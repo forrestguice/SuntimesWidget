@@ -66,6 +66,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     public static final String ARG_COLOR_TAG = "colorTag";
     public static final String DEF_COLOR_TAG = null;
 
+    public static final String ARG_COLOR_SELECTED_ID = "selectedID";
+    public static final String ARG_COLOR_SELECTED_DEFAULT = "defaultIsSelected";
+
     protected TextView label;
     protected Spinner selector;
     protected ImageButton addButton, editButton, backButton, menuButton;
@@ -163,8 +166,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     };
     protected void onColorValuesSelected(int position)
     {
+        ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(position);
+        getArguments().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
+        getArguments().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
         if (listener != null) {
-            listener.onItemSelected((ColorValuesItem) selector.getItemAtPosition(position));
+            listener.onItemSelected(item);
         }
         updateControls();
     }
@@ -335,7 +341,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             if (colorCollection != null)
             {
                 int selectedIndex = 0;
-                String selectedColorsID = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+                String selectedColorsID0 = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+                boolean defaultIsSelected = getArguments().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
+                String selectedColorsID = getArguments().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
 
                 for (int i=0; i<selector.getCount(); i++)
                 {
