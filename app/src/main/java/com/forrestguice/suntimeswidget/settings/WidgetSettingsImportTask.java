@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 
 import org.json.JSONObject;
 
@@ -539,6 +540,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
+        prefTypes.putAll(ClockWidgetSettings.getPrefTypes());
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());

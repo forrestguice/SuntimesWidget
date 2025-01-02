@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -97,7 +98,7 @@ public class ClockWidget0 extends SuntimesWidget0
 
     protected static ClockLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
-        ClockLayout layout = new ClockLayout_1x1_0();
+        ClockLayout layout = ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
         layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
