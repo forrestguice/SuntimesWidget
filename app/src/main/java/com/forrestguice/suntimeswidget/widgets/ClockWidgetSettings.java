@@ -25,12 +25,10 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.settings.WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
 
@@ -39,8 +37,6 @@ public class ClockWidgetSettings
     public static final String MODE_1x1 = "1x1";
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK = "widgetmode_clock";
     public static final WidgetModeClock1x1 PREF_DEF_APPEARANCE_WIDGETMODE_CLOCK1x1 = WidgetModeClock1x1.CLOCK0;
-
-    public static final String PREF_PREFIX_KEY_CLOCKWIDGET = "_clockwidget_";
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -115,6 +111,8 @@ public class ClockWidgetSettings
         WidgetModeClock1x1 mode = loadClock1x1ModePref(context, appWidgetId);
         switch (mode)
         {
+            case CLOCK1: layout = new ClockLayout_1x1_1(); break;
+            case CLOCK0:
             default: layout = new ClockLayout_1x1_0(); break;
         }
         return layout;
@@ -129,7 +127,8 @@ public class ClockWidgetSettings
      */
     public static enum WidgetModeClock1x1 implements WidgetSettings.WidgetModeDisplay
     {
-        CLOCK0("Clock", R.layout.layout_widget_clock_1x1_0);
+        CLOCK0("Clock", R.layout.layout_widget_clock_1x1_0),
+        CLOCK1("Clock", R.layout.layout_widget_clock_1x1_1);
 
         private final int layoutID;
         private String displayString;
@@ -158,6 +157,7 @@ public class ClockWidgetSettings
 
         public static void initDisplayStrings( Context context ) {
             CLOCK0.setDisplayString(context.getString(R.string.configAction_clock));
+            CLOCK1.setDisplayString(context.getString(R.string.configAction_clock));
         }
 
         public static boolean supportsLayout(int layoutID)

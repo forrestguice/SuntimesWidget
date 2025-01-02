@@ -178,7 +178,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     protected int timeColor = Color.WHITE;
     protected int textColor = Color.WHITE;
     protected int suffixColor = Color.GRAY;
-    private boolean boldTime = false;
+    protected boolean boldTime = false;
     protected float titleSizeSp = 10;
     protected float timeSizeSp = 12;
     protected float textSizeSp = 12;
