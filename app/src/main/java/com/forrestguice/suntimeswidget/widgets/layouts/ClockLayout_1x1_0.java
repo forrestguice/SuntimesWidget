@@ -70,6 +70,17 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
+    protected void updateTimeViews(Context context, int appWidgetId, RemoteViews views, Calendar now)
+    {
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+        String nowString = nowText.getValue();
+
+        CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+        views.setTextViewText(R.id.text_time, nowChars);
+        views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
@@ -82,10 +93,6 @@ public class ClockLayout_1x1_0 extends ClockLayout
         views.setViewVisibility(R.id.text_date, showDate ? View.VISIBLE : View.GONE);
 
         Calendar now = data.calendar();
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
-        String nowString = nowText.getValue();
-        CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
         String dateString = null;
         if (showDate)
@@ -136,8 +143,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
             }
         }
 
-        views.setTextViewText(R.id.text_time, nowChars);
-        views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+        updateTimeViews(context, appWidgetId, views, now);
 
         if (showLabels)
         {
