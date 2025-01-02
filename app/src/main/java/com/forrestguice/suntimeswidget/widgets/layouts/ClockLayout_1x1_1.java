@@ -18,7 +18,15 @@
 
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
+import android.content.Context;
+import android.widget.RemoteViews;
+
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 {
@@ -41,4 +49,29 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
             case 4: case 6: case 5: default: return R.layout.layout_widget_clock_1x1_1;         // center
         }
     }
+
+    @Override
+    protected void updateTimeViews(Context context, int appWidgetId, RemoteViews views, Calendar now)
+    {
+        SimpleDateFormat hourFormat = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
+        String nowString = hourFormat.format(now.getTime()) + "\n" + minuteFormat.format(now.getTime());
+        views.setTextViewText(R.id.text_time, nowString);
+        views.setTextViewText(R.id.text_time_suffix, "");
+    }
+
+    protected boolean is24(Context context, int appWidgetId)
+    {
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        switch (timeFormat)
+        {
+            case MODE_SUNTIMES: return SuntimesUtils.is24();
+            case MODE_SYSTEM: return android.text.format.DateFormat.is24HourFormat(context);
+            case MODE_12HR: return false;
+            case MODE_24HR: default: return true;
+        }
+    }
+
+    protected SimpleDateFormat hourFormat12 = new SimpleDateFormat("h", SuntimesUtils.getLocale());
+    protected SimpleDateFormat hourFormat24 = new SimpleDateFormat("HH", SuntimesUtils.getLocale());
+    protected SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", SuntimesUtils.getLocale());
 }

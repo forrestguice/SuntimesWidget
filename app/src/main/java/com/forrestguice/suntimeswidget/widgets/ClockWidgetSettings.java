@@ -127,8 +127,8 @@ public class ClockWidgetSettings
      */
     public static enum WidgetModeClock1x1 implements WidgetSettings.WidgetModeDisplay
     {
-        CLOCK0("Clock", R.layout.layout_widget_clock_1x1_0),
-        CLOCK1("Clock", R.layout.layout_widget_clock_1x1_1);
+        CLOCK0("Clock 0", R.layout.layout_widget_clock_1x1_0),
+        CLOCK1("Clock 1", R.layout.layout_widget_clock_1x1_1);
 
         private final int layoutID;
         private String displayString;
@@ -156,8 +156,8 @@ public class ClockWidgetSettings
         }
 
         public static void initDisplayStrings( Context context ) {
-            CLOCK0.setDisplayString(context.getString(R.string.configAction_clock));
-            CLOCK1.setDisplayString(context.getString(R.string.configAction_clock));
+            //CLOCK0.setDisplayString(context.getString(R.string.configAction_clock));
+            //CLOCK1.setDisplayString(context.getString(R.string.configAction_clock));
         }
 
         public static boolean supportsLayout(int layoutID)
