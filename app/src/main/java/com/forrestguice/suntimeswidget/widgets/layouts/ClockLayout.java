@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -28,7 +29,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public abstract class ClockLayout extends SuntimesLayout
 {
-
+    protected int dpWidth = 512, dpHeight = 512;
     protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
     public ClockLayout()
@@ -40,8 +41,14 @@ public abstract class ClockLayout extends SuntimesLayout
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
      */
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data) {
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data, int[] widgetSize)
+    {
         this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        if (Build.VERSION.SDK_INT >= 16)
+        {
+            this.dpWidth = widgetSize[0];
+            this.dpHeight = widgetSize[1];
+        }
     }
 
     /**

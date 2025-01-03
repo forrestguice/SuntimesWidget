@@ -53,9 +53,9 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data, int[] widgetSize)
     {
-        super.prepareForUpdate(context, appWidgetId, data);
+        super.prepareForUpdate(context, appWidgetId, data, widgetSize);
         int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
         this.layoutID = chooseLayout(position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
     }
@@ -79,6 +79,10 @@ public class ClockLayout_1x1_0 extends ClockLayout
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
         views.setTextViewText(R.id.text_time, nowChars);
         views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+    }
+
+    protected float getMaxSp() {
+        return SuntimesLayout.MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
     }
 
     @Override
@@ -120,7 +124,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
                 boolean rescale = false;
                 do
                 {
-                    float maxSp = SuntimesLayout.MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
+                    float maxSp = getMaxSp();
                     int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - ((int)adjustedSizeSp1[0] * (showDate ? 1 : 0)))};
 
                     adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);

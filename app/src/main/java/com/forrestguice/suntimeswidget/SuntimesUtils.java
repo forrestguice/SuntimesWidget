@@ -58,6 +58,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.MetricAffectingSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.ReplacementSpan;
 import android.text.style.UnderlineSpan;
@@ -2025,6 +2026,43 @@ public class SuntimesUtils
             span.setSpan(new AbsoluteSizeSpan(pointSizePixels), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
+    }
+
+    /**
+     * TypefaceSpan
+     */
+
+    public static SpannableString createTypefaceSpan(SpannableString span, String text, String toTypeface, String typeface)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toTypeface);
+        if (start >= 0)
+        {
+            int end = start + toTypeface.length();
+            span.setSpan(new TypefaceSpan(typeface), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
+    public static class TypefaceSpan extends MetricAffectingSpan
+    {
+        protected final Typeface typeface;
+
+        public TypefaceSpan(String typeface) {
+            this.typeface = Typeface.create(typeface, Typeface.NORMAL);
+        }
+
+        @Override
+        public void updateDrawState(TextPaint paint) {
+            paint.setTypeface(typeface);
+        }
+
+        @Override
+        public void updateMeasureState(TextPaint paint) {
+            paint.setTypeface(typeface);
+        }
     }
 
     public static int spToPixels(Context context, float spValue)
