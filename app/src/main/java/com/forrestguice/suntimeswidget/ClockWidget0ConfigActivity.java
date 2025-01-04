@@ -71,6 +71,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
 
         //showTimeFormatMode(true);
         showOptionLabels(true);
+        showOptionAllowResize(false);
 
         moveSectionToTop(R.id.appwidget_timezone_layout);
         moveSectionToTop(R.id.appwidget_general_layout);

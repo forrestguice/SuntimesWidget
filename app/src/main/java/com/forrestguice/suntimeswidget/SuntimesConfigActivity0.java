@@ -2705,6 +2705,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
+     */
+    protected void showOptionAllowResize(boolean showUI) {
+        View layout = findViewById(R.id.appwidget_appearance_allowResize_layout);
+        if (layout != null) {
+            layout.setVisibility(showUI ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
      *
      */
     protected void hideOption1x1LayoutMode()

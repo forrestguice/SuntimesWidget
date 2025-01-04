@@ -136,7 +136,8 @@
         </LinearLayout>
 
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout android:id="@+id/appwidget_appearance_allowResize_layout"
+            android:orientation="horizontal"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/widget_settings_check_padding_left" android:paddingStart="@dimen/widget_settings_check_padding_left"
