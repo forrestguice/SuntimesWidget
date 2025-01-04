@@ -34,6 +34,12 @@ import static com.forrestguice.suntimeswidget.settings.WidgetSettings.PREF_PREFI
 
 public class ClockWidgetSettings
 {
+    public static final String PREF_KEY_APPEARANCE_TYPEFACE = "typeface";
+    public static final String PREF_KEY_APPEARANCE_TYPEFACE_BOLD = "bold";
+    public static final String PREF_KEY_APPEARANCE_TYPEFACE_ITALIC = "italic";
+    public static final String PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE = "outline";
+    public static final String PREF_KEY_APPEARANCE_TYPEFACE_COLOR = "color";
+
     public static final String MODE_1x1 = "1x1";
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK = "widgetmode_clock";
     public static final WidgetModeClock1x1 PREF_DEF_APPEARANCE_WIDGETMODE_CLOCK1x1 = WidgetModeClock1x1.CLOCK0;
@@ -43,9 +49,20 @@ public class ClockWidgetSettings
 
     public static String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK + MODE_1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_BOLD,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_ITALIC,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_COLOR,
     };
-    public static String[] BOOL_KEYS = new String[] {};
-    public static String[] INT_KEYS = new String[] {};
+    public static String[] BOOL_KEYS = new String[] {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_BOLD,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_ITALIC,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE,
+    };
+    public static String[] INT_KEYS = new String[] {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_COLOR,
+    };
 
     private static Map<String,Class> types = null;
     public static Map<String,Class> getPrefTypes()
@@ -65,8 +82,65 @@ public class ClockWidgetSettings
         return types;
     }
 
-
     //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    public static void saveClockTypefacePref(Context context, int appWidgetId, String value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE, value);
+        prefs.apply();
+    }
+    public static void deleteClockTypefacePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE);
+        prefs.apply();
+    }
+    public static String loadClockTypefacePref(Context context, int appWidgetId, String defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE, defaultValue);
+    }
+
+    public static void saveClockTypefaceFlag(Context context, int appWidgetId, String key, boolean value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE + "_" + key, value);
+        prefs.apply();
+    }
+    public static boolean loadClockTypefaceFlag(Context context, int appWidgetId, String key, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE + "_" + key, defaultValue);
+    }
+
+    public static void saveClockTypefaceValue(Context context, int appWidgetId, String key, int value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putInt(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE + "_" + key, value);
+        prefs.apply();
+    }
+    public static void deleteClockTypefaceValue(Context context, int appWidgetId, String key)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE + "_" + key);
+        prefs.apply();
+    }
+    public static int loadClockTypefaceValue(Context context, int appWidgetId, String key, int defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getInt(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE + "_" + key, defaultValue);
+    }
+
     //////////////////////////////////////////////////
 
     public static void saveClockModePref(Context context, int appWidgetId, String value, String suffix)
@@ -117,7 +191,6 @@ public class ClockWidgetSettings
         }
         return layout;
     }
-
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -185,8 +258,14 @@ public class ClockWidgetSettings
      * @param context context
      * @param appWidgetId appWidgetId
      */
-    public static void deletePrefs(Context context, int appWidgetId) {
+    public static void deletePrefs(Context context, int appWidgetId)
+    {
         deleteClockModePref(context, appWidgetId, MODE_1x1);
+        deleteClockTypefacePref(context, appWidgetId);
+        deleteClockTypefaceValue(context, appWidgetId, PREF_KEY_APPEARANCE_TYPEFACE_BOLD);
+        deleteClockTypefaceValue(context, appWidgetId, PREF_KEY_APPEARANCE_TYPEFACE_ITALIC);
+        deleteClockTypefaceValue(context, appWidgetId, PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE);
+        deleteClockTypefaceValue(context, appWidgetId, PREF_KEY_APPEARANCE_TYPEFACE_COLOR);
     }
 
 }
