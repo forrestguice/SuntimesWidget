@@ -45,6 +45,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,6 +58,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -283,6 +285,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
         edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+        updatePreview(this);
     }
 
     public SuntimesData getData(Context context, int appWidgetId) {
@@ -435,9 +438,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         progressView = findViewById(R.id.progress);
 
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
-        if (text_appWidgetID != null)
-        {
+        if (text_appWidgetID != null) {
             text_appWidgetID.setText(String.format("%s", appWidgetId));
+        }
+
+        final View previewArea = findViewById(R.id.previewArea);
+        CheckBox check_showPreview = (CheckBox) findViewById(R.id.check_showPreview);
+        if (check_showPreview != null)
+        {
+            check_showPreview.setVisibility(supportsPreview() ? View.VISIBLE : View.GONE);
+            check_showPreview.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (previewArea != null) {
+                        previewArea.setVisibility(isChecked ? buttonView.VISIBLE : View.GONE);
+                    }
+                }
+            });
         }
 
         //
@@ -996,6 +1014,38 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         ArrayAdapter<WidgetSettings.WidgetGravity> adapter = new ArrayAdapter<WidgetSettings.WidgetGravity>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetGravity.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_gravity.setAdapter(adapter);
+    }
+
+    protected void updatePreview(Context context)
+    {
+        FrameLayout previewArea = (FrameLayout) findViewById(R.id.previewArea);
+        if (previewArea != null)
+        {
+            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+            int[] previewSize = SuntimesWidget0.widgetMaxSizeDp(context, widgetManager, appWidgetId, new int[] {40, 40});
+            View view = createPreview(context, previewArea, previewSize);
+
+            previewArea.removeAllViews();
+            previewArea.addView(view);
+
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
+            layoutParams.gravity = Gravity.CENTER;
+            view.setLayoutParams(layoutParams);
+        }
+    }
+
+    protected View createPreview(Context context, ViewGroup parent, int[] sizeDp) {
+        return null;
+    }
+    protected boolean supportsPreview() {
+        return false;
+    }
+
+    protected void centerPreview(@NonNull View view)
+    {
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
+        layoutParams.gravity = Gravity.CENTER;
+        view.setLayoutParams(layoutParams);
     }
 
     /**
@@ -2782,10 +2832,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void setConfigActivityTitle(String text)
     {
         TextView activityTitle = (TextView) findViewById(R.id.activity_title);
-        if (activityTitle != null)
-        {
+        if (activityTitle != null) {
             activityTitle.setText(text);
         }
+
+        //actionBar = getSupportActionBar();
+        //if (actionBar != null) {
+        //    actionBar.setSubtitle(text + " [" + appWidgetId + "]");
+        //}
     }
 
     public void moveSectionToTop(int sectionLayoutID)
