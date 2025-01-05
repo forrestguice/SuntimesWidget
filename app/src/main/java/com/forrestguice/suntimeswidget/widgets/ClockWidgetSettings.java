@@ -26,6 +26,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_3;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -185,6 +187,8 @@ public class ClockWidgetSettings
         WidgetModeClock1x1 mode = loadClock1x1ModePref(context, appWidgetId);
         switch (mode)
         {
+            case CLOCK3: layout = new ClockLayout_1x1_3(); break;
+            case CLOCK2: layout = new ClockLayout_1x1_2(); break;
             case CLOCK1: layout = new ClockLayout_1x1_1(); break;
             case CLOCK0:
             default: layout = new ClockLayout_1x1_0(); break;
@@ -201,7 +205,10 @@ public class ClockWidgetSettings
     public static enum WidgetModeClock1x1 implements WidgetSettings.WidgetModeDisplay
     {
         CLOCK0("Clock 0", R.layout.layout_widget_clock_1x1_0),
-        CLOCK1("Clock 1", R.layout.layout_widget_clock_1x1_1);
+        CLOCK1("Clock 1", R.layout.layout_widget_clock_1x1_1),
+        CLOCK2("Clock 2", R.layout.layout_widget_clock_1x1_2),
+        CLOCK3("Clock 3", R.layout.layout_widget_clock_1x1_3),
+        ;
 
         private final int layoutID;
         private String displayString;
@@ -231,6 +238,16 @@ public class ClockWidgetSettings
         public static void initDisplayStrings( Context context ) {
             //CLOCK0.setDisplayString(context.getString(R.string.configAction_clock));
             //CLOCK1.setDisplayString(context.getString(R.string.configAction_clock));
+        }
+
+        public static ClockWidgetSettings.WidgetModeClock1x1 findMode(int layoutID)
+        {
+            for (WidgetModeClock1x1 mode : values()) {
+                if (mode.layoutID == layoutID) {
+                    return mode;
+                }
+            }
+            return null;
         }
 
         public static boolean supportsLayout(int layoutID)

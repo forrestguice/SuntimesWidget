@@ -23,6 +23,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -77,27 +79,58 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
     }
     protected ClockFaceOptions options = null;
 
+    public static String getNowString(Context context, int appWidgetId, Calendar now, ClockFaceOptions options)
+    {
+        switch (options.style)
+        {
+            case ClockFaceOptions.STYLE_DIGITAL1:
+                WidgetSettings.TimeFormatMode timeFormat1 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+                SimpleDateFormat hourFormat1 = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
+                return hourFormat1.format(now.getTime()) + " " + minuteFormat.format(now.getTime());
+                //return utils.calendarDateTimeDisplayString(context, now, false, false, true, false, timeFormat1).toString();
+
+            case ClockFaceOptions.STYLE_DIGITAL0:
+                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+                SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+                //return nowText.toString();
+                return nowText.getValue();
+
+            case ClockFaceOptions.STYLE_VERTICAL:
+            default:
+                SimpleDateFormat hourFormat = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
+                return hourFormat.format(now.getTime()) + "\n" + minuteFormat.format(now.getTime());
+        }
+    }
+
     @Override
     protected void updateTimeViews(Context context, int appWidgetId, RemoteViews views, Calendar now)
     {
-        SimpleDateFormat hourFormat = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
-        String nowString = hourFormat.format(now.getTime()) + "\n" + minuteFormat.format(now.getTime());
-
+        ClockFaceOptions options = initClockFaceOptions(context, appWidgetId);
+        String nowString = getNowString(context, appWidgetId, now, options);
         views.setTextViewText(R.id.text_time, nowString);
         views.setTextViewText(R.id.text_time_suffix, "");
 
         int w, h;
-        w = h = Math.max(dpWidth, dpHeight);
-        //w = dpWidth;
-        //h = dpHeight;
+        switch (options.style)
+        {
+            case ClockFaceOptions.STYLE_DIGITAL0:
+            case ClockFaceOptions.STYLE_DIGITAL1:
+                w = dpWidth;
+                h = dpHeight;
+                break;
 
-        ClockFaceOptions o = initClockFaceOptions(context, appWidgetId);
-        Bitmap b = new ClockFaceBitmap().makeClockBitmap(context, w, h, nowString, o);
+            case ClockFaceOptions.STYLE_VERTICAL:
+            default:
+                w = h = Math.max(dpWidth, dpHeight);
+                break;
+        }
+
+        Bitmap b = new ClockFaceBitmap().makeClockBitmap(context, w, h, nowString, options);
         views.setImageViewBitmap(R.id.image_time, b);
         views.setContentDescription(R.id.image_time, nowString);
     }
 
-    protected boolean is24(Context context, int appWidgetId)
+    public static boolean is24(Context context, int appWidgetId)
     {
         WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         switch (timeFormat)
@@ -109,9 +142,9 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         }
     }
 
-    protected SimpleDateFormat hourFormat12 = new SimpleDateFormat("h", SuntimesUtils.getLocale());
-    protected SimpleDateFormat hourFormat24 = new SimpleDateFormat("HH", SuntimesUtils.getLocale());
-    protected SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", SuntimesUtils.getLocale());
+    protected static SimpleDateFormat hourFormat12 = new SimpleDateFormat("h", SuntimesUtils.getLocale());
+    protected static SimpleDateFormat hourFormat24 = new SimpleDateFormat("HH", SuntimesUtils.getLocale());
+    protected static SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", SuntimesUtils.getLocale());
 
     /**
      * ClockFaceBitmap
@@ -134,7 +167,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         private Paint pDebug;
         private TextPaint p;
 
-        protected Bitmap makeClockBitmap(Context context, int w, int h, String text, ClockFaceOptions options)
+        public Bitmap makeClockBitmap(Context context, int w, int h, String text, ClockFaceOptions options)
         {
             initPaint(context);
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
@@ -144,24 +177,24 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
             //c.drawCircle(w/2f, h/2f, w/4f, pDebug);
             //c.drawCircle(w/2f, h/2f, w/2f, pDebug);
 
-            p.setColor(options.textColor);
-            p.setTypeface(options.getTypeface());
-
             float textSizePx = options.minTextSizePx;
             p.setTextSize(textSizePx);
+            p.setTypeface(options.getTypeface());
 
             String[] lines = text.split("\n");
             StaticLayout layout = getStaticLayout(text, lines, p);
 
             if (options.scaleText)
             {
-                while (layout.getWidth() < w && layout.getHeight() < h)
+                float paddingPx = options.cutout ? context.getResources().getDimension(R.dimen.widget_layout_spacing_small) : 0;
+                int[] maxPx = new int[] {(int)(w - 2 * paddingPx), h};
+                while (layout.getWidth() < maxPx[0] && layout.getHeight() < maxPx[1])
                 {
                     textSizePx += 2;
                     p.setTextSize(textSizePx);
                     layout = getStaticLayout(text, lines, p);
                 }
-                while (layout.getWidth() > w || layout.getHeight() > h)
+                while (layout.getWidth() > maxPx[0] || layout.getHeight() > maxPx[1])
                 {
                     textSizePx -= 1;
                     p.setTextSize(textSizePx);
@@ -174,8 +207,8 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
             {
                 p.setStrokeWidth(textSizePx * options.outlineRatio);
                 p.setStrokeJoin(Paint.Join.ROUND);
-                //p.setStrokeMiter(10);
                 p.setStrokeCap(Paint.Cap.ROUND);
+                //p.setStrokeMiter(10);
             }
 
             if (options.glow) {
@@ -184,13 +217,31 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
                 p.clearShadowLayer();
             }
 
+            if (options.cutout)
+            {
+                c.drawColor(options.textColor);
+                p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+                p.setColor(Color.TRANSPARENT);
+            } else {
+                p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+                p.setColor(options.textColor);
+            }
+
             p.setTextAlign(options.textAlign);
+            float tx, ty;
             switch (options.textAlign)
             {
-                case CENTER: c.translate(w/2f, 0); break;
-                case LEFT: c.translate(w/2f - (layout.getWidth() / 2f), 0); break;
-                case RIGHT: default: c.translate(w/2f + (layout.getWidth() / 2f), 0); break;
+                case CENTER: tx = w/2f; break;
+                case LEFT: tx = w/2f - (layout.getWidth() / 2f); break;
+                case RIGHT: default: tx = w/2f + (layout.getWidth() / 2f); break;
             }
+            switch (options.style)
+            {
+                case ClockFaceOptions.STYLE_DIGITAL1:
+                case ClockFaceOptions.STYLE_DIGITAL0: ty = h/2f - layout.getHeight() / 2f; break; //h/2f; break;
+                case ClockFaceOptions.STYLE_VERTICAL: default: ty = 0;  break;
+            }
+            c.translate(tx, ty);
             layout.draw(c);
             return b;
         }
@@ -220,13 +271,19 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
      */
     public static class ClockFaceOptions
     {
+        public static final int STYLE_DIGITAL0 = 0;
+        public static final int STYLE_DIGITAL1 = 1;
+        public static final int STYLE_VERTICAL = 10;
+        public int style = STYLE_VERTICAL;
+
         public int textColor = Color.WHITE;
         public Paint.Align textAlign = Paint.Align.RIGHT;
 
-        public String fontFamily = "sans-serif-black";    // casual, cursive, monospace, sans-serif, sans-serif-black, sans-serif-condensed, sans-serif-condensed-light, sans-serif-light, sans-serif-medium, sans-serif-thin, serif, serif-monospace
+        public String fontFamily = "serif-monospace"; //"sans-serif-black";    // casual, cursive, monospace, sans-serif, sans-serif-black, sans-serif-condensed, sans-serif-condensed-light, sans-serif-light, sans-serif-medium, sans-serif-thin, serif, serif-monospace
         public boolean bold = false;
         public boolean italic = false;
 
+        public boolean cutout = false;
         public boolean outline = true;
         public float outlineRatio = 1/48f;
 
@@ -237,6 +294,8 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
         public boolean scaleText = true;
         public float minTextSizePx = 16;
+
+        public ClockFaceOptions() {}
 
         public ClockFaceOptions(Context context, int appWidgetId)
         {
@@ -257,6 +316,60 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
                     bold ? italic ? Typeface.BOLD_ITALIC : Typeface.BOLD
                             : italic ? Typeface.ITALIC : Typeface.NORMAL);
         }
+
+        /*
+        @Nullable
+        public static ClockFaceOptions createClockFaceOptions(String jsonString)
+        {
+            ClockFaceOptions result = new ClockFaceOptions();
+            try {
+                JSONObject json = new JSONObject(jsonString);
+                result.style = json.has("style") ? json.getInt("style") : result.style;
+                result.textColor = json.has("textColor") ? json.getInt("textColor") : result.textColor;
+                result.textAlign = json.has("textAlign") ? Paint.Align.values()[json.getInt("textAlign")] : result.textAlign;
+                result.fontFamily = json.has("fontFamily") ? json.getString("fontFamily") : result.fontFamily;
+                result.bold = json.has("bold") ? json.getBoolean("bold") : result.bold;
+                result.italic = json.has("italic") ? json.getBoolean("italic") : result.italic;
+                result.outline = json.has("outline") ? json.getBoolean("outline") : result.outline;
+                result.outlineRatio = (float) (json.has("outlineRatio") ? json.getDouble("outlineRatio") : result.outlineRatio);
+                result.glow = json.has("glow") ? json.getBoolean("glow") : result.glow;
+                result.glowX = json.has("glowX") ? json.getInt("glowX") : result.glowX;
+                result.glowY = json.has("glowY") ? json.getInt("glowY") : result.glowY;
+                result.glowRatio = (float) (json.has("glowRatio") ? json.getDouble("glowRatio") : result.glowRatio);
+                result.glowColor = json.has("glowColor") ? json.getInt("glowColor") : result.glowColor;
+                result.scaleText = json.has("scaleText") ? json.getBoolean("scaleText") : result.scaleText;
+                return result;
+
+            } catch (JSONException e) {
+                Log.e("ClockFaceOptions", "fromJSON: " + e);
+                return null;
+            }
+        }
+        public String toJSON()
+        {
+            JSONObject result = new JSONObject();
+            try {
+                result.put("style", style);
+                result.put("textColor", textColor);
+                result.put("textAlign", textAlign);
+                result.put("fontFamily", fontFamily);
+                result.put("bold", bold);
+                result.put("italic", italic);
+                result.put("outline", outline);
+                result.put("outlineRatio", outlineRatio);
+                result.put("glow", glow);
+                result.put("glowRatio", glowRatio);
+                result.put("glowColor", glowColor);
+                result.put("glowX", glowX);
+                result.put("glowY", glowY);
+                result.put("scaleText", scaleText);
+
+            } catch (JSONException e) {
+                Log.e("ClockFaceOptions", "toJSON: " + e);
+            }
+            return result.toString();
+        }
+        */
     }
 
     /*
