@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -48,7 +49,10 @@ import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
@@ -233,6 +237,13 @@ public class WidgetThemePreview
 
         } else if (WidgetSettings.WidgetModeSunPos1x1.supportsLayout(layoutID)) {
             updatePreview_position2(previewLayout, values);
+
+        } else if (ClockWidgetSettings.WidgetModeClock1x1.supportsLayout(layoutID)) {
+            ClockWidgetSettings.WidgetModeClock1x1 mode = ClockWidgetSettings.WidgetModeClock1x1.findMode(layoutID);
+            switch (mode) {
+                case CLOCK0: updatePreview_clock(previewLayout, values); break;
+                default: updatePreview_clock1(previewLayout, mode, values); break;
+            }
 
         } else {
             updatePreview_clock(previewLayout, values);
@@ -576,6 +587,48 @@ public class WidgetThemePreview
 
             previewTimeSuffix.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR));
             previewTimeSuffix.setText(nowText.getSuffix());
+        }
+    }
+
+    public void updatePreview_clock1(View previewLayout, ClockWidgetSettings.WidgetModeClock1x1 mode, ContentValues values)
+    {
+        Context context = previewLayout.getContext();
+        ImageView previewTime = (ImageView) previewLayout.findViewById(R.id.image_time);
+        if (previewTime != null)
+        {
+            ClockLayout_1x1_1.ClockFaceOptions options = new ClockLayout_1x1_1.ClockFaceOptions(context, appWidgetId);
+            options.textColor = ClockWidgetSettings.loadClockTypefaceValue(context, appWidgetId, ClockWidgetSettings.PREF_KEY_APPEARANCE_TYPEFACE_COLOR, values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR));
+            options.minTextSizePx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), context.getResources().getDisplayMetrics());
+            options.textAlign = AppSettings.isLocaleRtl(context) ? Paint.Align.LEFT : Paint.Align.RIGHT;
+
+            switch (mode)
+            {
+                case CLOCK1: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL; break;
+                case CLOCK2: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0; break;
+                case CLOCK3: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1; break;
+            }
+
+            Calendar now = Calendar.getInstance();
+            String nowString = ClockLayout_1x1_1.getNowString(context, appWidgetId, now, options);
+
+            int w, h;
+            switch (options.style)
+            {
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0:
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1:
+                    w = 256;
+                    h = 128;
+                    break;
+
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL:
+                default:
+                    w = h = 256;
+                    break;
+            }
+
+            Bitmap b = new ClockLayout_1x1_1.ClockFaceBitmap().makeClockBitmap(context, w, h, nowString, options);
+            previewTime.setImageBitmap(b);
+            previewTime.setContentDescription(nowString);
         }
     }
 
