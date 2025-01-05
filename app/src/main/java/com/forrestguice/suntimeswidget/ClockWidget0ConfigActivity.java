@@ -22,13 +22,20 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 
 /**
  * Clock widget config activity.
@@ -196,7 +203,6 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
 
-
     protected static int searchForIndex(Spinner spinner, Object enumValue)
     {
         for (int i=0; i<spinner.getAdapter().getCount(); i++) {
@@ -205,6 +211,29 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
             }
         }
         return -1;
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    @Override
+    protected View createPreview(Context context, ViewGroup parent, int[] sizeDp)
+    {
+        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+        data.calculate();
+
+        ClockLayout layout = ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
+        layout.prepareForUpdate(context, appWidgetId, data, sizeDp);
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        RemoteViews views = layout.getViews(context);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
+
+        layout.themeViews(context, views, appWidgetId);
+        layout.updateViews(context, appWidgetId, views, data);
+        return views.apply(getApplicationContext(), null);
     }
 
 }
