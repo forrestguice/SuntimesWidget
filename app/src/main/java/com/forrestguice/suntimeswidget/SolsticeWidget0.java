@@ -102,7 +102,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected static SuntimesEquinoxSolsticeData getSolsticeEquinoxData(Context context, int appWidgetId)
+    public static SuntimesEquinoxSolsticeData getSolsticeEquinoxData(Context context, int appWidgetId)
     {
         SuntimesEquinoxSolsticeData data;
         boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
