@@ -30,6 +30,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -51,6 +52,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.AdapterView;
 
 import android.widget.GridView;
@@ -127,6 +129,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
         initLocale();
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_themelist);
@@ -192,6 +199,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
                     toggleWallpaper();
                 }
             });
+        }
+
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+            if (background != null) {
+                background.setAlpha(1f);
+            }
         }
     }
 
@@ -845,9 +860,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        if (useWallpaper)
-        {
+        if (useWallpaper) {
             initWallpaper(false);
+        } else {
+            hideWallpaper();
         }
         if (isExporting && exportTask != null)
         {
@@ -875,11 +891,27 @@ public class WidgetThemeListActivity extends AppCompatActivity
      */
     protected void initWallpaper(boolean animate)
     {
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            ImageView shade = (ImageView)findViewById(R.id.themegrid_background);
+            shade.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+
+        } else {
+            try {
+                initWallpaperLegacy(animate);
+            } catch (Exception e) {
+                Log.e("initWallpaper", "failed to init wallpaper; " + e);
+            }
+        }
+    }
+    @Deprecated
+    protected void initWallpaperLegacy(boolean animate)
+    {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         if (wallpaperManager != null)
         {
             ImageView background = (ImageView)findViewById(R.id.themegrid_background);
-            Drawable wallpaper = wallpaperManager.getDrawable();
+            Drawable wallpaper = wallpaperManager.getDrawable();    // requires MANAGE_EXTERNAL_STORAGE
             if (background != null && wallpaper != null)
             {
                 background.setImageDrawable(wallpaper);
@@ -903,8 +935,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         ImageView background = (ImageView)findViewById(R.id.themegrid_background);
         if (background != null)
         {
-            if (Build.VERSION.SDK_INT >= 12)
-            {
+            if (Build.VERSION.SDK_INT > 18) {
+                ImageView shade = background;
+                shade.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+
+            } else if (Build.VERSION.SDK_INT >= 12) {
                 background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
 
             } else if (Build.VERSION.SDK_INT >= 11) {
