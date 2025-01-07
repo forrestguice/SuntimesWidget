@@ -169,6 +169,10 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
         public Bitmap makeClockBitmap(Context context, int w, int h, String text, ClockFaceOptions options)
         {
+            if (context == null || w <= 0 || h <= 0) {
+                return null;
+            }
+
             initPaint(context);
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(b);
