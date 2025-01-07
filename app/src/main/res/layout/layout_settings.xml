@@ -20,7 +20,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:id="@+id/root_layout">
+    android:orientation="vertical" android:id="@+id/root_layout"
+    android:animateLayoutChanges="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/layout_app_menubar"
@@ -33,12 +34,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout android:id="@+id/previewArea" android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="80dp" android:layout_gravity="center" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/widgetActivity_padding"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:background="?android:attr/windowBackground">
 
         <ProgressBar android:id="@+id/progress" android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -70,11 +76,6 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
-
-        <FrameLayout android:id="@+id/previewArea" android:visibility="gone"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_gravity="center" />
 
         <LinearLayout
             android:layout_width="wrap_content"
