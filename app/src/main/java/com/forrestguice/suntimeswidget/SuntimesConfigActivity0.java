@@ -855,12 +855,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             disableOptionScaleBase();  // scalable text require api14+
         }
-        checkbox_scaleBase.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spinner_gravity.setEnabled(!isChecked);
-            }
-        });
+        if (checkbox_scaleBase != null) {
+            checkbox_scaleBase.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    spinner_gravity.setEnabled(!isChecked);
+                }
+            });
+        }
 
         //
         // widget: tracking mode
