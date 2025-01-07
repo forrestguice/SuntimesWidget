@@ -168,6 +168,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_1x1mode != null) {
             spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
     @Override

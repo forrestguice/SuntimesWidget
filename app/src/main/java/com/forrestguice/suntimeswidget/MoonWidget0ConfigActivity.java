@@ -99,6 +99,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         if (spinner_1x1mode != null)
         {
             spinner_1x1mode.setAdapter(createAdapter_widgetModeMoon1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon1x1()
@@ -128,6 +129,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_2x1mode != null) {
             spinner_2x1mode.setAdapter(createAdapter_widgetModeMoon2x1());
+            addOnItemSelectedListener(spinner_2x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon2x1()
@@ -143,6 +145,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetModeMoon3x1());
+            addOnItemSelectedListener(spinner_3x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon3x1()

@@ -113,6 +113,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_1x1mode != null) {
             spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
@@ -147,6 +148,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetMode3x1());
+            addOnItemSelectedListener(spinner_3x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x1()
@@ -194,6 +196,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null) {
             spinner_3x2mode.setAdapter(createAdapter_widgetMode3x2());
+            addOnItemSelectedListener(spinner_3x2mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
@@ -271,6 +274,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x3mode != null) {
             spinner_3x3mode.setAdapter(createAdapter_widgetMode3x3());
+            addOnItemSelectedListener(spinner_3x3mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x3()

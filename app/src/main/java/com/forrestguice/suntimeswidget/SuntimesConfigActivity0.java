@@ -487,7 +487,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_onTap != null)
         {
             spinner_onTap.setAdapter(createAdapter_actionMode());
-            spinner_onTap.setOnItemSelectedListener(onActionModeListener);
+            addOnItemSelectedListener(spinner_onTap, onActionModeListener);
         }
 
         //
@@ -526,7 +526,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_calculatorMode != null)
         {
             spinner_calculatorMode.setAdapter(createAdapter_calculators());
-            spinner_calculatorMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            addOnItemSelectedListener(spinner_calculatorMode, new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
@@ -542,6 +542,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // widget: show date, calendar mode
         checkbox_showDate = (CheckBox) findViewById(R.id.appwidget_general_showDate);
+        addOnCheckedChangeListener(checkbox_showDate, null);
         initCalendarMode(context);
 
         //
@@ -555,6 +556,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         spinner_timeMode = (Spinner) findViewById(R.id.appwidget_general_timeMode);
         checkbox_timeModeOverride = (CheckBox) findViewById(R.id.appwidget_general_timeMode_override);
+        addOnCheckedChangeListener(checkbox_timeModeOverride, null);
         button_timeModeHelp = (ImageButton) findViewById(R.id.appwidget_general_timeMode_helpButton);
         button_timeModeMenu = (ImageButton) findViewById(R.id.appwidget_general_timeMode_moreButton);
         initTimeMode(context);
@@ -567,7 +569,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timezoneMode != null)
         {
             spinner_timezoneMode.setAdapter(createAdapter_timezoneMode());
-            spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
+            addOnItemSelectedListener(spinner_timezoneMode, onTimezoneModeListener);
         }
 
         //
@@ -582,6 +584,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_riseSetOrder != null)
         {
             spinner_riseSetOrder.setAdapter(createAdapter_riseSetOrder());
+            addOnItemSelectedListener(spinner_riseSetOrder, null);
         }
 
         button_riseSetOrderHelp = (ImageButton) findViewById(R.id.appwidget_general_riseSetOrder_helpButton);
@@ -637,6 +640,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     super.onStart();
                     progress_timezone.setVisibility(View.VISIBLE);
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
+                    addOnItemSelectedListener(spinner_timezone, null);
                     button_addWidget.setEnabled(false);
                 }
 
@@ -646,6 +650,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     super.onFinished(result);
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
+                    addOnItemSelectedListener(spinner_timezone, null);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
                     button_addWidget.setEnabled(true);
                     progress_timezone.setVisibility(View.GONE);
@@ -660,6 +665,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_solartime != null)
         {
             spinner_solartime.setAdapter(createAdapter_solarTimeMode());
+            addOnItemSelectedListener(spinner_solartime, null);
         }
 
         button_solartime_help = (ImageButton) findViewById(R.id.appwidget_solartime_help);
@@ -773,6 +779,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             disableOptionAllowResize();  // resizable widgets require api14+
         }
+        addOnCheckedChangeListener(checkbox_allowResize, null);
 
         ImageButton button_allowResizeHelp = (ImageButton) findViewById(R.id.appwidget_appearance_allowResize_helpButton);
         if (button_allowResizeHelp != null)
@@ -798,6 +805,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_gravity != null) {
             initGravityAdapter(context);
         }
+        addOnItemSelectedListener(spinner_gravity, null);
 
         //
         // widget: title text
@@ -826,17 +834,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: show title
         //
         checkbox_showTitle = (CheckBox) findViewById(R.id.appwidget_appearance_showTitle);
-        if (checkbox_showTitle != null)
-        {
-            checkbox_showTitle.setOnCheckedChangeListener(onShowTitleListener);
-        }
+        addOnCheckedChangeListener(checkbox_showTitle, onShowTitleListener);
 
         //
         // widget: show labels
         //
         checkbox_showLabels = (CheckBox) findViewById(R.id.appwidget_appearance_showLabels);
+        addOnCheckedChangeListener(checkbox_showLabels, null);
         showOptionLabels(false);
-
 
         //
         // widget: scale text
@@ -846,6 +851,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             disableOptionScaleText();  // scalable text require api14+
         }
+        addOnCheckedChangeListener(checkbox_scaleText, null);
 
         //
         // widget: scale base
@@ -856,7 +862,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             disableOptionScaleBase();  // scalable text require api14+
         }
         if (checkbox_scaleBase != null) {
-            checkbox_scaleBase.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            addOnCheckedChangeListener(checkbox_scaleBase, new CompoundButton.OnCheckedChangeListener()
+            {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     spinner_gravity.setEnabled(!isChecked);
@@ -872,6 +879,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_trackingMode.setAdapter(createAdapter_trackingMode());
         }
+        addOnItemSelectedListener(spinner_trackingMode, null);
 
         //
         // widget: compare mode
@@ -881,17 +889,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_compareMode.setAdapter(createAdapter_compareMode());
         }
+        addOnItemSelectedListener(spinner_compareMode, null);
 
         //
         // widget: showNoon
         //
         checkbox_showNoon = (CheckBox) findViewById(R.id.appwidget_general_showNoon);
+        addOnCheckedChangeListener(checkbox_showNoon, new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updatePreview(context);
+            }
+        });
 
         //
         // widget: showCompare
         //
         checkbox_showCompare = (CheckBox) findViewById(R.id.appwidget_general_showCompare);
-        checkbox_showCompare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        addOnCheckedChangeListener(checkbox_showCompare, new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
@@ -904,41 +920,47 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: showSeconds
         //
         checkbox_showSeconds = (CheckBox)findViewById(R.id.appwidget_general_showSeconds);
+        addOnCheckedChangeListener(checkbox_showSeconds, null);
 
         //
         // widget: showTimeDate
         //
         checkbox_showTimeDate = (CheckBox)findViewById(R.id.appwidget_general_showTimeDate);
+        addOnCheckedChangeListener(checkbox_showTimeDate, null);
         showOptionTimeDate(false);
 
         //
         // widget: showAbbrMonth
         //
         checkbox_showAbbrMonth = (CheckBox)findViewById(R.id.appwidget_general_showAbbrMonth);
+        addOnCheckedChangeListener(checkbox_showAbbrMonth, null);
         showOptionAbbrvMonth(false);
 
         //
         // widget: showWeeks
         //
         checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
+        addOnCheckedChangeListener(checkbox_showWeeks, null);
         showOptionWeeks(false);
 
         //
         // widget: showHours
         //
         checkbox_showHours = (CheckBox)findViewById(R.id.appwidget_general_showHours);
+        addOnCheckedChangeListener(checkbox_showHours, null);
         showOptionHours(false);
 
         //
         // widget: useAltitude
         //
         checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
+        addOnCheckedChangeListener(checkbox_useAltitude, null);
 
         // widget: locationFromApp
         checkbox_locationFromApp = (CheckBox)findViewById(R.id.appwidget_location_fromapp);
         if (checkbox_locationFromApp != null)
         {
-            checkbox_locationFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            addOnCheckedChangeListener(checkbox_locationFromApp, new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
@@ -958,7 +980,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_tzFromApp = (CheckBox)findViewById(R.id.appwidget_timezone_fromapp);
         if (checkbox_tzFromApp != null)
         {
-            checkbox_tzFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            addOnCheckedChangeListener(checkbox_tzFromApp, new CompoundButton.OnCheckedChangeListener()
+            {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
@@ -974,6 +997,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         checkbox_localizeHemisphere = (CheckBox)findViewById(R.id.appwidget_general_localize_hemisphere);
+        addOnCheckedChangeListener(checkbox_localizeHemisphere, null);
 
         //
         // widget: about button
@@ -984,6 +1008,47 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
         }
     }
+
+    protected void addOnCheckedChangeListener(CheckBox view, @Nullable CompoundButton.OnCheckedChangeListener listener) {
+        if (view != null) {
+            view.setOnCheckedChangeListener(onCheckedChangeListener(listener));
+        }
+    }
+    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener(final CompoundButton.OnCheckedChangeListener chained)
+    {
+        return new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (chained != null) {
+                    chained.onCheckedChanged(buttonView, isChecked);
+                }
+                updatePreview(SuntimesConfigActivity0.this);
+            }
+        };
+    }
+
+    protected void addOnItemSelectedListener(Spinner view, @Nullable Spinner.OnItemSelectedListener listener) {
+        if (view != null) {
+            view.setOnItemSelectedListener(onItemSelectedListener(listener));
+        }
+    }
+    private Spinner.OnItemSelectedListener onItemSelectedListener(final Spinner.OnItemSelectedListener chained)
+    {
+        return new AdapterView.OnItemSelectedListener()
+        {
+            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                if (chained != null) {
+                    chained.onItemSelected(parent, view, position, id);
+                }
+                updatePreview(SuntimesConfigActivity0.this);
+            }
+        };
+    };
+
 
     protected void initToolbar(final Context context)
     {
@@ -1005,7 +1070,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_themes, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
-        spinner_theme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        addOnItemSelectedListener(spinner_theme, new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onThemeSelectionChanged();
@@ -1065,6 +1130,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_1x1mode != null)
         {
             spinner_1x1mode.setAdapter(createAdapter_widgetModeSun1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
 
@@ -1093,6 +1159,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_2x1mode != null) {
             spinner_2x1mode.setAdapter(createAdapter_widgetModeSun2x1());
+            addOnItemSelectedListener(spinner_2x1mode, null);
         }
     }
     protected void loadWidgetMode2x1(Context context)
@@ -1119,6 +1186,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetModeSun3x1());
+            addOnItemSelectedListener(spinner_3x1mode, null);
         }
     }
     protected void loadWidgetMode3x1(Context context)
@@ -1166,7 +1234,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOption3x1LayoutMode(true);
         if (checkbox_allowResize != null)
         {
-            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
+            addOnCheckedChangeListener(checkbox_allowResize, onAllowResizeChecked);
             onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
         }
     }
@@ -1236,6 +1304,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timeFormatModeAdapter = new ArrayAdapter<WidgetSettings.TimeFormatMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeFormatMode.values());
             spinner_timeFormatModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_timeFormatMode.setAdapter(spinner_timeFormatModeAdapter);
+            addOnItemSelectedListener(spinner_timeFormatMode, null);
         }
     }
 
@@ -1298,7 +1367,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
 
-            spinner_timeMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            addOnItemSelectedListener(spinner_timeMode, new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
@@ -2969,6 +3038,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+                updatePreview(SuntimesConfigActivity0.this);
             }
         }
     }
