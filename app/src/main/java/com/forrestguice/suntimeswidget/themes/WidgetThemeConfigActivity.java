@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -248,6 +250,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
         initLocale();
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_themeconfig);
@@ -1849,14 +1852,25 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initWallpaper()
     {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-        if (wallpaperManager != null)
+        ImageView background = (ImageView)findViewById(R.id.preview_background);
+
+        if (Build.VERSION.SDK_INT > 18)
         {
-            ImageView background = (ImageView)findViewById(R.id.preview_background);
-            Drawable wallpaper = wallpaperManager.getDrawable();
-            if (background != null && wallpaper != null)
-            {
-                background.setImageDrawable(wallpaper);
+            background.setVisibility(View.GONE);
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        } else {
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+                if (wallpaperManager != null)
+                {
+                    Drawable wallpaper = wallpaperManager.getDrawable();
+                    if (background != null && wallpaper != null) {
+                        background.setImageDrawable(wallpaper);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("initWallpaper", "failed to init wallpaper; " + e);
             }
         }
     }
