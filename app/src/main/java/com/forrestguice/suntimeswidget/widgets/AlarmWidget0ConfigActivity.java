@@ -129,7 +129,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveMoreGeneralSettings(final Context context)
+    protected void saveMoreGeneralSettings(final Context context, int appWidgetId)
     {
         FragmentManager fragments = getSupportFragmentManager();
         if (fragments != null)
@@ -198,7 +198,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         }
     }
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         if (spinner_1x1mode != null)
         {
@@ -239,7 +239,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         }
     }
     @Override
-    protected void saveWidgetMode2x2(Context context)
+    protected void saveWidgetMode2x2(Context context, int appWidgetId)
     {
         if (spinner_2x2mode != null)
         {
@@ -287,7 +287,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
     @Override
-    protected void saveWidgetMode3x2(Context context)
+    protected void saveWidgetMode3x2(Context context, int appWidgetId)
     {
         if (spinner_3x2mode != null)
         {

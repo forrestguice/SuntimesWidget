@@ -174,7 +174,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         }
     }
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         if (spinner_1x1mode != null)
         {

@@ -820,7 +820,10 @@ public class LocationConfigView extends LinearLayout
     /**
      *
      */
-    public boolean saveSettings(Context context)
+    public boolean saveSettings(Context context) {
+        return saveSettings(context, appWidgetId);
+    }
+    public boolean saveSettings(Context context, int appWidgetId)
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
 

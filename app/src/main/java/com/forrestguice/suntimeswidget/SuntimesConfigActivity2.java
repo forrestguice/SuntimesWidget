@@ -126,7 +126,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         final WidgetSettings.WidgetModeSunPos1x1[] modes = WidgetSettings.WidgetModeSunPos1x1.values();
         WidgetSettings.WidgetModeSunPos1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
@@ -170,7 +170,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x1(Context context)
+    protected void saveWidgetMode3x1(Context context, int appWidgetId)
     {
         if (spinner_3x1mode != null) {
             WidgetSettings.WidgetModeSunPos3x1 mode = (WidgetSettings.WidgetModeSunPos3x1) spinner_3x1mode.getSelectedItem();
@@ -223,7 +223,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x2(Context context)
+    protected void saveWidgetMode3x2(Context context, int appWidgetId)
     {
         if (spinner_3x2mode != null)
         {
@@ -288,7 +288,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x3(Context context)
+    protected void saveWidgetMode3x3(Context context, int appWidgetId)
     {
         if (spinner_3x3mode != null)
         {

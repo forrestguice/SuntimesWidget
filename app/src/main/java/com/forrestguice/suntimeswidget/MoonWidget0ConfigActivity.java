@@ -112,7 +112,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         final WidgetSettings.WidgetModeMoon1x1[] modes = WidgetSettings.WidgetModeMoon1x1.values();
         WidgetSettings.WidgetModeMoon1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];

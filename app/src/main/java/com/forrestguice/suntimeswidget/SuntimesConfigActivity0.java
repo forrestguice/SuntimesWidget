@@ -297,17 +297,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      *
      * @param context the android application context
      */
-    protected void saveSettings(Context context)
+    protected void saveSettings(Context context) {
+        saveSettings(context, appWidgetId);
+    }
+    protected void saveSettings(Context context, int appWidgetId)
     {
-        saveLayoutSettings(context);
-        saveGeneralSettings(context);
-        saveCalendarSettings(context);
-        locationConfig.saveSettings(context);
-        saveTimezoneSettings(context);
-        saveAppearanceSettings(context);
-        saveActionSettings(context);
-        saveMoreGeneralSettings(context);
-        saveMetadata(context);
+        saveLayoutSettings(context, appWidgetId);
+        saveGeneralSettings(context, appWidgetId);
+        saveCalendarSettings(context, appWidgetId);
+        locationConfig.saveSettings(context, appWidgetId);
+        saveTimezoneSettings(context, appWidgetId);
+        saveAppearanceSettings(context, appWidgetId);
+        saveActionSettings(context, appWidgetId);
+        saveMoreGeneralSettings(context, appWidgetId);
+        saveMetadata(context, appWidgetId);
     }
 
     /**
@@ -1062,7 +1065,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         final WidgetSettings.WidgetModeSun1x1[] modes = WidgetSettings.WidgetModeSun1x1.values();
         WidgetSettings.WidgetModeSun1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
@@ -1090,7 +1093,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
         //spinner_1x1mode.setSelection(mode1x1.ordinal());
     }
-    protected void saveWidgetMode2x1(Context context)
+    protected void saveWidgetMode2x1(Context context, int appWidgetId)
     {
         // EMPTY
     }
@@ -1101,7 +1104,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadWidgetMode2x2(Context context) {
         // EMPTY
     }
-    protected void saveWidgetMode2x2(Context context) {
+    protected void saveWidgetMode2x2(Context context, int appWidgetId) {
         // EMPTY
     }
 
@@ -1116,7 +1119,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
         //spinner_1x1mode.setSelection(mode1x1.ordinal());
     }
-    protected void saveWidgetMode3x1(Context context)
+    protected void saveWidgetMode3x1(Context context, int appWidgetId)
     {
         // EMPTY
     }
@@ -1128,7 +1131,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // EMPTY
     }
-    protected void saveWidgetMode3x2(Context context)
+    protected void saveWidgetMode3x2(Context context, int appWidgetId)
     {
         // EMPTY
     }
@@ -1141,7 +1144,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // EMPTY
     }
-    protected void saveWidgetMode3x3(Context context)
+    protected void saveWidgetMode3x3(Context context, int appWidgetId)
     {
         // EMPTY
     }
@@ -1195,11 +1198,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     protected void initMoreGeneralSettings(final Context context) { /* EMPTY */ }
-    protected void saveMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void saveMoreGeneralSettings(final Context context, int appWidgetId) { /* EMPTY */ }
     protected void loadMoreGeneralSettings(final Context context) { /* EMPTY */ }
 
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
-    protected void saveCalendarSettings(Context context) {
+    protected void saveCalendarSettings(Context context, int appWidgetId) {
         CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, checkbox_showDate.isChecked());
     }
     protected void loadCalendarSettings(Context context) {
@@ -1620,15 +1623,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
-    protected void saveLayoutSettings(Context context)
+    protected void saveLayoutSettings(Context context, int appWidgetId)
     {
         // save: widgetmode_1x1, 2x2, 3x1, 3x2, 3x3
-        saveWidgetMode1x1(context);
-        saveWidgetMode2x1(context);
-        saveWidgetMode2x2(context);
-        saveWidgetMode3x1(context);
-        saveWidgetMode3x2(context);
-        saveWidgetMode3x3(context);
+        saveWidgetMode1x1(context, appWidgetId);
+        saveWidgetMode2x1(context, appWidgetId);
+        saveWidgetMode2x2(context, appWidgetId);
+        saveWidgetMode3x1(context, appWidgetId);
+        saveWidgetMode3x2(context, appWidgetId);
+        saveWidgetMode3x3(context, appWidgetId);
 
         // save: allow resize
         boolean allowResize = checkbox_allowResize.isChecked();
@@ -1660,7 +1663,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      *
      * @param context the android application context
      */
-    protected void saveAppearanceSettings(Context context)
+    protected void saveAppearanceSettings(Context context, int appWidgetId)
     {
         // save: theme
         ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
@@ -1761,7 +1764,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      *
      * @param context the android application context
      */
-    protected void saveGeneralSettings(Context context)
+    protected void saveGeneralSettings(Context context, int appWidgetId)
     {
         // save: calculator mode
         final SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
@@ -1929,7 +1932,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      *
      * @param context the android application context
      */
-    protected void saveTimezoneSettings(Context context)
+    protected void saveTimezoneSettings(Context context, int appWidgetId)
     {
         // save: timezone mode
         final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
@@ -1982,7 +1985,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
     }
 
-    protected void saveMetadata(Context context)
+    protected void saveMetadata(Context context, int appWidgetId)
     {
         WidgetSettingsMetadata.WidgetMetadata metadata = new WidgetSettingsMetadata.WidgetMetadata(
                 getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE,
@@ -1996,7 +1999,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      *
      * @param context the android application context
      */
-    protected void saveActionSettings(Context context)
+    protected void saveActionSettings(Context context, int appWidgetId)
     {
         // save: action mode
         WidgetSettings.ActionMode actionMode = (WidgetSettings.ActionMode) spinner_onTap.getSelectedItem();

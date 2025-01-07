@@ -232,9 +232,9 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveCalendarSettings(Context context)
+    protected void saveCalendarSettings(Context context, int appWidgetId)
     {
-        super.saveCalendarSettings(context);
+        super.saveCalendarSettings(context, appWidgetId);
 
         // save: calendar mode
         CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
