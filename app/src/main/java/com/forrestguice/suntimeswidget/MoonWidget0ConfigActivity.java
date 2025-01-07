@@ -191,4 +191,9 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         return intent;
     }
 
+    @Override
+    protected boolean supportsPreview() {
+        return false;  // TODO
+    }
+
 }

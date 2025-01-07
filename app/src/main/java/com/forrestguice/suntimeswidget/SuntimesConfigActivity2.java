@@ -311,4 +311,9 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
             }
         }
     }
+
+    @Override
+    protected boolean supportsPreview() {
+        return false;    // TODO
+    }
 }

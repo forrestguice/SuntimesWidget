@@ -371,4 +371,9 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         return new View[] { label_2x2mode, spinner_2x2mode, label_3x2mode, spinner_3x2mode };
     }
 
+    @Override
+    protected boolean supportsPreview() {
+        return false;    // TODO
+    }
+
 }

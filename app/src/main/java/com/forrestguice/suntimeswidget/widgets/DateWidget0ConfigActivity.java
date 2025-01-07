@@ -260,4 +260,9 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         setCalendarMode(calendarMode);
         setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, calendarMode.name()));
     }
+
+    @Override
+    protected boolean supportsPreview() {
+        return false;
+    }
 }
