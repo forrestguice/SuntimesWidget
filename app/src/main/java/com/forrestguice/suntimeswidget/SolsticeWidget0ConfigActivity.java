@@ -268,7 +268,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected View createPreview(Context context, ViewGroup parent, int[] sizeDp)
+    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp)
     {
         SolsticeLayout layout = new SolsticeLayout_1x1_0();
         RemoteViews views = layout.getViews(context);

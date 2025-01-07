@@ -216,7 +216,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected View createPreview(Context context, ViewGroup parent, int[] sizeDp)
+    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate();

@@ -455,7 +455,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (previewArea != null) {
-                        previewArea.setVisibility(isChecked ? buttonView.VISIBLE : View.GONE);
+                        previewArea.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                        updatePreview(context);
                     }
                 }
             });
@@ -1021,12 +1022,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void updatePreview(Context context)
     {
+        int previewWidgetID = Integer.MIN_VALUE + 1;
+        saveSettings(context, previewWidgetID);
+
         FrameLayout previewArea = (FrameLayout) findViewById(R.id.previewArea);
         if (previewArea != null)
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            int[] previewSize = SuntimesWidget0.widgetMaxSizeDp(context, widgetManager, appWidgetId, new int[] {40, 40});
-            View view = createPreview(context, previewArea, previewSize);
+            int[] previewSize = SuntimesWidget0.widgetMaxSizeDp(context, widgetManager, previewWidgetID, new int[] {40, 40});
+            View view = createPreview(context, previewWidgetID, previewArea, previewSize);
 
             previewArea.removeAllViews();
             previewArea.addView(view);
@@ -1037,7 +1041,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    protected View createPreview(Context context, ViewGroup parent, int[] sizeDp) {
+    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp) {
         return null;
     }
     protected boolean supportsPreview() {
@@ -1064,6 +1068,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * @param context a context used to access shared prefs
+     * @param appWidgetId
      */
     protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
