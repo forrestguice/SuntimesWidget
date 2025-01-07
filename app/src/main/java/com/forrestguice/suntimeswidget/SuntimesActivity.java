@@ -1382,22 +1382,6 @@ public class SuntimesActivity extends AppCompatActivity
         });
     }
 
-    private View.OnClickListener onMoonriseClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v) {
-            showMoonDialog();
-        }
-    });
-    private View.OnLongClickListener onMoonriseLongClick = new View.OnLongClickListener()
-    {
-        @Override
-        public boolean onLongClick(View v) {
-            showMoonDialog();
-            return true;
-        }
-    };
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -2186,20 +2170,13 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
-            onMoonHeaderAction(adapter, position);
+            showMoonPositionAt(adapter, position);
         }
         @Override
         public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
         {
-            onMoonHeaderAction(adapter, position);
+            showMoonPositionAt(adapter, position);
             return true;
-        }
-        protected void onMoonHeaderAction(CardAdapter adapter, int position)
-        {
-            Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
-            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
-                showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
-            } else showMoonDialog();
         }
 
         @Override
@@ -2637,6 +2614,16 @@ public class SuntimesActivity extends AppCompatActivity
         }
         dialog = showMoonDialog();
         dialog.showPositionAt(dateTime);
+    }
+    protected void showMoonPositionAt(CardAdapter adapter, int position)
+    {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = ((adapter != null) ? adapter.initData(SuntimesActivity.this, position) : null);
+        if (cardData != null) {
+            showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
+        } else showMoonDialog();
+    }
+    protected void showMoonPositionAt() {
+        showMoonPositionAt(card_adapter, card_layout.findFirstVisibleItemPosition());
     }
 
     /**
