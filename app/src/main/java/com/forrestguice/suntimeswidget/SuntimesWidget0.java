@@ -580,7 +580,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
     {
         SunLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
+        SuntimesWidget0.updateAppWidget(context, new UpdateWidgetViaAppWidgetManager(appWidgetManager), appWidgetId, layout, widgetClass);
     }
 
     protected static boolean isCurrentLocationMode(Context context, int appWidgetId) {
@@ -594,13 +594,42 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
     }
 
+    public interface UpdateWidgetInterface
+    {
+        void updateAppWidget(Context context, int appWidgetId, RemoteViews views);
+    }
+    public static class UpdateWidgetViaAppWidgetManager implements UpdateWidgetInterface
+    {
+        AppWidgetManager appWidgetManager;
+        public UpdateWidgetViaAppWidgetManager(AppWidgetManager appWidgetManager) {
+            this.appWidgetManager = appWidgetManager;
+        }
+
+        @Override
+        public void updateAppWidget(Context context, int appWidgetId, RemoteViews views) {
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+    }
+    public static class UpdateWidgetViaView implements UpdateWidgetInterface
+    {
+        private View view = null;
+        public View getView() {
+            return view;
+        }
+
+        @Override
+        public void updateAppWidget(Context context, int appWidgetId, RemoteViews views) {
+            view = views.apply(context.getApplicationContext(), null);
+        }
+    }
+
     /**
      * @param context the context
-     * @param appWidgetManager widget manager
+     * @param updater interface implementation
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, UpdateWidgetInterface updater, int appWidgetId, SunLayout layout, Class widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -628,7 +657,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        updater.updateAppWidget(context, appWidgetId, views);
 
         if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
         {
