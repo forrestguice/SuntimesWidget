@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,8 +33,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
-import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 
 /**
  * Clock widget config activity.
