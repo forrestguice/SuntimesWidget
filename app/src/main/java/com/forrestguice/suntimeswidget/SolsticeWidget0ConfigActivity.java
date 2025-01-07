@@ -196,7 +196,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveTimeMode(Context context)
+    protected void saveTimeMode(Context context, int appWidgetId)
     {
         if (spinner_timeMode != null) {
             EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();

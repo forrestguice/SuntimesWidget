@@ -1252,7 +1252,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveTimeFormatMode(Context context)
+    protected void saveTimeFormatMode(Context context, int appWidgetId)
     {
         if (spinner_timeFormatMode != null)
         {
@@ -1269,7 +1269,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             edit_dayOffset.setText(WidgetSettings.loadDateOffsetPref(context, appWidgetId) + "");
         }
     }
-    protected void saveDateOffset(Context context)
+    protected void saveDateOffset(Context context, int appWidgetId)
     {
         if (edit_dayOffset != null)
         {
@@ -1451,7 +1451,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveTimeMode(Context context)
+    protected void saveTimeMode(Context context, int appWidgetId)
     {
         if (spinner_timeMode != null) {
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
@@ -1474,7 +1474,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * @param context a context used to access shared prefs
      */
-    public void saveTimeModeOverride(Context context)
+    public void saveTimeModeOverride(Context context, int appWidgetId)
     {
         WidgetSettings.saveTimeMode2OverridePref(context, appWidgetId, checkbox_timeModeOverride.isChecked());
     }
@@ -1835,14 +1835,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
 
         // save: time mode
-        saveTimeMode(context);
-        saveTimeModeOverride(context);
+        saveTimeMode(context, appWidgetId);
+        saveTimeModeOverride(context, appWidgetId);
 
         // save: time format
-        saveTimeFormatMode(context);
+        saveTimeFormatMode(context, appWidgetId);
 
         // save: date offset
-        saveDateOffset(context);
+        saveDateOffset(context, appWidgetId);
     }
 
     /**

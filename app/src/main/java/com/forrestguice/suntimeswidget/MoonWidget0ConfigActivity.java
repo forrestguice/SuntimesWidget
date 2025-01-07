@@ -88,7 +88,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         // EMPTY
     }
     @Override
-    protected void saveTimeMode(Context context)
+    protected void saveTimeMode(Context context, int appWidgetId)
     {
         // EMPTY
     }
