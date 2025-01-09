@@ -21,18 +21,19 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 
 /**
  * Clock widget config activity.
@@ -217,21 +218,14 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp)
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
     {
-        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
-        data.calculate();
+        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultClockLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
 
-        ClockLayout layout = ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
-        layout.prepareForUpdate(context, appWidgetId, data, sizeDp);
-
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
-        RemoteViews views = layout.getViews(context);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
-        layout.themeViews(context, views, appWidgetId);
-        layout.updateViews(context, appWidgetId, views, data);
-        return views.apply(getApplicationContext(), null);
+    protected ClockLayout defaultClockLayout(Context context, int appWidgetId) {
+        return ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
     }
 
 }

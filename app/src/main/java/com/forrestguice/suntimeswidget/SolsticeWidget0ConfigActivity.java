@@ -24,19 +24,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
-import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
@@ -269,16 +266,14 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp)
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
     {
-        SolsticeLayout layout = new SolsticeLayout_1x1_0();
-        RemoteViews views = layout.getViews(context);
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSolsticeLayout(context));
+        return appWidgetManager.getView();
+    }
 
-        SuntimesEquinoxSolsticeData data = SolsticeWidget0.getSolsticeEquinoxData(context, appWidgetId);
-        layout.prepareForUpdate(context, appWidgetId, data);
-        layout.themeViews(context, views, appWidgetId);
-        layout.updateViews(context, appWidgetId, views, data);
-        return views.apply(getApplicationContext(), parent);
+    protected SolsticeLayout defaultSolsticeLayout(Context context) {
+        return new SolsticeLayout_1x1_0();
     }
 
 }

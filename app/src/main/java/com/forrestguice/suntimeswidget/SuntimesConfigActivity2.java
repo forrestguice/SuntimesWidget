@@ -22,12 +22,14 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
 
 import java.util.ArrayList;
 
@@ -313,7 +315,19 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultSunPosLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
+
+    @Override
     protected boolean supportsPreview() {
-        return false;    // TODO
+        return true;
+    }
+
+    protected SunPosLayout defaultSunPosLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
     }
 }

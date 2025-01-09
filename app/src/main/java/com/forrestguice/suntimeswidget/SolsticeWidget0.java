@@ -28,8 +28,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
@@ -74,17 +72,16 @@ public class SolsticeWidget0 extends SuntimesWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-
-        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId);
+        SolsticeWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId)
     {
         SolsticeLayout layout = SolsticeWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId);
         SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -99,7 +96,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SolsticeWidget0.class));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(context, appWidgetId, views);
     }
 
     public static SuntimesEquinoxSolsticeData getSolsticeEquinoxData(Context context, int appWidgetId)
@@ -137,7 +134,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         }
     }
 
-    protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static SolsticeLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId)
     {
         int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);

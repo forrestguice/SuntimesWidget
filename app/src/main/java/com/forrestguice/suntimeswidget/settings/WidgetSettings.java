@@ -252,6 +252,10 @@ public class WidgetSettings
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
+    public static final String PREF_KEY_HOMEGRID_WIDTH = "gridWidth";
+    public static final String PREF_KEY_HOMEGRID_HEIGHT = "gridHeight";
+    public static final int[] PREF_DEF_HOMEGRID = new int[] {5, 5};
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -315,7 +319,10 @@ public class WidgetSettings
 
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
 
-            PREF_KEY_NEXTUPDATE
+            PREF_KEY_NEXTUPDATE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_HOMEGRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_HOMEGRID_HEIGHT,
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -349,6 +356,8 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_HOMEGRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_HOMEGRID_HEIGHT,
     };
 
     public static PrefTypeInfo getPrefTypeInfo()
@@ -3350,6 +3359,33 @@ public class WidgetSettings
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void setHomeScreenGridSize(Context context, int[] size)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.putInt(prefs_prefix + PREF_KEY_HOMEGRID_WIDTH, size[0]);
+        prefs.putInt(prefs_prefix + PREF_KEY_HOMEGRID_HEIGHT, size[1]);
+        prefs.apply();
+    }
+    public static int[] homeScreenGridSize(Context context)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        int width = prefs.getInt(prefs_prefix + PREF_KEY_HOMEGRID_WIDTH, PREF_DEF_HOMEGRID[0]);
+        int height = prefs.getInt(prefs_prefix + PREF_KEY_HOMEGRID_WIDTH, PREF_DEF_HOMEGRID[1]);
+        return new int[] {width, height};
+    }
+    public static void deleteHomeScreenGridSize(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_HOMEGRID_WIDTH);
+        prefs.remove(prefs_prefix + PREF_KEY_HOMEGRID_HEIGHT);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void deletePrefs(Context context, int appWidgetId)
@@ -3420,6 +3456,8 @@ public class WidgetSettings
         WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
         AlarmWidgetSettings.deletePrefs(context, appWidgetId);
         ClockWidgetSettings.deletePrefs(context, appWidgetId);
+
+        deleteHomeScreenGridSize(context);
     }
 
     public static void initDefaults( Context context )

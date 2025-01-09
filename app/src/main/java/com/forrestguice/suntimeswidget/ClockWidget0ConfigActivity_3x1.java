@@ -63,4 +63,9 @@ public class ClockWidget0ConfigActivity_3x1 extends ClockWidget0ConfigActivity
         checkbox_showLabels.setChecked(showLabels);
     }
 
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x1;
+    }
+
 }

@@ -43,7 +43,7 @@ public class SuntimesWidget2_3x1 extends SuntimesWidget2
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SunPosLayout layout = WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2_3x1.class, getMinSize(context), layout);
+        SuntimesWidget2.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, SuntimesWidget2_3x1.class, getMinSize(context), layout);
     }
 
 }

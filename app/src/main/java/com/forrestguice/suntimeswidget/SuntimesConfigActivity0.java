@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -46,6 +47,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -107,6 +109,8 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1091,39 +1095,105 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_gravity.setAdapter(adapter);
     }
 
-    protected void updatePreview(Context context)
+    protected int[] getWidgetSizeConstraints(Context context, String size)
+    {
+        switch (size)
+        {
+            case SIZE_3x3: return new int[] {maxWidgetPx(context, 3), maxWidgetPx(context, 3)};
+            case SIZE_3x2: return new int[] {maxWidgetPx(context, 3), maxWidgetPx(context, 2)};
+            case SIZE_3x1: return new int[] {maxWidgetPx(context, 3), maxWidgetPx(context, 1)};
+            case SIZE_2x3: return new int[] {maxWidgetPx(context, 2), maxWidgetPx(context, 3)};
+            case SIZE_2x2: return new int[] {maxWidgetPx(context, 2), maxWidgetPx(context, 2)};
+            case SIZE_2x1: return new int[] {maxWidgetPx(context, 2), maxWidgetPx(context, 1)};
+            case SIZE_1x3: return new int[] {maxWidgetPx(context, 1), maxWidgetPx(context, 3)};
+            case SIZE_1x2: return new int[] {maxWidgetPx(context, 1), maxWidgetPx(context, 2)};
+            case SIZE_1x1: default: return new int[] {maxWidgetPx(context, 1), maxWidgetPx(context, 1)};
+        }
+    }
+    protected int minWidgetPx(int n) {
+        int dp = n * 70 - 30;
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+    protected int maxWidgetPx(Context context, int n)
+    {
+        int gridWidth = WidgetSettings.homeScreenGridSize(context)[0];
+        float widthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
+        float cellWidthPx = widthPx / gridWidth;
+        return (int)((n + 1) * cellWidthPx - 1);
+
+        //int dp = (n + 1) * 70 - 30 - 1;
+        //return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
+    protected void updatePreview(final Context context)
     {
         int previewWidgetID = Integer.MIN_VALUE + 1;
         saveSettings(context, previewWidgetID);
 
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        SuntimesWidget0.AppWidgetManagerView widgetPreview = new SuntimesWidget0.AppWidgetManagerView(widgetManager)
+        {
+            @Override
+            public Bundle getAppWidgetOptions(int notUsed) {
+                return appWidgetManager.getAppWidgetOptions(appWidgetId);
+            }
+        };
+
         FrameLayout previewArea = (FrameLayout) findViewById(R.id.previewArea);
         if (previewArea != null)
         {
-            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            int[] previewSize = SuntimesWidget0.widgetMaxSizeDp(context, widgetManager, previewWidgetID, new int[] {40, 40});
-            View view = createPreview(context, previewWidgetID, previewArea, previewSize);
+            View view = createPreview(context, previewWidgetID, widgetPreview);
+            if (view != null)
+            {
+                View clickArea = new View(context);
+                clickArea.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(context, context.getString(R.string.configAction_preview), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            previewArea.removeAllViews();
-            previewArea.addView(view);
+                FrameLayout cellArea = new FrameLayout(context);    // previewArea -> cellArea -> view
+                cellArea.addView(view);
+                cellArea.addView(clickArea);
+                cellArea.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.widget_frame));
 
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            view.setLayoutParams(layoutParams);
+                previewArea.removeAllViews();
+                previewArea.addView(cellArea);
+
+                int[] widgetSizeDp = new int[] { 40, 40 };
+                if (Build.VERSION.SDK_INT >= 16)
+                {
+                    Bundle widgetOptions = widgetManager.getAppWidgetOptions(appWidgetId);
+                    widgetSizeDp[0] = widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+                    widgetSizeDp[1] = widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+                }
+                int[] widgetSizePx = new int[] {
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, widgetSizeDp[0], getResources().getDisplayMetrics()),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, widgetSizeDp[1], getResources().getDisplayMetrics()),
+                };
+
+                FrameLayout.LayoutParams cellLayout = new FrameLayout.LayoutParams(widgetSizePx[0], widgetSizePx[1]);
+                cellLayout.gravity = Gravity.CENTER;
+                cellArea.setLayoutParams(cellLayout);
+
+                FrameLayout.LayoutParams clickLayout = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                clickArea.setLayoutParams(clickLayout);
+            }
         }
     }
 
-    protected View createPreview(Context context, int appWidgetId, ViewGroup parent, int[] sizeDp) {
-        return null;
+    protected View createPreview(final Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultSunLayout(context, appWidgetId));
+        return appWidgetManager.getView();
     }
     protected boolean supportsPreview() {
-        return false;
+        return true;
     }
 
-    protected void centerPreview(@NonNull View view)
-    {
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
-        layoutParams.gravity = Gravity.CENTER;
-        view.setLayoutParams(layoutParams);
+    protected SunLayout defaultSunLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
     }
 
     /**
@@ -1266,6 +1336,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
+    public static final String SIZE_1x1 = "1x1";
+    public static final String SIZE_1x2 = "1x2";
+    public static final String SIZE_1x3 = "1x3";
+    public static final String SIZE_2x1 = "2x1";
+    public static final String SIZE_2x2 = "2x2";
+    public static final String SIZE_2x3 = "2x3";
+    public static final String SIZE_3x1 = "3x1";
+    public static final String SIZE_3x2 = "3x2";
+    public static final String SIZE_3x3 = "3x3";
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_1x1;
+    }
     protected TextView getPrimaryWidgetModeLabel() {
         return label_1x1mode;
     }
@@ -2466,7 +2548,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * @param context a context used to access resources
-     * @return [w,h] minSize array; minimum size required by this type of widget
+     * @return [w,h] minSize array; minimum size required by this type of widget (dip)
      */
     protected int[] minWidgetSize(Context context)
     {
@@ -2572,7 +2654,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             settings.setVisibility(View.GONE);
         }
     }
-    
+
     protected void hideTimeZoneSettings()
     {
         View settings = findViewById(R.id.appwidget_timezone_layout);
@@ -2605,7 +2687,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             dataSourceLayout.setVisibility((showDataSourceUI ? View.VISIBLE : View.GONE));
         }
     }
-    
+
     protected void showTimeMode(boolean showTimeModeUI)
     {
         View timeModeLayout = findViewById(R.id.appwidget_general_timeMode_layout);
@@ -3542,5 +3624,5 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
     }
-    
+
 }

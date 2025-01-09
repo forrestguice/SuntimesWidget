@@ -33,12 +33,15 @@ import android.widget.SpinnerAdapter;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDialog;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout_1x1_0;
 
 import java.util.Calendar;
 
@@ -263,6 +266,18 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected boolean supportsPreview() {
-        return false;
+        return true;
+    }
+
+    @Override
+    protected View createPreview(final Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        DateWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSizePx);
+        return appWidgetManager.getView();
+    }
+
+    protected DateLayout defaultDateLayout(Context context, int appWidgetId) {
+        return new DateLayout_1x1_0();
     }
 }

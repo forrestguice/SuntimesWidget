@@ -26,7 +26,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X3_0;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
@@ -66,7 +69,7 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
     @Override
     protected int[] minWidgetSize( Context context )
     {
-        int minSize[] = new int[2];
+        int[] minSize = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
@@ -78,6 +81,16 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x1);
         return intent;
+    }
+
+    @Override
+    protected SunPosLayout defaultSunPosLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x1;
     }
 
     @Override

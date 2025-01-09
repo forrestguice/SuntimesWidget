@@ -31,10 +31,13 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -373,7 +376,19 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected boolean supportsPreview() {
-        return false;    // TODO
+        return true;
+    }
+
+    @Override
+    protected View createPreview(final Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultAlarmLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
+
+    protected AlarmLayout defaultAlarmLayout(Context context, int appWidgetId) {
+        return AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
     }
 
 }

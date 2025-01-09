@@ -26,6 +26,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
+
 /**
  * Widget config activity (for resizable widget that falls back to 2x1 layout).
  */
@@ -76,6 +80,16 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
         super.initWidgetModeLayout(context);
         showOption2x1LayoutMode(true);
         showOption3x1LayoutMode(true);
+    }
+
+    @Override
+    protected SunLayout defaultSunLayout(Context context, int appWidgetId) {
+        return new SunLayout_2x1_0();
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_2x1;
     }
 
     @Override
