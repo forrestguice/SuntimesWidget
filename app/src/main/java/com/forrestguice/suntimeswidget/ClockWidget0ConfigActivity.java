@@ -220,7 +220,8 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
     {
-        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultClockLayout(context, appWidgetId));
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSizePx);
         return appWidgetManager.getView();
     }
 
