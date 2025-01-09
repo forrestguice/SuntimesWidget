@@ -177,7 +177,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_onTap;
     protected EditActionView edit_launchIntent;
 
-    protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
@@ -520,7 +519,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             initThemeAdapter(context);
         }
 
-        button_themeConfig = (TextView) findViewById(R.id.appwidget_appearance_theme_label);
+        ImageButton button_themeConfig = findViewById(R.id.appwidget_appearance_theme_button);
         if (button_themeConfig != null)
         {
             button_themeConfig.setOnClickListener(new View.OnClickListener()
