@@ -110,7 +110,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -293,6 +292,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
         edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+
+        CheckBox check_showPreview = (CheckBox) findViewById(R.id.check_showPreview);
+        if (check_showPreview != null) {
+            check_showPreview.setChecked(WidgetSettings.loadShowWidgetPreviews(this));
+        }
         updatePreview(this);
     }
 
@@ -461,7 +465,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             check_showPreview.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    WidgetSettings.saveShowWidgetPreviews(context, isChecked);
                     if (previewArea != null) {
                         previewArea.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                         updatePreview(context);
@@ -1116,7 +1122,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     protected int maxWidgetPx(Context context, int n)
     {
-        int gridWidth = WidgetSettings.homeScreenGridSize(context)[0];
+        int gridWidth = WidgetSettings.loadPreviewGridSize(context)[0];
         float widthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
         float cellWidthPx = widthPx / gridWidth;
         return (int)((n + 1) * cellWidthPx - 1);
