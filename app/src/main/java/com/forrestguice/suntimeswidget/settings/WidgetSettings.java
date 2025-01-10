@@ -247,8 +247,7 @@ public class WidgetSettings
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
-    public static final String PREF_KEY_PREVIEW_SHOW = "showPreview";
-    public static final boolean PREF_DEF_PREVIEW_SHOW = true;
+    public static final String PREF_KEY_SETTINGS_GROUP_SHOW = "showSettingsGroup";
 
     public static final String PREF_KEY_PREVIEW_GRID_WIDTH = "gridWidth";
     public static final String PREF_KEY_PREVIEW_GRID_HEIGHT = "gridHeight";
@@ -319,7 +318,7 @@ public class WidgetSettings
 
             PREF_KEY_NEXTUPDATE,
 
-            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_SHOW,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
     };
@@ -345,7 +344,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
 
-            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_SHOW,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
     };
     public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
     public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
@@ -3361,26 +3360,28 @@ public class WidgetSettings
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveShowWidgetPreviews(Context context, boolean value)
+    public static void saveShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
-        prefs.putBoolean(prefs_prefix + PREF_KEY_PREVIEW_SHOW, value);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, value);
         prefs.apply();
     }
-    public static boolean loadShowWidgetPreviews(Context context)
+    public static boolean loadShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_PREVIEW_SHOW, PREF_DEF_PREVIEW_SHOW);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, defaultValue);
     }
-    public static void deleteShowWidgetPreviews(Context context)
+    public static void deleteShowSettingsGroup(Context context, int appWidgetId, String groupID)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
-        prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_SHOW);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID);
         prefs.apply();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void savePreviewGridSize(Context context, int[] size)
     {
@@ -3480,7 +3481,13 @@ public class WidgetSettings
         ClockWidgetSettings.deletePrefs(context, appWidgetId);
 
         deletePreviewGridSize(context);
-        deleteShowWidgetPreviews(context);
+        deleteShowSettingsGroup(context, appWidgetId, "preview");
+        deleteShowSettingsGroup(context, appWidgetId, "appearance");
+        deleteShowSettingsGroup(context, appWidgetId, "general");
+        deleteShowSettingsGroup(context, appWidgetId, "timezone");
+        deleteShowSettingsGroup(context, appWidgetId, "location");
+        deleteShowSettingsGroup(context, appWidgetId, "layout");
+        deleteShowSettingsGroup(context, appWidgetId, "action");
     }
 
     public static void initDefaults( Context context )

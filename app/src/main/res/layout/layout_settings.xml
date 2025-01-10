@@ -68,14 +68,11 @@
         android:padding="4dp" android:minHeight="80dp" android:layout_gravity="center"
         android:clipChildren="false" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout style="@style/SunsetTimeSettingsGroupTray"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="@dimen/widgetActivity_padding" android:paddingRight="@dimen/widgetActivity_padding"
-        android:paddingTop="6dp"
-        android:animateLayoutChanges="true"
-        android:background="?android:attr/windowBackground">
+        android:paddingTop="6dp">
 
         <ProgressBar android:id="@+id/progress" android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"

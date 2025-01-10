@@ -1124,6 +1124,11 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="SunsetTimeSettingsGroupTray">
+        <!--<item name="android:background">?android:attr/windowBackground</item>-->
+        <item name="android:background">@color/card_bg_trans</item>
+        <item name="android:animateLayoutChanges">true</item>
+    </style>
     <style name="SunsetTimeSettingsGroupLayout" parent="SunsetTimeWidget_dark">
         <item name="android:orientation">vertical</item>
         <item name="android:padding">0dp</item>
