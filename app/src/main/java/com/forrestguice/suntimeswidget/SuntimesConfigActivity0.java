@@ -29,11 +29,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -91,6 +94,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
+import com.forrestguice.suntimeswidget.map.WorldMapExportTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -108,6 +112,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -1253,6 +1258,51 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 
+    protected void sharePreview(final Context context)
+    {
+        if (t_widgetPreview != null)
+        {
+            WidgetPreviewExportTask exportTask = new WidgetPreviewExportTask(context, "widget-preview", true, true);
+            exportTask.setTaskListener(new ExportTask.TaskListener()
+            {
+                public void onStarted() {
+                    showProgress(context, "", "");
+                }
+                public void onFinished(ExportTask.ExportResult result)
+                {
+                    dismissProgress();
+                    if (result.getResult())
+                    {
+                        String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                        Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                        ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+
+                    } else {
+                        File file = result.getExportFile();
+                        String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            Bitmap bitmap = Bitmap.createBitmap(t_widgetPreview.getWidth(), t_widgetPreview.getHeight(), Bitmap.Config.ARGB_8888);
+            t_widgetPreview.draw(new Canvas(bitmap));
+            exportTask.setBitmaps(new Bitmap[] { bitmap });
+            if (Build.VERSION.SDK_INT >= 11) {
+                exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else exportTask.execute();
+        }
+    }
+    public static class WidgetPreviewExportTask extends WorldMapExportTask
+    {
+        public WidgetPreviewExportTask(Context context, String exportTarget) {
+            super(context, exportTarget);
+        }
+        public WidgetPreviewExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache) {
+            super(context, exportTarget, useExternalStorage, saveToCache);
+        }
+    }
+
     protected void updatePreviewAreaSize(final Context context)
     {
         FrameLayout previewArea = (FrameLayout) findViewById(R.id.previewArea);
@@ -1325,7 +1375,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void run()
                 {
-                    final View view = createPreview(context, previewWidgetID, widgetPreview);
+                    final View view = t_widgetPreview = createPreview(context, previewWidgetID, widgetPreview);
                     if (view != null)
                     {
                         handler.post(new Runnable()
@@ -1344,6 +1394,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
     }
+    private View t_widgetPreview = null;
     protected boolean freezePreview = false;
 
     protected void updatePreviewArea(final Context context, @NonNull FrameLayout previewArea, @NonNull View view, int[] widgetSizePx)
@@ -3494,6 +3545,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.widgetconfig, menu);
+
+        MenuItem shareItem = menu.findItem(R.id.action_share_preview);
+        if (shareItem != null) {
+            shareItem.setVisible(supportsPreview());
+        }
         return true;
     }
 
@@ -3516,6 +3572,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             case R.id.action_save:
                 addWidget();
+                return true;
+
+            case R.id.action_share_preview:
+                sharePreview(this);
                 return true;
 
             case R.id.action_reset:
