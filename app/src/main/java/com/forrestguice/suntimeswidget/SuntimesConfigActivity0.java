@@ -94,7 +94,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
-import com.forrestguice.suntimeswidget.map.WorldMapExportTask;
+import com.forrestguice.suntimeswidget.map.BitmapExportTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -1262,7 +1262,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (t_widgetPreview != null)
         {
-            WidgetPreviewExportTask exportTask = new WidgetPreviewExportTask(context, "widget-preview", true, true);
+            BitmapExportTask exportTask = new BitmapExportTask(context, "widget-preview", true, true);
             exportTask.setTaskListener(new ExportTask.TaskListener()
             {
                 public void onStarted() {
@@ -1291,15 +1291,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             if (Build.VERSION.SDK_INT >= 11) {
                 exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else exportTask.execute();
-        }
-    }
-    public static class WidgetPreviewExportTask extends WorldMapExportTask
-    {
-        public WidgetPreviewExportTask(Context context, String exportTarget) {
-            super(context, exportTarget);
-        }
-        public WidgetPreviewExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache) {
-            super(context, exportTarget, useExternalStorage, saveToCache);
         }
     }
 
