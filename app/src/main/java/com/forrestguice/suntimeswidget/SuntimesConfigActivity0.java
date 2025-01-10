@@ -296,6 +296,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (check_showPreview != null) {
             check_showPreview.setChecked(WidgetSettings.loadShowWidgetPreviews(this));
         }
+        final View previewArea = findViewById(R.id.previewArea);
+        if (previewArea != null) {
+            previewArea.setVisibility(WidgetSettings.loadShowWidgetPreviews(this) && supportsPreview() ? View.VISIBLE : View.GONE);
+        }
         updatePreview(this);
     }
 
