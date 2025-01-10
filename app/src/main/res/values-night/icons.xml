@@ -2,6 +2,7 @@
 <resources>
 
     <drawable name="widget_bg_ref">@drawable/bg_widget_dark</drawable>
+    <drawable name="settings_card_bg_ref">@drawable/card_alarmitem_controls_dark</drawable>
 
     <drawable name="chip_ref">@drawable/chip_dark</drawable>
     <drawable name="chip_tray_ref">@drawable/chip_tray_dark</drawable>

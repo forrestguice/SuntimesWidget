@@ -443,6 +443,68 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
+    protected void initGroups(final Context context)
+    {
+        View[] headerViews = new View[] {
+                findViewById(R.id.settings_group_layout_header),
+                findViewById(R.id.settings_group_general_header),
+                findViewById(R.id.settings_group_timezone_header),
+                findViewById(R.id.settings_group_appearance_header),
+                findViewById(R.id.settings_group_location_header),
+                findViewById(R.id.settings_group_action_header),
+        };
+        CheckBox[] expandButtons = new CheckBox[] {
+                (CheckBox) findViewById(R.id.settings_group_layout_button),
+                (CheckBox) findViewById(R.id.settings_group_general_button),
+                (CheckBox) findViewById(R.id.settings_group_timezone_button),
+                (CheckBox) findViewById(R.id.settings_group_appearance_button),
+                (CheckBox) findViewById(R.id.settings_group_location_button),
+                (CheckBox) findViewById(R.id.settings_group_action_button),
+        };
+        final View[] contentAreas = new View[] {
+                findViewById(R.id.settings_group_layout_content),
+                findViewById(R.id.settings_group_general_content),
+                findViewById(R.id.settings_group_timezone_content),
+                findViewById(R.id.settings_group_appearance_content),
+                findViewById(R.id.settings_group_location_content),
+                findViewById(R.id.settings_group_action_content),
+        };
+        for (int i=0; i<expandButtons.length; i++)
+        {
+            final View headerView = headerViews[i];
+            final View contentArea = contentAreas[i];
+            final CheckBox expandButton = expandButtons[i];
+            if (expandButtons != null && contentAreas != null && headerView != null)
+            {
+                expandButton.setChecked(true);
+                contentArea.setVisibility(View.VISIBLE);
+                expandButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        contentArea.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                    }
+                });
+                if (headerView != null)
+                {
+                    headerView.setOnClickListener(new View.OnClickListener()
+                    {
+                        public void onClick(View v) {
+                            if (!expandButton.isChecked()) {
+                                expandButton.toggle();
+                            }
+                        }
+                    });
+                    headerView.setOnLongClickListener(new View.OnLongClickListener()
+                    {
+                        public boolean onLongClick(View v) {
+                            expandButton.toggle();
+                            return true;
+                        }
+                    });
+                }
+            }
+        }
+    }
+    
     @SuppressWarnings("ResourceType")
     protected void initViews(final Context context)
     {
@@ -475,6 +537,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
+        initGroups(context);
+        
         //
         // widget: add button
         //
@@ -722,6 +786,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
+            locationConfig.setHideTitle(true);
             locationConfig.setAutoAllowed(true);
             locationConfig.setHideMode(false);
             locationConfig.init(this, false, this.appWidgetId);
