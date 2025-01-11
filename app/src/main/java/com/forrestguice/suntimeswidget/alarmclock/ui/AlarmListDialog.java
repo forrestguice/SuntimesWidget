@@ -51,7 +51,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
+import com.forrestguice.support.design.widget.SwitchCompat;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;

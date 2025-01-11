@@ -36,7 +36,7 @@ import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.SwitchCompat;
+import com.forrestguice.support.design.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
