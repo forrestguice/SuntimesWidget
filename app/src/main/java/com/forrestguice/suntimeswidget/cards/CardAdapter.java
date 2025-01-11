@@ -26,7 +26,7 @@ import android.graphics.Rect;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
+import com.forrestguice.support.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;

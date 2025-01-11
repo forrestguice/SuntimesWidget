@@ -35,7 +35,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
+import com.forrestguice.support.graphics.ColorUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;

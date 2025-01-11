@@ -31,7 +31,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
+import com.forrestguice.support.graphics.ColorUtils;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
