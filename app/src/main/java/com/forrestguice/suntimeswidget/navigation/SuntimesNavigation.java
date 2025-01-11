@@ -26,10 +26,10 @@ import android.content.Intent;
 import android.os.Build;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import com.forrestguice.support.appcompat.widget.NavigationView;
+import com.forrestguice.support.drawerlayout.widget.DrawerLayout;
+import com.forrestguice.support.appcompat.app.ActionBarDrawerToggle;
+
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -193,7 +193,7 @@ public class SuntimesNavigation
     public boolean isNavigationDrawerOpen()
     {
         if (drawer != null) {
-            return drawer.isDrawerOpen(GravityCompat.START);
+            return drawer.isDrawerOpen(DrawerLayout.START);
         }
         return false;
     }

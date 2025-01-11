@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<android.support.design.widget.NavigationView
+	<com.forrestguice.support.appcompat.widget.NavigationView
 		android:id="@+id/app_navigation"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
