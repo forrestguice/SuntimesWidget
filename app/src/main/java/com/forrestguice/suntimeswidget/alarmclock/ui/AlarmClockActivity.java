@@ -41,7 +41,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import com.forrestguice.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
+import com.forrestguice.support.design.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
@@ -886,8 +886,7 @@ public class AlarmClockActivity extends AppCompatActivity
             String transitionName = ViewCompat.getTransitionName(sharedView);
             if (transitionName != null)
             {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName);
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResult(intent, requestCode, ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName).toBundle());
 
             } else {
                 startActivityForResult(intent, requestCode);

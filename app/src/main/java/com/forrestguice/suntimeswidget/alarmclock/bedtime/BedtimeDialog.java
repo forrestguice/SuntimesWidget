@@ -27,7 +27,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
+import com.forrestguice.support.design.app.ActivityOptionsCompat;
 import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
@@ -908,8 +908,7 @@ public class BedtimeDialog extends DialogFragment
             String transitionName = "transition_" + item.rowID;
             ViewCompat.setTransitionName(sharedView, transitionName);
             if (getActivity() != null) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResult(intent, requestCode, ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName).toBundle());
             }
 
         } else {
