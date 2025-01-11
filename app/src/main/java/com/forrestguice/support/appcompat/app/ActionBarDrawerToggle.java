@@ -2,7 +2,7 @@ package com.forrestguice.support.appcompat.app;
 
 import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.Toolbar;
 
 public class ActionBarDrawerToggle extends android.support.v7.app.ActionBarDrawerToggle
 {

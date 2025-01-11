@@ -22,14 +22,14 @@
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<android.support.design.widget.AppBarLayout
+	<com.forrestguice.support.design.widget.AppBarLayout
 		android:id="@+id/layout_app_menubar"
 		android:layout_width="match_parent" android:layout_height="wrap_content"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
-		<android.support.v7.widget.Toolbar
+		<com.forrestguice.support.design.widget.Toolbar
 			android:id="@+id/app_menubar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
@@ -40,7 +40,7 @@
 			app:popupTheme="?attr/actionBarPopupTheme"
 			app:title="@string/configLabel_alarmClock" />
 
-	</android.support.design.widget.AppBarLayout>
+	</com.forrestguice.support.design.widget.AppBarLayout>
 
 	<LinearLayout android:id="@+id/fragmentContainer"
 		android:layout_width="0dp" android:layout_height="0dp"

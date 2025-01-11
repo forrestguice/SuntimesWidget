@@ -30,7 +30,7 @@ import com.forrestguice.support.appcompat.widget.NavigationView;
 import com.forrestguice.support.drawerlayout.widget.DrawerLayout;
 import com.forrestguice.support.appcompat.app.ActionBarDrawerToggle;
 
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 

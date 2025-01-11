@@ -52,7 +52,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;

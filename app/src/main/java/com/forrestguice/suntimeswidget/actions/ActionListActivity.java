@@ -28,7 +28,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuInflater;

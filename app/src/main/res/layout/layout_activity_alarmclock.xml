@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.forrestguice.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent" android:layout_height="match_parent">
@@ -25,21 +25,21 @@
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<android.support.design.widget.AppBarLayout
+		<com.forrestguice.support.design.widget.AppBarLayout
 			android:id="@+id/layout_app_menubar"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent">
 
-			<android.support.v7.widget.Toolbar
+			<com.forrestguice.support.design.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
 				app:title="@string/configLabel_alarmClock"
             	app:layout_constraintStart_toStartOf="parent"
             	app:layout_constraintEnd_toEndOf="parent"
             	app:layout_constraintTop_toTopOf="parent" />
 
-		</android.support.design.widget.AppBarLayout>
+		</com.forrestguice.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="0dp"
@@ -132,4 +132,4 @@
 		</LinearLayout>
 
 	</android.support.constraint.ConstraintLayout>
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.design.widget.CoordinatorLayout>

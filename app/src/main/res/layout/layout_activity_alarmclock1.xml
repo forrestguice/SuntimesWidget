@@ -22,7 +22,7 @@
 	android:layout_width="match_parent" android:layout_height="match_parent"
 	android:fitsSystemWindows="true" tools:openDrawer="start">
 
-<android.support.design.widget.CoordinatorLayout
+<com.forrestguice.support.design.widget.CoordinatorLayout
 	android:layout_width="match_parent" android:layout_height="match_parent">
 
 	<include layout="@layout/layout_activity_alarmclock_content" />
@@ -72,7 +72,7 @@
 
 	</android.support.v7.widget.LinearLayoutCompat>
 
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.design.widget.CoordinatorLayout>
 
 <include layout="@layout/nav_main" />
 </com.forrestguice.support.drawerlayout.widget.DrawerLayout>

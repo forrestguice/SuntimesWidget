@@ -44,7 +44,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.Toolbar;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;

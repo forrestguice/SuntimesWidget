@@ -21,21 +21,21 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:openDrawer="start">
 
-<android.support.design.widget.CoordinatorLayout
+<com.forrestguice.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                   android:orientation="vertical" >
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.design.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
+            <com.forrestguice.support.design.widget.Toolbar
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.design.widget.AppBarLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent" android:layout_height="match_parent"
@@ -173,7 +173,7 @@
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.design.widget.CoordinatorLayout>
 
 <include layout="@layout/nav_main" />
 </com.forrestguice.support.drawerlayout.widget.DrawerLayout>
