@@ -29,7 +29,7 @@ import android.os.Build;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import com.forrestguice.support.graphics.drawable.DrawableCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;

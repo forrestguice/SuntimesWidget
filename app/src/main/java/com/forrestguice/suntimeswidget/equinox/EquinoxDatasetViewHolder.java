@@ -23,7 +23,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.widget.ImageViewCompat;
+import com.forrestguice.support.design.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;

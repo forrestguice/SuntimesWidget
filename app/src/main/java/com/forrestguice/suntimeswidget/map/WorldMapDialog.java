@@ -41,7 +41,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
+import com.forrestguice.support.design.widget.ImageViewCompat;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;

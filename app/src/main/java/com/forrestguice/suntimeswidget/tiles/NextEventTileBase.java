@@ -27,7 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import com.forrestguice.support.graphics.drawable.DrawableCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
