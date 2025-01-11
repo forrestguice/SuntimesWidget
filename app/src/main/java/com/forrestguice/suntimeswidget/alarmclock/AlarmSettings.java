@@ -48,7 +48,6 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 

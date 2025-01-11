@@ -39,7 +39,7 @@ import android.os.Handler;
 import android.provider.AlarmClock;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+import com.forrestguice.support.design.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;

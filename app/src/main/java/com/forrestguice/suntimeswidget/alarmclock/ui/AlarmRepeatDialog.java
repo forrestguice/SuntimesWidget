@@ -29,7 +29,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import com.forrestguice.support.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
+import com.forrestguice.support.design.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
 import com.forrestguice.support.design.widget.SwitchCompat;
 import android.util.Log;

@@ -45,7 +45,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import com.forrestguice.support.design.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;

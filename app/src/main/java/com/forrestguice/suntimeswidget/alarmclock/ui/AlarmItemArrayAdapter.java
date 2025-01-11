@@ -32,7 +32,7 @@ import android.os.Vibrator;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
+import com.forrestguice.support.design.widget.CompoundButtonCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
