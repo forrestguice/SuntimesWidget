@@ -15,7 +15,7 @@
             app:layout_constraintBottom_toTopOf="@+id/options_layout"
             app:layout_constraintVertical_chainStyle="packed">
 
-            <android.support.v7.widget.AppCompatImageView
+            <com.forrestguice.support.appcompat.widget.AppCompatImageView
                 android:id="@+id/icon" android:layout_marginTop="8dp"
                 android:layout_width="96dp" android:layout_height="96dp" android:scaleType="fitCenter"
                 android:src="@drawable/ic_settings_128dp" app:tint="?attr/colorControlNormal"

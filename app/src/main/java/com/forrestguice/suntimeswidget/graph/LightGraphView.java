@@ -78,7 +78,7 @@ import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues
 /**
  * LightGraphView
  */
-public class LightGraphView extends android.support.v7.widget.AppCompatImageView
+public class LightGraphView extends com.forrestguice.support.appcompat.widget.AppCompatImageView
 {
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;

@@ -54,7 +54,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * LineGraphView
  */
-public class LineGraphView extends android.support.v7.widget.AppCompatImageView
+public class LineGraphView extends com.forrestguice.support.appcompat.widget.AppCompatImageView
 {
     public static final int MINUTES_IN_DAY = 24 * 60;
 
