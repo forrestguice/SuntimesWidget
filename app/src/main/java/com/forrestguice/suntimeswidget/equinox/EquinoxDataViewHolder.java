@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;

@@ -23,7 +23,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

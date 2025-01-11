@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;

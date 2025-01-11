@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Context;
 import android.preference.Preference;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;

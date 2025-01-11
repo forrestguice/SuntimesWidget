@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;

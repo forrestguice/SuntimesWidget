@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 

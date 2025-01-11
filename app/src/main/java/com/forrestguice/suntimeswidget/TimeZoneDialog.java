@@ -26,7 +26,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -38,7 +38,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 
 import android.util.AttributeSet;
 import android.util.Log;

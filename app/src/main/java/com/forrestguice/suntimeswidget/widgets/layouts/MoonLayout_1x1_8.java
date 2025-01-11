@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.Pair;

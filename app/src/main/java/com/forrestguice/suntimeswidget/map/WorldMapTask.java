@@ -27,7 +27,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;

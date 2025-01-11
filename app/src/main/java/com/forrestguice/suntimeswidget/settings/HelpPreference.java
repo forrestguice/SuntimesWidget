@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.preference.DialogPreference;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;

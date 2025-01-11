@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.actions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;

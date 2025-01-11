@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
