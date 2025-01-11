@@ -26,7 +26,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
