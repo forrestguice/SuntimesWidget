@@ -24,7 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
+import com.forrestguice.support.design.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.Log;

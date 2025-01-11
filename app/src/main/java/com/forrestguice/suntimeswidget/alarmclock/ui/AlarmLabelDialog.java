@@ -29,7 +29,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
+import com.forrestguice.support.design.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;

@@ -31,7 +31,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
+import com.forrestguice.support.design.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
