@@ -25,7 +25,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import android.support.v4.content.res.ResourcesCompat;
+import com.forrestguice.support.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 

@@ -27,7 +27,7 @@ import android.os.Handler;
 import android.os.Looper;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import com.forrestguice.support.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.util.TypedValue;

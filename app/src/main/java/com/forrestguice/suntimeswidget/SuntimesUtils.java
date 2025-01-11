@@ -18,14 +18,12 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -38,9 +36,8 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import com.forrestguice.support.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.text.Spannable;
@@ -64,15 +61,12 @@ import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
