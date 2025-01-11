@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:context=".WelcomeActivity">
 
-    <android.support.v4.view.ViewPager android:id="@+id/container"
+    <com.forrestguice.support.design.view.ViewPager android:id="@+id/container"
         android:layout_width="match_parent" android:layout_height="match_parent" />
 
     <LinearLayout android:id="@+id/indicator_layout"
