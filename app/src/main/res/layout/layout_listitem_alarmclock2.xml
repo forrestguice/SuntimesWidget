@@ -28,14 +28,14 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/layout_alarmcard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingTop="4dp" android:paddingBottom="8dp"
             android:background="@drawable/card_alarmitem_enabled_dark0"
             android:orientation="horizontal" android:descendantFocusability="blocksDescendants">
 
-            <android.support.constraint.Guideline
+            <com.forrestguice.support.constraint.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
         </FrameLayout>
 
         <LinearLayout android:id="@+id/layout_alarmcard_tray" android:orientation="vertical"

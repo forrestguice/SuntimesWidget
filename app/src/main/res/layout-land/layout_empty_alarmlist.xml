@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/empty"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:gravity="center" android:orientation="vertical"
@@ -38,9 +38,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emptyView_image" />
 
-    <android.support.constraint.Guideline
+    <com.forrestguice.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="horizontal" app:layout_constraintGuide_percent="0.5" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

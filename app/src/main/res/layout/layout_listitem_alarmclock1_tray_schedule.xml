@@ -11,11 +11,11 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingLeft="4dp" android:paddingRight="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:ignore="MissingConstraints">
 
-            <android.support.constraint.helper.Flow
+            <com.forrestguice.support.constraint.helper.Flow
                 android:id="@+id/flow0"
                 app:constraint_referenced_ids="chip_offset,chip_event,chip_location,chip_repeat"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -85,6 +85,6 @@
 
             </FrameLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
     </LinearLayout>
 </merge>

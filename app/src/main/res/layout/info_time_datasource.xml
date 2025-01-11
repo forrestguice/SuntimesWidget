@@ -18,7 +18,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout
@@ -95,6 +95,6 @@
             android:ellipsize="start" android:maxLines="2"
             app:layout_constraintHorizontal_weight="3"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

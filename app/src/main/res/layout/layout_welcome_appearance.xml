@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:gravity="center"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:paddingBottom="48dp">
@@ -32,4 +32,4 @@
     <include layout="@layout/layout_welcome_appearance_content"
         android:id="@+id/content_layout" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

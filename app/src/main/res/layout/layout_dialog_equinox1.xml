@@ -10,7 +10,7 @@
         android:background="?attr/dialogBackground"
         android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/dialog_header" android:orientation="horizontal"
             android:layout_gravity="center" android:layout_marginTop="4dp"
             android:layout_width="match_parent" android:layout_height="wrap_content">
@@ -54,7 +54,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:contentDescription="@string/configAction_overflow" />
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/info_equinoxsolstice_flipper1"
@@ -63,7 +63,7 @@
             tools:listitem="@layout/info_time_solsticequinox2"
             android:elevation="5dp" />
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/year_info_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingTop="8dp" android:paddingBottom="8dp" android:layout_marginTop="4dp"
@@ -93,7 +93,7 @@
 
 
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

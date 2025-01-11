@@ -45,7 +45,7 @@
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:descendantFocusability="afterDescendants">
 
-            <android.support.constraint.ConstraintLayout
+            <com.forrestguice.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:background="?attr/semiTransparentBackground" android:layout_marginBottom="16dp"
                 android:focusable="true" android:focusableInTouchMode="true">
@@ -161,7 +161,7 @@
                     <include layout="@layout/layout_themeconfig_misc" />
                 </LinearLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </com.forrestguice.support.constraint.ConstraintLayout>
 
         </ScrollView>
 
