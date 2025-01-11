@@ -44,7 +44,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;

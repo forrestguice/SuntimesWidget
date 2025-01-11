@@ -40,7 +40,7 @@ import com.forrestguice.support.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.style.ImageSpan;
 import android.util.Log;

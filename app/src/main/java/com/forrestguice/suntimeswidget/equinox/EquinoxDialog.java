@@ -31,7 +31,7 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -321,7 +321,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
-        menu.setOnDismissListener(onContextMenuDismissed);
+        PopupMenu.setOnDismissListener(menu, onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
         PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 

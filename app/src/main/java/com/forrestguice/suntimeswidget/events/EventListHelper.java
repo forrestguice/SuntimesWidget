@@ -36,7 +36,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;

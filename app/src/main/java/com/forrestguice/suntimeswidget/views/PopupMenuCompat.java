@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.content.Context;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -49,7 +49,7 @@ public class PopupMenuCompat
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(menuResID, menu.getMenu());
         if (onDismissListener != null) {
-            menu.setOnDismissListener(onDismissListener);
+            PopupMenu.setOnDismissListener(menu, onDismissListener);
         }
         if (onClickListener != null) {
             menu.setOnMenuItemClickListener(onClickListener);

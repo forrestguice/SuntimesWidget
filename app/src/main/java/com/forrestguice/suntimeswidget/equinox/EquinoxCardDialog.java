@@ -40,7 +40,7 @@ import com.forrestguice.support.design.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
@@ -609,7 +609,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
-        menu.setOnDismissListener(onContextMenuDismissed);
+        PopupMenu.setOnDismissListener(menu, onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
         PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 

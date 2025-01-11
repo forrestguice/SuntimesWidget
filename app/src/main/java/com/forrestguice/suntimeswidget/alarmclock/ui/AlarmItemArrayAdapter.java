@@ -35,7 +35,7 @@ import com.forrestguice.support.graphics.ColorUtils;
 import com.forrestguice.support.design.widget.CompoundButtonCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
