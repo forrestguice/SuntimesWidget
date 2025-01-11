@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.transition.TransitionInflater;

@@ -33,7 +33,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
+import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
