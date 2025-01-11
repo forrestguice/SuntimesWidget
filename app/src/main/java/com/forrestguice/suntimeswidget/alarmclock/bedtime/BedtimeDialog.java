@@ -36,7 +36,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -64,6 +63,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -112,9 +112,7 @@ public class BedtimeDialog extends DialogFragment
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
-
-        SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
-        animator.setChangeDuration(0);
+        RecyclerViewUtils.setChangeDuration(list, 0);
 
         if (savedState != null) {
             loadSettings(savedState);
