@@ -4,7 +4,7 @@
     <FrameLayout android:id="@+id/moonriseset_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView android:id="@+id/moonriseset_card"
+        <com.forrestguice.support.design.widget.RecyclerView android:id="@+id/moonriseset_card"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:itemCount="3" tools:orientation="horizontal"

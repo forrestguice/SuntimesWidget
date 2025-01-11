@@ -89,7 +89,7 @@
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
         android:textSize="?attr/text_size_small" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.forrestguice.support.design.widget.RecyclerView
         android:id="@+id/color_recent"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
