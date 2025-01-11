@@ -27,7 +27,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;

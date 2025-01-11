@@ -27,7 +27,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.CharacterStyle;
 import android.util.Log;

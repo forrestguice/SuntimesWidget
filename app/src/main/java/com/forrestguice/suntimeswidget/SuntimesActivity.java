@@ -44,7 +44,7 @@ import android.preference.PreferenceActivity;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;

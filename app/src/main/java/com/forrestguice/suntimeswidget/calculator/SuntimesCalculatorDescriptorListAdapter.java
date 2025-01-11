@@ -24,7 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;

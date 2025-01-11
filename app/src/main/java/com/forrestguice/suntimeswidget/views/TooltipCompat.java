@@ -23,7 +23,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;

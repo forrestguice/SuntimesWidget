@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
 import android.view.Gravity;
