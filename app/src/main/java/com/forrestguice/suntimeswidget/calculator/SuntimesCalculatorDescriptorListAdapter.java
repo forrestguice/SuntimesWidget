@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -49,12 +48,12 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
     private WeakReference<Context> contextRef;
 
     @SuppressLint("ResourceType")
-    public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, @LayoutRes int resource, @LayoutRes int dropDownResource, @NonNull SuntimesCalculatorDescriptor[] entries)
+    public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, int layoutResID, int dropDownResourceID, @NonNull SuntimesCalculatorDescriptor[] entries)
     {
-        super(context, resource, entries);
+        super(context, layoutResID, entries);
         this.contextRef = new WeakReference<>(context);
-        this.layoutID = resource;
-        this.dropDownLayoutID = dropDownResource;
+        this.layoutID = layoutResID;
+        this.dropDownLayoutID = dropDownResourceID;
         initDisplayStrings(context);
     }
 

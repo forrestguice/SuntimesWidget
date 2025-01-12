@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.settings;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import com.forrestguice.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -71,13 +70,13 @@ public class TextSizePreference extends ListPreference
      */
     public static class ListPrefAdapter extends ListPreference.ListPrefAdapter
     {
-        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, int i) {
-            super(context, resource, entries, i);
+        public ListPrefAdapter(@NonNull Context context, int layoutResID, @NonNull CharSequence[] entries, int i) {
+            super(context, layoutResID, entries, i);
             initTextSizes(context);
         }
 
-        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, @NonNull CharSequence[] summaries, int i) {
-            super(context, resource, entries, summaries, i);
+        public ListPrefAdapter(@NonNull Context context, int layoutResID, @NonNull CharSequence[] entries, @NonNull CharSequence[] summaries, int i) {
+            super(context, layoutResID, entries, summaries, i);
             initTextSizes(context);
         }
 
