@@ -37,7 +37,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -876,8 +875,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             importTask.resumeTask();
         }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(this, HELP_PATH_ID), DIALOGTAG_HELP);
         }

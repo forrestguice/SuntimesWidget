@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -92,9 +91,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void initViews()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        listDialog = (ColorValuesSelectFragment) fragments.findFragmentByTag(DIALOG_LIST);
-        editDialog = (ColorValuesEditFragment) fragments.findFragmentByTag(DIALOG_EDIT);
+        listDialog = (ColorValuesSelectFragment) getChildFragmentManager().findFragmentByTag(DIALOG_LIST);
+        editDialog = (ColorValuesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDIT);
 
         if (listDialog == null)
         {
@@ -106,7 +104,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setShowMenu(getShowMenu());
             listDialog.setPreviewKeys(previewKeys());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
             transaction.addToBackStack(DIALOG_LIST);
             transaction.commit();
@@ -118,12 +116,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
             transaction.addToBackStack(DIALOG_EDIT);
             transaction.commit();
         }
-        fragments.executePendingTransactions();
+        getChildFragmentManager().executePendingTransactions();
     }
 
     @Override

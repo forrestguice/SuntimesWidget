@@ -29,6 +29,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.Fragment;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.forrestguice.support.content.ContextCompat;
@@ -757,10 +758,7 @@ public class WelcomeActivity extends AppCompatActivity
         private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
-                FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null) {
-                    return (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-                }
+                return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
             }
             return null;
         }
@@ -862,8 +860,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected TimeZoneDialog getTimeZoneDialog() {
-            FragmentManager fragments = getChildFragmentManager();
-            return fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog") : null;
+            return (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog");
         }
 
         @Override

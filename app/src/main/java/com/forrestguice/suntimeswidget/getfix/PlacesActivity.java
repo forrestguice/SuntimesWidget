@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.view.Menu;
@@ -70,8 +69,7 @@ public class PlacesActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
+        list = (PlacesListFragment) getSupportFragmentManager().findFragmentById(R.id.placesListFragment);
         list.setDialogThemOverride(AppSettings.loadTheme(this));
         list.setFragmentListener(listFragmentListener);
 

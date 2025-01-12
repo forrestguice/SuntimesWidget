@@ -40,7 +40,6 @@ import android.provider.AlarmClock;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -369,38 +368,36 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         super.onResume();
 
-        FragmentManager fragments = getSupportFragmentManager();
-
-        AlarmEditDialog alarmEditDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+        AlarmEditDialog alarmEditDialog = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
         if (alarmEditDialog != null) {
             alarmEditDialog.setAlarmClockAdapterListener(alarmItemDialogListener);
             alarmEditDialog.setOnAcceptedListener(onItemDialogAccepted);
         }
 
-        AlarmEventDialog eventDialog0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog eventDialog0 = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 != null)
         {
             initEventDialog(eventDialog0, null);
             eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmClockItem.AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
         }
 
-        AlarmEventDialog eventDialog1 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+        AlarmEventDialog eventDialog1 = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
         if (eventDialog1 != null)
         {
             initEventDialog(eventDialog1, t_selectedLocation);
             eventDialog1.setOnAcceptedListener(onSolarEventChanged);
         }
 
-        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
+        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT);
         if (repeatDialog != null) {
             repeatDialog.setOnAcceptedListener(onRepetitionChanged);
         }
-        AlarmRepeatDialog repeatDialog1 = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT+1);
+        AlarmRepeatDialog repeatDialog1 = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT+1);
         if (repeatDialog1 != null) {
             repeatDialog1.setOnAcceptedListener(onRepetitionChanged1);
         }
 
-        AlarmLabelDialog labelDialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+        AlarmLabelDialog labelDialog = (AlarmLabelDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LABEL);
         if (labelDialog != null)
         {
             labelDialog.setOnAcceptedListener(onLabelChanged);
@@ -408,37 +405,37 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         for (int i=0; i<2; i++)
         {
-            LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + i);
+            LoadActionDialog actionDialog = (LoadActionDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ACTION + i);
             if (actionDialog != null) {
                 actionDialog.setOnAcceptedListener(onActionChanged(i));
             }
-            LoadActionDialog actionDialog1 = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION1 + i);
+            LoadActionDialog actionDialog1 = (LoadActionDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ACTION1 + i);
             if (actionDialog1 != null) {
                 actionDialog1.setOnAcceptedListener(onActionChanged1(i));
             }
         }
 
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null) {
             locationDialog.setDialogListener(onLocationChanged);
         }
-        LocationConfigDialog locationDialog1 = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION + 1);
+        LocationConfigDialog locationDialog1 = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION + 1);
         if (locationDialog1 != null) {
             locationDialog1.setDialogListener(onLocationChanged1);
         }
 
-        AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        AlarmTimeDialog timeDialog = (AlarmTimeDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
         if (timeDialog != null) {
             timeDialog.setDialogListener(onTimeChanged);
         }
 
         if (Build.VERSION.SDK_INT >= 11)
         {
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null) {
                 offsetDialog.setOnAcceptedListener(onOffsetChanged);
             }
-            AlarmOffsetDialog offsetDialog1 = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET + 1);
+            AlarmOffsetDialog offsetDialog1 = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET + 1);
             if (offsetDialog1 != null) {
                 offsetDialog1.setOnAcceptedListener(onOffsetChanged1);
             }
@@ -652,8 +649,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void showAddDialog(AlarmClockItem.AlarmType type)
     {
         //Log.d("DEBUG", "showAddDialog: " + type);
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmEventDialog eventDialog0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog eventDialog0 = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 == null)
         {
             final AlarmEventDialog dialog = new AlarmEventDialog();
@@ -669,8 +665,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
     protected void addAlarm(AlarmClockItem.AlarmType type)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmEventDialog dialog = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmEventDialog dialog = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT_FAB);
         addAlarm(type, "", dialog.getChoice(), -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
@@ -730,8 +725,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmEventDialog dialog = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            AlarmEventDialog dialog = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -909,8 +903,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmEditDialog itemDialog = (AlarmEditDialog)fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog)getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
             AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, false, true);
             task.setTaskListener(onUpdateItem);
 
@@ -1088,8 +1081,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onAccepted(AlarmTimeDialog dialog)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+            AlarmTimeDialog timeDialog = (AlarmTimeDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -1153,8 +1145,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -1194,8 +1185,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
+            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -1237,8 +1227,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+            AlarmLabelDialog dialog = (AlarmLabelDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LABEL);
 
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -1280,8 +1269,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getSupportFragmentManager();
-                LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + actionNum);
+                LoadActionDialog dialog = (LoadActionDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ACTION + actionNum);
 
                 AlarmClockItem item = adapter.findItem(t_selectedItem);
                 t_selectedItem = null;
@@ -1733,9 +1721,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET + 1);
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET + 1);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
 
             if (itemDialog != null && offsetDialog != null)
             {
@@ -1761,8 +1748,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
             if (itemDialog != null)
             {
                 AlarmClockItem item = itemDialog.getItem();
@@ -1786,9 +1772,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT + 1);
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT + 1);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
 
             if (itemDialog != null && repeatDialog != null)
             {
@@ -1819,9 +1804,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getSupportFragmentManager();
-                LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION1 + actionNum);
-                AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+                LoadActionDialog dialog = (LoadActionDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ACTION1 + actionNum);
+                AlarmEditDialog dialog1 = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ITEM);
                 if (dialog != null && dialog1 != null)
                 {
                     AlarmClockItem item = dialog1.getItem();

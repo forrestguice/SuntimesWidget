@@ -34,7 +34,6 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.design.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -116,8 +115,7 @@ public class PlacesListFragment extends Fragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment editDialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment editDialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
@@ -691,8 +689,7 @@ public class PlacesListFragment extends Fragment
 
     protected void dismissEditPlaceDialog()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment dialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment dialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (dialog != null) {
             dialog.dismiss();
         }

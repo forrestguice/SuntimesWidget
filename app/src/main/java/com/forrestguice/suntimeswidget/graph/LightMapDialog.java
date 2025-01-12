@@ -39,7 +39,6 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -204,8 +203,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
 
         Context context = getActivity();
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null && context != null)
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
@@ -215,7 +213,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }

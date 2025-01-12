@@ -23,7 +23,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -117,46 +116,35 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
-        {
-            FragmentTransaction transaction = fragments.beginTransaction();
-            AlarmWidget0ConfigFragment fragment = new AlarmWidget0ConfigFragment();
-            loadMoreGeneralSettings(context, fragment);
-            transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
-            transaction.commit();
-        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        AlarmWidget0ConfigFragment fragment = new AlarmWidget0ConfigFragment();
+        loadMoreGeneralSettings(context, fragment);
+        transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
+        transaction.commit();
     }
 
     @Override
     protected void saveMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
+        AlarmWidget0ConfigFragment fragment = (AlarmWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+        if (fragment != null)
         {
-            AlarmWidget0ConfigFragment fragment = (AlarmWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
-            if (fragment != null)
-            {
-                int sortOrder = fragment.getAlarmWidgetInt(PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER);
-                boolean enabledOnly = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_ENABLEDONLY, PREF_DEF_ALARMWIDGET_ENABLEDONLY);
-                boolean showIcons = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
-                Set<String> filterTypes = new TreeSet<String>(Arrays.asList(fragment.getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES)));
+            int sortOrder = fragment.getAlarmWidgetInt(PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER);
+            boolean enabledOnly = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_ENABLEDONLY, PREF_DEF_ALARMWIDGET_ENABLEDONLY);
+            boolean showIcons = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
+            Set<String> filterTypes = new TreeSet<String>(Arrays.asList(fragment.getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES)));
 
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY, enabledOnly);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, showIcons);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES, filterTypes);
-            }
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY, enabledOnly);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, showIcons);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES, filterTypes);
         }
     }
 
     @Override
     protected void loadMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            loadMoreGeneralSettings(context, (AlarmWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
-        }
+        loadMoreGeneralSettings(context, (AlarmWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
     }
 
     protected void loadMoreGeneralSettings(final Context context, @Nullable AlarmWidget0ConfigFragment fragment)

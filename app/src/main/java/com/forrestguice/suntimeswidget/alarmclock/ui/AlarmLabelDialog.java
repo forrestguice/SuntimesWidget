@@ -28,7 +28,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.design.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -183,8 +182,7 @@ public class AlarmLabelDialog extends DialogFragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
         }

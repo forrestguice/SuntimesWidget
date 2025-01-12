@@ -30,7 +30,6 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -559,8 +558,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null)
             {
                 int offset = (int)offsetDialog.getOffset();

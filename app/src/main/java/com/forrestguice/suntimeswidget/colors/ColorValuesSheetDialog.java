@@ -28,7 +28,6 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -232,8 +231,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
         editViewModel.setShowAlpha(getShowAlpha());
 
-        FragmentManager fragments = getChildFragmentManager();
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getChildFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
@@ -244,10 +242,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = fragments.beginTransaction();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
             transaction.commit();
-            fragments.executePendingTransactions();
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 

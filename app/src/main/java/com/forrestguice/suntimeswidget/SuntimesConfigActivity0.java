@@ -39,7 +39,6 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -1156,8 +1155,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void dismissHelpDialog()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog dialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog dialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (dialog != null) {
             dialog.dismiss();
         }

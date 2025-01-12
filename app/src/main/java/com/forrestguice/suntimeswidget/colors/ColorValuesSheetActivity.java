@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
@@ -76,7 +75,6 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         setContentView(R.layout.layout_activity_colorsheet);
 
         Intent intent = getIntent();
-        FragmentManager fragments = getSupportFragmentManager();
 
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         editViewModel.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
@@ -86,7 +84,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             previewIntentBuilder = intent.getParcelableExtra(EXTRA_PREVIEW_INTENTBUILDER);
         }
 
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getSupportFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
@@ -103,10 +101,10 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setFragmentListener(sheetListener);
         }
 
-        FragmentTransaction transaction = fragments.beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET);
         transaction.commit();
-        fragments.executePendingTransactions();
+        getSupportFragmentManager().executePendingTransactions();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);

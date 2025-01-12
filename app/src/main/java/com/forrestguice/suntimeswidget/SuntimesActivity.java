@@ -43,7 +43,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.support.design.app.AppCompatActivity;
@@ -509,8 +508,7 @@ public class SuntimesActivity extends AppCompatActivity
         // restore open dialogs
         updateDialogs(this);
 
-        FragmentManager fragments = getSupportFragmentManager();
-        TimeZoneDialog timezoneDialog = (TimeZoneDialog) fragments.findFragmentByTag(DIALOGTAG_TIMEZONE);
+        TimeZoneDialog timezoneDialog = (TimeZoneDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_TIMEZONE);
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
@@ -521,14 +519,14 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
-        final LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        final LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_CONFIG);
+        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_DATE_CONFIG);
         if (dateDialog != null)
         {
             dateDialog.setTimezone(dataset.timezone());
@@ -537,7 +535,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
-        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        TimeDateDialog seekDateDialog = (TimeDateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_DATE_SEEK);
         if (seekDateDialog != null)
         {
             seekDateDialog.setTimezone(dataset.timezone());
@@ -560,16 +558,14 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void updateDialogs(Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-
-        AlarmCreateDialog alarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+        AlarmCreateDialog alarmDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null) {
             alarmDialog.setOnAcceptedListener(onScheduleAlarm);
             alarmDialog.setOnNeutralListener(onManageAlarms);
             //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
-        LightGraphDialog lightGraphDialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        LightGraphDialog lightGraphDialog = (LightGraphDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
         if (lightGraphDialog != null)
         {
             lightGraphDialog.themeViews(this, appThemeOverride);
@@ -579,7 +575,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LightGraphDialog updated on restore.");
         }
 
-        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        LightMapDialog lightMapDialog = (LightMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
             lightMapDialog.themeViews(this, appThemeOverride);
@@ -589,7 +585,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
 
-        WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        WorldMapDialog worldMapDialog = (WorldMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
             worldMapDialog.themeViews(this, appThemeOverride);
@@ -599,7 +595,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
 
-        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
             equinoxDialog.themeViews(this, appThemeOverride);
@@ -608,7 +604,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
 
-        MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        MoonDialog moonDialog = (MoonDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
             moonDialog.themeViews(this, appThemeOverride);
@@ -618,7 +614,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -870,8 +866,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        FragmentManager fragments = getSupportFragmentManager();
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -1809,8 +1804,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Activity context = SuntimesActivity.this;
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
             if (dialog != null)
             {
                 AlarmClockItem.AlarmType type = dialog.getAlarmType();
@@ -1843,8 +1837,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
             if (dialog != null) {
                 dialog.dismiss();
             }
@@ -2339,8 +2332,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
     public void showLightGraphDialogAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        LightGraphDialog dialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        LightGraphDialog dialog = (LightGraphDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2423,8 +2415,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showSunPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        LightMapDialog dialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        LightMapDialog dialog = (LightMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2471,8 +2462,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showMapPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        WorldMapDialog dialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        WorldMapDialog dialog = (WorldMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2500,8 +2490,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void dismissEquinoxDialog()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null) {
             equinoxDialog.dismiss();
         }
@@ -2607,8 +2596,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showMoonPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        MoonDialog dialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        MoonDialog dialog = (MoonDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_MOON);
         if (dialog != null) {
             dialog.dismiss();
         }

@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
@@ -82,8 +81,7 @@ public class EventListActivity extends AppCompatActivity
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
         list.setLocation(location);
 
-        FragmentManager fragments = getSupportFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, list, "EventList");
         transaction.commit();
 

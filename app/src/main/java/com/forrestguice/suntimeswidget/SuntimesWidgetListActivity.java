@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -154,8 +153,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         super.onResume();
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesWidgetListActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }

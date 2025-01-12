@@ -42,7 +42,6 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewCompat;
@@ -830,8 +829,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Context context = AlarmClockActivity.this;
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
             if (dialog != null)
             {
                 AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
@@ -920,8 +918,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         list.clearSelection();
 
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
             if (type != null) {
@@ -943,8 +940,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void restoreDialogs()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
         if (alarmCreateDialog != null) {
             alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
             alarmCreateDialog.setOnCanceledListener(onAddAlarmCanceled);
