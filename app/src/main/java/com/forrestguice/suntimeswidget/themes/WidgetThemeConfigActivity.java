@@ -36,7 +36,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.ColorUtils;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;

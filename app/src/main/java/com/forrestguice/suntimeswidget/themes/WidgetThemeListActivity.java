@@ -39,7 +39,7 @@ import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import com.forrestguice.support.design.widget.Toolbar;
 

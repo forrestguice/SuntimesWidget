@@ -23,7 +23,7 @@ import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 

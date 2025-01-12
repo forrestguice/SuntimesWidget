@@ -46,7 +46,7 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;

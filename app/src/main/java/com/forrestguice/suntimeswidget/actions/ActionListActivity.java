@@ -26,7 +26,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 
 import android.view.Menu;

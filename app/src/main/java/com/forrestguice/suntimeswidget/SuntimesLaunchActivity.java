@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;

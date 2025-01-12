@@ -44,7 +44,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;

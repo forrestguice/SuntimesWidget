@@ -33,7 +33,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;

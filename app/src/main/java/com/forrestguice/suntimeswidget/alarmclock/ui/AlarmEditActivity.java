@@ -38,7 +38,7 @@ import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.style.ImageSpan;

@@ -64,7 +64,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
