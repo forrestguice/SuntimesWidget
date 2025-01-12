@@ -261,7 +261,7 @@ public class ColorDialog extends BottomSheetDialogFragment
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-        ColorPickerPagerAdapter colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager());
+        ColorPickerPagerAdapter colorPagerAdapter = new ColorPickerPagerAdapter(this);
         colorPagerAdapter.setAdapterListener(new ColorPickerPagerAdapter.AdapterListener()
         {
             @Override

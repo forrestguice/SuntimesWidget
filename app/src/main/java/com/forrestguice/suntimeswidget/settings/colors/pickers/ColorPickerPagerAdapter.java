@@ -20,9 +20,12 @@ package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.app.DialogFragment;
 import com.forrestguice.support.design.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.app.FragmentStatePagerAdapter;
 
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 
@@ -31,8 +34,14 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
  */
 public class ColorPickerPagerAdapter extends FragmentStatePagerAdapter
 {
-    public ColorPickerPagerAdapter(FragmentManager fragmentManager) {
-        super(fragmentManager);
+    public ColorPickerPagerAdapter(AppCompatActivity activity) {
+        super(activity);
+    }
+    public ColorPickerPagerAdapter(DialogFragment fragment) {
+        super(fragment);
+    }
+    public ColorPickerPagerAdapter(BottomSheetDialogFragment fragment) {
+        super(fragment);
     }
 
     public interface AdapterListener extends ColorChangeListener {

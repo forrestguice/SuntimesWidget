@@ -28,8 +28,7 @@ import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 
 import com.forrestguice.support.design.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import com.forrestguice.support.design.view.FragmentPagerAdapter;
 import com.forrestguice.support.design.view.ViewPager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -84,7 +83,7 @@ public class AboutActivity extends AppCompatActivity
             getSupportActionBar().setHomeAsUpIndicator(icon);
         }
 
-        pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new AboutPagerAdapter(this);
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
@@ -123,11 +122,10 @@ public class AboutActivity extends AppCompatActivity
     /**
      * AboutPagerAdapter
      */
-    public class AboutPagerAdapter extends FragmentPagerAdapter
+    public static class AboutPagerAdapter extends FragmentPagerAdapter
     {
-        public AboutPagerAdapter(FragmentManager fragments)
-        {
-            super(fragments);
+        public AboutPagerAdapter(AppCompatActivity activity) {
+            super(activity.getSupportFragmentManager());
         }
 
         @Override
