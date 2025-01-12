@@ -26,7 +26,6 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 
@@ -87,11 +86,9 @@ public class ActionListActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (preselectedAction != null && !preselectedAction.trim().isEmpty()) {

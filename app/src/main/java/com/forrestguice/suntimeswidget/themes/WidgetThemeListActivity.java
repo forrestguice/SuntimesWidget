@@ -38,7 +38,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -96,7 +95,6 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     private boolean adapterModified = false;
     private GridView gridView;
-    private ActionBar actionBar;
 
     protected ActionMode actionMode = null;
     private WidgetThemeActionCompat themeActions;
@@ -214,11 +212,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

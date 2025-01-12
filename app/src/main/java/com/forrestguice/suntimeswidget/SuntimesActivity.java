@@ -45,7 +45,6 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
@@ -199,7 +198,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
-    private ActionBar actionBar;
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
@@ -1043,12 +1041,11 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
             boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
-            actionBar.setHomeButtonEnabled(sideNavigation);
-            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
+            getSupportActionBar().setHomeButtonEnabled(sideNavigation);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(sideNavigation);
         }
         
         navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
@@ -1127,7 +1124,9 @@ public class SuntimesActivity extends AppCompatActivity
                 if (locations[0] != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
-                    actionBar.setSubtitle(location.toString());
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setSubtitle(location.toString());
+                    }
                 }
             }
 
@@ -1145,8 +1144,10 @@ public class SuntimesActivity extends AppCompatActivity
                 refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
                 if (refreshItem != null)
                 {
-                    actionBar.setTitle(getString(R.string.gps_lastfix_title_searching));
-                    actionBar.setSubtitle("");
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
+                        getSupportActionBar().setSubtitle("");
+                    }
                     refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
                 }
             }
@@ -1923,10 +1924,9 @@ public class SuntimesActivity extends AppCompatActivity
             locationSubtitle = new SpannableString(locationString);
         }
 
-        if (actionBar != null)
-        {
-            actionBar.setTitle(locationTitle);
-            actionBar.setSubtitle(locationSubtitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(locationTitle);
+            getSupportActionBar().setSubtitle(locationSubtitle);
         }
 
         //

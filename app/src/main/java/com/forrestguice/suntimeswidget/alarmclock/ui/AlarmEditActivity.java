@@ -37,7 +37,6 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.drawable.DrawableCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -285,17 +284,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = editor.getItem();
-            actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
+            getSupportActionBar().setTitle(item != null ? item.type.getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
             if (actionBarBackground != null) {
-                actionBar.setBackgroundDrawable(actionBarBackground);
+                getSupportActionBar().setBackgroundDrawable(actionBarBackground);
             }
         }
     }
@@ -1254,9 +1252,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onTypeChanged(AlarmClockItem forItem)
     {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
         invalidateOptionsMenu();
     }

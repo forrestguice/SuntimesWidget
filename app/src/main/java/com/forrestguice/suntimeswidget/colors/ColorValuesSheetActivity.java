@@ -27,7 +27,6 @@ import android.os.Parcelable;
 import com.forrestguice.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.util.Log;
@@ -111,17 +110,16 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             CharSequence title = intent.getCharSequenceExtra(EXTRA_TITLE);
             if (title != null) {
-                actionBar.setTitle(title);
+                getSupportActionBar().setTitle(title);
             }
-            actionBar.setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
+            getSupportActionBar().setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
         }
     }
 

@@ -46,7 +46,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.util.Log;
@@ -684,14 +683,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
             if (!showBack) {
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
             }
         }
 

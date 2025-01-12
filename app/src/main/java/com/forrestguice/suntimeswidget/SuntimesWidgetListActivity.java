@@ -43,7 +43,6 @@ import android.widget.ListView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.app.ActionBar;
 import com.forrestguice.support.design.widget.Toolbar;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
@@ -75,7 +74,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public static final int IMPORT_REQUEST = 100;
     public static final int EXPORT_REQUEST = 200;
 
-    private ActionBar actionBar;
     private ListView widgetList;
     private WidgetListAdapter widgetListAdapter;
     protected View progressView;
@@ -243,11 +241,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         progressView = findViewById(R.id.progress);

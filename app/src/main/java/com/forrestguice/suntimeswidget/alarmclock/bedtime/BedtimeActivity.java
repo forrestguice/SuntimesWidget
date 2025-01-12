@@ -33,7 +33,6 @@ import android.os.Handler;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import com.forrestguice.support.design.widget.Toolbar;
@@ -354,14 +353,13 @@ public class BedtimeActivity extends AppCompatActivity
 
         menubar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menubar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
             if (!showBack) {
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);   // TODO: "suntimes alarms" icon
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_suntimes);   // TODO: "suntimes alarms" icon
             }
         }
 

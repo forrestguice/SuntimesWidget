@@ -41,7 +41,6 @@ import com.forrestguice.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.Toolbar;
@@ -136,7 +135,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
 
-    private ActionBar actionBar;
     protected TextView text_appWidgetID;
     protected View progressView;
 
@@ -966,12 +964,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
         }
     }
 
