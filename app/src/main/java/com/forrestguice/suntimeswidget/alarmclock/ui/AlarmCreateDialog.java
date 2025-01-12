@@ -29,8 +29,6 @@ import android.os.Bundle;
 
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -745,16 +743,15 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            FrameLayout layout = getBottomSheetLayout(dialog);
             if (layout != null)
             {
-                final BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                final BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
                 behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
                 layout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
                     }
                 }, AUTO_EXPAND_DELAY);
             }

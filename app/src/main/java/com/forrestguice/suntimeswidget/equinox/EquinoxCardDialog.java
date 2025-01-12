@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.ImageViewCompat;
@@ -215,36 +214,32 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
             }
         }
     }
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_COLLAPSED);
             }
         }
     }
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    @Override
+    protected BottomSheetBehaviorCompat initBottomSheetBehavior(DialogInterface dialog)
     {
-        if (dialog != null)
+        BottomSheetBehaviorCompat behavior = super.initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
-                return behavior;
-            }
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            initPeekHeight(dialog, R.id.info_equinoxsolstice_flipper1);
+            return behavior;
         }
         return null;
     }
@@ -261,7 +256,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                 text_title.post(new Runnable() {
                     @Override
                     public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
 
@@ -520,7 +515,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_view.post(new Runnable() {
             @Override
             public void run() {
-                initSheet(getDialog());    // re-init dialog peek height
+                initBottomSheetBehavior(getDialog());    // re-init dialog peek height
             }
         });
     }

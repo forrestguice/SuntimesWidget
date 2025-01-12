@@ -30,8 +30,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.Preference;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -111,29 +109,6 @@ public class ViewUtils
 
             } else {
                 button.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                View divider1 = bottomSheet.findViewById(bottomViewResId);
-                if (divider1 != null)
-                {
-                    Rect headerBounds = new Rect();
-                    divider1.getDrawingRect(headerBounds);
-                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
-
-                } else {
-                    behavior.setPeekHeight(-1);
-                }
             }
         }
     }

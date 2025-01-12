@@ -31,8 +31,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
@@ -195,78 +193,48 @@ public class MoonDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
             }
         }
     }
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_COLLAPSED);
             }
         }
     }
     public boolean isCollapsed()
     {
-        BottomSheetBehavior bottomSheet = initSheet(getDialog());
+        BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(getDialog());
         if (bottomSheet != null) {
-            return (bottomSheet.getState() == BottomSheetBehavior.STATE_COLLAPSED);
+            return (bottomSheet.getState() == BottomSheetBehaviorCompat.STATE_COLLAPSED);
         }
         return false;
     }
 
+    @Override
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    protected BottomSheetBehaviorCompat initBottomSheetBehavior(DialogInterface dialog)
     {
-        if (dialog != null)
+        BottomSheetBehaviorCompat behavior = super.initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                return behavior;
-            }
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            return behavior;
         }
         return null;
     }
 
-    private void initPeekHeight(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            ViewGroup dialogLayout = (LinearLayout) bottomSheet.findViewById(R.id.moondialog_layout);
-            View divider1 = bottomSheet.findViewById(R.id.divider1);
-            if (dialogLayout != null && divider1 != null)
-            {
-                Rect headerBounds = new Rect();
-                divider1.getDrawingRect(headerBounds);
-                dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                behavior.setPeekHeight(headerBounds.top);
-
-            } else {
-                behavior.setPeekHeight(-1);
-            }
-        }
-    }
-
-    private Runnable initPeekHeight = new Runnable() {
+    private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
-            initPeekHeight(getDialog());
+            initPeekHeight(getDialog(), R.id.divider1, false);
         }
     };
 
