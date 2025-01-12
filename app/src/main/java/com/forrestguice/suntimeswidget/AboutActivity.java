@@ -27,7 +27,7 @@ import com.forrestguice.support.design.widget.TabLayout;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
+import com.forrestguice.support.design.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.forrestguice.support.design.view.ViewPager;
