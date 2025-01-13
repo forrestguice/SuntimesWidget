@@ -47,9 +47,8 @@ import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
-import android.support.v7.widget.PagerSnapHelper;
+import com.forrestguice.support.design.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -1306,7 +1305,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
         card_view.setOnScrollListener(onCardScrollListener);
     }

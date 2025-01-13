@@ -26,9 +26,8 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
+import com.forrestguice.support.design.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -145,7 +144,7 @@ public class EquinoxCardView extends LinearLayout
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
         initAdapter(context);

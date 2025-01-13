@@ -32,9 +32,8 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.TabLayout;
 import com.forrestguice.support.design.view.ViewPager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import com.forrestguice.support.design.widget.LinearSnapHelper;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -286,7 +285,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         recentColors.setAdapter(recentColors_adapter);
         recentColors.scrollToPosition(0);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recentColors);
 
         btn_suggest = (Button) dialogContent.findViewById(R.id.dialog_button_suggest);
