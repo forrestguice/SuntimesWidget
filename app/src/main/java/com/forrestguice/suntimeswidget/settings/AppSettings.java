@@ -40,7 +40,7 @@ import android.provider.Settings;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.AlertDialog;
-import android.support.v7.app.AppCompatDelegate;
+import com.forrestguice.support.appcompat.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
