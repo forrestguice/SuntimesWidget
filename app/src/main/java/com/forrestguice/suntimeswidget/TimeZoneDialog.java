@@ -28,7 +28,7 @@ import android.os.Bundle;
 
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableString;
@@ -724,7 +724,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         } else {
             // LEGACY; ActionMode for pre HONEYCOMB
             AppCompatActivity activity = (AppCompatActivity)getActivity();
-            android.support.v7.view.ActionMode actionMode = activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            if (activity == null)
+                return false;
+
+            this.actionMode = activity.startSupportActionMode(getString(R.string.timezone_sort_contextAction), new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -750,11 +753,6 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                     TimeZoneDialog.this.actionMode = null;
                 }
             });
-            if (actionMode != null)
-            {
-                this.actionMode = actionMode;
-                actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
-            }
         }
 
         view.setSelected(true);
