@@ -31,7 +31,7 @@ import android.os.Environment;
 import android.provider.OpenableColumns;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
+import com.forrestguice.support.content.FileProvider;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;

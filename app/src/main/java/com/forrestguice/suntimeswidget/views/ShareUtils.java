@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
+import com.forrestguice.support.content.FileProvider;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
