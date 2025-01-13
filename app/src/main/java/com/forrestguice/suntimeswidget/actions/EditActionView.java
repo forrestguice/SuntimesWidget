@@ -26,9 +26,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.net.Uri;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -486,9 +488,7 @@ public class EditActionView extends LinearLayout
 
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                    Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
-                    snackbar.show();
+                    Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -506,9 +506,7 @@ public class EditActionView extends LinearLayout
 
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
-            Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            ViewUtils.themeSnackbar(getContext(), snackbar, null);
-            snackbar.show();
+            SnackbarUtils.themeSnackbar(getContext(), Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG)).show();
         }
     }
 

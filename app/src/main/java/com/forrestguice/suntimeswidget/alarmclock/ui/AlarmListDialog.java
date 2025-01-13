@@ -38,9 +38,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
@@ -430,8 +432,8 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -440,10 +442,7 @@ public class AlarmListDialog extends DialogFragment
                         addAlarm(context, items.toArray(new AlarmClockItem[0]));
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
 
@@ -452,8 +451,8 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -462,10 +461,7 @@ public class AlarmListDialog extends DialogFragment
                         addAlarm(getActivity(), deletedItem);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -765,8 +761,8 @@ public class AlarmListDialog extends DialogFragment
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), UNDO_IMPORT_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -779,10 +775,7 @@ public class AlarmListDialog extends DialogFragment
                         }
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 8000;

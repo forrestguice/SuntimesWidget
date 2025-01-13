@@ -35,10 +35,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
@@ -2231,17 +2232,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (context != null && view != null)
         {
             CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
-            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, message, UNDO_IMPORT_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v) {
                     importSettings(context, previous, false);
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 12000;

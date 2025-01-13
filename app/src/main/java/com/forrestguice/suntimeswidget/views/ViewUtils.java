@@ -30,7 +30,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.Preference;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
@@ -119,47 +118,6 @@ public class ViewUtils
         if (window != null) {
             View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
             decorView.setOnClickListener(null);
-        }
-    }
-
-    @SuppressLint("ResourceType")
-    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
-    {
-        Integer[] colors = new Integer[] {null, null, null};
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
-        TypedArray a = context.obtainStyledAttributes(colorAttrs);
-        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
-        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
-        a.recycle();
-
-        if (colorOverrides != null && colorOverrides.length == colors.length) {
-            for (int i=0; i<colors.length; i++) {
-                if (colorOverrides[i] != null) {
-                    colors[i] = colorOverrides[i];
-                }
-            }
-        }
-
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(colors[2]);
-        snackbar.setActionTextColor(colors[1]);
-
-        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-        if (snackbarText != null) {
-            snackbarText.setTextColor(colors[0]);
-            snackbarText.setMaxLines(3);
-        }
-
-        View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
-        if (snackbarAction != null) {
-            if (Build.VERSION.SDK_INT >= 16)
-            {
-                snackbarAction.setBackground(buttonDrawable);
-                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
-            }
         }
     }
 

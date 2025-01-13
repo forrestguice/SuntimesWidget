@@ -52,9 +52,11 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.app.NotificationCompat;
@@ -229,7 +231,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
         showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
     }
-    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
@@ -258,22 +260,17 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (view != null)
             {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
-                if (actionText != null && actionListener != null) {
-                    snackbar.setAction(actionText, actionListener);
-                }
-                ViewUtils.themeSnackbar(context, snackbar, null);
-                snackbar.show();
-                return snackbar;
+                SnackbarUtils.themeSnackbar(context, Snackbar.make(view, alarmDisplay, duration, actionText, actionListener)).show();
+                return;
 
             } else {
                 Toast.makeText(context, alarmDisplay, duration).show();
-                return null;
+                return;
             }
 
         }
         Log.e(TAG, "showTimeUntilToast: context is null!");
-        return null;
+        return;
     }
 
     /**

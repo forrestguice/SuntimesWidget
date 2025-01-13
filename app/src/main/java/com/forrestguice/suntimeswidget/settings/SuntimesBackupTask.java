@@ -30,9 +30,11 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
@@ -583,17 +585,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     {
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-
+            CharSequence actionText = null;
+            View.OnClickListener actionListener = null;
             if (report != null) {
-                snackbar.setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report));
-
+                actionText = context.getString(R.string.configAction_info);
+                actionListener = onClickShowReport(context, message, report);
             } else if (result && shareUri != null) {
-                snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
+                actionText = context.getString(R.string.configAction_share);
+                actionListener = onClickShareUri(context, shareUri);
             }
-
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.show();
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG), actionText, actionListener)).show();
         }
     }
 

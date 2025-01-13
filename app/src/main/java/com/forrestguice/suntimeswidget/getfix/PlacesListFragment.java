@@ -30,9 +30,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.design.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -794,8 +796,8 @@ public class PlacesListFragment extends Fragment
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -807,10 +809,7 @@ public class PlacesListFragment extends Fragment
                         addOrUpdatePlace(deletedItems);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -868,8 +867,8 @@ public class PlacesListFragment extends Fragment
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -894,10 +893,7 @@ public class PlacesListFragment extends Fragment
                         setSelectedRowID(-1);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
 
