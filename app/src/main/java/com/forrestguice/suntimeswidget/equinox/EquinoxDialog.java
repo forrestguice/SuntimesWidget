@@ -28,7 +28,6 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
@@ -68,14 +67,17 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+        Dialog dialog = createBottomSheetDialog(getContext(), new OnBackPressed()
+        {
             @Override
-            public void onBackPressed() {
+            public boolean onBackPressed()
+            {
                 if (equinoxView.hasSelection()) {
                     equinoxView.setSelection(null);
-                } else super.onBackPressed();
+                    return true;
+                } else return false;
             }
-        };
+        });
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }

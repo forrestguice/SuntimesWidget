@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -106,21 +105,25 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         setArguments(new Bundle());
     }
 
+
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+        Dialog dialog = createBottomSheetDialog(getContext(), new OnBackPressed()
+        {
             @Override
-            public void onBackPressed() {
+            public boolean onBackPressed()
+            {
                 if (hasSelection())
                 {
                     setSelection((Integer) null);
                     if (AppSettings.isTelevision(getActivity())) {
                         btn_menu.requestFocus();
                     }
-                } else super.onBackPressed();
+                    return true;
+                } else return false;
             }
-        };
+        });
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }

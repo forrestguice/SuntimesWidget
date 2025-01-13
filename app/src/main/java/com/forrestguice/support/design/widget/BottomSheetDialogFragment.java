@@ -1,9 +1,11 @@
 package com.forrestguice.support.design.widget;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -117,6 +119,44 @@ public class BottomSheetDialogFragment extends android.support.design.widget.Bot
                     behavior.setPeekHeight(-1);
                 }
             }
+        }
+    }
+
+    /**
+     * OnBackPressed
+     */
+    public interface OnBackPressed
+    {
+        /**
+         * @return true handled (return), false unhandled (call super)
+         */
+        boolean onBackPressed();
+    }
+
+    public BottomSheetDialog createBottomSheetDialog(Context context, final OnBackPressed onBackPressed) {
+        return createBottomSheetDialog(context, getTheme(), onBackPressed);
+    }
+    public static BottomSheetDialog createBottomSheetDialog(Context context, final int themeResId, final OnBackPressed onBackPressed)
+    {
+        return new BottomSheetDialog(context, themeResId)
+        {
+            @Override
+            public void onBackPressed() {
+                if (!onBackPressed.onBackPressed()) {
+                    super.onBackPressed();
+                }
+            }
+        };
+    }
+
+    public static void setCancelable(DialogInterface dialog, boolean value)
+    {
+        try {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            bottomSheet.setCancelable(value);
+
+        } catch (Exception e) {
+            Log.e("setCancelable", "failed to set cancelable: " + e);
         }
     }
 

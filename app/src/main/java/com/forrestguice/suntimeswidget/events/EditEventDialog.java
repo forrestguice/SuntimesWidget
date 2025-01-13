@@ -29,7 +29,6 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -317,12 +316,14 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        Dialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+        Dialog dialog = createBottomSheetDialog(getContext(), new OnBackPressed()
+        {
             @Override
-            public void onBackPressed() {
+            public boolean onBackPressed() {
                 confirmDiscardChanges(getActivity());
+                return true;
             }
-        };
+        });
         dialog.setOnShowListener(onDialogShow);
         return dialog;
     }
@@ -833,6 +834,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+
     @Override
     protected void expandSheet(DialogInterface dialog)
     {
@@ -840,8 +842,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        bottomSheet.setCancelable(false);
+        setCancelable(dialog, false);
 
         BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
