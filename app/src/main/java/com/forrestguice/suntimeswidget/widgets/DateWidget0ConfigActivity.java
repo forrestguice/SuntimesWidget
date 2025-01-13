@@ -22,7 +22,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -128,14 +127,15 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         CalendarMode mode = CalendarSettings.loadCalendarModePref(DateWidget0ConfigActivity.this, appWidgetId);
         String pattern = CalendarSettings.loadCalendarFormatPatternPref(DateWidget0ConfigActivity.this, appWidgetId, mode.name());
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CalendarFormatDialog fragment = new CalendarFormatDialog();
         fragment.setCalendarMode(mode);
         fragment.setFormatPattern(pattern);
         fragment.updateCustomCalendarFormat(pattern);
         fragment.setDialogListener(calendarFormatDialogListener);
-        transaction.replace(R.id.appwidget_general_calendarFormat_fragmentContainer, fragment, "CalendarFormatDialog");
-        transaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.appwidget_general_calendarFormat_fragmentContainer, fragment, "CalendarFormatDialog")
+                .commit();
 
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
         if (spinner_calendarMode != null)

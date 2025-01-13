@@ -26,7 +26,6 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -238,9 +237,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
-            transaction.commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET)
+                    .commit();
             getChildFragmentManager().executePendingTransactions();
         }
     }

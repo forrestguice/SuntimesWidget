@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -104,10 +103,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setShowMenu(getShowMenu());
             listDialog.setPreviewKeys(previewKeys());
 
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
-            transaction.addToBackStack(DIALOG_LIST);
-            transaction.commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.layout_color_sheet, listDialog, DIALOG_LIST)
+                    .addToBackStack(DIALOG_LIST)
+                    .commit();
         }
         if (editDialog == null)
         {
@@ -116,10 +116,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
 
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
-            transaction.addToBackStack(DIALOG_EDIT);
-            transaction.commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT)
+                    .addToBackStack(DIALOG_EDIT)
+                    .commit();
         }
         getChildFragmentManager().executePendingTransactions();
     }

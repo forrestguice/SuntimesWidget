@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.util.Log;
@@ -101,9 +100,10 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setFragmentListener(sheetListener);
         }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET);
-        transaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET)
+                .commit();
         getSupportFragmentManager().executePendingTransactions();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);

@@ -31,7 +31,6 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
@@ -201,8 +200,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void showByEventFragment()
     {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-
         AlarmEventDialog fragment = new AlarmEventDialog();
         fragment.setDialogShowFrame(false);
         fragment.setDialogShowDesc(false);
@@ -235,8 +232,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         });
         fragment.setChoice(getEvent());
 
-        transaction.replace(R.id.fragmentContainer1, fragment, DIALOG_EVENT);
-        transaction.commit();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer1, fragment, DIALOG_EVENT)
+                .commit();
     }
 
     protected void showLocationMenu(final Context context, View v)
@@ -362,8 +361,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void showByTimeFragment()
     {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-
         AlarmTimeDialog fragment = new AlarmTimeDialog();
         fragment.setDate(getDate());
         fragment.setShowDateButton(showDateSelectButton());
@@ -403,8 +400,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             public void onCanceled(AlarmTimeDialog dialog) {}
         });
 
-        transaction.replace(R.id.fragmentContainer1, fragment, DIALOG_TIME);
-        transaction.commit();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer1, fragment, DIALOG_TIME)
+                .commit();
     }
 
     private void initViews(final Context context, View dialogContent)
