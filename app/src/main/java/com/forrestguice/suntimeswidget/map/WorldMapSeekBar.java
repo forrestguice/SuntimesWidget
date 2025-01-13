@@ -30,7 +30,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.AppCompatSeekBar;
+import com.forrestguice.support.appcompat.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
