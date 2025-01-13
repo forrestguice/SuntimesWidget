@@ -6,7 +6,7 @@
         <item android:id="@+id/searchPlaces"
             android:icon="?attr/icActionSearch"
             android:title="@string/configAction_searchPlace"
-            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:actionViewClass="com.forrestguice.support.design.widget.SearchView"
             app:showAsAction="ifRoom|collapseActionView"
             android:orderInCategory="0" />
 
