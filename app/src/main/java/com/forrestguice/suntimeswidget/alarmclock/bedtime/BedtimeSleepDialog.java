@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -104,10 +104,10 @@ public class BedtimeSleepDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(getDialogTitle(myParent));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -121,7 +121,7 @@ public class BedtimeSleepDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -137,12 +137,14 @@ public class BedtimeSleepDialog extends DialogFragment
 
         if (showHelp())
         {
-            dialog.setButton(AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener) null);
+            AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener) null);
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
-                    button.setOnClickListener(onHelpButtonClicked);
+                    Button button = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
+                    if (button != null) {
+                        button.setOnClickListener(onHelpButtonClicked);
+                    }
                 }
             });
         }

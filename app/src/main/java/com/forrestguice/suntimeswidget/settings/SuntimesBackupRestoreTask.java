@@ -30,6 +30,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -648,8 +649,11 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        onClickListener.onClick(dialog, methods[p]);
+                        ListView list = AlertDialog.getListView(dialog);
+                        if (list != null) {
+                            int p = list.getCheckedItemPosition();
+                            onClickListener.onClick(dialog, methods[p]);
+                        }
                     }
                 })
                 .setNegativeButton(context.getString(R.string.dialog_cancel), null);

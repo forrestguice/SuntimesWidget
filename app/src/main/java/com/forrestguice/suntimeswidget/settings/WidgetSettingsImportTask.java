@@ -32,6 +32,7 @@ import com.forrestguice.support.design.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -716,8 +717,12 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        onClickListener.onClick(dialog, methods[p]);
+                        ListView list = AlertDialog.getListView(dialog);
+                        if (list != null)
+                        {
+                            int p = list.getCheckedItemPosition();
+                            onClickListener.onClick(dialog, methods[p]);
+                        }
                     }
                 })
                 .setNegativeButton(context.getString(R.string.dialog_cancel), null);

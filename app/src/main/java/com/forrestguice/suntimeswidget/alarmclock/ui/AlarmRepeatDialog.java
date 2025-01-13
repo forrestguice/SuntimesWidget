@@ -30,7 +30,7 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.DialogFragment;
 import com.forrestguice.support.graphics.ColorUtils;
 import com.forrestguice.support.design.widget.CompoundButtonCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.widget.SwitchCompat;
 import android.util.Log;
 import android.util.SparseArray;
@@ -100,10 +100,10 @@ public class AlarmRepeatDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -117,7 +117,7 @@ public class AlarmRepeatDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
