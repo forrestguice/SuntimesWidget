@@ -35,7 +35,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.ColorUtils;
 import com.forrestguice.support.design.view.ViewCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.AttributeSet;

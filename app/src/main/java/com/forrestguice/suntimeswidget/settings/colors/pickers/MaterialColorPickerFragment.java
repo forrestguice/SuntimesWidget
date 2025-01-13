@@ -24,7 +24,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
+import com.forrestguice.support.design.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

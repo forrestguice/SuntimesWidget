@@ -40,7 +40,7 @@ import com.forrestguice.support.design.view.MenuItemCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.forrestguice.support.design.widget.SearchView;
 import android.text.TextUtils;
