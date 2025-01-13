@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;

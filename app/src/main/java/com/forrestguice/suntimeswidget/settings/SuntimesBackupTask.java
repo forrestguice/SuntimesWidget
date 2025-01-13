@@ -35,7 +35,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;

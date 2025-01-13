@@ -28,7 +28,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;

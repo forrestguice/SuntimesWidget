@@ -31,7 +31,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.content.FileProvider;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;

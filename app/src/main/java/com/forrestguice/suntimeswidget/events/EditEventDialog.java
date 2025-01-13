@@ -29,7 +29,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;

@@ -48,7 +48,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;

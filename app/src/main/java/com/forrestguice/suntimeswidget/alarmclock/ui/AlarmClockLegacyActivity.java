@@ -42,7 +42,7 @@ import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.Html;

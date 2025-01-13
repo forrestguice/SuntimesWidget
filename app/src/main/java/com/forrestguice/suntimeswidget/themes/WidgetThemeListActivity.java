@@ -37,7 +37,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import com.forrestguice.support.design.widget.Toolbar;

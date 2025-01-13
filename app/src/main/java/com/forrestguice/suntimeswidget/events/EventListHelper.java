@@ -37,7 +37,7 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;

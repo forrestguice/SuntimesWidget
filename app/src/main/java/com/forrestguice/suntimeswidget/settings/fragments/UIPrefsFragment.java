@@ -35,7 +35,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;

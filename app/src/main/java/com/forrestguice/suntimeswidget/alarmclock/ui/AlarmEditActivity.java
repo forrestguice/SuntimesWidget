@@ -36,7 +36,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.Toolbar;

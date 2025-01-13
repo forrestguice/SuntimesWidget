@@ -43,7 +43,7 @@ import android.os.PowerManager;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.Spannable;

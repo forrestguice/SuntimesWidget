@@ -38,7 +38,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;

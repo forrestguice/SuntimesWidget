@@ -33,7 +33,7 @@ import com.forrestguice.support.design.app.ActivityOptionsCompat;
 import com.forrestguice.support.design.app.DialogFragment;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;

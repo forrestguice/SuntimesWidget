@@ -28,7 +28,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;

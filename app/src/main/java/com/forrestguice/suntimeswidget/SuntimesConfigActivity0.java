@@ -41,7 +41,7 @@ import com.forrestguice.support.annotation.Nullable;
 
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.widget.PopupMenu;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.util.Log;

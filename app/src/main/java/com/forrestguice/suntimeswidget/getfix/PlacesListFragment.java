@@ -37,7 +37,7 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.design.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
