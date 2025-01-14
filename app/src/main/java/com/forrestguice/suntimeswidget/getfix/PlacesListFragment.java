@@ -38,7 +38,7 @@ import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.design.view.MenuItemCompat;
 import com.forrestguice.support.design.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
 import com.forrestguice.support.design.widget.RecyclerView;
