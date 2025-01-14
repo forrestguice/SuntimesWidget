@@ -35,7 +35,7 @@ import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
