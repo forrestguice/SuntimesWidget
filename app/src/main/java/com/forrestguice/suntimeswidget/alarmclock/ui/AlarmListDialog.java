@@ -42,6 +42,7 @@ import android.os.Bundle;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -2216,17 +2217,17 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerViewUtils.PositionMarginsItemDecoration()
     {
         @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            int position = parent.getChildAdapterPosition(view);
-            if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
-                outRect.bottom = 400;
-            } else {
-                super.getItemOffsets(outRect, view, parent, state);
-            }
+        protected int[] getMarginsPx() {
+            return marginsPx;
+        }
+        private final int[] marginsPx = new int[] {0, 0, 0, 400};
+
+        @Override
+        protected int getPosition() {
+            return adapter.getItemCount() - 1;
         }
     };
 

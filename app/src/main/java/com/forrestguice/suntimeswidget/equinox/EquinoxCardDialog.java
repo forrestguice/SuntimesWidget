@@ -38,7 +38,7 @@ import com.forrestguice.support.design.widget.GridLayoutManager;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
 import com.forrestguice.support.design.widget.LinearSnapHelper;
 import com.forrestguice.support.design.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -74,6 +74,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -908,15 +909,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration {
-        private int marginPx;
+    public static class CardViewDecorator extends RecyclerViewUtils.MarginsItemDecoration
+    {
         public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
+            int marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
+            init(marginPx, 0, marginPx, 0);
         }
     }
 

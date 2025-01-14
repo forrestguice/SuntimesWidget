@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 import com.forrestguice.support.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -553,19 +554,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     /**
      * CardViewDecorator
      */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
+    public static class CardViewDecorator extends RecyclerViewUtils.MarginsItemDecoration
     {
-        private int marginPx;
-
         public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-        {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
+            int marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
+            init(marginPx, 0, marginPx, 0);
         }
     }
 
