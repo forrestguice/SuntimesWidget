@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.app.AppCompatActivity;
 
@@ -727,7 +728,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (activity == null)
                 return false;
 
-            this.actionMode = activity.startSupportActionMode(getString(R.string.timezone_sort_contextAction), new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            this.actionMode = ActionModeHelper.wrap(activity.startSupportActionMode(getString(R.string.timezone_sort_contextAction), ActionModeHelper.wrap(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -747,12 +748,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 }
 
                 @Override
-                public void onDestroyActionMode(android.support.v7.view.ActionMode mode)
+                public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
                 {
                     super.onDestroyActionMode(mode);
                     TimeZoneDialog.this.actionMode = null;
                 }
-            });
+            })));
         }
 
         view.setSelected(true);

@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
+import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
@@ -66,7 +67,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.support.design.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -203,10 +203,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_solartime_help;
 
     protected String customTimezoneID;
-    protected ActionMode.Callback spinner_timezone_actionMode;
+    protected ActionModeHelper.ActionModeCallback spinner_timezone_actionMode;
     protected WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
 
     public SuntimesConfigActivity0()
     {
@@ -668,7 +668,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
 
             @Override
-            public void onDestroyActionMode(ActionMode mode)
+            public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
             {
                 super.onDestroyActionMode(mode);
                 actionMode = null;
@@ -1463,7 +1463,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (actionMode == null)
         {
-            actionMode = startSupportActionMode(spinner_timezone_actionMode);
+            actionMode = ActionModeHelper.wrap(startSupportActionMode(ActionModeHelper.wrap(spinner_timezone_actionMode)));
             actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
             return true;
         }

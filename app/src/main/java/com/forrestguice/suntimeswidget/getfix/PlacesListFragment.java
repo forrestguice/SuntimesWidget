@@ -34,12 +34,12 @@ import android.os.Parcelable;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.design.view.MenuItemCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
 import com.forrestguice.support.design.widget.RecyclerView;
 import com.forrestguice.support.design.widget.SearchView;
@@ -95,7 +95,7 @@ public class PlacesListFragment extends Fragment
     protected RecyclerView listView;
     protected View emptyView;
     protected View progressView;
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
 
     public PlacesListFragment()
@@ -281,7 +281,7 @@ public class PlacesListFragment extends Fragment
             if (items[0] != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = activity.startSupportActionMode(actions);
+                actionMode = ((activity != null) ? ActionModeHelper.wrap(activity.startSupportActionMode(ActionModeHelper.wrap(actions))) : null);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), items);
                 }
@@ -334,7 +334,7 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    private class PlacesListActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class PlacesListActionCompat implements ActionModeHelper.ActionModeCallback
     {
         private PlaceItem[] items = null;
         public void setItems(PlaceItem[] values) {
@@ -342,7 +342,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placescontext, menu);
@@ -350,7 +350,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -373,7 +373,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
@@ -406,7 +406,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode)
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
         {
             actionMode = null;
             adapter.setSelectedRowID(-1);

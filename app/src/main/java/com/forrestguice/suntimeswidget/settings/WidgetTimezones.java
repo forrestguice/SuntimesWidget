@@ -43,6 +43,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.design.view.ActionModeHelper;
+
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.ref.WeakReference;
@@ -848,7 +850,7 @@ public class WidgetTimezones
     /**
      * ActionMode for sorting time zone spinners (support mode version).
      */
-    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements android.support.v7.view.ActionMode.Callback
+    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements ActionModeHelper.ActionModeCallback
     {
         public TimeZoneSpinnerSortActionCompat(Context context, Spinner spinner)
         {
@@ -856,7 +858,7 @@ public class WidgetTimezones
         }
 
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.timezonesort, menu);
@@ -864,16 +866,16 @@ public class WidgetTimezones
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {}
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface actionMode) {}
 
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem item)
         {
             if (onActionItemClicked(item.getItemId()))
             {
