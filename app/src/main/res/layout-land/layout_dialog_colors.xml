@@ -85,7 +85,7 @@
             android:id="@+id/color_recent"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:paddingLeft="?dialogPreferredPadding" android:paddingRight="8dp"
-            android:orientation="vertical" app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:orientation="vertical" app:layoutManager="com.forrestguice.support.design.widget.LinearLayoutManager"
             tools:itemCount="16" tools:listitem="@layout/layout_listitem_color" />
 
         <com.forrestguice.suntimeswidget.settings.colors.NoSwipeViewPager

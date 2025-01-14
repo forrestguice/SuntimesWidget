@@ -5,7 +5,7 @@
 
     <com.forrestguice.support.design.widget.RecyclerView android:id="@+id/color_grid"
         android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager" app:spanCount="14" tools:itemCount="266"
+        app:layoutManager="com.forrestguice.support.design.widget.GridLayoutManager" app:spanCount="14" tools:itemCount="266"
         tools:listitem="@layout/layout_listitem_color" />
 
     <LinearLayout android:orientation="vertical"
