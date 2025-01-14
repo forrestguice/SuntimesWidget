@@ -48,7 +48,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
 import com.forrestguice.support.design.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import com.forrestguice.support.design.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;

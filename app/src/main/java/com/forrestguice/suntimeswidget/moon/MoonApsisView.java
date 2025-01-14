@@ -30,7 +30,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.ColorUtils;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;

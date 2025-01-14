@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.settings.colors;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 

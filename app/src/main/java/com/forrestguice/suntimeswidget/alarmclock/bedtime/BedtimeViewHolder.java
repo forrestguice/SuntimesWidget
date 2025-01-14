@@ -32,7 +32,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.drawable.DrawableCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;

@@ -25,7 +25,7 @@ import android.content.res.TypedArray;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;

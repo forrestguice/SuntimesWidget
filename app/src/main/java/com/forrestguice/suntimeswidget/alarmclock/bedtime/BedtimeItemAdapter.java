@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.content.Context;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

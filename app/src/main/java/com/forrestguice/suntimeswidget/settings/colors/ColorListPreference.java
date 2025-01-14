@@ -26,7 +26,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.preference.DialogPreference;
 import com.forrestguice.support.design.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;

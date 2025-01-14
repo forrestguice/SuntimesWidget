@@ -36,7 +36,7 @@ import com.forrestguice.support.design.view.ViewCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.widget.LinearLayoutManager;
 import com.forrestguice.support.design.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;

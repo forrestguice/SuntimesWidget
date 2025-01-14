@@ -22,7 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import com.forrestguice.support.annotation.Nullable;
 
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 
 import android.util.Log;
 import android.util.Pair;
