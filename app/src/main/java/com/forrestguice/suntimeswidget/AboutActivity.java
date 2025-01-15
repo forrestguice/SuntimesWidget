@@ -18,17 +18,15 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import com.forrestguice.support.design.widget.TabLayout;
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.design.widget.Toolbar;
 
 import com.forrestguice.support.design.app.Fragment;
-import com.forrestguice.support.design.view.FragmentPagerAdapter;
+import com.forrestguice.support.design.app.FragmentPagerAdapter;
 import com.forrestguice.support.design.view.ViewPager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -41,9 +39,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class AboutActivity extends AppCompatActivity
 {

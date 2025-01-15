@@ -29,6 +29,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
 import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
@@ -69,7 +70,7 @@ public class ActionListHelper
     public static final String DIALOGTAG_EDIT = "edit";
 
     private WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManagerInterface fragmentManager;
 
     private ActionDisplay selectedItem;
     private ListView list;
@@ -82,7 +83,7 @@ public class ActionListHelper
         return adapterModified;
     }
 
-    public ActionListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public ActionListHelper(@NonNull Context context, @NonNull FragmentManagerInterface fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -98,7 +99,7 @@ public class ActionListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerInterface fragments) {
         fragmentManager = fragments;
     }
 
@@ -137,14 +138,14 @@ public class ActionListHelper
 
     public void onResume()
     {
-        SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+        SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_ADD);
         if (addDialog != null)
         {
             addDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), addDialog));
             addDialog.getEdit().setFragmentManager(fragmentManager);
         }
 
-        SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+        SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_EDIT);
         if (editDialog != null)
         {
             editDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), editDialog));
@@ -316,7 +317,7 @@ public class ActionListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.get(), DIALOGTAG_ADD);
     }
 
     protected void editAction()
@@ -336,7 +337,7 @@ public class ActionListHelper
             });
 
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.get(), DIALOGTAG_EDIT);
         }
     }
 

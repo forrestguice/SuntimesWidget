@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
+import com.forrestguice.support.design.app.FragmentManagerCompat;
 import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
@@ -282,7 +283,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
-        edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+        edit_launchIntent.onResume(getSupportFragmentManagerCompat(), getData(this, appWidgetId));
     }
 
     public SuntimesData getData(Context context, int appWidgetId) {
@@ -472,7 +473,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: onTap launchActivity
         //
         edit_launchIntent = (EditActionView) findViewById(R.id.appwidget_action_launch_edit);
-        edit_launchIntent.setFragmentManager(getSupportFragmentManager());
+        edit_launchIntent.setFragmentManager(getSupportFragmentManagerCompat());
         edit_launchIntent.setData(getData(this, appWidgetId));
 
         //

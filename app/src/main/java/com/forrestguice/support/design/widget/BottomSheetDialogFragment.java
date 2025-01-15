@@ -10,9 +10,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentManagerCompat;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
 
 public class BottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment
 {
+    public FragmentManagerInterface getFragmentManagerCompat() {
+        return new FragmentManagerCompat(getFragmentManager());
+    }
+
+    public FragmentManagerInterface getChildFragmentManagerCompat() {
+        return new FragmentManagerCompat(getChildFragmentManager());
+    }
+
     public static int getBottomSheetResID() {
         //return com.google.android.material.R.id.design_bottom_sheet;    // for androidx
         return android.support.design.R.id.design_bottom_sheet;           // for support libs

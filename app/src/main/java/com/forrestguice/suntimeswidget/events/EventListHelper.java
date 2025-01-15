@@ -34,6 +34,7 @@ import android.os.Bundle;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
@@ -92,7 +93,7 @@ public class EventListHelper
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManagerInterface fragmentManager;
 
     private int selectedChild = -1;
     private EventSettings.EventAlias selectedItem;
@@ -110,7 +111,7 @@ public class EventListHelper
         return adapterModified;
     }
 
-    public EventListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public EventListHelper(@NonNull Context context, @NonNull FragmentManagerInterface fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -126,7 +127,7 @@ public class EventListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerInterface fragments) {
         fragmentManager = fragments;
     }
 
@@ -174,17 +175,17 @@ public class EventListHelper
 
     public void onResume()
     {
-        EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+        EditEventDialog addDialog = (EditEventDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_ADD);
         if (addDialog != null) {
             addDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), addDialog));
         }
 
-        EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+        EditEventDialog editDialog = (EditEventDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_EDIT);
         if (editDialog != null) {
             editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -422,7 +423,7 @@ public class EventListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.get(), DIALOGTAG_ADD);
     }
 
     protected void editEvent(final String eventID)
@@ -444,7 +445,7 @@ public class EventListHelper
             });
 
             saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.get(), DIALOGTAG_EDIT);
         }
     }
 
@@ -775,7 +776,7 @@ public class EventListHelper
             helpDialog.setContent(helpSpan);
             helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
-            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+            helpDialog.show(fragmentManager.get(), DIALOGTAG_HELP);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.forrestguice.support.design.view;
+package com.forrestguice.support.design.app;
 
 import android.support.v4.app.FragmentManager;
 
