@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.design.app.FragmentManagerCompat;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -845,12 +846,12 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         setCancelable(dialog, false);
 
-        BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

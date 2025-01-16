@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -196,12 +197,12 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+            BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
             if (behavior != null) {
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(false);
                 behavior.setPeekHeight(200);
-                behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+                behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }

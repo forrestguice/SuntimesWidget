@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -153,12 +154,12 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 }

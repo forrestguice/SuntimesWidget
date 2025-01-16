@@ -39,7 +39,8 @@ import android.os.SystemClock;
 import android.provider.AlarmClock;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorCompat;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityOptionsCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -151,7 +152,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private FloatingActionButton addButton;
     private FloatingActionButton deselectButton;
-    private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehaviorInterface sheetBehavior;
     private SuntimesNavigation navigation;
 
     private SuntimesWarningCollection warnings;
@@ -659,12 +660,12 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedState);
         warnings.restoreWarnings(savedState);
 
-        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehavior.STATE_HIDDEN);
+        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehaviorInterface.STATE_HIDDEN);
         sheetBehavior.setState(sheetState);
 
         if (Build.VERSION.SDK_INT >= 14)
         {
-            if (sheetState != BottomSheetBehavior.STATE_HIDDEN)
+            if (sheetState != BottomSheetBehaviorInterface.STATE_HIDDEN)
             {
                 addButton.setScaleX(0);
                 addButton.setScaleY(0);
@@ -720,20 +721,20 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         View bottomSheet = findViewById(R.id.app_bottomsheet);
-        sheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
+        sheetBehavior = BottomSheetBehaviorCompat.create(bottomSheet);
+        sheetBehavior.setState(BottomSheetBehaviorInterface.STATE_HIDDEN);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehaviorInterface.BottomSheetCallbackCompat()
         {
             @Override
             public void onStateChanged(@NonNull View view, int newState)
             {
-                /* switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN: break;
-                    case BottomSheetBehavior.STATE_EXPANDED: break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: break;
-                    case BottomSheetBehavior.STATE_DRAGGING: break;
-                    case BottomSheetBehavior.STATE_SETTLING: break;
-                } */
+                //switch (newState) {
+                //    case BottomSheetBehavior.STATE_HIDDEN: break;
+                //    case BottomSheetBehavior.STATE_EXPANDED: break;
+                //    case BottomSheetBehavior.STATE_COLLAPSED: break;
+                //    case BottomSheetBehavior.STATE_DRAGGING: break;
+                //    case BottomSheetBehavior.STATE_SETTLING: break;
+                //}
             }
 
             @Override
@@ -746,7 +747,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     private boolean isAddDialogShowing() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
+        return sheetBehavior.getState() == BottomSheetBehaviorInterface.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehaviorInterface.STATE_COLLAPSED;
     }
 
     private final AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
@@ -928,11 +929,11 @@ public class AlarmClockActivity extends AppCompatActivity
             dialog.setOnCanceledListener(onAddAlarmCanceled);
             dialog.setOnNeutralListener(onAddAlarmNeutral);
         }
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
     }
 
     protected void dismissAddDialog() {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        sheetBehavior.setState(BottomSheetBehaviorInterface.STATE_HIDDEN);
     }
 
     protected void updateViews(Context context) {
@@ -1130,7 +1131,7 @@ public class AlarmClockActivity extends AppCompatActivity
             navigation.closeNavigationDrawer();
 
         } else if (isAddDialogShowing()) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            sheetBehavior.setState(BottomSheetBehaviorInterface.STATE_HIDDEN);
 
         } else if (list.getSelectedRowID() != -1) {
             list.clearSelection();

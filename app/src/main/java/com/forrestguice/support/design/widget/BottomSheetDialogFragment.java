@@ -39,70 +39,18 @@ public class BottomSheetDialogFragment extends android.support.design.widget.Bot
     }
 
     @Nullable
-    public static BottomSheetBehavior<?> getBottomSheetBehavior(@Nullable DialogInterface dialog)
-    {
-        FrameLayout layout = getBottomSheetLayout(dialog);
-        if (layout != null) {
-            return BottomSheetBehavior.from(layout);
-        }
-        return null;
+    public static BottomSheetBehavior<?> getBottomSheetBehavior(@Nullable DialogInterface dialog) {
+        return BottomSheetBehaviorCompat.getBottomSheetBehavior(getBottomSheetLayout(dialog));
     }
 
     @Nullable
-    protected BottomSheetBehaviorCompat initBottomSheetBehavior() {
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior() {
         return initBottomSheetBehavior(getDialog());
     }
 
     @Nullable
-    protected BottomSheetBehaviorCompat initBottomSheetBehavior(DialogInterface dialog)
-    {
-        final BottomSheetBehavior<?> behavior = getBottomSheetBehavior(dialog);
-        if (behavior != null)
-        {
-            return new BottomSheetBehaviorCompat()
-            {
-                @Override
-                public void setState(int state) {
-                    behavior.setState(state);
-                }
-
-                @Override
-                public int getState() {
-                    return behavior.getState();
-                }
-
-                @Override
-                public void setHideable(boolean hideable) {
-                    behavior.setHideable(hideable);
-                }
-
-                @Override
-                public boolean isHideable() {
-                    return behavior.isHideable();
-                }
-
-                @Override
-                public void setSkipCollapsed(boolean value) {
-                    behavior.setSkipCollapsed(value);
-                }
-
-                @Override
-                public boolean getSkipCollapsed() {
-                    return behavior.getSkipCollapsed();
-                }
-
-                @Override
-                public void setPeekHeight(int peekHeight) {
-                    behavior.setPeekHeight(peekHeight);
-                }
-
-                @Override
-                public int getPeekHeight() {
-                    return behavior.getPeekHeight();
-                }
-            };
-        }
-        return null;
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior(DialogInterface dialog) {
+        return BottomSheetBehaviorCompat.create(getBottomSheetBehavior(dialog));
     }
 
     public static void initPeekHeight(DialogInterface dialog, int bottomViewResId) {
@@ -170,28 +118,4 @@ public class BottomSheetDialogFragment extends android.support.design.widget.Bot
         }
     }
 
-    /**
-     * BottomSheetBehaviorCompat
-     */
-    public interface BottomSheetBehaviorCompat
-    {
-        int STATE_DRAGGING = BottomSheetBehavior.STATE_DRAGGING;
-        int STATE_SETTLING = BottomSheetBehavior.STATE_SETTLING;
-        int STATE_EXPANDED = BottomSheetBehavior.STATE_EXPANDED;
-        int STATE_COLLAPSED = BottomSheetBehavior.STATE_COLLAPSED;
-        int STATE_HIDDEN = BottomSheetBehavior.STATE_HIDDEN;
-        int STATE_HALF_EXPANDED = BottomSheetBehavior.STATE_HALF_EXPANDED;
-
-        void setState(int state);
-        int getState();
-
-        void setHideable(boolean hideable);
-        boolean isHideable();
-
-        void setSkipCollapsed(boolean value);
-        boolean getSkipCollapsed();
-
-        void setPeekHeight(int peekHeight);
-        int getPeekHeight();
-    }
 }

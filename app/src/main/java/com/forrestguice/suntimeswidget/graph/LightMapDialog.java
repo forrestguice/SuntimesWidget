@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.widget.ImageViewCompat;
@@ -222,11 +223,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+            BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
             if (behavior != null) {
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
-                behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+                behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }

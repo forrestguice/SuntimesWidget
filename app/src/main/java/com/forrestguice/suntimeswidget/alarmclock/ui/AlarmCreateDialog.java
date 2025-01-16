@@ -29,6 +29,7 @@ import android.os.Bundle;
 
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.TabLayout;
 
@@ -745,12 +746,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             FrameLayout layout = getBottomSheetLayout(dialog);
             if (layout != null)
             {
-                final BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+                final BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
                 behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
                 layout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+                        behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
                     }
                 }, AUTO_EXPAND_DELAY);
             }

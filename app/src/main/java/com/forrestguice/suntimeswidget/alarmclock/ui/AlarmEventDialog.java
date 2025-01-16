@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -820,12 +821,12 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(true);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

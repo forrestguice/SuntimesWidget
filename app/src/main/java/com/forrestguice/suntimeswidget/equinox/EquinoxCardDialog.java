@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.ImageViewCompat;
 import com.forrestguice.support.design.widget.GridLayoutManager;
@@ -217,26 +218,26 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehaviorCompat bottomSheet = initBottomSheetBehavior(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehaviorCompat.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_COLLAPSED);
             }
         }
     }
     @Nullable
     @Override
-    protected BottomSheetBehaviorCompat initBottomSheetBehavior(DialogInterface dialog)
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior(DialogInterface dialog)
     {
-        BottomSheetBehaviorCompat behavior = super.initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = super.initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(false);

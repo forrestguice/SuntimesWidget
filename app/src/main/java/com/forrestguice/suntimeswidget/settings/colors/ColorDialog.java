@@ -29,6 +29,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.widget.TabLayout;
 import com.forrestguice.support.design.view.ViewPager;
@@ -369,12 +370,12 @@ public class ColorDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

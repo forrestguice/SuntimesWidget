@@ -28,6 +28,7 @@ import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 
@@ -463,12 +464,12 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetBehaviorCompat behavior = initBottomSheetBehavior(dialog);
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
         if (behavior != null)
         {
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 
