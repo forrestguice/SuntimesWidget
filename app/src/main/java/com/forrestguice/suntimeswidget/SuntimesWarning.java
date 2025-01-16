@@ -178,7 +178,7 @@ public class SuntimesWarning
             {
                 case DISMISS_EVENT_SWIPE:
                     wasDismissed = true;
-                    snackbar.get().getView().post(new Runnable() {
+                    snackbar.getView().post(new Runnable() {
                         @Override
                         public void run() {
                             showNextWarning();
