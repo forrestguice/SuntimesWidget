@@ -34,6 +34,7 @@ import android.os.Parcelable;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentActivity;
 import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
@@ -65,7 +66,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -583,7 +583,7 @@ public class PlacesListFragment extends Fragment
     {
         @Nullable
         protected LocationHelper createLocationHelper() {
-            return new GetFixHelper(getActivity(), getFixUI());
+            return new GetFixHelper(FragmentActivity.wrap(getActivity()), getFixUI());
         }
     }
 

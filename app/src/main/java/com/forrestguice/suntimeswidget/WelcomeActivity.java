@@ -30,6 +30,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.Fragment;
 
+import com.forrestguice.support.design.app.FragmentCompat;
 import com.forrestguice.support.design.app.FragmentPagerAdapter;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewPager;
@@ -1152,7 +1153,7 @@ public class WelcomeActivity extends AppCompatActivity
                 if (importTask != null) {
                     Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
                 }
-                AlarmListDialog.importAlarms(WelcomeAlarmsFragment.this, getContext(), getLayoutInflater(), IMPORT_REQUEST);
+                AlarmListDialog.importAlarms(FragmentCompat.create(WelcomeAlarmsFragment.this), getContext(), getLayoutInflater(), IMPORT_REQUEST);
             }
         };
 

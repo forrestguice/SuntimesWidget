@@ -32,10 +32,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.ActivityCompat;
 import com.forrestguice.support.design.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 
+import com.forrestguice.support.design.app.FragmentActivityInterface;
 import com.forrestguice.support.design.app.FragmentInterface;
 import com.forrestguice.support.design.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
@@ -73,13 +74,19 @@ public class GetFixHelper implements LocationHelper
     public boolean wasGettingFix = false;
     public boolean gotFix = false;
 
-    private FragmentActivity myParent;
+    private final WeakReference<FragmentActivityInterface> myParent;
+
+    @Nullable
+    protected FragmentActivityInterface getParentActivity() {
+        return myParent.get();
+    }
+
     private ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
-    public GetFixHelper(FragmentActivity parent, GetFixUI ui)
+    public GetFixHelper(FragmentActivityInterface parent, GetFixUI ui)
     {
-        myParent = parent;
+        myParent = new WeakReference<>(parent);
         addUI(ui);
     }
 
@@ -98,14 +105,20 @@ public class GetFixHelper implements LocationHelper
      */
     public boolean getFix()
     {
+        if (getParentActivity() == null || getParentActivity().getActivity() == null) {
+            Log.w("GetFixHelper", "getFix called with null context!");
+            return false;
+        }
+        Context context = getParentActivity().getActivity();
+
         if (!gettingFix)
         {
-            if (checkGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
+            if (checkGPSPermissions(getParentActivity(), REQUEST_GETFIX_LOCATION))
             {
-                if (isLocationEnabled(myParent))
+                if (isLocationEnabled(context))
                 {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
-                    getFixTask = new GetFixTask(myParent, this);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    getFixTask = new GetFixTask(context, this);
 
                     int minElapsed = LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
                     getFixTask.setMinElapsed(minElapsed);
@@ -135,7 +148,7 @@ public class GetFixHelper implements LocationHelper
                             }
                         }
                     });
-                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(myParent));
+                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(context));
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
@@ -176,7 +189,8 @@ public class GetFixHelper implements LocationHelper
 
     public void fallbackToLastLocation()
     {
-        LocationManager locationManager = (LocationManager)myParent.getSystemService(Context.LOCATION_SERVICE);
+        Context context = getParentActivity().getActivity();
+        LocationManager locationManager = ((context != null) ? (LocationManager) context.getSystemService(Context.LOCATION_SERVICE) : null);
         if (locationManager != null)
         {
             GetFixUI uiObj = getUI();
@@ -251,18 +265,24 @@ public class GetFixHelper implements LocationHelper
      * @param requestID used to identify the permission request
      * @return true already has gps permissions, false has no permissions (triggers a request)
      */
-    public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
+    public boolean checkGPSPermissions(@NonNull final FragmentActivityInterface activity, final int requestID)
     {
-        boolean hasPermission = hasLocationPermission(activity);
+        Context context = activity.getActivity();
+        if (context == null) {
+            Log.w("GetFixHelper", "checkGPSPermissions has null context! returning true");
+            return true;
+        }
+
+        boolean hasPermission = hasLocationPermission(activity.getActivity());
         //Log.d("checkGPSPermissions", "" + hasPermission);
 
         if (!hasPermission)
         {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION))
             {
-                String permissionMessage = activity.getString(R.string.privacy_permission_location);
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
+                String permissionMessage = context.getString(R.string.privacy_permission_location);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.privacy_permissiondialog_title))
                         .setMessage(fromHtml(permissionMessage))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                         {
@@ -279,7 +299,7 @@ public class GetFixHelper implements LocationHelper
                 builder.show();
 
             } else {
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+                ActivityCompat.requestPermissions(activity.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
             }
         }
         return hasPermission;
@@ -288,10 +308,14 @@ public class GetFixHelper implements LocationHelper
     protected void requestPermissions(final int requestID) {
         if (getFragment() != null) {
             requestPermissions(getFragment(), requestID);
-        } else requestPermissions(myParent, requestID);
+        } else if (getParentActivity() != null && getParentActivity().getActivity() != null) {
+            requestPermissions(getParentActivity().getActivity(), requestID);
+        }
     }
-    protected void requestPermissions(Activity activity, final int requestID) {
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+    protected void requestPermissions(@Nullable Activity activity, final int requestID) {
+        if (activity != null) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+        }
     }
     protected void requestPermissions(FragmentInterface fragment, final int requestID) {
         fragment.get().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
@@ -416,15 +440,14 @@ public class GetFixHelper implements LocationHelper
     public void onResume()
     {
         //Log.d("DEBUG", "GetFixHelper onResume");
-        FragmentManagerInterface fragments = FragmentManagerCompat.create(myParent.getSupportFragmentManager());
-
-        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.get().findFragmentByTag(DIALOGTAG_KEEPTRYING);
+        FragmentManagerInterface fragments = ((getParentActivity() != null && getParentActivity().getActivity() != null) ? FragmentManagerCompat.create(getParentActivity().getActivity().getSupportFragmentManager()) : null);
+        KeepTryingDialog keepTryingDialog = ((fragments != null) ? (KeepTryingDialog) fragments.get().findFragmentByTag(DIALOGTAG_KEEPTRYING) : null);
         if (keepTryingDialog != null)
         {
             keepTryingDialog.setHelper(this);
         }
 
-        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) fragments.get().findFragmentByTag(DIALOGTAG_ENABLEGPS);
+        EnableGPSDialog enableGPSDialog = ((fragments != null) ? (EnableGPSDialog) fragments.get().findFragmentByTag(DIALOGTAG_ENABLEGPS) : null);
         if (enableGPSDialog != null)
         {
             enableGPSDialog.setHelper(this);
@@ -480,9 +503,13 @@ public class GetFixHelper implements LocationHelper
 
     public void showKeepSearchingPrompt()
     {
-        final KeepTryingDialog dialog = new KeepTryingDialog();
-        dialog.setHelper(this);
-        dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_KEEPTRYING);
+        FragmentActivityInterface activity = getParentActivity();
+        if (activity != null && activity.getActivity() != null)
+        {
+            final KeepTryingDialog dialog = new KeepTryingDialog();
+            dialog.setHelper(this);
+            dialog.show(activity.getActivity().getSupportFragmentManager(), DIALOGTAG_KEEPTRYING);
+        }
     }
 
     /**
@@ -526,7 +553,7 @@ public class GetFixHelper implements LocationHelper
     public boolean isLocationEnabled(Context context)
     {
         boolean allowPassive = LocationHelperSettings.loadPrefGpsPassiveMode(context);
-        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
+        return isNetProviderEnabled(context) || isGPSProviderEnabled(context) || (allowPassive && isPassiveProviderEnabled(context));
     }
 
     @Override
@@ -552,9 +579,13 @@ public class GetFixHelper implements LocationHelper
 
     public void showGPSEnabledPrompt()
     {
-        final EnableGPSDialog dialog = new EnableGPSDialog();
-        dialog.setHelper(this);
-        dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
+        FragmentActivityInterface activity = getParentActivity();
+        if (activity != null && activity.getActivity() != null)
+        {
+            final EnableGPSDialog dialog = new EnableGPSDialog();
+            dialog.setHelper(this);
+            dialog.show(activity.getActivity().getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
+        }
     }
 
 

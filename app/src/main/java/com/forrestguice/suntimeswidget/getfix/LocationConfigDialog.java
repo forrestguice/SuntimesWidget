@@ -27,17 +27,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentActivity;
+import com.forrestguice.support.design.app.FragmentActivityInterface;
 import com.forrestguice.support.design.app.FragmentCompat;
 import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentActivity;
 
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
@@ -279,14 +279,13 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final FragmentActivity myParent = getActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
-        dialogContent.init(myParent, false);
+        dialogContent.init(FragmentActivity.wrap(getActivity()), false);
         dialogContent.setFragment(FragmentCompat.create(this));
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
@@ -331,7 +330,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             loadSettings(savedInstanceState);
 
         } else if (presetData != null) {
-            dialogContent.loadSettings(myParent, presetData);
+            dialogContent.loadSettings(getActivity(), presetData);
 
         } else if (presetLocation != null) {
             setLocation(getContext(), presetLocation);

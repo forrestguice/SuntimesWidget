@@ -42,10 +42,11 @@ import android.os.Bundle;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.app.FragmentInterface;
 import com.forrestguice.support.design.widget.RecyclerViewUtils;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.graphics.ColorUtils;
 import com.forrestguice.support.design.view.ViewCompat;
@@ -672,10 +673,10 @@ public class AlarmListDialog extends DialogFragment
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             return;
         }
-        importAlarms(AlarmListDialog.this, context, getLayoutInflater(), REQUEST_IMPORT_URI);
+        importAlarms(FragmentCompat.create(AlarmListDialog.this), context, getLayoutInflater(), REQUEST_IMPORT_URI);
     }
 
-    public static void importAlarms(final Fragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
+    public static void importAlarms(final FragmentInterface fragment, final Context context, LayoutInflater layoutInflater, final int request)
     {
         DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
         {
@@ -683,7 +684,7 @@ public class AlarmListDialog extends DialogFragment
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
-                    fragment.startActivityForResult(intent, request);
+                    fragment.get().startActivityForResult(intent, request);
                 } catch (Exception e) {
                     Log.e("ImportAlarms", "Failed to start activity! " + e);
                 }

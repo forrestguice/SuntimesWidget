@@ -47,6 +47,7 @@ import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.support.design.app.AppCompatActivity;
 import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
+import com.forrestguice.support.design.app.FragmentActivity;
 import com.forrestguice.support.design.widget.PagerSnapHelper;
 import com.forrestguice.support.design.widget.RecyclerView;
 import com.forrestguice.support.design.widget.Toolbar;
@@ -1099,7 +1100,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        getFixHelper = new GetFixHelper(FragmentActivity.wrap(this), new GetFixUI()
         {
             private MenuItem refreshItem = null;
 

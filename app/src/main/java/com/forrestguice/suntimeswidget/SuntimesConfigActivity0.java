@@ -39,7 +39,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 
-import com.forrestguice.support.design.app.FragmentManagerCompat;
+import com.forrestguice.support.design.app.FragmentActivity;
 import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
@@ -684,7 +684,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             locationConfig.setAutoAllowed(true);
             locationConfig.setHideMode(false);
-            locationConfig.init(this, false, this.appWidgetId);
+            locationConfig.init(FragmentActivity.wrap(this), false, this.appWidgetId);
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
