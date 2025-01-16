@@ -49,6 +49,8 @@ import android.provider.Settings;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
+
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -674,6 +676,13 @@ public class AlarmSettings
             }
         }
         return false;
+    }
+
+    /**
+     * areNotificationsEnabled
+     */
+    public static boolean areNotificationsEnabled(Context context) {
+        return NotificationManagerCompat.from(context).areNotificationsEnabled();
     }
 
     /**

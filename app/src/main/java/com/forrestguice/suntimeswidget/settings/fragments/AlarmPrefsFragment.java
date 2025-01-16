@@ -46,7 +46,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import android.text.SpannableString;
@@ -205,7 +204,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
-            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
+            if (AlarmSettings.areNotificationsEnabled(context))
             {
                 if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);

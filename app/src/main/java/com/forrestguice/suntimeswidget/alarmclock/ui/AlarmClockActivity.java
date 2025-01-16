@@ -43,7 +43,6 @@ import com.forrestguice.support.design.widget.BottomSheetBehaviorCompat;
 import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityOptionsCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.view.ViewCompat;
 import com.forrestguice.support.design.app.AppCompatActivity;
@@ -1034,7 +1033,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 switch (warningID)
                 {
                     case WARNINGID_NOTIFICATIONS:
-                        return !NotificationManagerCompat.from(context).areNotificationsEnabled();
+                        return !AlarmSettings.areNotificationsEnabled(context);
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "0":
                         return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[0]);

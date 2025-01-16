@@ -2492,7 +2492,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onShow)");
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
-                        if (!NotificationManagerCompat.from(context).areNotificationsEnabled())
+                        if (!AlarmSettings.areNotificationsEnabled(context))
                         {
                             // when notifications are disabled, fallback to directly starting the fullscreen activity
                             startActivity(getFullscreenIntent(context, item.getUri()));
