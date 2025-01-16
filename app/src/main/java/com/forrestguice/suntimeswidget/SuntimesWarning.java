@@ -26,9 +26,11 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.widget.Snackbar;
+
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -73,8 +75,8 @@ public class SuntimesWarning
         return parentView;
     }
 
-    private Snackbar snackbar = null;
-    public Snackbar getSnackbar() {
+    private Snackbar.SnackbarInterface snackbar = null;
+    public Snackbar.SnackbarInterface getSnackbar() {
         return snackbar;
     }
 
@@ -128,17 +130,17 @@ public class SuntimesWarning
         parentView = view;
         wasDismissed = false;
         snackbar = Snackbar.make(parentView, message, duration);
-        snackbar.addCallback(snackbarListener);
+        snackbar.get().addCallback(snackbarListener);
         setContentDescription(contentDescription);
         themeWarning(context, snackbar);
 
         if (actionLabel != null && actionListener != null) {
-            snackbar.setAction(actionLabel, actionListener);
+            snackbar.get().setAction(actionLabel, actionListener);
         }
     }
 
     @SuppressLint("ResourceType")
-    private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
+    private void themeWarning(@NonNull Context context, @NonNull Snackbar.SnackbarInterface snackbarWarning)
     {
         int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
         TypedArray a = context.obtainStyledAttributes(colorAttrs);
@@ -149,9 +151,9 @@ public class SuntimesWarning
         int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
         a.recycle();
 
-        View snackbarView = snackbarWarning.getView();
+        View snackbarView = snackbarWarning.get().getView();
         snackbarView.setBackgroundColor(backgroundColor);
-        snackbarWarning.setActionTextColor(accentColor);
+        snackbarWarning.get().setActionTextColor(accentColor);
 
         TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         if (snackbarText != null) {
@@ -171,9 +173,11 @@ public class SuntimesWarning
     private final Snackbar.Callback snackbarListener = new Snackbar.Callback()
     {
         @Override
-        public void onDismissed(Snackbar snackbar, int event)
+        public void onShown(Snackbar.SnackbarInterface snackbar) {}
+
+        @Override
+        public void onDismissed(Snackbar.SnackbarInterface snackbar, int event)
         {
-            super.onDismissed(snackbar, event);
             switch (event)
             {
                 case DISMISS_EVENT_SWIPE:
@@ -193,17 +197,17 @@ public class SuntimesWarning
 
     public boolean isShown()
     {
-        return (snackbar != null && snackbar.isShown());
+        return (snackbar != null && snackbar.get().isShown());
     }
 
     public void show()
     {
         if (snackbar != null) {
             snackbar.show();
-            snackbar.getView().post(new Runnable() {
+            snackbar.get().getView().post(new Runnable() {
                 @Override
                 public void run() {
-                    snackbar.getView().requestFocus();
+                    snackbar.get().getView().requestFocus();
                 }
             });
         }
@@ -213,7 +217,7 @@ public class SuntimesWarning
     public void dismiss()
     {
         if (isShown()) {
-            snackbar.dismiss();
+            snackbar.get().dismiss();
         }
     }
 
@@ -227,7 +231,7 @@ public class SuntimesWarning
     {
         this.contentDescription = value;
         if (snackbar != null) {
-            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            TextView snackText = (TextView) snackbar.get().getView().findViewById(android.support.design.R.id.snackbar_text);
             if (snackText != null) {
                 snackText.setContentDescription(contentDescription);
             }

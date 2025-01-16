@@ -22,20 +22,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.Snackbar;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.widget.Snackbar;
 
 public class SnackbarUtils
 {
     @SuppressLint("ResourceType")
-    public static Snackbar themeSnackbar(Context context, Snackbar snackbar) {
+    public static Snackbar.SnackbarInterface themeSnackbar(Context context, Snackbar.SnackbarInterface snackbar) {
         return themeSnackbar(context, snackbar, null);
     }
 
     @SuppressLint("ResourceType")
-    public static Snackbar themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    public static Snackbar.SnackbarInterface themeSnackbar(Context context, Snackbar.SnackbarInterface snackbar, Integer[] colorOverrides)
     {
         Integer[] colors = new Integer[] {null, null, null};
         int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };

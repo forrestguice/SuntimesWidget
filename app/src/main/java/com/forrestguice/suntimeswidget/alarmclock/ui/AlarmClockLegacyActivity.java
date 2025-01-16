@@ -222,7 +222,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         {
             notificationWarning.setMessage(AlarmClockLegacyActivity.this, getString(R.string.notificationsWarning));
             notificationWarning.initWarning(this, alarmList, null);
-            notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+            notificationWarning.getSnackbar().get().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view) {
