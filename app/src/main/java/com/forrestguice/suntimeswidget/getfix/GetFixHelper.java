@@ -36,7 +36,7 @@ import com.forrestguice.support.design.app.ActivityCompat;
 import com.forrestguice.support.design.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import com.forrestguice.support.design.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import android.text.Html;
@@ -44,6 +44,7 @@ import android.text.Spanned;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -414,15 +415,15 @@ public class GetFixHelper implements LocationHelper
     public void onResume()
     {
         //Log.d("DEBUG", "GetFixHelper onResume");
-        FragmentManager fragments = myParent.getSupportFragmentManager();
+        FragmentManagerInterface fragments = FragmentManagerCompat.create(myParent.getSupportFragmentManager());
 
-        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.findFragmentByTag(DIALOGTAG_KEEPTRYING);
+        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.get().findFragmentByTag(DIALOGTAG_KEEPTRYING);
         if (keepTryingDialog != null)
         {
             keepTryingDialog.setHelper(this);
         }
 
-        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) fragments.findFragmentByTag(DIALOGTAG_ENABLEGPS);
+        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) fragments.get().findFragmentByTag(DIALOGTAG_ENABLEGPS);
         if (enableGPSDialog != null)
         {
             enableGPSDialog.setHelper(this);

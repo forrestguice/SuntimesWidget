@@ -16,6 +16,6 @@ public class AppCompatActivity extends android.support.v7.app.AppCompatActivity
     }
 
     public FragmentManagerInterface getSupportFragmentManagerCompat() {
-        return new FragmentManagerCompat(getSupportFragmentManager());
+        return FragmentManagerCompat.create(getSupportFragmentManager());
     }
 }

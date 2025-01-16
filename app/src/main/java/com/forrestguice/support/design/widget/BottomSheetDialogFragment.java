@@ -16,11 +16,11 @@ import com.forrestguice.support.design.app.FragmentManagerInterface;
 public class BottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment
 {
     public FragmentManagerInterface getFragmentManagerCompat() {
-        return new FragmentManagerCompat(getFragmentManager());
+        return FragmentManagerCompat.create(getFragmentManager());
     }
 
     public FragmentManagerInterface getChildFragmentManagerCompat() {
-        return new FragmentManagerCompat(getChildFragmentManager());
+        return FragmentManagerCompat.create(getChildFragmentManager());
     }
 
     public static int getBottomSheetResID() {

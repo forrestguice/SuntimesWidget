@@ -4,10 +4,10 @@ public class DialogFragment extends android.support.v4.app.DialogFragment
         implements android.content.DialogInterface.OnCancelListener, android.content.DialogInterface.OnDismissListener
 {
     public FragmentManagerInterface getFragmentManagerCompat() {
-        return new FragmentManagerCompat(getFragmentManager());
+        return FragmentManagerCompat.create(getFragmentManager());
     }
 
     public FragmentManagerInterface getChildFragmentManagerCompat() {
-        return new FragmentManagerCompat(getChildFragmentManager());
+        return FragmentManagerCompat.create(getChildFragmentManager());
     }
 }
