@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentCompat;
 import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import com.forrestguice.support.design.app.AppCompatActivity;
@@ -254,7 +255,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         getFixHelper = createLocationHelper();
         if (getFixHelper != null) {
-            getFixHelper.setFragment(this);
+            getFixHelper.setFragment(FragmentCompat.create(this));
         }
         updateGPSButtonIcons();
     }

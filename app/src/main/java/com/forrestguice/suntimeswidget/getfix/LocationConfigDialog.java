@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentCompat;
 import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 
@@ -285,7 +286,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
         dialogContent.init(myParent, false);
-        dialogContent.setFragment(this);
+        dialogContent.setFragment(FragmentCompat.create(this));
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override

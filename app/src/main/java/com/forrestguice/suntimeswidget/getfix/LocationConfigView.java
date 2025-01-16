@@ -30,7 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import com.forrestguice.support.design.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -63,6 +63,7 @@ import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.support.design.app.FragmentInterface;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -115,12 +116,12 @@ public class LocationConfigView extends LinearLayout
 
     public boolean isInitialized() { return isInitialized; }
 
-    public void setFragment(Fragment f) {
+    public void setFragment(FragmentInterface f) {
         if (getFixHelper != null) {
             getFixHelper.setFragment(f);
         }
     }
-    public Fragment getFragment() {
+    public FragmentInterface getFragment() {
         return getFixHelper != null ? getFixHelper.getFragment() : null;
     }
 

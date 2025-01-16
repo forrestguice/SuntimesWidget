@@ -34,8 +34,9 @@ import android.preference.PreferenceManager;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.app.ActivityCompat;
 import com.forrestguice.support.design.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+
+import com.forrestguice.support.design.app.FragmentInterface;
 import com.forrestguice.support.design.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
@@ -82,13 +83,13 @@ public class GetFixHelper implements LocationHelper
         addUI(ui);
     }
 
-    public void setFragment(Fragment f) {
+    public void setFragment(FragmentInterface f) {
         fragmentRef = new WeakReference<>(f);
     }
-    public Fragment getFragment() {
+    public FragmentInterface getFragment() {
         return fragmentRef != null ? fragmentRef.get() : null;
     }
-    private WeakReference<Fragment> fragmentRef = null;
+    private WeakReference<FragmentInterface> fragmentRef = null;
 
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
@@ -292,8 +293,8 @@ public class GetFixHelper implements LocationHelper
     protected void requestPermissions(Activity activity, final int requestID) {
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
     }
-    protected void requestPermissions(Fragment fragment, final int requestID) {
-        fragment.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+    protected void requestPermissions(FragmentInterface fragment, final int requestID) {
+        fragment.get().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
     }
 
     public boolean isGettingFix()
