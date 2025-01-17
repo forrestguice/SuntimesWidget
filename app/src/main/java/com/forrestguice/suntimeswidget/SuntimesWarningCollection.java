@@ -179,6 +179,11 @@ public abstract class SuntimesWarningCollection
             warning.setWarningListener(warningListener);
         }
     }
+    public void restoreWarningListener() {
+        for (SuntimesWarning warning : warnings) {
+            warning.setWarningListener(warningListener);
+        }
+    }
 
     /**
      * resetWarnings
@@ -263,6 +268,7 @@ public abstract class SuntimesWarningCollection
                 showWarnings(contextRef.get());
             }
         };
+        restoreWarningListener();
     }
 
 }

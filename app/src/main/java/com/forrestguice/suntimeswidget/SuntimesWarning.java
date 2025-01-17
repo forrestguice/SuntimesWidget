@@ -182,7 +182,12 @@ public class SuntimesWarning
             {
                 case DISMISS_EVENT_SWIPE:
                     wasDismissed = true;
-                    showNextWarning();
+                    snackbar.getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNextWarning();
+                        }
+                    });
                     break;
             }
         }
