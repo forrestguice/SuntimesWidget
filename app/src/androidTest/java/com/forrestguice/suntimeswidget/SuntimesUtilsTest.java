@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;

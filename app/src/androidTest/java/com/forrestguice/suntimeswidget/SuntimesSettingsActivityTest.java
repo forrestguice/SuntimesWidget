@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.preference.Preference;
 import com.forrestguice.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;

@@ -22,7 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
