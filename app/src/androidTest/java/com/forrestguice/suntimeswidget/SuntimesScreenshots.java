@@ -19,9 +19,10 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
+import com.forrestguice.support.test.espresso.IdlingPolicies;
 import android.support.test.filters.LargeTest;
+
+import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -103,7 +104,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
         long waitTime = 1 * 1000;            // wait a moment
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
@@ -128,7 +129,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
         long waitTime = 3 * 1000;            // wait a moment
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);

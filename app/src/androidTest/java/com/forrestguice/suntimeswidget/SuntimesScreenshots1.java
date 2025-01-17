@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.ViewAction;
+import com.forrestguice.support.test.espresso.IdlingPolicies;
+import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.filters.LargeTest;
+
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -88,7 +88,7 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
         onView( withId(android.R.id.content)).perform(ViewActions.click());
 
         long waitTime = 6 * 1000;            // wait a moment
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);

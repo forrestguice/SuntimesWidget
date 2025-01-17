@@ -18,16 +18,15 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
+import com.forrestguice.support.test.espresso.IdlingPolicies;
 import android.support.test.filters.LargeTest;
 
+import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
@@ -506,7 +505,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         // wait a minute (and check again)
         long waitTime = 60 * 1000;
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
 
