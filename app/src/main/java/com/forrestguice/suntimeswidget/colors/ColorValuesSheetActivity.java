@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.ViewModel;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import com.forrestguice.support.annotation.NonNull;

@@ -18,10 +18,10 @@
 
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.MutableLiveData;
+import com.forrestguice.support.arch.lifecycle.Observer;
+import com.forrestguice.support.arch.lifecycle.ViewModel;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
