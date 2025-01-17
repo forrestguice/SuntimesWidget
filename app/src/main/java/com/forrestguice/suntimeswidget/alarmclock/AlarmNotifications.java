@@ -57,7 +57,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationManagerCompat;
+import com.forrestguice.support.design.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.app.NotificationCompat;
 import android.text.SpannableString;
@@ -1615,21 +1615,18 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showNotification(Context context, @Nullable Notification notification, int notificationID)
     {
         if (notification != null) {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+            NotificationManagerCompat.from(context).notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
             Log.d("DEBUG", "showNotification: " + notificationID);
         }
     }
     public static void dismissNotification(Context context, int notificationID)
     {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
+        NotificationManagerCompat.from(context).cancel(ALARM_NOTIFICATION_TAG, notificationID);
         Log.d("DEBUG", "dismissNotification: " + notificationID);
     }
     public static void dismissNotifications(Context context)
     {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancelAll();
+        NotificationManagerCompat.from(context).cancelAll();
         Log.d("DEBUG", "dismissNotification: ALL");
     }
 

@@ -50,7 +50,7 @@ import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v4.app.NotificationManagerCompat;
+import com.forrestguice.support.design.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
