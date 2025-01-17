@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.app.FragmentManagerInterface;
+import com.forrestguice.support.design.view.ActionModeHelper;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.Fragment;
 import com.forrestguice.support.content.ContextCompat;
@@ -1242,25 +1243,25 @@ public class EventListHelper
         }
     }
 
-    private class EventAliasActionMode extends EventAliasActionModeBase implements android.support.v7.view.ActionMode.Callback
+    private class EventAliasActionMode extends EventAliasActionModeBase implements ActionModeHelper.ActionModeCallback
     {
         public EventAliasActionMode() {
             super();
         }
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu) {
             return onCreateActionMode(mode.getMenuInflater(), menu);
         }
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode) {
             onDestroyActionMode();
         }
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu) {
             return onPrepareActionMode(menu);
         }
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem item)
         {
             boolean result = onActionItemClicked(item);
             mode.finish();

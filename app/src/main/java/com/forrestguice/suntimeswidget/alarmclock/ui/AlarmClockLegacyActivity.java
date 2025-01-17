@@ -40,7 +40,6 @@ import android.provider.AlarmClock;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.design.widget.FloatingActionButton;
 import com.forrestguice.support.design.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.design.app.AlertDialog;
 import com.forrestguice.support.design.app.AppCompatActivity;
@@ -238,7 +237,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     }
     private void checkWarnings()
     {
-        notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
+        notificationWarning.setShouldShow(!AlarmSettings.areNotificationsEnabled(this));
         showWarnings();
     }
 
