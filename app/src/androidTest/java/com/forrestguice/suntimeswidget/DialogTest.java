@@ -22,7 +22,7 @@ import android.content.Context;
 import com.forrestguice.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 

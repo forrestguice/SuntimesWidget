@@ -26,7 +26,7 @@ import android.net.Uri;
 import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 

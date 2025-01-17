@@ -29,7 +29,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
 

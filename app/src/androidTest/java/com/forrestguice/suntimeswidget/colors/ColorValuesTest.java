@@ -23,7 +23,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;

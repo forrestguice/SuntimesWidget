@@ -22,7 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;

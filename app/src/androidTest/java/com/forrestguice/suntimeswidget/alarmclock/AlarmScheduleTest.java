@@ -23,7 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import com.forrestguice.support.test.InstrumentationRegistry;
 
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
