@@ -30,7 +30,7 @@ import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;

@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.events;
 import android.content.Context;
 import android.graphics.Color;
 
-import android.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;

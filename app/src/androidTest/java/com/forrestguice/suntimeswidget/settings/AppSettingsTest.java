@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
-import android.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.R;

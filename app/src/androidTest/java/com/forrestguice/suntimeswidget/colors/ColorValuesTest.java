@@ -22,7 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
-import android.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 

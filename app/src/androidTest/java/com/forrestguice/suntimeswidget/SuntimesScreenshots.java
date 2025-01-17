@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
