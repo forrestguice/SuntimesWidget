@@ -59,7 +59,7 @@ import com.forrestguice.support.annotation.Nullable;
 import com.forrestguice.support.design.widget.Snackbar;
 import com.forrestguice.support.design.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.app.NotificationCompat;
+import com.forrestguice.support.design.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
