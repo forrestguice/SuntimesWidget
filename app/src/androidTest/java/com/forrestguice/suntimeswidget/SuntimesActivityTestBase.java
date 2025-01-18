@@ -27,7 +27,6 @@ import android.media.MediaScannerConnection;
 //import android.os.Environment;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewInteraction;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -208,25 +207,6 @@ public abstract class SuntimesActivityTestBase
             }
         }).check(matches(isDisplayed()));
         return isDisplayed[0];
-    }
-
-
-    /**
-     * @param viewInteraction a ViewInteraction wrapping some view
-     * @return true view is checked, false otherwise
-     */
-    public static boolean viewIsChecked(ViewInteraction viewInteraction)
-    {
-        final boolean[] isChecked = {true};
-        viewInteraction.withFailureHandler(new FailureHandler()
-        {
-            @Override
-            public void handle(Throwable error, Matcher<View> viewMatcher)
-            {
-                isChecked[0] = false;
-            }
-        }).check(matches(isChecked()));
-        return isChecked[0];
     }
 
     /**
