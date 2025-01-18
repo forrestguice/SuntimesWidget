@@ -37,8 +37,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.unregisterIdlingResources;
 
 @Category(UnlistedTest.class)
 @SuppressWarnings("Convert2Diamond")

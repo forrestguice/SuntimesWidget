@@ -48,17 +48,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onData;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.matcher.PreferenceMatchers.withKey;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.allOf;

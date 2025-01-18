@@ -31,14 +31,14 @@ import org.junit.runner.RunWith;
 
 import java.util.Random;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onData;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.replaceText;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;

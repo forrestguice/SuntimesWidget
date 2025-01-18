@@ -22,7 +22,7 @@ import android.content.Context;
 import android.os.SystemClock;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
 import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
-import android.support.test.espresso.action.ViewActions;
+import com.forrestguice.support.test.espresso.action.ViewActions;
 import android.support.test.filters.LargeTest;
 
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -39,10 +39,10 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.unregisterIdlingResources;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 
 @Category(UnlistedTest.class)
 @SuppressWarnings("Convert2Diamond")

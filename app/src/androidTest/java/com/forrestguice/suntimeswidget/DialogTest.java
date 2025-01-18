@@ -30,16 +30,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasLinks;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasLinks;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.not;
 
 @LargeTest
