@@ -64,6 +64,16 @@ public class RecyclerViewUtils
     {
         protected abstract int getPosition();
 
+        public PositionMarginsItemDecoration() {
+            super();
+        }
+        public PositionMarginsItemDecoration(int marginPx) {
+            super(marginPx);
+        }
+        public PositionMarginsItemDecoration(int leftMarginPx, int topMarginPx, int rightMarginPx, int bottomMarginPx) {
+            super(leftMarginPx, topMarginPx, rightMarginPx, bottomMarginPx);
+        }
+
         @Override
         public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull android.support.v7.widget.RecyclerView parent, @NonNull android.support.v7.widget.RecyclerView.State state) {
             if (getPosition() == parent.getChildAdapterPosition(view)) {

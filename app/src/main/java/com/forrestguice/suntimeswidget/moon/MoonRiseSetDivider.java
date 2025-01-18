@@ -22,7 +22,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.view.View;
 
 import com.forrestguice.support.design.view.ViewCompat;
@@ -49,30 +49,30 @@ public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)
+    public void onDraw(Canvas c, RecyclerView.RecyclerViewInterface parent, RecyclerView.State state)
     {
-        if (parent.getLayoutManager() == null) {
+        if (parent.get().getLayoutManager() == null) {
             return;
         }
 
         c.save();
         int top, bottom;
-        if (parent.getClipToPadding())
+        if (parent.get().getClipToPadding())
         {
-            top = parent.getPaddingTop();
-            bottom = parent.getHeight() - parent.getPaddingBottom();
-            c.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(), bottom);
+            top = parent.get().getPaddingTop();
+            bottom = parent.get().getHeight() - parent.get().getPaddingBottom();
+            c.clipRect(parent.get().getPaddingLeft(), top, parent.get().getWidth() - parent.get().getPaddingRight(), bottom);
         } else {
             top = 0;
-            bottom = parent.getHeight();
+            bottom = parent.get().getHeight();
         }
 
-        int n = parent.getChildCount();
+        int n = parent.get().getChildCount();
         for (int i=0; i<n; i++)
         {
-            View child = parent.getChildAt(i);
-            int position = parent.getChildAdapterPosition(child);
-            parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
+            View child = parent.get().getChildAt(i);
+            int position = parent.get().getChildAdapterPosition(child);
+            parent.get().getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
 
             int offset = (position - centerPosition) % itemsPerDay;
             if (offset < 0) {
@@ -103,7 +103,7 @@ public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
     }
 
     @Override
-    public void getItemOffsets(Rect rect, View v, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(Rect rect, View v, RecyclerView.RecyclerViewInterface parent, RecyclerView.State state) {
         rect.set(0, 0, divider.getIntrinsicWidth(), 0);
     }
 }

@@ -160,7 +160,7 @@ public class AlarmListDialog extends DialogFragment
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.addItemDecoration(itemDecoration);
+        list.addItemDecoration(itemDecoration.get());
         list.setAdapter(adapter);
 
         if (savedState != null) {
@@ -2218,7 +2218,7 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerViewUtils.PositionMarginsItemDecoration()
+    private final RecyclerView.ItemDecorationInterface itemDecoration = RecyclerView.wrap(new RecyclerViewUtils.PositionMarginsItemDecoration()
     {
         @Override
         protected int[] getMarginsPx() {
@@ -2230,7 +2230,7 @@ public class AlarmListDialog extends DialogFragment
         protected int getPosition() {
             return adapter.getItemCount() - 1;
         }
-    };
+    });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
