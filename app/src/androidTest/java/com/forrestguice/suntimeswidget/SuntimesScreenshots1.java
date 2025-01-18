@@ -23,7 +23,7 @@ import android.os.SystemClock;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
 import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import com.forrestguice.support.test.espresso.action.ViewActions;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.filters.LargeTest;
 
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;

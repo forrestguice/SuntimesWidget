@@ -20,7 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -86,7 +87,7 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyLightmapDialog()
     {
-        onView(withId(R.id.dialog_lightmap_layout)).check(assertShown);
+        onView(withId(R.id.dialog_lightmap_layout)).check(ViewAssertionHelper.assertShown);
     }
 
     public static void cancelLightmapDialog()
@@ -133,7 +134,7 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyEquinoxDialog()
     {
-        onView(withId(R.id.dialog_header)).check(assertShown);
+        onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
     }
 
     public static void cancelEquinoxDialog()
@@ -174,7 +175,7 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyHelpDialog()
     {
-        onView(withId(R.id.txt_help_content)).check(assertShown);
+        onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
     }
 
     public static void cancelHelpDialog()
@@ -215,14 +216,14 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyAboutDialog()
     {
-        onView(withId(R.id.txt_about_name)).check(assertShown);
-        onView(withId(R.id.txt_about_desc)).check(assertShown);
-        onView(withId(R.id.txt_about_version)).check(assertShown);
+        onView(withId(R.id.txt_about_name)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.txt_about_desc)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.txt_about_version)).check(ViewAssertionHelper.assertShown);
 
-        onView(withId(R.id.txt_about_url)).check(assertShown);
+        onView(withId(R.id.txt_about_url)).check(ViewAssertionHelper.assertShown);
         onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
 
-        onView(withId(R.id.txt_about_support)).check(assertShown);
+        onView(withId(R.id.txt_about_support)).check(ViewAssertionHelper.assertShown);
         onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
 
         //onView(withId(R.id.txt_about_legal1)).check(assertShown);

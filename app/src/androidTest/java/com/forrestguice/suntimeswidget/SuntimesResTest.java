@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import com.forrestguice.android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;

@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.filters.LargeTest;
 
 import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import com.forrestguice.support.test.rule.ActivityTestRule;

@@ -24,7 +24,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
 
 import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -152,12 +153,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public void verifyActionBar()
     {
-        onView(withId(R.id.action_location_add)).check(assertShown);
+        onView(withId(R.id.action_location_add)).check(ViewAssertionHelper.assertShown);
 
         WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activityRule.getActivity(), 0);
         if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
-            onView(withId(R.id.action_location_refresh)).check(assertShown);
+            onView(withId(R.id.action_location_refresh)).check(ViewAssertionHelper.assertShown);
 
         } else {
             onView(withId(R.id.action_location_refresh)).check(doesNotExist());
@@ -171,23 +172,23 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
         String timezoneID = dataset.timezone().getID();
 
-        onView(withId(R.id.text_time)).check(assertShown);
+        onView(withId(R.id.text_time)).check(ViewAssertionHelper.assertShown);
         onView(withId(R.id.text_time)).check(matches(withText(timeText.getValue())));
 
         if (!SuntimesUtils.is24()) {
-            onView(withId(R.id.text_time_suffix)).check(assertShown);
+            onView(withId(R.id.text_time_suffix)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.text_time_suffix)).check(matches(withText(timeText.getSuffix())));
         }
 
-        onView(withId(R.id.text_timezone)).check(assertShown);
+        onView(withId(R.id.text_timezone)).check(ViewAssertionHelper.assertShown);
         onView(withId(R.id.text_timezone)).check(matches(withText(containsString(timezoneID))));
 
-        onView(withId(R.id.layout_clock)).check(assertClickable);
+        onView(withId(R.id.layout_clock)).check(ViewAssertionHelper.assertClickable);
     }
 
     public static void verifyNote(SuntimesActivity activity)
     {
-        onView(withId(R.id.info_note_flipper)).check(assertShown);
+        onView(withId(R.id.info_note_flipper)).check(ViewAssertionHelper.assertShown);
 
         NoteData note = activity.notes.getNote( activity.notes.getNoteIndex() );
         onView(allOf(withId(R.id.text_timenote1), isDisplayed())).check(matches(withText(containsString(note.timeText.getValue()))));
@@ -199,7 +200,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         Matcher<View> lightmap = allOf(withId(R.id.info_time_lightmap), withParent(isDisplayed()));
         if (AppSettings.loadShowLightmapPref(context)) {
-            onView(lightmap).check(assertShown);
+            onView(lightmap).check(ViewAssertionHelper.assertShown);
         } else {
             onView(lightmap).check(matches(not(isDisplayed())));
         }
@@ -209,7 +210,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (AppSettings.loadShowEquinoxPref(context))
         {
-            onView(withId(R.id.info_date_solsticequinox)).check(assertShown);
+            onView(withId(R.id.info_date_solsticequinox)).check(ViewAssertionHelper.assertShown);
         } else {
             onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
         }
@@ -219,7 +220,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (AppSettings.loadDatasourceUIPref(context))
         {
-            onView(withId(R.id.txt_datasource)).check(assertShown);
+            onView(withId(R.id.txt_datasource)).check(ViewAssertionHelper.assertShown);
 
             SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
             if (dataSource != null)
@@ -482,7 +483,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     private void userSwappedCard()
     {
         Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
-        onView(cardFlipper).check(assertShown);   // flipper should be visible
+        onView(cardFlipper).check(ViewAssertionHelper.assertShown);   // flipper should be visible
 
         boolean cardSetToToday = viewIsDisplayed(R.id.info_time_all_today, "Today");
 
@@ -538,7 +539,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public void verifyTimeCard()
     {
-        onView(withId(R.id.info_time_flipper1)).check(assertShown);
+        onView(withId(R.id.info_time_flipper1)).check(ViewAssertionHelper.assertShown);
         // TODO
         //if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
             //verifyTimeCard_today();
@@ -549,15 +550,15 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void verifyTimeCard(String whichCard)
     {
         Matcher<View> card = withId(R.id.info_time_flipper1);
-        onView(card).check(assertShown);
+        onView(card).check(ViewAssertionHelper.assertShown);
 
         Matcher<View> dateField = allOf(withId(R.id.text_date), isDescendantOfA(card), withText(containsString(whichCard)));
-        onView(dateField).check(assertShown);
-        onView(dateField).check(assertClickable);
+        onView(dateField).check(ViewAssertionHelper.assertShown);
+        onView(dateField).check(ViewAssertionHelper.assertClickable);
 
         ArrayList<Matcher<View>> timeFields = timeFields(R.id.info_time_flipper1, dateField);
         for (Matcher<View> field : timeFields) {
-            onView(field).check(assertShown);
+            onView(field).check(ViewAssertionHelper.assertShown);
         }
     }
 

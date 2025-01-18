@@ -20,7 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -89,7 +90,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
 
     public static void verifyAlarmDialog()
     {
-        onView(withId(R.id.dialog_header)).check(assertShown);
+        onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
         //onView(withId(R.id.appwidget_schedalarm_note)).check(assertShown);
     }
 

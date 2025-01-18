@@ -26,10 +26,9 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaScannerConnection;
 //import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewAssertion;
+import com.forrestguice.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
@@ -91,17 +90,6 @@ public abstract class SuntimesActivityTestBase
 
 
     public static final String SCREENSHOT_DIR = "test-screenshots";
-
-    protected static ViewAssertion assertShown = matches(isDisplayed());
-    protected static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(90));
-    protected static ViewAssertion assertHidden = matches(not(isDisplayed()));
-    protected static ViewAssertion assertEnabled = matches(allOf(isEnabled(), isDisplayed()));
-    protected static ViewAssertion assertDisabled = matches(allOf(not(isEnabled()), isDisplayed()));
-    protected static ViewAssertion assertFocused = matches(allOf(isEnabled(), isDisplayed(), hasFocus()));
-    protected static ViewAssertion assertClickable = matches(isClickable());
-    protected static ViewAssertion assertSelected = matches(isSelected());
-    protected static ViewAssertion assertChecked = matches(isChecked());
-    protected static ViewAssertion assertNotChecked = matches(isNotChecked());
 
     /**
      * Rotate the device to landscape and back.

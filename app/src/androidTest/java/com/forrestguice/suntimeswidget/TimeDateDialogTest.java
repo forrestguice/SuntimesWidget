@@ -20,7 +20,8 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -82,7 +83,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
     public static void verifyDateDialog(Context context)
     {
-        onView(withId(R.id.appwidget_date_custom)).check(assertShown);
+        onView(withId(R.id.appwidget_date_custom)).check(ViewAssertionHelper.assertShown);
 
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, 0);
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)

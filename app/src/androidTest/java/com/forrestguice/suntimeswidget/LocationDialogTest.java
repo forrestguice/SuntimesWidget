@@ -19,7 +19,9 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.support.test.filters.LargeTest;
+
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
@@ -243,14 +245,14 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
     public static void verifyLocationDialogMode_current()
     {
-        onView(withId(R.id.appwidget_location_auto)).check( assertEnabled );
-        onView(withId(R.id.appwidget_location_name)).check( assertHidden );        // name textedit hidden
-        onView(withId(R.id.appwidget_location_nameSelect)).check( assertDisabled ); // name selector disabled
-        onView(withId(R.id.appwidget_location_lat)).check( assertDisabled );       // lat field disabled
-        onView(withId(R.id.appwidget_location_lon)).check( assertDisabled );       // lon field disabled
-        onView(withId(R.id.appwidget_location_edit)).check( assertHidden );        // edit button is hidden
-        onView(withId(R.id.appwidget_location_save)).check( assertHidden );        // save button hidden
-        onView(withId(R.id.appwidget_location_getfix)).check( assertHidden );
+        onView(withId(R.id.appwidget_location_auto)).check( ViewAssertionHelper.assertEnabled );
+        onView(withId(R.id.appwidget_location_name)).check( ViewAssertionHelper.assertHidden );        // name textedit hidden
+        onView(withId(R.id.appwidget_location_nameSelect)).check( ViewAssertionHelper.assertDisabled ); // name selector disabled
+        onView(withId(R.id.appwidget_location_lat)).check( ViewAssertionHelper.assertDisabled );       // lat field disabled
+        onView(withId(R.id.appwidget_location_lon)).check( ViewAssertionHelper.assertDisabled );       // lon field disabled
+        onView(withId(R.id.appwidget_location_edit)).check( ViewAssertionHelper.assertHidden );        // edit button is hidden
+        onView(withId(R.id.appwidget_location_save)).check( ViewAssertionHelper.assertHidden );        // save button hidden
+        onView(withId(R.id.appwidget_location_getfix)).check( ViewAssertionHelper.assertHidden );
     }
 
     public static void verifyLocationDialogMode_custom()
@@ -262,25 +264,25 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
     public static void verifyLocationDialogState_select()
     {
-        onView(withId(R.id.appwidget_location_name)).check( assertHidden );        // name textedit hidden
-        onView(withId(R.id.appwidget_location_nameSelect)).check( assertEnabled ); // name selector enabled
-        onView(withId(R.id.appwidget_location_lat)).check( assertDisabled );       // lat field disabled
-        onView(withId(R.id.appwidget_location_lon)).check( assertDisabled );       // lon field disabled
-        onView(withId(R.id.appwidget_location_edit)).check( assertShown );         // edit button is shown
-        onView(withId(R.id.appwidget_location_save)).check( assertHidden );        // save button hidden
-        onView(withId(R.id.appwidget_location_getfix)).check( assertHidden );      // gps button is hidden
-        onView(withId(R.id.appwidget_location_auto)).check( assertHidden );
+        onView(withId(R.id.appwidget_location_name)).check( ViewAssertionHelper.assertHidden );        // name textedit hidden
+        onView(withId(R.id.appwidget_location_nameSelect)).check( ViewAssertionHelper.assertEnabled ); // name selector enabled
+        onView(withId(R.id.appwidget_location_lat)).check( ViewAssertionHelper.assertDisabled );       // lat field disabled
+        onView(withId(R.id.appwidget_location_lon)).check( ViewAssertionHelper.assertDisabled );       // lon field disabled
+        onView(withId(R.id.appwidget_location_edit)).check( ViewAssertionHelper.assertShown );         // edit button is shown
+        onView(withId(R.id.appwidget_location_save)).check( ViewAssertionHelper.assertHidden );        // save button hidden
+        onView(withId(R.id.appwidget_location_getfix)).check( ViewAssertionHelper.assertHidden );      // gps button is hidden
+        onView(withId(R.id.appwidget_location_auto)).check( ViewAssertionHelper.assertHidden );
     }
 
     public static void verifyLocationDialogState_edit()
     {
-        onView(withId(R.id.appwidget_location_name)).check( assertFocused );      // name textedit enabled (and focused)
-        onView(withId(R.id.appwidget_location_nameSelect)).check(assertHidden);   // name selector hidden
-        onView(withId(R.id.appwidget_location_lat)).check( assertEnabled );       // lat, lon now enabled
-        onView(withId(R.id.appwidget_location_lon)).check( assertEnabled );
-        onView(withId(R.id.appwidget_location_edit)).check( assertHidden );       // edit button is hidden
-        onView(withId(R.id.appwidget_location_save)).check( assertShown );        // save button now shown
-        onView(withId(R.id.appwidget_location_getfix)).check( assertEnabled );    // gps button is enabled
-        onView(withId(R.id.appwidget_location_auto)).check( assertHidden );
+        onView(withId(R.id.appwidget_location_name)).check( ViewAssertionHelper.assertFocused );      // name textedit enabled (and focused)
+        onView(withId(R.id.appwidget_location_nameSelect)).check(ViewAssertionHelper.assertHidden);   // name selector hidden
+        onView(withId(R.id.appwidget_location_lat)).check( ViewAssertionHelper.assertEnabled );       // lat, lon now enabled
+        onView(withId(R.id.appwidget_location_lon)).check( ViewAssertionHelper.assertEnabled );
+        onView(withId(R.id.appwidget_location_edit)).check( ViewAssertionHelper.assertHidden );       // edit button is hidden
+        onView(withId(R.id.appwidget_location_save)).check( ViewAssertionHelper.assertShown );        // save button now shown
+        onView(withId(R.id.appwidget_location_getfix)).check( ViewAssertionHelper.assertEnabled );    // gps button is enabled
+        onView(withId(R.id.appwidget_location_auto)).check( ViewAssertionHelper.assertHidden );
     }
 }

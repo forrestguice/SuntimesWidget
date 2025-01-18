@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
+import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
