@@ -36,13 +36,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.Toolbar;
 
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -96,9 +94,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     private boolean adapterModified = false;
     private GridView gridView;
-    private ActionBar actionBar;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
     private WidgetThemeActionCompat themeActions;
     private SuntimesTheme.ThemeDescriptor selected = null;
 
@@ -214,11 +211,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -254,7 +250,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (themeDesc != null)
             {
                 themeActions.setTheme(this, themeDesc);
-                actionMode = startSupportActionMode(themeActions);
+                actionMode = ActionModeHelper.wrap(startSupportActionMode(ActionModeHelper.wrap(themeActions)));
                 actionMode.setTitle(themeDesc.displayString());
             }
             return true;
@@ -631,7 +627,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * WidgetThemeActionCompat
      */
-    private class WidgetThemeActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class WidgetThemeActionCompat implements ActionModeHelper.ActionModeCallback
     {
         private SuntimesTheme theme = null;
 
@@ -643,7 +639,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.themecontext, menu);
@@ -651,7 +647,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode)
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
         {
             actionMode = null;
             selected = null;
@@ -666,7 +662,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -683,7 +679,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem item)
         {
             if (theme != null)
             {
@@ -879,8 +875,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             importTask.resumeTask();
         }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(this, HELP_PATH_ID), DIALOGTAG_HELP);
         }

@@ -26,12 +26,10 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaScannerConnection;
 //import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.espresso.FailureHandler;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
 
@@ -50,19 +48,19 @@ import java.io.File;
 import java.util.HashMap;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
-import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
-import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isSelected;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -91,17 +89,6 @@ public abstract class SuntimesActivityTestBase
 
 
     public static final String SCREENSHOT_DIR = "test-screenshots";
-
-    protected static ViewAssertion assertShown = matches(isDisplayed());
-    protected static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(90));
-    protected static ViewAssertion assertHidden = matches(not(isDisplayed()));
-    protected static ViewAssertion assertEnabled = matches(allOf(isEnabled(), isDisplayed()));
-    protected static ViewAssertion assertDisabled = matches(allOf(not(isEnabled()), isDisplayed()));
-    protected static ViewAssertion assertFocused = matches(allOf(isEnabled(), isDisplayed(), hasFocus()));
-    protected static ViewAssertion assertClickable = matches(isClickable());
-    protected static ViewAssertion assertSelected = matches(isSelected());
-    protected static ViewAssertion assertChecked = matches(isChecked());
-    protected static ViewAssertion assertNotChecked = matches(isNotChecked());
 
     /**
      * Rotate the device to landscape and back.
@@ -220,25 +207,6 @@ public abstract class SuntimesActivityTestBase
             }
         }).check(matches(isDisplayed()));
         return isDisplayed[0];
-    }
-
-
-    /**
-     * @param viewInteraction a ViewInteraction wrapping some view
-     * @return true view is checked, false otherwise
-     */
-    public static boolean viewIsChecked(ViewInteraction viewInteraction)
-    {
-        final boolean[] isChecked = {true};
-        viewInteraction.withFailureHandler(new FailureHandler()
-        {
-            @Override
-            public void handle(Throwable error, Matcher<View> viewMatcher)
-            {
-                isChecked[0] = false;
-            }
-        }).check(matches(isChecked()));
-        return isChecked[0];
     }
 
     /**

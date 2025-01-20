@@ -19,7 +19,8 @@
 package com.forrestguice.suntimeswidget;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+
+import com.forrestguice.support.design.widget.Snackbar;
 
 import org.junit.Test;
 import static junit.framework.Assert.assertFalse;

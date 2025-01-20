@@ -33,7 +33,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatCheckedTextView style="?android:attr/dropDownItemStyle"
+        <com.forrestguice.support.appcompat.widget.AppCompatCheckedTextView style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text1"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"

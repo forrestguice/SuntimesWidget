@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;

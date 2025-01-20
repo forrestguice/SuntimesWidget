@@ -25,13 +25,13 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SwitchCompat;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.DialogFragment;
+import com.forrestguice.support.graphics.ColorUtils;
+import com.forrestguice.support.design.widget.CompoundButtonCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.widget.SwitchCompat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
@@ -100,10 +100,10 @@ public class AlarmRepeatDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -117,7 +117,7 @@ public class AlarmRepeatDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override

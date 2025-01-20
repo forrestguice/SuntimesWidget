@@ -20,10 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -33,17 +34,17 @@ import org.junit.runner.RunWith;
 
 import java.util.TimeZone;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onData;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -93,7 +94,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
     public static void verifyTimezoneDialog(Context context)
     {
-        onView(withId(R.id.appwidget_timezone_mode)).check(assertShown);
+        onView(withId(R.id.appwidget_timezone_mode)).check(ViewAssertionHelper.assertShown);
         verifyTimezoneDialog(context, getTimezoneDialogMode());
     }
 
@@ -123,38 +124,38 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.SOLAR_TIME.toString())));
 
-        onView(withId(R.id.appwidget_timezone_custom)).check(assertHidden);
-        onView(withId(R.id.sort_timezones)).check(assertHidden);
+        onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertHidden);
+        onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
 
         WidgetSettings.SolarTimeMode solarTimeMode = WidgetSettings.loadSolarTimeModePref(context, 0);
         onView(withId(R.id.appwidget_solartime)).check(matches(withSpinnerText( containsString(solarTimeMode.toString()) )));
-        onView(withId(R.id.appwidget_solartime)).check(assertEnabled);
+        onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertEnabled);
     }
 
     public static void verifyTimezoneDialog_system()
     {
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CURRENT_TIMEZONE.toString())));
-        onView(withId(R.id.appwidget_solartime)).check(assertHidden);
-        onView(withId(R.id.sort_timezones)).check(assertHidden);
+        onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertHidden);
+        onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
 
         String timezoneId = TimeZone.getDefault().getID();
         onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
-        onView(withId(R.id.appwidget_timezone_custom)).check(assertDisabled);
+        onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertDisabled);
     }
 
     public static void verifyTimezoneDialog_custom(Context context)
     {
         onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE.toString())));
-        onView(withId(R.id.appwidget_solartime)).check(assertHidden);
+        onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertHidden);
 
-        onView(withId(R.id.sort_timezones)).check(assertEnabled);
-        onView(withId(R.id.sort_timezones)).check(assertClickable);
+        onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertEnabled);
+        onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertClickable);
 
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
         String timezoneId = WidgetSettings.loadTimezonePref(context, 0, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? TimeZoneDialog.SLOT_CUSTOM0 : ""));
         onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
-        onView(withId(R.id.appwidget_timezone_custom)).check(assertEnabled);
-        onView(withId(R.id.appwidget_timezone_custom)).check(assertClickable);
+        onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertEnabled);
+        onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertClickable);
     }
 
     public static WidgetSettings.TimezoneMode getTimezoneDialogMode()

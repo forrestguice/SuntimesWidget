@@ -23,10 +23,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -91,14 +90,12 @@ public class HelpDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+            if (behavior != null) {
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(false);
                 behavior.setPeekHeight(200);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }

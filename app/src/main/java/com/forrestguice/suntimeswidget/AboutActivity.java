@@ -18,20 +18,16 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.widget.TabLayout;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import com.forrestguice.support.design.app.Fragment;
+import com.forrestguice.support.design.app.FragmentPagerAdapter;
+import com.forrestguice.support.design.view.ViewPager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -43,9 +39,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class AboutActivity extends AppCompatActivity
 {
@@ -79,14 +72,13 @@ public class AboutActivity extends AppCompatActivity
             icon = intent.getIntExtra(EXTRA_ICONID, icon);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(icon);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(icon);
         }
 
-        pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new AboutPagerAdapter(this);
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
@@ -125,11 +117,10 @@ public class AboutActivity extends AppCompatActivity
     /**
      * AboutPagerAdapter
      */
-    public class AboutPagerAdapter extends FragmentPagerAdapter
+    public static class AboutPagerAdapter extends FragmentPagerAdapter
     {
-        public AboutPagerAdapter(FragmentManager fragments)
-        {
-            super(fragments);
+        public AboutPagerAdapter(AppCompatActivity activity) {
+            super(activity.getSupportFragmentManager());
         }
 
         @Override

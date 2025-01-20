@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
 import android.os.Parcel;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

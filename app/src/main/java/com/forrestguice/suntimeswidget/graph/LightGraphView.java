@@ -32,8 +32,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -78,7 +78,7 @@ import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues
 /**
  * LightGraphView
  */
-public class LightGraphView extends android.support.v7.widget.AppCompatImageView
+public class LightGraphView extends com.forrestguice.support.appcompat.widget.AppCompatImageView
 {
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;
