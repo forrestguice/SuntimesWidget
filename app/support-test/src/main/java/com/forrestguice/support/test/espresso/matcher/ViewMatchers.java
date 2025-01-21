@@ -1,12 +1,13 @@
 package com.forrestguice.support.test.espresso.matcher;
 
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.is;
 
 public class ViewMatchers
 {
@@ -96,6 +97,15 @@ public class ViewMatchers
     public static Matcher<View> withContentDescription(
             final Matcher<? extends CharSequence> charSequenceMatcher) {
         return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(charSequenceMatcher);
+    }
+
+    /**
+     * from https://stackoverflow.com/a/42368341
+     */
+    public static Matcher<View> navigationButton() {
+        return allOf(
+                isAssignableFrom(AppCompatImageButton.class),
+                withParent(isAssignableFrom(Toolbar.class)));
     }
 
 }
