@@ -4,6 +4,10 @@ import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.is;
+
 public class ViewMatchers
 {
     public static Matcher<View> hasLinks() {
@@ -81,6 +85,17 @@ public class ViewMatchers
     }
     public static Matcher<View> withSpinnerText(final Matcher<String> stringMatcher) {
         return android.support.test.espresso.matcher.ViewMatchers.withSpinnerText(stringMatcher);
+    }
+
+    public static Matcher<View> withContentDescription(final int resourceId) {
+        return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(resourceId);
+    }
+    public static Matcher<View> withContentDescription(String text) {
+        return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(text);
+    }
+    public static Matcher<View> withContentDescription(
+            final Matcher<? extends CharSequence> charSequenceMatcher) {
+        return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(charSequenceMatcher);
     }
 
 }
