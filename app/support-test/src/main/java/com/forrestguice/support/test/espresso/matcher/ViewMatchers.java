@@ -1,5 +1,6 @@
 package com.forrestguice.support.test.espresso.matcher;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -58,6 +59,9 @@ public class ViewMatchers
     public static Matcher<View> isDisplayingAtLeast(final int areaPercentage) {
         return android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast(areaPercentage);
     }
+    public static Matcher<View> isCompletelyDisplayed() {
+        return android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed();
+    }
 
     public static Matcher<View> withClassName(final Matcher<String> classNameMatcher) {
         return android.support.test.espresso.matcher.ViewMatchers.withClassName(classNameMatcher);
@@ -99,6 +103,10 @@ public class ViewMatchers
         return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(charSequenceMatcher);
     }
 
+    public static Matcher<View> tabLayout() {
+        return allOf(isDisplayed(), isAssignableFrom(TabLayout.class));
+    }
+
     /**
      * from https://stackoverflow.com/a/42368341
      */
@@ -107,5 +115,21 @@ public class ViewMatchers
                 isAssignableFrom(AppCompatImageButton.class),
                 withParent(isAssignableFrom(Toolbar.class)));
     }
+
+    /*public static Matcher<View> withTabText(String text)
+    {
+        return new BoundedMatcher<View, TabItem>(TabItem.class)
+        {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with tab: ");
+                description.appendText(text);
+            }
+
+            public boolean matchesSafely(TabItem item) {
+                return (item != null && item.text != null) && text.equals(item.text.toString());
+            }
+        };
+    }*/
 
 }

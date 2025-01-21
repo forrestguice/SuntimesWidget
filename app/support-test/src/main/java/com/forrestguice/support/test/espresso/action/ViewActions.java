@@ -1,8 +1,17 @@
 package com.forrestguice.support.test.espresso.action;
 
+import android.support.design.widget.TabLayout;
+import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.view.View;
+
+import org.hamcrest.Matcher;
 
 import javax.annotation.Nonnull;
+
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static org.hamcrest.Matchers.allOf;
 
 public class ViewActions
 {
@@ -56,6 +65,38 @@ public class ViewActions
 
     public static ViewAction replaceText(@Nonnull String stringToBeSet) {
         return android.support.test.espresso.action.ViewActions.replaceText(stringToBeSet);
+    }
+
+    /**
+     * from https://stackoverflow.com/a/51262525
+     */
+    public static ViewAction selectTabAtPosition(final int position)
+    {
+        return new ViewAction()
+        {
+            @Override
+            public Matcher<View> getConstraints() {
+                return allOf(isDisplayed(), isAssignableFrom(TabLayout.class));
+            }
+
+            @Override
+            public String getDescription() {
+                return "with tab at index " + position;
+            }
+
+            @Override
+            public void perform(UiController uiController, View view)
+            {
+                if (view instanceof TabLayout)
+                {
+                    TabLayout tabLayout = (TabLayout) view;
+                    TabLayout.Tab tab = tabLayout.getTabAt(position);
+                    if (tab != null) {
+                        tab.select();
+                    }
+                }
+            }
+        };
     }
 
 }
