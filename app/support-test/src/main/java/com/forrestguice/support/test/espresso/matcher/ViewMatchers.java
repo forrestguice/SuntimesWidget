@@ -7,7 +7,6 @@ import android.view.View;
 
 import org.hamcrest.Matcher;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static org.hamcrest.Matchers.allOf;
 
 public class ViewMatchers
@@ -81,6 +80,9 @@ public class ViewMatchers
     public static Matcher<View> withText(final Matcher<String> stringMatcher) {
         return android.support.test.espresso.matcher.ViewMatchers.withText(stringMatcher);
     }
+    public static Matcher<View> withText(final int resourceId) {
+        return android.support.test.espresso.matcher.ViewMatchers.withText(resourceId);
+    }
 
     public static Matcher<View> withSpinnerText(final int resourceId) {
         return android.support.test.espresso.matcher.ViewMatchers.withSpinnerText(resourceId);
@@ -101,6 +103,10 @@ public class ViewMatchers
     public static Matcher<View> withContentDescription(
             final Matcher<? extends CharSequence> charSequenceMatcher) {
         return android.support.test.espresso.matcher.ViewMatchers.withContentDescription(charSequenceMatcher);
+    }
+
+    public static Matcher<View> isAssignableFrom(final Class<? extends View> clazz) {
+        return  android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom(clazz);
     }
 
     public static Matcher<View> tabLayout() {
