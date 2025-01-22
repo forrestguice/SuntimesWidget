@@ -11,7 +11,9 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisp
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isSelected;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.IsNot.not;
 
 public class ViewAssertionHelper
@@ -26,4 +28,7 @@ public class ViewAssertionHelper
     public static ViewAssertion assertSelected = matches(isSelected());
     public static ViewAssertion assertChecked = matches(isChecked());
     public static ViewAssertion assertNotChecked = matches(isNotChecked());
+    public static ViewAssertion assertContainsText(String text) {
+        return matches(withText(containsString(text)));
+    }
 }
