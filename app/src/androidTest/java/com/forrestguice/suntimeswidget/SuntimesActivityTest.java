@@ -76,15 +76,11 @@ import static com.forrestguice.suntimeswidget.DialogTest.showEquinoxDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.showLightmapDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.verifyEquinoxDialog;
 import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
+
 import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.inputLocationDialog_mode;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
 import static com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest.verifyGeneralSettings;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.applyDateDialog;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.cancelDateDialog;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.inputDateDialog_date;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.showDateDialog;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.verifyDateDialog;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -259,14 +255,17 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_onLightmapClick()
     {
+        Activity context = activityRule.getActivity();
         if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
         {
-            showLightmapDialog(activityRule.getActivity());
-            cancelLightmapDialog();
+            DialogTest.DialogRobot robot = new DialogTest.LightmapDialogRobot()
+                    .showDialog(context)
+                    .cancelDialog(context);
 
             onView(withId(R.id.info_time_lightmap)).perform(longClick());
-            verifyLightmapDialog();
-            cancelLightmapDialog();
+            robot.assertDialogShown(context)
+                    .cancelDialog(context)
+                    .assertDialogNotShown(context);
 
         } else {
             onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
@@ -278,9 +277,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
         {
-            showEquinoxDialog(activityRule.getActivity());
-            verifyEquinoxDialog();
-            cancelEquinoxDialog();
+            onView(withId(R.id.info_date_solsticequinox)).perform(click());
+            new DialogTest.EquinoxDialogRobot()
+                    .assertDialogShown(activityRule.getActivity())
+                    .cancelDialog(activityRule.getActivity());
 
         } else {
             onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
@@ -310,8 +310,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         String tapAction = AppSettings.loadClockTapActionPref(activity);
         if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
-            verifyAlarmDialog();
-            cancelAlarmDialog();
+            new AlarmDialogTest.AlarmDialogRobot()
+                    .assertDialogShown(activity)
+                    .cancelDialog(activity).assertDialogNotShown(activity);
 
         } else if (tapAction.equals(WidgetActions.SuntimesAction.PREV_NOTE.name())) {
             verifyOnNotePrev(activity, noteIndex);
@@ -359,8 +360,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         String tapAction = AppSettings.loadNoteTapActionPref(activity);
         if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
-            verifyAlarmDialog();
-            cancelAlarmDialog();
+            new AlarmDialogTest.AlarmDialogRobot()
+                    .assertDialogShown(activity)
+                    .cancelDialog(activity).assertDialogNotShown(activity);
 
         } else if (tapAction.equals(WidgetActions.SuntimesAction.NEXT_NOTE.name())) {
             verifyOnNoteNext(activity, noteIndex);
@@ -424,8 +426,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         String tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
         if (tapAction.equals(WidgetActions.SuntimesAction.CONFIG_DATE.name()))
         {
-            verifyDateDialog(activityRule.getActivity());
-            cancelDateDialog();
+            new TimeDateDialogTest.TimeDateDialogRobot()
+                    .assertDialogShown(activityRule.getActivity())
+                    .cancelDialog(activityRule.getActivity()).assertDialogNotShown(activityRule.getActivity());
 
         } else if (tapAction.equals(WidgetActions.SuntimesAction.SWAP_CARD.name())) {
             if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
@@ -458,10 +461,11 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         applyLocationDialog(activityRule.getActivity());
 
         // open the date dialog, and set to "custom date"
-        showDateDialog(activityRule.getActivity());
-        //inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
-        inputDateDialog_date(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY);
-        applyDateDialog(activityRule.getActivity());
+        Activity context = activityRule.getActivity();
+        TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
+        robot.showDialog(context);
+        robot.inputDate(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY)
+                .applyDialog(context);
 
         verifyActivity();
     }

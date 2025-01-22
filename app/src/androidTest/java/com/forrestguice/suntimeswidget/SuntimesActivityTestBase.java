@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
+import android.app.UiAutomation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -260,6 +261,10 @@ public abstract class SuntimesActivityTestBase
         return displaysText[0];
     }
 
+    public static boolean spinnerDisplaysText(Context context, int spinnerId, int stringResID) {
+        return spinnerDisplaysText(spinnerId, context.getString(stringResID));
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -348,5 +353,12 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 
+    public static void setAnimationsEnabled(boolean enabled)
+    {
+        UiAutomation automation = android.support.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
+        automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0"));
+        automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0"));
+        automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0"));
+    }
 
 }
