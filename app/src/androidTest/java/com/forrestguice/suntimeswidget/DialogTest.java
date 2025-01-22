@@ -18,7 +18,13 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.os.SystemClock;
+
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.test.InstrumentationRegistry;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
 import com.forrestguice.support.test.filters.LargeTest;
@@ -27,6 +33,8 @@ import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +47,7 @@ import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.do
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasLinks;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.not;
@@ -50,191 +59,294 @@ public class DialogTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
-    /**
-     * UI Test
-     *
-     * Show, rotate, and dismiss the lightmap dialog.
-     */
+    @Before
+    public void beforeTest() {
+        setAnimationsEnabled(false);
+    }
+    @After
+    public void afterTest() {
+        setAnimationsEnabled(true);
+    }
+
     @Test
     public void test_showLightmapDialog()
     {
-        Context context = activityRule.getActivity();
-        if (AppSettings.loadShowLightmapPref(context))
-        {
-            showLightmapDialog(context);
-            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-lightmap0");
+        Activity context = activityRule.getActivity();
+        new LightmapDialogRobot()
+                .showDialog(context).assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-lightmap0")
+                .rotateDevice(context).assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
 
-            rotateDevice(activityRule);
-            verifyLightmapDialog();
-            cancelLightmapDialog();
-
-        } else {
-            onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
-        }
+        //if (AppSettings.loadShowLightmapPref(context)) {    // TODO: move
+        //    onView(withId(R.id.info_time_lightmap)).check(matches(isDisplayed()));
+        //} else {
+        //    onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+        //}
     }
 
-    public static void showLightmapDialog(Context context)
-    {
-        showLightmapDialog(context, true);
-    }
-    public static void showLightmapDialog(Context context, boolean verify)
-    {
-        onView(withId(R.id.info_time_lightmap)).perform(click());
-        if (verify) {
-            verifyLightmapDialog();
-        }
-    }
-
-    public static void verifyLightmapDialog()
-    {
-        onView(withId(R.id.dialog_lightmap_layout)).check(ViewAssertionHelper.assertShown);
-    }
-
-    public static void cancelLightmapDialog()
-    {
-        onView(withId(R.id.dialog_lightmap_layout)).perform(pressBack());
-        onView(withId(R.id.dialog_lightmap_layout)).check(doesNotExist());
-    }
-
-    /**
-     *  UI Test
-     *
-     *  Show, rotate, and dismiss the solstice/equinox dialog.
-     */
     @Test
     public void test_showEquinoxDialog()
     {
-        Context context = activityRule.getActivity();
-        if (AppSettings.loadShowEquinoxPref(context))
-        {
-            showEquinoxDialog(context);
-            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-equinox0");
+        Activity context = activityRule.getActivity();
+        new EquinoxDialogRobot()
+                .showDialog(context).assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-equinox0")
+                .rotateDevice(context).assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
 
-            verifyEquinoxDialog();
-            cancelEquinoxDialog();
-
+        if (AppSettings.loadShowEquinoxPref(context)) {   // TODO: move
+            onView(withId(R.id.info_date_solsticequinox)).check(matches(isDisplayed()));
         } else {
             onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
         }
     }
 
-    public static void showEquinoxDialog(Context context)
-    {
-        showEquinoxDialog(context, true);
-    }
-    public static void showEquinoxDialog(Context context, boolean verify)
-    {
-        String actionText = context.getString(R.string.configAction_equinoxDialog);
-        openActionBarOverflowOrOptionsMenu(context);
-        onView(withText(actionText)).perform(click());
-        if (verify) {
-            verifyEquinoxDialog();
-        }
-    }
-
-    public static void verifyEquinoxDialog()
-    {
-        onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
-    }
-
-    public static void cancelEquinoxDialog()
-    {
-        onView(withId(R.id.dialog_header)).perform(pressBack());
-        onView(withId(R.id.dialog_header)).check(doesNotExist());
-    }
-
-    /**
-     *  UI Test
-     *
-     *  Show, rotate, and dismiss the help dialog.
-     */
     @Test
     public void test_showHelpDialog()
     {
-        showHelpDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-help0");
-
-        rotateDevice(activityRule);
-        verifyHelpDialog();
-        cancelHelpDialog();
+        Activity context = activityRule.getActivity();
+        new HelpDialogRobot()
+                .showDialog(context).assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-help0")
+                .rotateDevice(context).assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
     }
 
-    public static void showHelpDialog(Context context)
-    {
-        showHelpDialog(context, true);
-    }
-    public static void showHelpDialog(Context context, boolean verify)
-    {
-        String actionHelpText = context.getString(R.string.configAction_help);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionHelpText)).perform(click());
-        if (verify) {
-            verifyHelpDialog();
-        }
-    }
-
-    public static void verifyHelpDialog()
-    {
-        onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
-    }
-
-    public static void cancelHelpDialog()
-    {
-        onView(withId(R.id.txt_help_content)).perform(pressBack());
-        onView(withId(R.id.txt_help_content)).check(doesNotExist());
-    }
-
-    /**
-     * UI Test
-     *
-     * Show, rotate, and dismiss the about dialog.
-     */
     @Test
     public void test_showAboutDialog()
     {
-        showAboutDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-about0");
-
-        rotateDevice(activityRule);
-        verifyAboutDialog();
-        cancelAboutDialog();
+        Activity context = activityRule.getActivity();
+        new AboutDialogRobot()
+                .showDialog(context).assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-about0")
+                .rotateDevice(context).assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
     }
 
-    public static void showAboutDialog(Context context)
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+
+    /**
+     * DialogRobot
+     */
+    public interface DialogRobot
     {
-        showAboutDialog(context, true);
+        DialogRobot showDialog(Activity context);
+        DialogRobot applyDialog(Context context);
+        DialogRobot cancelDialog(Context context);
+
+        DialogRobot assertDialogShown(Context context);
+        DialogRobot assertDialogNotShown(Context context);
+
+        DialogRobot captureScreenshot(Activity activity, String name);
+        DialogRobot captureScreenshot(Activity activity, String subdir, String name);
+
+        DialogRobot rotateDevice(Activity activity);
+        DialogRobot rotateDevice(Activity activity, int orientation);
+
+        DialogRobot sleep(long ms);
     }
-    public static void showAboutDialog(Context context, boolean verify)
+
+    public static class DialogRobotConfig
     {
-        String actionAboutText = context.getString(R.string.configAction_aboutWidget);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionAboutText)).perform(click());
-        if (verify) {
-            verifyAboutDialog();
+        public Location getLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
         }
     }
 
-    public static void verifyAboutDialog()
+    public static abstract class DialogRobotBase implements DialogRobot
     {
-        onView(withId(R.id.txt_about_name)).check(ViewAssertionHelper.assertShown);
-        onView(withId(R.id.txt_about_desc)).check(ViewAssertionHelper.assertShown);
-        onView(withId(R.id.txt_about_version)).check(ViewAssertionHelper.assertShown);
+        public DialogRobotBase() {
+            initRobotConfig();
+        }
 
-        onView(withId(R.id.txt_about_url)).check(ViewAssertionHelper.assertShown);
-        onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
+        protected DialogRobotConfig expected;
+        public void initRobotConfig() {
+            setRobotConfig(new DialogRobotConfig());
+        }
+        public void setRobotConfig(DialogRobotConfig config) {
+            expected = config;
+        }
 
-        onView(withId(R.id.txt_about_support)).check(ViewAssertionHelper.assertShown);
-        onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
+        @Override
+        public abstract DialogRobot showDialog(Activity activity);
 
-        //onView(withId(R.id.txt_about_legal1)).check(assertShown);
-        //onView(withId(R.id.txt_about_legal2)).check(assertShown);
-        //onView(withId(R.id.txt_about_legal3)).check(assertShown);
+        @Override
+        public DialogRobot applyDialog(Context context) {
+            onView(withId(R.id.dialog_button_accept)).perform(click());
+            return this;
+        }
+        @Override
+        public DialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.dialog_header)).perform(pressBack());
+            return this;
+        }
+
+        @Override
+        public DialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+        @Override
+        public DialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.dialog_header)).check(doesNotExist());
+            return this;
+        }
+
+        @Override
+        public DialogRobot captureScreenshot(Activity activity, String name) {
+            captureScreenshot(activity, "", name);
+            return this;
+        }
+        @Override
+        public DialogRobot captureScreenshot(Activity activity, String subdir, String name) {
+            SuntimesActivityTestBase.captureScreenshot(activity, subdir, name);
+            return this;
+        }
+
+        @Override
+        public DialogRobot rotateDevice(Activity activity)
+        {
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return this;
+        }
+        @Override
+        public DialogRobot rotateDevice(Activity activity, int orientation)
+        {
+            activity.setRequestedOrientation(orientation);
+            return this;
+        }
+        @Override
+        public DialogRobot sleep(long ms)
+        {
+            SystemClock.sleep(ms);
+            return this;
+        }
     }
 
-    public static void cancelAboutDialog()
+    /**
+     * EquinoxDialogRobot
+     */
+    public static class EquinoxDialogRobot extends DialogRobotBase implements DialogRobot
     {
-        onView(withId(R.id.txt_about_name)).perform(pressBack());
-        onView(withId(R.id.txt_about_name)).check(doesNotExist());
+        @Override
+        public EquinoxDialogRobot showDialog(Activity context) {
+            String actionText = context.getString(R.string.configAction_equinoxDialog);
+            openActionBarOverflowOrOptionsMenu(context);
+            onView(withText(actionText)).perform(click());
+            return this;
+        }
+        @Override
+        public EquinoxDialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.year_info_layout)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
     }
 
+    /**
+     * LightmapDialogRobot
+     */
+    public static class LightmapDialogRobot extends DialogRobotBase implements DialogRobot
+    {
+        @Override
+        public LightmapDialogRobot showDialog(Activity context) {
+            onView(withId(R.id.info_time_lightmap)).perform(click());
+            return this;
+        }
+        @Override
+        public LightmapDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.dialog_lightmap_layout)).perform(pressBack());
+            return this;
+        }
+        @Override
+        public LightmapDialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.dialog_lightmap_layout)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+        @Override
+        public LightmapDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.dialog_lightmap_layout)).check(doesNotExist());
+            return this;
+        }
+    }
+
+    /**
+     * HelpDialogRobot
+     */
+    public static class HelpDialogRobot extends DialogRobotBase implements DialogRobot
+    {
+        @Override
+        public HelpDialogRobot showDialog(Activity context) {
+            String actionHelpText = context.getString(R.string.configAction_help);
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            onView(withText(actionHelpText)).perform(click());
+            return this;
+        }
+        @Override
+        public HelpDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.txt_help_content)).perform(pressBack());
+            return this;
+        }
+        @Override
+        public HelpDialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+        @Override
+        public HelpDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.txt_help_content)).check(doesNotExist());
+            return this;
+        }
+    }
+
+    /**
+     * AboutDialogRobot
+     */
+    public static class AboutDialogRobot extends DialogRobotBase implements DialogRobot
+    {
+        @Override
+        public AboutDialogRobot showDialog(Activity context)
+        {
+            String navMode = AppSettings.loadNavModePref(context);
+            if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
+            {
+                onView(navigationButton()).perform(click());
+                String actionAboutText = context.getString(R.string.configAction_aboutWidget);
+                onView(withText(actionAboutText)).perform(click());
+
+            } else {
+                String actionAboutText = context.getString(R.string.configAction_aboutWidget);
+                openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+                onView(withText(actionAboutText)).perform(click());
+            }
+            return this;
+        }
+        @Override
+        public AboutDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.txt_about_name)).perform(pressBack());
+            return this;
+        }
+        @Override
+        public AboutDialogRobot assertDialogShown(Context context)
+        {
+            onView(withId(R.id.txt_about_name)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_desc)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_version)).check(ViewAssertionHelper.assertShown);
+
+            onView(withId(R.id.txt_about_url)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
+
+            onView(withId(R.id.txt_about_support)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
+            return this;
+        }
+        @Override
+        public AboutDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.txt_about_name)).check(doesNotExist());
+            return this;
+        }
+    }
 }

@@ -31,6 +31,7 @@ import com.forrestguice.support.test.runner.AndroidJUnit4;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,6 +57,12 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
     @Before
     public void initScreenshots() {
         initConfigurations();
+        setAnimationsEnabled(false);
+    }
+
+    @After
+    public void afterTest() {
+        setAnimationsEnabled(true);
     }
 
     /**

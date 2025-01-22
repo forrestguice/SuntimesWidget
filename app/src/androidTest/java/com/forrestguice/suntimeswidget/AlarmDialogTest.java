@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,31 +18,65 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.test.InstrumentationRegistry;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.espresso.ViewInteractionHelper;
+import com.forrestguice.support.test.espresso.action.ViewActions;
+import com.forrestguice.support.test.espresso.contrib.PickerActions;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static com.forrestguice.support.test.espresso.Espresso.onData;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isSelected;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.tabLayout;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -51,59 +85,347 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
-    /**
-     * UI Test
-     *
-     * Show, rotate, and dismiss the alarm dialog.
-     */
+    @Before
+    public void beforeTest() {
+        setAnimationsEnabled(false);
+    }
+    @After
+    public void afterTest() {
+        setAnimationsEnabled(true);
+    }
+
     @Test
     public void test_showAlarmDialog()
     {
-        showAlarmDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-alarm0");
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+                //.captureScreenshot(activityRule.getActivity(), "suntimes-dialog-alarm0");
+                //.rotateDevice(context).assertDialogShown(context)
 
-        //rotateDevice(activityRule);
-        verifyAlarmDialog();
-        cancelAlarmDialog();
+        AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { AlarmClockItem.AlarmType.ALARM,
+                AlarmClockItem.AlarmType.NOTIFICATION, AlarmClockItem.AlarmType.NOTIFICATION1 };
+        for (AlarmClockItem.AlarmType type : types) {
+            robot.selectAlarmType(type)
+                    .assertAlarmTypeSelected(type);
+        }
+        for (AlarmClockItem.AlarmType type : types)
+        {
+            robot.selectAlarmType(type).assertAlarmTypeSelected(type);
+            for (int i : new int[] {0, 1, 0, 1}) {
+                robot.selectTabAtPosition(i)
+                        .assertTabAtPosition(context, i);
+            }
+        }
+        robot.cancelDialog(context).assertDialogNotShown(context);
     }
 
-    public static void showAlarmDialog(Context context)
+    @Test
+    public void test_showAlarmDialog_eventTab()
     {
-        showAlarmDialog(context, true);
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+
+        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0)
+                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+                .assertTabAtPosition(context, 0);
+
+        SolarEvents[] events = new SolarEvents[] { SolarEvents.SUNSET, SolarEvents.NOON, SolarEvents.SUNRISE };
+        for (SolarEvents event : events) {
+            robot.selectAlarmDialogEvent(event).assertAlarmDialogEvent(event);
+        }
+
+        robot.showAlarmLocationMenu(context)
+                .assertAlarmLocationMenuShown(context)
+                .cancelAlarmLocationMenu(context); //.sleep(1000);
+
+        robot.showOverflowMenu(context)
+                .assertOverflowMenuShown(context)
+                .cancelOverflowMenu(context); //.sleep(1000);
     }
-    public static void showAlarmDialog(Context context, boolean verify)
+
+    @Test
+    public void test_showAlarmDialog_eventTab_customEvent()
     {
-        String actionAboutText = context.getString(R.string.configAction_setAlarm);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionAboutText)).perform(click());
-        if (verify) {
-            verifyAlarmDialog();
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+
+        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
+                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+                .assertTabAtPosition(context, 0)
+                .assertAlarmDialogEvent(SolarEvents.SUNRISE);
+
+        robot.showOverflowMenu(context)
+                .assertOverflowMenuShown(context)
+                .clickOverflowMenuItem_manageEvents(context);
+        // TODO: verify EventActivity shown
+    }
+
+    @Test
+    public void test_showAlarmDialog_eventTab_withLocation()
+    {
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+
+        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
+                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+                .assertTabAtPosition(context, 0)
+                .assertAlarmDialogEvent(SolarEvents.SUNRISE);
+
+        robot.showAlarmLocationMenu(context)
+                .clickAlarmLocationMenu_setLocation(context);
+        // TODO: verify location dialog shown, select location, verify location changed
+    }
+
+    @Test
+    public void test_showAlarmDialog_timeTab()
+    {
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+
+        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(1)
+                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+                .assertTabAtPosition(context, 1);
+
+        robot.selectTZ_ApparentSolarTime()
+                .assertTZ_ApparentSolarTime(context);
+
+        robot.selectTZ_LocalMeanTime()
+                .assertTZ_LocalMeanTime(context);
+
+        robot.selectTZ_SystemTime()
+                .assertTZ_SystemTime(context);
+
+        int[] hours = new int[] { 3, 6, 12, 18 };
+        int[] minutes = new int[] { 0, 15, 30, 45 };
+        for (int i=0; i<hours.length; i++) {
+            for (int j=0; j<minutes.length; j++) {
+                robot.selectAlarmTime(hours[i], minutes[j])
+                        .assertAlarmTime(context, hours[i], minutes[j]);
+            }
+        }
+
+        robot.showAlarmDateDialog();
+        // TODO
+    }
+
+    /**
+     * AlarmDialogRobot
+     */
+    public static class AlarmDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    {
+        protected static SuntimesUtils utils = new SuntimesUtils();
+
+        protected AlarmDialogRobotConfig expected;
+        public void initRobotConfig() {
+            setRobotConfig(expected = new AlarmDialogRobotConfig());
+        }
+        public void setRobotConfig(AlarmDialogRobotConfig config) {
+            super.setRobotConfig(config);
+        }
+
+        @Override
+        public AlarmDialogRobot showDialog(Activity context)
+        {
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            onView(withText(R.string.configAction_setAlarm)).perform(click());
+            return this;
+        }
+
+        public AlarmDialogRobot selectAlarmType(AlarmClockItem.AlarmType type)
+        {
+            onView(withId(R.id.type_spin)).perform(click());
+            onData(allOf(is(instanceOf(AlarmClockItem.AlarmType.class)), is(type))).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot assertAlarmTypeSelected(AlarmClockItem.AlarmType type)
+        {
+            spinnerDisplaysText(R.id.type_spin, type.getDisplayString());
+            return this;
+        }
+
+        public AlarmDialogRobot showOverflowMenu(Context context) {
+            onView(withId(R.id.appwidget_schedalarm_more)).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot cancelOverflowMenu(Context context) {
+            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).perform(pressBack());
+            return this;
+        }
+        public AlarmDialogRobot clickOverflowMenuItem_manageEvents(Context context) {
+            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+
+        @Override
+        public AlarmDialogRobot assertDialogShown(Context context)
+        {
+            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.dialog_button_accept)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.type_spin)).check(ViewAssertionHelper.assertShown);
+            onView(tabLayout()).check(ViewAssertionHelper.assertShown);
+
+            onView(withId(R.id.text_datetime)).check(ViewAssertionHelper.assertShown);
+            onView(allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()))
+                    .check(ViewAssertionHelper.assertContainsText("AM"));
+
+            if (expected.showAlarmListButton()) {
+                onView(withId(R.id.dialog_button_alarms)).check(ViewAssertionHelper.assertShown);
+            } else {
+                onView(withId(R.id.dialog_button_alarms)).check(doesNotExist());
+            }
+            return this;
+        }
+
+        public AlarmDialogRobot pressAlarmListButton()
+        {
+            if (expected.showAlarmListButton()) {
+                onView(withId(R.id.dialog_button_alarms)).perform(click());
+            } else Log.w("TEST", "skipping call to pressAlarmListButton (hidden)");
+            return this;
+        }
+
+        public AlarmDialogRobot assertOverflowMenuShown(Context context) {
+            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+
+        public AlarmDialogRobot selectTabAtPosition(int tabPosition) {
+            onView(withId(R.id.tabLayout)).perform(ViewActions.selectTabAtPosition(tabPosition));
+            return this;
+        }
+        public AlarmDialogRobot assertTabAtPosition(Context context, int tabPosition)
+        {
+            Location location = expected.getLocation(context);
+            switch (tabPosition)
+            {
+                case 1:
+                    onView(withText(R.string.schedalarm_dialog_tab_time)).check(matches(isSelected()));
+                    onView(withId(R.id.modepicker)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.timepicker)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.modepicker)).check(ViewAssertionHelper.assertClickable);
+                    onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertClickable);
+                    break;
+
+                case 0:
+                default:
+                    onView(withText(R.string.schedalarm_dialog_tab_event)).check(matches(isSelected()));
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertEnabled);
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertClickable);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertClickable);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertContainsText(location.getLabel()));
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertEnabled);
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertClickable);
+                    break;
+            }
+            return this;
+        }
+
+        public AlarmDialogRobot selectAlarmTime(int hours, int minutes)
+        {
+            onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(hours, minutes));
+            return this;
+        }
+        public AlarmDialogRobot assertAlarmTime(Context context, int hours, int minutes)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hours);
+            calendar.set(Calendar.MINUTE, minutes);
+            calendar.set(Calendar.SECOND, 0);
+
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
+            onView( allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()) )
+                    .check(ViewAssertionHelper.assertContainsText(text.toString()));
+            return this;
+        }
+
+        public AlarmDialogRobot showAlarmDateDialog() {
+            onView(withId(R.id.datePicker)).perform(click());
+            return this;
+        }
+
+        public AlarmDialogRobot selectTZ_ApparentSolarTime() {
+            onView(withId(R.id.modepicker)).perform(click());
+            onView(withText(R.string.time_apparent)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot assertTZ_ApparentSolarTime(Context context) {
+            spinnerDisplaysText(context, R.id.modepicker, R.string.time_apparent);
+            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertClickable);
+            return this;
+        }
+
+        public AlarmDialogRobot selectTZ_LocalMeanTime() {
+            onView(withId(R.id.modepicker)).perform(click());
+            onView(withText(R.string.time_localMean)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot assertTZ_LocalMeanTime(Context context) {
+            spinnerDisplaysText(context, R.id.modepicker, R.string.time_localMean);
+            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertClickable);
+            return this;
+        }
+
+        public AlarmDialogRobot selectTZ_SystemTime() {
+            onView(withId(R.id.modepicker)).perform(click());
+            onView(withText(R.string.timezoneMode_current)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot assertTZ_SystemTime(Context context) {
+            spinnerDisplaysText(context, R.id.modepicker, R.string.timezoneMode_current);
+            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertHidden);
+            return this;
+        }
+
+        public AlarmDialogRobot selectAlarmDialogEvent(SolarEvents mode)
+        {
+            onView(withId(R.id.appwidget_schedalarm_mode)).perform(click());
+            onData(allOf(is(instanceOf(AlarmEvent.AlarmEventItem.class)), hasToString(mode.toString())))
+                    .inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot assertAlarmDialogEvent(SolarEvents mode)
+        {
+            spinnerDisplaysText(R.id.appwidget_schedalarm_mode, mode.toString());
+            return this;
+        }
+
+        public AlarmDialogRobot showAlarmLocationMenu(Context context) {
+            onView(withId(R.id.appwidget_schedalarm_location)).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot clickAlarmLocationMenu_setLocation(Context context) {
+            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmDialogRobot cancelAlarmLocationMenu(Context context) {
+            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).perform(pressBack());
+            return this;
+        }
+        public AlarmDialogRobot assertAlarmLocationMenuShown(Context context)
+        {
+            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            return this;
         }
     }
 
-    public static void inputAlarmDialog_alarm(SolarEvents mode)
+    public static class AlarmDialogRobotConfig extends DialogTest.DialogRobotConfig
     {
-        onView(withId(R.id.appwidget_schedalarm_mode)).perform(click());
-        onData(allOf(is(instanceOf(SolarEvents.class)), is(mode))).inRoot(isPlatformPopup()).perform(click());
-        // TODO: verify action
-    }
-
-    public static void verifyAlarmDialog()
-    {
-        onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
-        //onView(withId(R.id.appwidget_schedalarm_note)).check(assertShown);
-    }
-
-    public static void applyAlarmDialog(Context context)
-    {
-        onView(withId(R.id.dialog_button_accept)).perform(click());
-        // TODO: verify action
-    }
-
-    public static void cancelAlarmDialog()
-    {
-        onView(withId(R.id.dialog_header)).perform(pressBack());
-        onView(withId(R.id.dialog_header)).check(doesNotExist());
+        public boolean showAlarmListButton() {
+            return true;
+        }
     }
 
 }
