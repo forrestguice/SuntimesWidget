@@ -1,15 +1,20 @@
 package com.forrestguice.support.test.espresso;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Looper;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.uiautomator.UiDevice;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
 import java.util.List;
+
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 public class Espresso
 {
@@ -55,5 +60,13 @@ public class Espresso
 
     public static void openActionBarOverflowOrOptionsMenu(Context context) {
         android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu(context);
+    }
+
+    @TargetApi(18)
+    public static void click(int x, int y)
+    {
+        if (Build.VERSION.SDK_INT >= 18) {
+            UiDevice.getInstance(getInstrumentation()).click(x, y);
+        }
     }
 }
