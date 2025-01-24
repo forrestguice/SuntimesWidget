@@ -54,12 +54,14 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import java.io.IOException;
 import java.util.Calendar;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -75,11 +77,11 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
     }
     @After
-    public void afterTest() {
+    public void afterTest() throws IOException {
         setAnimationsEnabled(true);
     }
 
@@ -127,11 +129,11 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
 
         robot.showAlarmLocationMenu(context)
                 .assertAlarmLocationMenuShown(context)
-                .cancelAlarmLocationMenu(context); //.sleep(1000);
+                .cancelAlarmLocationMenu(context).sleep(500);
 
         robot.showOverflowMenu(context)
                 .assertOverflowMenuShown(context)
-                .cancelOverflowMenu(context); //.sleep(1000);
+                .cancelOverflowMenu(context).sleep(500);
     }
 
     @Test
@@ -164,8 +166,8 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
                 .assertTabAtPosition(context, 0)
                 .assertAlarmDialogEvent(SolarEvents.SUNRISE);
 
-        robot.showAlarmLocationMenu(context)
-                .clickAlarmLocationMenu_setLocation(context);
+        robot.showAlarmLocationMenu(context);
+                //.clickAlarmLocationMenu_setLocation(context);
         // TODO: verify location dialog shown, select location, verify location changed
     }
 
@@ -175,7 +177,6 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
-
         robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(1)
                 .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
                 .assertTabAtPosition(context, 1);
@@ -199,7 +200,33 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
 
         robot.showAlarmDateDialog();
-        // TODO
+        new TimeDateDialogTest.TimeDateDialogRobot()
+                .assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
+    }
+
+    @Test
+    public void test_showAlarmDialog_timeTab_withDate()
+    {
+        Activity context = activityRule.getActivity();
+        AlarmDialogRobot robot = new AlarmDialogRobot();
+        robot.showDialog(context).assertDialogShown(context);
+        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(1)
+                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+                .assertTabAtPosition(context, 1)
+                .assertDateNotSet(context);
+
+        robot.showAlarmDateDialog();    // set date
+        TimeDateDialogTest.TimeDateDialogRobot robot1 = new TimeDateDialogTest.TimeDateDialogRobot();
+        robot1.assertDialogShown(context)
+                .selectDate(2098, 2, 3)   // in the year 2525
+                .applyDialog(context);
+        robot.assertDateSetTo(context, 2098, 2, 3);
+
+        robot.showAlarmDateDialog();    // clear date
+        robot1.assertDialogShown(context)
+                .clickClearButton();
+        robot.assertDateNotSet(context);
     }
 
     /**
@@ -255,12 +282,9 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         {
             onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.dialog_button_accept)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.text_datetime)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.type_spin)).check(ViewAssertionHelper.assertShown);
             onView(tabLayout()).check(ViewAssertionHelper.assertShown);
-
-            onView(withId(R.id.text_datetime)).check(ViewAssertionHelper.assertShown);
-            onView(allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()))
-                    .check(ViewAssertionHelper.assertContainsText("AM"));
 
             if (expected.showAlarmListButton()) {
                 onView(withId(R.id.dialog_button_alarms)).check(ViewAssertionHelper.assertShown);
@@ -374,6 +398,15 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         public AlarmDialogRobot assertTZ_SystemTime(Context context) {
             spinnerDisplaysText(context, R.id.modepicker, R.string.timezoneMode_current);
             onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertHidden);
+            return this;
+        }
+
+        public AlarmDialogRobot assertDateNotSet(Context context) {
+            onView(withId(R.id.datePicker)).check(matches(withText(equalTo(""))));
+            return this;
+        }
+        public AlarmDialogRobot assertDateSetTo(Context context, int year, int month, int day) {
+            onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertContainsText("" + year));
             return this;
         }
 

@@ -33,6 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.TimeZone;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -59,11 +60,11 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
     }
     @After
-    public void afterTest() {
+    public void afterTest() throws IOException {
         setAnimationsEnabled(true);
     }
 
@@ -99,16 +100,13 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         @Override
         public TimeZoneDialogRobot showDialog(Activity activity)
         {
-            String actionTimezoneText = activity.getString(R.string.configAction_setTimeZone);
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-            onView(withText(actionTimezoneText)).perform(click());
+            onView(withText(R.string.configAction_setTimeZone)).perform(click());
             return this;
         }
         @Override
-        public TimeZoneDialogRobot applyDialog(Context context)
-        {
-            String setTimezoneText = context.getString(R.string.timezone_dialog_ok);
-            onView(withText(setTimezoneText)).perform(click());
+        public TimeZoneDialogRobot applyDialog(Context context) {
+            onView(withText(R.string.timezone_dialog_ok)).perform(click());
             return this;
         }
         @Override

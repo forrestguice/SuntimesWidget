@@ -24,6 +24,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.DatePicker;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,6 +37,8 @@ import static android.support.test.espresso.Espresso.openActionBarOverflowOrOpti
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+
+import java.io.IOException;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -51,11 +54,11 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
     }
     @After
-    public void afterTest() {
+    public void afterTest() throws IOException {
         setAnimationsEnabled(true);
     }
 
@@ -88,22 +91,27 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
             onView(withId(R.id.appwidget_date_custom)).perform(pressBack());
             return this;
         }
+        public TimeDateDialogRobot selectDate( int year, int month, int day ) {
+            onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(year, month, day));
+            return this;
+        }
+        public TimeDateDialogRobot clickTodayButton() {
+            onView(withText(R.string.today)).perform(click());
+            return this;
+        }
+        public TimeDateDialogRobot clickClearButton() {
+            onView(withText(R.string.configAction_clearDate)).perform(click());
+            return this;
+        }
+
         @Override
-        public TimeDateDialogRobot assertDialogShown(Context context)
-        {
+        public TimeDateDialogRobot assertDialogShown(Context context) {
             onView(withId(R.id.appwidget_date_custom)).check(ViewAssertionHelper.assertShown);
             return this;
         }
         @Override
         public TimeDateDialogRobot assertDialogNotShown(Context context) {
             onView(withId(R.id.appwidget_date_custom)).check(doesNotExist());
-            return this;
-        }
-
-        public TimeDateDialogRobot inputDate( int year, int month, int day )
-        {
-            // TODO: set datepicker to year, month, day
-            //onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, month + 1, day));
             return this;
         }
     }
