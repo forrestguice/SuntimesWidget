@@ -20,6 +20,9 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
+import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
 import com.forrestguice.support.test.filters.LargeTest;
 
@@ -37,6 +40,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
@@ -52,12 +56,12 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
-    public void initScreenshots() {
+    public void initScreenshots() throws IOException {
         initConfigurations();
         setAnimationsEnabled(false);
     }
     @After
-    public void afterTest() {
+    public void afterTest() throws IOException {
         setAnimationsEnabled(true);
     }
 
@@ -155,11 +159,11 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-help-" + theme)
                 .cancelDialog(context);
 
-        new DialogTest.EquinoxDialogRobot().showDialog(activity)
+        new EquinoxCardDialogTest.EquinoxDialogRobot().showDialog(activity)
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-equinox-" + theme)
                 .cancelDialog(context);
 
-        new DialogTest.LightmapDialogRobot().showDialog(activity)
+        new LightMapDialogTest.LightMapDialogRobot().showDialog(activity)
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-lightmap-" + theme)
                 .cancelDialog(context);
 

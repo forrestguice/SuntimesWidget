@@ -46,6 +46,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
@@ -321,12 +322,12 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 
-    public static void setAnimationsEnabled(boolean enabled)
+    public static void setAnimationsEnabled(boolean enabled) throws IOException
     {
         UiAutomation automation = android.support.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
-        automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0"));
-        automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0"));
-        automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0"));
+        automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
+        automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
+        automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
     }
 
 }

@@ -24,6 +24,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
+import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.support.test.espresso.IdlingPolicies;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
 import com.forrestguice.support.test.filters.LargeTest;
@@ -250,7 +253,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
         {
-            DialogTest.DialogRobot robot = new DialogTest.LightmapDialogRobot()
+            DialogTest.DialogRobot robot = new LightMapDialogTest.LightMapDialogRobot()
                     .showDialog(context)
                     .cancelDialog(context);
 
@@ -270,7 +273,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
         {
             onView(withId(R.id.info_date_solsticequinox)).perform(click());
-            new DialogTest.EquinoxDialogRobot()
+            new EquinoxCardDialogTest.EquinoxDialogRobot()
                     .assertDialogShown(activityRule.getActivity())
                     .cancelDialog(activityRule.getActivity());
 
@@ -456,7 +459,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
         robot.showDialog(context);
-        robot.inputDate(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY)
+        robot.selectDate(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY)
                 .applyDialog(context);
 
         verifyActivity();

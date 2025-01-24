@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,8 +22,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.SystemClock;
+import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.test.InstrumentationRegistry;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
@@ -39,18 +41,23 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeDown;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeUp;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasLinks;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -60,46 +67,12 @@ public class DialogTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
     }
     @After
-    public void afterTest() {
+    public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-    }
-
-    @Test
-    public void test_showLightmapDialog()
-    {
-        Activity context = activityRule.getActivity();
-        new LightmapDialogRobot()
-                .showDialog(context).assertDialogShown(context)
-                //.captureScreenshot(context, "suntimes-dialog-lightmap0")
-                .rotateDevice(context).assertDialogShown(context)
-                .cancelDialog(context).assertDialogNotShown(context);
-
-        //if (AppSettings.loadShowLightmapPref(context)) {    // TODO: move
-        //    onView(withId(R.id.info_time_lightmap)).check(matches(isDisplayed()));
-        //} else {
-        //    onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
-        //}
-    }
-
-    @Test
-    public void test_showEquinoxDialog()
-    {
-        Activity context = activityRule.getActivity();
-        new EquinoxDialogRobot()
-                .showDialog(context).assertDialogShown(context)
-                //.captureScreenshot(context, "suntimes-dialog-equinox0")
-                .rotateDevice(context).assertDialogShown(context)
-                .cancelDialog(context).assertDialogNotShown(context);
-
-        if (AppSettings.loadShowEquinoxPref(context)) {   // TODO: move
-            onView(withId(R.id.info_date_solsticequinox)).check(matches(isDisplayed()));
-        } else {
-            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
-        }
     }
 
     @Test
@@ -194,6 +167,19 @@ public class DialogTest extends SuntimesActivityTestBase
             return this;
         }
 
+        public DialogRobot expandSheet() {
+            onView(withId(R.id.dialog_header)).perform(swipeUp());
+            return this;
+        }
+        public DialogRobot collapseSheet() {
+            onView(withId(R.id.dialog_header)).perform(swipeDown());
+            return this;
+        }
+        public DialogRobot assertSheetIsCollapsed(Context context) {
+            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+
         @Override
         public DialogRobot captureScreenshot(Activity activity, String name) {
             captureScreenshot(activity, "", name);
@@ -226,52 +212,8 @@ public class DialogTest extends SuntimesActivityTestBase
         }
     }
 
-    /**
-     * EquinoxDialogRobot
-     */
-    public static class EquinoxDialogRobot extends DialogRobotBase implements DialogRobot
-    {
-        @Override
-        public EquinoxDialogRobot showDialog(Activity context) {
-            String actionText = context.getString(R.string.configAction_equinoxDialog);
-            openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(actionText)).perform(click());
-            return this;
-        }
-        @Override
-        public EquinoxDialogRobot assertDialogShown(Context context) {
-            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.year_info_layout)).check(ViewAssertionHelper.assertShown);
-            return this;
-        }
-    }
-
-    /**
-     * LightmapDialogRobot
-     */
-    public static class LightmapDialogRobot extends DialogRobotBase implements DialogRobot
-    {
-        @Override
-        public LightmapDialogRobot showDialog(Activity context) {
-            onView(withId(R.id.info_time_lightmap)).perform(click());
-            return this;
-        }
-        @Override
-        public LightmapDialogRobot cancelDialog(Context context) {
-            onView(withId(R.id.dialog_lightmap_layout)).perform(pressBack());
-            return this;
-        }
-        @Override
-        public LightmapDialogRobot assertDialogShown(Context context) {
-            onView(withId(R.id.dialog_lightmap_layout)).check(ViewAssertionHelper.assertShown);
-            return this;
-        }
-        @Override
-        public LightmapDialogRobot assertDialogNotShown(Context context) {
-            onView(withId(R.id.dialog_lightmap_layout)).check(doesNotExist());
-            return this;
-        }
-    }
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
 
     /**
      * HelpDialogRobot
@@ -280,9 +222,8 @@ public class DialogTest extends SuntimesActivityTestBase
     {
         @Override
         public HelpDialogRobot showDialog(Activity context) {
-            String actionHelpText = context.getString(R.string.configAction_help);
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-            onView(withText(actionHelpText)).perform(click());
+            onView(withText(R.string.configAction_help)).perform(click());
             return this;
         }
         @Override
@@ -314,13 +255,11 @@ public class DialogTest extends SuntimesActivityTestBase
             if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
             {
                 onView(navigationButton()).perform(click());
-                String actionAboutText = context.getString(R.string.configAction_aboutWidget);
-                onView(withText(actionAboutText)).perform(click());
+                onView(withText(R.string.configAction_aboutWidget)).perform(click());
 
             } else {
-                String actionAboutText = context.getString(R.string.configAction_aboutWidget);
                 openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-                onView(withText(actionAboutText)).perform(click());
+                onView(withText(R.string.configAction_aboutWidget)).perform(click());
             }
             return this;
         }
