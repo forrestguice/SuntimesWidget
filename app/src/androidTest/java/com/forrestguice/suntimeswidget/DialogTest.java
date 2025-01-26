@@ -22,13 +22,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.SystemClock;
-import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.support.test.InstrumentationRegistry;
-import com.forrestguice.support.test.espresso.ViewAssertionHelper;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -42,21 +42,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.action.ViewActions.swipeDown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.swipeUp;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
-import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasLinks;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
@@ -158,7 +158,7 @@ public class DialogTest extends SuntimesActivityTestBase
 
         @Override
         public DialogRobot assertDialogShown(Context context) {
-            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.dialog_header)).check(assertShown);
             return this;
         }
         @Override
@@ -176,7 +176,7 @@ public class DialogTest extends SuntimesActivityTestBase
             return this;
         }
         public DialogRobot assertSheetIsCollapsed(Context context) {
-            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.dialog_header)).check(assertShown);
             return this;
         }
 
@@ -195,6 +195,7 @@ public class DialogTest extends SuntimesActivityTestBase
         public DialogRobot rotateDevice(Activity activity)
         {
             rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            sleep(1000);
             rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             return this;
         }
@@ -210,6 +211,49 @@ public class DialogTest extends SuntimesActivityTestBase
             SystemClock.sleep(ms);
             return this;
         }
+
+        public SuntimesCalculator appCalculator(Context context) {
+            SuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+            calculator.init(appLocation(context), appTimeZone(context));
+            return calculator;
+        }
+        public Location appLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
+        }
+        public TimeZone appTimeZone(Context context) {
+            return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
+        }
+
+        public static TimeZone timeZone_UTC() {
+            return TimeZone.getTimeZone("UTC");
+        }
+        public TimeZone timeZone_ApparentSolar(Context context) {
+            return WidgetTimezones.getTimeZone(WidgetTimezones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public TimeZone timeZone_LocalMean(Context context) {
+            return WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public TimeZone timeZone_Suntimes(Context context) {
+            return appTimeZone(context);
+        }
+
+        public static int thisYear() {
+            return Calendar.getInstance().get(Calendar.YEAR);
+        }
+        public static int nextYear() {
+            return thisYear() + 1;
+        }
+        public static int lastYear() {
+            return thisYear() - 1;
+        }
+
+        public Calendar now(Context context) {
+            return now(TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0)));
+        }
+        public Calendar now(TimeZone timezone) {
+            return Calendar.getInstance(timezone);
+        }
+
     }
 
     //////////////////////////////////////////////////////////////////
@@ -233,7 +277,7 @@ public class DialogTest extends SuntimesActivityTestBase
         }
         @Override
         public HelpDialogRobot assertDialogShown(Context context) {
-            onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_help_content)).check(assertShown);
             return this;
         }
         @Override
@@ -271,14 +315,14 @@ public class DialogTest extends SuntimesActivityTestBase
         @Override
         public AboutDialogRobot assertDialogShown(Context context)
         {
-            onView(withId(R.id.txt_about_name)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.txt_about_desc)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.txt_about_version)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_name)).check(assertShown);
+            onView(withId(R.id.txt_about_desc)).check(assertShown);
+            onView(withId(R.id.txt_about_version)).check(assertShown);
 
-            onView(withId(R.id.txt_about_url)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_url)).check(assertShown);
             onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
 
-            onView(withId(R.id.txt_about_support)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_about_support)).check(assertShown);
             onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
             return this;
         }

@@ -27,6 +27,10 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaScannerConnection;
 //import android.os.Environment;
 import android.preference.PreferenceManager;
+
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.support.test.espresso.FailureHandler;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -47,7 +51,10 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
@@ -195,6 +202,9 @@ public abstract class SuntimesActivityTestBase
     public static boolean viewIsDisplayed(int viewId) {
         return viewIsDisplayed(viewId, null);
     }
+    public static boolean viewIsDisplayed(int viewId, Context context, int textResID) {
+        return viewIsDisplayed(viewId, context.getString(textResID));
+    }
     public static boolean viewIsDisplayed(int viewId, String text)
     {
         final boolean[] isDisplayed = {true};
@@ -299,7 +309,8 @@ public abstract class SuntimesActivityTestBase
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
-        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOXDATE, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, false);
         prefs.putInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
         prefs.apply();
     }
@@ -321,6 +332,27 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
+
+    public static SimpleDateFormat[] timeDateFormats12 = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, h:mm a"),
+            new SimpleDateFormat("MMMM d, h:mm a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm a")
+    };
+    public static SimpleDateFormat[] timeDateFormats12s = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, h:mm:ss a"),
+            new SimpleDateFormat("MMMM d, h:mm:ss a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss a")
+    };
+    public static SimpleDateFormat[] timeDateFormats24 = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, HH:mm"),
+            new SimpleDateFormat("MMMM d, HH:mm"),
+            new SimpleDateFormat("MMMM d, yyyy, HH:mm")
+    };
+    public static SimpleDateFormat[] timeDateFormats24s = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, HH:mm:ss"),
+            new SimpleDateFormat("MMMM d, HH:mm:ss"),
+            new SimpleDateFormat("MMMM d, yyyy, HH:mm:ss")
+    };
 
     public static void setAnimationsEnabled(boolean enabled) throws IOException
     {

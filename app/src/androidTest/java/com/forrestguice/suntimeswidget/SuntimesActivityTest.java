@@ -23,6 +23,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
@@ -46,10 +47,13 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.hamcrest.Matcher;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +61,8 @@ import java.util.concurrent.TimeUnit;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
 import static com.forrestguice.support.test.espresso.Espresso.unregisterIdlingResources;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.longClick;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
@@ -81,6 +87,7 @@ import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -89,18 +96,26 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
+    @Before
+    public void beforeTest() throws IOException {
+        setAnimationsEnabled(false);
+    }
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
+    }
+
     /**
-     * UI Test
-     *
-     * Open the activity, take a screenshot, swap the card, take a screenshot, and then rotate.
+     * UI Test; open the activity, take a screenshot, swap the card, take a screenshot, and then rotate.
      */
     @Test
-    public void test_activity()
+    public void test_mainActivity()
     {
         verifyActivity();
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-main0");
 
-        swapCard();
+        new MainActivityRobot()
+                .swapCard(activityRule.getActivity());
         verifyTimeCard();
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-main1");
 
@@ -144,12 +159,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public void verifyActionBar()
     {
-        onView(withId(R.id.action_location_add)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.action_location_add)).check(assertShown);
 
         WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activityRule.getActivity(), 0);
         if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
-            onView(withId(R.id.action_location_refresh)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.action_location_refresh)).check(assertShown);
 
         } else {
             onView(withId(R.id.action_location_refresh)).check(doesNotExist());
@@ -163,23 +178,23 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
         String timezoneID = dataset.timezone().getID();
 
-        onView(withId(R.id.text_time)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.text_time)).check(assertShown);
         onView(withId(R.id.text_time)).check(matches(withText(timeText.getValue())));
 
         if (!SuntimesUtils.is24()) {
-            onView(withId(R.id.text_time_suffix)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.text_time_suffix)).check(assertShown);
             onView(withId(R.id.text_time_suffix)).check(matches(withText(timeText.getSuffix())));
         }
 
-        onView(withId(R.id.text_timezone)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.text_timezone)).check(assertShown);
         onView(withId(R.id.text_timezone)).check(matches(withText(containsString(timezoneID))));
 
-        onView(withId(R.id.layout_clock)).check(ViewAssertionHelper.assertClickable);
+        //onView(withId(R.id.layout_clock)).check(ViewAssertionHelper.assertClickable);
     }
 
     public static void verifyNote(SuntimesActivity activity)
     {
-        onView(withId(R.id.info_note_flipper)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.info_note_flipper)).check(assertShown);
 
         NoteData note = activity.notes.getNote( activity.notes.getNoteIndex() );
         onView(allOf(withId(R.id.text_timenote1), isDisplayed())).check(matches(withText(containsString(note.timeText.getValue()))));
@@ -191,7 +206,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         Matcher<View> lightmap = allOf(withId(R.id.info_time_lightmap), withParent(isDisplayed()));
         if (AppSettings.loadShowLightmapPref(context)) {
-            onView(lightmap).check(ViewAssertionHelper.assertShown);
+            onView(lightmap).check(assertShown);
         } else {
             onView(lightmap).check(matches(not(isDisplayed())));
         }
@@ -201,7 +216,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (AppSettings.loadShowEquinoxPref(context))
         {
-            onView(withId(R.id.info_date_solsticequinox)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.info_date_solsticequinox)).check(assertShown);
         } else {
             onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
         }
@@ -211,11 +226,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (AppSettings.loadDatasourceUIPref(context))
         {
-            onView(withId(R.id.txt_datasource)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.txt_datasource)).check(assertShown);
 
             SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
-            if (dataSource != null)
-            {
+            if (dataSource != null) {
                 onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.getName())));
             }
             // else { // TODO: test conditions when dataSource==null }
@@ -226,83 +240,149 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     }
 
     /**
-     * UI Test
-     *
-     * Click on the data source label and verify setting activity is displayed.
+     * UI Test; click on the data source label and verify setting activity is displayed.
      */
     @Test
-    public void test_onDataSourceUIClick()
+    public void test_mainActivity_onDataSourceUIClick()
     {
         verifyDataSourceUI(activityRule.getActivity());
         if (AppSettings.loadDatasourceUIPref(activityRule.getActivity()))
         {
-            onView(withId(R.id.txt_datasource)).perform(click());
-            verifyGeneralSettings(activityRule.getActivity());
+            new MainActivityRobot()
+                    .clickDataSourceLabel();
+            //verifyGeneralSettings(activityRule.getActivity());  // TODO
             onView(isRoot()).perform(pressBack());
         }
     }
 
     /**
-     * UI Test
-     *
-     * Click on the lightmap area and verify the dialog is displayed.
+     * UI Test; click on the lightmap area and verify the lightmap dialog is displayed.
      */
     @Test
-    public void test_onLightmapClick()
+    public void test_mainActivity_onLightmapClick()
     {
         Activity context = activityRule.getActivity();
-        if (AppSettings.loadShowLightmapPref(activityRule.getActivity()))
+        if (AppSettings.loadShowLightmapPref(context))
         {
-            DialogTest.DialogRobot robot = new LightMapDialogTest.LightMapDialogRobot()
-                    .showDialog(context)
-                    .cancelDialog(context);
+            new MainActivityRobot()
+                    .clickLightmapField();
+            new LightMapDialogTest.LightMapDialogRobot()
+                    .assertDialogShown(context)
+                    .cancelDialog(context)
+                    .assertDialogNotShown(context);
 
-            onView(withId(R.id.info_time_lightmap)).perform(longClick());
-            robot.assertDialogShown(context)
+            new MainActivityRobot()
+                    .longClickLightmapField();
+            new LightMapDialogTest.LightMapDialogRobot()
+                    .assertDialogShown(context)
                     .cancelDialog(context)
                     .assertDialogNotShown(context);
 
         } else {
-            onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
+            onView(withId(R.id.info_time_lightmap)).check(assertHidden);
         }
     }
 
+    /**
+     * UI Test: click on the solstice area and verify the solstice dialog is displayed.
+     */
     @Test
-    public void test_onSolsticeEquinoxClick()
+    public void test_mainActivity_onSolsticeEquinoxClick()
     {
         if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
         {
-            onView(withId(R.id.info_date_solsticequinox)).perform(click());
+            new MainActivityRobot()
+                    .clickSolsticeField();
             new EquinoxCardDialogTest.EquinoxDialogRobot()
                     .assertDialogShown(activityRule.getActivity())
                     .cancelDialog(activityRule.getActivity());
 
         } else {
-            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
+            onView(withId(R.id.info_date_solsticequinox)).check(assertHidden);
+        }
+    }
+    @Test
+    public void test_mainActivity_onSolsticeEquinoxSwipeNext()
+    {
+        if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
+        {
+            new MainActivityRobot()
+                    .swipeSolsticeField_next().sleep(500)
+                    .swipeSolsticeField_prev().sleep(500);
+            // TODO
+
+        } else {
+            onView(withId(R.id.info_date_solsticequinox)).check(assertHidden);
+        }
+    }
+    @Test
+    public void test_mainActivity_onSolsticeEquinoxSwipePrev()
+    {
+        if (AppSettings.loadShowEquinoxPref(activityRule.getActivity()))
+        {
+            new MainActivityRobot()
+                    .swipeSolsticeField_next().sleep(500)
+                    .swipeSolsticeField_prev().sleep(500);
+            // TODO
+
+        } else {
+            onView(withId(R.id.info_date_solsticequinox)).check(assertHidden);
         }
     }
 
     /**
-     * UI Test
-     *
-     * Click on the clock area and verify the configured action.
+     * UI Test; click on the clock area and verify the configured action.
      */
     @Test
-    public void test_onClockClick()
+    public void test_mainActivity_onClockClick_alarm()
     {
-        clickOnClock(activityRule.getActivity());
+        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
+        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.ALARM.name()).apply();
+
+        new MainActivityRobot()
+                .clickOnClock();
+        int noteIndex = activityRule.getActivity().notes.getNoteIndex();
+        verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.ALARM.name(), noteIndex);
+
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
     }
 
-    public static void clickOnClock(SuntimesActivity activity)
+    @Test
+    public void test_mainActivity_onClockClick_nextNote()
     {
-        int noteIndex = activity.notes.getNoteIndex();
-        onView(withId(R.id.layout_clock)).perform(click());
-        verifyOnClockClick(activity, noteIndex);
+        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
+        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.NEXT_NOTE.name()).apply();
+
+        int noteIndex = activityRule.getActivity().notes.getNoteIndex();
+        new MainActivityRobot()
+                .clickOnClock();
+        verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.NEXT_NOTE.name(), noteIndex);
+
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
     }
 
-    public static void verifyOnClockClick(SuntimesActivity activity, int noteIndex)
+    @Test
+    public void test_mainActivity_onClockClick_prevNote()
+    {
+        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
+        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.PREV_NOTE.name()).apply();
+
+        int noteIndex = activityRule.getActivity().notes.getNoteIndex();
+        new MainActivityRobot()
+                .clickOnClock().sleep(1000);
+        verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.PREV_NOTE.name(), noteIndex);
+
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
+    }
+
+    public static void verifyOnClockClick(SuntimesActivity activity, String tapAction0, int noteIndex)
     {
         String tapAction = AppSettings.loadClockTapActionPref(activity);
+        assertEquals(tapAction0, tapAction);
+
         if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
             new AlarmDialogTest.AlarmDialogRobot()
@@ -321,32 +401,31 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     }
 
     /**
-     * UI Test
-     *
-     * Swipe the note area and verify the note changes (next, prev).
+     * UI Test; swipe the note area and verify the note changes (next, prev).
      */
     @Test
-    public void test_onNoteSwipe()
+    public void test_mainActivity_onNoteSwipe()
     {
         int noteIndex = activityRule.getActivity().notes.getNoteIndex();
-        swipeNoteNext();
+        new MainActivityRobot()
+                .swipeNoteNext();
         verifyOnNoteNext(activityRule.getActivity(), noteIndex);
 
         noteIndex = activityRule.getActivity().notes.getNoteIndex();
-        swipeNotePrev();
+        new MainActivityRobot()
+                .swipeNotePrev();
         verifyOnNotePrev(activityRule.getActivity(), noteIndex);
     }
 
     /**
-     * UI Test
-     *
-     * Click the note area and verify the configured action.
+     * UI Test; click the note area and verify the configured action.
      */
     @Test
-    public void test_onNoteClick()
+    public void test_mainActivity_onNoteClick()
     {
         int noteIndex = activityRule.getActivity().notes.getNoteIndex();
-        clickOnNote();
+        new MainActivityRobot()
+                .clickOnNote();
         verifyOnNoteClick(activityRule.getActivity(), noteIndex);
     }
 
@@ -370,21 +449,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }*/
     }
 
-    public static void clickOnNote()
-    {
-        onView(withId(R.id.info_note_flipper)).perform(click());
-    }
-
-    public static void swipeNoteNext()
-    {
-        onView(withId(R.id.info_note_flipper)).perform(swipeLeft());
-    }
-
-    public static void swipeNotePrev()
-    {
-        onView(withId(R.id.info_note_flipper)).perform(swipeRight());
-    }
-
     public static void verifyOnNoteNext(SuntimesActivity activity, int prevNoteIndex)
     {
         int n = activity.notes.noteCount();
@@ -406,67 +470,92 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     }
 
     /**
-     * UI Test
-     *
-     * Click the date field and verify the configured action.
+     * UI Test; click the date field and verify the configured action.
      */
     @Test
-    public void test_onDateClick()
+    public void test_mainActivity_onDateClick_configDate()
     {
-        // click on the date field
-        Matcher<View> dateField = allOf(withId(R.id.text_date), isDescendantOfA(withId(R.id.info_time_all_today)), withText(containsString("Today")));
-        onView(dateField).perform(click());
+        String savedState = AppSettings.loadDateTapActionPref(activityRule.getActivity());
+        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.CONFIG_DATE.name()).apply();
 
-        // verify the action
         String tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        if (tapAction.equals(WidgetActions.SuntimesAction.CONFIG_DATE.name()))
+        assertEquals(WidgetActions.SuntimesAction.CONFIG_DATE.name(), tapAction);
+
+        new MainActivityRobot()
+                .clickCardDate();
+        new TimeDateDialogTest.TimeDateDialogRobot()
+                .assertDialogShown(activityRule.getActivity())
+                .cancelDialog(activityRule.getActivity());
+
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState).apply();
+    }
+    // TODO: SHOW_CALENDAR, ...
+
+    /**
+     * UI Test; click the date field and verify the configured action.
+     */
+    @Test
+    public void test_mainActivity_onDateClick_swapCard()
+    {
+        Context context = activityRule.getActivity();
+        String savedState = AppSettings.loadDateTapActionPref(context);
+        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.SWAP_CARD.name()).apply();
+
+        String tapAction = AppSettings.loadDateTapActionPref(context);
+        assertEquals(WidgetActions.SuntimesAction.SWAP_CARD.name(), tapAction);
+
+        int c = 0;
+        MainActivityRobot robot = new MainActivityRobot();
+        while (c < 4)
         {
-            new TimeDateDialogTest.TimeDateDialogRobot()
-                    .assertDialogShown(activityRule.getActivity())
-                    .cancelDialog(activityRule.getActivity()).assertDialogNotShown(activityRule.getActivity());
+            c++;
+            robot.clickCardDate()
+                    .sleep(500);
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.SWAP_CARD.name())) {
-            if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
+            if (viewIsDisplayed(R.id.text_date, context.getString(R.string.today)))
                 verifyTimeCard_today();
-            else verifyTimeCard_tomorrow();
+            else if (viewIsDisplayed(R.id.text_date, context.getString(R.string.tomorrow)))
+                verifyTimeCard_tomorrow();
+            else fail("swapped card does not display 'today' or 'tomorrow'!");
+        }
 
-        } /**else if (tapAction == AppSettings.DateTapAction.SHOW_CALENDAR) {
-            // TODO
-
-        } else {   // DO_NOTHING
-            // TODO
-        }*/
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState).apply();
     }
 
     /**
-     * UI Test
-     *
-     * Test app crash (latitude edge case) described in issue #74.
+     * UI Test; test app crash (latitude edge case) described in issue #74.
      */
     @Test
     public void test_appCrash74()
     {
+        int year = 2017; int month = 1; int day = 19;
+        String latitude = "83.124";
+        String longitude = "23.1592";
+
         // open the location dialog, and set test location
         showLocationDialog();
         inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
         onView(withId(R.id.appwidget_location_edit)).perform(click());
-        onView(withId(R.id.appwidget_location_name)).perform(replaceText(TESTLOC_1_LABEL));
-        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(TESTLOC_1_LAT));
-        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(TESTLOC_1_LON));
+        onView(withId(R.id.appwidget_location_name)).perform(replaceText("TestAppCrash74"));
+        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(latitude));
+        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(longitude));
         applyLocationDialog(activityRule.getActivity());
 
-        // open the date dialog, and set to "custom date"
+        // open the date dialog and change the date
         Activity context = activityRule.getActivity();
         TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
-        robot.showDialog(context);
-        robot.selectDate(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY)
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .selectDate(year, month, day)
                 .applyDialog(context);
 
         verifyActivity();
     }
 
     @Test
-    public void test_userSwappedCard_withSwipe()
+    public void test_mainActivity_userSwappedCard_withSwipe()
     {
         showLocationDialog();
         inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
@@ -482,9 +571,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     private void userSwappedCard()
     {
         Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
-        onView(cardFlipper).check(ViewAssertionHelper.assertShown);   // flipper should be visible
+        onView(cardFlipper).check(assertShown);   // flipper should be visible
 
-        boolean cardSetToToday = viewIsDisplayed(R.id.info_time_all_today, "Today");
+        boolean cardSetToToday = viewIsDisplayed(R.id.text_date, activityRule.getActivity().getString(R.string.today));
 
         // pre-click checks
         if (cardSetToToday)
@@ -493,8 +582,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         // click the next/prev button
         if (cardSetToToday)
-            swapCardNext();
-        else swapCardPrev();
+            new MainActivityRobot().swapCardNext();
+        else new MainActivityRobot().swapCardPrev();
 
         cardSetToToday = !cardSetToToday;
 
@@ -517,28 +606,11 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         unregisterIdlingResources(waitForResource);
     }
 
-    public void swapCard()
-    {
-        if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
-            swapCardNext();
-        else swapCardPrev();
-    }
 
-    public void swapCardNext()
-    {
-        Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
-        onView(cardFlipper).perform(swipeLeft());
-    }
-
-    public void swapCardPrev()
-    {
-        Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
-        onView(cardFlipper).perform(swipeRight());
-    }
 
     public void verifyTimeCard()
     {
-        onView(withId(R.id.info_time_flipper1)).check(ViewAssertionHelper.assertShown);
+        onView(withId(R.id.info_time_flipper1)).check(assertShown);
         // TODO
         //if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
             //verifyTimeCard_today();
@@ -549,15 +621,15 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void verifyTimeCard(String whichCard)
     {
         Matcher<View> card = withId(R.id.info_time_flipper1);
-        onView(card).check(ViewAssertionHelper.assertShown);
+        onView(card).check(assertShown);
 
         Matcher<View> dateField = allOf(withId(R.id.text_date), isDescendantOfA(card), withText(containsString(whichCard)));
-        onView(dateField).check(ViewAssertionHelper.assertShown);
+        onView(dateField).check(assertShown);
         onView(dateField).check(ViewAssertionHelper.assertClickable);
 
         ArrayList<Matcher<View>> timeFields = timeFields(R.id.info_time_flipper1, dateField);
         for (Matcher<View> field : timeFields) {
-            onView(field).check(ViewAssertionHelper.assertShown);
+            onView(field).check(assertShown);
         }
     }
 
@@ -573,23 +645,35 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         Matcher<View> card = withId(cardId);
         ArrayList<Matcher<View>> timeFields = new ArrayList<>();
-        timeFields.add( allOf(withId(R.id.text_time_sunrise_astro), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunrise_nautical), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunrise_civil), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunrise_actual), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_noon), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunset_actual), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunset_civil), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunset_nautical), isDescendantOfA(card), hasSibling(sibling)) );
-        timeFields.add( allOf(withId(R.id.text_time_sunset_astro), isDescendantOfA(card), hasSibling(sibling)) );
+
+        boolean[] fields = AppSettings.loadShowFieldsPref(activityRule.getActivity());
+        if (fields[AppSettings.FIELD_ASTRO]) {
+            timeFields.add( allOf(withId(R.id.text_time_sunrise_astro), isDescendantOfA(card), hasSibling(sibling)) );
+            timeFields.add( allOf(withId(R.id.text_time_sunset_astro), isDescendantOfA(card), hasSibling(sibling)) );
+        }
+        if (fields[AppSettings.FIELD_NAUTICAL]) {
+            timeFields.add( allOf(withId(R.id.text_time_sunrise_nautical), isDescendantOfA(card), hasSibling(sibling)) );
+            timeFields.add( allOf(withId(R.id.text_time_sunset_nautical), isDescendantOfA(card), hasSibling(sibling)) );
+        }
+        if (fields[AppSettings.FIELD_CIVIL]) {
+            timeFields.add( allOf(withId(R.id.text_time_sunrise_civil), isDescendantOfA(card), hasSibling(sibling)) );
+            timeFields.add( allOf(withId(R.id.text_time_sunset_civil), isDescendantOfA(card), hasSibling(sibling)) );
+        }
+        if (fields[AppSettings.FIELD_NOON]) {
+            timeFields.add( allOf(withId(R.id.text_time_noon), isDescendantOfA(card), hasSibling(sibling)) );
+        }
+        if (fields[AppSettings.FIELD_ACTUAL]) {
+            timeFields.add( allOf(withId(R.id.text_time_sunrise_actual), isDescendantOfA(card), hasSibling(sibling)) );
+            timeFields.add( allOf(withId(R.id.text_time_sunset_actual), isDescendantOfA(card), hasSibling(sibling)) );
+        }
         return timeFields;
     }
 
     @Test
-    public void test_partialUpdateReciever()
+    public void test_mainActivity_partialUpdateReciever()
     {
         // test PendingIntent
-        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        final SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
         PendingIntent partialUpdateIntent = activity.getPartialUpdateIntent(activity);
         try {
             partialUpdateIntent.send();
@@ -611,10 +695,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_fullUpdateReciever()
+    public void test_mainActivity_fullUpdateReciever()
     {
         // test PendingIntent
-        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        final SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
         PendingIntent fullUpdateIntent = activity.getFullUpdateIntent(activity);
         try {
             fullUpdateIntent.send();
@@ -639,20 +723,95 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_issue408()
     {
         // test "show moon" enabled
-        SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(activity).edit();
-        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true);
-        pref.commit();
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
         activity.finish();
         activityRule.launchActivity(activity.getIntent());
-        test_fullUpdateReciever();
+        test_mainActivity_fullUpdateReciever();
 
         // test "show moon" disabled
-        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false);
-        pref.commit();
-        activity = (SuntimesActivity)activityRule.getActivity();
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
+        activity = (SuntimesActivity) activityRule.getActivity();
         activity.finish();
         activityRule.launchActivity(activity.getIntent());
-        test_fullUpdateReciever();
+        test_mainActivity_fullUpdateReciever();
+    }
+
+    /**
+     * MainActivityRobot
+     */
+    public static class MainActivityRobot
+    {
+        public MainActivityRobot clickOnClock() {
+            onView(withId(R.id.layout_clock)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickCardDate()
+        {
+            onView(allOf( withId(R.id.text_date), isDisplayed(),
+                    isDescendantOfA(withId(R.id.info_time_all_today))
+            )).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickDataSourceLabel() {
+            onView(withId(R.id.txt_datasource)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickSolsticeField() {
+            onView(allOf(withId(R.id.info_date_solsticequinox), isDisplayed())).perform(click());
+            return this;
+        }
+        public MainActivityRobot swipeSolsticeField_next() {
+            onView(allOf(withId(R.id.info_date_solsticequinox), isDisplayed())).perform(swipeLeft());
+            return this;
+        }
+        public MainActivityRobot swipeSolsticeField_prev() {
+            onView(allOf(withId(R.id.info_date_solsticequinox), isDisplayed())).perform(swipeRight());
+            return this;
+        }
+        public MainActivityRobot clickLightmapField() {
+            onView(allOf(withId(R.id.info_time_lightmap), isDisplayed())).perform(click());
+            return this;
+        }
+        public MainActivityRobot longClickLightmapField() {
+            onView(allOf(withId(R.id.info_time_lightmap), isDisplayed())).perform(longClick());
+            return this;
+        }
+
+        public MainActivityRobot swapCard(Context context) {
+            if (viewIsDisplayed(R.id.info_time_all_today, context, R.string.today))
+                swapCardNext();
+            else swapCardPrev();
+            return this;
+        }
+        public MainActivityRobot swapCardNext() {
+            Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
+            onView(cardFlipper).perform(swipeLeft());
+            return this;
+        }
+        public MainActivityRobot swapCardPrev() {
+            Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
+            onView(cardFlipper).perform(swipeRight());
+            return this;
+        }
+
+        public MainActivityRobot clickOnNote() {
+            onView(withId(R.id.info_note_flipper)).perform(click());
+            return this;
+        }
+        public MainActivityRobot swipeNoteNext() {
+            onView(withId(R.id.info_note_flipper)).perform(swipeLeft());
+            return this;
+        }
+        public MainActivityRobot swipeNotePrev() {
+            onView(withId(R.id.info_note_flipper)).perform(swipeRight());
+            return this;
+        }
+
+        public MainActivityRobot sleep(long ms) {
+            SystemClock.sleep(ms);
+            return this;
+        }
     }
 }

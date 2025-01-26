@@ -27,7 +27,9 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
-import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.support.annotation.NonNull;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -39,9 +41,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertDisabled;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertEnabled;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.action.ViewActions.swipeDown;
@@ -49,6 +59,8 @@ import static com.forrestguice.support.test.espresso.action.ViewActions.swipeUp;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTextAsDate;
+import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -70,8 +82,10 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     public void test_showWorldMapDialog()
     {
         Activity context = activityRule.getActivity();
-        WorldMapDialogRobot robot = new WorldMapDialogRobot()
-                .showDialog(context).assertDialogShown(context);
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
                 //.captureScreenshot(context, "suntimes-dialog-worldmap0");
 
         robot.clickTimeZoneLabel(context)
@@ -106,9 +120,23 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                 .assertMapMenuShown(context).sleep(500)
                 .cancelMapMenu(context).sleep(500);
 
-        // Collapse / Expand
+
+        robot.cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
+
+    @Test
+    public void test_showWorldMapDialog_expandCollapse()
+    {
+        Activity context = activityRule.getActivity();
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
+
         robot.collapseSheet().sleep(1500)
                 .assertSheetIsCollapsed(context)
+                .assertShowsDate(context, robot.now(context))
                 .expandSheet().sleep(1500)
                 .assertDialogShown(context);
 
@@ -120,9 +148,10 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     public void test_showWorldMapDialog_maps()
     {
         Activity context = activityRule.getActivity();
-        WorldMapDialogRobot robot = new WorldMapDialogRobot()
-                .showDialog(context)
-                .assertDialogShown(context);
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
 
         robot.showMapMenu(context)
                 .assertMapMenuShown(context)
@@ -155,14 +184,42 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_viewDate()
+    public void test_showWorldMapDialog_timeZone()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot()
-                .showDialog(context)
+                .showDialog(context).sleep(1000)
                 .assertDialogShown(context);
 
-        // : -> View date -> Suntimes
+        robot.showOverflowMenu(context)
+                .clickOverflowMenu_TimeZone(context).sleep(500)
+                .assertOverflowMenu_TimeZone(context)
+                .clickOverflowMenu_TimeZone_LocalMean(context).sleep(500)
+                .assertShowsDate(context, robot.now(robot.timeZone_LocalMean(context)));
+
+        robot.showOverflowMenu(context).sleep(500)
+                .clickOverflowMenu_TimeZone(context)
+                .clickOverflowMenu_TimeZone_Suntimes(context).sleep(500)
+                .assertShowsDate(context, robot.now(robot.timeZone_Suntimes(context)));
+
+        robot.showOverflowMenu(context).sleep(500)
+                .clickOverflowMenu_TimeZone(context)
+                .clickOverflowMenu_TimeZone_UTC(context).sleep(500)
+                .assertShowsDate(context, robot.now(robot.timeZone_UTC()));
+
+        robot.cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
+
+    @Test
+    public void test_showWorldMapDialog_viewDate_Suntimes()
+    {
+        Activity context = activityRule.getActivity();
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
+
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_View(context)
                 .assertOverflowMenu_View(context).sleep(500)
@@ -171,19 +228,19 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                 .expandSheet().sleep(1000)
                 .assertDialogShown(context);    // dialog still shown
 
-        // : -> View date -> Moon
-        robot.showOverflowMenu(context)
-                .clickOverflowMenu_View(context)
-                .assertOverflowMenu_View(context).sleep(500)
-                .clickOverflowMenu_View_Moon(context);
-        new MoonDialogTest.MoonDialogRobot()
-                .assertDialogShown(context).sleep(500)
-                .cancelDialog(context)
+        robot.cancelDialog(context)
                 .assertDialogNotShown(context);
-        robot.expandSheet().sleep(1000)
-                .assertDialogShown(context);
+    }
 
-        // : -> View date -> Sun Position
+    @Test
+    public void test_showWorldMapDialog_viewDate_Sun()
+    {
+        Activity context = activityRule.getActivity();
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
+
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_View(context)
                 .assertOverflowMenu_View(context).sleep(500)
@@ -199,11 +256,44 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                 .assertDialogNotShown(context);
     }
 
+    @Test
+    public void test_showWorldMapDialog_viewDate_Moon()
+    {
+        Activity context = activityRule.getActivity();
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .assertShowsDate(context, robot.now(context));
+
+        robot.showOverflowMenu(context)
+                .clickOverflowMenu_View(context)
+                .assertOverflowMenu_View(context).sleep(500)
+                .clickOverflowMenu_View_Moon(context);
+        new MoonDialogTest.MoonDialogRobot()
+                .assertDialogShown(context).sleep(500)
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
+        robot.expandSheet().sleep(1000)
+                .assertDialogShown(context);
+
+        robot.cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
+
     /**
      * WorldMapDialogRobot
      */
     public static class WorldMapDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
     {
+        public Calendar now(Context context)
+        {
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+            TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId)
+                    ? appTimeZone(context)
+                    : WidgetTimezones.getTimeZone(tzId, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+            return now(timezone);
+        }
+
         @Override
         public WorldMapDialogRobot sleep(long ms) {
             super.sleep(ms);
@@ -328,6 +418,18 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
+        public WorldMapDialogRobot clickOverflowMenu_TimeZone_UTC(Context context) {
+            onView(withText(R.string.time_utc)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public WorldMapDialogRobot clickOverflowMenu_TimeZone_LocalMean(Context context) {
+            onView(withText(R.string.time_localMean)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public WorldMapDialogRobot clickOverflowMenu_TimeZone_Suntimes(Context context) {
+            onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
         public WorldMapDialogRobot cancelOverflowMenu_TimeZone(Context context) {
             onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
@@ -336,16 +438,16 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         @Override
         public WorldMapDialogRobot assertDialogShown(Context context)
         {
-            onView(withId(R.id.info_time_utc)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.info_time_worldmap)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.seek_map)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.map_menu)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.map_menu)).check(ViewAssertionHelper.assertEnabled);
-            onView(withId(R.id.map_menu)).check(ViewAssertionHelper.assertClickable);
-            onView(withId(R.id.media_reset_map)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.media_reset_map)).check(ViewAssertionHelper.assertClickable);
-            onView(withId(R.id.map_modemenu)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.map_modemenu)).check(ViewAssertionHelper.assertClickable);
+            onView(withId(R.id.info_time_utc)).check(assertShown);
+            onView(withId(R.id.info_time_worldmap)).check(assertShown);
+            onView(withId(R.id.seek_map)).check(assertShown);
+            onView(withId(R.id.map_menu)).check(assertShown);
+            onView(withId(R.id.map_menu)).check(assertEnabled);
+            onView(withId(R.id.map_menu)).check(assertClickable);
+            onView(withId(R.id.media_reset_map)).check(assertShown);
+            onView(withId(R.id.media_reset_map)).check(assertClickable);
+            onView(withId(R.id.map_modemenu)).check(assertShown);
+            onView(withId(R.id.map_modemenu)).check(assertClickable);
             return this;
         }
         @Override
@@ -355,37 +457,37 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
             // TODO: other options
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_View(Context context) {
-            onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_TimeZone(Context context) {
-            onView(withText(R.string.time_utc)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.time_localMean)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.time_utc)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.time_localMean)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public WorldMapDialogRobot assertMapMenuShown(Context context) {
-            onView(withText(R.string.widgetMode_sunPosMap_simplerectangular)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.widgetMode_sunPosMap_bluemarble)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal_south)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal_location)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.widgetMode_sunPosMap_simplerectangular)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetMode_sunPosMap_bluemarble)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal_south)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetMode_sunPosMap_simpleazimuthal_location)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
@@ -411,21 +513,39 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
 
         public WorldMapDialogRobot assertIsReset(Context context) {
-            onView(withId(R.id.media_reset_map)).check(ViewAssertionHelper.assertDisabled);
-            onView(withId(R.id.media_play_map)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.media_pause_map)).check(ViewAssertionHelper.assertHidden);
+            onView(withId(R.id.media_reset_map)).check(assertDisabled);
+            onView(withId(R.id.media_play_map)).check(assertShown);
+            onView(withId(R.id.media_pause_map)).check(assertHidden);
             return this;
         }
         public WorldMapDialogRobot assertCanBeReset(Context context) {
-            onView(withId(R.id.media_reset_map)).check(ViewAssertionHelper.assertEnabled);
+            onView(withId(R.id.media_reset_map)).check(assertEnabled);
             return this;
         }
 
         @Override
         public WorldMapDialogRobot assertSheetIsCollapsed(Context context) {
-            onView(withId(R.id.info_time_utc)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.info_time_worldmap)).check(ViewAssertionHelper.assertHidden);
-            onView(withId(R.id.map_menu)).check(ViewAssertionHelper.assertHidden);
+            onView(withId(R.id.info_time_utc)).check(assertShown);
+            onView(withId(R.id.info_time_worldmap)).check(assertHidden);
+            onView(withId(R.id.map_menu)).check(assertHidden);
+            return this;
+        }
+
+        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
+            return assertShowsDate(date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
+        }
+        public WorldMapDialogRobot assertShowsDate(@NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        {
+            SimpleDateFormat[] formats = (withMode == WidgetSettings.TimeFormatMode.MODE_12HR)
+                    ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
+                    : (withSeconds ? timeDateFormats24s : timeDateFormats24);
+            long tolerance = (withSeconds
+                    ? 10 * 1000
+                    : 90 * 1000);
+
+            onView(allOf(withId(R.id.info_time_utc),
+                    withTextAsDate(formats, date, tolerance, true)
+            )).check(assertShown);
             return this;
         }
     }
