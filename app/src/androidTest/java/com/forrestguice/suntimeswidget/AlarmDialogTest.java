@@ -32,9 +32,7 @@ import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -58,16 +56,11 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasToString;
-import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -280,14 +273,14 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         @Override
         public AlarmDialogRobot assertDialogShown(Context context)
         {
-            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.dialog_button_accept)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.text_datetime)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.type_spin)).check(ViewAssertionHelper.assertShown);
-            onView(tabLayout()).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.dialog_header)).check(assertShown);
+            onView(allOf(withId(R.id.dialog_button_accept), hasSibling(withId(R.id.type_spin)))).check(assertShown);
+            onView(withId(R.id.text_datetime)).check(assertShown);
+            onView(withId(R.id.type_spin)).check(assertShown);
+            onView(tabLayout()).check(assertShown);
 
             if (expected.showAlarmListButton()) {
-                onView(withId(R.id.dialog_button_alarms)).check(ViewAssertionHelper.assertShown);
+                onView(withId(R.id.dialog_button_alarms)).check(assertShown);
             } else {
                 onView(withId(R.id.dialog_button_alarms)).check(doesNotExist());
             }
@@ -303,7 +296,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
 
         public AlarmDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
@@ -318,25 +311,25 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
             {
                 case 1:
                     onView(withText(R.string.schedalarm_dialog_tab_time)).check(matches(isSelected()));
-                    onView(withId(R.id.modepicker)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.timepicker)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.modepicker)).check(ViewAssertionHelper.assertClickable);
-                    onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertClickable);
+                    onView(withId(R.id.modepicker)).check(assertShown);
+                    onView(withId(R.id.datePicker)).check(assertShown);
+                    onView(withId(R.id.timepicker)).check(assertShown);
+                    onView(withId(R.id.modepicker)).check(assertClickable);
+                    onView(withId(R.id.datePicker)).check(assertClickable);
                     break;
 
                 case 0:
                 default:
                     onView(withText(R.string.schedalarm_dialog_tab_event)).check(matches(isSelected()));
-                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertEnabled);
-                    onView(withId(R.id.appwidget_schedalarm_mode)).check(ViewAssertionHelper.assertClickable);
-                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertClickable);
-                    onView(withId(R.id.appwidget_schedalarm_location)).check(ViewAssertionHelper.assertContainsText(location.getLabel()));
-                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertShown);
-                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertEnabled);
-                    onView(withId(R.id.appwidget_schedalarm_more)).check(ViewAssertionHelper.assertClickable);
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(assertEnabled);
+                    onView(withId(R.id.appwidget_schedalarm_mode)).check(assertClickable);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(assertClickable);
+                    onView(withId(R.id.appwidget_schedalarm_location)).check(assertContainsText(location.getLabel()));
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(assertShown);
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(assertEnabled);
+                    onView(withId(R.id.appwidget_schedalarm_more)).check(assertClickable);
                     break;
             }
             return this;
@@ -357,7 +350,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
             WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
             SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
             onView( allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()) )
-                    .check(ViewAssertionHelper.assertContainsText(text.toString()));
+                    .check(assertContainsText(text.toString()));
             return this;
         }
 
@@ -373,8 +366,8 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
         public AlarmDialogRobot assertTZ_ApparentSolarTime(Context context) {
             spinnerDisplaysText(context, R.id.modepicker, R.string.time_apparent);
-            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertClickable);
+            onView(withId(R.id.locationPicker)).check(assertShown);
+            onView(withId(R.id.locationPicker)).check(assertClickable);
             return this;
         }
 
@@ -385,8 +378,8 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
         public AlarmDialogRobot assertTZ_LocalMeanTime(Context context) {
             spinnerDisplaysText(context, R.id.modepicker, R.string.time_localMean);
-            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertShown);
-            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertClickable);
+            onView(withId(R.id.locationPicker)).check(assertShown);
+            onView(withId(R.id.locationPicker)).check(assertClickable);
             return this;
         }
 
@@ -397,7 +390,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
         public AlarmDialogRobot assertTZ_SystemTime(Context context) {
             spinnerDisplaysText(context, R.id.modepicker, R.string.timezoneMode_current);
-            onView(withId(R.id.locationPicker)).check(ViewAssertionHelper.assertHidden);
+            onView(withId(R.id.locationPicker)).check(assertHidden);
             return this;
         }
 
@@ -406,7 +399,7 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmDialogRobot assertDateSetTo(Context context, int year, int month, int day) {
-            onView(withId(R.id.datePicker)).check(ViewAssertionHelper.assertContainsText("" + year));
+            onView(withId(R.id.datePicker)).check(assertContainsText("" + year));
             return this;
         }
 
@@ -437,8 +430,8 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
         public AlarmDialogRobot assertAlarmLocationMenuShown(Context context)
         {
-            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }
