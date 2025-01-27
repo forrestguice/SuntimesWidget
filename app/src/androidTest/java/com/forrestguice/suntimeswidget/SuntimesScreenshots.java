@@ -183,11 +183,13 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-date-" + theme)
                 .cancelDialog(activity);
 
-        LocationDialogTest.showLocationDialog(false);
-        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location0-" + theme);
-        LocationDialogTest.editLocationDialog(false);
-        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location1-" + theme);
-        LocationDialogTest.cancelLocationDialog(context);
+        new LocationDialogTest.LocationDialogRobot()
+                .showDialog(activity)
+                .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location0-" + theme);
+        new LocationDialogTest.LocationDialogRobot()
+                .clickLocationEditButton()
+                .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location1-" + theme)
+                .cancelDialog(activity);
     }
 
 }

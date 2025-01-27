@@ -99,6 +99,10 @@ public abstract class SuntimesActivityTestBase
 
     public static final String SCREENSHOT_DIR = "test-screenshots";
 
+    protected SharedPreferences config(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
     /**
      * Rotate the device to landscape and back.
      */
