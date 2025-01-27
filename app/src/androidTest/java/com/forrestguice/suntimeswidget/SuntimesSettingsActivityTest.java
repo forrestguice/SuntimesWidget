@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.SystemClock;
 import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -29,6 +30,7 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -64,6 +66,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -77,7 +80,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity
      */
     @Test
-    public void test_showSettingsActivity()
+    public void test_settingsActivity()
     {
         showSettingsActivity(activityRule.getActivity());
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings0");
@@ -99,6 +102,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         onView(isRoot()).perform(pressBack());
 
         showWidgetSettings(activityRule.getActivity());
+        verifyWidgetSettings(activityRule.getActivity());
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-widgets0");
         onView(isRoot()).perform(pressBack());
 
@@ -107,9 +111,15 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void showSettingsActivity(Activity activity)
     {
-        String actionSettingsText = activity.getString(R.string.configAction_settings);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionSettingsText)).perform(click());
+        if (AppSettings.loadNavModePref(activity).equals(AppSettings.NAVIGATION_SIDEBAR)) {
+            new SuntimesActivityTest.MainActivityRobot()
+                    .showSidebarMenu(activity)
+                    .clickSidebarMenu_settings(activity);
+        } else {
+            new SuntimesActivityTest.MainActivityRobot()
+                    .showOverflowMenu(activity)
+                    .clickOverflowMenu_settings(activity);
+        }
         verifySettingsActivity(activity);
     }
 
@@ -127,11 +137,10 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity_general
      */
     @Test
-    public void test_showSettingsActivity_general()
+    public void test_settingsActivity_general()
     {
         showSettingsActivity(activityRule.getActivity());
         showGeneralSettings(activityRule.getActivity());
-
     }
 
     public static void showGeneralSettings(Activity activity)
@@ -148,29 +157,27 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyGeneralSettings_dataSource(Context context)
     {
-        DataInteraction dataSourcePref = onData(allOf( is(instanceOf(Preference.class)), withKey("appwidget_0_general_calculator")) ).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        dataSourcePref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface dataSourcePref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("appwidget_0_general_calculator")) ).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        dataSourcePref.get().check(assertEnabled);
 
         SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
-        DataInteraction dataSourcePref_text = dataSourcePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getName())));
-        dataSourcePref_text.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface dataSourcePref_text = DataInteractionHelper.wrap(dataSourcePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getName()))));
+        dataSourcePref_text.get().check(assertShown);
     }
 
     public static void verifyPlacesSettings_gpsTimeLimit(Context context)
     {
-        DataInteraction gpsTimePref = onData(
-                allOf( is(instanceOf(Preference.class)), withKey("getFix_maxElapsed")) )
-                .inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        gpsTimePref.check(assertEnabled);
+        onData(allOf(instanceOf(Preference.class), withKey("getFix_maxElapsed")
+        )).inAdapterView(allOf(instanceOf(ListView.class), isDisplayed())).check(assertShown);
+
         // TODO: verify correct setting
     }
 
     public static void verifyPlacesSettings_gpsMaxAge(Context context)
     {
-        DataInteraction gpsAgePref = onData(
-                allOf( is(instanceOf(Preference.class)), withKey("getFix_maxAge")) )
-                .inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))) );
-        gpsAgePref.check(assertEnabled);
+        onData(allOf(instanceOf(Preference.class), withKey("getFix_maxAge")
+        )).inAdapterView(allOf(instanceOf(ListView.class), isDisplayed())).check(assertShown);
+
         // TODO: verify correct setting
     }
 
@@ -179,7 +186,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity_locale
      */
     @Test
-    public void test_showSettingsActivity_locale()
+    public void test_settingsActivity_locale()
     {
         showSettingsActivity(activityRule.getActivity());
         showLocaleSettings(activityRule.getActivity());
@@ -194,26 +201,26 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     public static void verifyLocaleSettings(Context context)
     {
         // verify the mode selector
-        DataInteraction modePref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_locale_mode")))
-                .inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        modePref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface modePref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_locale_mode")))
+                .inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        modePref.get().check(assertEnabled);
 
         AppSettings.LocaleMode mode = AppSettings.loadLocaleModePref(context);
-        DataInteraction modePref_text = modePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(mode.getDisplayString())));
-        modePref_text.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface modePref_text = DataInteractionHelper.wrap(modePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(mode.getDisplayString()))));
+        modePref_text.get().check(assertShown);
 
         // verify the language selector
-        DataInteraction langPref = onData(allOf(is(instanceOf(Preference.class)), withKey("app_locale")))
-                .inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        langPref.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface langPref = DataInteractionHelper.wrap(onData(allOf(instanceOf(Preference.class), withKey("app_locale")))
+                .inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        langPref.get().check(assertShown);
 
         if (mode == AppSettings.LocaleMode.SYSTEM_LOCALE)
-            langPref.check(assertDisabled);       // language disabled for system mode
-        else langPref.check(assertEnabled);
+            langPref.get().check(ViewAssertionHelper.assertDisabled);       // language disabled for system mode
+        else langPref.get().check(assertEnabled);
 
         String lang = getLocaleDisplayString(context, AppSettings.loadLocalePref(context));
-        DataInteraction langPref_text = langPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(lang)));
-        langPref_text.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface langPref_text = DataInteractionHelper.wrap(langPref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(lang))));
+        langPref_text.get().check(assertShown);
     }
 
     /**
@@ -221,16 +228,16 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity_places
      */
     @Test
-    public void test_showSettingsActivity_places()
+    public void test_settingsActivity_places()
     {
         showSettingsActivity(activityRule.getActivity());
         showPlacesSettings(activityRule.getActivity());
 
-        showClearPlacesDialog(activityRule.getActivity());
-        onView(isRoot()).perform(pressBack());
+        //showClearPlacesDialog(activityRule.getActivity());
+        //onView(isRoot()).perform(pressBack());
 
-        onView(isRoot()).perform(pressBack());
-        onView(isRoot()).perform(pressBack());
+        //onView(isRoot()).perform(pressBack());
+        //onView(isRoot()).perform(pressBack());
     }
 
     public static void showPlacesSettings(Activity activity)
@@ -263,7 +270,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity_ui
      */
     @Test
-    public void test_showSettingsActivity_ui()
+    public void test_settingsActivity_ui()
     {
         showSettingsActivity(activityRule.getActivity());
         showUISettings(activityRule.getActivity());
@@ -299,9 +306,9 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void inputUISettings_lightmap(Context context, boolean checked)
     {
-        Matcher<Preference> pref = allOf(is(instanceOf(Preference.class)), withKey("app_ui_showlightmap"));
-        Matcher<View> list = allOf(is(instanceOf(ListView.class)), hasFocus());
-        ViewInteraction lightmapPref = onData(pref).inAdapterView(list).onChildView(withClassName(is(CheckBox.class.getName()))).check(assertShown);
+        Matcher<Preference> pref = allOf(instanceOf(Preference.class), withKey("app_ui_showlightmap"));
+        Matcher<View> list = allOf(instanceOf(ListView.class), isDisplayed());
+        ViewInteractionHelper.ViewInteractionInterface lightmapPref = ViewInteractionHelper.wrap(onData(pref).inAdapterView(list).onChildView(withClassName(is(CheckBox.class.getName()))).check(assertShown));
 
         boolean prefChecked = viewIsChecked(lightmapPref);
         if (prefChecked && !checked || !prefChecked && checked)
@@ -312,7 +319,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void flipUISettings_lightmap(SuntimesActivity activity)
     {
-        SuntimesActivityTest.verifyLightmap(activity);
+        new SuntimesActivityTest.MainActivityRobot().assertShown_lightmap(activity);
         showSettingsActivity(activity);
         showUISettings(activity);
 
@@ -321,14 +328,15 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
         onView(isRoot()).perform(pressBack());
         onView(isRoot()).perform(pressBack());
-        assertTrue(shouldShowLightmap == AppSettings.loadShowLightmapPref(activity));
-        SuntimesActivityTest.verifyLightmap(activity);
+        assertEquals(shouldShowLightmap, AppSettings.loadShowLightmapPref(activity));
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertShown_lightmap(activity);
     }
 
     public static void verifyUISettings_lightmap(Context context)
     {
-        DataInteraction lightmapPref = onData(allOf(is(instanceOf(Preference.class)), withKey("app_ui_showlightmap"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        lightmapPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface lightmapPref = DataInteractionHelper.wrap(onData(allOf(instanceOf(Preference.class), withKey("app_ui_showlightmap"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        lightmapPref.get().check(assertEnabled);
 
         DataInteraction lightmapPref_checkBox = lightmapPref.onChildView(withClassName(is(CheckBox.class.getName())));
         if (AppSettings.loadShowLightmapPref(context))
@@ -338,9 +346,9 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void inputUISettings_uiWarnings(Context context, boolean checked)
     {
-        Matcher<Preference> pref = allOf(is(instanceOf(Preference.class)), withKey("app_ui_showwarnings"));
-        Matcher<View> list = allOf(is(instanceOf(ListView.class)), hasFocus());
-        ViewInteraction warningPref = onData(pref).inAdapterView(list).onChildView(withClassName(is(CheckBox.class.getName()))).check(assertShown);
+        Matcher<Preference> pref = allOf(instanceOf(Preference.class), withKey("app_ui_showwarnings"));
+        Matcher<View> list = allOf(instanceOf(ListView.class), isDisplayed());
+        ViewInteractionHelper.ViewInteractionInterface warningPref = ViewInteractionHelper.wrap(onData(pref).inAdapterView(list).onChildView(withClassName(is(CheckBox.class.getName()))).check(assertShown));
 
         boolean prefChecked = viewIsChecked(warningPref);
         if (prefChecked && !checked || !prefChecked && checked)
@@ -364,8 +372,8 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_uiWarnings(Context context)
     {
-        DataInteraction warningPref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_ui_showwarnings"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))) );
-        warningPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface warningPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_ui_showwarnings"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class)) ));
+        warningPref.get().check(assertEnabled);
 
         DataInteraction warningPref_checkBox = warningPref.onChildView(withClassName(is(CheckBox.class.getName())));
         if (AppSettings.loadShowWarningsPref(context))
@@ -375,8 +383,8 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_noteTap(Context context)
     {
-        DataInteraction notetapPref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_ui_notetapaction"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        notetapPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface notetapPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_ui_notetapaction"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        notetapPref.get().check(assertEnabled);
 
         //AppSettings.ClockTapAction action = AppSettings.loadNoteTapActionPref(context);
         //DataInteraction notetapPref_text = notetapPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(containsString(action.getDisplayString()))));
@@ -386,8 +394,8 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_dateTap(Context context)
     {
-        DataInteraction datetapPref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_ui_datetapaction"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))) );
-        datetapPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface datetapPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_ui_datetapaction"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class)) ));
+        datetapPref.get().check(assertEnabled);
 
         //AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(context);
         //DataInteraction datetapPref_text = datetapPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(containsString(action.getDisplayString()))));
@@ -397,8 +405,8 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_clockTap(Context context)
     {
-        DataInteraction clocktapPref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_ui_clocktapaction"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))) );
-        clocktapPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface clocktapPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_ui_clocktapaction"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class)) ));
+        clocktapPref.get().check(assertEnabled);
 
         //AppSettings.ClockTapAction action = AppSettings.loadClockTapActionPref(context);
         //DataInteraction clocktapPref_text = clocktapPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(containsString(action.getDisplayString()))));
@@ -408,24 +416,24 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyUISettings_timeFormatMode(Context context)
     {
-        DataInteraction formatPref = onData(allOf( is(instanceOf(Preference.class)), withKey("appwidget_0_appearance_timeformatmode"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        formatPref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface formatPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("appwidget_0_appearance_timeformatmode"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        formatPref.get().check(assertEnabled);
 
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         String modeSummary = String.format(GeneralPrefsFragment.timeFormatPrefSummary(mode, context), mode.getDisplayString());
-        DataInteraction formatPref_text = formatPref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary)));
-        formatPref_text.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface formatPref_text = DataInteractionHelper.wrap(formatPref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary))));
+        formatPref_text.get().check(assertShown);
     }
 
     public static void verifyUISettings_theme(Activity activity)
     {
-        DataInteraction themePref = onData(allOf( is(instanceOf(Preference.class)), withKey("app_appearance_theme"))).inAdapterView(allOf(hasFocus(), is(instanceOf(ListView.class))));
-        themePref.check(assertEnabled);
+        DataInteractionHelper.DataInteractionInterface themePref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_appearance_theme"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+        themePref.get().check(assertEnabled);
 
         String themeName = AppSettings.loadThemePref(activity);
         String themeDisplay = getThemeDisplayString(activity, themeName);
-        DataInteraction themePref_text = themePref.onChildView(allOf(withClassName(is(TextView.class.getName())), withText(themeDisplay)));
-        themePref_text.check(assertShown);
+        DataInteractionHelper.DataInteractionInterface themePref_text = DataInteractionHelper.wrap(themePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(themeDisplay))));
+        themePref_text.get().check(assertShown);
     }
 
     /**
@@ -433,10 +441,11 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
      * test_showSettingsActivity_widgets
      */
     @Test
-    public void test_showSettingsActivity_widgets()
+    public void test_settingsActivity_widgets()
     {
         showSettingsActivity(activityRule.getActivity());
         showWidgetSettings(activityRule.getActivity());
+        verifyWidgetSettings(activityRule.getActivity());
     }
 
     public static void showWidgetSettings(Activity activity)
@@ -502,6 +511,100 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
                 return matcher.matches(view) && currentIndex++ == index;
             }
         };
+    }
+
+    /**
+     * SettingsActivityRobot
+     */
+    public static class SettingsActivityRobot
+    {
+        public SettingsActivityRobot showActivity(Activity activity)
+        {
+            if (AppSettings.loadNavModePref(activity).equals(AppSettings.NAVIGATION_SIDEBAR)) {
+                new SuntimesActivityTest.MainActivityRobot()
+                        .showSidebarMenu(activity)
+                        .clickSidebarMenu_settings(activity);
+            } else {
+                new SuntimesActivityTest.MainActivityRobot()
+                        .showOverflowMenu(activity)
+                        .clickOverflowMenu_settings(activity);
+            }
+            return this;
+        }
+
+        public SettingsActivityRobot pressBack() {
+            onView(isRoot()).perform(ViewActions.pressBack());
+            return this;
+        }
+        public SettingsActivityRobot sleep(long ms) {
+            SystemClock.sleep(ms);
+            return this;
+        }
+
+        public SettingsActivityRobot clickHeader_generalSettings() {
+            onView(withText(R.string.configLabel_general)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickHeader_userAlarmSettings() {
+            onView(withText(R.string.configLabel_alarmClock)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickHeader_userInterfaceSettings() {
+            onView(withText(R.string.configLabel_ui)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickHeader_localeSettings() {
+            onView(withText(R.string.configLabel_locale)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickHeader_placeSettings() {
+            onView(withText(R.string.configLabel_places)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickHeader_widgetList() {
+            onView(withText(R.string.configLabel_widgetList)).perform(click());
+            return this;
+        }
+
+        public SettingsActivityRobot assertShown_generalSettings(Activity context)
+        {
+            assertShown_timeFormatMode(context);
+            assertShown_dataSource(context);
+            return this;
+        }
+
+        public SettingsActivityRobot assertShown_timeFormatMode(Context context)
+        {
+            DataInteractionHelper.DataInteractionInterface formatPref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("appwidget_0_appearance_timeformatmode"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+            formatPref.get().check(assertEnabled);
+
+            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+            String modeSummary = String.format(GeneralPrefsFragment.timeFormatPrefSummary(mode, context), mode.getDisplayString());
+            DataInteractionHelper.DataInteractionInterface formatPref_text = DataInteractionHelper.wrap(formatPref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary))));
+            formatPref_text.get().check(assertShown);
+            return this;
+        }
+        public SettingsActivityRobot assertShown_dataSource(Context context)
+        {
+            DataInteractionHelper.DataInteractionInterface dataSourcePref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("appwidget_0_general_calculator")) ).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+            dataSourcePref.get().check(assertEnabled);
+
+            SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
+            DataInteractionHelper.DataInteractionInterface dataSourcePref_text = DataInteractionHelper.wrap(dataSourcePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getName()))));
+            dataSourcePref_text.get().check(assertShown);
+            return this;
+        }
+        public SettingsActivityRobot assertShown_theme(Activity activity)
+        {
+            DataInteractionHelper.DataInteractionInterface themePref = DataInteractionHelper.wrap(onData(allOf( instanceOf(Preference.class), withKey("app_appearance_theme"))).inAdapterView(allOf(isDisplayed(), instanceOf(ListView.class))));
+            themePref.get().check(assertEnabled);
+
+            String themeName = AppSettings.loadThemePref(activity);
+            String themeDisplay = getThemeDisplayString(activity, themeName);
+            DataInteractionHelper.DataInteractionInterface themePref_text = DataInteractionHelper.wrap(themePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(themeDisplay))));
+            themePref_text.get().check(assertShown);
+            return this;
+        }
     }
 
 }

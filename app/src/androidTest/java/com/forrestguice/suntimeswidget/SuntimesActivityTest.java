@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,9 @@ import android.preference.PreferenceManager;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
+
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
+import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
@@ -88,6 +91,7 @@ import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDi
 import static com.forrestguice.suntimeswidget.LocationDialogTest.inputLocationDialog_mode;
 import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
 import static com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest.verifyGeneralSettings;
+
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -105,11 +109,37 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState();
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState();
     }
+
+    protected void saveConfigState() {
+        savedState_dateTapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
+        savedState_clockTapAction = AppSettings.loadClockTapActionPref(activityRule.getActivity());
+        savedState_showDataSource = AppSettings.loadDatasourceUIPref(activityRule.getActivity());
+        savedState_showMapButton = AppSettings.loadShowMapButtonPref(activityRule.getActivity());
+        savedState_navMode = AppSettings.loadNavModePref(activityRule.getActivity());
+        savedState_locationMode = WidgetSettings.loadLocationModePref(activityRule.getActivity(), 0);
+    }
+    protected void restoreConfigState() {
+        SharedPreferences.Editor config = config(activityRule.getActivity()).edit();
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState_dateTapAction).apply();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState_clockTapAction).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, savedState_showDataSource).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, savedState_showMapButton).apply();
+        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_navMode).apply();
+        WidgetSettings.saveLocationModePref(activityRule.getActivity(), 0, savedState_locationMode);
+    }
+    protected String savedState_navMode;
+    protected String savedState_dateTapAction;
+    protected String savedState_clockTapAction;
+    protected boolean savedState_showDataSource;
+    protected boolean savedState_showMapButton;
+    protected WidgetSettings.LocationMode savedState_locationMode;
 
     /**
      * UI Test; open the activity, take a screenshot, swap the card, take a screenshot, and then rotate.
@@ -137,9 +167,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         verifyClock();
         verifyNote(activityRule.getActivity());
         verifyTimeCard();
-        verifyLightmap(activityRule.getActivity());
-        verifySolsticeEquinox(activityRule.getActivity());
-        verifyDataSourceUI(activityRule.getActivity());
+        new MainActivityRobot()
+                .assertShown_lightmap(true)
+                .assertShown_solsticeEquinox(activityRule.getActivity(), true)
+                .assertShown_dataSourceUI(activityRule.getActivity(), true);
     }
 
     public static void verifyTheme(SuntimesActivity activity)
@@ -208,57 +239,136 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         onView(allOf(withId(R.id.text_timenote3), isDisplayed())).check(matches(withText(containsString(note.noteText))));
     }
 
-    public static void verifyLightmap(Context context)
+    @Test
+    public void test_mainActivity_navigation_simple()
     {
-        Matcher<View> lightmap = allOf(withId(R.id.info_time_lightmap), withParent(isDisplayed()));
-        if (AppSettings.loadShowLightmapPref(context)) {
-            onView(lightmap).check(assertShown);
-        } else {
-            onView(lightmap).check(matches(not(isDisplayed())));
+        Activity context = activityRule.getActivity();
+        config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIMPLE).apply();
+
+        MainActivityRobot robot = new MainActivityRobot();
+        robot.recreateActivity(context);
+        robot.assertActionBar_navigationButtonShown(context, false);
+
+        robot.showOverflowMenu(context).sleep(1000)
+                .assertOverflowMenuShown(context)
+                .assertOverflowMenu_hasSimpleNavigation(context, true)
+                .cancelOverflowMenu(context);
+    }
+
+    @Test
+    public void test_mainActivity_navigation_sidebar()
+    {
+        Activity context = activityRule.getActivity();
+        config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIDEBAR).apply();
+
+        MainActivityRobot robot = new MainActivityRobot();
+        robot.recreateActivity(context);
+        robot.showOverflowMenu(context).sleep(1000)
+                .assertOverflowMenuShown(context)
+                .assertOverflowMenu_hasSimpleNavigation(context, false)
+                .cancelOverflowMenu(context);
+
+        robot.assertActionBar_navigationButtonShown(context, true)
+                .showSidebarMenu(context)
+                .assertSideBarMenuShown(context)
+                .cancelSidebarMenu(context);
+    }
+
+    @Test
+    public void test_mainActivity_navigation_mapButton()
+    {
+        Activity context = activityRule.getActivity();
+        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        config(context).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true).apply();
+        MainActivityRobot robot = new MainActivityRobot();
+
+        // map button [enabled]
+        robot.recreateActivity(context).sleep(1000)
+                .assertActionBar_mapButtonShown(true);
+
+        robot.showOverflowMenu(context).sleep(1000)
+                .assertOverflowMenuShown(context)
+                .assertOverflowMenu_mapButtonShown(context, false)
+                .cancelOverflowMenu(context);
+
+        // map button [disabled]
+        config(context).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, false).apply();
+        robot.recreateActivity(context).sleep(1000)
+                .assertActionBar_mapButtonShown(false);
+
+        robot.showOverflowMenu(context).sleep(1000)
+                .assertOverflowMenuShown(context)
+                .assertOverflowMenu_mapButtonShown(context, true)
+                .cancelOverflowMenu(context);
+    }
+
+    /**
+     * UI Test
+     * Set the location using the location dialog.
+     */
+    @Test
+    public void test_setLocation_custom()
+    {
+        String[] name = {TESTLOC_0_LABEL, TESTLOC_1_LABEL};
+        String[] lat  = {TESTLOC_0_LAT, TESTLOC_1_LAT };
+        String[] lon  = {TESTLOC_0_LON, TESTLOC_1_LON };
+
+        LocationDialogTest.LocationDialogRobot robot = new LocationDialogTest.LocationDialogRobot();
+        for (int i=0; i<name.length; i++)
+        {
+            robot.showDialog(activityRule.getActivity())
+                    .assertDialogShown(activityRule.getActivity())
+                    .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                    .clickLocationEditButton()
+                    .inputLocationEditValues(name[i], lat[i], lon[i])
+                    .assertLocationEditCoordinates(lat[i], lon[i])
+                    .applyDialog(activityRule.getActivity());
+            // TODO: verify action
         }
     }
 
-    public static void verifySolsticeEquinox(Context context)
+    /**
+     * UI Test
+     * Set the mode to "current location" using the location dialog.
+     */
+    @Test
+    public void test_setLocation_current()
     {
-        if (AppSettings.loadShowEquinoxPref(context))
-        {
-            onView(withId(R.id.info_date_solsticequinox)).check(assertShown);
-        } else {
-            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
-        }
-    }
-
-    public static void verifyDataSourceUI(Context context)
-    {
-        if (AppSettings.loadDatasourceUIPref(context))
-        {
-            onView(withId(R.id.txt_datasource)).check(assertShown);
-
-            SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
-            if (dataSource != null) {
-                onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.getName())));
-            }
-            // else { // TODO: test conditions when dataSource==null }
-
-        } else {
-            onView(withId(R.id.txt_datasource)).check(matches(not(isDisplayed())));
-        }
+        new LocationDialogTest.LocationDialogRobot()
+                .showDialog(activityRule.getActivity())
+                .assertDialogShown(activityRule.getActivity())
+                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+                .assertDialogMode_isCurrent()
+                .applyDialog(activityRule.getActivity());
+        // TODO: verify action
     }
 
     /**
      * UI Test; click on the data source label and verify setting activity is displayed.
      */
     @Test
-    public void test_mainActivity_onDataSourceUIClick()
+    public void test_mainActivity_dataSourceUI()
     {
-        verifyDataSourceUI(activityRule.getActivity());
-        if (AppSettings.loadDatasourceUIPref(activityRule.getActivity()))
-        {
-            new MainActivityRobot()
-                    .clickDataSourceLabel();
-            //verifyGeneralSettings(activityRule.getActivity());  // TODO
-            onView(isRoot()).perform(pressBack());
-        }
+        Activity activity = activityRule.getActivity();
+        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, true).apply();
+
+        // dataSourceUI [enabled]
+        new MainActivityRobot()
+                .recreateActivity(activity).sleep(1000)
+                .assertShown_dataSourceUI(activity, true);
+
+        new MainActivityRobot()
+                .clickDataSourceLabel().sleep(1000);
+
+        new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .assertShown_generalSettings(activity)
+                .pressBack();
+
+        // dataSourceUI [disabled]
+        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false).apply();
+        new MainActivityRobot()
+                .recreateActivity(activity).sleep(1000)
+                .assertShown_dataSourceUI(activityRule.getActivity(), false);
     }
 
     /**
@@ -342,46 +452,34 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_mainActivity_onClockClick_alarm()
     {
-        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
-        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.ALARM.name()).apply();
+        config(activityRule.getActivity()).edit().putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.ALARM.name()).apply();
 
         new MainActivityRobot()
                 .clickOnClock();
         int noteIndex = activityRule.getActivity().notes.getNoteIndex();
         verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.ALARM.name(), noteIndex);
-
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
     }
 
     @Test
     public void test_mainActivity_onClockClick_nextNote()
     {
-        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
-        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.NEXT_NOTE.name()).apply();
+        config(activityRule.getActivity()).edit().putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.NEXT_NOTE.name()).apply();
 
         int noteIndex = activityRule.getActivity().notes.getNoteIndex();
         new MainActivityRobot()
                 .clickOnClock();
         verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.NEXT_NOTE.name(), noteIndex);
-
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
     }
 
     @Test
     public void test_mainActivity_onClockClick_prevNote()
     {
-        String savedState = AppSettings.loadClockTapActionPref(activityRule.getActivity());
-        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.PREV_NOTE.name()).apply();
+        config(activityRule.getActivity()).edit().putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, WidgetActions.SuntimesAction.PREV_NOTE.name()).apply();
 
         int noteIndex = activityRule.getActivity().notes.getNoteIndex();
         new MainActivityRobot()
                 .clickOnClock().sleep(1000);
         verifyOnClockClick(activityRule.getActivity(), WidgetActions.SuntimesAction.PREV_NOTE.name(), noteIndex);
-
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState).apply();
     }
 
     public static void verifyOnClockClick(SuntimesActivity activity, String tapAction0, int noteIndex)
@@ -481,9 +579,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_mainActivity_onDateClick_configDate()
     {
-        String savedState = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity()).edit();
-        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.CONFIG_DATE.name()).apply();
+        config(activityRule.getActivity()).edit().putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.CONFIG_DATE.name()).apply();
 
         String tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
         assertEquals(WidgetActions.SuntimesAction.CONFIG_DATE.name(), tapAction);
@@ -493,8 +589,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         new TimeDateDialogTest.TimeDateDialogRobot()
                 .assertDialogShown(activityRule.getActivity())
                 .cancelDialog(activityRule.getActivity());
-
-        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState).apply();
     }
     // TODO: SHOW_CALENDAR, ...
 
@@ -505,9 +599,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_mainActivity_onDateClick_swapCard()
     {
         Context context = activityRule.getActivity();
-        String savedState = AppSettings.loadDateTapActionPref(context);
-        SharedPreferences.Editor config = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.SWAP_CARD.name()).apply();
+        config(context).edit().putString(AppSettings.PREF_KEY_UI_DATETAPACTION, WidgetActions.SuntimesAction.SWAP_CARD.name()).apply();
 
         String tapAction = AppSettings.loadDateTapActionPref(context);
         assertEquals(WidgetActions.SuntimesAction.SWAP_CARD.name(), tapAction);
@@ -526,8 +618,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
                 verifyTimeCard_tomorrow();
             else fail("swapped card does not display 'today' or 'tomorrow'!");
         }
-
-        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState).apply();
     }
 
     /**
@@ -541,16 +631,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         String longitude = "23.1592";
 
         // open the location dialog, and set test location
-        showLocationDialog();
-        inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
-        onView(withId(R.id.appwidget_location_edit)).perform(click());
-        onView(withId(R.id.appwidget_location_name)).perform(replaceText("TestAppCrash74"));
-        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(latitude));
-        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(longitude));
-        applyLocationDialog(activityRule.getActivity());
+        Activity context = activityRule.getActivity();
+        new LocationDialogTest.LocationDialogRobot()
+                .showDialog(context)
+                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .clickLocationEditButton()
+                .inputLocationEditValues("TestAppCrash74", latitude, longitude)
+                .assertLocationEditCoordinates(latitude, longitude)
+                .applyDialog(context);
 
         // open the date dialog and change the date
-        Activity context = activityRule.getActivity();
         TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
         robot.showDialog(context)
                 .assertDialogShown(context)
@@ -563,13 +653,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_mainActivity_userSwappedCard_withSwipe()
     {
-        showLocationDialog();
-        inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);
-        onView(withId(R.id.appwidget_location_edit)).perform(click());
-        onView(withId(R.id.appwidget_location_name)).perform(replaceText(TESTLOC_0_LABEL));
-        onView(withId(R.id.appwidget_location_lat)).perform(replaceText(TESTLOC_0_LAT));
-        onView(withId(R.id.appwidget_location_lon)).perform(replaceText(TESTLOC_0_LON));
-        applyLocationDialog(activityRule.getActivity());
+        new LocationDialogTest.LocationDialogRobot()
+                .showDialog(activityRule.getActivity())
+                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .clickLocationEditButton()
+                .inputLocationEditValues(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON)
+                .applyDialog(activityRule.getActivity());
 
         userSwappedCard();
     }
@@ -730,14 +819,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         // test "show moon" enabled
         SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
-        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(activity).edit();
-        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
+        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
         activity.finish();
         activityRule.launchActivity(activity.getIntent());
         test_mainActivity_fullUpdateReciever();
 
         // test "show moon" disabled
-        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
+        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
         activity = (SuntimesActivity) activityRule.getActivity();
         activity.finish();
         activityRule.launchActivity(activity.getIntent());
@@ -749,6 +837,20 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
      */
     public static class MainActivityRobot
     {
+        public MainActivityRobot sleep(long ms) {
+            SystemClock.sleep(ms);
+            return this;
+        }
+        public MainActivityRobot recreateActivity(final Activity activity)
+        {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    activity.recreate();
+                }
+            });
+            return this;
+        }
+
         public MainActivityRobot clickOnClock() {
             onView(withId(R.id.layout_clock)).perform(click());
             return this;
@@ -758,6 +860,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(allOf( withId(R.id.text_date), isDisplayed(),
                     isDescendantOfA(withId(R.id.info_time_all_today))
             )).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickMapButton() {
+            onView(withContentDescription(R.string.configAction_mapLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickDataSourceLabel() {
@@ -815,9 +921,144 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public MainActivityRobot sleep(long ms) {
-            SystemClock.sleep(ms);
+        public MainActivityRobot showSidebarMenu(Context context) {
+            onView(navigationButton()).perform(click());
             return this;
         }
+        public MainActivityRobot clickSidebarMenu_clock(Context context) {
+            onView(withText(R.string.configAction_settings)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickSidebarMenu_alarms(Context context) {
+            onView(withText(R.string.configLabel_alarmClock)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickSidebarMenu_settings(Context context) {
+            onView(withText(R.string.configAction_settings)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickSidebarMenu_about(Context context) {
+            onView(withText(R.string.configAction_aboutWidget)).perform(click());
+            return this;
+        }
+        public MainActivityRobot cancelSidebarMenu(Context context) {
+            onView(withText(R.string.configAction_aboutWidget)).perform(pressBack());
+            return this;
+        }
+
+        public MainActivityRobot showOverflowMenu(Context context) {
+            openActionBarOverflowOrOptionsMenu(context);
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
+            onView(withText(R.string.configAction_viewDate)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_setTimeZone(Context context) {
+            onView(withText(R.string.configAction_setTimeZone)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickActionBar_setLocation(Context context) {
+            onView(withText(R.string.configAction_addLocation)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_sunPosition(Context context) {
+            onView(withText(R.string.configAction_sunDialog)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_sunLight(Context context) {
+            onView(withText(R.string.configAction_lightGraphDialog)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_moon(Context context) {
+            onView(withText(R.string.configAction_moon)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_worldMap(Context context) {
+            onView(withText(R.string.configAction_worldMap)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_help(Context context) {
+            onView(withText(R.string.configAction_help)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_settings(Context context) {
+            onView(withText(R.string.configAction_settings)).perform(click());
+            return this;
+        }
+        public MainActivityRobot clickOverflowMenu_about(Context context) {
+            onView(withText(R.string.configAction_aboutWidget)).perform(click());
+            return this;
+        }
+        public MainActivityRobot cancelOverflowMenu(Context context) {
+            onView(withText(R.string.configAction_viewDate)).perform(pressBack());
+            return this;
+        }
+
+        public MainActivityRobot assertActionBar_navigationButtonShown(Context context, boolean shown) {
+            onView(navigationButton()).check(shown ? assertShown : doesNotExist());
+            return this;
+        }
+        public MainActivityRobot assertActionBar_mapButtonShown(boolean shown) {
+            onView(withContentDescription(R.string.configAction_mapLocation)).check(shown ? assertShown : doesNotExist());
+            return this;
+        }
+
+        public MainActivityRobot assertSideBarMenuShown(Activity context) {
+            onView(withText(R.string.configAction_clock)).check(assertShown);
+            onView(withText(R.string.configLabel_alarmClock)).check(assertShown);
+            onView(withText(R.string.configAction_settings)).check(assertShown);
+            onView(withText(R.string.configAction_aboutWidget)).check(assertShown);
+            return this;
+        }
+        public MainActivityRobot assertOverflowMenuShown(Context context)
+        {
+            onView(withText(R.string.configAction_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setTimeZone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_lightGraphDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            return this;
+        }
+        public MainActivityRobot assertOverflowMenu_hasSimpleNavigation(Context context, boolean isSimple)
+        {
+            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            return this;
+        }
+        public MainActivityRobot assertOverflowMenu_mapButtonShown(Activity context, boolean shown) {
+            onView(withText(R.string.configAction_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
+            return this;
+        }
+
+        public MainActivityRobot assertShown_solsticeEquinox(Context context, boolean shown) {
+            onView(withId(R.id.info_date_solsticequinox)).check(shown ? assertShown : assertHidden);
+            return this;
+        }
+        public MainActivityRobot assertShown_lightmap(Context context) {
+            return assertShown_lightmap(AppSettings.loadShowLightmapPref(context));
+        }
+        public MainActivityRobot assertShown_lightmap(boolean shown) {
+            onView(allOf(withId(R.id.info_time_lightmap), withParent(isDisplayed()))).check(shown ? assertShown : assertHidden);
+            return this;
+        }
+        public MainActivityRobot assertShown_dataSourceUI(Context context, boolean shown)
+        {
+            if (shown)
+            {
+                onView(withId(R.id.txt_datasource)).check(assertShown);
+                SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
+                if (dataSource != null) {
+                    onView(withId(R.id.txt_datasource)).check(matches(withText(dataSource.getName())));
+                } // else { // TODO: test conditions when dataSource==null }
+
+            } else {
+                onView(withId(R.id.txt_datasource)).check(assertHidden);
+            }
+            return this;
+        }
+
     }
 }
