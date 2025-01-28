@@ -172,7 +172,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         new LightGraphDialogTest.LightGraphDialogRobot().assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
 
-        robot.rotateDevice(context)
+        robot.doubleRotateDevice(context)
                 .assertDialogShown(context)
                 .cancelDialog(context)
                 .assertDialogNotShown(context);
@@ -288,7 +288,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
                 .clickOverflowMenu_TimeZone_UTC(context)
                 .assert_TimeZone_UTC(context)
                 .assertShowsDate(context, robot.now(timeZone_UTC()))
-                .rotateDevice(context)
+                .doubleRotateDevice(context)
                 .assertDialogShown(context);
         robot.assert_TimeZone_UTC(context).sleep(1000);
 

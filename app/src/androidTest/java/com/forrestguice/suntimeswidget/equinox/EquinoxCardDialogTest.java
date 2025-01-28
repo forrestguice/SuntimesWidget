@@ -182,7 +182,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
                 .assertHelpShown(context).sleep(500)
                 .cancelHelp(context).sleep(500);
 
-        robot.rotateDevice(context)
+        robot.doubleRotateDevice(context)
                 .assertDialogShown(context)
                 .cancelDialog(context);
     }

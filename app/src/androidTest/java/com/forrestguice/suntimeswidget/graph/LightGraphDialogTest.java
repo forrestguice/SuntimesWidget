@@ -104,7 +104,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
         new LightMapDialogTest.LightMapDialogRobot().assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
 
-        robot.rotateDevice(context).assertDialogShown(context);
+        robot.doubleRotateDevice(context).assertDialogShown(context);
         robot.cancelDialog(context).assertDialogNotShown(context);
     }
 

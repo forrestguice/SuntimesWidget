@@ -133,7 +133,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
                 .clickOverflowMenu_Controls_Previous(context)
                 .cancelOverflowMenu_Controls(context)
                 .assertCanBeReset(context).sleep(500);
-        robot.rotateDevice(context).assertDialogShown(context)
+        robot.doubleRotateDevice(context).assertDialogShown(context)
                 .assertCanBeReset(context).sleep(1000)
                 .clickResetButton(context)
                 .assertIsReset(context);

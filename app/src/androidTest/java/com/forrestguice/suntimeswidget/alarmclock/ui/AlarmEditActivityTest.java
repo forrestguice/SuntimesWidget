@@ -16,11 +16,17 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivityTest;
+import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.WidgetListActivityTest;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -34,20 +40,25 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
 @RunWith(AndroidJUnit4.class)
-public class WidgetListActivityTest extends SuntimesActivityTestBase
+public class AlarmEditActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
 
     @Before
     public void beforeTest() throws IOException {
@@ -65,10 +76,10 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
     /////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void test_WidgetListActivity()
+    public void test_AlarmEditActivity()
     {
         Activity activity = activityRule.getActivity();
-        WidgetListActivityRobot robot = new WidgetListActivityRobot()
+        AlarmEditActivityRobot robot = new AlarmEditActivityRobot()
                 .showActivity(activity)
                 .assertActivityShown(activity);
 
@@ -81,59 +92,46 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         new DialogTest.HelpDialogRobot()
                 .assertDialogShown(activity)
                 .cancelDialog(activity);
+
+        // TODO
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
     /**
-     * WidgetListActivityRobot
+     * AlarmEditActivityRobot
      */
-    public static class WidgetListActivityRobot extends ActivityRobot<WidgetListActivityRobot>
+    public static class AlarmEditActivityRobot extends ActivityRobot<AlarmEditActivityRobot>
     {
-        public WidgetListActivityRobot() {
+        public AlarmEditActivityRobot() {
             setRobot(this);
         }
 
-        protected WidgetListActivityRobot showActivity(Activity activity) {
-            new SuntimesSettingsActivityTest.SettingsActivityRobot()
-                    .showActivity(activity)
-                    .clickHeader_widgetList();
+        protected AlarmEditActivityRobot showActivity(Activity activity)
+        {
+            new AlarmActivityTest.AlarmActivityRobot()
+                    .clickAlarmItem(0)
+                    .clickAlarmItem(0);
             return this;
         }
-
-        public WidgetListActivityRobot clickBackButton(Context context) {
-            // TODO
-            return this;
-        }
-
-        public WidgetListActivityRobot clickOverflowMenu_createBackup() {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).perform(click());
-            return this;
-        }
-        public WidgetListActivityRobot clickOverflowMenu_restoreBackup() {
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).perform(click());
-            return this;
-        }
-        public WidgetListActivityRobot cancelOverflowMenu(Context context) {
+        
+        public AlarmEditActivityRobot cancelOverflowMenu(Context context) {
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         /////////////////////////////////////////////////////////////////////////
 
-        public WidgetListActivityRobot assertActivityShown(Context context)
+        public AlarmEditActivityRobot assertActivityShown(Context context)
         {
-            //onView(withId(R.id.info_time_utc)).check(assertShown);
-            // TODO: activityTitle
-            // TODO: backButton
-            // TODO: searchButton
+            //onView(allOf(withText(R.string.configLabel_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
+            //onView(withContentDescription(R.string.configLabel_bedtime)).check(assertShown);
+            //onView(withContentDescription(R.string.configLabel_bedtime)).check(assertClickable);
+            // TODO
             return this;
         }
-
-        public WidgetListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
+        public AlarmEditActivityRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }

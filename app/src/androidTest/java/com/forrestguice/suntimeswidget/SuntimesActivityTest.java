@@ -209,11 +209,11 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         MainActivityRobot robot = new MainActivityRobot();
         robot.recreateActivity(context);
-        robot.assertActionBar_navigationButtonShown(context, false);
+        robot.assertActionBar_navigationButtonShown(false);
 
         robot.showOverflowMenu(context).sleep(1000)
                 .assertOverflowMenuShown(context)
-                .assertOverflowMenu_hasSimpleNavigation(context, true)
+                .assertOverflowMenu_hasSimpleNavigation(true)
                 .cancelOverflowMenu(context);
     }
 
@@ -227,10 +227,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         robot.recreateActivity(context);
         robot.showOverflowMenu(context).sleep(1000)
                 .assertOverflowMenuShown(context)
-                .assertOverflowMenu_hasSimpleNavigation(context, false)
+                .assertOverflowMenu_hasSimpleNavigation(false)
                 .cancelOverflowMenu(context);
 
-        robot.assertActionBar_navigationButtonShown(context, true)
+        robot.assertActionBar_navigationButtonShown(true)
                 .showSidebarMenu(context)
                 .assertSideBarMenuShown(context)
                 .cancelSidebarMenu(context);
@@ -889,10 +889,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.configAction_aboutWidget)).perform(click());
             return this;
         }
-        public MainActivityRobot cancelSidebarMenu(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).perform(pressBack());
-            return this;
-        }
 
         public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
             onView(withText(R.string.configAction_viewDate)).perform(click());
@@ -922,39 +918,17 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.configAction_worldMap)).perform(click());
             return this;
         }
-        public MainActivityRobot clickOverflowMenu_help(Context context) {
-            onView(withText(R.string.configAction_help)).perform(click());
-            return this;
-        }
-        public MainActivityRobot clickOverflowMenu_settings(Context context) {
-            onView(withText(R.string.configAction_settings)).perform(click());
-            return this;
-        }
-        public MainActivityRobot clickOverflowMenu_about(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).perform(click());
-            return this;
-        }
+
         public MainActivityRobot cancelOverflowMenu(Context context) {
             onView(withText(R.string.configAction_viewDate)).perform(pressBack());
             return this;
         }
 
-        public MainActivityRobot assertActionBar_navigationButtonShown(Context context, boolean shown) {
-            onView(navigationButton()).check(shown ? assertShown : doesNotExist());
-            return this;
-        }
         public MainActivityRobot assertActionBar_mapButtonShown(boolean shown) {
             onView(withContentDescription(R.string.configAction_mapLocation)).check(shown ? assertShown : doesNotExist());
             return this;
         }
 
-        public MainActivityRobot assertSideBarMenuShown(Activity context) {
-            onView(withText(R.string.configAction_clock)).check(assertShown);
-            onView(withText(R.string.configLabel_alarmClock)).check(assertShown);
-            onView(withText(R.string.configAction_settings)).check(assertShown);
-            onView(withText(R.string.configAction_aboutWidget)).check(assertShown);
-            return this;
-        }
         public MainActivityRobot assertOverflowMenuShown(Context context)
         {
             onView(withText(R.string.configAction_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
@@ -966,12 +940,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
-        public MainActivityRobot assertOverflowMenu_hasSimpleNavigation(Context context, boolean isSimple)
-        {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
-            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
-            return this;
-        }
+
         public MainActivityRobot assertOverflowMenu_mapButtonShown(Activity context, boolean shown) {
             onView(withText(R.string.configAction_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
             return this;

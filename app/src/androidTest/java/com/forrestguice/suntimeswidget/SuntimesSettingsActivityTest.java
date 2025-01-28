@@ -137,7 +137,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         } else {
             new SuntimesActivityTest.MainActivityRobot()
                     .showOverflowMenu(activity)
-                    .clickOverflowMenu_settings(activity);
+                    .clickOverflowMenu_settings();
         }
         verifySettingsActivity(activity);
     }
@@ -550,7 +550,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             } else {
                 new SuntimesActivityTest.MainActivityRobot()
                         .showOverflowMenu(activity)
-                        .clickOverflowMenu_settings(activity);
+                        .clickOverflowMenu_settings();
             }
             return this;
         }

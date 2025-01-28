@@ -77,7 +77,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
         new TimeDateDialogRobot()
                 .showDialog(context).assertDialogShown(context)
                 //.captureScreenshot(context, "suntimes-dialog-date0")
-                .rotateDevice(context).assertDialogShown(context)
+                .doubleRotateDevice(context).assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
     }
 

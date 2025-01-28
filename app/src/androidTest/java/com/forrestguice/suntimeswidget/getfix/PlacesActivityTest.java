@@ -105,22 +105,6 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public PlacesActivityRobot sleep(long ms) {
-            SystemClock.sleep(ms);
-            return this;
-        }
-        public PlacesActivityRobot doubleRotateDevice(Activity activity)
-        {
-            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            sleep(1000);
-            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            return this;
-        }
-        public PlacesActivityRobot rotateDevice(Activity activity, int orientation) {
-            activity.setRequestedOrientation(orientation);
-            return this;
-        }
-
         public PlacesActivityRobot clickBackButton(Context context) {
             // TODO
             return this;
@@ -138,10 +122,6 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public PlacesActivityRobot showOverflowMenu(Context context) {
-            openActionBarOverflowOrOptionsMenu(context);
-            return this;
-        }
         public PlacesActivityRobot clickOverflowMenu_add(Context context) {
             onView(withText(R.string.configAction_addPlace)).inRoot(isPlatformPopup()).perform(click());
             return this;
