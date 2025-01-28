@@ -84,7 +84,7 @@ public class DialogTest extends SuntimesActivityTestBase
         new HelpDialogRobot()
                 .showDialog(context).assertDialogShown(context)
                 //.captureScreenshot(context, "suntimes-dialog-help0")
-                .rotateDevice(context).assertDialogShown(context)
+                .doubleRotateDevice(context).assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
     }
 
@@ -95,7 +95,7 @@ public class DialogTest extends SuntimesActivityTestBase
         new AboutDialogRobot()
                 .showDialog(context).assertDialogShown(context)
                 //.captureScreenshot(context, "suntimes-dialog-about0")
-                .rotateDevice(context).assertDialogShown(context)
+                .doubleRotateDevice(context).assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
     }
 
@@ -106,15 +106,10 @@ public class DialogTest extends SuntimesActivityTestBase
      * DialogRobot
      * @param <T> robot return type (implementations must call setRobot)
      */
-    public static abstract class DialogRobot<T>
+    public static abstract class DialogRobot<T> extends Robot<T>
     {
         public DialogRobot() {
             initRobotConfig();
-        }
-
-        protected T robot;
-        protected void setRobot(T robot) {
-            this.robot = robot;
         }
 
         protected DialogRobotConfig expected;
@@ -153,33 +148,6 @@ public class DialogTest extends SuntimesActivityTestBase
         }
         public T assertSheetIsCollapsed(Context context) {
             onView(withId(R.id.dialog_header)).check(assertShown);
-            return robot;
-        }
-
-        public T captureScreenshot(Activity activity, String name) {
-            captureScreenshot(activity, "", name);
-            return robot;
-        }
-        public T captureScreenshot(Activity activity, String subdir, String name) {
-            SuntimesActivityTestBase.captureScreenshot(activity, subdir, name);
-            return robot;
-        }
-
-        public T rotateDevice(Activity activity)
-        {
-            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            sleep(1000);
-            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            return robot;
-        }
-        public T rotateDevice(Activity activity, int orientation)
-        {
-            activity.setRequestedOrientation(orientation);
-            return robot;
-        }
-        public T sleep(long ms)
-        {
-            SystemClock.sleep(ms);
             return robot;
         }
 

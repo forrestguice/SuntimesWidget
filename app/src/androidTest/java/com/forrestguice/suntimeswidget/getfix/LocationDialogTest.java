@@ -99,11 +99,11 @@ public class LocationDialogTest extends SuntimesActivityTestBase
 
         robot.selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent()
-                .rotateDevice(activityRule.getActivity())
+                .doubleRotateDevice(activityRule.getActivity())
                 .assertDialogMode_isCurrent();
 
         robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
-                .rotateDevice(activityRule.getActivity())
+                .doubleRotateDevice(activityRule.getActivity())
                 .assertDialogMode_isCustom()
                 .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
                 .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
@@ -123,7 +123,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
                 .assertDialogMode_isCustom()
                 .assertDialogState_select()
-                .rotateDevice(activity).sleep(1000)
+                .doubleRotateDevice(activity).sleep(1000)
                 .assertDialogMode_isCustom()
                 .assertDialogState_select();
 
@@ -132,7 +132,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
                 .assertDialogState_edit()
                 .inputLocationEditValues(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON)
 
-                .rotateDevice(activity).sleep(1000)
+                .doubleRotateDevice(activity).sleep(1000)
                 .assertDialogState_edit()
                 .assertLocationEditCoordinates(TESTLOC_0_LAT, TESTLOC_0_LON)
 
@@ -148,7 +148,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
                 .assertLocationEditCoordinates(TESTLOC_0_LAT, TESTLOC_0_LON);
 
         robot.selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
-                .rotateDevice(activity).sleep(1000)
+                .doubleRotateDevice(activity).sleep(1000)
                 .assertDialogMode_isCurrent()
                 .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
                 .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
@@ -162,12 +162,12 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         // click on the `edit` button
         LocationDialogRobot robot = new LocationDialogRobot();
         robot.clickLocationEditButton()
-                .rotateDevice(activityRule.getActivity())
+                .doubleRotateDevice(activityRule.getActivity())
                 .assertDialogState_edit();
 
         // fill in form fields
         robot.inputLocationEditValues(name, latitude, longitude)
-                .rotateDevice(activityRule.getActivity())
+                .doubleRotateDevice(activityRule.getActivity())
                 .assertLocationEditCoordinates(latitude, longitude);
 
         // click the `save` button

@@ -26,6 +26,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -92,6 +94,25 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
                 .cancelSortMenu(activity);
     }
 
+    @Test
+    public void test_AlarmActivity_navigation_sidebar()
+    {
+        Activity context = activityRule.getActivity();
+        config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIDEBAR).apply();
+
+        AlarmActivityRobot robot = new AlarmActivityRobot();
+        robot.recreateActivity(context);
+        robot.showOverflowMenu(context).sleep(1000)
+                .assertOverflowMenuShown(context)
+                .assertOverflowMenu_hasSimpleNavigation(false)
+                .cancelOverflowMenu(context);
+
+        robot.assertActionBar_navigationButtonShown(true)
+                .showSidebarMenu(context)
+                .assertSideBarMenuShown(context)
+                .cancelSidebarMenu(context);
+    }
+
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
@@ -108,6 +129,49 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
             new SuntimesActivityTest.MainActivityRobot()
                     .showSidebarMenu(activity)
                     .clickSidebarMenu_alarms(activity);
+            return this;
+        }
+
+        public AlarmActivityRobot clickAddAlarmButton(int position) {
+            // TODO
+            return this;
+        }
+        public AlarmActivityRobot clickClearSelectionButton(int position) {
+            // TODO
+            return this;
+        }
+
+        public AlarmActivityRobot clickAlarmItem(int position) {
+            // TODO
+            return this;
+        }
+        public AlarmActivityRobot clickAlarmItem_delete(int position) {
+            // TODO
+            return this;
+        }
+        public AlarmActivityRobot clickAlarmItem_dismiss(int position) {
+            // TODO
+            return this;
+        }
+        public AlarmActivityRobot clickAlarmItem_snooze(int position) {
+            // TODO
+            return this;
+        }
+
+        public AlarmActivityRobot assertAlarmItem_noSelection() {
+            // TODO: no items selected? clear-selection fab hidden?
+            return this;
+        }
+        public AlarmActivityRobot assertAlarmItem_isSelected(int position, boolean isSelected) {
+            // TODO: selection background shown? clear-selection fab shown?
+            return this;
+        }
+        public AlarmActivityRobot assertAlarmItem_isEnabled(int position, boolean isEnabled) {
+            // TODO: checkbox/switch isChecked? item shows enabled background?
+            return this;
+        }
+        public AlarmActivityRobot assertAlarmItem_isType(int position, AlarmClockItem.AlarmType type) {
+            // TODO: correct icon shown? correct label shown?
             return this;
         }
 

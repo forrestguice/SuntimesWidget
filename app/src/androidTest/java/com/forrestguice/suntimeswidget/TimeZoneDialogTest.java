@@ -92,7 +92,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
                 .verifyTimezoneDialog_solar(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone-solar0");
 
-        robot.rotateDevice(context).assertDialogShown(context)
+        robot.doubleRotateDevice(context).assertDialogShown(context)
                 .cancelDialog(context).assertDialogNotShown(context);
     }
 

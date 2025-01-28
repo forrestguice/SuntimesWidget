@@ -140,10 +140,6 @@ public class EventListActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.configAction_importEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
-        public EventListActivityRobot clickOverflowMenu_help(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
-            return this;
-        }
         public EventListActivityRobot cancelOverflowMenu(Context context) {
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;

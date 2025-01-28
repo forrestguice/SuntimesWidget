@@ -418,17 +418,8 @@ public abstract class SuntimesActivityTestBase
     protected WidgetSettings.LocationMode savedState_locationMode;
     //protected AppSettings.LocaleMode savedState_localeMode;
 
-    /**
-     * ActivityRobot
-     * @param <T> robot method return type
-     */
-    public static abstract class ActivityRobot<T>
+    public static abstract class Robot<T>
     {
-        public ActivityRobot() {}
-        public ActivityRobot(T robot) {
-            this.robot = robot;
-        }
-
         protected T robot;
         public void setRobot(T robot) {
             this.robot = robot;
@@ -451,6 +442,27 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
 
+        public T captureScreenshot(Activity activity, String name) {
+            captureScreenshot(activity, "", name);
+            return robot;
+        }
+        public T captureScreenshot(Activity activity, String subdir, String name) {
+            SuntimesActivityTestBase.captureScreenshot(activity, subdir, name);
+            return robot;
+        }
+    }
+
+    /**
+     * ActivityRobot
+     * @param <T> robot method return type
+     */
+    public static abstract class ActivityRobot<T> extends Robot<T>
+    {
+        public ActivityRobot() {}
+        public ActivityRobot(T robot) {
+            this.robot = robot;
+        }
+
         public T recreateActivity(final Activity activity)
         {
             InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
@@ -465,9 +477,45 @@ public abstract class SuntimesActivityTestBase
             onView(navigationButton()).perform(click());
             return robot;
         }
+        public T cancelSidebarMenu(Context context) {
+            onView(withText(R.string.configAction_aboutWidget)).perform(pressBack());
+            return robot;
+        }
 
         public T showOverflowMenu(Context context) {
             openActionBarOverflowOrOptionsMenu(context);
+            return robot;
+        }
+        public T clickOverflowMenu_help() {
+            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+        public T clickOverflowMenu_settings() {
+            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+        public T clickOverflowMenu_about() {
+            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+
+        public T assertOverflowMenu_hasSimpleNavigation(boolean isSimple)
+        {
+            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            return robot;
+        }
+
+        public T assertActionBar_navigationButtonShown(boolean shown) {
+            onView(navigationButton()).check(shown ? assertShown : doesNotExist());
+            return robot;
+        }
+
+        public T assertSideBarMenuShown(Activity context) {
+            onView(withText(R.string.configAction_clock)).check(assertShown);
+            onView(withText(R.string.configLabel_alarmClock)).check(assertShown);
+            onView(withText(R.string.configAction_settings)).check(assertShown);
+            onView(withText(R.string.configAction_aboutWidget)).check(assertShown);
             return robot;
         }
     }
