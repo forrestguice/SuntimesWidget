@@ -58,6 +58,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class DialogTest extends SuntimesActivityTestBase
 {
@@ -67,10 +68,13 @@ public class DialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
@@ -100,36 +104,17 @@ public class DialogTest extends SuntimesActivityTestBase
 
     /**
      * DialogRobot
+     * @param <T> robot return type (implementations must call setRobot)
      */
-    public interface DialogRobot
+    public static abstract class DialogRobot<T>
     {
-        DialogRobot showDialog(Activity context);
-        DialogRobot applyDialog(Context context);
-        DialogRobot cancelDialog(Context context);
-
-        DialogRobot assertDialogShown(Context context);
-        DialogRobot assertDialogNotShown(Context context);
-
-        DialogRobot captureScreenshot(Activity activity, String name);
-        DialogRobot captureScreenshot(Activity activity, String subdir, String name);
-
-        DialogRobot rotateDevice(Activity activity);
-        DialogRobot rotateDevice(Activity activity, int orientation);
-
-        DialogRobot sleep(long ms);
-    }
-
-    public static class DialogRobotConfig
-    {
-        public Location getLocation(Context context) {
-            return WidgetSettings.loadLocationPref(context, 0);
-        }
-    }
-
-    public static abstract class DialogRobotBase implements DialogRobot
-    {
-        public DialogRobotBase() {
+        public DialogRobot() {
             initRobotConfig();
+        }
+
+        protected T robot;
+        protected void setRobot(T robot) {
+            this.robot = robot;
         }
 
         protected DialogRobotConfig expected;
@@ -140,74 +125,62 @@ public class DialogTest extends SuntimesActivityTestBase
             expected = config;
         }
 
-        @Override
-        public abstract DialogRobot showDialog(Activity activity);
-
-        @Override
-        public DialogRobot applyDialog(Context context) {
+        public T applyDialog(Context context) {
             onView(withId(R.id.dialog_button_accept)).perform(click());
-            return this;
+            return robot;
         }
-        @Override
-        public DialogRobot cancelDialog(Context context) {
+        public T cancelDialog(Context context) {
             onView(withId(R.id.dialog_header)).perform(pressBack());
-            return this;
+            return robot;
         }
 
-        @Override
-        public DialogRobot assertDialogShown(Context context) {
+        public T assertDialogShown(Context context) {
             onView(withId(R.id.dialog_header)).check(assertShown);
-            return this;
+            return robot;
         }
-        @Override
-        public DialogRobot assertDialogNotShown(Context context) {
+        public T assertDialogNotShown(Context context) {
             onView(withId(R.id.dialog_header)).check(doesNotExist());
-            return this;
+            return robot;
         }
 
-        public DialogRobot expandSheet() {
+        public T expandSheet() {
             onView(withId(R.id.dialog_header)).perform(swipeUp());
-            return this;
+            return robot;
         }
-        public DialogRobot collapseSheet() {
+        public T collapseSheet() {
             onView(withId(R.id.dialog_header)).perform(swipeDown());
-            return this;
+            return robot;
         }
-        public DialogRobot assertSheetIsCollapsed(Context context) {
+        public T assertSheetIsCollapsed(Context context) {
             onView(withId(R.id.dialog_header)).check(assertShown);
-            return this;
+            return robot;
         }
 
-        @Override
-        public DialogRobot captureScreenshot(Activity activity, String name) {
+        public T captureScreenshot(Activity activity, String name) {
             captureScreenshot(activity, "", name);
-            return this;
+            return robot;
         }
-        @Override
-        public DialogRobot captureScreenshot(Activity activity, String subdir, String name) {
+        public T captureScreenshot(Activity activity, String subdir, String name) {
             SuntimesActivityTestBase.captureScreenshot(activity, subdir, name);
-            return this;
+            return robot;
         }
 
-        @Override
-        public DialogRobot rotateDevice(Activity activity)
+        public T rotateDevice(Activity activity)
         {
             rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             sleep(1000);
             rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            return this;
+            return robot;
         }
-        @Override
-        public DialogRobot rotateDevice(Activity activity, int orientation)
+        public T rotateDevice(Activity activity, int orientation)
         {
             activity.setRequestedOrientation(orientation);
-            return this;
+            return robot;
         }
-        @Override
-        public DialogRobot sleep(long ms)
+        public T sleep(long ms)
         {
             SystemClock.sleep(ms);
-            return this;
+            return robot;
         }
 
         public SuntimesCalculator appCalculator(Context context) {
@@ -251,7 +224,13 @@ public class DialogTest extends SuntimesActivityTestBase
         public Calendar now(TimeZone timezone) {
             return Calendar.getInstance(timezone);
         }
+    }
 
+    public static class DialogRobotConfig
+    {
+        public Location getLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
+        }
     }
 
     //////////////////////////////////////////////////////////////////
@@ -260,9 +239,13 @@ public class DialogTest extends SuntimesActivityTestBase
     /**
      * HelpDialogRobot
      */
-    public static class HelpDialogRobot extends DialogRobotBase implements DialogRobot
+    public static class HelpDialogRobot extends DialogRobot<HelpDialogRobot>
     {
-        @Override
+        public HelpDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public HelpDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
             onView(withText(R.string.configAction_help)).perform(click());
@@ -288,9 +271,13 @@ public class DialogTest extends SuntimesActivityTestBase
     /**
      * AboutDialogRobot
      */
-    public static class AboutDialogRobot extends DialogRobotBase implements DialogRobot
+    public static class AboutDialogRobot extends DialogRobot<AboutDialogRobot>
     {
-        @Override
+        public AboutDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public AboutDialogRobot showDialog(Activity context)
         {
             String navMode = AppSettings.loadNavModePref(context);

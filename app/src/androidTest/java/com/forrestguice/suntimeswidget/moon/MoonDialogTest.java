@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.moon;
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -47,6 +48,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class MoonDialogTest extends SuntimesActivityTestBase
 {
@@ -56,29 +58,44 @@ public class MoonDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
-    public void test_showMoonDialog()
+    public void test_moonDialog()
+    {
+        Activity context = activityRule.getActivity();
+        MoonDialogRobot robot = new MoonDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .captureScreenshot(context, "suntimes-dialog-moon0");
+
+        robot.cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
+
+    @Test
+    public void test_moonDialog_overflowMenu()
     {
         Activity context = activityRule.getActivity();
         MoonDialogRobot robot = new MoonDialogRobot()
                 .showDialog(context)
                 .assertDialogShown(context);
-                //.captureScreenshot(context, "suntimes-dialog-moon0");
+
+        robot.showOverflowMenu(context)
+                .assertOverflowMenuShown(context)
+                .cancelOverflowMenu(context).sleep(1000);
 
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_Help(context)
                 .assertOverflowMenu_Help(context).sleep(500)
                 .cancelOverflowMenu_Help(context).sleep(1000);
-
-        robot.showOverflowMenu(context)
-                .assertOverflowMenuShown(context)
-                .cancelOverflowMenu(context).sleep(1000);
 
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_Controls(context)
@@ -89,6 +106,17 @@ public class MoonDialogTest extends SuntimesActivityTestBase
                 .clickOverflowMenu_Options(context)
                 .assertOverflowMenu_Options(context).sleep(500)
                 .cancelOverflowMenu_Options(context).sleep(1000);
+
+        robot.cancelDialog(context);
+    }
+
+    @Test
+    public void test_moonDialog_controls()
+    {
+        Activity context = activityRule.getActivity();
+        MoonDialogRobot robot = new MoonDialogRobot()
+                .showDialog(context)
+                .assertDialogShown(context);
 
         robot.clickPositionArea(context)
                 .assertOverflowMenu_Controls(context).sleep(500)
@@ -110,28 +138,19 @@ public class MoonDialogTest extends SuntimesActivityTestBase
                 .clickResetButton(context)
                 .assertIsReset(context);
 
-        robot.cancelDialog(context)
-                .assertDialogNotShown(context);
+        robot.cancelDialog(context);
     }
 
     /**
      * MoonDialogRobot
      */
-    public static class MoonDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class MoonDialogRobot extends DialogTest.DialogRobot<MoonDialogRobot>
     {
-        @Override
-        public MoonDialogRobot sleep(long ms) {
-            super.sleep(ms);
-            return this;
+        public MoonDialogRobot() {
+            super();
+            setRobot(this);
         }
 
-        @Override
-        public MoonDialogRobot rotateDevice(Activity activity) {
-            super.rotateDevice(activity);
-            return this;
-        }
-
-        @Override
         public MoonDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
             onView(withText(R.string.configAction_moon)).perform(click());

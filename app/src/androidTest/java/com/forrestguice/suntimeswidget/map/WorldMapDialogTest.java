@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.map;
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -63,6 +64,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class WorldMapDialogTest extends SuntimesActivityTestBase
 {
@@ -72,14 +74,17 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
-    public void test_showWorldMapDialog()
+    public void test_worldMapDialog()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -120,13 +125,12 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                 .assertMapMenuShown(context).sleep(500)
                 .cancelMapMenu(context).sleep(500);
 
-
         robot.cancelDialog(context)
                 .assertDialogNotShown(context);
     }
 
     @Test
-    public void test_showWorldMapDialog_expandCollapse()
+    public void test_worldMapDialog_expandCollapse()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -145,7 +149,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_maps()
+    public void test_worldMapDialog_maps()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -184,7 +188,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_timeZone()
+    public void test_worldMapDialog_timeZone()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot()
@@ -212,7 +216,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_viewDate_Suntimes()
+    public void test_worldMapDialog_viewDate_Suntimes()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -233,7 +237,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_viewDate_Sun()
+    public void worldMapDialog_viewDate_Sun()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -257,7 +261,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showWorldMapDialog_viewDate_Moon()
+    public void test_worldMapDialog_viewDate_Moon()
     {
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
@@ -283,8 +287,13 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     /**
      * WorldMapDialogRobot
      */
-    public static class WorldMapDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class WorldMapDialogRobot extends DialogTest.DialogRobot<WorldMapDialogRobot>
     {
+        public WorldMapDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public Calendar now(Context context)
         {
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
@@ -292,17 +301,6 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                     ? appTimeZone(context)
                     : WidgetTimezones.getTimeZone(tzId, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
             return now(timezone);
-        }
-
-        @Override
-        public WorldMapDialogRobot sleep(long ms) {
-            super.sleep(ms);
-            return this;
-        }
-        @Override
-        public WorldMapDialogRobot rotateDevice(Activity activity) {
-            super.rotateDevice(activity);
-            return this;
         }
 
         @Override
@@ -316,7 +314,6 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        @Override
         public WorldMapDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
             onView(withText(R.string.configAction_worldMap)).perform(click());

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
-//import android.os.Environment;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewAssertion;
@@ -48,15 +48,12 @@ import com.jraska.falcon.Falcon;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.support.test.espresso.Espresso.onView;
@@ -75,7 +72,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -385,6 +381,95 @@ public abstract class SuntimesActivityTestBase
         automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
         automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
         automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
+    }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+
+    protected void overrideConfigState(Activity activity)
+    {
+        config(activity).edit().remove(AppSettings.PREF_KEY_LOCALE);
+        config(activity).edit().putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.SYSTEM_LOCALE.name()).apply();
+    }
+    protected void saveConfigState(Activity activity) {
+        //savedState_localeMode = AppSettings.loadLocaleModePref(activity);
+        savedState_dateTapAction = AppSettings.loadDateTapActionPref(activity);
+        savedState_clockTapAction = AppSettings.loadClockTapActionPref(activity);
+        savedState_showDataSource = AppSettings.loadDatasourceUIPref(activity);
+        savedState_showMapButton = AppSettings.loadShowMapButtonPref(activity);
+        savedState_navMode = AppSettings.loadNavModePref(activity);
+        savedState_locationMode = WidgetSettings.loadLocationModePref(activity, 0);
+    }
+    protected void restoreConfigState(Activity activity) {
+        SharedPreferences.Editor config = config(activity).edit();
+        //config.putString(AppSettings.PREF_KEY_LOCALE_MODE, savedState_localeMode.name()).apply();
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState_dateTapAction).apply();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState_clockTapAction).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, savedState_showDataSource).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, savedState_showMapButton).apply();
+        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_navMode).apply();
+        WidgetSettings.saveLocationModePref(activity, 0, savedState_locationMode);
+    }
+    protected String savedState_navMode;
+    protected String savedState_dateTapAction;
+    protected String savedState_clockTapAction;
+    protected boolean savedState_showDataSource;
+    protected boolean savedState_showMapButton;
+    protected WidgetSettings.LocationMode savedState_locationMode;
+    //protected AppSettings.LocaleMode savedState_localeMode;
+
+    /**
+     * ActivityRobot
+     * @param <T> robot method return type
+     */
+    public static abstract class ActivityRobot<T>
+    {
+        public ActivityRobot() {}
+        public ActivityRobot(T robot) {
+            this.robot = robot;
+        }
+
+        protected T robot;
+        public void setRobot(T robot) {
+            this.robot = robot;
+        }
+
+        public T sleep(long ms) {
+            SystemClock.sleep(ms);
+            return robot;
+        }
+
+        public T doubleRotateDevice(Activity activity)
+        {
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            sleep(1000);
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return robot;
+        }
+        public T rotateDevice(Activity activity, int orientation) {
+            activity.setRequestedOrientation(orientation);
+            return robot;
+        }
+
+        public T recreateActivity(final Activity activity)
+        {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    activity.recreate();
+                }
+            });
+            return robot;
+        }
+
+        public T showSidebarMenu(Context context) {
+            onView(navigationButton()).perform(click());
+            return robot;
+        }
+
+        public T showOverflowMenu(Context context) {
+            openActionBarOverflowOrOptionsMenu(context);
+            return robot;
+        }
     }
 
 }

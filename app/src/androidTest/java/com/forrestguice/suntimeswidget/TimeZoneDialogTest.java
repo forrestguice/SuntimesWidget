@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -53,6 +53,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class TimeZoneDialogTest extends SuntimesActivityTestBase
 {
@@ -62,14 +63,17 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
-    public void test_showTimezoneDialog()
+    public void test_TimezoneDialog()
     {
         Activity context = activityRule.getActivity();
         TimeZoneDialogRobot robot = new TimeZoneDialogTest.TimeZoneDialogRobot();
@@ -95,9 +99,13 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     /**
      * TimeZoneDialogRobot
      */
-    public static class TimeZoneDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class TimeZoneDialogRobot extends DialogTest.DialogRobot<TimeZoneDialogRobot>
     {
-        @Override
+        public TimeZoneDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public TimeZoneDialogRobot showDialog(Activity activity)
         {
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());

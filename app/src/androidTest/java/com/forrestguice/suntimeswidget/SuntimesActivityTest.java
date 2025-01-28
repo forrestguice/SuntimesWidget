@@ -30,6 +30,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
+import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
@@ -96,10 +97,10 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesActivityTest extends SuntimesActivityTestBase
 {
@@ -109,37 +110,14 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState();
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState();
+        restoreConfigState(activityRule.getActivity());
     }
-
-    protected void saveConfigState() {
-        savedState_dateTapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        savedState_clockTapAction = AppSettings.loadClockTapActionPref(activityRule.getActivity());
-        savedState_showDataSource = AppSettings.loadDatasourceUIPref(activityRule.getActivity());
-        savedState_showMapButton = AppSettings.loadShowMapButtonPref(activityRule.getActivity());
-        savedState_navMode = AppSettings.loadNavModePref(activityRule.getActivity());
-        savedState_locationMode = WidgetSettings.loadLocationModePref(activityRule.getActivity(), 0);
-    }
-    protected void restoreConfigState() {
-        SharedPreferences.Editor config = config(activityRule.getActivity()).edit();
-        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState_dateTapAction).apply();
-        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState_clockTapAction).apply();
-        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, savedState_showDataSource).apply();
-        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, savedState_showMapButton).apply();
-        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_navMode).apply();
-        WidgetSettings.saveLocationModePref(activityRule.getActivity(), 0, savedState_locationMode);
-    }
-    protected String savedState_navMode;
-    protected String savedState_dateTapAction;
-    protected String savedState_clockTapAction;
-    protected boolean savedState_showDataSource;
-    protected boolean savedState_showMapButton;
-    protected WidgetSettings.LocationMode savedState_locationMode;
 
     /**
      * UI Test; open the activity, take a screenshot, swap the card, take a screenshot, and then rotate.
@@ -835,20 +813,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     /**
      * MainActivityRobot
      */
-    public static class MainActivityRobot
+    public static class MainActivityRobot extends ActivityRobot<MainActivityRobot>
     {
-        public MainActivityRobot sleep(long ms) {
-            SystemClock.sleep(ms);
-            return this;
-        }
-        public MainActivityRobot recreateActivity(final Activity activity)
-        {
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                public void run() {
-                    activity.recreate();
-                }
-            });
-            return this;
+        public MainActivityRobot() {
+            setRobot(this);
         }
 
         public MainActivityRobot clickOnClock() {
@@ -921,10 +889,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public MainActivityRobot showSidebarMenu(Context context) {
-            onView(navigationButton()).perform(click());
-            return this;
-        }
         public MainActivityRobot clickSidebarMenu_clock(Context context) {
             onView(withText(R.string.configAction_settings)).perform(click());
             return this;
@@ -946,10 +910,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public MainActivityRobot showOverflowMenu(Context context) {
-            openActionBarOverflowOrOptionsMenu(context);
-            return this;
-        }
         public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
             onView(withText(R.string.configAction_viewDate)).perform(click());
             return this;
