@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.graph;
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -48,7 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static com.forrestguice.suntimeswidget.DialogTest.DialogRobotBase.timeZone_UTC;
+import static com.forrestguice.suntimeswidget.DialogTest.DialogRobot.timeZone_UTC;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.MAPTAG_LIGHTMAP;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -67,6 +68,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class LightMapDialogTest extends SuntimesActivityTestBase
 {
@@ -76,10 +78,13 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
@@ -371,9 +376,13 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     /**
      * LightmapDialogRobot
      */
-    public static class LightMapDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class LightMapDialogRobot extends DialogTest.DialogRobot<LightMapDialogRobot>
     {
-        @Override
+        public LightMapDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public LightMapDialogRobot showDialog(Activity context) {
             //onView(withId(R.id.info_time_lightmap)).perform(click());
             openActionBarOverflowOrOptionsMenu(context);
@@ -679,12 +688,6 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             onView(allOf(withId(R.id.info_time_solar),
                     withTextAsDate(formats, date, tolerance, true)
             )).check(assertShown);
-            return this;
-        }
-
-        @Override
-        public LightMapDialogRobot sleep(long ms) {
-            super.sleep(ms);
             return this;
         }
 

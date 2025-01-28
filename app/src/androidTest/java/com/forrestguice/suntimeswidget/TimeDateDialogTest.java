@@ -51,6 +51,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
  * Automated UI tests for the TimeDateDialog.
  */
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
@@ -60,14 +61,17 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
-    public void test_showDateDialog()
+    public void test_TimeDateDialog()
     {
         Activity context = activityRule.getActivity();
         new TimeDateDialogRobot()
@@ -80,9 +84,13 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     /**
      * DateDialogRobot
      */
-    public static class TimeDateDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class TimeDateDialogRobot extends DialogTest.DialogRobot<TimeDateDialogRobot>
     {
-        @Override
+        public TimeDateDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public TimeDateDialogRobot showDialog(Activity context)
         {
             String actionDateText = context.getString(R.string.configAction_viewDate);

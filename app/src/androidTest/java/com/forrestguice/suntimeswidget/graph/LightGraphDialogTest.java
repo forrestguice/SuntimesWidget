@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.graph;
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -48,6 +49,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class LightGraphDialogTest extends SuntimesActivityTestBase
 {
@@ -57,14 +59,17 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
-    public void test_showLightGraphDialog()
+    public void test_LightGraphDialog()
     {
         Activity context = activityRule.getActivity();
         LightGraphDialogRobot robot = new LightGraphDialogRobot();
@@ -106,9 +111,13 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
     /**
      * LightGraphDialogRobot
      */
-    public static class LightGraphDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class LightGraphDialogRobot extends DialogTest.DialogRobot<LightGraphDialogRobot>
     {
-        @Override
+        public LightGraphDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public LightGraphDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
             onView(withText(R.string.configAction_lightGraphDialog)).perform(click());

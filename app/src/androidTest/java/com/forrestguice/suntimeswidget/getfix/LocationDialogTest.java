@@ -16,12 +16,18 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.espresso.matcher.ViewMatchers;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -52,6 +58,7 @@ import static org.hamcrest.CoreMatchers.is;
  * Automated UI tests for the LocationDialog.
  */
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class LocationDialogTest extends SuntimesActivityTestBase
 {
@@ -61,10 +68,13 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     /**
@@ -173,11 +183,15 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     /**
      * LocationDialogRobot
      */
-    public static class LocationDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class LocationDialogRobot extends DialogTest.DialogRobot<LocationDialogRobot>
     {
-        @Override
+        public LocationDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         public LocationDialogRobot showDialog(Activity activity) {
-            onView(withId(R.id.action_location_add)).perform(click());   // show dialog from actionbar
+            onView(ViewMatchers.withId(R.id.action_location_add)).perform(click());   // show dialog from actionbar
             return this;
         }
         @Override
@@ -188,16 +202,6 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         @Override
         public LocationDialogRobot cancelDialog(Context context) {
             onView(withId(R.id.dialog_button_cancel)).perform(click());
-            return this;
-        }
-        @Override
-        public LocationDialogRobot rotateDevice(Activity activity) {
-            super.rotateDevice(activity);
-            return this;
-        }
-        @Override
-        public LocationDialogRobot sleep(long ms) {
-            super.sleep(ms);
             return this;
         }
 

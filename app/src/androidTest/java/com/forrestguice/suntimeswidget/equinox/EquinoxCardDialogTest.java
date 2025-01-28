@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.AlarmDialogTest;
+import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -49,9 +50,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.forrestguice.suntimeswidget.DialogTest.DialogRobotBase.lastYear;
-import static com.forrestguice.suntimeswidget.DialogTest.DialogRobotBase.nextYear;
-import static com.forrestguice.suntimeswidget.DialogTest.DialogRobotBase.thisYear;
+import static com.forrestguice.suntimeswidget.DialogTest.DialogRobot.lastYear;
+import static com.forrestguice.suntimeswidget.DialogTest.DialogRobot.nextYear;
+import static com.forrestguice.suntimeswidget.DialogTest.DialogRobot.thisYear;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
@@ -81,34 +82,37 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 {
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
-    public void initTestConfig() {
-        AppSettings.saveShowCrossQuarterPref(activityRule.getActivity(), false);
-    }
-
     @Before
-    public void beforeTest() throws IOException
-    {
+    public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState();
-        initTestConfig();
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState();
+        restoreConfigState(activityRule.getActivity());
     }
 
-    protected void saveConfigState() {
+    @Override
+    public void overrideConfigState(Activity activity) {
+        super.overrideConfigState(activity);
+        AppSettings.saveShowCrossQuarterPref(activityRule.getActivity(), false);
+    }
+    @Override
+    protected void saveConfigState(Activity activity) {
         savedState_crossQuarterDays = AppSettings.loadShowCrossQuarterPref(activityRule.getActivity());
         savedState_trackingMode = WidgetSettings.loadTrackingModePref(activityRule.getActivity(), 0);
     }
-    protected void restoreConfigState() {
+    @Override
+    protected void restoreConfigState(Activity activity) {
         AppSettings.saveShowCrossQuarterPref(activityRule.getActivity(), savedState_crossQuarterDays);
         WidgetSettings.saveTrackingModePref(activityRule.getActivity(), 0, savedState_trackingMode);
     }
@@ -142,7 +146,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog()
+    public void test_EquinoxDialog()
     {
         Activity context = activityRule.getActivity();
         AppSettings.saveShowCrossQuarterPref(context, false);
@@ -184,7 +188,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_changeYear()
+    public void test_EquinoxDialog_changeYear()
     {
         Activity context = activityRule.getActivity();
         AppSettings.saveShowCrossQuarterPref(context, false);
@@ -227,7 +231,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_collapseExpand()
+    public void test_EquinoxDialog_collapseExpand()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -244,7 +248,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_tracking()
+    public void test_EquinoxDialog_tracking()
     {
         Activity context = activityRule.getActivity();
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);   // test begins with tracking set to "soonest"
@@ -292,7 +296,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_crossQuarterDays()
+    public void test_EquinoxDialog_crossQuarterDays()
     {
         Activity context = activityRule.getActivity();
         AppSettings.saveShowCrossQuarterPref(context, false);    // test begins with "show cross-quarter days" set to false
@@ -326,7 +330,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems()
+    public void test_EquinoxDialog_cardItems()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -352,7 +356,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_share()
+    public void test_EquinoxDialog_cardItems_share()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -373,7 +377,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_setAlarm()
+    public void test_EquinoxDialog_cardItems_setAlarm()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -402,7 +406,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_viewWith_suntimes()
+    public void test_EquinoxDialog_cardItems_viewWith_suntimes()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -434,7 +438,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_viewWith_sun()
+    public void test_EquinoxDialog_cardItems_viewWith_sun()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -464,7 +468,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_viewWith_moon()
+    public void test_EquinoxDialog_cardItems_viewWith_moon()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -494,7 +498,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showEquinoxDialog_cardItems_viewWith_worldmap()
+    public void test_EquinoxDialog_cardItems_viewWith_worldmap()
     {
         Activity context = activityRule.getActivity();
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
@@ -526,15 +530,13 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     /**
      * EquinoxDialogRobot
      */
-    public static class EquinoxDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class EquinoxDialogRobot extends DialogTest.DialogRobot<EquinoxDialogRobot>
     {
-        @Override
-        public EquinoxDialogRobot sleep(long ms) {
-            super.sleep(ms);
-            return this;
+        public EquinoxDialogRobot() {
+            super();
+            setRobot(this);
         }
 
-        @Override
         public EquinoxDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
             onView(withText(R.string.configAction_equinoxDialog)).perform(click());
@@ -693,7 +695,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         @Override
-        public DialogTest.DialogRobot assertSheetIsCollapsed(Context context)
+        public EquinoxDialogRobot assertSheetIsCollapsed(Context context)
         {
             onView(withId(R.id.dialog_header)).check(assertShown);
             onView(withId(R.id.year_info_layout)).check(ViewAssertionHelper.assertHidden);

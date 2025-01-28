@@ -74,6 +74,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasToString;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class AlarmDialogTest extends SuntimesActivityTestBase
 {
@@ -83,10 +84,13 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
     }
 
     @Test
@@ -236,8 +240,13 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
     /**
      * AlarmDialogRobot
      */
-    public static class AlarmDialogRobot extends DialogTest.DialogRobotBase implements DialogTest.DialogRobot
+    public static class AlarmDialogRobot extends DialogTest.DialogRobot<AlarmDialogRobot>
     {
+        public AlarmDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
         protected static SuntimesUtils utils = new SuntimesUtils();
 
         protected AlarmDialogRobotConfig expected;
@@ -248,7 +257,6 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
             super.setRobotConfig(config);
         }
 
-        @Override
         public AlarmDialogRobot showDialog(Activity context)
         {
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,20 +20,18 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.SystemClock;
 import android.preference.Preference;
 import com.forrestguice.support.annotation.NonNull;
-import com.forrestguice.support.test.InstrumentationRegistry;
 
 import com.forrestguice.support.test.espresso.DataInteractionHelper;
 
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
 import com.forrestguice.support.test.espresso.ViewInteractionHelper;
 import com.forrestguice.support.test.espresso.action.ViewActions;
-import com.forrestguice.support.test.espresso.matcher.ViewMatchers;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -49,24 +47,25 @@ import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 import static com.forrestguice.support.test.espresso.Espresso.onData;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertEnabled;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.PreferenceMatchers.withKey;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static junit.framework.Assert.assertTrue;
@@ -76,11 +75,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 {
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
+    @Before
+    public void beforeTest() throws IOException {
+        setAnimationsEnabled(false);
+        saveConfigState(activityRule.getActivity());
+        overrideConfigState(activityRule.getActivity());
+    }
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
+        restoreConfigState(activityRule.getActivity());
+    }
 
     /**
      * UI Test
@@ -523,8 +535,12 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     /**
      * SettingsActivityRobot
      */
-    public static class SettingsActivityRobot
+    public static class SettingsActivityRobot extends ActivityRobot<SettingsActivityRobot>
     {
+        public SettingsActivityRobot() {
+            setRobot(this);
+        }
+
         public SettingsActivityRobot showActivity(Activity activity)
         {
             if (AppSettings.loadNavModePref(activity).equals(AppSettings.NAVIGATION_SIDEBAR)) {
@@ -543,16 +559,12 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             onView(isRoot()).perform(ViewActions.pressBack());
             return this;
         }
-        public SettingsActivityRobot sleep(long ms) {
-            SystemClock.sleep(ms);
-            return this;
-        }
 
         public SettingsActivityRobot clickHeader_generalSettings() {
             onView(withText(R.string.configLabel_general)).perform(click());
             return this;
         }
-        public SettingsActivityRobot clickHeader_userAlarmSettings() {
+        public SettingsActivityRobot clickHeader_alarmSettings() {
             onView(withText(R.string.configLabel_alarmClock)).perform(click());
             return this;
         }
@@ -573,10 +585,44 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
+        public SettingsActivityRobot clickPref_managePlaces() {
+            onView(withText(R.string.configLabel_places_manage)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickPref_manageEvents() {
+            onView(withText(R.string.configLabel_manageEvents)).perform(click());
+            return this;
+        }
+        public SettingsActivityRobot clickPref_welcomeWizard(Activity activity) {
+            onView(withText(R.string.welcome_pref_title)).perform(click());
+            return this;
+        }
+
+
         public SettingsActivityRobot assertShown_generalSettings(Activity context)
         {
             assertShown_timeFormatMode(context);
             assertShown_dataSource(context);
+            return this;
+        }
+        public SettingsActivityRobot assertShown_userInterfaceSettings(Activity context)
+        {
+            // TODO
+            return this;
+        }
+        public SettingsActivityRobot assertShown_alarmSettings(Activity context)
+        {
+            // TODO
+            return this;
+        }
+        public SettingsActivityRobot assertShown_localeSettings(Activity context)
+        {
+            // TODO
+            return this;
+        }
+        public SettingsActivityRobot assertShown_placeSettings(Activity context)
+        {
+            // TODO
             return this;
         }
 
