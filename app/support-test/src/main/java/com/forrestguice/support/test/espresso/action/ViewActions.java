@@ -3,11 +3,17 @@ package com.forrestguice.support.test.espresso.action;
 import android.support.design.widget.TabLayout;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.CoordinatesProvider;
+import android.support.test.espresso.action.GeneralLocation;
+import android.support.test.espresso.action.GeneralSwipeAction;
+import android.support.test.espresso.action.Press;
+import android.support.test.espresso.action.Swipe;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
 import javax.annotation.Nonnull;
+
 
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -33,6 +39,26 @@ public class ViewActions
 
     public static ViewAction swipeUp() {
         return android.support.test.espresso.action.ViewActions.swipeUp();
+    }
+
+    public static ViewAction swipeRightTo(final int x) {
+        return swipeHorizontalTo(x);
+    }
+    public static ViewAction swipeLeftTo(final int x) {
+        return swipeHorizontalTo(x);
+    }
+    public static ViewAction swipeHorizontalTo(final int x)
+    {
+        return new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER, new CoordinatesProvider()
+        {
+            @Override
+            public float[] calculateCoordinates(View view)
+            {
+                int[] position = new int[2];
+                view.getLocationOnScreen(position);
+                return new float[] { x, position[1] };
+            }
+        }, Press.FINGER);
     }
 
     public static ViewAction closeSoftKeyboard() {
