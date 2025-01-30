@@ -93,7 +93,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             new SuntimesSettingsActivityTest.SettingsActivityRobot()
                     .showActivity(activity)
                     .clickHeader_generalSettings()
-                    .clickPref_welcomeWizard(activity);
+                    .clickPref_welcomeWizard();
             return this;
         }
 

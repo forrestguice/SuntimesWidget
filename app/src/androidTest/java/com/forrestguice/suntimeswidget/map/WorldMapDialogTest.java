@@ -46,6 +46,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appCalculator;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appLocation;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appTimeZone;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_LocalMean;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_Suntimes;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_UTC;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
@@ -199,17 +205,17 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
                 .clickOverflowMenu_TimeZone(context).sleep(500)
                 .assertOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_LocalMean(context).sleep(500)
-                .assertShowsDate(context, robot.now(robot.timeZone_LocalMean(context)));
+                .assertShowsDate(context, robot.now(timeZone_LocalMean(context)));
 
         robot.showOverflowMenu(context).sleep(500)
                 .clickOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_Suntimes(context).sleep(500)
-                .assertShowsDate(context, robot.now(robot.timeZone_Suntimes(context)));
+                .assertShowsDate(context, robot.now(timeZone_Suntimes(context)));
 
         robot.showOverflowMenu(context).sleep(500)
                 .clickOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_UTC(context).sleep(500)
-                .assertShowsDate(context, robot.now(robot.timeZone_UTC()));
+                .assertShowsDate(context, robot.now(timeZone_UTC()));
 
         robot.cancelDialog(context)
                 .assertDialogNotShown(context);

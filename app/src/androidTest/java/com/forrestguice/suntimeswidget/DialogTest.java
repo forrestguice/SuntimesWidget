@@ -153,31 +153,6 @@ public class DialogTest extends SuntimesActivityTestBase
             return robot;
         }
 
-        public SuntimesCalculator appCalculator(Context context) {
-            SuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
-            calculator.init(appLocation(context), appTimeZone(context));
-            return calculator;
-        }
-        public Location appLocation(Context context) {
-            return WidgetSettings.loadLocationPref(context, 0);
-        }
-        public TimeZone appTimeZone(Context context) {
-            return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
-        }
-
-        public static TimeZone timeZone_UTC() {
-            return TimeZone.getTimeZone("UTC");
-        }
-        public TimeZone timeZone_ApparentSolar(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
-        }
-        public TimeZone timeZone_LocalMean(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
-        }
-        public TimeZone timeZone_Suntimes(Context context) {
-            return appTimeZone(context);
-        }
-
         public static int thisYear() {
             return Calendar.getInstance().get(Calendar.YEAR);
         }
