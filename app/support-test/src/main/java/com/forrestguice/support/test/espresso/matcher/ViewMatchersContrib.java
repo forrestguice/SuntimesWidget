@@ -1,5 +1,6 @@
 package com.forrestguice.support.test.espresso.matcher;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -70,9 +71,11 @@ public class ViewMatchersContrib
                 withParent(isAssignableFrom(Toolbar.class)));
     }
 
+    @TargetApi(12)
     public static Matcher<View> hasDrawable(int drawableResourceId) {
         return new DrawableMatcher(drawableResourceId);
     }
+    @TargetApi(12)
     public static class DrawableMatcher extends TypeSafeMatcher<View>
     {
         protected int withResourceID;
