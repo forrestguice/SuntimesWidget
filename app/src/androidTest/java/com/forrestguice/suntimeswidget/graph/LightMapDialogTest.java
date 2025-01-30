@@ -49,7 +49,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static com.forrestguice.suntimeswidget.DialogTest.DialogRobot.timeZone_UTC;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appCalculator;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appLocation;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.appTimeZone;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_ApparentSolar;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_LocalMean;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_Suntimes;
+import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.ActivityRobot.timeZone_UTC;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.MAPTAG_LIGHTMAP;
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -274,13 +280,13 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(context).assertOverflowMenuShown(context)
                 .clickOverflowMenu_TimeZone(context).assertOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_LocalMean(context)
-                .assertShowsDate(context, robot.now(robot.timeZone_LocalMean(context)))
+                .assertShowsDate(context, robot.now(timeZone_LocalMean(context)))
                 .assert_TimeZone_LocalMean(context).sleep(1000);
 
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_ApparentSolar(context)
-                .assertShowsDate(context, robot.now(robot.timeZone_ApparentSolar(context)))
+                .assertShowsDate(context, robot.now(timeZone_ApparentSolar(context)))
                 .assert_TimeZone_ApparentSolar(context).sleep(1000);
 
         robot.showOverflowMenu(context)
@@ -295,7 +301,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(context)
                 .clickOverflowMenu_TimeZone(context)
                 .clickOverflowMenu_TimeZone_Suntimes(context)
-                .assertShowsDate(context, robot.now(robot.timeZone_Suntimes(context)))
+                .assertShowsDate(context, robot.now(timeZone_Suntimes(context)))
                 .assert_TimeZone_Suntimes(context).sleep(1000);
 
         robot.cancelDialog(context)

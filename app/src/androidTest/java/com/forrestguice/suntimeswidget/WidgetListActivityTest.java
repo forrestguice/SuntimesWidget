@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -34,11 +36,13 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertEnabled;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
@@ -103,7 +107,7 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot clickBackButton(Context context) {
-            // TODO
+            onView(navigationButton()).perform(click());
             return this;
         }
 
@@ -124,10 +128,10 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
 
         public WidgetListActivityRobot assertActivityShown(Context context)
         {
-            //onView(withId(R.id.info_time_utc)).check(assertShown);
-            // TODO: activityTitle
-            // TODO: backButton
-            // TODO: searchButton
+            ArrayAdapter<?> widgetAdapter = WidgetListAdapter.createWidgetListAdapter(context);
+            if (widgetAdapter.isEmpty())
+                onView(withId(android.R.id.empty)).check(assertEnabled);
+            else onView(withId(R.id.widgetList)).check(assertEnabled);
             return this;
         }
 

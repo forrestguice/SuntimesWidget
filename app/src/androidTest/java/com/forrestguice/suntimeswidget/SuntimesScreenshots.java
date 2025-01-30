@@ -26,6 +26,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
@@ -174,7 +175,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone1-" + theme)
                 .cancelDialog(activity);
 
-        new AlarmDialogTest.AlarmDialogRobot().showDialog(activity)
+        new AlarmCreateDialogTest.AlarmDialogRobot().showDialog(activity)
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-alarm-" + theme)
                 .cancelDialog(activity);
 

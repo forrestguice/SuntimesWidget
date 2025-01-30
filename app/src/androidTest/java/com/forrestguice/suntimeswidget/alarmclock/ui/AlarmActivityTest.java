@@ -22,10 +22,11 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.test.filters.LargeTest;
@@ -42,12 +43,16 @@ import java.io.IOException;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -59,7 +64,7 @@ import static org.hamcrest.Matchers.endsWith;
 public class AlarmActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
 
     @Before
     public void beforeTest() throws IOException {
@@ -81,16 +86,15 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
     {
         Activity activity = activityRule.getActivity();
         AlarmActivityRobot robot = new AlarmActivityRobot()
-                .showActivity(activity)
-                .assertActivityShown(activity);
+                .assertActivityShown();
 
         robot.showOverflowMenu(activity).sleep(1000)    // :
-                .assertOverflowMenuShown(activity)
+                .assertOverflowMenuShown()
                 .cancelOverflowMenu(activity);
 
         robot.showOverflowMenu(activity).sleep(1000)    // : -> Sort
                 .clickOverflowMenu_sort(activity)
-                .assertSortMenuShown(activity)
+                .assertSortMenuShown()
                 .cancelSortMenu(activity);
     }
 
@@ -99,22 +103,112 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
     {
         Activity context = activityRule.getActivity();
         config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIDEBAR).apply();
+        AlarmActivityRobot robot = new AlarmActivityRobot()
+                .recreateActivity(context)
+                .assertActionBar_navButtonShown(true);
 
-        AlarmActivityRobot robot = new AlarmActivityRobot();
-        robot.recreateActivity(context);
         robot.showOverflowMenu(context).sleep(1000)
-                .assertOverflowMenuShown(context)
+                .assertOverflowMenuShown()
                 .assertOverflowMenu_hasSimpleNavigation(false)
                 .cancelOverflowMenu(context);
 
-        robot.assertActionBar_navigationButtonShown(true)
-                .showSidebarMenu(context)
+        robot.showSidebarMenu(context).sleep(1000)
                 .assertSideBarMenuShown(context)
                 .cancelSidebarMenu(context);
+
+        robot.showSidebarMenu(context).sleep(1000)    // About
+                .clickSidebarMenu_about(context);
+        new DialogTest.AboutDialogRobot()
+                .assertDialogShown(context)
+                .cancelDialog(context);
+        robot.assertActivityShown();
+
+        robot.showSidebarMenu(context).sleep(1000)    // Settings
+                .clickSidebarMenu_settings(context);
+        new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .assertActivityShown(context)
+                .pressBack();
+        robot.assertActivityShown();
+
+        robot.showSidebarMenu(context).sleep(1000)    // Clock
+                .clickSidebarMenu_clock(context);
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(context);
+        onView(isRoot()).perform(pressBack());
+        robot.assertActivityShown();
+    }
+
+    @Test
+    public void test_AlarmActivity_navigation_simple()
+    {
+        Activity context = activityRule.getActivity();
+        config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIMPLE).apply();
+        AlarmActivityRobot robot = new AlarmActivityRobot()
+                .recreateActivity(context)
+                .assertActivityShown()
+                .assertActionBar_homeButtonShown(true);
+
+        robot.showOverflowMenu(context)        // :
+                .sleep(1000)
+                .assertOverflowMenuShown()
+                .assertOverflowMenu_hasSimpleNavigation(true)
+                .cancelOverflowMenu(context);
+
+        robot.showOverflowMenu(context)        // : -> About
+                .clickOverflowMenu_about()
+                .sleep(1000);
+        new DialogTest.AboutDialogRobot()
+                .assertDialogShown(context)
+                .cancelDialog(context);
+        robot.assertActivityShown();
+
+        robot.showOverflowMenu(context)        // : -> Settings
+                .clickOverflowMenu_settings()
+                .sleep(1000);
+        new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .assertActivityShown(context)
+                .pressBack();
+        robot.assertActivityShown();
+
+        robot.clickHomeButton(context)         // Home Button
+                .sleep(1000);
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(context);
+        onView(isRoot()).perform(pressBack());
+        robot.assertActivityShown();
+    }
+
+    @Test
+    public void test_AlarmActivity_addAlarm()
+    {
+        Activity context = activityRule.getActivity();
+        AlarmActivityRobot robot = new AlarmActivityRobot();
+        AlarmCreateDialogTest.AlarmDialogRobot robot1 = dialogRobot();
+        robot.assertActivityShown()
+                .assertAddAlarmButtonShown(true)
+                .clickAddAlarmButton().sleep(1000);
+
+        //robot.assertAddAlarmButtonShown(false);   // TODO: detect fab in hidden state; it shrinks as the bottom drawer is pulled up
+        robot1.assertDialogShown(context)
+                .cancelDialog(context).sleep(1000);
+        robot.assertAddAlarmButtonShown(true);
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
+
+    protected static AlarmCreateDialogTest.AlarmDialogRobot dialogRobot()
+    {
+        AlarmCreateDialogTest.AlarmDialogRobot robot = new AlarmCreateDialogTest.AlarmDialogRobot();
+        robot.setRobotConfig(new AlarmCreateDialogTest.AlarmDialogRobotConfig()
+        {
+            @Override
+            public boolean showAlarmListButton() {
+                return false;
+            }
+        });
+        return robot;
+    }
 
     /**
      * AlarmActivityRobot
@@ -126,35 +220,40 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
         }
 
         protected AlarmActivityRobot showActivity(Activity activity) {
-            new SuntimesActivityTest.MainActivityRobot()
-                    .showSidebarMenu(activity)
-                    .clickSidebarMenu_alarms(activity);
+            showSidebarMenu(activity);
+            clickSidebarMenu_alarms(activity);
             return this;
         }
 
-        public AlarmActivityRobot clickAddAlarmButton(int position) {
-            // TODO
+        public AlarmActivityRobot clickAddAlarmButton() {
+            onView(allOf(withContentDescription(R.string.configAction_addAlarm), withClassName(endsWith("ActionButton")))).perform(click());
             return this;
         }
         public AlarmActivityRobot clickClearSelectionButton(int position) {
-            // TODO
+            onView(allOf(withContentDescription(R.string.configAction_deselect), withClassName(endsWith("ActionButton")))).perform(click());
             return this;
         }
 
         public AlarmActivityRobot clickAlarmItem(int position) {
-            // TODO
+            onView(withId(R.id.layout_alarmcard)).perform(click());
             return this;
         }
         public AlarmActivityRobot clickAlarmItem_delete(int position) {
-            // TODO
+            onView(allOf( isDescendantOfA(withId(R.id.layout_alarmcard)),
+                    withContentDescription(R.string.configAction_deleteAlarm)
+            )).perform(click());
             return this;
         }
         public AlarmActivityRobot clickAlarmItem_dismiss(int position) {
-            // TODO
+            onView(allOf( isDescendantOfA(withId(R.id.layout_alarmcard)),
+                    withText(R.string.alarmAction_dismiss)
+            )).perform(click());
             return this;
         }
         public AlarmActivityRobot clickAlarmItem_snooze(int position) {
-            // TODO
+            onView(allOf( isDescendantOfA(withId(R.id.layout_alarmcard)),
+                    withText(R.string.alarmAction_snooze)
+            )).perform(click());
             return this;
         }
 
@@ -202,7 +301,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
 
         /////////////////////////////////////////////////////////////////////////
 
-        public AlarmActivityRobot assertActivityShown(Context context)
+        public AlarmActivityRobot assertActivityShown()
         {
             onView(allOf(withText(R.string.configLabel_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(withContentDescription(R.string.configLabel_bedtime)).check(assertShown);
@@ -210,18 +309,26 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
             // TODO: fab, navDrawer
             return this;
         }
-        public AlarmActivityRobot assertOverflowMenuShown(Context context) {
+        public AlarmActivityRobot assertOverflowMenuShown() {
             onView(withText(R.string.configAction_clearAlarms)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_importAlarms)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_exportAlarms)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_sortAlarms)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
-        public AlarmActivityRobot assertSortMenuShown(Context context) {
+        public AlarmActivityRobot assertSortMenuShown() {
             onView(withText(R.string.configAction_sortAlarms_by_creation)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_sortAlarms_by_time)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_sortAlarms_offset)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_sortAlarms_enabled_first)).inRoot(isPlatformPopup()).check(assertShown);
+            return this;
+        }
+
+        public AlarmActivityRobot assertAddAlarmButtonShown(boolean isShown)
+        {
+            onView(allOf(withContentDescription(R.string.configAction_addAlarm),
+                    withClassName(endsWith("ActionButton"))
+            )).check(isShown ? assertShown : assertHidden);
             return this;
         }
     }

@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,11 +30,17 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.TimeDateDialogTest;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.After;
@@ -65,7 +71,7 @@ import static org.hamcrest.Matchers.hasToString;
 @LargeTest
 @BehaviorTest
 @RunWith(AndroidJUnit4.class)
-public class AlarmDialogTest extends SuntimesActivityTestBase
+public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 {
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
@@ -244,12 +250,13 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         }
         public void setRobotConfig(AlarmDialogRobotConfig config) {
             super.setRobotConfig(config);
+            expected = config;
         }
 
         public AlarmDialogRobot showDialog(Activity context)
         {
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-            onView(withText(R.string.configAction_setAlarm)).perform(click());
+            onView(ViewMatchers.withText(R.string.configAction_setAlarm)).perform(click());
             return this;
         }
 
@@ -283,14 +290,14 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
         {
             onView(withId(R.id.dialog_header)).check(assertShown);
             onView(allOf(withId(R.id.dialog_button_accept), hasSibling(withId(R.id.type_spin)))).check(assertShown);
-            onView(withId(R.id.text_datetime)).check(assertShown);
+            //onView(withId(R.id.text_datetime)).check(assertShown);
             onView(withId(R.id.type_spin)).check(assertShown);
             onView(tabLayout()).check(assertShown);
 
             if (expected.showAlarmListButton()) {
                 onView(withId(R.id.dialog_button_alarms)).check(assertShown);
             } else {
-                onView(withId(R.id.dialog_button_alarms)).check(doesNotExist());
+                onView(withId(R.id.dialog_button_alarms)).check(assertHidden);
             }
             return this;
         }

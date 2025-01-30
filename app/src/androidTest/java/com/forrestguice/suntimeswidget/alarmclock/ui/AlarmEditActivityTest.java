@@ -24,9 +24,7 @@ import android.content.Context;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.WidgetListActivityTest;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -40,15 +38,18 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 
@@ -87,13 +88,48 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
                 .assertOverflowMenuShown(activity)
                 .cancelOverflowMenu(activity);
 
-        robot.showOverflowMenu(activity)
+        robot.showOverflowMenu(activity).sleep(1000)
+                .clickOverflowMenu_options(activity)
+                .assertOptionsMenuShown(activity)
+                .cancelOptionsMenu(activity);
+
+
+        robot.showOverflowMenu(activity).sleep(1000)
+                .assertOverflowMenuShown(activity)
                 .clickOverflowMenu_help();
         new DialogTest.HelpDialogRobot()
                 .assertDialogShown(activity)
                 .cancelDialog(activity);
 
         // TODO
+    }
+
+    @Test
+    public void test_AlarmEditActivity_discardChanges()
+    {
+        Activity context = activityRule.getActivity();
+        AlarmActivityTest.AlarmActivityRobot robot = new AlarmActivityTest.AlarmActivityRobot();
+        AlarmCreateDialogTest.AlarmDialogRobot robot1 = AlarmActivityTest.dialogRobot();
+        AlarmEditActivityTest.AlarmEditActivityRobot robot2 = new AlarmEditActivityTest.AlarmEditActivityRobot();
+
+        robot.assertActivityShown()
+                .assertAddAlarmButtonShown(true)
+                .clickAddAlarmButton().sleep(1000);      // click add button
+
+        robot1.assertDialogShown(context)
+                .applyDialog(context).sleep(1000);       // click apply (add alarm)
+
+        robot2.assertActivityShown(context)
+                .clickBackButton()                           // click back (discardChanges)
+                .assertDiscardChangesShown()
+                .clickDiscardChanges_cancel();               // cancel "discard changes"
+
+        robot2.assertActivityShown(context)
+                .clickBackButton()                           // click back (discardChanges)
+                .assertDiscardChangesShown()
+                .clickDiscardChanges_discard();              // confirm "discard changes"
+
+        robot.assertActivityShown();
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -110,14 +146,58 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
 
         protected AlarmEditActivityRobot showActivity(Activity activity)
         {
-            new AlarmActivityTest.AlarmActivityRobot()
-                    .clickAlarmItem(0)
-                    .clickAlarmItem(0);
+            //new AlarmActivityTest.AlarmActivityRobot()
+            //        .clickAlarmItem(0)
+            //        .clickAlarmItem(0);
+
+            AlarmActivityTest.AlarmActivityRobot robot = new AlarmActivityTest.AlarmActivityRobot();
+            AlarmCreateDialogTest.AlarmDialogRobot robot1 = AlarmActivityTest.dialogRobot();
+            robot.clickAddAlarmButton();
+            robot1.applyDialog(activity);
             return this;
         }
-        
+
+        public AlarmEditActivityRobot clickOverflowMenu_options(Context context) {
+            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+        public AlarmEditActivityRobot cancelOptionsMenu(Context context) {
+            onView(withText(R.string.configAction_setAlarmType)).inRoot(isPlatformPopup()).perform(pressBack());
+            return this;
+        }
         public AlarmEditActivityRobot cancelOverflowMenu(Context context) {
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            return this;
+        }
+
+        public AlarmEditActivityRobot clickBackButton() {
+            onView(isRoot()).perform(pressBack());    // TODO: via toolbar button
+            return this;
+        }
+
+        public AlarmEditActivityRobot clickSaveButton() {
+            onView(withText(R.string.configAction_saveAlarm)).check(assertShown);
+            return this;
+        }
+        public AlarmEditActivityRobot clickSaveAndEnableButton() {
+            onView(withText(R.string.configAction_enableAlarm)).check(assertShown);
+            return this;
+        }
+        public AlarmEditActivityRobot clickSaveAndDisableButton() {
+            onView(withText(R.string.configAction_disableAlarm)).check(assertShown);
+            return this;
+        }
+
+        public AlarmEditActivityRobot clickDiscardChanges_save() {
+            onView(withText(R.string.discardchanges_dialog_neutral)).perform(click());
+            return this;
+        }
+        public AlarmEditActivityRobot clickDiscardChanges_discard() {
+            onView(withText(R.string.discardchanges_dialog_ok)).perform(click());
+            return this;
+        }
+        public AlarmEditActivityRobot clickDiscardChanges_cancel() {
+            onView(withText(R.string.discardchanges_dialog_cancel)).perform(click());
             return this;
         }
 
@@ -125,15 +205,47 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
 
         public AlarmEditActivityRobot assertActivityShown(Context context)
         {
-            //onView(allOf(withText(R.string.configLabel_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
-            //onView(withContentDescription(R.string.configLabel_bedtime)).check(assertShown);
-            //onView(withContentDescription(R.string.configLabel_bedtime)).check(assertClickable);
-            // TODO
+            onView(allOf( anyOf(withText(R.string.alarmMode_alarm), withText(R.string.alarmMode_notification), withText(R.string.alarmMode_notification1)),
+                    withParent(withClassName(endsWith("Toolbar")))
+            )).check(assertShown);
+            onView(navigationButton()).check(assertShown);
             return this;
         }
         public AlarmEditActivityRobot assertOverflowMenuShown(Context context) {
+            onView(withText(R.string.configAction_deleteAlarm)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
+        public AlarmEditActivityRobot assertOptionsMenuShown(Context context) {
+            onView(withText(R.string.configAction_setAlarmType)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmLabel)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmNote)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmOffset)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmRepeat)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.configAction_setAlarmSound)).inRoot(isPlatformPopup()).check(assertShown);
+            return this;
+        }
+
+        public AlarmEditActivityRobot assertDiscardChangesShown()
+        {
+            onView(withText(R.string.discardchanges_dialog_ok)).check(assertShown);
+            onView(withText(R.string.discardchanges_dialog_cancel)).check(assertShown);
+            onView(withText(R.string.discardchanges_dialog_message)).check(assertShown);
+            onView(withText(R.string.discardchanges_dialog_neutral)).check(assertShown);
+            return this;
+        }
+
+        public AlarmEditActivityRobot assertShown_saveAndEnableButton(boolean isShown) {
+            onView(withText(R.string.configAction_enableAlarm)).check(isShown ? assertShown : assertHidden);
+            return this;
+        }
+        public AlarmEditActivityRobot assertShown_saveAndDisableButton(boolean isShown) {
+            onView(withText(R.string.configAction_disableAlarm)).check(isShown ? assertShown : assertHidden);
+            return this;
+        }
+
     }
 }

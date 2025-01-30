@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.app.Activity;
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.AlarmDialogTest;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
@@ -394,7 +394,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
                     .clickCardItem_menu(context, mode).sleep(500)
                     .clickCardItem_menu_setAlarm(context, mode).sleep(500);
 
-            new AlarmDialogTest.AlarmDialogRobot()
+            new AlarmCreateDialogTest.AlarmDialogRobot()
                     .assertDialogShown(context)
                     .assertTabAtPosition(context, 0)
                     .assertAlarmDialogEvent(SolarEvents.valueOf(mode))

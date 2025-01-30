@@ -54,6 +54,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.support.test.espresso.Espresso.onView;
@@ -71,7 +72,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -473,8 +476,32 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
 
+        public T clickHomeButton(Context context) {
+            onView(navigationButton()).perform(click());
+            return robot;
+        }
         public T showSidebarMenu(Context context) {
             onView(navigationButton()).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_clock(Context context) {
+            onView(allOf(withText(R.string.configAction_clock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_alarms(Context context) {
+            onView(allOf(withText(R.string.configLabel_alarmClock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_settings(Context context) {
+            onView(allOf(withText(R.string.configAction_settings),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_about(Context context) {
+            onView(allOf(withText(R.string.configAction_aboutWidget),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T cancelSidebarMenu(Context context) {
@@ -506,17 +533,52 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
 
-        public T assertActionBar_navigationButtonShown(boolean shown) {
+        public T assertActionBar_homeButtonShown(boolean shown) {
+            onView(allOf(navigationButton(), hasDrawable(R.drawable.ic_action_suntimes))).check(shown ? assertShown : doesNotExist());
+            return robot;
+        }
+        public T assertActionBar_navButtonShown(boolean shown) {
             onView(navigationButton()).check(shown ? assertShown : doesNotExist());
             return robot;
         }
 
         public T assertSideBarMenuShown(Activity context) {
-            onView(withText(R.string.configAction_clock)).check(assertShown);
-            onView(withText(R.string.configLabel_alarmClock)).check(assertShown);
-            onView(withText(R.string.configAction_settings)).check(assertShown);
-            onView(withText(R.string.configAction_aboutWidget)).check(assertShown);
+            onView(allOf(withText(R.string.configAction_clock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.configLabel_alarmClock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.configAction_settings),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.configAction_aboutWidget),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
             return robot;
+        }
+
+        //////////////////////////////////////////////////////////
+
+        public static SuntimesCalculator appCalculator(Context context) {
+            SuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+            calculator.init(appLocation(context), appTimeZone(context));
+            return calculator;
+        }
+        public static Location appLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
+        }
+        public static TimeZone appTimeZone(Context context) {
+            return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
+        }
+
+        public static TimeZone timeZone_UTC() {
+            return TimeZone.getTimeZone("UTC");
+        }
+        public static TimeZone timeZone_ApparentSolar(Context context) {
+            return WidgetTimezones.getTimeZone(WidgetTimezones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public static TimeZone timeZone_LocalMean(Context context) {
+            return WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public static TimeZone timeZone_Suntimes(Context context) {
+            return appTimeZone(context);
         }
     }
 

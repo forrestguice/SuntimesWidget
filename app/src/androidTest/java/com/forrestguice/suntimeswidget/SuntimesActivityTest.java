@@ -29,6 +29,7 @@ import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
@@ -224,13 +225,30 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIMPLE).apply();
 
         MainActivityRobot robot = new MainActivityRobot();
-        robot.recreateActivity(context);
-        robot.assertActionBar_navigationButtonShown(false);
+        robot.recreateActivity(context)
+                .assertActionBar_navButtonShown(false);
 
-        robot.showOverflowMenu(context).sleep(1000)
+        robot.showOverflowMenu(context)
+                .sleep(1000)
                 .assertOverflowMenuShown(context)
                 .assertOverflowMenu_hasSimpleNavigation(true)
                 .cancelOverflowMenu(context);
+
+        robot.showOverflowMenu(context)
+                .clickOverflowMenu_about()
+                .sleep(1000);
+        new DialogTest.AboutDialogRobot()
+                .assertDialogShown(context)
+                .cancelDialog(context);
+        robot.assertActivityShown(context);
+
+        robot.showOverflowMenu(context)
+                .clickOverflowMenu_settings()
+                .sleep(1000);
+        new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .assertActivityShown(context)
+                .pressBack();
+        robot.assertActivityShown(context);
     }
 
     @Test
@@ -246,7 +264,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
                 .assertOverflowMenu_hasSimpleNavigation(false)
                 .cancelOverflowMenu(context);
 
-        robot.assertActionBar_navigationButtonShown(true)
+        robot.assertActionBar_navButtonShown(true)
                 .showSidebarMenu(context)
                 .assertSideBarMenuShown(context)
                 .cancelSidebarMenu(context);
@@ -467,7 +485,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
-            new AlarmDialogTest.AlarmDialogRobot()
+            new AlarmCreateDialogTest.AlarmDialogRobot()
                     .assertDialogShown(activity)
                     .cancelDialog(activity).assertDialogNotShown(activity);
 
@@ -516,7 +534,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         String tapAction = AppSettings.loadNoteTapActionPref(activity);
         if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
-            new AlarmDialogTest.AlarmDialogRobot()
+            new AlarmCreateDialogTest.AlarmDialogRobot()
                     .assertDialogShown(activity)
                     .cancelDialog(activity).assertDialogNotShown(activity);
 
@@ -889,23 +907,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public MainActivityRobot clickSidebarMenu_clock(Context context) {
-            onView(withText(R.string.configAction_settings)).perform(click());
-            return this;
-        }
-        public MainActivityRobot clickSidebarMenu_alarms(Context context) {
-            onView(withText(R.string.configLabel_alarmClock)).perform(click());
-            return this;
-        }
-        public MainActivityRobot clickSidebarMenu_settings(Context context) {
-            onView(withText(R.string.configAction_settings)).perform(click());
-            return this;
-        }
-        public MainActivityRobot clickSidebarMenu_about(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).perform(click());
-            return this;
-        }
-
         public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
             onView(withText(R.string.configAction_viewDate)).perform(click());
             return this;
@@ -942,6 +943,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         public MainActivityRobot assertActionBar_mapButtonShown(boolean shown) {
             onView(withContentDescription(R.string.configAction_mapLocation)).check(shown ? assertShown : doesNotExist());
+            return this;
+        }
+
+        public MainActivityRobot assertActivityShown(Context context) {
+            onView(withId(R.id.layout_clock)).check(assertShown);
+            // TODO
             return this;
         }
 
