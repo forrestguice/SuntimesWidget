@@ -55,7 +55,7 @@ import static com.forrestguice.support.test.espresso.action.ViewActions.swipeUp;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasLinks;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 

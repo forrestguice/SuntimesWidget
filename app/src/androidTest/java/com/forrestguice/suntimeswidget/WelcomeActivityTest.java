@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -34,13 +35,20 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
 import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShownCompletely;
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.swipeLeft;
 import static com.forrestguice.support.test.espresso.action.ViewActions.swipeRight;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasTextColor;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.hasDrawable;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withIndex;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 
@@ -68,13 +76,105 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
     /////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void test_WelcomeActivity()
+    public void test_WelcomeActivity_navigation_nextAndBack()
     {
         Activity activity = activityRule.getActivity();
-        WelcomeActivityRobot robot = new WelcomeActivityRobot()
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
                 .showActivity(activity)
-                .assertActivityShown(activity);
-        robot.clickPrevButton();
+                .clickHeader_generalSettings()
+                .clickPref_welcomeWizard();
+
+        // swipe next / prev through all pages
+        robot.assertActivityShown(activity)
+                .assertWelcomePageIsShown(activity);
+        int c = 0;
+        int n = robot.numPages() - 1;
+        for (int i=0; i<n; i++) {
+            robot.swipeNext()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+        robot.assertAboutPageIsShown(activity);
+        robot.swipeNext()
+                .assertPageIndicatorIsShown(activity, c);    // swipe next from last page does nothing
+        for (int i=0; i<n; i++) {
+            robot.swipePrev()
+                    .assertPageIndicatorIsShown(activity, --c);
+        }
+        robot.swipePrev()
+                .assertPageIndicatorIsShown(activity, 0)    // swipe prev from first page does nothing
+                .assertWelcomePageIsShown(activity);
+
+        // click next / prev through all pages
+        c = 0;
+        for (int i=0; i<n; i++) {
+            robot.clickNextButton()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+        robot.assertAboutPageIsShown(activity);
+        for (int i=0; i<n; i++) {
+            robot.clickPrevButton()
+                    .assertPageIndicatorIsShown(activity, --c);
+        }
+        robot.assertWelcomePageIsShown(activity);
+
+        robot.clickPrevButton();    // back (skip)
+        robot0.assertShown_generalSettings(activity);
+    }
+
+    @Test
+    public void test_WelcomeActivity_navigation_nextAndFinish() {
+        Activity activity = activityRule.getActivity();
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .showActivity(activity)
+                .clickHeader_generalSettings()
+                .clickPref_welcomeWizard();
+
+        robot.assertActivityShown(activity)
+                .assertWelcomePageIsShown(activity);
+        int c = 0;
+        int n = robot.numPages() - 1;
+        for (int i=0; i<n; i++) {
+            robot.clickNextButton()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+
+        robot.assertAboutPageIsShown(activity);
+        robot.clickNextButton();
+        robot0.assertShown_generalSettings(activity);
+    }
+
+    @Test
+    public void test_WelcomeActivity_pages()
+    {
+        Activity activity = activityRule.getActivity();
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
+                .showActivity(activity)
+                .clickHeader_generalSettings()
+                .clickPref_welcomeWizard();
+
+        robot.clickNextButton()      // 0 welcome
+                .assertAppearancePageIsShown(activity)
+
+                .clickNextButton()   // 1 appearance
+                .assertUIPageIsShown(activity)
+
+                .clickNextButton()   // 2 ui
+                .assertLocationPageIsShown(activity)
+
+                .clickNextButton()   // 3 location
+                .assertTimeZonePageIsShown(activity)
+
+                .clickNextButton()   // 4 timezone
+                .assertAlarmsPageIsShown(activity)
+
+                .clickNextButton()   // 5 alarms
+                .assertAboutPageIsShown(activity);
+
+        robot.clickNextButton();     // 6 about (finish)
+        robot0.assertShown_generalSettings(activity);
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -126,11 +226,72 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
 
         public WelcomeActivityRobot assertActivityShown(Context context)
         {
-            onView(withId(R.id.button_next)).check(assertShown);
-            onView(withId(R.id.button_prev)).check(assertShown);
+            onView(withId(R.id.button_next)).check(assertShown).check(assertClickable);
+            onView(withId(R.id.button_prev)).check(assertShown).check(assertClickable);
             onView(allOf(withId(R.id.container), withClassName(endsWith("ViewPager")))).check(assertShown);
             return this;
         }
 
+        public WelcomeActivityRobot assertPageIndicatorIsShown(Context context, int index)
+        {
+            TypedArray typedArray = context.obtainStyledAttributes(new int[] { R.attr.text_accentColor, R.attr.text_disabledColor });
+            int activeColorId = typedArray.getResourceId(0, R.color.text_accent_dark);
+            int inactiveColorId = typedArray.getResourceId(1, R.color.text_disabled_dark);
+            typedArray.recycle();
+
+            int n = numPages();
+            for (int i=1; i<n; i++)
+            {
+                onView(allOf(
+                        withIndex(withParent(withId(R.id.indicator_layout)), i),
+                        hasTextColor(i == index ? activeColorId : inactiveColorId),
+                        withText("\u2022")
+                )).check(assertShownCompletely);
+            }
+            return this;
+        }
+
+        public WelcomeActivityRobot assertWelcomePageIsShown(Context context)
+        {
+            onView(withText(R.string.app_name)).check(assertShownCompletely);
+            onView(withText(R.string.app_shortdesc)).check(assertShownCompletely);
+            onView(allOf( withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
+                    hasSibling(withText(R.string.app_name))
+            )).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertAboutPageIsShown(Context context)
+        {
+            onView(allOf(withText(R.string.configAction_aboutWidget), withClassName(endsWith("Button"))))
+                    .check(assertShownCompletely)
+                    .check(assertClickable);
+            onView(allOf(withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
+                    hasSibling(withText(R.string.configAction_aboutWidget)))).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertAppearancePageIsShown(Context context) {
+            onView(allOf(withId(R.id.text_title), withText(R.string.configLabel_appearance))).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertUIPageIsShown(Context context) {
+            onView(allOf(withId(R.id.text_title), withText(R.string.configLabel_ui))).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertLocationPageIsShown(Context context) {
+            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_location))).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertTimeZonePageIsShown(Context context) {
+            onView(allOf(withId(R.id.txt_about_name), withText(R.string.configLabel_timezone))).check(assertShownCompletely);
+            return this;
+        }
+        public WelcomeActivityRobot assertAlarmsPageIsShown(Context context) {
+            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_alarmClock))).check(assertShownCompletely);
+            return this;
+        }
+
+        protected int numPages() {
+            return 7;
+        }
     }
 }

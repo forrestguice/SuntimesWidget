@@ -66,10 +66,10 @@ import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.do
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasDrawable;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.hasDrawable;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;

@@ -69,8 +69,8 @@ import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.ma
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTextAsDate;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTextAsDoubleApproximateTo;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withTextAsDate;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withTextAsDoubleApproximateTo;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest

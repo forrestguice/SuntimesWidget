@@ -71,7 +71,7 @@ import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlat
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isSelected;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.tabLayout;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.tabLayout;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;

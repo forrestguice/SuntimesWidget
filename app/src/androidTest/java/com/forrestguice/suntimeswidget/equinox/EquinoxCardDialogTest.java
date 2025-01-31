@@ -66,15 +66,15 @@ import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.ma
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isCheckBoxWithTextInDropDownMenu;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.isCheckBoxWithTextInDropDownMenu;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isMenuDropDownListView;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRadioButtonWithTextInDropDownMenu;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.isMenuDropDownListView;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.isRadioButtonWithTextInDropDownMenu;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withChild;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTextAsDate;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withTextAsDate;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.junit.Assert.assertEquals;

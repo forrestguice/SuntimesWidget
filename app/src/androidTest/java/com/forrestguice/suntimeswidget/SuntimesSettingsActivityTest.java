@@ -65,7 +65,7 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisp
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withIndex;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withIndex;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTagValue;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
