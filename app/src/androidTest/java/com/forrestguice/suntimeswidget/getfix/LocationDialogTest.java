@@ -157,6 +157,29 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         robot.cancelDialog(activity);
     }
 
+    @Test
+    public void test_locationDialog_custom_placesActivity()
+    {
+        Activity activity = activityRule.getActivity();
+        LocationDialogRobot robot = new LocationDialogRobot();
+        robot.showDialog(activity)
+                .assertDialogShown(activity);
+
+        robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .assertDialogMode_isCustom()
+                .assertDialogState_select();
+
+        robot.clickLocationListButton();
+        new PlacesActivityTest.PlacesActivityRobot()
+                .assertActivityShown(activity)
+                .clickOnItem(0)
+                .clickAcceptButton();
+        robot.assertDialogShown(activity);
+        // TODO: verify place shown
+
+        robot.cancelDialog(activity);
+    }
+
     private void editLocation( String name, String latitude, String longitude )
     {
         // click on the `edit` button
@@ -207,6 +230,11 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             onView(withId(R.id.appwidget_location_mode)).perform(click());
             onData(allOf(is(instanceOf(WidgetSettings.LocationMode.class)), is(mode)))
                     .inRoot(isPlatformPopup()).perform(click());
+            return this;
+        }
+
+        public LocationDialogRobot clickLocationListButton() {
+            onView(withId(R.id.appwidget_location_list)).perform(click());
             return this;
         }
 
@@ -277,6 +305,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             onView(withId(R.id.appwidget_location_lat)).check( ViewAssertionHelper.assertDisabled );       // lat field disabled
             onView(withId(R.id.appwidget_location_lon)).check( ViewAssertionHelper.assertDisabled );       // lon field disabled
             onView(withId(R.id.appwidget_location_edit)).check( ViewAssertionHelper.assertShown );         // edit button is shown
+            onView(withId(R.id.appwidget_location_list)).check( ViewAssertionHelper.assertShown );         // list button is shown
             onView(withId(R.id.appwidget_location_save)).check( ViewAssertionHelper.assertHidden );        // save button hidden
             onView(withId(R.id.appwidget_location_getfix)).check( ViewAssertionHelper.assertHidden );      // gps button is hidden
             onView(withId(R.id.appwidget_location_auto)).check( ViewAssertionHelper.assertHidden );
@@ -289,6 +318,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             onView(withId(R.id.appwidget_location_lat)).check( ViewAssertionHelper.assertEnabled );       // lat, lon now enabled
             onView(withId(R.id.appwidget_location_lon)).check( ViewAssertionHelper.assertEnabled );
             onView(withId(R.id.appwidget_location_edit)).check( ViewAssertionHelper.assertHidden );       // edit button is hidden
+            onView(withId(R.id.appwidget_location_list)).check( ViewAssertionHelper.assertHidden );       // list button is hidden
             onView(withId(R.id.appwidget_location_save)).check( ViewAssertionHelper.assertShown );        // save button now shown
             onView(withId(R.id.appwidget_location_getfix)).check( ViewAssertionHelper.assertEnabled );    // gps button is enabled
             onView(withId(R.id.appwidget_location_auto)).check( ViewAssertionHelper.assertHidden );

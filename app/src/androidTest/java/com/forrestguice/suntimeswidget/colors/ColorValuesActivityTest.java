@@ -47,7 +47,7 @@ import static com.forrestguice.support.test.espresso.action.ViewActions.pressBac
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;

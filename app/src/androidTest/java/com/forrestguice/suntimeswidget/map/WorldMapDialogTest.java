@@ -66,7 +66,7 @@ import static com.forrestguice.support.test.espresso.action.ViewActions.swipeUp;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTextAsDate;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withTextAsDate;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest

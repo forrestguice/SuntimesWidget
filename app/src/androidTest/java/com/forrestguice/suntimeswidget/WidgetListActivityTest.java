@@ -41,7 +41,7 @@ import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertS
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.navigationButton;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
