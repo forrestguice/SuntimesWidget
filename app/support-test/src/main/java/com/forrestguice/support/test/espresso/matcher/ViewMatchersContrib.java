@@ -6,9 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,11 +79,20 @@ public class ViewMatchersContrib
         return new DrawableMatcher(drawableResourceId);
     }
     @TargetApi(12)
+    public static Matcher<View> hasDrawable(Drawable drawable) {
+        return new DrawableMatcher(drawable);
+    }
+    @TargetApi(12)
     public static class DrawableMatcher extends TypeSafeMatcher<View>
     {
         protected int withResourceID;
         public DrawableMatcher(int withResourceId) {
             this.withResourceID = withResourceId;
+        }
+
+        protected Drawable drawable = null;
+        public DrawableMatcher(Drawable drawable) {
+            this.drawable = drawable;
         }
 
         @Override
@@ -89,9 +101,12 @@ public class ViewMatchersContrib
             if (!(view instanceof ImageView) && !(view instanceof AppCompatImageButton) && !(view instanceof ImageButton)) {
                 return false;
             }
-            Drawable withDrawable = view.getContext().getResources().getDrawable(withResourceID);
-            if (withDrawable == null) {
-                return false;
+            Drawable withDrawable = drawable;
+            if (drawable == null) {
+                withDrawable = view.getContext().getResources().getDrawable(withResourceID);
+                if (withDrawable == null) {
+                    return false;
+                }
             }
 
             Drawable d = null;
@@ -106,9 +121,15 @@ public class ViewMatchersContrib
         }
 
         @Override
-        public void describeTo(Description description) {
-            description.appendText("with drawable resource id: ");
-            description.appendValue(withResourceID);
+        public void describeTo(Description description)
+        {
+            if (drawable != null) {
+                description.appendText("with drawable: ");
+                description.appendValue(drawable.toString());
+            } else {
+                description.appendText("with drawable resource id: ");
+                description.appendValue(withResourceID);
+            }
         }
 
         @Nullable
@@ -301,6 +322,28 @@ public class ViewMatchersContrib
                 description.appendText(dateWasParsed
                     ? " [match differed by " + dateDifferedBy + " ms (tolerance of " + tolerance + " ms)]"
                     : " [ParseException (wrong format?)]");
+            }
+        };
+    }
+
+    /**
+     * https://stackoverflow.com/a/34286462
+     */
+    public static Matcher<View> isShowingError()
+    {
+        return new TypeSafeMatcher<View>()
+        {
+            @Override
+            public boolean matchesSafely(View view) {
+                if (view instanceof EditText) {
+                    return (((EditText) view).getError() != null);
+                }
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with error text");
             }
         };
     }
