@@ -29,16 +29,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.widget.ImageViewCompat;
+import com.forrestguice.support.design.widget.PopupMenu;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
@@ -177,8 +175,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
             boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
@@ -188,7 +185,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -197,78 +194,48 @@ public class MoonDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_COLLAPSED);
             }
         }
     }
     public boolean isCollapsed()
     {
-        BottomSheetBehavior bottomSheet = initSheet(getDialog());
+        BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(getDialog());
         if (bottomSheet != null) {
-            return (bottomSheet.getState() == BottomSheetBehavior.STATE_COLLAPSED);
+            return (bottomSheet.getState() == BottomSheetBehaviorInterface.STATE_COLLAPSED);
         }
         return false;
     }
 
+    @Override
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior(DialogInterface dialog)
     {
-        if (dialog != null)
+        BottomSheetBehaviorInterface behavior = super.initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                return behavior;
-            }
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            return behavior;
         }
         return null;
     }
 
-    private void initPeekHeight(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            ViewGroup dialogLayout = (LinearLayout) bottomSheet.findViewById(R.id.moondialog_layout);
-            View divider1 = bottomSheet.findViewById(R.id.divider1);
-            if (dialogLayout != null && divider1 != null)
-            {
-                Rect headerBounds = new Rect();
-                divider1.getDrawingRect(headerBounds);
-                dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                behavior.setPeekHeight(headerBounds.top);
-
-            } else {
-                behavior.setPeekHeight(-1);
-            }
-        }
-    }
-
-    private Runnable initPeekHeight = new Runnable() {
+    private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
-            initPeekHeight(getDialog());
+            initPeekHeight(getDialog(), R.id.divider1, false);
         }
     };
 

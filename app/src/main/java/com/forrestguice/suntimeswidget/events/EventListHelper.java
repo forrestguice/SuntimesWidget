@@ -30,13 +30,17 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.Snackbar;
+import com.forrestguice.support.design.app.Fragment;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -90,7 +94,7 @@ public class EventListHelper
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManagerInterface fragmentManager;
 
     private int selectedChild = -1;
     private EventSettings.EventAlias selectedItem;
@@ -108,7 +112,7 @@ public class EventListHelper
         return adapterModified;
     }
 
-    public EventListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public EventListHelper(@NonNull Context context, @NonNull FragmentManagerInterface fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -124,7 +128,7 @@ public class EventListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerInterface fragments) {
         fragmentManager = fragments;
     }
 
@@ -172,17 +176,17 @@ public class EventListHelper
 
     public void onResume()
     {
-        EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+        EditEventDialog addDialog = (EditEventDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_ADD);
         if (addDialog != null) {
             addDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), addDialog));
         }
 
-        EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+        EditEventDialog editDialog = (EditEventDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_EDIT);
         if (editDialog != null) {
             editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -420,7 +424,7 @@ public class EventListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.get(), DIALOGTAG_ADD);
     }
 
     protected void editEvent(final String eventID)
@@ -442,7 +446,7 @@ public class EventListHelper
             });
 
             saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.get(), DIALOGTAG_EDIT);
         }
     }
 
@@ -653,8 +657,8 @@ public class EventListHelper
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.eventPlural, items.size(), items.size());
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importevents_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.importevents_toast_success, plural), UNDO_IMPORT_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -671,10 +675,7 @@ public class EventListHelper
                         adapterModified = true;
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 8000;
@@ -776,7 +777,7 @@ public class EventListHelper
             helpDialog.setContent(helpSpan);
             helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
-            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+            helpDialog.show(fragmentManager.get(), DIALOGTAG_HELP);
         }
     }
 
@@ -1242,25 +1243,25 @@ public class EventListHelper
         }
     }
 
-    private class EventAliasActionMode extends EventAliasActionModeBase implements android.support.v7.view.ActionMode.Callback
+    private class EventAliasActionMode extends EventAliasActionModeBase implements ActionModeHelper.ActionModeCallback
     {
         public EventAliasActionMode() {
             super();
         }
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu) {
             return onCreateActionMode(mode.getMenuInflater(), menu);
         }
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode) {
             onDestroyActionMode();
         }
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu) {
             return onPrepareActionMode(menu);
         }
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem item)
         {
             boolean result = onActionItemClicked(item);
             mode.finish();

@@ -10,7 +10,7 @@
         android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
         android:padding="8dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/table" style="@style/SunsetTimeLayout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_gravity="start" android:minWidth="400dp"
@@ -194,7 +194,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
                 tools:text="6:00 PM"/>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

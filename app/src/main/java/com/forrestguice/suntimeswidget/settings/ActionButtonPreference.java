@@ -85,6 +85,7 @@ public class ActionButtonPreference extends ListPreference
             boolean enabled = isEnabled();
             actionButton.setEnabled(enabled);
             actionButton.setContentDescription(actionButtonContentDescription);
+            actionButton.setTag(getKey());
 
             if (Build.VERSION.SDK_INT >= 11) {
                 actionButton.setAlpha(enabled ? 1f : 0f);

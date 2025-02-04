@@ -44,11 +44,10 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.design.app.ActivityCompat;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -205,7 +204,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
-            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
+            if (AlarmSettings.areNotificationsEnabled(context))
             {
                 if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);

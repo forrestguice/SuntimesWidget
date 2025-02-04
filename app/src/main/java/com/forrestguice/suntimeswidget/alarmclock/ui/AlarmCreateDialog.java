@@ -27,16 +27,13 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.widget.TabLayout;
 
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -204,9 +201,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void showByEventFragment()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
-
         AlarmEventDialog fragment = new AlarmEventDialog();
         fragment.setDialogShowFrame(false);
         fragment.setDialogShowDesc(false);
@@ -239,8 +233,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         });
         fragment.setChoice(getEvent());
 
-        transaction.replace(R.id.fragmentContainer1, fragment, DIALOG_EVENT);
-        transaction.commit();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer1, fragment, DIALOG_EVENT)
+                .commit();
     }
 
     protected void showLocationMenu(final Context context, View v)
@@ -296,8 +292,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
-            FragmentManager fragments = getChildFragmentManager();
-            LocationConfigDialog dialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
+            LocationConfigDialog dialog = (LocationConfigDialog) getChildFragmentManager().findFragmentByTag(DIALOG_LOCATION);
             if (dialog != null)
             {
                 setUseAppLocation(context, false);
@@ -367,9 +362,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void showByTimeFragment()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
-
         AlarmTimeDialog fragment = new AlarmTimeDialog();
         fragment.setDate(getDate());
         fragment.setShowDateButton(showDateSelectButton());
@@ -409,8 +401,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             public void onCanceled(AlarmTimeDialog dialog) {}
         });
 
-        transaction.replace(R.id.fragmentContainer1, fragment, DIALOG_TIME);
-        transaction.commit();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer1, fragment, DIALOG_TIME)
+                .commit();
     }
 
     private void initViews(final Context context, View dialogContent)
@@ -679,15 +673,14 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         if (isAdded())
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOG_EVENT);
+            AlarmEventDialog fragment0 = (AlarmEventDialog) getChildFragmentManager().findFragmentByTag(DIALOG_EVENT);
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, getLocation());
                 fragment0.setChoice(getEvent());
                 fragment0.setType(getAlarmType());
             }
 
-            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOG_TIME);
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) getChildFragmentManager().findFragmentByTag(DIALOG_TIME);
             if (fragment1 != null) {
                 fragment1.setLocation(getLocation());
                 fragment1.setTime(getHour(), getMinute());
@@ -739,8 +732,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
+        LocationConfigDialog locationDialog = (LocationConfigDialog) getChildFragmentManager().findFragmentByTag(DIALOG_LOCATION);
         if (locationDialog != null) {
             locationDialog.setDialogListener(onLocationChanged);
         }
@@ -751,16 +743,15 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            FrameLayout layout = getBottomSheetLayout(dialog);
             if (layout != null)
             {
-                final BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                final BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
                 behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
                 layout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
                     }
                 }, AUTO_EXPAND_DELAY);
             }
@@ -1028,14 +1019,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         if (isAdded())
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmEventDialog fragment0 = (AlarmEventDialog) fragments.findFragmentByTag(DIALOG_EVENT);
+            AlarmEventDialog fragment0 = (AlarmEventDialog) getChildFragmentManager().findFragmentByTag(DIALOG_EVENT);
             if (fragment0 != null) {
                 initEventDialog(getActivity(), fragment0, location);
                 fragment0.setChoice(event);
             }
 
-            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOG_TIME);
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) getChildFragmentManager().findFragmentByTag(DIALOG_TIME);
             if (fragment1 != null) {
                 fragment1.setLocation(location);
                 getArguments().putLong(EXTRA_DATE, fragment1.getDate());
@@ -1059,8 +1049,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         if (isAdded())
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOG_TIME);
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) getChildFragmentManager().findFragmentByTag(DIALOG_TIME);
             if (fragment1 != null) {
                 fragment1.setDate(date);
                 fragment1.updateViews(getActivity());
@@ -1080,8 +1069,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         if (isAdded())
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOG_TIME);
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) getChildFragmentManager().findFragmentByTag(DIALOG_TIME);
             if (fragment1 != null) {
                 fragment1.setTime(hour, minute);
                 fragment1.setTimeZone(timezone);
@@ -1104,8 +1092,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         getArguments().putSerializable(EXTRA_ALARMTYPE, value);
         if (isAdded())
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmEventDialog fragment = (AlarmEventDialog) fragments.findFragmentByTag(DIALOG_EVENT);
+            AlarmEventDialog fragment = (AlarmEventDialog) getChildFragmentManager().findFragmentByTag(DIALOG_EVENT);
             if (fragment != null) {
                 fragment.setType(getAlarmType());
             }

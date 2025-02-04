@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.cards;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
 public class CardLayoutManager extends LinearLayoutManager

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.AppCompatCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.appcompat.widget.AppCompatCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeightSmall"

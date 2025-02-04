@@ -258,7 +258,7 @@
 
         <!-- FileProvider (export to file; places, themes) -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="com.forrestguice.support.content.FileProvider"
             android:authorities="com.forrestguice.suntimeswidget.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">

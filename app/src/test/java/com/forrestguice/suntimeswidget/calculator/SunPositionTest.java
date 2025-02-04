@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;

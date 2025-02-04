@@ -30,8 +30,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;

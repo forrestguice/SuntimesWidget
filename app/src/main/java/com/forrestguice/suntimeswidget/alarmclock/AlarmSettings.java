@@ -46,10 +46,11 @@ import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+
+import com.forrestguice.support.design.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -675,6 +676,13 @@ public class AlarmSettings
             }
         }
         return false;
+    }
+
+    /**
+     * areNotificationsEnabled
+     */
+    public static boolean areNotificationsEnabled(Context context) {
+        return NotificationManagerCompat.from(context).areNotificationsEnabled();
     }
 
     /**
