@@ -1,4 +1,4 @@
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.support.test.espresso;
 
 /**
     Copyright 2015 Chiu-Ki Chan

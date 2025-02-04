@@ -19,15 +19,13 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,9 +90,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void initViews()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        listDialog = (ColorValuesSelectFragment) fragments.findFragmentByTag(DIALOG_LIST);
-        editDialog = (ColorValuesEditFragment) fragments.findFragmentByTag(DIALOG_EDIT);
+        listDialog = (ColorValuesSelectFragment) getChildFragmentManager().findFragmentByTag(DIALOG_LIST);
+        editDialog = (ColorValuesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDIT);
 
         if (listDialog == null)
         {
@@ -106,10 +103,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setShowMenu(getShowMenu());
             listDialog.setPreviewKeys(previewKeys());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
-            transaction.addToBackStack(DIALOG_LIST);
-            transaction.commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.layout_color_sheet, listDialog, DIALOG_LIST)
+                    .addToBackStack(DIALOG_LIST)
+                    .commit();
         }
         if (editDialog == null)
         {
@@ -118,12 +116,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
-            transaction.addToBackStack(DIALOG_EDIT);
-            transaction.commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT)
+                    .addToBackStack(DIALOG_EDIT)
+                    .commit();
         }
-        fragments.executePendingTransactions();
+        getChildFragmentManager().executePendingTransactions();
     }
 
     @Override

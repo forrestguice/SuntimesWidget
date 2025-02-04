@@ -46,12 +46,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_moreButton"
+            <com.forrestguice.support.appcompat.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_moreButton"
                 style="?attr/actionOverflowButtonStyle"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:contentDescription="@string/configAction_overflow" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
+            <com.forrestguice.support.appcompat.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -89,7 +89,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarMode_helpButton"
+            <com.forrestguice.support.appcompat.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarMode_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -126,7 +126,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_riseSetOrder_helpButton"
+            <com.forrestguice.support.appcompat.widget.AppCompatImageButton android:id="@+id/appwidget_general_riseSetOrder_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -189,7 +189,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:inputType="textVisiblePassword" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
+            <com.forrestguice.support.appcompat.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"

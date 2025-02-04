@@ -30,18 +30,20 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentActivity;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.Snackbar;
+import com.forrestguice.support.design.app.Fragment;
+import com.forrestguice.support.design.view.MenuItemCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.RecyclerView;
+import com.forrestguice.support.design.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,7 +66,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -94,7 +95,7 @@ public class PlacesListFragment extends Fragment
     protected RecyclerView listView;
     protected View emptyView;
     protected View progressView;
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
 
     public PlacesListFragment()
@@ -116,8 +117,7 @@ public class PlacesListFragment extends Fragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment editDialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment editDialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
@@ -281,7 +281,7 @@ public class PlacesListFragment extends Fragment
             if (items[0] != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = activity.startSupportActionMode(actions);
+                actionMode = ((activity != null) ? ActionModeHelper.wrap(activity.startSupportActionMode(ActionModeHelper.wrap(actions))) : null);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), items);
                 }
@@ -334,7 +334,7 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    private class PlacesListActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class PlacesListActionCompat implements ActionModeHelper.ActionModeCallback
     {
         private PlaceItem[] items = null;
         public void setItems(PlaceItem[] values) {
@@ -342,7 +342,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placescontext, menu);
@@ -350,7 +350,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -373,7 +373,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
@@ -406,7 +406,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode)
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
         {
             actionMode = null;
             adapter.setSelectedRowID(-1);
@@ -583,7 +583,7 @@ public class PlacesListFragment extends Fragment
     {
         @Nullable
         protected LocationHelper createLocationHelper() {
-            return new GetFixHelper(getActivity(), getFixUI());
+            return new GetFixHelper(FragmentActivity.wrap(getActivity()), getFixUI());
         }
     }
 
@@ -691,8 +691,7 @@ public class PlacesListFragment extends Fragment
 
     protected void dismissEditPlaceDialog()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment dialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment dialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -797,8 +796,8 @@ public class PlacesListFragment extends Fragment
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -810,10 +809,7 @@ public class PlacesListFragment extends Fragment
                         addOrUpdatePlace(deletedItems);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -871,8 +867,8 @@ public class PlacesListFragment extends Fragment
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -897,10 +893,7 @@ public class PlacesListFragment extends Fragment
                         setSelectedRowID(-1);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
 

@@ -19,13 +19,13 @@
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.ViewModel;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.design.widget.GridLayoutManager;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

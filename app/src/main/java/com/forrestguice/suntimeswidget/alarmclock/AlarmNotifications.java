@@ -52,12 +52,14 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.app.NotificationCompat;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.Snackbar;
+import com.forrestguice.support.design.app.NotificationManagerCompat;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
@@ -229,7 +231,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
         showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
     }
-    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
@@ -258,22 +260,17 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (view != null)
             {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
-                if (actionText != null && actionListener != null) {
-                    snackbar.setAction(actionText, actionListener);
-                }
-                ViewUtils.themeSnackbar(context, snackbar, null);
-                snackbar.show();
-                return snackbar;
+                SnackbarUtils.themeSnackbar(context, Snackbar.make(view, alarmDisplay, duration, actionText, actionListener)).show();
+                return;
 
             } else {
                 Toast.makeText(context, alarmDisplay, duration).show();
-                return null;
+                return;
             }
 
         }
         Log.e(TAG, "showTimeUntilToast: context is null!");
-        return null;
+        return;
     }
 
     /**
@@ -1618,21 +1615,18 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showNotification(Context context, @Nullable Notification notification, int notificationID)
     {
         if (notification != null) {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+            NotificationManagerCompat.from(context).notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
             Log.d("DEBUG", "showNotification: " + notificationID);
         }
     }
     public static void dismissNotification(Context context, int notificationID)
     {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
+        NotificationManagerCompat.from(context).cancel(ALARM_NOTIFICATION_TAG, notificationID);
         Log.d("DEBUG", "dismissNotification: " + notificationID);
     }
     public static void dismissNotifications(Context context)
     {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.cancelAll();
+        NotificationManagerCompat.from(context).cancelAll();
         Log.d("DEBUG", "dismissNotification: ALL");
     }
 
@@ -2495,7 +2489,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onShow)");
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
-                        if (!NotificationManagerCompat.from(context).areNotificationsEnabled())
+                        if (!AlarmSettings.areNotificationsEnabled(context))
                         {
                             // when notifications are disabled, fallback to directly starting the fullscreen activity
                             startActivity(getFullscreenIntent(context, item.getUri()));

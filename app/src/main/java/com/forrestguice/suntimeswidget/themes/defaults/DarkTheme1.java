@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;

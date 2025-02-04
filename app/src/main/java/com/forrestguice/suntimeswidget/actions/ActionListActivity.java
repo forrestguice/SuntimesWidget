@@ -25,10 +25,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,18 +79,16 @@ public class ActionListActivity extends AppCompatActivity
 
         initData(this);
 
-        helper = new ActionListHelper(this, getSupportFragmentManager());
+        helper = new ActionListHelper(this, getSupportFragmentManagerCompat());
         helper.setData(data);
         helper.initViews(this, findViewById(android.R.id.content), icicle);
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (preselectedAction != null && !preselectedAction.trim().isEmpty()) {
@@ -116,7 +113,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getSupportFragmentManager());
+        helper.setFragmentManager(getSupportFragmentManagerCompat());
         helper.setData(data);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.onResume();

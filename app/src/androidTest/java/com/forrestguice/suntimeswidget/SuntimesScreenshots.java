@@ -19,11 +19,12 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.espresso.IdlingPolicies;
+import com.forrestguice.support.test.filters.LargeTest;
+
+import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -36,8 +37,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.unregisterIdlingResources;
 
 @Category(UnlistedTest.class)
 @SuppressWarnings("Convert2Diamond")
@@ -103,7 +104,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
         long waitTime = 1 * 1000;            // wait a moment
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
@@ -128,7 +129,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
         long waitTime = 3 * 1000;            // wait a moment
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
