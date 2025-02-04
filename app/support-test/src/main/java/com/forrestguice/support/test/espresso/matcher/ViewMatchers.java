@@ -50,6 +50,14 @@ public class ViewMatchers
         return android.support.test.espresso.matcher.ViewMatchers.hasDescendant(descendantMatcher);
     }
 
+    public static Matcher<View> hasBackground(final int drawableId) {
+        return android.support.test.espresso.matcher.ViewMatchers.hasBackground(drawableId);
+    }
+
+    public static Matcher<View> hasTextColor(final int colorResId) {
+        return android.support.test.espresso.matcher.ViewMatchers.hasTextColor(colorResId);
+    }
+
     public static Matcher<View> isEnabled() {
         return android.support.test.espresso.matcher.ViewMatchers.isEnabled();
     }
