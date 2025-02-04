@@ -129,12 +129,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         verifyActivity();
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-main0");
 
-        new MainActivityRobot()
+        MainActivityRobot robot = new MainActivityRobot()
                 .swapCard(activityRule.getActivity());
         verifyTimeCard();
-        captureScreenshot(activityRule.getActivity(), "suntimes-activity-main1");
+        robot.captureScreenshot(activityRule.getActivity(), "suntimes-activity-main1");
 
-        rotateDevice(activityRule);
+        robot.doubleRotateDevice(activityRule.getActivity());
         verifyActivity();
     }
 
