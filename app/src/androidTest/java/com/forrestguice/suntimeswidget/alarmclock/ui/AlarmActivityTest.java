@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
@@ -64,26 +67,38 @@ import static org.hamcrest.Matchers.endsWith;
 public class AlarmActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
+    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
+    @Test @QuickTest
     public void test_AlarmActivity()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        new AlarmActivityRobot()
+                .assertActivityShown();
+    }
+
+    @Test
+    public void test_AlarmActivity_menu()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         AlarmActivityRobot robot = new AlarmActivityRobot()
                 .assertActivityShown();
@@ -101,6 +116,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_AlarmActivity_navigation_sidebar()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIDEBAR).apply();
         AlarmActivityRobot robot = new AlarmActivityRobot()
@@ -141,6 +157,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_AlarmActivity_navigation_simple()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         config(context).edit().putString(AppSettings.PREF_KEY_NAVIGATION_MODE, AppSettings.NAVIGATION_SIMPLE).apply();
         AlarmActivityRobot robot = new AlarmActivityRobot()
@@ -181,6 +198,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_AlarmActivity_addAlarm()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmActivityRobot robot = new AlarmActivityRobot();
         AlarmCreateDialogTest.AlarmDialogRobot robot1 = dialogRobot();

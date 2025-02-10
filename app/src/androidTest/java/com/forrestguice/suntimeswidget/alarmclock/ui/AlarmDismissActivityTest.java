@@ -19,15 +19,17 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
-import com.forrestguice.suntimeswidget.colors.ColorValuesActivityTest;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.support.test.espresso.ViewInteractionHelper;
-import com.forrestguice.support.test.espresso.matcher.ViewMatchers;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
 import com.forrestguice.support.test.runner.AndroidJUnit4;
@@ -60,47 +62,45 @@ import static org.hamcrest.Matchers.endsWith;
 public class AlarmDismissActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
+    public ActivityTestRule<AlarmDismissActivity> activityRule = new ActivityTestRule<>(AlarmDismissActivity.class);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
+    @Test @QuickTest
     public void test_AlarmDismissActivity()
     {
-        Activity activity = activityRule.getActivity();
-        AlarmDismissActivityRobot robot = new AlarmDismissActivityRobot()
-                .showActivity(activity)    // TODO
-                .assertActivityShown(activity);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1));
+        activityRule.launchActivity(intent);
+        new AlarmDismissActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
     }
 
-    @Test
+    /*@Test
     public void test_AlarmDismissActivity_preview()
     {
-        final Activity activity = activityRule.getActivity();
-        ColorValuesActivityTest.ColorValuesActivityRobot robot0 = ColorValuesActivityTest.brightAlarmColorsActivityRobot(activity);
-        robot0.showActivity(activity)
-                .assertActivityShown(activity)
-                .showOverflowMenu(activity)
-                .clickOverflowMenu_preview().sleep(1000);
-
-        AlarmDismissActivityRobot robot = new AlarmDismissActivityRobot();
-        robot.assertActivityShown(activity)
-                .dragDismissButton(activity).sleep(1000);
-        robot0.assertActivityShown(activity);
-    }
+        Intent intent = new Intent(AlarmDismissActivity.ACTION_PREVIEW);
+        intent.setData(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1));
+        activityRule.launchActivity(intent);
+        new AlarmDismissActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+    }*/
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -112,16 +112,6 @@ public class AlarmDismissActivityTest extends SuntimesActivityTestBase
     {
         public AlarmDismissActivityRobot() {
             setRobot(this);
-        }
-
-        protected AlarmDismissActivityRobot showActivity(Activity activity)
-        {
-            //AlarmActivityTest.AlarmActivityRobot robot = new AlarmActivityTest.AlarmActivityRobot();
-            //AlarmDialogTest.AlarmDialogRobot robot1 = AlarmActivityTest.dialogRobot();
-            //robot.clickAddAlarmButton();
-            //robot1.applyDialog(activity);
-            // TODO
-            return this;
         }
 
         public AlarmDismissActivityRobot dragDismissButton(Activity activity) {

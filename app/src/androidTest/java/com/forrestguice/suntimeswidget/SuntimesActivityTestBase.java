@@ -372,38 +372,51 @@ public abstract class SuntimesActivityTestBase
         automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
     }
 
+    public static Context getContext() {
+        return android.support.test.InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
 
-    protected void overrideConfigState(Activity activity)
+    protected void overrideConfigState(Context context)
     {
-        config(activity).edit().remove(AppSettings.PREF_KEY_LOCALE);
-        config(activity).edit().putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.SYSTEM_LOCALE.name()).apply();
+        config(context).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
+        config(context).edit().remove(AppSettings.PREF_KEY_LOCALE);
+        config(context).edit().putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.SYSTEM_LOCALE.name()).apply();
     }
-    protected void saveConfigState(Activity activity) {
+    protected void saveConfigState(Context context) {
         //savedState_localeMode = AppSettings.loadLocaleModePref(activity);
-        savedState_dateTapAction = AppSettings.loadDateTapActionPref(activity);
-        savedState_clockTapAction = AppSettings.loadClockTapActionPref(activity);
-        savedState_showDataSource = AppSettings.loadDatasourceUIPref(activity);
-        savedState_showMapButton = AppSettings.loadShowMapButtonPref(activity);
-        savedState_navMode = AppSettings.loadNavModePref(activity);
-        savedState_locationMode = WidgetSettings.loadLocationModePref(activity, 0);
+        savedState_dateTapAction = AppSettings.loadDateTapActionPref(context);
+        savedState_clockTapAction = AppSettings.loadClockTapActionPref(context);
+        savedState_showDataSource = AppSettings.loadDatasourceUIPref(context);
+        savedState_showMapButton = AppSettings.loadShowMapButtonPref(context);
+        savedState_firstLaunch = AppSettings.isFirstLaunch(context);
+        savedState_navMode = AppSettings.loadNavModePref(context);
+        savedState_launcherMode = AppSettings.loadLauncherModePref(context);
+        savedState_locationMode = WidgetSettings.loadLocationModePref(context, 0);
     }
-    protected void restoreConfigState(Activity activity) {
-        SharedPreferences.Editor config = config(activity).edit();
+    protected void restoreConfigState(Context context) {
+        SharedPreferences.Editor config = config(context).edit();
         //config.putString(AppSettings.PREF_KEY_LOCALE_MODE, savedState_localeMode.name()).apply();
         config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState_dateTapAction).apply();
         config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState_clockTapAction).apply();
         config.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, savedState_showDataSource).apply();
         config.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, savedState_showMapButton).apply();
-        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_navMode).apply();
-        WidgetSettings.saveLocationModePref(activity, 0, savedState_locationMode);
+        config.putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, savedState_firstLaunch).apply();
+        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_launcherMode).apply();
+        config.putString(AppSettings.PREF_KEY_LAUNCHER_MODE, savedState_navMode).apply();
+        if (savedState_locationMode != null) {
+            WidgetSettings.saveLocationModePref(context, 0, savedState_locationMode);
+        }
     }
     protected String savedState_navMode;
+    protected String savedState_launcherMode;
     protected String savedState_dateTapAction;
     protected String savedState_clockTapAction;
     protected boolean savedState_showDataSource;
     protected boolean savedState_showMapButton;
+    protected boolean savedState_firstLaunch;
     protected WidgetSettings.LocationMode savedState_locationMode;
     //protected AppSettings.LocaleMode savedState_localeMode;
 
@@ -457,6 +470,16 @@ public abstract class SuntimesActivityTestBase
             InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
                 public void run() {
                     activity.recreate();
+                }
+            });
+            return robot;
+        }
+
+        public T finishActivity(final Activity activity)
+        {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    activity.finish();
                 }
             });
             return robot;

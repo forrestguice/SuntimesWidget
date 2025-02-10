@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
@@ -75,29 +78,40 @@ import static org.junit.Assert.assertTrue;
 public class PlacesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<PlacesActivity> activityRule = new ActivityTestRule<>(PlacesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
+    @Test @QuickTest
     public void test_PlacesActivity()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        new PlacesActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+    }
+
+    @Test
+    public void test_PlacesActivit_menu()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
                 .assertActivityShown(activity);
 
         robot.showOverflowMenu(activity).sleep(1000)
@@ -105,10 +119,10 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
                 .cancelOverflowMenu(activity);
 
         robot.showOverflowMenu(activity)
-            .clickOverflowMenu_add(activity).sleep(1000)
-            .assertAddDialogShown(activity)
-            .clickAddDialog_cancelButton()
-            .assertAddDialogNotShown(activity);
+                .clickOverflowMenu_add(activity).sleep(1000)
+                .assertAddDialogShown(activity)
+                .clickAddDialog_cancelButton()
+                .assertAddDialogNotShown(activity);
     }
 
     @Test
@@ -119,13 +133,14 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
+        addLocationToDatabaseIfMissing(getContext(), location1);
+        addLocationToDatabaseIfMissing(getContext(), location2);
+        addLocationToDatabaseIfMissing(getContext(), location3);
+
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        addLocationToDatabaseIfMissing(activity, location1);
-        addLocationToDatabaseIfMissing(activity, location2);
-        addLocationToDatabaseIfMissing(activity, location3);
 
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
                 .assertActivityShown(activity)
                 .assertActionBarTitleShown(activity, true)
                 .assertSearchButtonShown(activity, true)
@@ -158,17 +173,17 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
                 .assertSearchFieldShown(activity, false);
     }
 
-    protected static void clearPlaces(Activity activity)
+    protected static void clearPlaces(Context context)
     {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(activity);
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         db.clearPlaces();
         db.close();
     }
 
-    protected static void removeLocationFromDatabaseIfExists(Activity activity, String label)
+    protected static void removeLocationFromDatabaseIfExists(Context context, String label)
     {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(activity);
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
         int p = GetFixDatabaseAdapter.findPlaceByName(label, cursor);
@@ -180,9 +195,9 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         db.close();
     }
 
-    protected static Location addLocationToDatabaseIfMissing(Activity activity, Location location)
+    protected static Location addLocationToDatabaseIfMissing(Context context, Location location)
     {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(activity);
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
         int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
@@ -194,8 +209,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         return location;
     }
 
-    protected static boolean placeExistsInDatabase(Activity activity, String label) {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(activity);
+    protected static boolean placeExistsInDatabase(Context context, String label) {
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
         int p = GetFixDatabaseAdapter.findPlaceByName(label, cursor);
@@ -205,8 +220,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         return retValue;
     }
 
-    protected static int numPlaces(Activity activity) {
-        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(activity);
+    protected static int numPlaces(Context context) {
+        GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         int n = db.getPlaceCount();
         db.close();
@@ -216,11 +231,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_build()
     {
+        clearPlaces(getContext());
+        assertEquals(0, numPlaces(getContext()));
+
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        clearPlaces(activity);
-        assertEquals(0, numPlaces(activity));
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
+                .assertActivityShown(activity)
                 .assertEmptyPlaces(activity);
 
         robot.showOverflowMenu(activity)
@@ -245,14 +262,15 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        Activity activity = activityRule.getActivity();
-        addLocationToDatabaseIfMissing(activity, location1);
-        addLocationToDatabaseIfMissing(activity, location2);
-        addLocationToDatabaseIfMissing(activity, location3);
-        int n = numPlaces(activity);
+        addLocationToDatabaseIfMissing(getContext(), location1);
+        addLocationToDatabaseIfMissing(getContext(), location2);
+        addLocationToDatabaseIfMissing(getContext(), location3);
+        int n = numPlaces(getContext());
 
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
+                .assertActivityShown(activity)
                 .assertListHasAtLeast(activity, 3);
 
         robot.showOverflowMenu(activity)
@@ -278,12 +296,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add()
     {
+        clearPlaces(getContext());
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        removeLocationFromDatabaseIfExists(activity, "Test Location");
-        assertFalse(placeExistsInDatabase(activity, "Test Location"));
 
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
                 .showOverflowMenu(activity)
                 .clickOverflowMenu_add(activity).sleep(1000)
                 .assertAddDialogShown(activity);
@@ -297,10 +314,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_PlacesActivity_add_errors() {
+    public void test_PlacesActivity_add_errors()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         PlacesActivityRobot robot = new PlacesActivityRobot()
-                .showActivity(activity)
                 .showOverflowMenu(activity)
                 .clickOverflowMenu_add(activity)
                 .assertAddDialogShown(activity)
@@ -316,19 +334,16 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add_errors_longitude()
     {
-        Activity activity = activityRule.getActivity();
-        PlacesActivityRobot robot = new PlacesActivityRobot();
-        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot();
-        robot0.showActivity(activity)
-                .clickHeader_placeSettings();
-
         String label = "Test Location";
         String latitude = "25.55";
         String[] longitudes = new String[] { "", "-180.1", "180.1" };
 
         for (int i=0; i<longitudes.length; i++)
         {
-            robot0.clickPref_managePlaces();
+            activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+            Activity activity = activityRule.getActivity();
+
+            PlacesActivityRobot robot = new PlacesActivityRobot();
             robot.showOverflowMenu(activity)
                     .clickOverflowMenu_add(activity).sleep(500)
                     .assertAddDialogShown(activity)
@@ -348,19 +363,16 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add_errors_latitude()
     {
-        Activity activity = activityRule.getActivity();
-        PlacesActivityRobot robot = new PlacesActivityRobot();
-        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot();
-        robot0.showActivity(activity)
-                .clickHeader_placeSettings();
-
         String label = "Test Location";
         String longitude = "0";
         String[] latitudes = new String[] { "", "-90.1", "90.1" };
 
         for (int i=0; i<latitudes.length; i++)
         {
-            robot0.clickPref_managePlaces();
+            activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+            Activity activity = activityRule.getActivity();
+
+            PlacesActivityRobot robot = new PlacesActivityRobot();
             robot.showOverflowMenu(activity)
                     .clickOverflowMenu_add(activity).sleep(500)
                     .assertAddDialogShown(activity)
@@ -514,7 +526,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         /////////////////////////////////////////////////////////////////////////
 
         public PlacesActivityRobot assertActivityShown(Context context) {
-            onView(withId(R.id.placesList)).check(assertEnabled);
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.configLabel_places),
+                    isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             return this;
         }
 

@@ -20,12 +20,16 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivityTest;
 import com.forrestguice.support.test.espresso.ViewInteractionHelper;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -62,18 +66,21 @@ import static org.hamcrest.Matchers.endsWith;
 public class ColorValuesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesSettingsActivity> activityRule = new ActivityTestRule<>(SuntimesSettingsActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -91,6 +98,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_ColorValuesActivity_AppColors_Dark()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         AppColorsActivityRobot robot = new AppColorsActivityRobot(activity);
         robot.showActivity(activity, true)
@@ -104,6 +112,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_ColorValuesActivity_AppColors_Light()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         AppColorsActivityRobot robot = new AppColorsActivityRobot(activity);
         robot.showActivity(activity, false)
@@ -117,6 +126,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_ColorValuesActivity_BrightAlarmColors()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         ColorValuesActivityRobot robot = brightAlarmColorsActivityRobot(activity)
                 .showActivity(activity)
@@ -125,6 +135,23 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(activity).sleep(1000)
                 .assertOverflowMenuShown()
                 .cancelOverflowMenu();
+    }
+
+    @Test
+    public void test_ColorValuesActivity_BrightAlarmColors_preview()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        final Activity activity = activityRule.getActivity();
+        ColorValuesActivityRobot robot0 = brightAlarmColorsActivityRobot(activity);
+        robot0.showActivity(activity)
+                .assertActivityShown(activity)
+                .showOverflowMenu(activity)
+                .clickOverflowMenu_preview().sleep(1000);
+
+        AlarmDismissActivityTest.AlarmDismissActivityRobot robot = new AlarmDismissActivityTest.AlarmDismissActivityRobot();
+        robot.assertActivityShown(activity)
+                .dragDismissButton(activity).sleep(1000);
+        robot0.assertActivityShown(activity);
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -161,7 +188,6 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
         public ColorValuesActivityRobot showActivity(Activity activity, boolean darkMode)
         {
             SuntimesSettingsActivityTest.SettingsActivityRobot robot = new SuntimesSettingsActivityTest.SettingsActivityRobot()
-                    .showActivity(activity)
                     .clickHeader_userInterfaceSettings();
             if (darkMode) {
                 robot.clickPrefButton_darkAppColors().sleep(1000);

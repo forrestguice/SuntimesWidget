@@ -13,6 +13,7 @@ import android.view.View;
 import org.hamcrest.Matcher;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
@@ -24,6 +25,14 @@ public class Espresso
 
     public static ViewInteraction onView(final Matcher<View> viewMatcher) {
         return android.support.test.espresso.Espresso.onView(viewMatcher);
+    }
+
+    public static void onIdle() {
+        android.support.test.espresso.Espresso.onIdle();
+    }
+
+    public static <T> T onIdle(Callable<T> action) {
+        return android.support.test.espresso.Espresso.onIdle(action);
     }
 
     public static void registerLooperAsIdlingResource(Looper looper) {

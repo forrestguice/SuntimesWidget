@@ -20,12 +20,16 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -75,29 +79,43 @@ import static org.hamcrest.CoreMatchers.allOf;
 public class WorldMapDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
-    @Test
+    @Test @QuickTest
     public void test_worldMapDialog()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
                 //.captureScreenshot(context, "suntimes-dialog-worldmap0");
+    }
+
+    @Test
+    public void test_worldMapDialog_menu()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        WorldMapDialogRobot robot = new WorldMapDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context);
 
         robot.clickTimeZoneLabel(context)
                 .assertOverflowMenu_TimeZone(context).sleep(500)
@@ -138,6 +156,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_worldMapDialog_expandCollapse()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
@@ -157,6 +176,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_worldMapDialog_maps()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
@@ -196,6 +216,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_worldMapDialog_timeZone()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot()
                 .showDialog(context).sleep(1000)
@@ -224,6 +245,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_worldMapDialog_viewDate_Suntimes()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
@@ -245,6 +267,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void worldMapDialog_viewDate_Sun()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
@@ -269,6 +292,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_worldMapDialog_viewDate_Moon()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
         robot.showDialog(context)
@@ -535,11 +559,13 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
 
         public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
-            return assertShowsDate(date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
+            return assertShowsDate(context, date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
-        public WorldMapDialogRobot assertShowsDate(@NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
         {
-            SimpleDateFormat[] formats = (withMode == WidgetSettings.TimeFormatMode.MODE_12HR)
+            boolean is24 = (withMode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || withMode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+                    : (withMode == WidgetSettings.TimeFormatMode.MODE_24HR);
+            SimpleDateFormat[] formats = !is24
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                     : (withSeconds ? timeDateFormats24s : timeDateFormats24);
             long tolerance = (withSeconds

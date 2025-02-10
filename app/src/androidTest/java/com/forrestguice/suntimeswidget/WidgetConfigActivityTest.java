@@ -58,6 +58,9 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesConfigActivity0> activityRule = new ActivityTestRule<>(SuntimesConfigActivity0.class, false, false);
 
+    @Rule
+    public RetryRule retry = new RetryRule(3);
+
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);

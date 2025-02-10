@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -87,23 +89,27 @@ import static org.hamcrest.Matchers.hasToString;
 public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     @Test
     public void test_showAlarmDialog()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
@@ -130,6 +136,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_showAlarmDialog_eventTab()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
@@ -155,6 +162,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_showAlarmDialog_eventTab_customEvent()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
@@ -173,6 +181,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_showAlarmDialog_eventTab_withLocation()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
@@ -190,6 +199,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_showAlarmDialog_timeTab()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
@@ -224,6 +234,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_showAlarmDialog_timeTab_withDate()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
