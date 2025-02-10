@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  instruemnted_tests:
-    runs-on: macos-12
+  instrumented_tests:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         api-level: [28]
@@ -69,7 +69,7 @@ jobs:
         disable-animations: true
         script: ./gradlew connectedCheck -e annotation com.forrestguice.suntimeswidget.QuickTest
 
-    #- name: Upload artifacts (lint results)
+    #- name: Upload artifacts (test results)
     #  uses: actions/upload-artifact@v4
     #  with:
     #    name: test-results-api${{ matrix.api-level }}.html
