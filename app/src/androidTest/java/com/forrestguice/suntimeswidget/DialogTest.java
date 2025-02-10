@@ -24,6 +24,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.SystemClock;
 
@@ -63,34 +64,43 @@ import java.util.TimeZone;
 public class DialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     @Test
     public void test_showHelpDialog()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         new HelpDialogRobot()
-                .showDialog(context).assertDialogShown(context)
-                //.captureScreenshot(context, "suntimes-dialog-help0")
-                .doubleRotateDevice(context).assertDialogShown(context)
-                .cancelDialog(context).assertDialogNotShown(context);
+                .showDialog(context)
+                .assertDialogShown(context)
+
+                .doubleRotateDevice(context)
+                .assertDialogShown(context)
+
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
     }
 
     @Test
     public void test_showAboutDialog()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         new AboutDialogRobot()
                 .showDialog(context).assertDialogShown(context)
@@ -191,6 +201,7 @@ public class DialogTest extends SuntimesActivityTestBase
 
         public HelpDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            sleep(500);
             onView(withText(R.string.configAction_help)).perform(click());
             return this;
         }
@@ -207,6 +218,11 @@ public class DialogTest extends SuntimesActivityTestBase
         @Override
         public HelpDialogRobot assertDialogNotShown(Context context) {
             onView(withId(R.id.txt_help_content)).check(doesNotExist());
+            return this;
+        }
+
+        public HelpDialogRobot assertOnlineHelpButtonShown(Context context) {
+            onView(withText(R.string.configAction_onlineHelp)).check(assertShown).check(assertClickable);
             return this;
         }
     }

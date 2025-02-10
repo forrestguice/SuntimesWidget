@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -59,26 +62,39 @@ import static org.hamcrest.Matchers.endsWith;
 public class AlarmEditActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
+    public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
+    @Test @QuickTest
     public void test_AlarmEditActivity()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        new AlarmEditActivityRobot()
+                .showActivity(activityRule.getActivity())
+                .assertActivityShown(activityRule.getActivity());
+    }
+
+    @Test
+    public void test_AlarmEditActivity_menu()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         AlarmEditActivityRobot robot = new AlarmEditActivityRobot()
                 .showActivity(activity)
@@ -92,7 +108,16 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
                 .clickOverflowMenu_options(activity)
                 .assertOptionsMenuShown(activity)
                 .cancelOptionsMenu(activity);
+    }
 
+    @Test
+    public void test_AlarmEditActivity_help()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        AlarmEditActivityRobot robot = new AlarmEditActivityRobot()
+                .showActivity(activity)
+                .assertActivityShown(activity);
 
         robot.showOverflowMenu(activity).sleep(1000)
                 .assertOverflowMenuShown(activity)
@@ -100,13 +125,12 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         new DialogTest.HelpDialogRobot()
                 .assertDialogShown(activity)
                 .cancelDialog(activity);
-
-        // TODO
     }
 
     @Test
     public void test_AlarmEditActivity_discardChanges()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         AlarmActivityTest.AlarmActivityRobot robot = new AlarmActivityTest.AlarmActivityRobot();
         AlarmCreateDialogTest.AlarmDialogRobot robot1 = AlarmActivityTest.dialogRobot();

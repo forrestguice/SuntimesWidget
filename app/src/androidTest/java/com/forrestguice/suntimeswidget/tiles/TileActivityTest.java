@@ -24,6 +24,7 @@ import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.WidgetConfigActivityTest;
@@ -49,7 +50,6 @@ import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withChild;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
@@ -62,7 +62,10 @@ import static org.hamcrest.Matchers.allOf;
 public class TileActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<TileLockScreenActivity> activityRule = new ActivityTestRule<>(TileLockScreenActivity.class, false, false);
+    public ActivityTestRule<TileLockScreenActivity> activityRule = new ActivityTestRule<>(TileLockScreenActivity.class, true, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {

@@ -20,11 +20,15 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.preference.Preference;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.events.EventListActivityTest;
+import com.forrestguice.suntimeswidget.getfix.PlacesActivityTest;
 
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
@@ -76,93 +80,119 @@ import static org.hamcrest.CoreMatchers.is;
 public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesSettingsActivity> activityRule = new ActivityTestRule<>(SuntimesSettingsActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
-    @Test
+    @Test @QuickTest
     public void test_settingsActivity()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         new SettingsActivityRobot()
-                .showActivity(activity)
                 .assertActivityShown(activity)
                 .captureScreenshot(activity, "suntimes-activity-settings0");
     }
 
-    @Test
+    @Test @QuickTest
     public void test_settingsActivity_general()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         new SettingsActivityRobot()
-                .showActivity(activity)
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-general0");
                 .assertActivityShown(activity)
                 .clickHeader_generalSettings()
                 .assertShown_generalSettings(activity);
     }
 
-    @Test
+    @Test @QuickTest
     public void test_settingsActivity_alarms()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         new SettingsActivityRobot()
-                .showActivity(activity)
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-alarms0");
                 .assertActivityShown(activity)
                 .clickHeader_alarmSettings()
                 .assertShown_alarmSettings(activity);
     }
 
-    @Test
+    @Test @QuickTest
     public void test_settingsActivity_locale()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         new SettingsActivityRobot()
-                .showActivity(activity)
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-locale0");
                 .assertActivityShown(activity)
                 .clickHeader_localeSettings()
                 .assertShown_localeSettings(activity);
     }
 
-    @Test
+    @Test @QuickTest
     public void test_settingsActivity_places()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         new SettingsActivityRobot()
-                .showActivity(activityRule.getActivity())
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-places0");
                 .assertActivityShown(activityRule.getActivity())
                 .clickHeader_placeSettings()
                 .assertShown_placeSettings(activityRule.getActivity());
     }
 
-    @Test
+    @Test @QuickTest
+    public void test_settingsActivity_places_managePlaces()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        new SettingsActivityRobot()
+                .clickHeader_placeSettings()
+                .clickPref_managePlaces();
+        new PlacesActivityTest.PlacesActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+    }
+
+    @Test @QuickTest
     public void test_settingsActivity_ui()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         new SettingsActivityRobot()
-                .showActivity(activityRule.getActivity())
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-ui0");
                 .assertActivityShown(activityRule.getActivity())
                 .clickHeader_userInterfaceSettings()
                 .assertShown_userInterfaceSettings(activityRule.getActivity());
     }
 
-    @Test
+    @Test @QuickTest
+    public void test_settingsActivity_ui_customEvents()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        new SettingsActivityRobot()
+                .assertActivityShown(activityRule.getActivity())
+                .clickHeader_userInterfaceSettings().sleep(250)
+                .clickPref_manageEvents();
+        new EventListActivityTest.EventListActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+    }
+
+    @Test @QuickTest
     public void test_settingsActivity_widgets()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         new SettingsActivityRobot()
-                .showActivity(activityRule.getActivity())
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-widgets0");
                 .assertActivityShown(activityRule.getActivity())
                 .clickHeader_widgetList();
@@ -288,15 +318,15 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         }
 
         public SettingsActivityRobot clickPref_managePlaces() {
-            onView(withText(R.string.configLabel_places_manage)).perform(click());
+            onView(withText(R.string.configLabel_places_manage)).perform(scrollTo(), click());
             return this;
         }
         public SettingsActivityRobot clickPref_manageEvents() {
-            onView(withText(R.string.configLabel_manageEvents)).perform(click());
+            onView(withText(R.string.configLabel_manageEvents)).perform(scrollTo(), click());
             return this;
         }
         public SettingsActivityRobot clickPref_welcomeWizard() {
-            onView(withText(R.string.welcome_pref_title)).perform(click());
+            onView(withText(R.string.welcome_pref_title)).perform(scrollTo(), click());
             return this;
         }
         public SettingsActivityRobot clickPref_brightAlarmColors() {

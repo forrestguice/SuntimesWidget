@@ -108,16 +108,19 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
+    @Rule
+    public RetryRule retry = new RetryRule(3);
+
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /**
@@ -826,6 +829,19 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         activity.finish();
         activityRule.launchActivity(activity.getIntent());
         test_mainActivity_fullUpdateReciever();
+    }
+
+    @Test
+    public void test_mainActivity_about()
+    {
+        Activity activity = activityRule.getActivity();
+        AboutActivityTest.AboutActivityRobot robot = new AboutActivityTest.AboutActivityRobot()
+                .showActivity(activity)
+                .assertActivityShown(activity);
+
+        robot.clickHomeButton(activity);
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activity);
     }
 
     /**

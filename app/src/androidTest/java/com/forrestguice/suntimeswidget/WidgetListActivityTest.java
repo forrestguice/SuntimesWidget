@@ -20,8 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ArrayAdapter;
 
+import com.forrestguice.suntimeswidget.actions.ActionListActivityTest;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivityTest;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -41,6 +44,7 @@ import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertS
 import static com.forrestguice.support.test.espresso.action.ViewActions.click;
 import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
 import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
@@ -51,29 +55,32 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
 public class WidgetListActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesWidgetListActivity> activityRule = new ActivityTestRule<>(SuntimesWidgetListActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
+    @Test @QuickTest
     public void test_WidgetListActivity()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         WidgetListActivityRobot robot = new WidgetListActivityRobot()
-                .showActivity(activity)
                 .assertActivityShown(activity);
 
         robot.showOverflowMenu(activity).sleep(1000)
@@ -85,6 +92,34 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         new DialogTest.HelpDialogRobot()
                 .assertDialogShown(activity)
                 .cancelDialog(activity);
+    }
+
+    @Test @QuickTest
+    public void test_WidgetListActivity_manageThemes()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        WidgetListActivityRobot robot = new WidgetListActivityRobot()
+                .assertActivityShown(activity)
+                .clickManageThemesButton(activity);
+        new WidgetThemeListActivityTest.ThemeListActivityRobot()
+                .assertActivityShown(activity)
+                .clickBackButton();
+        robot.assertActivityShown(activity);
+    }
+
+    @Test @QuickTest
+    public void test_WidgetListActivity_manageActions()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        WidgetListActivityRobot robot = new WidgetListActivityRobot()
+                .assertActivityShown(activity)
+                .clickManageActionsButton(activity);
+        new ActionListActivityTest.ActionListActivityRobot()
+                .assertActivityShown(activity)
+                .clickBackButton();
+        robot.assertActivityShown(activity);
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -108,6 +143,15 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
 
         public WidgetListActivityRobot clickBackButton(Context context) {
             onView(navigationButton()).perform(click());
+            return this;
+        }
+
+        public WidgetListActivityRobot clickManageThemesButton(Context context) {
+            onView(withContentDescription(R.string.configLabel_widgetThemeList)).perform(click());
+            return this;
+        }
+        public WidgetListActivityRobot clickManageActionsButton(Context context) {
+            onView(withContentDescription(R.string.loadaction_dialog_title)).perform(click());
             return this;
         }
 

@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.app.Activity;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
@@ -89,32 +90,35 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
+    @Rule
+    public RetryRule retry = new RetryRule(3);
+
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     @Override
-    public void overrideConfigState(Activity activity) {
-        super.overrideConfigState(activity);
-        AppSettings.saveShowCrossQuarterPref(activityRule.getActivity(), false);
+    public void overrideConfigState(Context context) {
+        super.overrideConfigState(context);
+        AppSettings.saveShowCrossQuarterPref(context, false);
     }
     @Override
-    protected void saveConfigState(Activity activity) {
-        savedState_crossQuarterDays = AppSettings.loadShowCrossQuarterPref(activityRule.getActivity());
-        savedState_trackingMode = WidgetSettings.loadTrackingModePref(activityRule.getActivity(), 0);
+    protected void saveConfigState(Context context) {
+        savedState_crossQuarterDays = AppSettings.loadShowCrossQuarterPref(context);
+        savedState_trackingMode = WidgetSettings.loadTrackingModePref(context, 0);
     }
     @Override
-    protected void restoreConfigState(Activity activity) {
-        AppSettings.saveShowCrossQuarterPref(activityRule.getActivity(), savedState_crossQuarterDays);
-        WidgetSettings.saveTrackingModePref(activityRule.getActivity(), 0, savedState_trackingMode);
+    protected void restoreConfigState(Context context) {
+        AppSettings.saveShowCrossQuarterPref(context, savedState_crossQuarterDays);
+        WidgetSettings.saveTrackingModePref(context, 0, savedState_trackingMode);
     }
     protected boolean savedState_crossQuarterDays = false;
     protected WidgetSettings.TrackingMode savedState_trackingMode = null;

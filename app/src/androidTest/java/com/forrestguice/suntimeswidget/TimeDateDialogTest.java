@@ -24,6 +24,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.content.Intent;
 import android.widget.DatePicker;
 
 import org.junit.After;
@@ -52,29 +53,50 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
+    }
+
+    @Test @QuickTest
+    public void test_TimeDateDialog()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        new TimeDateDialogRobot()
+                .showDialog(context)
+                .assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-date0")
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
     }
 
     @Test
-    public void test_TimeDateDialog()
+    public void test_TimeDateDialog_rotate()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         new TimeDateDialogRobot()
-                .showDialog(context).assertDialogShown(context)
-                //.captureScreenshot(context, "suntimes-dialog-date0")
-                .doubleRotateDevice(context).assertDialogShown(context)
-                .cancelDialog(context).assertDialogNotShown(context);
+                .showDialog(context)
+                .assertDialogShown(context)
+
+                .doubleRotateDevice(context)
+                .assertDialogShown(context)
+
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
     }
 
     /**

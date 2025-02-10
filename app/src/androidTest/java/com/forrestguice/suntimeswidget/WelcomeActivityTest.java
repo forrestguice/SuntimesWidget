@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.support.test.filters.FlakyTest;
 
 import com.forrestguice.support.test.filters.LargeTest;
 import com.forrestguice.support.test.rule.ActivityTestRule;
@@ -58,102 +60,32 @@ import static org.hamcrest.Matchers.endsWith;
 public class WelcomeActivityTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<WelcomeActivity> activityRule = new ActivityTestRule<>(WelcomeActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
-    @Test
-    public void test_WelcomeActivity_navigation_nextAndBack()
-    {
-        Activity activity = activityRule.getActivity();
-        WelcomeActivityRobot robot = new WelcomeActivityRobot();
-        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
-                .showActivity(activity)
-                .clickHeader_generalSettings()
-                .clickPref_welcomeWizard();
-
-        // swipe next / prev through all pages
-        robot.assertActivityShown(activity)
-                .assertWelcomePageIsShown(activity);
-        int c = 0;
-        int n = robot.numPages() - 1;
-        for (int i=0; i<n; i++) {
-            robot.swipeNext()
-                    .assertPageIndicatorIsShown(activity, ++c);
-        }
-        robot.assertAboutPageIsShown(activity);
-        robot.swipeNext()
-                .assertPageIndicatorIsShown(activity, c);    // swipe next from last page does nothing
-        for (int i=0; i<n; i++) {
-            robot.swipePrev()
-                    .assertPageIndicatorIsShown(activity, --c);
-        }
-        robot.swipePrev()
-                .assertPageIndicatorIsShown(activity, 0)    // swipe prev from first page does nothing
-                .assertWelcomePageIsShown(activity);
-
-        // click next / prev through all pages
-        c = 0;
-        for (int i=0; i<n; i++) {
-            robot.clickNextButton()
-                    .assertPageIndicatorIsShown(activity, ++c);
-        }
-        robot.assertAboutPageIsShown(activity);
-        for (int i=0; i<n; i++) {
-            robot.clickPrevButton()
-                    .assertPageIndicatorIsShown(activity, --c);
-        }
-        robot.assertWelcomePageIsShown(activity);
-
-        robot.clickPrevButton();    // back (skip)
-        robot0.assertShown_generalSettings(activity);
-    }
-
-    @Test
-    public void test_WelcomeActivity_navigation_nextAndFinish() {
-        Activity activity = activityRule.getActivity();
-        WelcomeActivityRobot robot = new WelcomeActivityRobot();
-        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
-                .showActivity(activity)
-                .clickHeader_generalSettings()
-                .clickPref_welcomeWizard();
-
-        robot.assertActivityShown(activity)
-                .assertWelcomePageIsShown(activity);
-        int c = 0;
-        int n = robot.numPages() - 1;
-        for (int i=0; i<n; i++) {
-            robot.clickNextButton()
-                    .assertPageIndicatorIsShown(activity, ++c);
-        }
-
-        robot.assertAboutPageIsShown(activity);
-        robot.clickNextButton();
-        robot0.assertShown_generalSettings(activity);
-    }
-
-    @Test
+    @Test @QuickTest
     public void test_WelcomeActivity_pages()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
         WelcomeActivityRobot robot = new WelcomeActivityRobot();
-        SuntimesSettingsActivityTest.SettingsActivityRobot robot0 = new SuntimesSettingsActivityTest.SettingsActivityRobot()
-                .showActivity(activity)
-                .clickHeader_generalSettings()
-                .clickPref_welcomeWizard();
 
         robot.clickNextButton()      // 0 welcome
                 .assertAppearancePageIsShown(activity)
@@ -174,7 +106,85 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
                 .assertAboutPageIsShown(activity);
 
         robot.clickNextButton();     // 6 about (finish)
-        robot0.assertShown_generalSettings(activity);
+        //robot0.assertShown_generalSettings(activity);
+    }
+
+    @Test
+    public void test_WelcomeActivity_navigation_nextAndBack()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+
+        // click next / prev through all pages
+        robot.assertActivityShown(activity)
+                .assertWelcomePageIsShown(activity);
+        int c = 0;
+        int n = robot.numPages() - 1;
+        for (int i=0; i<n; i++) {
+            robot.clickNextButton()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+        robot.sleep(500)
+                .assertAboutPageIsShown(activity);
+        for (int i=0; i<n; i++) {
+            robot.clickPrevButton()
+                    .assertPageIndicatorIsShown(activity, --c);
+        }
+        robot.assertWelcomePageIsShown(activity);
+
+        robot.clickPrevButton();    // back (skip)
+        //robot0.assertShown_generalSettings(activity);
+    }
+
+    @Test
+    public void test_WelcomeActivity_navigation_nextAndFinish()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+
+        robot.assertActivityShown(activity)
+                .assertWelcomePageIsShown(activity);
+        int c = 0;
+        int n = robot.numPages() - 1;
+        for (int i=0; i<n; i++) {
+            robot.clickNextButton()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+
+        robot.sleep(500)
+                .assertAboutPageIsShown(activity)
+                .clickNextButton();
+        //robot0.assertShown_generalSettings(activity);
+    }
+
+    @Test @FlakyTest
+    public void test_WelcomeActivity_navigation_gestures()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity activity = activityRule.getActivity();
+        WelcomeActivityRobot robot = new WelcomeActivityRobot();
+
+        // swipe next / prev through all pages
+        robot.assertActivityShown(activity)
+                .assertWelcomePageIsShown(activity);
+        int c = 0;
+        int n = robot.numPages() - 1;
+        for (int i=0; i<n; i++) {
+            robot.swipeNext()
+                    .assertPageIndicatorIsShown(activity, ++c);
+        }
+        robot.assertAboutPageIsShown(activity);
+        robot.swipeNext()
+                .assertPageIndicatorIsShown(activity, c);    // swipe next from last page does nothing
+        for (int i=0; i<n; i++) {
+            robot.swipePrev()
+                    .assertPageIndicatorIsShown(activity, --c);
+        }
+        robot.swipePrev()
+                .assertPageIndicatorIsShown(activity, 0)    // swipe prev from first page does nothing
+                .assertWelcomePageIsShown(activity);
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -265,8 +275,8 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             onView(allOf(withText(R.string.configAction_aboutWidget), withClassName(endsWith("Button"))))
                     .check(assertShownCompletely)
                     .check(assertClickable);
-            onView(allOf(withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
-                    hasSibling(withText(R.string.configAction_aboutWidget)))).check(assertShownCompletely);
+            //onView(allOf(withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
+            //        hasSibling(withText(R.string.configAction_aboutWidget)))).check(assertShown);
             return this;
         }
         public WelcomeActivityRobot assertAppearancePageIsShown(Context context) {

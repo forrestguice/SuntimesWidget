@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.moon;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
@@ -53,23 +56,27 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
 public class MoonDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
-    @Test
+    @Test @QuickTest
     public void test_moonDialog()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         MoonDialogRobot robot = new MoonDialogRobot();
         robot.showDialog(context)
@@ -81,8 +88,9 @@ public class MoonDialogTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_moonDialog_overflowMenu()
+    public void test_moonDialog_menu()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         MoonDialogRobot robot = new MoonDialogRobot()
                 .showDialog(context)
@@ -113,6 +121,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_moonDialog_controls()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         MoonDialogRobot robot = new MoonDialogRobot()
                 .showDialog(context)

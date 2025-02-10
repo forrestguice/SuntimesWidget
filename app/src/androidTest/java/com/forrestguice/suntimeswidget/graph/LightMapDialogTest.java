@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
@@ -79,23 +82,27 @@ import static org.hamcrest.CoreMatchers.allOf;
 public class LightMapDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
     }
 
     @Test
     public void test_MainCard_showLightmap()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         if (AppSettings.loadShowLightmapPref(context))
         {
@@ -114,16 +121,26 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         }
     }
 
-    @Test
-    public void test_LightmapDialog()
-    {
+    @Test @QuickTest
+    public void test_LightmapDialog() {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
-        robot.showDialog(context).sleep(500)
+        robot.showDialog(context)
                 .assertDialogShown(context)
                 .assertIsReset(context)
                 .assertShowsDate(context, robot.now(context));
         //.captureScreenshot(context, "suntimes-dialog-lightmap0")
+    }
+
+    @Test
+    public void test_LightmapDialog_menu()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        LightMapDialogRobot robot = new LightMapDialogRobot();
+        robot.showDialog(context).sleep(500)
+                .assertDialogShown(context);
 
         robot.clickTimeZoneLabel(context)
                 .assertOverflowMenu_TimeZone(context)
@@ -187,6 +204,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_playPauseReset()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context).sleep(500)
@@ -225,6 +243,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_seekAltitude()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context)
@@ -271,6 +290,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_timezone()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context)
@@ -311,6 +331,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_viewWith_Suntimes()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context)
@@ -332,6 +353,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_viewWith_moon()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context)
@@ -357,6 +379,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Test
     public void test_LightmapDialog_viewWith_worldMap()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context)

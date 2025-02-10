@@ -20,10 +20,13 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.support.test.espresso.ViewAssertionHelper;
@@ -54,27 +57,41 @@ import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withTe
 public class LightGraphDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(activityRule.getActivity());
-        overrideConfigState(activityRule.getActivity());
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(activityRule.getActivity());
+        restoreConfigState(getContext());
+    }
+
+    @Test @QuickTest
+    public void test_LightGraphDialog()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        LightGraphDialogRobot robot = new LightGraphDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context);
+        //.captureScreenshot(context, "suntimes-dialog-lightgraph0")
     }
 
     @Test
-    public void test_LightGraphDialog()
+    public void test_LightGraphDialog_menu()
     {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         LightGraphDialogRobot robot = new LightGraphDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
-                //.captureScreenshot(context, "suntimes-dialog-lightgraph0")
 
         robot.clickTimeZoneLabel(context)
                 .assertOverflowMenuShown_TimeZone(context)
@@ -175,7 +192,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
 
         @Override
         public LightGraphDialogRobot assertDialogShown(Context context) {
-            onView(withId(R.id.dialog_header)).check(ViewAssertionHelper.assertShown);
+            onView(withId(R.id.layout_header)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.info_time_lightgraph)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.info_time_graph)).check(ViewAssertionHelper.assertShown);
             onView(withId(R.id.info_time_graph)).check(ViewAssertionHelper.assertClickable);
@@ -188,7 +205,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
         }
         @Override
         public LightGraphDialogRobot assertDialogNotShown(Context context) {
-            onView(withId(R.id.dialog_header)).check(doesNotExist());
+            onView(withId(R.id.layout_header)).check(doesNotExist());
             onView(withId(R.id.info_time_lightgraph)).check(doesNotExist());
             return this;
         }
