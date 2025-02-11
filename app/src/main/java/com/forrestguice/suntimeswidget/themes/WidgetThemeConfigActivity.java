@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ContentValues;
@@ -1864,6 +1865,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
                 if (wallpaperManager != null)
                 {
+                    @SuppressLint("MissingPermission")
                     Drawable wallpaper = wallpaperManager.getDrawable();
                     if (background != null && wallpaper != null) {
                         background.setImageDrawable(wallpaper);

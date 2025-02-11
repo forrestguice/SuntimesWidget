@@ -485,7 +485,8 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             if (cursor != null)
             {
                 cursor.moveToFirst();
-                String filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                int i = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                String filename = ((i >= 0) ? cursor.getString(i) : null);
                 cursor.close();
                 return filename;
             }

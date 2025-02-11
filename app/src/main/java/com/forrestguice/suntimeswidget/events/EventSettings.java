@@ -181,7 +181,8 @@ public class EventSettings
                 {
                     cursor.moveToFirst();
                     if (!cursor.isAfterLast()) {
-                        retValue = cursor.getString(cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY));
+                        int i = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
+                        retValue = ((i >= 0) ? cursor.getString(i) : null);
                     }
                     cursor.close();
                 }
