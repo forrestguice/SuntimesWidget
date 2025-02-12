@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
@@ -33,6 +34,9 @@ import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject2;
 import android.util.Log;
 import android.view.View;
 
@@ -47,6 +51,7 @@ import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import org.hamcrest.Matcher;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -915,8 +920,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.configAction_setTimeZone)).perform(click());
             return this;
         }
+        public MainActivityRobot clickActionBar_updateLocation(Context context) {
+            onView(withContentDescription(R.string.configAction_refreshLocation)).perform(click());
+            return this;
+        }
         public MainActivityRobot clickActionBar_setLocation(Context context) {
-            onView(withText(R.string.configAction_addLocation)).perform(click());
+            onView(withContentDescription(R.string.configAction_addLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_sunPosition(Context context) {
@@ -996,5 +1005,50 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
 
+    }
+
+    /**
+     * MainActivityAutomator
+     */
+    public static class MainActivityAutomator
+    {
+        protected UiDevice device;
+
+        public MainActivityAutomator() {
+            device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        }
+
+        public MainActivityAutomator showOverflowMenu()
+        {
+            final UiObject2 button = device.findObject(By.desc("More options"));
+            if (button != null && button.isClickable()) {
+                button.click();
+            } else {
+                Assert.fail("UIObject not found! overflow menu");
+            }
+            return this;
+        }
+
+        public MainActivityAutomator clickOverflowMenu_viewDate()
+        {
+            final UiObject2 button = device.findObject(By.text("View date"));    // TODO: this line doesn't work...
+            if (button != null && button.isClickable()) {
+                button.click();
+            } else {
+                Assert.fail("UIObject not found: refresh button");
+            }
+            return this;
+        }
+
+        public MainActivityAutomator clickActionBar_refreshLocation()
+        {
+            final UiObject2 button = device.findObject(By.desc("Refresh"));
+            if (button != null && button.isClickable()) {
+                button.click();
+            } else {
+                Assert.fail("UIObject not found: refresh button");
+            }
+            return this;
+        }
     }
 }
