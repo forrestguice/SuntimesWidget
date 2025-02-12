@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -33,12 +34,14 @@ import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.TimeDateDialogTest;
+import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -56,14 +59,24 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import java.io.IOException;
 import java.util.Calendar;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertContainsText;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertEnabled;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.tabLayout;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -327,7 +340,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         }
 
         public AlarmDialogRobot selectTabAtPosition(int tabPosition) {
-            onView(withId(R.id.tabLayout)).perform(ViewActions.selectTabAtPosition(tabPosition));
+            onView(withId(R.id.tabLayout)).perform(ViewActionsContrib.selectTabAtPosition(tabPosition));
             return this;
         }
         public AlarmDialogRobot assertTabAtPosition(Context context, int tabPosition)

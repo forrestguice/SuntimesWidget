@@ -27,6 +27,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.content.Intent;
 import android.widget.DatePicker;
 
+import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,6 +44,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 
 import java.io.IOException;
 
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 

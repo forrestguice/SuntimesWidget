@@ -32,9 +32,9 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.support.test.filters.LargeTest;
-import com.forrestguice.support.test.rule.ActivityTestRule;
-import com.forrestguice.support.test.runner.AndroidJUnit4;
+import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,20 +44,20 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
-import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
-import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
-import static com.forrestguice.support.test.espresso.action.ViewActions.click;
-import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
-import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 

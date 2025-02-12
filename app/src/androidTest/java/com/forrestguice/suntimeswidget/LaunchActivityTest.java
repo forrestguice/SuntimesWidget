@@ -23,9 +23,9 @@ import android.content.Intent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.support.test.filters.LargeTest;
-import com.forrestguice.support.test.rule.ActivityTestRule;
-import com.forrestguice.support.test.runner.AndroidJUnit4;
+import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;

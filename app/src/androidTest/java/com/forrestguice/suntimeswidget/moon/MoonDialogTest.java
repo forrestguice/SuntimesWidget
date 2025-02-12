@@ -29,10 +29,11 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.support.test.espresso.ViewAssertionHelper;
-import com.forrestguice.support.test.filters.LargeTest;
-import com.forrestguice.support.test.rule.ActivityTestRule;
-import com.forrestguice.support.test.runner.AndroidJUnit4;
+import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+
+import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,13 +43,13 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static com.forrestguice.support.test.espresso.Espresso.onView;
-import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static com.forrestguice.support.test.espresso.action.ViewActions.click;
-import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
-import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
 @BehaviorTest

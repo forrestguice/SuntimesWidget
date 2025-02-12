@@ -22,9 +22,6 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
@@ -32,9 +29,6 @@ import android.support.test.filters.LargeTest;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
-import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
-
-import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import android.support.test.rule.ActivityTestRule;
@@ -48,6 +42,7 @@ import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 
 import org.hamcrest.Matcher;
 
@@ -68,32 +63,21 @@ import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.AlarmDialogTest.cancelAlarmDialog;
-import static com.forrestguice.suntimeswidget.AlarmDialogTest.verifyAlarmDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.cancelEquinoxDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.cancelLightmapDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.showEquinoxDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.showLightmapDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.verifyEquinoxDialog;
-import static com.forrestguice.suntimeswidget.DialogTest.verifyLightmapDialog;
 
-import static com.forrestguice.suntimeswidget.LocationDialogTest.applyLocationDialog;
-import static com.forrestguice.suntimeswidget.LocationDialogTest.inputLocationDialog_mode;
-import static com.forrestguice.suntimeswidget.LocationDialogTest.showLocationDialog;
-import static com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest.verifyGeneralSettings;
-
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
