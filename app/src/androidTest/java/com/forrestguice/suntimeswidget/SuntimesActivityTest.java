@@ -747,10 +747,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_mainActivity_fullUpdateReciever()
+    public void test_mainActivity_fullUpdateReciever() {
+        test_mainActivity_fullUpdateReciever(activityRule.getActivity());
+    }
+    public static void test_mainActivity_fullUpdateReciever(final SuntimesActivity activity)
     {
         // test PendingIntent
-        final SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
         PendingIntent fullUpdateIntent = activity.getFullUpdateIntent(activity);
         try {
             fullUpdateIntent.send();
@@ -769,24 +771,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
                 assertTrue("app hasn't crashed", activity.isFinishing());
             }
         });
-    }
-
-    @Test
-    public void test_issue408()
-    {
-        // test "show moon" enabled
-        SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
-        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
-        activity.finish();
-        activityRule.launchActivity(activity.getIntent());
-        test_mainActivity_fullUpdateReciever();
-
-        // test "show moon" disabled
-        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
-        activity = (SuntimesActivity) activityRule.getActivity();
-        activity.finish();
-        activityRule.launchActivity(activity.getIntent());
-        test_mainActivity_fullUpdateReciever();
     }
 
     @Test

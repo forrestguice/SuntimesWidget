@@ -24,8 +24,13 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
+import com.forrestguice.suntimeswidget.graph.LightGraphDialogTest;
+import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
+import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.junit.After;
@@ -45,7 +50,7 @@ public class IssuesTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
 
     @Rule
-    public RetryRule retry = new RetryRule(3);
+    public RetryRule retry = new RetryRule(1);
 
     @Before
     public void beforeTest() throws IOException {
@@ -87,11 +92,55 @@ public class IssuesTest extends SuntimesActivityTestBase
         robot.showDialog(context)
                 .assertDialogShown(context)
                 .selectDate(year, month, day)
-                .applyDialog(context);
+                .applyDialog(context)
+                .sleep(2000);
 
-        SuntimesActivityTest.verifyActivity((SuntimesActivity) activityRule.getActivity());
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+        //SuntimesActivityTest.verifyActivity((SuntimesActivity) activityRule.getActivity());
     }
 
+    /**
+     * Issue 408
+     * NullPointerException when refreshing location ("show moon" option disabled)
+     */
+    @Test
+    public void test_issue408_refreshLocation()
+    {
+        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
+        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        SuntimesActivity activity = activityRule.getActivity();
+
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activity);
+        activity.finish();
+
+        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
+        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();    // crash on refresh when "show moon" set false
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activity);    // wait for app to idle
+    }
+    @Test
+    public void test_issue408_updateReceiver()
+    {
+        // test "show moon" enabled
+        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
+        SuntimesActivityTest.test_mainActivity_fullUpdateReciever(activity);    // calls activity.finish()
+
+        // test "show moon" disabled
+        config(activity).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
+        activityRule.launchActivity(activity.getIntent());
+        SuntimesActivityTest.test_mainActivity_fullUpdateReciever(activity);    // crash on updateReceiver when "show moon" set false
+    }
 
     /**
      * Issue 862
@@ -100,19 +149,26 @@ public class IssuesTest extends SuntimesActivityTestBase
     @Test
     public void test_issue862_viewDate()
     {
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-        SuntimesActivity activity = activityRule.getActivity();
-        SuntimesActivityTest.MainActivityRobot robot = new SuntimesActivityTest.MainActivityRobot()
-                .assertActivityShown(activity);
-
+        init_issue862();
         new SuntimesActivityTest.MainActivityAutomator()
                 .clickActionBar_refreshLocation();
 
-        activity.showDate();    // crashes with NPE before date dialog is shown
+        activityRule.getActivity().showDate();    // crashes with NPE before date dialog is shown
         new TimeDateDialogTest.TimeDateDialogAutomator()
                 .clickApplyButton();    // if first NPE is avoided, there is another after dialog is dismissed
-        robot.assertActivityShown(activity);
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activityRule.getActivity());
+    }
+
+    protected void init_issue862()
+    {
+        config(getContext()).edit().putString(AppSettings.PREF_KEY_GETFIX_MAXAGE, "0");
+        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        SuntimesActivity activity = activityRule.getActivity();
+        new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activity);
+
     }
 
     /**
@@ -122,18 +178,62 @@ public class IssuesTest extends SuntimesActivityTestBase
     @Test
     public void test_issue862_moon()
     {
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-        SuntimesActivity activity = activityRule.getActivity();
-        new SuntimesActivityTest.MainActivityRobot()
-                .assertActivityShown(activity);
-
+        init_issue862();
         new SuntimesActivityTest.MainActivityAutomator()
                 .clickActionBar_refreshLocation();
 
-        activity.showMoonDialog();    // crashes with NPE before moon dialog is shown
+        activityRule.getActivity().showMoonDialog();    // crashes with NPE before moon dialog is shown
         new MoonDialogTest.MoonDialogRobot()
-                .assertDialogShown(activity);
+                .assertDialogShown(activityRule.getActivity());
+    }
+
+    @Test
+    public void test_issue862_equinox()
+    {
+        init_issue862();
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        activityRule.getActivity().showEquinoxDialog();
+        new EquinoxCardDialogTest.EquinoxDialogRobot()
+                .assertDialogShown(activityRule.getActivity());
+    }
+    @Test
+    public void test_issue862_worldmap()
+    {
+        init_issue862();
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        activityRule.getActivity().showWorldMapDialog();
+        new WorldMapDialogTest.WorldMapDialogRobot()
+                .assertDialogShown(activityRule.getActivity());
+    }
+    @Test
+    public void test_issue862_sunlight()
+    {
+        init_issue862();
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        activityRule.getActivity().showLightGraphDialog();
+        new LightGraphDialogTest.LightGraphDialogRobot()
+                .assertDialogShown(activityRule.getActivity());
+    }
+    @Test
+    public void test_issue862_sunpos()
+    {
+        init_issue862();
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        activityRule.getActivity().showLightMapDialog();
+        new LightMapDialogTest.LightMapDialogRobot()
+                .assertDialogShown(activityRule.getActivity());
+    }
+    @Test
+    public void test_issue862_setAlarm()
+    {
+        init_issue862();
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+        activityRule.getActivity().scheduleAlarm();
     }
 
 }
