@@ -99,6 +99,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         options.init(context);
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
@@ -113,6 +114,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return retValue;
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
