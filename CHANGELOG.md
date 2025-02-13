@@ -1,10 +1,11 @@
 ### ~
 
-### v0.16.5 (2025-02-04)
-* adds "show date" to options; the moon dialog, solstice dialog, or solstice widget will only show the number of days remaining (#846, #847).
+### v0.16.5 (2025-02-14)
+* adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
 * adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.
 * enhances the alarm dismiss activity to display the current time using the alarm's time zone (#849).
-* enhances the "custom event" alarm selector so that it displays a preview.
+* enhances the "custom event" alarm selector to display a time preview.
+* fixes app crash when using menu actions while refreshing location (#862).
 * fixes app crash when toggling wallpaper from the theme configuration activity.
 * fixes bug where "warnings only show the first message when multiple warnings are queued".
 * fixes bug where "gradually increase volume" is only applied to the left channel.
@@ -16,7 +17,7 @@
 * changes defaults; "bright alarms" are now enabled by default.
 * changes defaults; "gradually increase brightness" changed from 60 to 30 seconds.
 * changes defaults; "gradually increase volume" changed from 10 to 30 seconds.
-* refactors codebase to remove direct dependence on the android support library (#859); extends UI test coverage (#860).
+* extends UI test coverage (#864).
 
 ### v0.16.4 (2024-12-04)
 * fixes bug "boot completed hangs after phone restart" (#842).
