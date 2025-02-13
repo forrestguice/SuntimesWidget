@@ -18,11 +18,13 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -56,6 +58,40 @@ public class IssuesTest extends SuntimesActivityTestBase
         setAnimationsEnabled(true);
         restoreConfigState(getContext());
     }
+
+    /**
+     * Issue 74
+     * app crash (latitude edge case) described in issue #74.
+     */
+    @Test
+    public void test_issue74()
+    {
+        int year = 2017; int month = 1; int day = 19;
+        String latitude = "83.124";
+        String longitude = "23.1592";
+
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+
+        // open the location dialog, and set test location
+        new LocationDialogTest.LocationDialogRobot()
+                .showDialog(context)
+                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .clickLocationEditButton()
+                .inputLocationEditValues("TestAppCrash74", latitude, longitude)
+                .assertLocationEditCoordinates(latitude, longitude)
+                .applyDialog(context);
+
+        // open the date dialog and change the date
+        TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
+        robot.showDialog(context)
+                .assertDialogShown(context)
+                .selectDate(year, month, day)
+                .applyDialog(context);
+
+        SuntimesActivityTest.verifyActivity((SuntimesActivity) activityRule.getActivity());
+    }
+
 
     /**
      * Issue 862

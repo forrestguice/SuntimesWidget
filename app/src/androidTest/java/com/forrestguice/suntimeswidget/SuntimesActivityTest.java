@@ -118,7 +118,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_mainActivity()
     {
-        verifyActivity();
+        verifyActivity((SuntimesActivity) activityRule.getActivity());
         captureScreenshot(activityRule.getActivity(), "suntimes-activity-main0");
 
         MainActivityRobot robot = new MainActivityRobot()
@@ -127,21 +127,21 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         robot.captureScreenshot(activityRule.getActivity(), "suntimes-activity-main1");
 
         robot.doubleRotateDevice(activityRule.getActivity());
-        verifyActivity();
+        verifyActivity((SuntimesActivity) activityRule.getActivity());
     }
 
-    public void verifyActivity()
+    public static void verifyActivity(SuntimesActivity activity)
     {
-        verifyTheme(activityRule.getActivity());
-        verifyLocale(activityRule.getActivity());
-        verifyActionBar();
-        verifyClock();
-        verifyNote(activityRule.getActivity());
+        verifyTheme(activity);
+        verifyLocale(activity);
+        verifyActionBar(activity);
+        verifyClock(activity);
+        verifyNote(activity);
         verifyTimeCard();
         new MainActivityRobot()
                 .assertShown_lightmap(true)
-                .assertShown_solsticeEquinox(activityRule.getActivity(), true)
-                .assertShown_dataSourceUI(activityRule.getActivity(), true);
+                .assertShown_solsticeEquinox(activity, true)
+                .assertShown_dataSourceUI(activity, true);
     }
 
     public static void verifyTheme(SuntimesActivity activity)
@@ -165,11 +165,11 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
     }
 
-    public void verifyActionBar()
+    public static void verifyActionBar(Activity activity)
     {
         onView(withId(R.id.action_location_add)).check(assertShown);
 
-        WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activityRule.getActivity(), 0);
+        WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
         if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
             onView(withId(R.id.action_location_refresh)).check(assertShown);
@@ -179,9 +179,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
     }
 
-    public void verifyClock()
+    public static void verifyClock(SuntimesActivity activity)
     {
-        SuntimesActivity activity = activityRule.getActivity();
         SuntimesRiseSetDataset dataset = activity.dataset;
         SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
         String timezoneID = dataset.timezone().getID();
@@ -608,36 +607,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
     }
 
-    /**
-     * UI Test; test app crash (latitude edge case) described in issue #74.
-     */
-    @Test
-    public void test_appCrash74()
-    {
-        int year = 2017; int month = 1; int day = 19;
-        String latitude = "83.124";
-        String longitude = "23.1592";
-
-        // open the location dialog, and set test location
-        Activity context = activityRule.getActivity();
-        new LocationDialogTest.LocationDialogRobot()
-                .showDialog(context)
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
-                .clickLocationEditButton()
-                .inputLocationEditValues("TestAppCrash74", latitude, longitude)
-                .assertLocationEditCoordinates(latitude, longitude)
-                .applyDialog(context);
-
-        // open the date dialog and change the date
-        TimeDateDialogTest.TimeDateDialogRobot robot = new TimeDateDialogTest.TimeDateDialogRobot();
-        robot.showDialog(context)
-                .assertDialogShown(context)
-                .selectDate(year, month, day)
-                .applyDialog(context);
-
-        verifyActivity();
-    }
-
     @Test
     public void test_mainActivity_userSwappedCard_withSwipe()
     {
@@ -691,7 +660,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
 
 
-    public void verifyTimeCard()
+    public static void verifyTimeCard()
     {
         onView(withId(R.id.info_time_flipper1)).check(assertShown);
         // TODO
