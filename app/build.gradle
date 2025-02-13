@@ -89,6 +89,7 @@ def getGitHash()
 tasks.withType(Test) 
 {
     useJUnit {
+        includeCategories 'com.forrestguice.suntimeswidget.QuickTest'
         excludeCategories 'com.forrestguice.suntimeswidget.UnlistedTest', 'com.forrestguice.suntimeswidget.FlakeyTest'
     }
     testLogging 
