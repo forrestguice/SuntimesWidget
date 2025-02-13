@@ -1483,11 +1483,18 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void showDate(@Nullable Long datetime)
     {
+        Long startDate = card_adapter.findDateForPosition(this, 0);
+        Long endDate = card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1);
+
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
-        datePicker.setMinDate( card_adapter.findDateForPosition(this, 0) );
-        datePicker.setMaxDate( card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1) );
+        if (startDate != null) {
+            datePicker.setMinDate(startDate);
+        }
+        if (endDate != null) {
+            datePicker.setMaxDate(endDate);
+        }
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
         if (datetime != null) {
