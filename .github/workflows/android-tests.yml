@@ -67,7 +67,7 @@ jobs:
         force-avd-creation: false
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
-        script: ./gradlew connectedCheck -e annotation com.forrestguice.suntimeswidget.QuickTest
+        script: ./gradlew connectedCheck
 
     #- name: Upload artifacts (test results)
     #  uses: actions/upload-artifact@v4
