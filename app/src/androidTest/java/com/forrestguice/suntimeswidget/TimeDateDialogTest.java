@@ -25,12 +25,16 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.content.Intent;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject2;
 import android.widget.DatePicker;
 
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -146,6 +150,29 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
         @Override
         public TimeDateDialogRobot assertDialogNotShown(Context context) {
             onView(withId(R.id.appwidget_date_custom)).check(doesNotExist());
+            return this;
+        }
+    }
+
+    /**
+     * TimeDateDialogAutomator
+     */
+    public static class TimeDateDialogAutomator
+    {
+        protected UiDevice device;
+
+        public TimeDateDialogAutomator() {
+            device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        }
+
+        public TimeDateDialogAutomator clickApplyButton()
+        {
+            final UiObject2 button = device.findObject(By.desc("Set"));
+            if (button != null && button.isClickable()) {
+                button.click();
+            } else {
+                Assert.fail("UIObject not found: apply button");
+            }
             return this;
         }
     }

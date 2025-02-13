@@ -23,6 +23,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.junit.After;
@@ -58,10 +59,32 @@ public class IssuesTest extends SuntimesActivityTestBase
 
     /**
      * Issue 862
-     * Crash when performing various menu actions while location update is running
+     * Crash when showing date dialog while location update is running.
      */
     @Test
-    public void test_issue862()
+    public void test_issue862_viewDate()
+    {
+        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        SuntimesActivity activity = activityRule.getActivity();
+        SuntimesActivityTest.MainActivityRobot robot = new SuntimesActivityTest.MainActivityRobot()
+                .assertActivityShown(activity);
+
+        new SuntimesActivityTest.MainActivityAutomator()
+                .clickActionBar_refreshLocation();
+
+        activity.showDate();    // crashes with NPE before date dialog is shown
+        new TimeDateDialogTest.TimeDateDialogAutomator()
+                .clickApplyButton();    // if first NPE is avoided, there is another after dialog is dismissed
+        robot.assertActivityShown(activity);
+    }
+
+    /**
+     * Issue 862
+     * Crash when showing moon dialog while location update is running.
+     */
+    @Test
+    public void test_issue862_moon()
     {
         WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
@@ -71,8 +94,9 @@ public class IssuesTest extends SuntimesActivityTestBase
 
         new SuntimesActivityTest.MainActivityAutomator()
                 .clickActionBar_refreshLocation();
-        activity.showDate();    // crashes here with NPE before date dialog is shown
-        new TimeDateDialogTest.TimeDateDialogRobot()
+
+        activity.showMoonDialog();    // crashes with NPE before moon dialog is shown
+        new MoonDialogTest.MoonDialogRobot()
                 .assertDialogShown(activity);
     }
 
