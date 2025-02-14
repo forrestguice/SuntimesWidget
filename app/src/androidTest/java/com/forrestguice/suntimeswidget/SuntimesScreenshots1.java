@@ -31,12 +31,14 @@ import com.forrestguice.support.test.runner.AndroidJUnit4;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.support.test.espresso.Espresso.onView;
@@ -54,8 +56,14 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
     public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
 
     @Before
-    public void initScreenshots() {
+    public void initScreenshots() throws IOException {
         initConfigurations();
+        setAnimationsEnabled(false);
+    }
+
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
     }
 
     /**

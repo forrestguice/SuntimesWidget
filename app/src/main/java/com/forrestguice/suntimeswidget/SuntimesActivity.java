@@ -1479,11 +1479,18 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void showDate(@Nullable Long datetime)
     {
+        Long startDate = card_adapter.findDateForPosition(this, 0);
+        Long endDate = card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1);
+
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
-        datePicker.setMinDate( card_adapter.findDateForPosition(this, 0) );
-        datePicker.setMaxDate( card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1) );
+        if (startDate != null) {
+            datePicker.setMinDate(startDate);
+        }
+        if (endDate != null) {
+            datePicker.setMaxDate(endDate);
+        }
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
         if (datetime != null) {
@@ -1862,8 +1869,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         card_adapter.initData(context);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
-        dataset = cardData.first;
-        dataset_moon = cardData.second;
+        if (cardData != null) {
+            dataset = cardData.first;
+            dataset_moon = cardData.second;
+        }
 
         initNotes();
     }
@@ -2562,7 +2571,8 @@ public class SuntimesActivity extends AppCompatActivity
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
-        SuntimesMoonData d = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition()).second;
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
+        SuntimesMoonData d = (data != null ? data.second : null);
         moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);

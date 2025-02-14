@@ -100,6 +100,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         options.init(context);
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
@@ -114,6 +115,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return retValue;
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
@@ -156,7 +158,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new Pair<>(sun, moon);
     }
 
-    public long findDateForPosition(Context context, int position)
+    public Long findDateForPosition(Context context, int position)
     {
         if (position < 0) {
             position = 0;     // clamp invalid positions
@@ -176,6 +178,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
+        if (data_today == null) {
+            return TODAY_POSITION;
+        }
+
         Calendar today = Calendar.getInstance(data_today.first.timezone());
         today.setTimeInMillis(data_today.first.calendar().getTimeInMillis());
         today.set(Calendar.HOUR_OF_DAY, 12);
