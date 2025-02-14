@@ -1,5 +1,24 @@
 ### ~
 
+### v0.16.5 (2025-02-14)
+* adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
+* adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.
+* enhances the alarm dismiss activity to display the current time using the alarm's time zone (#849).
+* enhances the "custom event" alarm selector to display a time preview.
+* fixes app crash when using menu actions while refreshing location (#862).
+* fixes app crash when toggling wallpaper from the theme configuration activity.
+* fixes bug where "warnings only show the first message when multiple warnings are queued".
+* fixes bug where "gradually increase volume" is only applied to the left channel.
+* fixes bug where "flippable widget fails to change views" (#855).
+* fixes bug where the moon dialog opens with today's information instead of the selected day (#858).
+* fixes bug where the color collection activity loses the current selection; fixes bug where the share action is disabled for default colors.
+* fixes bug where alarm edit screen layout is cropped in landscape mode; input chips may now flow to use space more efficiently.
+* fixes bug where the "location dialog shows the wrong icon when 'use app location' is checked".
+* changes defaults; "bright alarms" are now enabled by default.
+* changes defaults; "gradually increase brightness" changed from 60 to 30 seconds.
+* changes defaults; "gradually increase volume" changed from 10 to 30 seconds.
+* extends UI test coverage (#864).
+
 ### v0.16.4 (2024-12-04)
 * fixes bug "boot completed hangs after phone restart" (#842).
 * fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
