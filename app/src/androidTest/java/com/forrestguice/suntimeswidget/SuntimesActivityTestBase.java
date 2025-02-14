@@ -27,12 +27,11 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaScannerConnection;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import com.forrestguice.support.test.espresso.FailureHandler;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
@@ -57,23 +56,20 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
-import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.hasDrawable;
-import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isSelected;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -228,25 +224,6 @@ public abstract class SuntimesActivityTestBase
             }
         }).check(matches(isDisplayed()));
         return isDisplayed[0];
-    }
-
-
-    /**
-     * @param viewInteraction a ViewInteraction wrapping some view
-     * @return true view is checked, false otherwise
-     */
-    public static boolean viewIsChecked(ViewInteraction viewInteraction)
-    {
-        final boolean[] isChecked = {true};
-        viewInteraction.withFailureHandler(new FailureHandler()
-        {
-            @Override
-            public void handle(Throwable error, Matcher<View> viewMatcher)
-            {
-                isChecked[0] = false;
-            }
-        }).check(matches(isChecked()));
-        return isChecked[0];
     }
 
     /**

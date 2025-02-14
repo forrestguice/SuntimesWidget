@@ -38,20 +38,24 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.app.FragmentInterface;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
+import com.forrestguice.support.design.widget.Snackbar;
+import com.forrestguice.support.design.app.DialogFragment;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.graphics.ColorUtils;
+import com.forrestguice.support.design.view.ViewCompat;
+import com.forrestguice.support.design.widget.ImageViewCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.PopupMenu;
+import com.forrestguice.support.design.widget.RecyclerView;
+import com.forrestguice.support.design.widget.SwitchCompat;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -156,7 +160,7 @@ public class AlarmListDialog extends DialogFragment
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.addItemDecoration(itemDecoration);
+        list.addItemDecoration(itemDecoration.get());
         list.setAdapter(adapter);
 
         if (savedState != null) {
@@ -430,8 +434,8 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -440,10 +444,7 @@ public class AlarmListDialog extends DialogFragment
                         addAlarm(context, items.toArray(new AlarmClockItem[0]));
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
 
@@ -452,8 +453,8 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), UNDO_DELETE_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -462,10 +463,7 @@ public class AlarmListDialog extends DialogFragment
                         addAlarm(getActivity(), deletedItem);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -675,10 +673,10 @@ public class AlarmListDialog extends DialogFragment
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             return;
         }
-        importAlarms(AlarmListDialog.this, context, getLayoutInflater(), REQUEST_IMPORT_URI);
+        importAlarms(FragmentCompat.create(AlarmListDialog.this), context, getLayoutInflater(), REQUEST_IMPORT_URI);
     }
 
-    public static void importAlarms(final Fragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
+    public static void importAlarms(final FragmentInterface fragment, final Context context, LayoutInflater layoutInflater, final int request)
     {
         DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
         {
@@ -686,7 +684,7 @@ public class AlarmListDialog extends DialogFragment
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
-                    fragment.startActivityForResult(intent, request);
+                    fragment.get().startActivityForResult(intent, request);
                 } catch (Exception e) {
                     Log.e("ImportAlarms", "Failed to start activity! " + e);
                 }
@@ -765,8 +763,8 @@ public class AlarmListDialog extends DialogFragment
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), UNDO_IMPORT_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -779,10 +777,7 @@ public class AlarmListDialog extends DialogFragment
                         }
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 8000;
@@ -2223,19 +2218,19 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+    private final RecyclerView.ItemDecorationInterface itemDecoration = RecyclerView.wrap(new RecyclerViewUtils.PositionMarginsItemDecoration()
     {
         @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            int position = parent.getChildAdapterPosition(view);
-            if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
-                outRect.bottom = 400;
-            } else {
-                super.getItemOffsets(outRect, view, parent, state);
-            }
+        protected int[] getMarginsPx() {
+            return marginsPx;
         }
-    };
+        private final int[] marginsPx = new int[] {0, 0, 0, 400};
+
+        @Override
+        protected int getPosition() {
+            return adapter.getItemCount() - 1;
+        }
+    });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

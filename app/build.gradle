@@ -23,6 +23,9 @@ android
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 28
+        missingDimensionStrategy 'targetApi', 'api28'
+        missingDimensionStrategy 'supportApi', 'supportlib'
+
         versionCode 118
         versionName "0.16.4"
 
@@ -53,6 +56,7 @@ android
 
 dependencies
 {
+    implementation project(path: ":app:support")
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
@@ -65,6 +69,8 @@ dependencies
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:2.2.0'
+
+    androidTestImplementation project(path: ":app:support-test")
     androidTestImplementation 'com.android.support:support-annotations:28.0.0'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test:rules:0.5'

@@ -34,16 +34,18 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+
+import com.forrestguice.support.design.app.FragmentActivity;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.Snackbar;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.widget.PopupMenu;
+import com.forrestguice.support.design.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,13 +61,13 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
+import com.forrestguice.support.design.app.AppCompatActivity;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -135,7 +137,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
 
-    private ActionBar actionBar;
     protected TextView text_appWidgetID;
     protected View progressView;
 
@@ -203,10 +204,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_solartime_help;
 
     protected String customTimezoneID;
-    protected ActionMode.Callback spinner_timezone_actionMode;
+    protected ActionModeHelper.ActionModeCallback spinner_timezone_actionMode;
     protected WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
 
     public SuntimesConfigActivity0()
     {
@@ -282,7 +283,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
-        edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+        edit_launchIntent.onResume(getSupportFragmentManagerCompat(), getData(this, appWidgetId));
     }
 
     public SuntimesData getData(Context context, int appWidgetId) {
@@ -472,7 +473,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: onTap launchActivity
         //
         edit_launchIntent = (EditActionView) findViewById(R.id.appwidget_action_launch_edit);
-        edit_launchIntent.setFragmentManager(getSupportFragmentManager());
+        edit_launchIntent.setFragmentManager(getSupportFragmentManagerCompat());
         edit_launchIntent.setData(getData(this, appWidgetId));
 
         //
@@ -668,7 +669,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
 
             @Override
-            public void onDestroyActionMode(ActionMode mode)
+            public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
             {
                 super.onDestroyActionMode(mode);
                 actionMode = null;
@@ -683,7 +684,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             locationConfig.setAutoAllowed(true);
             locationConfig.setHideMode(false);
-            locationConfig.init(this, false, this.appWidgetId);
+            locationConfig.init(FragmentActivity.wrap(this), false, this.appWidgetId);
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -965,12 +966,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
         }
     }
 
@@ -1158,8 +1158,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void dismissHelpDialog()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog dialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog dialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -1465,7 +1464,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (actionMode == null)
         {
-            actionMode = startSupportActionMode(spinner_timezone_actionMode);
+            actionMode = ActionModeHelper.wrap(startSupportActionMode(ActionModeHelper.wrap(spinner_timezone_actionMode)));
             actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
             return true;
         }
@@ -2175,7 +2174,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        ListView list = AlertDialog.getListView(dialog);
+                        int p = ((list != null) ? list.getCheckedItemPosition() : -1);
                         if ((p >= 0 && p < matchingValues.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
                             importSettings(context, matchingValues[p]);
@@ -2197,7 +2197,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        ListView list = AlertDialog.getListView(dialog);
+                        int p = ((list != null) ? list.getCheckedItemPosition() : -1);
                         if ((p >= 0 && p < values.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
                             importSettings(context, values[p]);
@@ -2235,17 +2236,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (context != null && view != null)
         {
             CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
-            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            SnackbarUtils.themeSnackbar(context, Snackbar.make(view, message, UNDO_IMPORT_MILLIS, context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v) {
                     importSettings(context, previous, false);
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            })).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 12000;

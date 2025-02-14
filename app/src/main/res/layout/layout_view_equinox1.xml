@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
 
-    <android.support.v7.widget.RecyclerView android:visibility="visible"
+    <com.forrestguice.support.design.widget.RecyclerView android:visibility="visible"
         android:id="@+id/info_equinoxsolstice_flipper1"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="6dp"

@@ -29,13 +29,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.util.Log;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
@@ -149,12 +147,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                super.onBackPressed();
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }
@@ -260,8 +253,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         }
 
         Context context = getActivity();
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
@@ -271,7 +263,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        //HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        //HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         //if (helpDialog != null) {
         //    helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         //}
@@ -289,36 +281,32 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }
-    private void collapseSheet(Dialog dialog)
+    private void collapseSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_COLLAPSED);
             }
         }
     }
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    @Override
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior(DialogInterface dialog)
     {
-        if (dialog != null)
+        BottomSheetBehaviorInterface behavior = super.initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(sheetFrameID);
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                ViewUtils.initPeekHeight(getDialog(), peekViewID);
-                return behavior;
-            }
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            initPeekHeight(getDialog(), peekViewID);
+            return behavior;
         }
         return null;
     }
@@ -337,7 +325,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                     text_title.post(new Runnable() {
                         @Override
                         public void run() {
-                            ViewUtils.initPeekHeight(getDialog(), peekViewID);
+                            initPeekHeight(getDialog(), peekViewID);
                         }
                     });
                 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout android:id="@+id/layout_header" android:orientation="horizontal"
@@ -57,11 +57,11 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/colorPanel"
+    <com.forrestguice.support.design.widget.RecyclerView android:id="@+id/colorPanel"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_header" app:layout_constraintBottom_toTopOf="@+id/layout_id"
         app:layout_constraintHeight_max="350dp"
         app:spanCount="2" tools:itemCount="6" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

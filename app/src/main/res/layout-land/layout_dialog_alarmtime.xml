@@ -34,7 +34,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatSpinner
+        <com.forrestguice.support.appcompat.widget.AppCompatSpinner
             android:id="@+id/modepicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

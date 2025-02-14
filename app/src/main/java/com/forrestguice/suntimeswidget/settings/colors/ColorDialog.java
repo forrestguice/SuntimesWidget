@@ -19,24 +19,22 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.Observer;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.widget.TabLayout;
+import com.forrestguice.support.design.view.ViewPager;
+import com.forrestguice.support.design.widget.LinearSnapHelper;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -261,7 +259,7 @@ public class ColorDialog extends BottomSheetDialogFragment
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-        ColorPickerPagerAdapter colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager());
+        ColorPickerPagerAdapter colorPagerAdapter = new ColorPickerPagerAdapter(this);
         colorPagerAdapter.setAdapterListener(new ColorPickerPagerAdapter.AdapterListener()
         {
             @Override
@@ -288,7 +286,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         recentColors.setAdapter(recentColors_adapter);
         recentColors.scrollToPosition(0);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recentColors);
 
         btn_suggest = (Button) dialogContent.findViewById(R.id.dialog_button_suggest);
@@ -372,14 +370,12 @@ public class ColorDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 
