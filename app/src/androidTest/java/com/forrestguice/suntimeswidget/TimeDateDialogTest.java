@@ -32,7 +32,7 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject2;
 import android.widget.DatePicker;
 
-import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
+import com.forrestguice.support.test.espresso.contrib.PickerActions;
 
 import org.junit.After;
 import org.junit.Assert;

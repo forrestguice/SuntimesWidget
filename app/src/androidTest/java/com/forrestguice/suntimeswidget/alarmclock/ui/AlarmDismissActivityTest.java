@@ -30,9 +30,9 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.support.espresso.ViewInteractionHelper;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,17 +42,17 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib.swipeLeftTo;
-import static com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib.swipeRightTo;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeLeftTo;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeRightTo;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 

@@ -28,7 +28,7 @@ import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
 
 import org.junit.After;
 import org.junit.Before;

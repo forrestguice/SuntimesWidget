@@ -45,9 +45,9 @@ import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertEnabled;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
-import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertEnabled;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.navigationButton;
 
 @LargeTest
 @BehaviorTest

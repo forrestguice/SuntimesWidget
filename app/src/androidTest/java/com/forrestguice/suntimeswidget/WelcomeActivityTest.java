@@ -45,11 +45,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShownCompletely;
-import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.hasDrawable;
-import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withIndex;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShownCompletely;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.hasDrawable;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchersContrib.withIndex;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 
