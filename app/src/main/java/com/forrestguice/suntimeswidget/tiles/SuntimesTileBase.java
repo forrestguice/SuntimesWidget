@@ -29,9 +29,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,12 +154,12 @@ public abstract class SuntimesTileBase
             {
                 startUpdateTask(context, d);
 
-                Button settingsButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                Button settingsButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
                 if (settingsButton != null) {
                     settingsButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, configIntent));
                 }
 
-                Button launchButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                Button launchButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_POSITIVE);
                 if (launchButton != null) {
                     launchButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, launchIntent));
                 }

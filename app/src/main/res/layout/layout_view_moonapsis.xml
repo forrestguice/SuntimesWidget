@@ -21,7 +21,7 @@
     <FrameLayout
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
+        <com.forrestguice.support.design.widget.RecyclerView
             android:id="@+id/moonapsis_card"
             android:layout_width="match_parent" android:layout_height="wrap_content" />
 

@@ -20,9 +20,9 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;

@@ -26,14 +26,15 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.Fragment;
+
+import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.app.FragmentPagerAdapter;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.view.ViewPager;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -112,7 +113,7 @@ public class WelcomeActivity extends AppCompatActivity
             intent.removeExtra(EXTRA_PAGE);
         }
 
-        pagerAdapter = new WelcomeFragmentAdapter(this, getSupportFragmentManager());
+        pagerAdapter = new WelcomeFragmentAdapter();
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
@@ -191,9 +192,9 @@ public class WelcomeActivity extends AppCompatActivity
         public void onPageSelected(int position)
         {
             //Log.d("DEBUG", "onPageSelected: " + position);
-            if (saveSettings(getSupportFragmentManager(), previousPosition))
+            if (saveSettings(previousPosition))
             {
-                updateViews(getSupportFragmentManager(), position);
+                updateViews(position);
                 setIndicator(position);
                 prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
                 nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
@@ -253,7 +254,7 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void onDone()
     {
-        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
+        saveSettings(pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
         setResult(RESULT_OK, getResultData());
         finish();
@@ -261,14 +262,13 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void saveSettings()
     {
-        FragmentManager fragments = getSupportFragmentManager();
         for (int i=0; i<pagerAdapter.getCount(); i++) {
-            saveSettings(fragments, i);
+            saveSettings(i);
         }
     }
-    private boolean saveSettings(FragmentManager fragments, int position)
+    private boolean saveSettings(int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(pager, position);
         if (page != null) {
             if (page.validateInput(WelcomeActivity.this)) {
                 return page.saveSettings(WelcomeActivity.this);
@@ -276,25 +276,25 @@ public class WelcomeActivity extends AppCompatActivity
         }
         return false;
     }
-    private boolean validateInput(FragmentManager fragments, int position)
+    private boolean validateInput(int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(pager, position);
         if (page != null) {
             return page.validateInput(WelcomeActivity.this);
         }
         return true;
     }
-    private void updateViews(FragmentManager fragments, int position)
+    private void updateViews(int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(pager, position);
         if (page != null) {
             page.updateViews(WelcomeActivity.this);
         }
     }
 
-    public static WelcomeFragment getPageFragment(FragmentManager fragments, ViewPager pager, int position) {
+    public WelcomeFragment getPageFragment(ViewPager pager, int position) {
         // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
-        return (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
+        return (WelcomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
     }
 
     public void showAbout( View v )
@@ -325,9 +325,11 @@ public class WelcomeActivity extends AppCompatActivity
     {
         protected ArrayList<WelcomeFragmentPage> pages = new ArrayList<>();
 
-        public WelcomeFragmentAdapter(Context context, FragmentManager fragments)
+        public WelcomeFragmentAdapter()
         {
-            super(fragments);
+            super(WelcomeActivity.this.getSupportFragmentManager());
+            Context context = WelcomeActivity.this;
+
             pages.add(new WelcomeFragmentPage() {    // 0; first page
                 public WelcomeFragment newInstance() {
                     return WelcomeFirstPageFragment.newInstance();
@@ -757,10 +759,7 @@ public class WelcomeActivity extends AppCompatActivity
         private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
-                FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null) {
-                    return (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-                }
+                return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
             }
             return null;
         }
@@ -862,8 +861,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected TimeZoneDialog getTimeZoneDialog() {
-            FragmentManager fragments = getChildFragmentManager();
-            return fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog") : null;
+            return (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog");
         }
 
         @Override
@@ -1155,7 +1153,7 @@ public class WelcomeActivity extends AppCompatActivity
                 if (importTask != null) {
                     Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
                 }
-                AlarmListDialog.importAlarms(WelcomeAlarmsFragment.this, getContext(), getLayoutInflater(), IMPORT_REQUEST);
+                AlarmListDialog.importAlarms(FragmentCompat.create(WelcomeAlarmsFragment.this), getContext(), getLayoutInflater(), IMPORT_REQUEST);
             }
         };
 

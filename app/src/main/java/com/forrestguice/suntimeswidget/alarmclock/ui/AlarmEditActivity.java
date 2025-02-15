@@ -32,16 +32,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.graphics.drawable.DrawableCompat;
+import com.forrestguice.support.design.app.AlertDialog;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.design.widget.PopupMenu;
+import com.forrestguice.support.design.widget.Toolbar;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
@@ -285,17 +283,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = editor.getItem();
-            actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
+            getSupportActionBar().setTitle(item != null ? item.type.getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
             if (actionBarBackground != null) {
-                actionBar.setBackgroundDrawable(actionBarBackground);
+                getSupportActionBar().setBackgroundDrawable(actionBarBackground);
             }
         }
     }
@@ -352,39 +349,37 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void restoreDialogs()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-
-        AlarmCreateDialog eventDialog1 = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+        AlarmCreateDialog eventDialog1 = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
         if (eventDialog1 != null) {
             eventDialog1.setOnAcceptedListener(onPickEventAccepted);
             eventDialog1.setOnNeutralListener(onPickEventCanceled);
             eventDialog1.setOnCanceledListener(onPickEventCanceled);
         }
 
-        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
+        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT);
         if (repeatDialog != null) {
             repeatDialog.setOnAcceptedListener(onRepetitionChanged);
         }
 
-        AlarmLabelDialog labelDialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+        AlarmLabelDialog labelDialog = (AlarmLabelDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LABEL);
         if (labelDialog != null)
         {
             labelDialog.setOnAcceptedListener(onLabelChanged);
         }
 
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null) {
             locationDialog.setDialogListener(onLocationChanged);
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
 
         if (Build.VERSION.SDK_INT >= 11)
         {
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null) {
                 offsetDialog.setOnAcceptedListener(onOffsetChanged);
             }
@@ -970,8 +965,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
+            AlarmLabelDialog dialog = (AlarmLabelDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LABEL);
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
@@ -1000,8 +994,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_NOTE);
+            AlarmLabelDialog dialog = (AlarmLabelDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_NOTE);
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
@@ -1033,8 +1026,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET + 1);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET + 1);
             if (editor != null && offsetDialog != null)
             {
                 AlarmClockItem item = editor.getItem();
@@ -1069,8 +1061,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
@@ -1089,8 +1080,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
             if (editor != null && dialog != null) {
                 dialog.dismiss();
             }
@@ -1175,7 +1165,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
-            FragmentManager fragments = getSupportFragmentManager();
             if (editor != null)
             {
                 AlarmClockItem item = editor.getItem();
@@ -1205,8 +1194,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT + 1);
+            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_REPEAT + 1);
 
             if (editor != null && repeatDialog != null)
             {
@@ -1254,9 +1242,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onTypeChanged(AlarmClockItem forItem)
     {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
         invalidateOptionsMenu();
     }

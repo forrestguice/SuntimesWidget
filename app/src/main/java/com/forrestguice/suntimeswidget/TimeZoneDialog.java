@@ -26,19 +26,18 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.app.AppCompatActivity;
 
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 
 import android.util.AttributeSet;
 import android.util.Log;
@@ -727,7 +726,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         } else {
             // LEGACY; ActionMode for pre HONEYCOMB
             AppCompatActivity activity = (AppCompatActivity)getActivity();
-            android.support.v7.view.ActionMode actionMode = activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            if (activity == null)
+                return false;
+
+            this.actionMode = ActionModeHelper.wrap(activity.startSupportActionMode(getString(R.string.timezone_sort_contextAction), ActionModeHelper.wrap(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -747,17 +749,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 }
 
                 @Override
-                public void onDestroyActionMode(android.support.v7.view.ActionMode mode)
+                public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode)
                 {
                     super.onDestroyActionMode(mode);
                     TimeZoneDialog.this.actionMode = null;
                 }
-            });
-            if (actionMode != null)
-            {
-                this.actionMode = actionMode;
-                actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
-            }
+            })));
         }
 
         view.setSelected(true);
@@ -913,8 +910,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -952,7 +948,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialog) {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 
@@ -1001,14 +997,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

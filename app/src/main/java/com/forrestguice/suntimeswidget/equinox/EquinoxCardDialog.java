@@ -30,19 +30,16 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.widget.ImageViewCompat;
+import com.forrestguice.support.design.widget.GridLayoutManager;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.LinearSnapHelper;
+import com.forrestguice.support.design.widget.PopupMenu;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -78,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -108,21 +106,25 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         setArguments(new Bundle());
     }
 
+
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+        Dialog dialog = createBottomSheetDialog(getContext(), new OnBackPressed()
+        {
             @Override
-            public void onBackPressed() {
+            public boolean onBackPressed()
+            {
                 if (hasSelection())
                 {
                     setSelection((Integer) null);
                     if (AppSettings.isTelevision(getActivity())) {
                         btn_menu.requestFocus();
                     }
-                } else super.onBackPressed();
+                    return true;
+                } else return false;
             }
-        };
+        });
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }
@@ -197,8 +199,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
             boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
@@ -208,7 +209,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -217,36 +218,32 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehaviorInterface bottomSheet = initBottomSheetBehavior(dialog);
             if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheet.setState(BottomSheetBehaviorInterface.STATE_COLLAPSED);
             }
         }
     }
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    @Override
+    protected BottomSheetBehaviorInterface initBottomSheetBehavior(DialogInterface dialog)
     {
-        if (dialog != null)
+        BottomSheetBehaviorInterface behavior = super.initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
-                return behavior;
-            }
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            initPeekHeight(dialog, R.id.info_equinoxsolstice_flipper1);
+            return behavior;
         }
         return null;
     }
@@ -263,7 +260,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                 text_title.post(new Runnable() {
                     @Override
                     public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
 
@@ -522,7 +519,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_view.post(new Runnable() {
             @Override
             public void run() {
-                initSheet(getDialog());    // re-init dialog peek height
+                initBottomSheetBehavior(getDialog());    // re-init dialog peek height
             }
         });
     }
@@ -609,7 +606,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
-        menu.setOnDismissListener(onContextMenuDismissed);
+        PopupMenu.setOnDismissListener(menu, onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
         PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
@@ -776,7 +773,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
-        SnapHelper snapHelper = new LinearSnapHelper(); //new PagerSnapHelper();
+        LinearSnapHelper snapHelper = new LinearSnapHelper(); //new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
         initAdapter(context);
@@ -913,15 +910,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration {
-        private int marginPx;
+    public static class CardViewDecorator extends RecyclerViewUtils.MarginsItemDecoration
+    {
         public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
+            int marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
+            init(marginPx, 0, marginPx, 0);
         }
     }
 

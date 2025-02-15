@@ -26,12 +26,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
+import com.forrestguice.support.design.widget.Snackbar;
+
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -413,7 +415,7 @@ public class EditActionView extends LinearLayout
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
                 helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+                helpDialog.show(fragmentManager.get(), DIALOGTAG_HELP);
             }
         }
     };
@@ -486,9 +488,7 @@ public class EditActionView extends LinearLayout
 
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                    Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
-                    snackbar.show();
+                    Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -506,9 +506,7 @@ public class EditActionView extends LinearLayout
 
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
-            Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            ViewUtils.themeSnackbar(getContext(), snackbar, null);
-            snackbar.show();
+            SnackbarUtils.themeSnackbar(getContext(), Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG)).show();
         }
     }
 
@@ -582,7 +580,7 @@ public class EditActionView extends LinearLayout
             }
         });
         saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
+        saveDialog.show(fragmentManager.get(), DIALOGTAG_SAVE);
     }
 
     public void loadIntent()
@@ -591,7 +589,7 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
-        loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+        loadDialog.show(fragmentManager.get(), DIALOGTAG_LOAD);
     }
 
     private DialogInterface.OnClickListener onSaveDialogAccepted(final Context context, final SaveActionDialog saveDialog)
@@ -712,8 +710,8 @@ public class EditActionView extends LinearLayout
     /**
      * setFragmentManager
      */
-    protected FragmentManager fragmentManager = null;
-    public void setFragmentManager( FragmentManager fragmentManager ) {
+    protected FragmentManagerInterface fragmentManager = null;
+    public void setFragmentManager( FragmentManagerInterface fragmentManager ) {
         this.fragmentManager = fragmentManager;
     }
 
@@ -862,14 +860,14 @@ public class EditActionView extends LinearLayout
     /**
      * onResume()
      */
-    public void onResume( FragmentManager fragments, @Nullable SuntimesData data )
+    public void onResume( FragmentManagerInterface fragments, @Nullable SuntimesData data )
     {
         setFragmentManager(fragments);
         setData(data);
 
         if (fragmentManager != null)
         {
-            HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+            HelpDialog helpDialog = (HelpDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_HELP);
             if (helpDialog != null)
             {
                 String tag = helpDialog.getListenerTag();
@@ -878,7 +876,7 @@ public class EditActionView extends LinearLayout
                 }
             }
 
-            SaveActionDialog saveDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
+            SaveActionDialog saveDialog = (SaveActionDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_SAVE);
             if (saveDialog != null)
             {
                 saveDialog.setOnAcceptedListener(onSaveDialogAccepted(getContext(), saveDialog));
@@ -886,7 +884,7 @@ public class EditActionView extends LinearLayout
                 saveDialog.getEdit().setData(data);
             }
 
-            LoadActionDialog loadDialog = (LoadActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_LOAD);
+            LoadActionDialog loadDialog = (LoadActionDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_LOAD);
             if (loadDialog != null)
             {
                 loadDialog.setData(data);

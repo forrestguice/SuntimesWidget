@@ -24,8 +24,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.design.app.FragmentManagerCompat;
 
 import java.io.File;
 
@@ -74,7 +75,7 @@ public class EventListFragment extends Fragment
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(getActivity(), getChildFragmentManager());
+        helper = new EventListHelper(getActivity(), getChildFragmentManagerCompat());
         helper.setLocation(getLocation());
         helper.setExpanded(getArguments().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArguments().getBoolean(EXTRA_NOSELECT, false));
@@ -93,7 +94,7 @@ public class EventListFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getChildFragmentManager());
+        helper.setFragmentManager(getChildFragmentManagerCompat());
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
         helper.setImportTaskListener(importListener);

@@ -25,19 +25,19 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentActivity;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentActivity;
+import com.forrestguice.support.design.app.FragmentActivityInterface;
+import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
@@ -279,15 +279,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final FragmentActivity myParent = getActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
-        dialogContent.init(myParent, false);
-        dialogContent.setFragment(this);
+        dialogContent.init(FragmentActivity.wrap(getActivity()), false);
+        dialogContent.setFragment(FragmentCompat.create(this));
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
@@ -331,7 +330,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             loadSettings(savedInstanceState);
 
         } else if (presetData != null) {
-            dialogContent.loadSettings(myParent, presetData);
+            dialogContent.loadSettings(getActivity(), presetData);
 
         } else if (presetLocation != null) {
             setLocation(getContext(), presetLocation);
@@ -406,7 +405,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            initPeekHeight(dialog, R.id.dialog_footer);
 
             if (AppSettings.isTelevision(getActivity())) {
                 btn_accept.requestFocus();
@@ -464,14 +463,12 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

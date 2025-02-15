@@ -41,18 +41,16 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.Toolbar;
+import com.forrestguice.support.design.app.AppCompatActivity;
+import com.forrestguice.support.appcompat.widget.AppCompatCheckBox;
+import com.forrestguice.support.design.app.FragmentActivity;
+import com.forrestguice.support.design.widget.PagerSnapHelper;
+import com.forrestguice.support.design.widget.RecyclerView;
+import com.forrestguice.support.design.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -199,7 +197,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
-    private ActionBar actionBar;
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
@@ -511,8 +508,7 @@ public class SuntimesActivity extends AppCompatActivity
         // restore open dialogs
         updateDialogs(this);
 
-        FragmentManager fragments = getSupportFragmentManager();
-        TimeZoneDialog timezoneDialog = (TimeZoneDialog) fragments.findFragmentByTag(DIALOGTAG_TIMEZONE);
+        TimeZoneDialog timezoneDialog = (TimeZoneDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_TIMEZONE);
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
@@ -523,14 +519,14 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
-        final LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        final LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_CONFIG);
+        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_DATE_CONFIG);
         if (dateDialog != null)
         {
             dateDialog.setTimezone(dataset.timezone());
@@ -539,7 +535,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
-        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        TimeDateDialog seekDateDialog = (TimeDateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_DATE_SEEK);
         if (seekDateDialog != null)
         {
             seekDateDialog.setTimezone(dataset.timezone());
@@ -562,16 +558,14 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void updateDialogs(Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-
-        AlarmCreateDialog alarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+        AlarmCreateDialog alarmDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null) {
             alarmDialog.setOnAcceptedListener(onScheduleAlarm);
             alarmDialog.setOnNeutralListener(onManageAlarms);
             //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
-        LightGraphDialog lightGraphDialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        LightGraphDialog lightGraphDialog = (LightGraphDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
         if (lightGraphDialog != null)
         {
             lightGraphDialog.themeViews(this, appThemeOverride);
@@ -581,7 +575,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LightGraphDialog updated on restore.");
         }
 
-        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        LightMapDialog lightMapDialog = (LightMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
             lightMapDialog.themeViews(this, appThemeOverride);
@@ -591,7 +585,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
 
-        WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        WorldMapDialog worldMapDialog = (WorldMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
             worldMapDialog.themeViews(this, appThemeOverride);
@@ -601,7 +595,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
 
-        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
             equinoxDialog.themeViews(this, appThemeOverride);
@@ -610,7 +604,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
 
-        MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        MoonDialog moonDialog = (MoonDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
             moonDialog.themeViews(this, appThemeOverride);
@@ -620,7 +614,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -872,8 +866,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        FragmentManager fragments = getSupportFragmentManager();
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -1043,12 +1036,11 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
             boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
-            actionBar.setHomeButtonEnabled(sideNavigation);
-            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
+            getSupportActionBar().setHomeButtonEnabled(sideNavigation);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(sideNavigation);
         }
         
         navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
@@ -1108,7 +1100,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        getFixHelper = new GetFixHelper(FragmentActivity.wrap(this), new GetFixUI()
         {
             private MenuItem refreshItem = null;
 
@@ -1127,7 +1119,9 @@ public class SuntimesActivity extends AppCompatActivity
                 if (locations[0] != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
-                    actionBar.setSubtitle(location.toString());
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setSubtitle(location.toString());
+                    }
                 }
             }
 
@@ -1145,8 +1139,10 @@ public class SuntimesActivity extends AppCompatActivity
                 refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
                 if (refreshItem != null)
                 {
-                    actionBar.setTitle(getString(R.string.gps_lastfix_title_searching));
-                    actionBar.setSubtitle("");
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
+                        getSupportActionBar().setSubtitle("");
+                    }
                     refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
                 }
             }
@@ -1310,7 +1306,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
         card_view.setOnScrollListener(onCardScrollListener);
     }
@@ -1815,8 +1811,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Activity context = SuntimesActivity.this;
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
             if (dialog != null)
             {
                 AlarmClockItem.AlarmType type = dialog.getAlarmType();
@@ -1849,8 +1844,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
             if (dialog != null) {
                 dialog.dismiss();
             }
@@ -1932,10 +1926,9 @@ public class SuntimesActivity extends AppCompatActivity
             locationSubtitle = new SpannableString(locationString);
         }
 
-        if (actionBar != null)
-        {
-            actionBar.setTitle(locationTitle);
-            actionBar.setSubtitle(locationSubtitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(locationTitle);
+            getSupportActionBar().setSubtitle(locationSubtitle);
         }
 
         //
@@ -2348,8 +2341,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
     public void showLightGraphDialogAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        LightGraphDialog dialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        LightGraphDialog dialog = (LightGraphDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2432,8 +2424,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showSunPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        LightMapDialog dialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        LightMapDialog dialog = (LightMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2480,8 +2471,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showMapPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        WorldMapDialog dialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        WorldMapDialog dialog = (WorldMapDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -2509,8 +2499,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void dismissEquinoxDialog()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null) {
             equinoxDialog.dismiss();
         }
@@ -2617,8 +2606,7 @@ public class SuntimesActivity extends AppCompatActivity
     };
     public void showMoonPositionAt(@Nullable Long dateTime)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        MoonDialog dialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        MoonDialog dialog = (MoonDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_MOON);
         if (dialog != null) {
             dialog.dismiss();
         }

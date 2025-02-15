@@ -31,14 +31,13 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.support.design.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -822,14 +821,12 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(true);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

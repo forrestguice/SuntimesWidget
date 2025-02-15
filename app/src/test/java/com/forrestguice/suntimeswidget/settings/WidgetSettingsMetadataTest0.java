@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.ContentValues;
-import android.support.annotation.NonNull;
+import com.forrestguice.support.annotation.NonNull;
 
 import org.junit.Test;
 

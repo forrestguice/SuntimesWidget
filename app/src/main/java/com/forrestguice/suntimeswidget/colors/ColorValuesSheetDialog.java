@@ -19,17 +19,14 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -200,14 +197,12 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+            if (behavior != null) {
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(false);
                 behavior.setPeekHeight(200);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
             }
         }
     }
@@ -232,8 +227,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
         editViewModel.setShowAlpha(getShowAlpha());
 
-        FragmentManager fragments = getChildFragmentManager();
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getChildFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
@@ -244,10 +238,11 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
-            transaction.commit();
-            fragments.executePendingTransactions();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET)
+                    .commit();
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 
