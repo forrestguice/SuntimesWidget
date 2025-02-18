@@ -10,8 +10,10 @@
     <dimen name="tooltip_radius">4dp</dimen>
     <dimen name="toast_radius">28dp</dimen>
     <dimen name="popupmenu_radius">8dp</dimen>
+    <dimen name="tilecard_radius">16dp</dimen>
     <dimen name="chip_radius">6dp</dimen>
     <dimen name="chip_stroke">2dp</dimen>
+    <dimen name="chip_minHeight">38dp</dimen>
 
     <dimen name="snackbar_button_padding">8dp</dimen>
 

@@ -1257,7 +1257,10 @@
     <string name="configLabel_bedtime_tile_normal">睡眠</string>             <!-- Quick Settings Tile labels -->
     <string name="configLabel_bedtime_tile_active">睡眠（激活）</string>
     <string name="configLabel_bedtime_tile_paused">睡眠（暂停）</string>
-    
+
+    <string name="configLabel_dnd_rulebased">勿扰模式规则</string>
+    <string name="configLabel_dnd_rulebased_summary">使用自动规则控制勿扰模式设置。</string>
+
     <string name="configLabel_bedtime_zenrule_name">睡眠（日落时间）</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
     
     <string name="configAction_dnd_allow">允许访问</string>              <!-- button label when requesting permission -->
@@ -1316,6 +1319,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>最佳猜测</b>。导入的设置会根据类型被应用于现有的小部件。<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>直接导入</b>。导入的设置会被直接应用。只有小部件 ID 未发生变化时可用。<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    <string name="resetwidget_dialog_message">您确认要重置为默认值吗？</string>
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>清除</b>。闹钟会在从备份中导入前被清除。<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>保持现有</b>。现有的闹钟会被保留（可能会重复）。<br/>]]></string>

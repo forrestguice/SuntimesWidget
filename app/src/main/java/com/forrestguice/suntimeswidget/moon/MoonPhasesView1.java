@@ -224,6 +224,10 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
+    public void notifyDataSetChanged() {
+        card_adapter.notifyDataSetChanged();
+    }
+
     public void updateViews( Context context )
     {
         if (isInEditMode()) {
@@ -623,6 +627,7 @@ public class MoonPhasesView1 extends LinearLayout
                 return;
             }
 
+            boolean showDate = AppSettings.loadShowMoonPhaseDatePref(context);
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
@@ -650,7 +655,7 @@ public class MoonPhasesView1 extends LinearLayout
                 }
             }
 
-            updateField(context, data.now(), phaseDate, showWeeks, showTime, showHours, showSeconds);
+            updateField(context, data.now(), phaseDate, showDate, showWeeks, showTime, showHours, showSeconds);
             setLabel(phaseLabel);
         }
 
@@ -674,11 +679,12 @@ public class MoonPhasesView1 extends LinearLayout
             icon.setImageBitmap(bitmap);
         }
 
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
+        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showDate, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
         {
             if (field != null)
             {
                 field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showTime, showSeconds).getValue());
+                field.setVisibility(showDate ? View.VISIBLE : View.GONE);
             }
 
             if (note != null)

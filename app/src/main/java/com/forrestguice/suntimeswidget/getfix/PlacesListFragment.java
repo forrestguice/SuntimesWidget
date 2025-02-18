@@ -1067,18 +1067,26 @@ public class PlacesListFragment extends Fragment
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast())
                 {
-                    String name = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_NAME));
-                    String lat = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
-                    String lon = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
-                    String alt = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
-                    String comment = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
-                    Location location = new Location(name, lat, lon, alt);
-                    location.setUseAltitude(true);
+                    try {
+                        int i_name = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_NAME);    // optional fields
+                        int i_alt = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE);
+                        int i_comment = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_COMMENT);
 
-                    PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_ROWID)), location);
-                    item.isDefault = (comment != null && comment.contains(PlaceItem.TAG_DEFAULT));
+                        String name = (i_name >= 0) ? cursor.getString(i_name) : "";
+                        String lat = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+                        String lon = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+                        String alt = (i_alt >= 0) ? cursor.getString(i_alt) : "0";
+                        String comment = (i_comment >= 0) ? cursor.getString(i_comment) : "";
+                        Location location = new Location(name, lat, lon, alt);
+                        location.setUseAltitude(true);
 
-                    result.add(item);
+                        PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID)), location);
+                        item.isDefault = (comment != null && comment.contains(PlaceItem.TAG_DEFAULT));
+                        result.add(item);
+
+                    } catch (IllegalArgumentException e) {
+                        Log.w("PlacesListFragment", "missing columns! skipping item... " + e);
+                    }
                     cursor.moveToNext();
                 }
                 cursor.close();

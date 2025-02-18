@@ -22,6 +22,11 @@
                 android:checkable="true"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/action_phase_showdate"
+                android:title="@string/configLabel_ui_showMoonPhaseDate"
+                android:checkable="true"
+                app:showAsAction="never" />
+
             <item android:id="@+id/action_phase_columns"
                 android:title="@string/configLabel_ui_showmoon_phase_columns"
                 app:showAsAction="never">

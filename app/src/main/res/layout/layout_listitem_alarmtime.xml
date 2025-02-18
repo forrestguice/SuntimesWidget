@@ -39,7 +39,8 @@
 
     <TextSwitcher
         android:id="@+id/text_datetime"
-        android:layout_width="wrap_content" android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:minHeight="67dp"
         android:layout_marginTop="8dp" android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:ellipsize="end" android:gravity="center" android:maxLines="1"
-            android:textColor="?attr/text_buttonSelector" android:textSize="52dp" android:textStyle="bold"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
             tools:ignore="SpUsage" tools:text="11:22 am" />
 
     </TextSwitcher>

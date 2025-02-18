@@ -284,7 +284,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void updateViews(@NonNull Context context)
     {
-        widgetListAdapter = WidgetListAdapter.createWidgetListAdapter(context);
+        widgetListAdapter = WidgetListAdapter.createWidgetListAdapter(context, false);
         widgetList.setAdapter(widgetListAdapter);
     }
 

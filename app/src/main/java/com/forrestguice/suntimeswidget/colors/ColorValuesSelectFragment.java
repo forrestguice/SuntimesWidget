@@ -66,6 +66,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     public static final String ARG_COLOR_TAG = "colorTag";
     public static final String DEF_COLOR_TAG = null;
 
+    public static final String ARG_COLOR_SELECTED_ID = "selectedID";
+    public static final String ARG_COLOR_SELECTED_DEFAULT = "defaultIsSelected";
+
     protected TextView label;
     protected Spinner selector;
     protected ImageButton addButton, editButton, backButton, menuButton;
@@ -163,8 +166,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     };
     protected void onColorValuesSelected(int position)
     {
+        ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(position);
+        getArguments().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
+        getArguments().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
         if (listener != null) {
-            listener.onItemSelected((ColorValuesItem) selector.getItemAtPosition(position));
+            listener.onItemSelected(item);
         }
         updateControls();
     }
@@ -247,8 +253,14 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
         popup.show();
     }
-    protected void onPrepareOverflowMenu(Context context, Menu menu) { /* EMPTY */ }
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    protected void onPrepareOverflowMenu(Context context, Menu menu)
+    {
+        MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
+        if (deleteItem != null) {
+            deleteItem.setEnabled(!colorCollection.isDefaultColorID(getSelectedID()));
+        }
+    }
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -280,7 +292,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         Context context = getActivity();
         if (colorCollection != null && context != null)
         {
-            ColorValues colors = colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag());
+            ColorValues colors = colorCollection.getColors(context, getSelectedID());
+            if (colors == null) {
+                colors = colorCollection.getDefaultColors(context);
+            }
+
             if (colors != null)
             {
                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -325,7 +341,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             if (colorCollection != null)
             {
                 int selectedIndex = 0;
-                String selectedColorsID = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+                String selectedColorsID0 = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+                boolean defaultIsSelected = getArguments().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
+                String selectedColorsID = getArguments().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
 
                 for (int i=0; i<selector.getCount(); i++)
                 {
@@ -467,9 +485,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         public String colorsID;
         public int[] previewColors;
 
-        public ColorValuesItem(String displayString, String colorsID, int... previewColors)
+        public ColorValuesItem(@Nullable String displayString, @Nullable String colorsID, int... previewColors)
         {
-            this.displayString = displayString;
+            this.displayString = (displayString != null ? displayString : colorsID);
             this.colorsID = colorsID;
             this.previewColors = previewColors;
         }

@@ -88,6 +88,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  * AlarmDismissActivity
@@ -99,7 +100,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     public static final String EXTRA_TEST = "test";
     public static final String EXTRA_TEST_CHALLENGE_ID = "testChallengeID";
+    public static final String EXTRA_TEST_BRIGHTMODE = "testBrightMode";
+    public static final String EXTRA_TEST_BRIGHTMODE_ID = "testBrightModeID";
 
+    public static final String ACTION_PREVIEW = "suntimeswidget.alarm.preview";
     public static final String ACTION_SNOOZE = AlarmNotifications.ACTION_SNOOZE;
     public static final String ACTION_DISMISS = AlarmNotifications.ACTION_DISMISS;
 
@@ -116,7 +120,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private boolean isTesting = false;
     private int testChallengeID = -1;
 
-    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText, noteText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, timezoneText, offsetText, infoText, noteText;
     private TextView[] labels;
 
     private FloatingActionButton backButton;
@@ -151,6 +155,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         initTheme(this);
         super.onCreate(icicle);
         initLocale(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         setContentView(R.layout.layout_activity_dismissalarm);
 
         Intent intent = getIntent();
@@ -171,7 +176,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     private void initTheme(Context context)
     {
-        isBrightMode = AlarmSettings.loadPrefAlarmBrightMode(this);
+        isBrightMode = AlarmSettings.loadPrefAlarmBrightMode(this) || getIntent().getBooleanExtra(EXTRA_TEST_BRIGHTMODE, false);
         appTheme = //(isBrightMode ? AppSettings.AppThemeInfo.getExtendedThemeName("light", AppSettings.loadTextSizePref(context)) :
                 AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
@@ -185,7 +190,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (isBrightMode)
         {
             BrightAlarmColorValuesCollection<BrightAlarmColorValues> collection = new BrightAlarmColorValuesCollection<>(context);
-            colors = collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS);
+            String param_colorsID = getIntent().getStringExtra(EXTRA_TEST_BRIGHTMODE_ID);
+
+            colors = (!getIntent().hasExtra(EXTRA_TEST_BRIGHTMODE)) ? collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS)
+                                                                    : collection.getColors(context, param_colorsID);
             if (colors == null) {
                 colors = new BrightAlarmColorValues(context, false);
             }
@@ -211,6 +219,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
         clockText = (TextView)findViewById(R.id.txt_clock_time);
         clockText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_TIME));
+
+        timezoneText = (TextView)findViewById(R.id.txt_clock_timezone);
+        timezoneText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
 
         offsetText = (TextView)findViewById(R.id.txt_alarm_offset);
         offsetText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
@@ -717,11 +728,28 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    protected AlarmClockItem getPreviewAlarmItem(Context context, long alarmID)
+    {
+        AlarmClockItem item = new AlarmClockItem();
+        item.enabled = true;
+        item.rowID = alarmID;
+        item.label = context.getString(R.string.configAction_preview);
+        item.note = context.getString(R.string.configLabel_alarms_brightMode_summary);
+        item.setState(AlarmState.STATE_SOUNDING);
+        return item;
+    }
+
     public void setAlarmID(final Context context, long alarmID) {
         setAlarmID(context, alarmID, null);
     }
     public void setAlarmID(final Context context, long alarmID, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener listener)
     {
+        if (ACTION_PREVIEW.equals(getIntent().getAction()))
+        {
+            setAlarmItem(context, getPreviewAlarmItem(context, alarmID));
+            return;
+        }
+
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
         task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
@@ -758,14 +786,25 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    protected TimeZone getTimeZone()
+    {
+        if (alarm != null && alarm.timezone != null) {
+            return AlarmClockItem.AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location);
+        } else return TimeZone.getDefault();
+    }
+
     public static final int CLOCK_UPDATE_RATE = 3000;
     private final Runnable updateClockTask = new Runnable()
     {
         @Override
         public void run()
         {
-            clockText.setText(formatTimeDisplay(AlarmDismissActivity.this, Calendar.getInstance()));
+            TimeZone timezone = getTimeZone();
+            clockText.setText(formatTimeDisplay(AlarmDismissActivity.this, Calendar.getInstance(timezone)));
             clockText.postDelayed(this, CLOCK_UPDATE_RATE);
+
+            timezoneText.setVisibility((alarm != null && alarm.timezone != null) ? View.VISIBLE : View.GONE);
+            timezoneText.setText(timezone.getID());
         }
     };
 
@@ -804,7 +843,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
     protected int currentTextColor()
     {
-        if (clockText != null) {
+        if (infoText != null) {
             return infoText.getCurrentTextColor();
         } else {
             return colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY);
@@ -883,7 +922,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateBackground(new int[] { currentBackgroundColor(), snoozeBackgroundColor }, 1500, new LinearInterpolator());
                 animateColors(new int[] { currentTitleColor(), snoozeTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), snoozeTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
-                animateColors(new int[] { currentTextColor(), snoozeTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText));
+                animateColors(new int[] { currentTextColor(), snoozeTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText), new ColorableTextView(timezoneText));
             }
 
             if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
@@ -918,7 +957,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 animateBackground(new int[] { currentBackgroundColor(), timeoutBackgroundColor }, 1500, new AccelerateInterpolator());
                 animateColors(new int[] { currentTitleColor(), timeoutTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), timeoutTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
-                animateColors(new int[] { currentTextColor(), timeoutTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText));
+                animateColors(new int[] { currentTextColor(), timeoutTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(infoText), new ColorableTextView(timezoneText));
             }
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
@@ -938,10 +977,12 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 int soundingBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_END);
                 int soundingTitleColor = getContrastingTextColor(soundingBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
                 int soundingTimeColor = getContrastingTextColor(soundingBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
+                int soundingTextColor = getContrastingTextColor(soundingBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_SECONDARY, AlarmColorValues.COLOR_TEXT_SECONDARY_INVERSE);
 
                 animateBackground(new int[] { colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START), soundingBackgroundColor }, AlarmSettings.loadPrefAlarmBrightFadeIn(this), new AccelerateInterpolator());
                 animateColors(new int[] { currentTitleColor(), soundingTitleColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(alarmTitle));
                 animateColors(new int[] { currentTimeColor(), soundingTimeColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(clockText));
+                animateColors(new int[] { currentTextColor(), soundingTextColor }, 1500, false, new LinearInterpolator(), new ColorableTextView(timezoneText));
                 infoText.setTextColor(Color.TRANSPARENT);
             }
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);

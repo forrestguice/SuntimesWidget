@@ -12,6 +12,7 @@
     <attr name="popupMenuBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
+    <attr name="tileCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
 
@@ -284,8 +285,12 @@
         <attr name="appWidgetID" format="integer" />
         <attr name="showAlpha" format="boolean" />
         <attr name="previewKeys" format="reference" />
+        <attr name="previewMode" format="integer" />
         <attr name="android:summary" />
     </declare-styleable>
+    <integer name="colorpicker_preview_text">0</integer>        <!-- previewMode value -->
+    <integer name="colorpicker_preview_contrast">10</integer>   <!-- previewMode value -->
+    <integer name="colorpicker_preview_luminance">10</integer>  <!-- previewMode value -->
 
     <declare-styleable name="HelpPreference">
         <attr name="helpText" format="string" />

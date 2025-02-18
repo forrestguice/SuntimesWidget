@@ -1332,6 +1332,9 @@
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
 
+    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
 
     <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
@@ -1390,6 +1393,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Лучшее предположение</b>. Импортированные настройки будут применены к существующим виджетам по типу.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Прямой импорт</b>. Импортированные настройки будут применены непосредственно. Это работает корректно только если идентификаторы виджетов не изменены.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    <string name="resetwidget_dialog_message">Вы уверены, что хотите восстановить настройки по умолчанию?</string>    <!-- TODO: verify -->
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Очистить</b>. Будильники будут очищены перед импортом из резервной копии.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Сохранить существующие</b>. Существующие будильники будут сохранены (может привести к дублированию).<br/>]]></string>

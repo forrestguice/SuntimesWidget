@@ -24,11 +24,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.preference.Preference;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +69,7 @@ public class ColorValuesCollectionPreference extends Preference
             appWidgetID = a.getInt(R.styleable.ColorCollectionPreference_appWidgetID, appWidgetID);
             showAlpha = a.getBoolean(R.styleable.ColorCollectionPreference_showAlpha, showAlpha);
             summaryStringResID = a.getResourceId(R.styleable.ColorCollectionPreference_android_summary, 0);
+            previewMode = a.getInt(R.styleable.ColorCollectionPreference_previewMode, previewMode);
 
             int previewArrayID = a.getResourceId(R.styleable.ColorCollectionPreference_previewKeys, 0);
             if (previewArrayID != 0) {
@@ -161,6 +164,19 @@ public class ColorValuesCollectionPreference extends Preference
         showAlpha = value;
     }
 
+    protected int previewMode = ColorPickerFragment.ColorPickerModel.PREVIEW_TEXT;
+    public void setPreviewMode(int value) {
+        previewMode = value;
+    }
+    public int getPreviewMode() {
+        return previewMode;
+    }
+
+    protected ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder = null;
+    public void setPreviewIntentBuilder(ColorValuesSheetActivity.PreviewColorsIntentBuilder value) {
+        previewIntentBuilder = value;
+    }
+
     protected int requestCode = 0;
     public int getRequestCode() {
         return requestCode;
@@ -191,19 +207,31 @@ public class ColorValuesCollectionPreference extends Preference
             {
                 if (activity != null)
                 {
-                    Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, getTitle());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, getAppWidgetID());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, getColorTag());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, getCollection());
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_KEYS, previewKeys.toArray(new String[0]));
-                    intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha());
-                    activity.startActivityForResult(intent, getRequestCode());
+                    Intent intent = createPreferenceOnClickIntent(activity, getCollection(), getAppWidgetID(), getColorTag(), getTitle(), showAlpha(), previewMode, previewKeys.toArray(new String[0]), previewIntentBuilder);
+                    activity.startActivityForResult(intent, requestCode);
                     activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 }
                 return false;
             }
         };
+    }
+
+    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
+    {
+        Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, title);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, appWidgetID);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLORTAG, colorTag);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_COLLECTION, collection);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_KEYS, previewKeys);
+        intent.putExtra(ColorValuesSheetActivity.EXTRA_SHOW_ALPHA, showAlpha);
+        if (previewMode != null) {
+            intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_MODE, previewMode);
+        }
+        if (previewIntentBuilder != null) {
+            intent.putExtra(ColorValuesSheetActivity.EXTRA_PREVIEW_INTENTBUILDER, previewIntentBuilder);
+        }
+        return intent;
     }
 
 }

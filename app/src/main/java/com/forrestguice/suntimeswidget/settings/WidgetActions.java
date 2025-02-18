@@ -287,8 +287,8 @@ public class WidgetActions
         if (values != null)
         {
             String id = values.getAsString(PREF_KEY_ACTION_LAUNCH_ID);
-            if (id != null)
-            {
+            //if (id != null)
+            //{
                 String tagString = values.getAsString(PREF_KEY_ACTION_LAUNCH_TAGS);
                 String[] tags = (tagString != null ? tagString.split("\\|") : new String[0]);
 
@@ -305,7 +305,7 @@ public class WidgetActions
                         values.getAsString(PREF_KEY_ACTION_LAUNCH_DATATYPE),
                         values.getAsString(PREF_KEY_ACTION_LAUNCH_EXTRAS), true);
                 return true;
-            }
+            //}
         }
         return false;
     }

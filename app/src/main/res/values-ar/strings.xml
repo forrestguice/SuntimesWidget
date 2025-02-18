@@ -1387,6 +1387,9 @@
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
 
+    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
 
     <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
@@ -1451,6 +1454,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>التخمين الأفضل</b>. سيتم تطبيق الإعدادات المستوردة على الودجات الحالية حسب النوع.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>الاستيراد المباشر</b>. سيتم تطبيق الإعدادات المستوردة مباشرة. هذا يعمل بشكل صحيح فقط إذا لم تتغير معرّفات الودج.<br/>]]></string>
     <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+    <string name="resetwidget_dialog_message">Are you sure you want to reset to defaults?</string>    <!-- TODO -->
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>مسح</b>. سيتم مسح المنبهات قبل الاستيراد من النسخ الاحتياطي.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>الاحتفاظ بالقائمة الحالية</b>. سيتم الاحتفاظ بالمنبهات الحالية (قد تنتج نسخًا متكررة).<br/>]]></string>

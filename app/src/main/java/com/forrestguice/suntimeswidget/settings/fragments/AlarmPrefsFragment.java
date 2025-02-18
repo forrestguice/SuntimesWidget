@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -54,11 +57,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
@@ -245,6 +251,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             brightColorsPref.setCollection(context, new BrightAlarmColorValuesCollection<BrightAlarmColorValues>(context));
             brightColorsPref.initPreferenceOnClickListener(fragment.getActivity(), SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM);
+            brightColorsPref.setPreviewIntentBuilder(brightColorPreviewIntent);
         }
 
         Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
@@ -294,6 +301,21 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
+        CheckBoxPreference dndRuleBased = (CheckBoxPreference) fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_DND_RULEBASED);
+        if (dndRuleBased != null)
+        {
+            dndRuleBased.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context));
+            dndRuleBased.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    return true;
+                }
+            });
+        }
+
         initPref_alarms_bootCompleted(fragment);
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
@@ -315,6 +337,44 @@ public class AlarmPrefsFragment extends PreferenceFragment
             });
         }
     }
+
+    private static ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
+    public static class BrightColorsPreviewIntent implements ColorValuesSheetActivity.PreviewColorsIntentBuilder
+    {
+        public BrightColorsPreviewIntent() {}
+
+        private BrightColorsPreviewIntent(Parcel in) {}
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {}
+
+        public static final Parcelable.Creator<BrightColorsPreviewIntent> CREATOR = new Parcelable.Creator<BrightColorsPreviewIntent>()
+        {
+            public BrightColorsPreviewIntent createFromParcel(Parcel in) {
+                return new BrightColorsPreviewIntent(in);
+            }
+
+            public BrightColorsPreviewIntent[] newArray(int size) {
+                return new BrightColorsPreviewIntent[size];
+            }
+        };
+
+        @Override
+        public Intent getIntent(Context context, String colorsID)
+        {
+            return AlarmNotifications.getFullscreenIntent(context, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1))
+                    .setAction(AlarmDismissActivity.ACTION_PREVIEW)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE_ID, colorsID)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
+        }
+    };
 
     /**
      * this method calls areNotificationsPaused (api29+) via reflection

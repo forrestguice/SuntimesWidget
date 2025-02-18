@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/text1" style="?android:attr/dropDownItemStyle"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:padding="@dimen/colortext_margin"
+    android:background="?attr/selectableItemBackground"
+    android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small" android:textStyle="bold"
+    android:gravity="center"
+    android:singleLine="true" android:ellipsize="end"
+    tools:text="Primary" />

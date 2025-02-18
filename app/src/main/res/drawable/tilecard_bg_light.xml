@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/dialog_bg_light" />
+    <corners android:radius="@dimen/tilecard_radius" />
+</shape>

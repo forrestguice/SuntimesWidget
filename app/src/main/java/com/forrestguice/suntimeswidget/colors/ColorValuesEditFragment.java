@@ -19,25 +19,19 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.SpannableString;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,18 +39,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -71,11 +59,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public static final String ARG_ALLOW_DELETE = "allowDelete";
     public static final boolean DEF_ALLOW_DELETE = true;
 
-    public static final String ARG_SHOW_ALPHA = "showAlpha";
-    public static final boolean DEF_SHOW_ALPHA = false;
-
+    protected ColorValuesEditViewModel viewModel;
     protected EditText editID, editLabel;
-    protected GridLayout panel;
+    protected RecyclerView panel;
+    protected ColorValuesEditViewAdapter adapter;
     protected ImageButton cancelButton;
 
     public ColorValuesEditFragment() {
@@ -96,6 +83,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
 
+        viewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditViewModel.class);
+
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
             overflow.setOnClickListener(new ViewUtils.ThrottledClickListener(onOverflowButtonClicked));
@@ -111,7 +100,21 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             cancelButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onCancelButtonClicked));
         }
 
-        panel = (GridLayout) content.findViewById(R.id.colorPanel);
+        adapter = new ColorValuesEditViewAdapter(getActivity(), colorValues);
+        adapter.setFilter(getFilter());
+        adapter.setAdapterListener(new ColorValuesEditViewAdapter.AdapterListener()
+        {
+            @Override
+            public void onItemClicked(String key) {
+                pickColor(key);
+            }
+        });
+
+        panel = (RecyclerView) content.findViewById(R.id.colorPanel);
+        panel.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+        panel.setAdapter(adapter);
+        panel.scrollToPosition(0);
+
         editID = (EditText) content.findViewById(R.id.editTextID);
         editLabel = (EditText) content.findViewById(R.id.editTextLabel);
         setID(null);
@@ -253,6 +256,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
         setID(savedState.getString("editID"));
         setLabel(savedState.getString("editLabel"));
+
+        if (adapter != null) {
+            adapter.setColorValues(getColorValues());
+            adapter.setFilter(getFilter());
+        }
     }
 
     @Override
@@ -268,120 +276,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected void updateViews()
-    {
-        if (panel != null && colorValues != null)
-        {
-            String[] keys = colorValues.getColorKeys();
-
-            int itemMargin = 0;
-            TypedValue itemBackground = null;
-            Context context = getActivity();
-            if (context != null)
-            {
-                Resources.Theme theme = context.getTheme();
-                itemBackground = new TypedValue();
-                theme.resolveAttribute(android.R.attr.selectableItemBackground, itemBackground, true);
-                itemMargin = (int)context.getResources().getDimension(R.dimen.colortext_margin);
-            }
-
-            int[] defaultColors = getDefaultColors(context);
-            float textSizePx = getTextSizePx_medium(context);
-
-            int c = 0;
-            panel.removeAllViews();
-            for (int i=0; i<keys.length; i++)
-            {
-                if (applyFilter()
-                        && !passesFilter(keys[i])) {
-                    continue;
-                }
-
-                boolean bold = true;
-                Integer textColor;
-                Integer backgroundColor;
-                switch (colorValues.getRole(keys[i]))
-                {
-                    case ColorValues.ROLE_BACKGROUND_PRIMARY: case ColorValues.ROLE_BACKGROUND:
-                    case ColorValues.ROLE_BACKGROUND_INVERSE: case ColorValues.ROLE_ACTION:
-                        bold = false;
-                        backgroundColor = colorValues.getColor(keys[i]);
-                        textColor = getContrastingColor(keys[i], ColorUtils.isTextReadable(defaultColors[0], backgroundColor)
-                                ? defaultColors[0] : defaultColors[2]);
-                        break;
-
-                    case ColorValues.ROLE_TEXT: case ColorValues.ROLE_TEXT_PRIMARY:
-                    case ColorValues.ROLE_TEXT_PRIMARY_INVERSE: case ColorValues.ROLE_TEXT_INVERSE:
-                    case ColorValues.ROLE_ACCENT: case ColorValues.ROLE_FOREGROUND:
-                        textColor = colorValues.getColor(keys[i]);
-                        backgroundColor = getContrastingColor(keys[i], defaultColors[1]);
-                        break;
-
-                    case ColorValues.ROLE_UNKNOWN:
-                    default:
-                        textColor = colorValues.getColor(keys[i]);
-                        backgroundColor = null;
-                        break;
-                }
-
-                SpannableString colorLabel = null;
-                String labelText = " " + colorValues.getLabel(keys[i]) + " ";
-
-                if (backgroundColor != null && textColor != null)
-                {
-                    float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);
-                    colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
-
-                } else if (textColor != null) {
-                    colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(colorLabel, labelText, labelText, textColor)
-                                       : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
-
-                } else {
-                    colorLabel = new SpannableString(" ");
-                }
-
-                TextView colorEdit = new TextView(getActivity());
-                colorEdit.setText(colorLabel);
-                colorEdit.setOnClickListener(onColorEditClick(keys[i]));
-                colorEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
-                colorEdit.setGravity(Gravity.CENTER);
-
-                if (itemBackground != null) {
-                    colorEdit.setBackgroundResource(itemBackground.resourceId);
-                }
-                colorEdit.setPadding(itemMargin, itemMargin, itemMargin, itemMargin);
-
-                panel.addView(colorEdit, getItemLayoutParams(c));
-                c++;
-            }
-
-        } else if (panel != null) {
-            TextView emptyMsg = new TextView(getActivity());
-            emptyMsg.setText(" ");
-            panel.removeAllViews();
-            panel.addView(emptyMsg);
-        }
-    }
-
-    private GridLayout.LayoutParams getItemLayoutParams(int i) {
-        if (Build.VERSION.SDK_INT >= 21)
-        {
-            return new GridLayout.LayoutParams(GridLayout.spec(i/2, GridLayout.FILL, 1f),
-                    GridLayout.spec(i%2, GridLayout.FILL, 1f));
-
-        } else {
-            return new GridLayout.LayoutParams(GridLayout.spec(i/2, GridLayout.CENTER),
-                    GridLayout.spec(i%2, GridLayout.CENTER));
-        }
-    }
-
-    public View.OnClickListener onColorEditClick(final String colorKey) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickColor(colorKey);
-            }
-        };
+    protected void updateViews() {
     }
 
     protected ColorValues colorValues = null;
@@ -390,6 +285,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         colorValues = v;
         setID(null);
         setLabel(null);
+
+        if (adapter != null) {
+            adapter.setColorValues(colorValues);
+        }
         updateViews();
     }
     public ColorValues getColorValues() {
@@ -406,7 +305,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public void setApplyFilter(boolean value) {
         getArguments().putBoolean("applyFilter", value);
-        if (isAdded()) {
+        if (isAdded())
+        {
+            if (adapter != null) {
+                adapter.setFilter(applyFilter() ? getFilter() : null);
+            }
             updateViews();
         }
     }
@@ -437,8 +340,13 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return filterValues.isEmpty() || filterValues.contains(key);
     }
 
-    protected void setColor(String key, int color) {
+    protected void setColor(String key, int color)
+    {
         colorValues.setColor(key, color);
+        int position = adapter.findPositionForKey(key);
+        if (position >= 0) {
+            adapter.notifyItemChanged(position);
+        }
         updateViews();
     }
 
@@ -454,33 +362,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected float getTextSizePx_medium(Context context)
-    {
-        int[] attr = { R.attr.text_size_medium };
-        TypedArray typedArray = context.obtainStyledAttributes(attr);
-        float textSize = typedArray.getDimension(0, context.getResources().getDimension(R.dimen.text_size_medium));
-        typedArray.recycle();
-        return textSize;
-    }
-
-    @SuppressLint("ResourceType")
-    protected int[] getDefaultColors(Context context)
-    {
-        int[] attr = { R.attr.timeCardBackground, R.attr.text_primaryColor, R.attr.text_primaryInverseColor };
-        TypedArray typedArray = context.obtainStyledAttributes(attr);
-        int backgroundColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.card_bg));
-        int textColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_primary));
-        int inverseTextColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.text_primary_inverse));
-        typedArray.recycle();
-        return new int[] { textColor, backgroundColor, inverseTextColor };
-    }
-
     protected int[] getColorOverUnder(Context context, String key)
     {
-        int[] defaultColors = getDefaultColors(context);
+        int[] defaultColors = ColorValuesEditViewHolder.getDefaultColors(context);
         int colorOver = defaultColors[0];
         int colorUnder = defaultColors[1];
-        Integer contrastingColor = getContrastingColor(key, null);
+        Integer contrastingColor = ColorValuesEditViewHolder.getContrastingColor(colorValues, key, null);
 
         switch (colorValues.getRole(key))
         {
@@ -497,52 +384,26 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return new int[] { colorOver, colorUnder };
     }
 
-    @Nullable
-    protected Integer getContrastingColor(String key, Integer defaultValue)
-    {
-        String k;
-        switch (colorValues.getRole(key))
-        {
-            case ColorValues.ROLE_ACTION:
-            case ColorValues.ROLE_BACKGROUND: case ColorValues.ROLE_BACKGROUND_PRIMARY:
-                k = colorValues.findColorWithRole(ColorValues.ROLE_TEXT_PRIMARY);
-                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
-
-            case ColorValues.ROLE_BACKGROUND_INVERSE:
-                k = colorValues.findColorWithRole(ColorValues.ROLE_TEXT_PRIMARY_INVERSE);
-                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
-
-            case ColorValues.ROLE_TEXT: case ColorValues.ROLE_TEXT_PRIMARY:
-            case ColorValues.ROLE_ACCENT: case ColorValues.ROLE_FOREGROUND:
-                k = colorValues.findColorWithRole(ColorValues.ROLE_BACKGROUND_PRIMARY);
-                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
-
-            case ColorValues.ROLE_TEXT_INVERSE:
-            case ColorValues.ROLE_TEXT_PRIMARY_INVERSE:
-                k = colorValues.findColorWithRole(ColorValues.ROLE_BACKGROUND_INVERSE);
-                return (k != null) ? Integer.valueOf(colorValues.getColor(k)) : defaultValue;
-
-            default:
-                return null;
-        }
-    }
-
     protected Intent pickColorIntent(String key, int requestCode)
     {
         int color = colorValues.getColor(key);
+        viewModel.setColor(color);
+
         ArrayList<Integer> recentColors = new ArrayList<>(new LinkedHashSet<>(colorValues.getColors()));
         recentColors.add(0, color);
 
+        int[] colorOverUnder = getColorOverUnder(getActivity(), key);
+        viewModel.setColorOver(colorOverUnder[0]);
+        viewModel.setColorUnder(colorOverUnder[1]);
+
         Intent intent = new Intent(getActivity(), ColorActivity.class);
-        intent.putExtra(ColorDialog.KEY_SHOWALPHA, showAlpha());
+        intent.putExtra(ColorDialog.KEY_SHOWALPHA, viewModel.showAlpha());
         intent.setData(Uri.parse("color://" + String.format("#%08X", color)));
         intent.putExtra(ColorDialog.KEY_RECENT, recentColors);
         intent.putExtra(ColorDialog.KEY_LABEL, colorValues.getLabel(key));
-
-        int[] colorOverUnder = getColorOverUnder(getActivity(), key);
-        intent.putExtra(ColorDialog.KEY_COLOR_OVER, colorOverUnder[0]);
-        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, colorOverUnder[1]);
-        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_LUMINANCE);
+        intent.putExtra(ColorDialog.KEY_COLOR_OVER, viewModel.getColorOver());
+        intent.putExtra(ColorDialog.KEY_COLOR_UNDER, viewModel.getColorUnder());
+        intent.putExtra(ColorDialog.KEY_PREVIEW_MODE, viewModel.getPreviewMode());
 
         if (defaultValues != null) {
             intent.putExtra(ColorDialog.KEY_SUGGESTED, defaultValues.getColor(key));
@@ -623,13 +484,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         setBoolArg(ARG_ALLOW_DELETE, allowDelete);
     }
 
-    public boolean showAlpha() {
-        return getBoolArg(ARG_SHOW_ALPHA, DEF_SHOW_ALPHA);
-    }
-    public void setShowAlpha(boolean value) {
-        setBoolArg(ARG_SHOW_ALPHA, value);
-    }
-
     public static final int REQUEST_IMPORT_THEME = 1000;
     protected void importFromTheme(Context context) {
         startActivityForResult(pickThemeIntent(), REQUEST_IMPORT_THEME);
@@ -705,6 +559,11 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         Bundle args = getArguments();
         return args != null ? args.getBoolean(key, defValue) : defValue;
     }
+
+    /**
+     * ColorValuesEditViewModel
+     */
+    public static class ColorValuesEditViewModel extends ColorPickerFragment.ColorPickerModel {}
 
     /**
      * FragmentListener

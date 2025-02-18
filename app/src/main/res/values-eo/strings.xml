@@ -1243,6 +1243,9 @@
     <string name="configLabel_bedtime_tile_active">Dormtempo (aktiva)</string>
     <string name="configLabel_bedtime_tile_paused">Dormtempo (paŭzigita)</string>
 
+    <string name="configLabel_dnd_rulebased">Regulo por senĝena reĝimo</string>
+    <string name="configLabel_dnd_rulebased_summary">Regi agordojn pri senĝena reĝimo per aŭtomata regulo.</string>
+
     <string name="configLabel_bedtime_zenrule_name">Dormtempo (Suntempoj)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
     <string name="configAction_dnd_allow">Doni permeson</string>              <!-- button label when requesting permission -->
@@ -1299,6 +1302,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    <string name="resetwidget_dialog_message">Ĉu vi certe volas restarigi implicitajn valorojn?</string>
     
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>
@@ -1386,7 +1390,7 @@
 
     <!-- App Setting: Show Lunar Noon -->
     <string name="configLabel_ui_showmoon_noon">Montri plej(mal)supron de Luno</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la dialogujo “lunaj informoj”.</string>
+    <string name="configLabel_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la fenestro “Luno”.</string>
 
     <!-- App Setting: Moon Phase Columns -->
     <string name="configLabel_ui_showmoon_phase_columns">Kolumnoj (fazoj)</string>
@@ -1469,10 +1473,10 @@
     <string name="configActionDesc_mapLocation">Montri lokon sur mapo</string>
     <string name="configActionDesc_setAlarm">Agordi alarmon</string>
     <string name="configActionDesc_worldMap">Montri mondmapon</string>
-    <string name="configActionDesc_equinoxDialog">Dialogujo “Solstico/ekvinokso”</string>
-    <string name="configActionDesc_moon">Dialogujo “Luno”</string>
-    <string name="configActionDesc_sunDialog">Dialogujo “Pozicio de Suno”</string>
-    <string name="configActionDesc_sunlightDialog">Dialogujo “Sunlumo”</string>
+    <string name="configActionDesc_equinoxDialog">Fenestro “Solstico/ekvinokso”</string>
+    <string name="configActionDesc_moon">Fenestro “Luno”</string>
+    <string name="configActionDesc_sunDialog">Fenestro “Pozicio de Suno”</string>
+    <string name="configActionDesc_sunlightDialog">Fenestro “Sunlumo”</string>
     <string name="configActionDesc_setDate">Agordi daton</string>
     <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
     <string name="configActionDesc_setLocation">Agordi pozicion</string>

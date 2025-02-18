@@ -19,9 +19,11 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.ActivityNotFoundException;
@@ -40,6 +42,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
@@ -54,12 +57,14 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
@@ -132,14 +137,21 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_BRIGHTMODE = "app_alarms_bright";
 
     public static final String PREF_KEY_ALARM_BRIGHTMODE_FADEIN = "app_alarms_bright_fadeinMillis";
-    public static final int PREF_DEF_ALARM_BRIGHTMODE_FADEIN = 1000 * 60;   // 60 s
 
     //public static final String PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR = "app_alarms_bright_color_start";
     //public static final String PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR = "app_alarms_bright_color_end";
     public static final String PREF_KEY_ALARM_BRIGHTMODE_COLORS = "app_alarms_bright_colors";
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
-    public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
+
+    public static final int FADE_HANDLER_LINEAR = 0;
+    public static final int FADE_HANDLER_CUBIC = 1;
+
+    public static final int FADE_VSHAPER_LINEAR = 10;    // VolumeShaper (api26+)
+    public static final int FADE_VSHAPER_CUBIC = 11;
+    public static final int FADE_VSHAPER_SCURVE = 12;
+
+    public static final String PREF_KEY_ALARM_FADEIN_METHOD = "app_alarms_fadeinMethod";    // int as String
 
     public static final int SORT_BY_ALARMTIME = 0;
     public static final int SORT_BY_CREATION = 10;
@@ -173,7 +185,7 @@ public class AlarmSettings
             PREF_KEY_ALARM_POWEROFFALARMS, PREF_KEY_ALARM_UPCOMING_ALARMID,
             PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID, PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
             PREF_KEY_ALARM_BRIGHTMODE, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, // PREF_KEY_ALARM_BRIGHTMODE_STARTCOLOR, PREF_KEY_ALARM_BRIGHTMODE_ENDCOLOR,
-            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_DISMISS_CHALLENGE,
+            PREF_KEY_ALARM_FADEIN, PREF_KEY_ALARM_FADEIN_METHOD, PREF_KEY_ALARM_DISMISS_CHALLENGE,
             PREF_KEY_ALARM_SORT, PREF_KEY_ALARM_SORT_ENABLED_FIRST, PREF_KEY_ALARM_SORT_SHOW_OFFSET,
             PREF_KEY_ALARM_BOOTCOMPLETED, PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED, PREF_KEY_ALARM_BOOTCOMPLETED_DURATION, PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
     };
@@ -416,8 +428,8 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
-        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, PREF_DEF_ALARM_BRIGHTMODE_FADEIN);
+            return prefs.getInt(PREF_KEY_ALARM_BRIGHTMODE_FADEIN, Integer.parseInt(context.getString(R.string.def_app_alarms_bright_fadein)));
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_BRIGHTMODE_FADEIN, Long.parseLong(context.getString(R.string.def_app_alarms_bright_fadein)));
     }
 
     /*public static int[] loadPrefAlarmBrightColors(Context context)
@@ -440,8 +452,15 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getInt(PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
-        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
+            return prefs.getInt(PREF_KEY_ALARM_FADEIN, Integer.parseInt(context.getString(R.string.def_app_alarms_fadein)));
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, Long.parseLong(context.getString(R.string.def_app_alarms_fadein)));
+    }
+    public static int loadPrefAlarmFadeInMethod(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return Integer.parseInt(prefs.getString(PREF_KEY_ALARM_FADEIN_METHOD, context.getString(R.string.def_app_alarms_fadein_method)));
+        } else return (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN_METHOD, Long.parseLong(context.getString(R.string.def_app_alarms_fadein_method)));
     }
 
     public static void saveSystemTimeZoneInfo(Context context) {
@@ -532,15 +551,22 @@ public class AlarmSettings
                 + (type == AlarmClockItem.AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
     }
 
+    public static final long MAX_WAIT_MS = 990;
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
         return getDefaultRingtoneUri(context, type, false);
     }
-    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type, boolean resolveDefaults)
+    public static Uri getDefaultRingtoneUri(final Context context, final AlarmClockItem.AlarmType type, boolean resolveDefaults)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return new AlarmSettings().setDefaultRingtone(context, type);
+            return ExecutorUtils.getResult("defaultRingtoneUri", new Callable<Uri>()
+            {
+                public Uri call() {
+                    Uri result = new AlarmSettings().setDefaultRingtone(context, type);
+                    return (result != null ? result : Uri.parse(VALUE_RINGTONE_DEFAULT));
+                }
+            }, MAX_WAIT_MS);
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
     public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
@@ -683,6 +709,45 @@ public class AlarmSettings
     }
 
     /**
+     * @return true device has been unlocked at least once (app now has access to credential protected storage)
+     */
+    @TargetApi(24)
+    public static boolean isUserUnlocked(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 24)
+        {
+            UserManager userManager = (UserManager) context.getSystemService(Service.USER_SERVICE);
+            if (userManager != null) {
+                return userManager.isUserUnlocked();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return true device has a lock screen
+     */
+    public static boolean isDeviceSecure(Context context)
+    {
+        if (android.os.Build.VERSION.SDK_INT >= 23)
+        {
+            KeyguardManager manager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (manager != null) {
+                return manager.isDeviceSecure();
+            }
+        }
+        return false;
+    }
+
+    public static Context getDeviceProtectedStorageContext(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 24) {
+            return context.createDeviceProtectedStorageContext();
+        }
+        return context;
+    }
+
+    /**
      * @return true optimization is disabled (recommended), false optimization is enabled (alarms may be delayed or fail to sound)
      */
     public static boolean isIgnoringBatteryOptimizations(Context context)
@@ -690,10 +755,11 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 23)
         {
             PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            if (powerManager != null)
+            if (powerManager != null) {
                 return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
-            else return false;
-        } else return true;
+            }
+        }
+        return true;
     }
 
     /***

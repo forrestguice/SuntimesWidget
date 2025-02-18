@@ -19,9 +19,9 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -184,8 +184,16 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     public void onResume()
     {
         super.onResume();
+        if (colorSheet != null) {
+            colorSheet.setFragmentListener(fragmentListener);
+        }
+        if (check_filter != null)
+        {
+            check_filter.setChecked(applyFilter());
+            check_filter.setOnCheckedChangeListener(onFilterCheckChanged);
+            updateFilterVisibility(getActivity());
+        }
         updateViews();
-
         expandSheet(getDialog());
     }
 
@@ -219,6 +227,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     public void initViews(View dialogView)
     {
         titleText = (TextView) dialogView.findViewById(R.id.dialog_title);
+        check_filter = (CheckBox) dialogView.findViewById(R.id.check_filter);
+
+        ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
+        editViewModel.setShowAlpha(getShowAlpha());
 
         FragmentManager fragments = getChildFragmentManager();
         colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
@@ -231,27 +243,11 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setApplyFilter(applyFilter());
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
-            colorSheet.setShowAlpha(getShowAlpha());
-            colorSheet.setFragmentListener(fragmentListener);
 
             FragmentTransaction transaction = fragments.beginTransaction();
             transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
             transaction.commit();
             fragments.executePendingTransactions();
-        }
-
-        check_filter = (CheckBox) dialogView.findViewById(R.id.check_filter);
-        if (check_filter != null)
-        {
-            check_filter.setChecked(applyFilter());
-            updateFilterVisibility(getActivity());
-            check_filter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setApplyFilter(isChecked);
-                }
-            });
         }
     }
 
@@ -327,6 +323,14 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         @Override
         public ColorValues getDefaultValues() {
             return ((dialogListener != null) ? dialogListener.getDefaultValues() : null);
+        }
+    };
+
+    private final CompoundButton.OnCheckedChangeListener onFilterCheckChanged = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            setApplyFilter(isChecked);
         }
     };
 

@@ -46,6 +46,11 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
@@ -290,13 +295,14 @@ public class UIPrefsFragment extends PreferenceFragment
         {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                //overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
                 Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
     }
 
+    @Deprecated
     private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
     {
         return new ActionButtonPreference.ActionButtonPreferenceListener()
@@ -309,6 +315,23 @@ public class UIPrefsFragment extends PreferenceFragment
                 configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedTheme);
                 activity.startActivityForResult(configThemesIntent, requestCode);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            }
+        };
+    }
+
+    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final ColorValuesCollection<?> collection, final int requestCode, final int appWidgetID, final String colorTag, final CharSequence title, final CharSequence subtitle, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys)
+    {
+        return new ActionButtonPreference.ActionButtonPreferenceListener ()
+        {
+            @Override
+            public void onActionButtonClicked()
+            {
+                if (activity != null)
+                {
+                    Intent intent = ColorValuesCollectionPreference.createPreferenceOnClickIntent(activity, collection, appWidgetID, colorTag, title, showAlpha, previewMode, previewKeys, null);
+                    activity.startActivityForResult(intent, requestCode);
+                    activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                }
             }
         };
     }
@@ -333,7 +356,7 @@ public class UIPrefsFragment extends PreferenceFragment
                 }
             }
 
-            WidgetThemes.initThemes(activity);
+            /*WidgetThemes.initThemes(activity);
             List<SuntimesTheme.ThemeDescriptor> themes0 = WidgetThemes.getSortedValues(true);
             ArrayList<SuntimesTheme.ThemeDescriptor> themes = new ArrayList<>();
             for (SuntimesTheme.ThemeDescriptor theme : themes0)
@@ -345,7 +368,10 @@ public class UIPrefsFragment extends PreferenceFragment
             }
 
             String[] themeEntries = new String[themes.size() + defaults.size()];
-            String[] themeValues = new String[themes.size() + defaults.size()];
+            String[] themeValues = new String[themes.size() + defaults.size()];*/
+
+            String[] themeEntries = new String[defaults.size()];
+            String[] themeValues = new String[defaults.size()];
 
             Set<String> keyset = defaults.keySet();
             themeValues[0] = THEME_DEFAULT;
@@ -358,11 +384,11 @@ public class UIPrefsFragment extends PreferenceFragment
                 themeEntries[j] = defaults.get(k);
                 j++;
             }
-            for (SuntimesTheme.ThemeDescriptor theme : themes) {
+            /*for (SuntimesTheme.ThemeDescriptor theme : themes) {
                 themeValues[j] = theme.name();
                 themeEntries[j] = theme.displayString();
                 j++;
-            }
+            }*/
 
             listPref.setEntries(themeEntries);
             listPref.setEntryValues(themeValues);
@@ -375,13 +401,15 @@ public class UIPrefsFragment extends PreferenceFragment
         {
             boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
             String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(activity) : AppSettings.loadThemeDarkPref(activity)));
-            int requestCode = (isLightTheme ? SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT : SettingsActivityInterface.REQUEST_PICKTHEME_DARK);
+            int requestCode = (isLightTheme ? SettingsActivityInterface.REQUEST_PICKCOLORS_LIGHT : SettingsActivityInterface.REQUEST_PICKCOLORS_DARK);
+            AppColorValuesCollection<?> colorCollection = new AppColorValuesCollection<>(activity);
+            String colorsID = colorCollection.getSelectedColorsID(activity, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS);
 
             int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
             if (currentIndex >= 0)
             {
                 listPref.setValueIndex(currentIndex);
-                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, listPref.getTitle(), true, null, null));
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
@@ -392,9 +420,14 @@ public class UIPrefsFragment extends PreferenceFragment
                 } else {
                     Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
                     listPref.setValueIndex(0);
-                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, colorCollection, requestCode, (isLightTheme ? 0 : 1), AppColorValues.TAG_APPCOLORS, null, null, true, null, null));
                     listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
                 }
+            }
+
+            if (!colorCollection.isDefaultColorID(colorsID)) {
+                String label = colorCollection.getColorsLabel(activity, colorsID);
+                listPref.setSummary(listPref.getEntry() + "\n" + (label != null ? label : colorsID));
             }
         }
     }

@@ -20,8 +20,10 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
+import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -35,17 +37,16 @@ import java.util.List;
 @TargetApi(24)
 public class BedtimeTileService extends SuntimesTileService
 {
-    public static final int BEDTIMETILE_APPWIDGET_ID = -3;
+    public static final int BEDTIMETILE_APPWIDGET_ID = -4;
+
+    @Override
+    protected SuntimesTileBase initTileBase() {
+        return new BedtimeTileBase(null);
+    }
 
     @Override
     protected int appWidgetId() {
         return BEDTIMETILE_APPWIDGET_ID;
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
-    protected Class getConfigActivityClass(Context context) {
-        return null;
     }
 
     @Override

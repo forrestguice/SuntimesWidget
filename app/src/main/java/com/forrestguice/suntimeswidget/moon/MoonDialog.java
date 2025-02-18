@@ -700,6 +700,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         //moonapsis.scrollToCenter();
     }
 
+    protected void toggleShowPhaseDate(Context context)
+    {
+        boolean value = AppSettings.loadShowMoonPhaseDatePref(context);
+        AppSettings.saveShowMoonPhaseDatePref(context, !value);
+        moonphases.notifyDataSetChanged();
+    }
+
     protected void toggleLunarNoon(Context context)
     {
         boolean value = AppSettings.loadShowLunarNoonPref(context);
@@ -732,6 +739,11 @@ public class MoonDialog extends BottomSheetDialogFragment
             lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
         }
 
+        MenuItem phaseDateItem = menu.findItem(R.id.action_phase_showdate);
+        if (phaseDateItem != null) {
+            phaseDateItem.setChecked(AppSettings.loadShowMoonPhaseDatePref(context));
+        }
+
         MenuItem columnItem;
         switch (moonphases.numColumns())
         {
@@ -752,6 +764,10 @@ public class MoonDialog extends BottomSheetDialogFragment
             {
                 case R.id.action_colors:
                     showColorDialog(getActivity());
+                    return true;
+
+                case R.id.action_phase_showdate:
+                    toggleShowPhaseDate(getContext());
                     return true;
 
                 case R.id.action_phase_columns_2:

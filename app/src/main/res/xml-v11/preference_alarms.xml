@@ -88,6 +88,12 @@
             android:title="@string/configLabel_dnd"
             android:summary="@string/configLabel_permissionGranted" />
 
+        <CheckBoxPreference
+            android:key="app_bedtime_dnd_rulebased"
+            android:title="@string/configLabel_dnd_rulebased"
+            android:summary="@string/configLabel_dnd_rulebased_summary"
+            android:defaultValue="@bool/def_app_bedtime_dnd_rulebased" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -104,6 +110,7 @@
             android:key="app_alarms_bright_colors"
             android:persistent="false"
             app:colorTag="alarmcolors" app:appWidgetID="0" app:showAlpha="true"
+            app:previewMode="@integer/colorpicker_preview_luminance"
             android:widgetLayout="@layout/layout_pref_colors" app:previewKeys="@array/brightMode_colors_previewKeys"
             android:title="@string/configLabel_alarms_brightMode_colors"
             android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
@@ -156,6 +163,14 @@
             android:defaultValue="@string/def_app_alarms_fadein"
             app:mode="seconds" app:minValue="0"
             app:zeroValueText="@string/configLabel_alarms_fadein_disabled" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_alarms_fadeinMethod"
+            android:title="@string/configLabel_alarms_fadein_method"
+            android:dialogTitle="@string/configLabel_alarms_fadein_method"
+            android:summary="%s"
+            android:entries="@array/fadeInMethod_display" android:entryValues="@array/fadeInMethod_values"
+            android:defaultValue="@string/def_app_alarms_fadein_method" />
 
         <CheckBoxPreference
             android:key="app_alarms_allringtones"
