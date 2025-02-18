@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -320,7 +321,8 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
                 AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
-                alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));
+                //noinspection MissingPermission
+                alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));    // TODO:  android.permission.SCHEDULE_EXACT_ALARM required after targeting api31+
 
             } else if (Build.VERSION.SDK_INT >= 19) {
                 alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
@@ -2411,7 +2413,10 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDismissed)");
-                    sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
+                    if (Build.VERSION.SDK_INT < 31) {
+                        //noinspection MissingPermission
+                        sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
+                    }
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));    // dismiss fullscreen activity
                     if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))           // trigger dismiss action
                     {
