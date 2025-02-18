@@ -361,18 +361,9 @@
         </activity>
 
         <service
-            android:name=".tiles.BedtimeTileService"
-            android:label="@string/configLabel_bedtime"
-            android:icon="@drawable/ic_action_bedtime"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
-
-        <service
             android:name=".alarmclock.bedtime.BedtimeConditionService"
             android:enabled="@bool/api_post_24"
+            android:directBootAware="true"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
             <intent-filter>
@@ -384,10 +375,17 @@
                 android:value="com.forrestguice.suntimeswidget/com.forrestguice.suntimeswidget.alarmclock.ui.bedtime.BedtimeActivity" />
         </service>
 
-        <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
-        <receiver android:name=".alarmclock.AlarmNotifications">
+        <service android:name=".alarmclock.AlarmJobService"
+            android:enabled="@bool/api_post_24"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service android:name=".alarmclock.AlarmNotifications$NotificationService"
+            android:directBootAware="true" />
+        <receiver android:name=".alarmclock.AlarmNotifications"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <!--<action android:name="android.intent.action.TIME_SET" />-->
@@ -404,6 +402,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
+            android:directBootAware="true"
             android:exported="true"
             android:permission="suntimes.permission.READ_CALCULATOR">
             <intent-filter>
@@ -415,49 +414,61 @@
         </receiver>
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <!-- Alarm Tile                                                                  -->
+        <!-- Quick Settings Tiles (api 24+)                                              -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <activity android:name=".tiles.TileLockScreenActivity" android:theme="@style/LockScreenActivityStyle"
+            android:enabled="@bool/api_post_24" />
+
+        <service
+            android:name=".tiles.BedtimeTileService"
+            android:label="@string/configLabel_bedtime"
+            android:icon="@drawable/ic_action_bedtime"
+            android:enabled="@bool/api_post_24"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
 
         <service
             android:name=".tiles.AlarmTileService"
             android:label="@string/app_name_alarmtile"
             android:icon="@drawable/ic_action_alarms"
+            android:enabled="@bool/api_post_24"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <activity android:name=".tiles.AlarmTileConfigActivity" />
-
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <!-- Clock Tile                                                                  -->
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <activity android:name=".tiles.AlarmTileConfigActivity"
+            android:enabled="@bool/api_post_24" />
 
         <service
             android:name=".tiles.ClockTileService"
             android:label="@string/app_name_clocktile"
             android:icon="@drawable/ic_action_time"
+            android:enabled="@bool/api_post_24"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <activity android:name=".tiles.ClockTileConfigActivity" />
-
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <!-- Event Tile                                                                  -->
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <activity android:name=".tiles.ClockTileConfigActivity"
+            android:enabled="@bool/api_post_24" />
 
         <service
             android:name=".tiles.NextEventTileService"
             android:label="@string/app_name_eventtile"
             android:icon="@drawable/ic_action_timereset"
+            android:enabled="@bool/api_post_24"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <activity android:name=".tiles.NextEventTileConfigActivity" />
+        <activity android:name=".tiles.NextEventTileConfigActivity"
+            android:enabled="@bool/api_post_24" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->

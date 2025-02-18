@@ -168,6 +168,14 @@
             app:mode="seconds" app:minValue="0"
             app:zeroValueText="@string/configLabel_alarms_fadein_disabled" />
 
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_alarms_fadeinMethod"
+            android:title="@string/configLabel_alarms_fadein_method"
+            android:dialogTitle="@string/configLabel_alarms_fadein_method"
+            android:summary="%s"
+            android:entries="@array/fadeInMethod_display" android:entryValues="@array/fadeInMethod_values"
+            android:defaultValue="@string/def_app_alarms_fadein_method" />
+
         <CheckBoxPreference
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"

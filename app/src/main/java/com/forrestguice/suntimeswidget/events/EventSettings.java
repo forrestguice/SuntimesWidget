@@ -34,12 +34,14 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -157,9 +159,14 @@ public class EventSettings
         }
 
         private String summary;
-        public String getSummary(Context context) {
+        public String getSummary(final Context context) {
             if (summary == null) {
-                summary = resolveSummary(context);
+                summary = ExecutorUtils.getResult("getSummary", new Callable<String>()
+                {
+                    public String call() {
+                        return resolveSummary(context);
+                    }
+                }, 1000);
             }
             return summary;
         }
@@ -174,7 +181,8 @@ public class EventSettings
                 {
                     cursor.moveToFirst();
                     if (!cursor.isAfterLast()) {
-                        retValue = cursor.getString(cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY));
+                        int i = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
+                        retValue = ((i >= 0) ? cursor.getString(i) : null);
                     }
                     cursor.close();
                 }

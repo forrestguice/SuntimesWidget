@@ -12,6 +12,7 @@
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref</item>
         <item name="widgetBackground">@drawable/widget_bg_ref</item>
         <item name="settingsCardBackground">@color/card_bg</item>
         <item name="timeCardBackground">@color/card_bg</item>
@@ -437,6 +438,7 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_light</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
@@ -675,6 +677,7 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_dark</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
@@ -759,6 +762,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref1</item>
     </style>
     <style name="AppTheme.System1.Small" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -833,6 +837,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light1</item>
     </style>
     <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -909,6 +914,7 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark1</item>
     </style>
     <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -1348,6 +1354,33 @@
         <item name="android:maxLines">3</item>
         <item name="android:ellipsize">end</item>
         <item name="android:antialias">true</item>
+    </style>
+
+    <style name="LockScreenActivityStyleBase" parent="AppTheme.System">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+    </style>
+    <style name="LockScreenActivityStyle" parent="LockScreenActivityStyleBase">
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+    </style>
+
+    <style name="LockScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+        <item name="android:windowBackground">?attr/tileCardBackground</item>
+    </style>
+
+    <style name="LockScreenDialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>

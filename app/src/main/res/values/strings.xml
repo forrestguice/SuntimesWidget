@@ -1275,6 +1275,16 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarms_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string-array name="fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
+        <item>Linear</item>
+        <item>Cubic</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="fadeInMethod_values" translatable="false">
+        <item>0</item>    <!-- handler (linear) -->
+        <item>1</item>    <!-- handler (cubic) -->
+    </string-array>
+
     <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>
@@ -1284,6 +1294,10 @@
 
     <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="configAction_preview">Preview</string>    <!-- TODO -->
+    <string name="configAction_previewColors">@string/configAction_preview</string>
+
     <string-array name="brightMode_colors_previewKeys" translatable="false">
         <item>color_bright_bg_end</item>
         <!--<item>color_sounding_pulse_start</item>
@@ -1414,8 +1428,8 @@
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>
 
-    <string name="configLabel_dnd_rulebased">\'Do Not Disturb\' rules</string>    <!-- TODO -->
-    <string name="configLabel_dnd_rulebased_summary">Trigger \'Do Not Disturb\' settings using an automatic rule (recommended).</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased">DND Rules</string>
+    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>
 
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
@@ -1478,6 +1492,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
     <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+    <string name="resetwidget_dialog_message">Are you sure you want to reset to defaults?</string>
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string>
@@ -1587,6 +1602,10 @@
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
@@ -1594,6 +1613,10 @@
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+
+    <!-- App Setting: Show Equinox / Solstice (date) -->
+    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>

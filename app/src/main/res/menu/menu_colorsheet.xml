@@ -11,6 +11,13 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_colors_preview"
+        android:orderInCategory="100"
+        android:icon="?attr/icActionPlay"
+        android:title="@string/configAction_previewColors"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_colors_import"
         android:orderInCategory="200"
         android:icon="?attr/icActionNew"

@@ -1,5 +1,52 @@
 ### ~
 
+### v0.16.5 (2025-02-14)
+* adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
+* adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.
+* enhances the alarm dismiss activity to display the current time using the alarm's time zone (#849).
+* enhances the "custom event" alarm selector to display a time preview.
+* fixes app crash when using menu actions while refreshing location (#862).
+* fixes app crash when toggling wallpaper from the theme configuration activity.
+* fixes bug where "warnings only show the first message when multiple warnings are queued".
+* fixes bug where "gradually increase volume" is only applied to the left channel.
+* fixes bug where "flippable widget fails to change views" (#855).
+* fixes bug where the moon dialog opens with today's information instead of the selected day (#858).
+* fixes bug where the color collection activity loses the current selection; fixes bug where the share action is disabled for default colors.
+* fixes bug where alarm edit screen layout is cropped in landscape mode; input chips may now flow to use space more efficiently.
+* fixes bug where the "location dialog shows the wrong icon when 'use app location' is checked".
+* changes defaults; "bright alarms" are now enabled by default.
+* changes defaults; "gradually increase brightness" changed from 60 to 30 seconds.
+* changes defaults; "gradually increase volume" changed from 10 to 30 seconds.
+* extends UI test coverage (#864).
+
+### v0.16.4 (2024-12-04)
+* fixes bug "boot completed hangs after phone restart" (#842).
+* fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
+* fixes bug where "moon dialog displays the wrong phase label" (#843).
+* fixes bug where custom color labels are invisible when ellipsized (missing text).
+* fixes bug where text is cropped in moon day widget (#845).
+* fixes bugs in widget previews; missing padding, missing map foreground.
+* adds "preview" action to the "bright alarm colors" selector.
+* adds `AFTER_BOOT_COMPLETED`; changes `ACTION_BOOT_COMPLETED` so that it defers scheduling alarms until a few moments later (#842).
+* adds time-out when querying various content providers to avoid potential ANRs if a provider fails to respond.
+* updates build; replaces jitpack.io artifacts, adds git submodule.
+* updates translation to Polish and Esperanto (eo, pl) (#841 by Verdulo).
+
+### v0.16.3 (2024-11-04)
+* enhances the quick settings tiles to support displaying their dialogs over the lock screen.
+* improves the appearance of the quick settings tile dialogs (replaces AlertDialog).
+* fixes app crash when configuring quick settings tiles.
+* fixes bug where quick settings tiles use the wrong default values.
+* adds a "restore defaults" action to the widget configuration activity.
+* enhances "bedtime mode" to support Direct Boot; responds to `LOCKED_BOOT_COMPLETED` to restore bedtime state after a reboot.
+* adds "DND rules" option to "bedtime mode"; this advanced option allows choosing between using automatic DND rules, or overriding DND directly (#818).
+* fixes the bedtime notification tap action; tapping the notification opens the bedtime activity.
+* revises the notification text displayed when the alarm foreground service does periodic work.
+* fixes bug where battery optimization warning is displayed on devices without power management (Android TV).
+* fixes miscellaneous bugs in the color picker; cropped text on smaller screens; state lost when changing orientation; edit/delete buttons mistakenly enabled for default items; empty/invisible list items.
+* drops support for overriding the app theme using widget themes (this functionality is replaced by the "custom colors" UI).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#839 by James Liu).
+
 ### v0.16.2 (2024-09-23)
 * adds "bright alarm colors"; allows customization of fullscreen alarm colors (#741).
 * adds "do-not-disturb" preference that indicates the state of the required permission (#818).

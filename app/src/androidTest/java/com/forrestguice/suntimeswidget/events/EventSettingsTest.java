@@ -90,4 +90,11 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         assertEquals(uri, alias.getUri());
     }
 
+    public static Set<String> populateEventListWithTestItems(Context context)
+    {
+        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
+        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        return EventSettings.loadEventList(getContext());
+    }
+
 }

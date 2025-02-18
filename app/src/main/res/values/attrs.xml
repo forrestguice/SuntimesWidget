@@ -12,6 +12,7 @@
     <attr name="popupMenuBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
+    <attr name="tileCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
 

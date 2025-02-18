@@ -142,6 +142,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         options.init(context);
         options.showSeconds = true;
+        options.showDate = true;
 
         AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
         boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);

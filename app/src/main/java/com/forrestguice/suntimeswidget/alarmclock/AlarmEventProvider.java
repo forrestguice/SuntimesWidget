@@ -355,7 +355,8 @@ public class AlarmEventProvider extends ContentProvider
             {
                 case COLUMN_EVENT_TIMEMILLIS:
                     if (cursor != null) {
-                        row[i] = cursor.getLong(cursor.getColumnIndex(COLUMN_EVENT_TIMEMILLIS));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_TIMEMILLIS);
+                        row[i] = (j >= 0) ? cursor.getLong(j) : null;
                     } else row[i] = null;
                     break;
 
@@ -369,44 +370,51 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_PHRASE:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_PHRASE));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE);
+                        row[i] = (j >= 0) ? cursor.getString(j) : event.getLabel();
                     } else row[i] = event.getLabel();
                     break;
 
                 case COLUMN_EVENT_PHRASE_GENDER:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_PHRASE_GENDER));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE_GENDER);
+                        row[i] = (j >= 0) ? cursor.getString(j) : "other";
                     } else row[i] = "other";
                     break;
 
                 case COLUMN_EVENT_PHRASE_QUANTITY:
                     if (cursor != null) {
-                        row[i] = cursor.getInt(cursor.getColumnIndex(COLUMN_EVENT_PHRASE_QUANTITY));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE_QUANTITY);
+                        row[i] = (j >= 0) ? cursor.getInt(j) : 1;
                     } else row[i] = 1;
                     break;
 
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     if (cursor != null) {
-                        row[i] = cursor.getInt(cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_REPEATING));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_REPEATING);
+                        row[i] = (j >= 0) ? cursor.getInt(j) : REPEAT_SUPPORT_DAILY;
                     } else row[i] = REPEAT_SUPPORT_DAILY;
                     break;
 
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_OFFSETDAYS));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_OFFSETDAYS);
+                        row[i] = (j >= 0) ? cursor.getString(j) : Boolean.toString(false);
                     } else row[i] = Boolean.toString(false);
                     break;
 
                 case COLUMN_EVENT_REQUIRES_LOCATION:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_REQUIRES_LOCATION));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_REQUIRES_LOCATION);
+                        row[i] = (j >= 0) ? cursor.getString(j) : Boolean.toString(true);
                     } else row[i] = Boolean.toString(true);
                     break;
 
                 case COLUMN_EVENT_SUMMARY:
                 default:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_SUMMARY));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUMMARY);
+                        row[i] = (j >= 0) ? cursor.getString(j) : null;
                     } else row[i] = null;
                     break;
             }

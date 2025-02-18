@@ -30,6 +30,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SolsticeLayout extends SuntimesLayout
 {
+    public static final boolean PREF_DEF_CALENDAR_SHOWDATE = true;
+
     protected float titleSizeSp = 12;
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
