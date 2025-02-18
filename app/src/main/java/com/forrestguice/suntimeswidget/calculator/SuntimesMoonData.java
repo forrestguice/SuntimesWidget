@@ -414,11 +414,11 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    public static MoonPhaseDisplay findCurrentPhaseOf(Calendar calendar, SuntimesMoonData data)
+    public static MoonPhaseDisplay findCurrentPhaseOf(Context context, Calendar calendar, SuntimesMoonData data)
     {
         SuntimesMoonData data1 = new SuntimesMoonData(data);
         data1.setTodayIs(calendar);
-        data1.calculate();
+        data1.calculate(context);
 
         SuntimesCalculator.MoonPhase nextPhase = data1.nextPhase(calendar);
         Calendar nextPhaseDate = data1.moonPhases.get(nextPhase);
