@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,14 +18,21 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.content.Intent;
+
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,206 +41,238 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasLinks;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static org.hamcrest.CoreMatchers.not;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class DialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
 
-    /**
-     * UI Test
-     *
-     * Show, rotate, and dismiss the lightmap dialog.
-     */
-    @Test
-    public void test_showLightmapDialog()
-    {
-        Context context = activityRule.getActivity();
-        if (AppSettings.loadShowLightmapPref(context))
-        {
-            showLightmapDialog(context);
-            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-lightmap0");
+    @Rule
+    public RetryRule retry = new RetryRule(3);
 
-            rotateDevice(activityRule);
-            verifyLightmapDialog();
-            cancelLightmapDialog();
-
-        } else {
-            onView(withId(R.id.info_time_lightmap)).check(matches(not(isDisplayed())));
-        }
+    @Before
+    public void beforeTest() throws IOException {
+        setAnimationsEnabled(false);
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
+    }
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
+        restoreConfigState(getContext());
     }
 
-    public static void showLightmapDialog(Context context)
-    {
-        showLightmapDialog(context, true);
-    }
-    public static void showLightmapDialog(Context context, boolean verify)
-    {
-        onView(withId(R.id.info_time_lightmap)).perform(click());
-        if (verify) {
-            verifyLightmapDialog();
-        }
-    }
-
-    public static void verifyLightmapDialog()
-    {
-        onView(withId(R.id.dialog_lightmap_layout)).check(assertShown);
-    }
-
-    public static void cancelLightmapDialog()
-    {
-        onView(withId(R.id.dialog_lightmap_layout)).perform(pressBack());
-        onView(withId(R.id.dialog_lightmap_layout)).check(doesNotExist());
-    }
-
-    /**
-     *  UI Test
-     *
-     *  Show, rotate, and dismiss the solstice/equinox dialog.
-     */
-    @Test
-    public void test_showEquinoxDialog()
-    {
-        Context context = activityRule.getActivity();
-        if (AppSettings.loadShowEquinoxPref(context))
-        {
-            showEquinoxDialog(context);
-            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-equinox0");
-
-            verifyEquinoxDialog();
-            cancelEquinoxDialog();
-
-        } else {
-            onView(withId(R.id.info_date_solsticequinox)).check(matches(not(isDisplayed())));
-        }
-    }
-
-    public static void showEquinoxDialog(Context context)
-    {
-        showEquinoxDialog(context, true);
-    }
-    public static void showEquinoxDialog(Context context, boolean verify)
-    {
-        String actionText = context.getString(R.string.configAction_equinoxDialog);
-        openActionBarOverflowOrOptionsMenu(context);
-        onView(withText(actionText)).perform(click());
-        if (verify) {
-            verifyEquinoxDialog();
-        }
-    }
-
-    public static void verifyEquinoxDialog()
-    {
-        onView(withId(R.id.dialog_header)).check(assertShown);
-    }
-
-    public static void cancelEquinoxDialog()
-    {
-        onView(withId(R.id.dialog_header)).perform(pressBack());
-        onView(withId(R.id.dialog_header)).check(doesNotExist());
-    }
-
-    /**
-     *  UI Test
-     *
-     *  Show, rotate, and dismiss the help dialog.
-     */
     @Test
     public void test_showHelpDialog()
     {
-        showHelpDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-help0");
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        new HelpDialogRobot()
+                .showDialog(context)
+                .assertDialogShown(context)
 
-        rotateDevice(activityRule);
-        verifyHelpDialog();
-        cancelHelpDialog();
+                .doubleRotateDevice(context)
+                .assertDialogShown(context)
+
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
     }
 
-    public static void showHelpDialog(Context context)
-    {
-        showHelpDialog(context, true);
-    }
-    public static void showHelpDialog(Context context, boolean verify)
-    {
-        String actionHelpText = context.getString(R.string.configAction_help);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionHelpText)).perform(click());
-        if (verify) {
-            verifyHelpDialog();
-        }
-    }
-
-    public static void verifyHelpDialog()
-    {
-        onView(withId(R.id.txt_help_content)).check(assertShown);
-    }
-
-    public static void cancelHelpDialog()
-    {
-        onView(withId(R.id.txt_help_content)).perform(pressBack());
-        onView(withId(R.id.txt_help_content)).check(doesNotExist());
-    }
-
-    /**
-     * UI Test
-     *
-     * Show, rotate, and dismiss the about dialog.
-     */
     @Test
     public void test_showAboutDialog()
     {
-        showAboutDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-about0");
-
-        rotateDevice(activityRule);
-        verifyAboutDialog();
-        cancelAboutDialog();
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        new AboutDialogRobot()
+                .showDialog(context).assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-about0")
+                .doubleRotateDevice(context).assertDialogShown(context)
+                .cancelDialog(context).assertDialogNotShown(context);
     }
 
-    public static void showAboutDialog(Context context)
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+
+    /**
+     * DialogRobot
+     * @param <T> robot return type (implementations must call setRobot)
+     */
+    public static abstract class DialogRobot<T> extends Robot<T>
     {
-        showAboutDialog(context, true);
-    }
-    public static void showAboutDialog(Context context, boolean verify)
-    {
-        String actionAboutText = context.getString(R.string.configAction_aboutWidget);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionAboutText)).perform(click());
-        if (verify) {
-            verifyAboutDialog();
+        public DialogRobot() {
+            initRobotConfig();
+        }
+
+        protected DialogRobotConfig expected;
+        public void initRobotConfig() {
+            setRobotConfig(new DialogRobotConfig());
+        }
+        public void setRobotConfig(DialogRobotConfig config) {
+            expected = config;
+        }
+
+        public T applyDialog(Context context) {
+            onView(withId(R.id.dialog_button_accept)).perform(click());
+            return robot;
+        }
+        public T cancelDialog(Context context) {
+            onView(withId(R.id.dialog_header)).perform(pressBack());
+            return robot;
+        }
+
+        public T assertDialogShown(Context context) {
+            onView(withId(R.id.dialog_header)).check(assertShown);
+            return robot;
+        }
+        public T assertDialogNotShown(Context context) {
+            onView(withId(R.id.dialog_header)).check(doesNotExist());
+            return robot;
+        }
+
+        public T expandSheet() {
+            onView(withId(R.id.dialog_header)).perform(swipeUp());
+            return robot;
+        }
+        public T collapseSheet() {
+            onView(withId(R.id.dialog_header)).perform(swipeDown());
+            return robot;
+        }
+        public T assertSheetIsCollapsed(Context context) {
+            onView(withId(R.id.dialog_header)).check(assertShown);
+            return robot;
+        }
+
+        public static int thisYear() {
+            return Calendar.getInstance().get(Calendar.YEAR);
+        }
+        public static int nextYear() {
+            return thisYear() + 1;
+        }
+        public static int lastYear() {
+            return thisYear() - 1;
+        }
+
+        public Calendar now(Context context) {
+            return now(TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0)));
+        }
+        public Calendar now(TimeZone timezone) {
+            return Calendar.getInstance(timezone);
         }
     }
 
-    public static void verifyAboutDialog()
+    public static class DialogRobotConfig
     {
-        onView(withId(R.id.txt_about_name)).check(assertShown);
-        onView(withId(R.id.txt_about_desc)).check(assertShown);
-        onView(withId(R.id.txt_about_version)).check(assertShown);
-
-        onView(withId(R.id.txt_about_url)).check(assertShown);
-        onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
-
-        onView(withId(R.id.txt_about_support)).check(assertShown);
-        onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
-
-        //onView(withId(R.id.txt_about_legal1)).check(assertShown);
-        //onView(withId(R.id.txt_about_legal2)).check(assertShown);
-        //onView(withId(R.id.txt_about_legal3)).check(assertShown);
+        public Location getLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
+        }
     }
 
-    public static void cancelAboutDialog()
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+
+    /**
+     * HelpDialogRobot
+     */
+    public static class HelpDialogRobot extends DialogRobot<HelpDialogRobot>
     {
-        onView(withId(R.id.txt_about_name)).perform(pressBack());
-        onView(withId(R.id.txt_about_name)).check(doesNotExist());
+        public HelpDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
+        public HelpDialogRobot showDialog(Activity context) {
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            sleep(500);
+            onView(withText(R.string.configAction_help)).perform(click());
+            return this;
+        }
+        @Override
+        public HelpDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.txt_help_content)).perform(pressBack());
+            return this;
+        }
+        @Override
+        public HelpDialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.txt_help_content)).check(assertShown);
+            return this;
+        }
+        @Override
+        public HelpDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.txt_help_content)).check(doesNotExist());
+            return this;
+        }
+
+        public HelpDialogRobot assertOnlineHelpButtonShown(Context context) {
+            onView(withText(R.string.configAction_onlineHelp)).check(assertShown).check(assertClickable);
+            return this;
+        }
     }
 
+    /**
+     * AboutDialogRobot
+     */
+    public static class AboutDialogRobot extends DialogRobot<AboutDialogRobot>
+    {
+        public AboutDialogRobot() {
+            super();
+            setRobot(this);
+        }
+
+        public AboutDialogRobot showDialog(Activity context)
+        {
+            String navMode = AppSettings.loadNavModePref(context);
+            if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
+            {
+                onView(navigationButton()).perform(click());
+                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+
+            } else {
+                openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+            }
+            return this;
+        }
+        @Override
+        public AboutDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.txt_about_name)).perform(pressBack());
+            return this;
+        }
+        @Override
+        public AboutDialogRobot assertDialogShown(Context context)
+        {
+            onView(withId(R.id.txt_about_name)).check(assertShown);
+            onView(withId(R.id.txt_about_desc)).check(assertShown);
+            onView(withId(R.id.txt_about_version)).check(assertShown);
+
+            onView(withId(R.id.txt_about_url)).check(assertShown);
+            onView(withId(R.id.txt_about_url)).check(matches(hasLinks()));
+
+            onView(withId(R.id.txt_about_support)).check(assertShown);
+            onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
+            return this;
+        }
+        @Override
+        public AboutDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.txt_about_name)).check(doesNotExist());
+            return this;
+        }
+    }
 }

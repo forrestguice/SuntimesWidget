@@ -204,7 +204,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         themeCardViews(view.getContext(), options);
     }
 
-    public void bindDataToPosition(@NonNull Context context, int position, Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
+    public void bindDataToPosition(@NonNull Context context, int position, @Nullable Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
     {
         this.position = position;
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);

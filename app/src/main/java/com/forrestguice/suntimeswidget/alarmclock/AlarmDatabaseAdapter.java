@@ -397,11 +397,16 @@ public class AlarmDatabaseAdapter
             cursor.moveToFirst();
             while (!cursor.isAfterLast())
             {
-                long alarmtime = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED));
-                long timeToAlarm = alarmtime - nowMillis;
-                if (timeToAlarm > 0 && timeToAlarm < timeToUpcomingAlarm) {
-                    timeToUpcomingAlarm = timeToAlarm;
-                    upcomingAlarmId = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID));
+                try {
+                    long alarmtime = cursor.getLong(cursor.getColumnIndexOrThrow(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED));
+                    int i_rowID = cursor.getColumnIndexOrThrow(AlarmDatabaseAdapter.KEY_ROWID);
+                    long timeToAlarm = alarmtime - nowMillis;
+                    if (timeToAlarm > 0 && timeToAlarm < timeToUpcomingAlarm) {
+                        timeToUpcomingAlarm = timeToAlarm;
+                        upcomingAlarmId = cursor.getLong(i_rowID);
+                    }
+                } catch (IllegalArgumentException e) {
+                    Log.w("AlarmDatabaseAdapter", "findUpcomingAlarmId: missing required columns! " + e);
                 }
                 cursor.moveToNext();
             }
@@ -1031,10 +1036,12 @@ public class AlarmDatabaseAdapter
 
                 while (!cursor.isAfterLast())
                 {
-                    String index = (param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID;
-                    long alarmId = cursor.getLong(cursor.getColumnIndex(index));
-                    if (passesFilter(cursor, alarmId)) {
-                        alarmIds.add(alarmId);
+                    int index = cursor.getColumnIndex((param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID);
+                    if (index >= 0) {
+                        long alarmId = cursor.getLong(index);
+                        if (passesFilter(cursor, alarmId)) {
+                            alarmIds.add(alarmId);
+                        }
                     }
                     cursor.moveToNext();
                 }

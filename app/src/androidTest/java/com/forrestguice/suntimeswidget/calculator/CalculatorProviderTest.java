@@ -789,4 +789,34 @@ public class CalculatorProviderTest
                         && calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getColumnName(WidgetSettings.SolsticeEquinoxMode mode)
+    {
+        switch (mode) {
+            case EQUINOX_SPRING: return CalculatorProviderContract.COLUMN_SEASON_SPRING;
+            case SOLSTICE_SUMMER: return CalculatorProviderContract.COLUMN_SEASON_SUMMER;
+            case EQUINOX_AUTUMNAL: return CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
+            case SOLSTICE_WINTER: default: return CalculatorProviderContract.COLUMN_SEASON_WINTER;
+        }
+    }
+    public static Calendar lookupEventTime(Context context, WidgetSettings.SolsticeEquinoxMode mode, int forYear) {
+        return lookupEventTime(context, mode, forYear, null);
+    }
+    public static Calendar lookupEventTime(Context context, WidgetSettings.SolsticeEquinoxMode mode, int forYear, TimeZone timezone)
+    {
+        Calendar retValue = null;
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + forYear);
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(uri, new String[] { getColumnName(mode) }, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            retValue = Calendar.getInstance(timezone != null ? timezone : TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0)));
+            retValue.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(getColumnName(mode))));
+            cursor.close();
+        }
+        return retValue;
+    }
+
 }

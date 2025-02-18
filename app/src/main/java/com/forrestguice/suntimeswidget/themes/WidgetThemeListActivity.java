@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
@@ -904,6 +905,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
             }
         }
     }
+
+    @TargetApi(18)
+    @SuppressLint("MissingPermission")
     @Deprecated
     protected void initWallpaperLegacy(boolean animate)
     {

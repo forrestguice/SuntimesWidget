@@ -47,6 +47,8 @@
     </string-array>
     <string-array name="place_group_unsorted">
         <item>places_unsorted, place_label_other</item>    <!-- all others -->
+        <item>places_deeps, place_label_other</item>
+        <item>places_mount, place_label_other</item>
     </string-array>
 
     <!-- Antarctica -->
@@ -362,6 +364,32 @@
 
     <!-- Unsorted -->
     <string-array name="places_unsorted">
+        <item>"Grasberg mine", -4.05876, 137.11323, 4270</item>    <!-- Indonesia -->
+    </string-array>
+
+    <string-array name="places_deeps">    <!-- deepest places -->
+        <item>\"Challenger Deep, West Pacific\", 11.37333, 142.59166, -10925</item>
+        <item>\"Horizon Deep, South West Pacific\", -23.25833, -174.72666, -10820</item>
+        <item>\"Sirena Deep, West Pacific\", 12.0654, 144.58113, -10714</item>
+        <item>\"Brownson Deep, Atlantic Ocean\", 19.58333, -66.5, -8376</item>
+        <item>\"Weber Deep, Banda Sea\", -5.43927, 131.01452, -7351</item>
+        <item>\"Molloy Deep, Greenland Sea\", 79.13666, 2.8166, -5550</item>
+        <item>\"Litke Deep, Arctic Ocean\", 82.4, 19.51666, -5449</item>
+        <item>\"Calypso Deep, Mediterranean Sea\", 36.56666, 21.13333, -5200</item>
+        <item>\"Sigsbee Deep, Gulf of Mexico\", 23.86666, -91.58333, -4384</item>
+    </string-array>
+
+    <string-array name="places_mount">    <!-- highest places -->
+        <item>"Mount Everest", 27.98833, 86.92527, 8848.86</item>    <!-- Asia -->
+        <item>"Aconcagua", -32.65332, -70.012, 6960.8</item>         <!-- South America -->
+        <item>"Chimborazo", -1.46916, -78.8175, 6263.47</item>       <!-- South America -->
+        <item>"Denali", 63.06919, -151.00713, 6190.0</item>          <!-- North America -->
+        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895</item>    <!-- Africa -->
+        <item>"Mount Elbrus", 43.355, 42.43916, 5642</item>          <!-- Russia -->
+        <item>"Vinson Massif", -78.52607, -85.6274, 4892</item>      <!-- Antarctica -->
+        <item>"Puncak Jaya", -4.07888, 137.15833, 4884</item>        <!-- Indonesia -->
+        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59</item>        <!-- Europe -->
+        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228</item>  <!-- Australia -->
     </string-array>
 
 </resources>
