@@ -47,7 +47,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
@@ -124,6 +123,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
     public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
 
+    public static final String PREF_KEY_UI_SHOWEQUINOXDATE = "app_ui_showequinox_date";
+
     public static final String PREF_KEY_UI_SHOWCROSSQUARTER = "app_ui_showcrossquarter";
     public static final boolean PREF_DEF_UI_SHOWCROSSQUARTER = true;
 
@@ -135,6 +136,8 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_MOONPHASECOLUMNS = "app_ui_showmoon_phases_columns";
     public static final int PREF_DEF_UI_MOONPHASECOLUMNS = 4;
+
+    public static final String PREF_KEY_UI_MOONPHASE_SHOWDATE = "app_ui_showmoon_phases_showdate";
 
     public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
     public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
@@ -199,10 +202,10 @@ public class AppSettings
             PREF_KEY_APPEARANCE_THEME, PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_KEY_APPEARANCE_THEME_DARK, PREF_KEY_APPEARANCE_TEXTSIZE,
             PREF_KEY_LOCALE_MODE, PREF_KEY_LOCALE, PREF_KEY_UI_SHOWWARNINGS,
             PREF_KEY_UI_DATETAPACTION, PREF_KEY_UI_DATETAPACTION1, PREF_KEY_UI_CLOCKTAPACTION, PREF_KEY_UI_NOTETAPACTION,
-            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWEQUINOXDATE, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
             PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
             PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
-            PREF_KEY_UI_MOONPHASECOLUMNS,
+            PREF_KEY_UI_MOONPHASECOLUMNS, PREF_KEY_UI_MOONPHASE_SHOWDATE,
             PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
             PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
             //PREF_KEY_GETFIX_TIME,
@@ -218,7 +221,8 @@ public class AppSettings
     public static final String[] BOOL_KEYS = new String[]
     {
             PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON,
-            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWEQUINOXDATE, PREF_KEY_UI_SHOWCROSSQUARTER,
+            PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON, PREF_KEY_UI_MOONPHASE_SHOWDATE,
             PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
     };
 
@@ -570,6 +574,18 @@ public class AppSettings
         pref.apply();
     }
 
+    public static boolean loadShowEquinoxDatePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, context.getResources().getBoolean(R.bool.def_app_ui_showequinox_date));
+    }
+    public static void saveShowEquinoxDatePref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, value);
+        pref.apply();
+    }
+
     public static boolean loadShowCrossQuarterPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -615,6 +631,18 @@ public class AppSettings
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putInt(PREF_KEY_UI_MOONPHASECOLUMNS, value);
+        pref.apply();
+    }
+
+    public static boolean loadShowMoonPhaseDatePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_MOONPHASE_SHOWDATE, context.getResources().getBoolean(R.bool.def_app_ui_showmoon_phases_showdate));
+    }
+    public static void saveShowMoonPhaseDatePref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_MOONPHASE_SHOWDATE, value);
         pref.apply();
     }
 

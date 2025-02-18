@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -47,6 +48,7 @@ public class EventListFragment extends Fragment
     public static final String EXTRA_SELECTED = "selected";
     public static final String EXTRA_NOSELECT = "noselect";
     public static final String EXTRA_EXPANDED = "expanded";
+    public static final String EXTRA_LOCATION = "location";
 
     private EventListHelper helper;
 
@@ -73,6 +75,7 @@ public class EventListFragment extends Fragment
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
         helper = new EventListHelper(getActivity(), getChildFragmentManager());
+        helper.setLocation(getLocation());
         helper.setExpanded(getArguments().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArguments().getBoolean(EXTRA_NOSELECT, false));
         helper.initViews(getActivity(), v, savedState);
@@ -211,6 +214,13 @@ public class EventListFragment extends Fragment
     }
     public boolean disallowSelect() {
         return getArguments().getBoolean(EXTRA_NOSELECT, false);
+    }
+
+    public void setLocation(Location value) {
+        getArguments().putParcelable(EXTRA_LOCATION, value);
+    }
+    public Location getLocation() {
+        return getArguments().getParcelable(EXTRA_LOCATION);
     }
 
     /**

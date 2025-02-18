@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -26,10 +27,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 
@@ -43,6 +41,7 @@ import android.icu.text.MessageFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.media.VolumeShaper;
 import android.net.Uri;
 
 import android.os.Binder;
@@ -322,7 +321,8 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
                 AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
-                alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));
+                //noinspection MissingPermission
+                alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));    // TODO:  android.permission.SCHEDULE_EXACT_ALARM required after targeting api31+
 
             } else if (Build.VERSION.SDK_INT >= 19) {
                 alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
@@ -732,7 +732,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    protected static void startAlert(Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
+    protected static void startAlert(final Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
         if (soundUri == null) {
             throw new IOException("URI must not be null!");
@@ -780,7 +780,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     if (fadeInMillis > 0) {
-                        startFadeIn(player, fadeInMillis);
+                        startFadeIn(context, mediaPlayer, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
                     mediaPlayer.start();
@@ -852,45 +852,98 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static int FADEIN_STEP_MILLIS = 50;
+    public static int FADEIN_STEP_MILLIS = 25;
     protected static boolean isFadingIn = false;
     protected static float t_volume = 0;
     protected static Handler fadeHandler;
 
-    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull final MediaPlayer player, final long duration)    // TODO: use VolumeShaper for api 26+
+    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull final MediaPlayer player, final long duration, final int method)
     {
         return new Runnable()
         {
-            private float elapsed = 0;
+            private final float oneOverDuration = 1f / duration;
+            private Long startedAt = null;
 
             @Override
             public void run()
             {
                 isFadingIn = true;
-                elapsed += FADEIN_STEP_MILLIS;
-                float volume = elapsed / (float) duration;
-                player.setVolume(volume, t_volume = 1);
+                if (startedAt == null) {
+                    startedAt = System.currentTimeMillis();
+                }
+
+                float elapsed = (float) (System.currentTimeMillis() - startedAt);
+                float x = Math.min(elapsed * oneOverDuration, 1f);    // x[0,1]
+                float volume = f(x, method);                          // y[0,1]
+                player.setVolume(volume, t_volume = volume);
 
                 //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
                     handler.postDelayed(this, FADEIN_STEP_MILLIS);
-                } else isFadingIn = false;
+                } else {
+                    isFadingIn = false;
+                    player.setVolume(1f, t_volume = 1f);
+                }
+            }
+
+            private float f(float x, int method) {
+                switch (method) {
+                    case AlarmSettings.FADE_HANDLER_CUBIC: return x*x*x;
+                    case AlarmSettings.FADE_HANDLER_LINEAR:
+                    default: return x;   // y = x
+                }
             }
         };
     }
 
     @NonNull
-    private static void startFadeIn(@Nullable MediaPlayer player, final long duration)
+    private static void startFadeIn(Context context, @Nullable MediaPlayer player, final long duration)
     {
         if (player != null)
         {
+            int method = AlarmSettings.loadPrefAlarmFadeInMethod(context);
+
+            if (Build.VERSION.SDK_INT >= 26)
+            {
+                VolumeShaper.Configuration fadeInConfig = getFadeInVolumeShaperConfig(context, duration, method);
+                if (fadeInConfig != null)
+                {
+                    VolumeShaper fadeInVolume = player.createVolumeShaper(fadeInConfig);    // TODO: VolumeShaper sometimes jumps to full volume for no apparent reason...
+                    fadeInVolume.apply(VolumeShaper.Operation.PLAY);
+                    return;    // else fall-through to legacy fadeHandler
+                }
+            }
+
             player.setVolume(0, t_volume = 0);
             if (fadeHandler == null) {
                 fadeHandler = new Handler();
             }
-            fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration), FADEIN_STEP_MILLIS);
+            fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration, method), FADEIN_STEP_MILLIS);
+
         } else {
             Log.w(TAG, "startFadeIn: null MediaPlayer!");
+        }
+    }
+
+    @Nullable
+    @TargetApi(26)
+    public static VolumeShaper.Configuration getFadeInVolumeShaperConfig(Context context, long duration, int method)
+    {
+        switch (method)
+        {
+            case AlarmSettings.FADE_VSHAPER_LINEAR:
+                return new VolumeShaper.Configuration.Builder(VolumeShaper.Configuration.LINEAR_RAMP).setDuration(duration).build();
+
+            case AlarmSettings.FADE_VSHAPER_SCURVE:
+                return new VolumeShaper.Configuration.Builder(VolumeShaper.Configuration.SCURVE_RAMP).setDuration(duration).build();
+
+            case AlarmSettings.FADE_VSHAPER_CUBIC:
+                return new VolumeShaper.Configuration.Builder(VolumeShaper.Configuration.CUBIC_RAMP).setDuration(duration).build();
+
+            case AlarmSettings.FADE_HANDLER_LINEAR:
+            case AlarmSettings.FADE_HANDLER_CUBIC:
+            default:
+                return null;
         }
     }
 
@@ -2360,7 +2413,10 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDismissed)");
-                    sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
+                    if (Build.VERSION.SDK_INT < 31) {
+                        //noinspection MissingPermission
+                        sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
+                    }
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));    // dismiss fullscreen activity
                     if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))           // trigger dismiss action
                     {
@@ -2925,7 +2981,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
-    protected static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    public static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");

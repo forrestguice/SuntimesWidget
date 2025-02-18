@@ -37,6 +37,7 @@ public class EquinoxViewOptions
 
     public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
     public boolean showSeconds = false;
+    public boolean showDate = true;
 
     public int titleColor, noteColor, disabledColor, pressedColor;
     public EquinoxColorValues colors = new EquinoxColorValues();
