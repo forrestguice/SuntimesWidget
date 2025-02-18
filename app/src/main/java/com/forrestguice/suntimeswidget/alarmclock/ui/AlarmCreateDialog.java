@@ -996,8 +996,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setUseAppLocation(Context context, boolean value)
     {
         getArguments().putBoolean(EXTRA_LOCATION_FROMAPP, value);
-        if (value && isAdded() && context != null) {
-            setEvent(getEvent(), WidgetSettings.loadLocationPref(context, 0));
+        if (isAdded() && context != null) {
+            setEvent(getEvent(), value ? WidgetSettings.loadLocationPref(context, 0) : getLocation());
         }
     }
     public boolean useAppLocation() {
@@ -1143,6 +1143,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         moonData.calculate();
         equinoxData.calculateData();
         dialog.setData(context, sunData, moonData, equinoxData);
+        dialog.setUseAppLocation(useAppLocation());
     }
 
     public static AlarmClockItem createAlarm(@NonNull Context context, @NonNull AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)

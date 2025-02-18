@@ -132,6 +132,15 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         showDesc = value;
     }
 
+    private boolean useAppLocation = false;
+    public void setUseAppLocation(boolean value)
+    {
+        useAppLocation = value;
+        if (isAdded()) {
+            updateViews(getContext());
+        }
+    }
+
     /**
      * The supporting datasets.
      */
@@ -321,9 +330,11 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         txt_note.setText("");
 
         txt_location = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_location);
-        if (txt_location != null) {
+        if (txt_location != null)
+        {
             txt_location.setText("");
             txt_location.setOnClickListener(onLocationClicked);
+            updateLocationIcon(context, txt_location, useAppLocation);
         }
 
         alarmPickers = AlarmAddon.queryEventPickers(context);
@@ -483,6 +494,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
             {
                 Intent intent = new Intent(getActivity(), EventListActivity.class);
                 intent.putExtra(EventListActivity.EXTRA_EXPANDED, true);
+                intent.putExtra(EventListActivity.EXTRA_LOCATION, getLocation());
                 startActivityForResult(intent, REQUEST_EVENTALIAS);
                 return true;
 
@@ -597,6 +609,8 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         if (txt_modeLabel != null) {
             txt_modeLabel.setText(getString(type == AlarmClockItem.AlarmType.ALARM ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode));
         }
+
+        updateLocationIcon(context, txt_location, useAppLocation);
     }
 
     private int color_textTimeDelta;
@@ -739,6 +753,21 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
                 return false;
             }
         } else return false;
+    }
+
+    public static void updateLocationIcon(Context context, TextView text_location, boolean useAppLocation)
+    {
+        if (context != null && text_location != null)
+        {
+            int[] attr = { R.attr.icActionPlace, R.attr.icActionHome };
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            Drawable placeIcon = ContextCompat.getDrawable(context, typedArray.getResourceId(0, R.drawable.ic_action_place));
+            @SuppressLint("ResourceType")
+            Drawable homeIcon = ContextCompat.getDrawable(context, typedArray.getResourceId(1, R.drawable.ic_action_home));
+            typedArray.recycle();
+
+            text_location.setCompoundDrawablesWithIntrinsicBounds(useAppLocation ? homeIcon : placeIcon, null, null, null);
+        }
     }
 
     @Override

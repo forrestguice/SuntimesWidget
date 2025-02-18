@@ -2790,6 +2790,50 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    public void moveViewToTop(int sectionLayoutID, int viewID) {
+        moveViewToPosition(sectionLayoutID, viewID, 1);    // 1; 0 is group title view
+    }
+    public void moveViewToBeforeOther(int sectionLayoutID, int viewID, int otherViewID)
+    {
+        int i = getViewPosition(sectionLayoutID, otherViewID);
+        if (i >= 0) {
+            moveViewToPosition(sectionLayoutID, viewID, Math.max(i - 1, 0));
+        }
+    }
+    public void moveViewToAfterOther(int sectionLayoutID, int viewID, int otherViewID)
+    {
+        int i = getViewPosition(sectionLayoutID, otherViewID);
+        if (i >= 0) {
+            moveViewToPosition(sectionLayoutID, viewID, i + 1);
+        }
+    }
+    protected void moveViewToPosition(int sectionLayoutID, int viewID, int position)
+    {
+        LinearLayout layout = (LinearLayout) findViewById(sectionLayoutID);
+        if (layout != null && position >= 0)
+        {
+            View view = findViewById(viewID);
+            if (view != null)
+            {
+                LinearLayout parent = (LinearLayout) view.getParent();
+                parent.removeView(view);
+                layout.addView(view, position);
+            }
+        }
+    }
+    protected int getViewPosition(int sectionLayoutID, int viewID)
+    {
+        LinearLayout layout = (LinearLayout)findViewById(sectionLayoutID);
+        if (layout != null)
+        {
+            View view = layout.findViewById(viewID);
+            if (view != null) {
+                return layout.indexOfChild(view);
+            }
+        }
+        return -1;
+    }
+
     /**
      * @param requestCode anticipates PICK_THEME_REQUEST
      * @param resultCode RESULT_OK, RESULT_CANCELED

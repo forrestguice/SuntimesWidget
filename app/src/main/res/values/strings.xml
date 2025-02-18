@@ -1268,6 +1268,16 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarms_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string-array name="fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
+        <item>Linear</item>
+        <item>Cubic</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="fadeInMethod_values" translatable="false">
+        <item>0</item>    <!-- handler (linear) -->
+        <item>1</item>    <!-- handler (cubic) -->
+    </string-array>
+
     <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>
@@ -1585,6 +1595,10 @@
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
@@ -1592,6 +1606,10 @@
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+
+    <!-- App Setting: Show Equinox / Solstice (date) -->
+    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>

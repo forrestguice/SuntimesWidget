@@ -193,6 +193,12 @@
             android:defaultValue="@bool/def_app_ui_showequinox" />
 
         <CheckBoxPreference
+            android:key="app_ui_showequinox_date"
+            android:title="@string/configLabel_ui_showEquinoxDate"
+            android:summary="@string/configLabel_ui_showEquinoxDate_summary"
+            android:defaultValue="@bool/def_app_ui_showequinox_date" />
+
+        <CheckBoxPreference
             android:key="app_ui_showcrossquarter"
             android:title="@string/configLabel_ui_showCrossQuarter"
             android:summary="@string/configLabel_ui_showCrossQuarter_summary"
