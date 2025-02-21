@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: net.time4j:time4j-android:4.8-2021a@aar">
+    <CLASSES>
+      <root url="jar://D:/Forrest/.gradle/caches/transforms-1/files-1.1/time4j-android-4.8-2021a.aar/90546143f0e23bbfa6abfc088f45d20c/jars/classes.jar!/" />
+      <root url="file://D:/Forrest/.gradle/caches/transforms-1/files-1.1/time4j-android-4.8-2021a.aar/90546143f0e23bbfa6abfc088f45d20c/res" />
+      <root url="file://D:/Forrest/.gradle/caches/transforms-1/files-1.1/time4j-android-4.8-2021a.aar/90546143f0e23bbfa6abfc088f45d20c/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/Forrest/.gradle/caches/modules-2/files-2.1/net.time4j/time4j-android/4.8-2021a/1569630ca2534f2fa9611239ca6e12389172fa99/time4j-android-4.8-2021a-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/Forrest/.gradle/caches/modules-2/files-2.1/net.time4j/time4j-android/4.8-2021a/11043df13b7491f412d09eee7fe5e62d067022d6/time4j-android-4.8-2021a-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

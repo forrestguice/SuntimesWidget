@@ -25,8 +25,8 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
 
 import android.util.AttributeSet;
 import android.util.Log;
@@ -47,7 +47,7 @@ import java.util.concurrent.locks.Lock;
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
  * night, day, and twilight times.
  */
-public class LightMapView extends android.support.v7.widget.AppCompatImageView
+public class LightMapView extends com.forrestguice.support.appcompat.widget.AppCompatImageView
 {
     private static final double MINUTES_IN_DAY = 24 * 60;
     private static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;

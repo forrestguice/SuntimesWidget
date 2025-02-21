@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.notes;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;

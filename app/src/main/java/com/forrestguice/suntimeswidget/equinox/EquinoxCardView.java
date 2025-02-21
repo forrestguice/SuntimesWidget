@@ -22,13 +22,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.design.widget.ImageViewCompat;
+import com.forrestguice.support.design.widget.LinearLayoutManager;
+import com.forrestguice.support.design.widget.PagerSnapHelper;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -50,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.design.widget.RecyclerViewUtils;
 
 @SuppressWarnings("Convert2Diamond")
 public class EquinoxCardView extends LinearLayout
@@ -145,7 +145,7 @@ public class EquinoxCardView extends LinearLayout
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
         initAdapter(context);
@@ -322,13 +322,10 @@ public class EquinoxCardView extends LinearLayout
     /**
      * CardViewDecorator
      */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
+    public static class CardViewDecorator extends RecyclerViewUtils.MarginsItemDecoration
     {
         public CardViewDecorator( Context context ) {
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left = outRect.right = outRect.top = outRect.bottom = 0;
+            init(0, 0, 0, 0);
         }
     }
 

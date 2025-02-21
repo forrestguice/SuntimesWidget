@@ -33,11 +33,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ServiceTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.rule.ServiceTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
@@ -725,7 +725,17 @@ public class AlarmNotificationsTest
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
     @Test
+    public void test_initPlayer()
+    {
+        test_initPlayer(AlarmNotifications.CHANNEL_ID_ALARMS);
+        test_initPlayer(AlarmNotifications.CHANNEL_ID_BEDTIME);
+        test_initPlayer(AlarmNotifications.CHANNEL_ID_NOTIFICATIONS0);
+        test_initPlayer(AlarmNotifications.CHANNEL_ID_NOTIFICATIONS1);
+        test_initPlayer(AlarmNotifications.CHANNEL_ID_MISC);
+    }
+
     public void test_initPlayer(String channel)
     {
         AlarmNotifications.audioManager = null;

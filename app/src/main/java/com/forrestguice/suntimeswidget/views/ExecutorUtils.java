@@ -18,8 +18,8 @@
 
 package com.forrestguice.suntimeswidget.views;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.concurrent.Callable;

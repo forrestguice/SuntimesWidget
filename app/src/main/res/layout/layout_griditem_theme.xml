@@ -22,7 +22,7 @@
     android:baselineAligned="false" android:gravity="center_vertical" android:orientation="vertical"
     android:padding="8dp">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/widgetframe_inner"
         android:background="@drawable/appwidget_dark_bg" android:padding="4dp"
         android:layout_height="wrap_content" android:layout_width="wrap_content">
@@ -197,6 +197,6 @@
         </LinearLayout>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </LinearLayout>

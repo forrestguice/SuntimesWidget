@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import com.forrestguice.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.BufferedInputStream;

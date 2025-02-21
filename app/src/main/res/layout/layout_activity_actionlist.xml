@@ -23,15 +23,15 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.design.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
+            <com.forrestguice.support.design.widget.Toolbar
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/loadaction_dialog_title" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.design.widget.AppBarLayout>
 
         <LinearLayout android:id="@android:id/content"
             android:layout_width="match_parent" android:layout_height="wrap_content"

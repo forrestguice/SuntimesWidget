@@ -21,7 +21,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/dialogBackground">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/layout_header" android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="0dp"
@@ -79,7 +79,7 @@
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
     <com.forrestguice.suntimeswidget.graph.LightMapView
         android:id="@+id/info_time_lightmap"

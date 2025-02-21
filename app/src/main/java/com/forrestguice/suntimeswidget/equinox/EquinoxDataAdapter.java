@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;

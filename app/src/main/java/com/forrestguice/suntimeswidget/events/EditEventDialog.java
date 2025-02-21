@@ -26,12 +26,10 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+
+import com.forrestguice.support.design.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -54,6 +52,8 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.design.app.FragmentManagerCompat;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -318,12 +318,14 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        Dialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+        Dialog dialog = createBottomSheetDialog(getContext(), new OnBackPressed()
+        {
             @Override
-            public void onBackPressed() {
+            public boolean onBackPressed() {
                 confirmDiscardChanges(getActivity());
+                return true;
             }
-        };
+        });
         dialog.setOnShowListener(onDialogShow);
         return dialog;
     }
@@ -366,7 +368,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
         } else choose_color = new ColorChooser(context, null, null, null, "event");
 
-        choose_color.setFragmentManager(getChildFragmentManager());
+        choose_color.setFragmentManager(getChildFragmentManagerCompat());
         choose_color.setCollapsed(true);
         choose_color.setColorChangeListener(onColorChanged);
 
@@ -559,8 +561,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-            FragmentManager fragments = getChildFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null)
             {
                 int offset = (int)offsetDialog.getOffset();
@@ -835,6 +836,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+
     @Override
     protected void expandSheet(DialogInterface dialog)
     {
@@ -842,16 +844,14 @@ public class EditEventDialog extends EditBottomSheetDialog
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        bottomSheet.setCancelable(false);
+        setCancelable(dialog, false);
 
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 

@@ -23,13 +23,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.FragmentCompat;
+import com.forrestguice.support.design.view.ActionModeHelper;
+import com.forrestguice.support.design.widget.BottomSheetBehaviorInterface;
+import com.forrestguice.support.design.widget.BottomSheetDialogFragment;
+import com.forrestguice.support.design.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,7 +75,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeHelper.ActionModeInterface actionMode = null;
     protected PlacesEditActionCompat actions = new PlacesEditActionCompat();
 
     public PlacesEditFragment()
@@ -256,7 +256,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         getFixHelper = createLocationHelper();
         if (getFixHelper != null) {
-            getFixHelper.setFragment(this);
+            getFixHelper.setFragment(FragmentCompat.create(this));
         }
         updateGPSButtonIcons();
     }
@@ -341,14 +341,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             return;
         }
 
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
+        BottomSheetBehaviorInterface behavior = initBottomSheetBehavior(dialog);
+        if (behavior != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setState(BottomSheetBehaviorInterface.STATE_EXPANDED);
         }
     }
 
@@ -624,7 +622,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             if (item != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = activity.startSupportActionMode(actions);
+                actionMode = ((activity != null) ? ActionModeHelper.wrap(activity.startSupportActionMode(ActionModeHelper.wrap(actions))) : null);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), item);
                 }
@@ -647,10 +645,10 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     /**
      * PlacesEditActionCompat
      */
-    private class PlacesEditActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class PlacesEditActionCompat implements ActionModeHelper.ActionModeCallback
     {
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placesedit, menu);
@@ -658,12 +656,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionModeHelper.ActionModeInterface mode, Menu menu) {
             return false;
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        public boolean onActionItemClicked(ActionModeHelper.ActionModeInterface mode, MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
@@ -675,7 +673,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
+        public void onDestroyActionMode(ActionModeHelper.ActionModeInterface mode) {
             actionMode = null;
         }
     }

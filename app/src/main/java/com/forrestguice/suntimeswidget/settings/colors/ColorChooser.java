@@ -24,7 +24,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import com.forrestguice.support.design.app.FragmentManagerInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -414,8 +414,8 @@ public class ColorChooser implements View.OnFocusChangeListener
         onColorChanged(getColor());
     }
 
-    private FragmentManager fragmentManager = null;
-    public void setFragmentManager( FragmentManager manager )
+    private FragmentManagerInterface fragmentManager = null;
+    public void setFragmentManager( FragmentManagerInterface manager )
     {
         fragmentManager = manager;
     }
@@ -429,7 +429,7 @@ public class ColorChooser implements View.OnFocusChangeListener
         colorDialog.setColorDialogListener(colorDialogListener);
         if (fragmentManager != null)
         {
-            colorDialog.show(fragmentManager, DIALOGTAG_COLOR + "_" + chooserID);
+            colorDialog.show(fragmentManager.get(), DIALOGTAG_COLOR + "_" + chooserID);
         } else {
             Log.w("showColorPicker", "fragmentManager is null; showing fallback ...");
             Dialog dialog = colorDialog.getDialog();
@@ -461,7 +461,7 @@ public class ColorChooser implements View.OnFocusChangeListener
     {
         if (fragmentManager != null)
         {
-            ColorDialog colorDialog = (ColorDialog) fragmentManager.findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);
+            ColorDialog colorDialog = (ColorDialog) fragmentManager.get().findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);
             if (colorDialog != null)
             {
                 colorDialog.setColorDialogListener(colorDialogListener);

@@ -23,7 +23,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
+import com.forrestguice.support.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
