@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
@@ -193,12 +194,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (useMainThread)
         {
             //Log.d("DEBUG", "updating lightmap on main thread.. " + getWidth() + "x" + getHeight() + " @ " + getNow() + " :: view-" + Integer.toHexString(getColors().hashCode()));
-            LightMapTask draw = new LightMapTask();
+            LightMapTask draw = new LightMapTask(getContext());
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
             drawTaskListener.onFinished(b);
 
         } else {
-            drawTask = new LightMapTask();
+            drawTask = new LightMapTask(getContext());
             drawTask.setListener(drawTaskListener);
             drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
         }
@@ -301,7 +302,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             if (data != null) {
                 Calendar calendar = Calendar.getInstance(data.timezone());
                 data.setTodayIs(calendar);
-                data.calculateData();
+                data.calculateData(getContext());
             }
         }
         updateViews(true);
@@ -401,9 +402,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
+        private WeakReference<Context> contextRef;
         private LightMapColors colors;
 
         private SuntimesRiseSetDataset t_data = null;
+
+        public LightMapTask(Context context) {
+            contextRef = new WeakReference<>(context);
+        }
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -464,7 +470,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                         data = new SuntimesRiseSetDataset(data);
                         data.setTodayIs(calendar);
-                        data.calculateData();
+                        data.calculateData(contextRef.get());
                         t_data = data;
                     }
                 }

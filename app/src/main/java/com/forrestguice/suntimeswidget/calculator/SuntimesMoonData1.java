@@ -61,11 +61,12 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
 
     /**
      * calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
-        super.calculate();
+        super.calculate(context);
 
         Calendar after = (Calendar)todaysCalendar.clone();
         for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {

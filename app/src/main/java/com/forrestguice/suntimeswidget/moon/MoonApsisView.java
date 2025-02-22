@@ -413,7 +413,7 @@ public class MoonApsisView extends LinearLayout
                     //Log.d("DEBUG", "minuteOffset: " + minuteOffset2 / 60d + " (" + minuteOffset0 / 60d + ", " + ((minuteOffset0 - minuteOffset2) / 60d) + ")");
                 }
             }
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 

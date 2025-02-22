@@ -152,8 +152,9 @@ public class SuntimesData
 
     /**
      * perform calculation on the data
+     * @param context
      */
-    public void calculate()
+    public void calculate(Context context)
     {
         this.calculated = true;
     }

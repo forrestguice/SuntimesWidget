@@ -147,6 +147,14 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSolarMidnightCalendarForDate(Calendar date)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> noon = this.solarTime.transitAtMidnight();
+        return momentToCalendar(localDate.get(noon));
+    }
+
+    @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
         PlainDate localDate = calendarToPlainDate(date);
