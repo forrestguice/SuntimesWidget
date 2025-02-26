@@ -37,6 +37,10 @@
         <item>places_NA, place_label_NA</item>                <!-- North America (unsorted) -->
         <item>places_NA_CA, place_label_NA_CA</item>          <!-- North America; Canada -->
         <item>places_NA_US, place_label_NA_US</item>          <!-- North America; US -->
+        <item>places_NA_US_W, place_label_NA_US_W</item>
+        <item>places_NA_US_MW, place_label_NA_US_MW</item>
+        <item>places_NA_US_NE, place_label_NA_US_NE</item>
+        <item>places_NA_US_S, place_label_NA_US_S</item>
     </string-array>
     <string-array name="place_group_OC">
         <item>places_OC, place_label_OC</item>                <!-- Oceania (unsorted) -->
@@ -266,7 +270,6 @@
 
     <!-- North America -->
     <string-array name="places_NA">
-        <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
         <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0</item>
         <item>"Havana", 23.0504, -82.6129, 0</item>
         <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18</item>
@@ -279,7 +282,6 @@
         <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0</item>
         <item>"Port-au-Prince", 18.54242, -72.33583, 0</item>
         <item>"Road Town", 18.4243, -64.6333, 255</item>
-        <item>"San Juan", 18.3848, -66.1283, 30</item>
         <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
         <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0</item>
     </string-array>
@@ -296,42 +298,129 @@
         <item>"Winnipeg", 49.89908, -97.12469, 239</item>
         <item>"Vancouver", 49.27934, -123.13920, 0</item>
     </string-array>
+
     <string-array name="places_NA_US">
+        <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
+        <item>"San Juan", 18.3848, -66.1283, 30</item>
+    </string-array>
+    <string-array name="places_NA_US_W">
         <item>\"Anchorage, AK\", 61.15496, -150.05585, 31</item>
-        <item>"Chicago", 41.86859, -87.61582, 176</item>
-        <item>"Houston", 29.76010, -95.37176, 32</item>
-        <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
         <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6</item>
-        <item>"Los Angeles", 34.05094, -118.2506, 93</item>
-        <item>"New York City", 40.68620, -74.02619, 0</item>
-        <item>"Philadelphia", 39.94704, -75.15252, 12</item>
-        <item>"Phoenix", 33.45579, -111.94580, 385</item>
-        <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
-        <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
-        <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
-        <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
-        <item>"San Francisco", 37.80907, -122.41289, 0</item>
+        <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capitol]</item>
+        <item>"Phoenix", 33.45579, -111.94580, 385, [capitol]</item>
+        <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044</item>
+        <item>\"Tucson, AZ\", 32.28142, -110.93382, 728</item>
+        <item>"Los Angeles", 34.05094, -118.2506, 93</item>
+        <item>\"Sacramento, CA\", 38.5755, -121.49126, 10, [capitol]</item>
+        <item>"San Diego", 32.70585, -117.16723, 0</item>
+        <item>"San Francisco", 37.80907, -122.41289, 0</item>
+        <item>\"San Jose, CA\", 37.34325, -121.90372, 0</item>
+        <item>\"Denver, CO\", 39.73914, -104.98874, 1600, [capitol]</item>
+        <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
+        <item>\"Boise, ID\", 43.61714, -116.20022, 824, [capitol]</item>
+        <item>\"Helena, MT\", 46.58654, -112.01834, 1218, [capitol]</item>
+        <item>\"Albuquerque, NM\", 35.13037, -106.68346, 1620</item>
+        <item>\"Santa Fe, NM\", 35.68739, -105.93855, 2133, [capitol]</item>
+        <item>\"Carson City, NV\", 39.16278, -119.76614, 1427, [capitol]</item>
+        <item>"Las Vegas", 36.16823, -115.18886, 610</item>
+        <item>\"Reno, NV\", 39.54412, -119.81675, 1373</item>
+        <item>\"Portland, OR\", 45.51883, -122.67915, 50</item>
+        <item>\"Salem, OR\", 44.94154, -123.04313, 50, [capitol]</item>
+        <item>"Salt Lake City", 40.76153, -111.90117, 1300, [capitol]</item>
+        <item>\"Olympia, WA\", 47.03652, -122.90324, 30, [capitol]</item>
+        <item>"Seattle", 47.59338, -122.31852, 0</item>
+        <item>\"Cheyenne, WY\", 41.14, -104.81986, 1855, [capitol]</item>
+    </string-array>
+    <string-array name="places_NA_US_NE">
+        <item>\"Hartford, CT\", 41.77408, -72.6667, 0, [capitol]</item>
+        <item>\"Washington, DC\", 38.88953, -77.03525, 0, [capitol]</item>
+        <item>\"Dover, DE\", 39.16751, -75.52066, 10, [capitol]</item>
+        <item>\"Boston\", 42.35514, -71.0656, 0, [capitol]</item>
+        <item>\"Annapolis, MD\", 38.97432, -76.48709, 0, [capitol]</item>
+        <item>\"Baltimore, MD\", 39.28923, -76.5817, 0</item>
+        <item>\"Augusta, ME\", 44.31623, -69.76809, 37, [capitol]</item>
+        <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capitol]</item>
+        <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capitol]</item>
+        <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capitol]</item>
+        <item>"New York City", 40.68620, -74.02619, 0</item>
+        <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capitol]</item>
+        <item>"Philadelphia", 39.94704, -75.15252, 12</item>
+        <item>"Pittsburgh", 40.43997, -79.97385, 300</item>
+        <item>\"Providence, RI\", 41.82034, -71.40712, 0, [capitol]</item>
+        <item>\"Montpelier, VT\", 44.26184, -72.58080, 160, [capitol]</item>
+    </string-array>
+    <string-array name="places_NA_US_MW">
+        <item>\"Des Moines, IA\", 41.58929, -93.60334, 242, [capitol]</item>
+        <item>"Indianapolis", 39.772, -86.1569, 220, [capitol]</item>
+        <item>"Chicago", 41.86859, -87.61582, 176</item>
+        <item>"Detroit", 42.3318, -83.0467, 200</item>
+        <item>\"Springfield, IL\", 39.79779, -89.65408, 183, [capitol]</item>
+        <item>\"Topeka, KS\", 39.04932, -95.67765, 286, [capitol]</item>
+        <item>"Cincinnati", 39.10153, -84.49811, 226</item>
+        <item>"Cleveland", 41.49918, -81.71361, 200</item>
+        <item>\"Columbus, OH\", 39.95645, -83.00415, 240, [capitol]</item>
+        <item>\"Lansing, MI\", 42.73363, -84.55644, 260, [capitol]</item>
+        <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
+        <item>\"St. Paul, MN\", 44.95362, -93.10223, 250, [capitol]</item>
+        <item>\"Jefferson City, MO\", 38.5787, -92.17359, 192, [capitol]</item>
+        <item>\"Kansas City, MO\", 39.11523, -94.55513, 277</item>
+        <item>\"St. Louis, MO\", 38.60653, -90.25826, 0</item>
+        <item>\"Lincoln, NE\", 40.82562, -96.73025, 366, [capitol]</item>
+        <item>\"Bismarck, ND\", 46.81772, -100.78280, 532, [capitol]</item>
+        <item>\"Pierre, SD\", 44.36136, -100.36171, 500, [capitol]</item>
+        <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
+        <item>\"Sioux Falls, SD\", 43.54604, -96.72092, 446</item>
+        <item>\"Madison, WI\", 43.074, -89.38327, 266, [capitol]</item>
+        <item>\"Milwaukee, WI\", 43.0338, -87.89532, 188</item>
+    </string-array>
+    <string-array name="places_NA_US_S">
+        <item>\"Montgomery, AL\", 32.37624, -86.30344, 70, [capitol]</item>
+        <item>\"Little Rock, AR\", 34.74511, -92.28837, 85, [capitol]</item>
+        <item>\"Jacksonville, FL\", 30.32936, -81.65925, 0</item>
+        <item>\"Miami, FL\", 25.77613, -80.18594, 0</item>
+        <item>\"Tallahassee, FL\", 30.45352, -84.2757, 60, [capitol]</item>
+        <item>"Atlanta", 33.7485, -84.38719, 320, [capitol]</item>
+        <item>\"Frankfort, KY\", 38.20006, -84.87667, 154, [capitol]</item>
+        <item>\"Louisville, KY\", 38.26080, -85.74276, 142</item>
+        <item>\"Baton Rouge, LA\", 30.45552, -91.18725, 15, [capitol]</item>
+        <item>\"New Orleans\", 30.00173, -90.09298, 0</item>
+        <item>\"Jackson, MS\", 32.29806, -90.21307, 110, [capitol]</item>
+        <item>\"Charlotte, NC\", 35.1868, -80.77201, 0</item>
+        <item>\"Raleigh, NC\", 35.77763, -78.64253, 100, [capitol]</item>
+        <item>\"Oklahoma City, OK\", 35.47431, -97.5719, 365, [capitol]</item>
+        <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
+        <item>\"Columbia, SC\", 34.00112, -81.03335, 90, [capitol]</item>
+        <item>\"Memphis, TN\", 35.14758, -89.9923, 100</item>
+        <item>\"Nashville, TN\", 36.16662, -86.7783, 170, [capitol]</item>
+        <item>\"Austin, TX\", 30.28528, -97.7344, 185, [capitol]</item>
+        <item>\"Dallas, TX\", 32.77274, -96.78683, 147</item>
+        <item>"Houston", 29.76010, -95.37176, 32</item>
+        <item>\"El Paso, TX\", 31.75961, -106.48835, 1185</item>
+        <item>\"San Antonio\", 29.428, -98.48916, 220</item>
+        <item>\"Richmond, VA\", 37.53832, -77.4341, 65, [capitol]</item>
+        <item>\"Charleston, WV\", 38.33012, -81.58262, 180, [capitol]</item>
     </string-array>
 
     <!-- Oceania -->
     <string-array name="places_OC">
-        <item>"Apia", -13.8600, 171.8031, 0</item>
+        <item>\"Apia, Samoa\", -13.8600, 171.8031, 0</item>
         <item>"Auckland", -36.8468, 174.8256, 39</item>
         <item>\"Hagåtña, Guam\", 13.47916, 144.75, 0</item>
-        <item>"Honiara", -9.4351, 159.9382, 67</item>
-        <item>"Honolulu", 21.3280, -157.8691, 0</item>
+        <item>\"Hanga Roa, Easter Island\", -27.15157, -109.43997, 0</item>
+        <item>\"Honiara, Solomons\", -9.4351, 159.9382, 67</item>
+        <item>"Honolulu", 21.3280, -157.8691, 0, [capitol]</item>
         <item>"Pago Pago", -14.27176, -170.70223, 0</item>
-        <item>"Palikir", 6.9192, 158.1412, 20</item>
+        <item>\"Palikir, Micronesia\", 6.9192, 158.1412, 20</item>
         <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
-        <item>"Suva", -18.14857, 178.42384, 0</item>
+        <item>\"Suva, Fiji\", -18.14857, 178.42384, 0</item>
     </string-array>
     <string-array name="places_OC_AU">
         <item>"Adelaide", -34.94418, 138.50037, 0</item>
         <item>"Brisbane", -27.47464, 153.02998, 32</item>
         <item>"Canberra", -35.30676, 149.12177, 578</item>
         <item>"Darwin", -12.43165, 130.83440, 0</item>
-        <item>"Hobart", -42.88881, 147.33821, 0</item>
+        <item>\"Hobart, Tasmania\", -42.88881, 147.33821, 0</item>
         <item>"Melbourne", -37.81100, 144.95491, 31</item>
         <item>"Perth", -31.96644, 115.83743, 0</item>
         <item>"Sydney", -33.8981, 151.2328, 40</item>
