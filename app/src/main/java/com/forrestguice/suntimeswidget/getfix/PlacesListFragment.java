@@ -1080,8 +1080,7 @@ public class PlacesListFragment extends Fragment
                         Location location = new Location(name, lat, lon, alt);
                         location.setUseAltitude(true);
 
-                        PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID)), location);
-                        item.isDefault = (comment != null && comment.contains(PlaceItem.TAG_DEFAULT));
+                        PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID)), location, comment);
                         result.add(item);
 
                     } catch (IllegalArgumentException e) {
@@ -1573,10 +1572,10 @@ public class PlacesListFragment extends Fragment
             if (item != null)
             {
                 if (icon_default != null) {
-                    icon_default.setVisibility(item.isDefault ? View.VISIBLE : View.GONE);
+                    icon_default.setVisibility(item.isDefault() ? View.VISIBLE : View.GONE);
                 }
                 if (icon_userdefined != null) {
-                    icon_userdefined.setVisibility(item.isDefault ? View.GONE : View.VISIBLE);
+                    icon_userdefined.setVisibility(item.isDefault() ? View.GONE : View.VISIBLE);
                 }
             }
         }
