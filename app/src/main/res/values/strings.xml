@@ -28,6 +28,7 @@
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
     <string name="configAction_info">More Info</string>
+    <string name="configAction_sort">Sort</string>    <!-- TODO -->
     <string name="configAction_sortBy">Sort by</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
@@ -1050,7 +1051,7 @@
     <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
     <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
     <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">@string/configAction_sort</string>                <!-- action button / menu item -->   <!-- TODO: updated -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->
@@ -1531,6 +1532,10 @@
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="configAction_sortPlaces">@string/configAction_sort</string>       <!-- button (contentDescription) -->
+    <string name="configAction_sortPlaces_by_label_ascending">Label (ascending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_sortPlaces_by_label_descending">Label (descending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_sortPlaces_by_proximity">Nearest (last known)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
 
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>

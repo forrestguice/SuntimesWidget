@@ -40,7 +40,7 @@
     </FrameLayout>
 
     <LinearLayout android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical"
         android:layout_gravity="center_vertical">
 
         <TextView android:id="@android:id/text1"
@@ -56,5 +56,10 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <TextView android:id="@+id/text3" android:visibility="gone"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:text="145 km" />
 </LinearLayout>
 

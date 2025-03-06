@@ -23,6 +23,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -202,7 +204,7 @@ public class PlacesListFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         inflater.inflate(R.menu.placeslist, menu);
 
@@ -242,6 +244,31 @@ public class PlacesListFragment extends Fragment
                 searchItem.setVisible(false);  // TODO: legacy support
             }
         }
+
+        switch (loadPrefPlacesListSortMode(getActivity()))
+        {
+            case SORT_BY_PROXIMITY:
+                MenuItem sortByProximity = menu.findItem(R.id.sortByProximity);
+                if (sortByProximity != null) {
+                    sortByProximity.setChecked(true);
+                }
+                break;
+
+            case SORT_BY_LABEL_DESC:
+                MenuItem sortByLabelDesc = menu.findItem(R.id.sortByLabelDesc);
+                if (sortByLabelDesc != null) {
+                    sortByLabelDesc.setChecked(true);
+                }
+                break;
+
+            case SORT_BY_LABEL_ASC:
+            default:
+                MenuItem sortByLabelAsc = menu.findItem(R.id.sortByLabelAsc);
+                if (sortByLabelAsc != null) {
+                    sortByLabelAsc.setChecked(true);
+                }
+                break;
+        }
     }
 
     @Override
@@ -249,6 +276,18 @@ public class PlacesListFragment extends Fragment
     {
         switch (item.getItemId())
         {
+            case R.id.sortByLabelAsc:
+                sortList(getActivity(), SORT_BY_LABEL_ASC);
+                return true;
+
+            case R.id.sortByLabelDesc:
+                sortList(getActivity(), SORT_BY_LABEL_DESC);
+                return true;
+
+            case R.id.sortByProximity:
+                sortList(getActivity(), SORT_BY_PROXIMITY);
+                return true;
+
             case R.id.addPlace:
                 addPlace(getActivity());
                 return true;
@@ -1044,6 +1083,39 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final int SORT_BY_LABEL_ASC = 0;
+    public static final int SORT_BY_LABEL_DESC = 10;
+    public static final int SORT_BY_PROXIMITY = 20;
+
+    public static final String PREF_KEY_PLACES_SORT = "app_places_sort";
+    public static final int PREF_DEF_PLACES_SORT = SORT_BY_LABEL_ASC;
+
+    public void sortList(Context context, int sortMode)
+    {
+        savePrefPlacesListSortMode(context, sortMode);
+        getActivity().invalidateOptionsMenu();
+        if (adapter != null) {
+            adapter.sortItems(context);
+        }
+    }
+
+    public static int loadPrefPlacesListSortMode(Context context)
+    {
+        if (context != null) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            return prefs.getInt(PREF_KEY_PLACES_SORT, PREF_DEF_PLACES_SORT);
+        } else return PREF_DEF_PLACES_SORT;
+    }
+    public static void savePrefPlacesListSortMode(Context context, int value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putInt(PREF_KEY_PLACES_SORT, value);
+        prefs.apply();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * PlacesListTask
      */
@@ -1235,7 +1307,7 @@ public class PlacesListFragment extends Fragment
             filterExceptions.clear();
 
             items0.clear();
-            items0.addAll(sortItems(values));
+            items0.addAll(sortItems(contextRef.get(), values, loadPrefPlacesListSortMode(contextRef.get())));
 
             items.clear();
             items.addAll(items0);
@@ -1253,7 +1325,7 @@ public class PlacesListFragment extends Fragment
                     items0.set(position, value);
                 } else {
                     items0.add(value);
-                    sortItems(items0);
+                    sortItems(contextRef.get(), items0, loadPrefPlacesListSortMode(contextRef.get()));
                 }
                 filterExceptions.add(value.rowID);
             }
@@ -1322,26 +1394,75 @@ public class PlacesListFragment extends Fragment
             return array;
         }
 
-        protected static List<PlaceItem> sortItems(List<PlaceItem> items)
+        public void sortItems(Context context)
         {
-            Collections.sort(items, new Comparator<PlaceItem>() {
-                @Override
-                public int compare(PlaceItem o1, PlaceItem o2)
-                {
-                    if ((o1 == null || o1.location == null) && (o2 == null || o2.location == null)) {
-                        return 0;
+            sortItems(context, items0, loadPrefPlacesListSortMode(context));
+            applyFilter(getFilterText(), false);
+        }
 
-                    } else if (o1 == null || o1.location == null) {
-                        return -1;
+        protected static List<PlaceItem> sortItems(Context context, List<PlaceItem> items, int sortMode)
+        {
+            switch (sortMode)
+            {
+                case SORT_BY_PROXIMITY:
+                    final Location location0 = WidgetSettings.loadLocationPref(context, 0);
+                    Collections.sort(items, new Comparator<PlaceItem>()
+                    {
+                        @Override
+                        public int compare(PlaceItem o1, PlaceItem o2)
+                        {
+                            if ((o1 == null || o1.location == null) && (o2 == null || o2.location == null)) {
+                                return 0;
+                            } else if (o1 == null || o1.location == null) {
+                                return -1;
+                            } else if (o2 == null || o2.location == null) {
+                                return 1;
+                            } else {
+                                return Double.compare(o1.location.distanceTo(location0), o2.location.distanceTo(location0));
+                            }
+                        }
+                    });
+                    break;
 
-                    } else if (o2 == null || o2.location == null) {
-                        return 1;
+                case SORT_BY_LABEL_DESC:
+                    Collections.sort(items, new Comparator<PlaceItem>()
+                    {
+                        @Override
+                        public int compare(PlaceItem o1, PlaceItem o2)
+                        {
+                            if ((o1 == null || o1.location == null) && (o2 == null || o2.location == null)) {
+                                return 0;
+                            } else if (o1 == null || o1.location == null) {
+                                return 1;
+                            } else if (o2 == null || o2.location == null) {
+                                return -1;
+                            } else {
+                                return o2.location.getLabel().toLowerCase(Locale.ROOT).compareTo(o1.location.getLabel().toLowerCase(Locale.ROOT));
+                            }
+                        }
+                    });
+                    break;
 
-                    } else {
-                        return o1.location.getLabel().toLowerCase(Locale.ROOT).compareTo(o2.location.getLabel().toLowerCase(Locale.ROOT));
-                    }
-                }
-            });
+                case SORT_BY_LABEL_ASC:
+                default:
+                    Collections.sort(items, new Comparator<PlaceItem>()
+                    {
+                        @Override
+                        public int compare(PlaceItem o1, PlaceItem o2)
+                        {
+                            if ((o1 == null || o1.location == null) && (o2 == null || o2.location == null)) {
+                                return 0;
+                            } else if (o1 == null || o1.location == null) {
+                                return -1;
+                            } else if (o2 == null || o2.location == null) {
+                                return 1;
+                            } else {
+                                return o1.location.getLabel().toLowerCase(Locale.ROOT).compareTo(o2.location.getLabel().toLowerCase(Locale.ROOT));
+                            }
+                        }
+                    });
+                    break;
+            }
             return items;
         }
 
@@ -1545,6 +1666,7 @@ public class PlacesListFragment extends Fragment
     {
         public TextView label;
         public TextView summary;
+        public TextView distance;
         public ImageView icon_default, icon_userdefined;
         public boolean selected = false;
 
@@ -1553,6 +1675,7 @@ public class PlacesListFragment extends Fragment
             super(itemView);
             label = (TextView) itemView.findViewById(android.R.id.text1);
             summary = (TextView) itemView.findViewById(android.R.id.text2);
+            distance = (TextView) itemView.findViewById(R.id.text3);
             icon_userdefined = (ImageView) itemView.findViewById(R.id.icon1);
             icon_default = (ImageView) itemView.findViewById(R.id.icon2);
         }
@@ -1567,6 +1690,18 @@ public class PlacesListFragment extends Fragment
             if (summary != null) {
                 summary.setText(context == null || item == null || item.location == null ? ""
                         : locationDisplayString(context, item.location, true));
+            }
+            if (distance != null && context != null)
+            {
+                int sortMode = loadPrefPlacesListSortMode(context);
+                if (sortMode == SORT_BY_PROXIMITY)
+                {
+                    Location location0 = WidgetSettings.loadLocationPref(context, 0);
+                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                    double d = item.location.distanceTo(location0);
+                    distance.setText(context != null ? SuntimesUtils.formatAsDistance(context, d, units, 2, true).toString() : "");
+                }
+                distance.setVisibility(sortMode == SORT_BY_PROXIMITY ? View.VISIBLE : View.GONE);
             }
 
             if (item != null)
