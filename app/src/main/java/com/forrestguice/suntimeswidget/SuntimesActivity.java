@@ -2339,7 +2339,7 @@ public class SuntimesActivity extends AppCompatActivity
             dialog.setData(SuntimesActivity.this, dataset);
         } else {
             SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
-            data.calculateData();
+            data.calculateData(this);
             dialog.setData(SuntimesActivity.this, data);
         }
 
@@ -2396,7 +2396,7 @@ public class SuntimesActivity extends AppCompatActivity
             lightMapDialog.setData(SuntimesActivity.this, dataset);
         } else {
             SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
-            data.calculateData();
+            data.calculateData(this);
             lightMapDialog.setData(SuntimesActivity.this, data);
         }
         lightMapDialog.setDialogListener(lightMapListener);

@@ -37,7 +37,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -776,7 +775,7 @@ public class AlarmEventProvider extends ContentProvider
 
         Calendar day = Calendar.getInstance();
         sunData.setTodayIs(day);
-        sunData.calculate();
+        sunData.calculate(context);
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
         if (eventTime != null)
         {
@@ -798,7 +797,7 @@ public class AlarmEventProvider extends ContentProvider
             Log.w(AlarmNotifications.TAG, "updateAlarmTime: sunElevationEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
-            sunData.calculate();
+            sunData.calculate(context);
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
             if (eventTime != null)
             {
@@ -953,7 +952,7 @@ public class AlarmEventProvider extends ContentProvider
 
         Calendar day = Calendar.getInstance();
         data.setTodayIs(day);
-        data.calculate();
+        data.calculate(context);
 
         eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                       : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
@@ -977,7 +976,7 @@ public class AlarmEventProvider extends ContentProvider
             Log.w(AlarmNotifications.TAG, "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
-            data.calculate();
+            data.calculate(context);
             eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                           : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
             if (eventTime != null)

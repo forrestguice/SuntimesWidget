@@ -705,7 +705,7 @@ public class EditActionView extends LinearLayout
     public void setData(SuntimesData data) {
         this.data = data;
         if (!this.data.isCalculated()) {
-            data.calculate();
+            data.calculate(getContext());
         }
     }
 
