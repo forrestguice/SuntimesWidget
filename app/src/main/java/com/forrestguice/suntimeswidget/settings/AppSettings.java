@@ -901,7 +901,9 @@ public class AppSettings
                         if (check_notagain != null) {
                             AppSettings.setDialogDoNotShowAgain(context, key, check_notagain.isChecked());
                         }
-                        onOkClicked.onClick(dialog, which);
+                        if (onOkClicked != null) {
+                            onOkClicked.onClick(dialog, which);
+                        }
                     }
                 });
         return dialog;
