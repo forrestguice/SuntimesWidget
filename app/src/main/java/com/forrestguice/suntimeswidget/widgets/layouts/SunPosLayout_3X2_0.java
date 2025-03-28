@@ -24,8 +24,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.graphics.ColorUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 

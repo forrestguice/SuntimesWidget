@@ -28,9 +28,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatSeekBar;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.appcompat.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.Gravity;
 

@@ -22,18 +22,23 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.filters.LargeTest;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.forrestguice.support.test.InstrumentationRegistry;
+import com.forrestguice.support.test.espresso.IdlingPolicies;
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
+
+import com.forrestguice.support.test.espresso.ElapsedTimeIdlingResource;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject2;
@@ -46,7 +51,6 @@ import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 
 import org.hamcrest.Matcher;
 
@@ -62,27 +66,29 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.registerIdlingResources;
+import static com.forrestguice.support.test.espresso.Espresso.unregisterIdlingResources;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertHidden;
+import static com.forrestguice.support.test.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.longClick;
+import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.action.ViewActions.replaceText;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeLeft;
+import static com.forrestguice.support.test.espresso.action.ViewActions.swipeRight;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static com.forrestguice.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.forrestguice.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasSibling;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withParent;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
 
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
-import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -646,7 +652,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         // wait a minute (and check again)
         long waitTime = 60 * 1000;
-        IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
+        ElapsedTimeIdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
 

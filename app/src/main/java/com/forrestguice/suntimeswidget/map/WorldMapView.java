@@ -32,10 +32,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -57,7 +56,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class WorldMapView extends android.support.v7.widget.AppCompatImageView
+public class WorldMapView extends com.forrestguice.support.appcompat.widget.AppCompatImageView
 {
     public static final String LOGTAG = "WorldMap";
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second

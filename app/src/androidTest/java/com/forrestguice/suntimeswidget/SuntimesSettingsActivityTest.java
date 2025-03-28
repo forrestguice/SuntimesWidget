@@ -23,17 +23,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.preference.Preference;
+import com.forrestguice.support.annotation.NonNull;
+import com.forrestguice.support.test.InstrumentationRegistry;
 
-import android.support.annotation.NonNull;
+import com.forrestguice.support.test.espresso.DataInteractionHelper;
+
+import com.forrestguice.support.test.espresso.ViewAssertionHelper;
+import com.forrestguice.support.test.espresso.ViewInteractionHelper;
+import com.forrestguice.support.test.filters.LargeTest;
+import com.forrestguice.support.test.rule.ActivityTestRule;
+import com.forrestguice.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivityTest;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivityTest;
-
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -52,17 +57,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.support.test.espresso.Espresso.onData;
+import static com.forrestguice.support.test.espresso.Espresso.onView;
+import static com.forrestguice.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static com.forrestguice.support.test.espresso.action.ViewActions.click;
+import static com.forrestguice.support.test.espresso.action.ViewActions.pressBack;
+import static com.forrestguice.support.test.espresso.matcher.PreferenceMatchers.withKey;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.forrestguice.support.test.espresso.matcher.ViewMatchers.withText;
+
 import java.io.IOException;
 
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertChecked;
@@ -244,10 +250,10 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         Matcher<View> list = allOf(instanceOf(ListView.class), isDisplayed());
         ViewInteractionHelper.ViewInteractionInterface warningPref = ViewInteractionHelper.wrap(onData(pref).inAdapterView(list).onChildView(withClassName(is(CheckBox.class.getName()))).check(assertShown));
 
-        boolean prefChecked = viewIsChecked(warningPref);
+        boolean prefChecked = ViewInteractionHelper.viewIsChecked(warningPref.get());
         if (prefChecked && !checked || !prefChecked && checked)
         {
-            warningPref.perform(click());
+            warningPref.get().perform(click());
         }
     }*/
     /*public static void flipUISettings_uiWarnings(SuntimesActivity activity)

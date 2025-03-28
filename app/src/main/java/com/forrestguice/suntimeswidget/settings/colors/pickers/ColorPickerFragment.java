@@ -18,16 +18,15 @@
 
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
+import com.forrestguice.support.arch.lifecycle.MutableLiveData;
+import com.forrestguice.support.arch.lifecycle.Observer;
+import com.forrestguice.support.arch.lifecycle.ViewModel;
+import com.forrestguice.support.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import com.forrestguice.support.annotation.Nullable;
+import com.forrestguice.support.design.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class ColorPickerFragment extends Fragment
         setArguments(new Bundle());
     }
 
-    @CallSuper
+    //@CallSuper
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -63,7 +62,7 @@ public class ColorPickerFragment extends Fragment
         return null;
     }
 
-    @CallSuper
+    //@CallSuper
     protected void initViews(Context context, View view)
     {
         preview = view.findViewById(R.id.preview_color);
@@ -111,7 +110,7 @@ public class ColorPickerFragment extends Fragment
         }
     };
 
-    @CallSuper
+    //@CallSuper
     public void updateViews(Context context) {
         updatePreview(context);
     }

@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import com.forrestguice.support.design.app.FragmentInterface;
 
 @SuppressWarnings("Convert2Diamond")
 public interface LocationHelper
@@ -29,8 +29,8 @@ public interface LocationHelper
     void saveSettings( Bundle bundle );
     void loadSettings( Bundle bundle );
 
-    void setFragment(Fragment f);
-    Fragment getFragment();
+    void setFragment(FragmentInterface f);
+    FragmentInterface getFragment();
     void onResume();
 
     GetFixUI getUI();
