@@ -5,7 +5,7 @@
     <integer name="minAlarmSnoozeMinutes">2</integer>
     <integer name="maxAlarmSnoozeMinutes">120</integer>
     <integer name="minAlarmAutoDismissSeconds">5</integer>
-    <integer name="maxAlarmAutoDismissSeconds">300</integer>
+    <integer name="maxAlarmAutoDismissSeconds">43200</integer>   <!-- 12 hours -->
 
     <integer name="minAlarmFullscreenFadeinSeconds">15</integer>
     <integer name="maxAlarmFullscreenFadeinSeconds">180</integer>
