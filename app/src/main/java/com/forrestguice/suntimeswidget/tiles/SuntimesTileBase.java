@@ -346,7 +346,7 @@ public abstract class SuntimesTileBase
     {
         if (data == null || replace) {
             data = new SuntimesRiseSetData2(context, appWidgetId());
-            data.calculate();
+            data.calculate(context);
         }
         return data;
     }

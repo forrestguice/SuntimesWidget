@@ -43,6 +43,7 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataNautical;
     public SuntimesRiseSetData dataAstro;
     public SuntimesRiseSetData dataNoon;
+    public SuntimesRiseSetData dataMidnight;
     public SuntimesRiseSetData dataGold;
     public SuntimesRiseSetData dataBlue8;
     public SuntimesRiseSetData dataBlue4;
@@ -89,6 +90,7 @@ public class SuntimesRiseSetDataset
                 case NAUTICAL: dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), this.dataNautical = new SuntimesRiseSetData(other.dataNautical)); break;
                 case ASTRONOMICAL: dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), this.dataAstro = new SuntimesRiseSetData(other.dataAstro)); break;
                 case NOON: dataset.put(WidgetSettings.TimeMode.NOON.name(), this.dataNoon = new SuntimesRiseSetData(other.dataNoon)); break;
+                case MIDNIGHT: dataset.put(WidgetSettings.TimeMode.MIDNIGHT.name(), this.dataMidnight = new SuntimesRiseSetData(other.dataMidnight)); break;
                 case GOLD: dataset.put(WidgetSettings.TimeMode.GOLD.name(), this.dataGold = new SuntimesRiseSetData(other.dataGold)); break;
                 case BLUE8: dataset.put(WidgetSettings.TimeMode.BLUE8.name(), this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8)); break;
                 case BLUE4: dataset.put(WidgetSettings.TimeMode.BLUE4.name(), this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4)); break;
@@ -119,6 +121,10 @@ public class SuntimesRiseSetDataset
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
         dataset.put(WidgetSettings.TimeMode.NOON.name(), dataNoon);
 
+        dataMidnight = new SuntimesRiseSetData(dataActual);
+        dataMidnight.setTimeMode(WidgetSettings.TimeMode.MIDNIGHT);
+        dataset.put(WidgetSettings.TimeMode.MIDNIGHT.name(), dataMidnight);
+
         dataGold = new SuntimesRiseSetData(dataActual);
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
         dataset.put(WidgetSettings.TimeMode.GOLD.name(), dataGold);
@@ -132,7 +138,7 @@ public class SuntimesRiseSetDataset
         dataset.put(WidgetSettings.TimeMode.BLUE4.name(), dataBlue4);
     }
 
-    public void calculateData()
+    public void calculateData(Context context)
     {
         SuntimesCalculator calculator = this.calculator;
         SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
@@ -145,18 +151,18 @@ public class SuntimesRiseSetDataset
         {
             if (first && descriptor == null)
             {
-                data.calculate();
+                data.calculate(context);
                 calculator = data.calculator();
                 descriptor = data.calculatorMode();
                 first = false;
 
             } else {
                 data.setCalculator(calculator, descriptor);
-                data.calculate();
+                data.calculate(context);
             }
 
             WidgetSettings.TimeMode mode = data.timeMode();
-            if (mode == WidgetSettings.TimeMode.NOON || mode == WidgetSettings.TimeMode.GOLD
+            if (mode == WidgetSettings.TimeMode.NOON || mode == WidgetSettings.TimeMode.MIDNIGHT || mode == WidgetSettings.TimeMode.GOLD
                     || mode == WidgetSettings.TimeMode.BLUE4 || mode == WidgetSettings.TimeMode.BLUE8)
                 continue;
 

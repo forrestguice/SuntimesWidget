@@ -28,21 +28,13 @@ import java.util.Calendar;
 
 public class SuntimesEquinoxSolsticeData extends SuntimesData
 {
-    private Context context;
-
-    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesEquinoxSolsticeData(SuntimesEquinoxSolsticeData other)
-    {
-        this.context = other.context;
+    public SuntimesEquinoxSolsticeData(SuntimesEquinoxSolsticeData other) {
         initFromOther(other);
     }
 
@@ -165,12 +157,8 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return eventCalendarNextYear;
     }
 
-    public void initCalculator()
-    {
-        initCalculator(context);
-    }
-    
-    public void calculate()
+    @Override
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -273,7 +261,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
                 break;
         }
 
-        super.calculate();
+        super.calculate(context);
     }
 
     public boolean isImplemented()

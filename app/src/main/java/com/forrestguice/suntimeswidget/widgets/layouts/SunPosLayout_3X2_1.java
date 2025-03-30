@@ -98,7 +98,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
-        LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask();
+        LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask(context);
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);

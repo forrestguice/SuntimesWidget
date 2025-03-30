@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -184,7 +185,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             return;
         }
 
-        drawTask = new LineGraphTask();
+        drawTask = new LineGraphTask(getContext());
         drawTask.setListener(drawTaskListener);
 
         if (Build.VERSION.SDK_INT >= 11) {
@@ -291,7 +292,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             if (data != null) {
                 Calendar calendar = Calendar.getInstance(data.timezone());
                 data.setTodayIs(calendar);
-                data.calculateData();
+                data.calculateData(getContext());
             }
         }
         updateViews(true);
@@ -362,9 +363,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
+        private WeakReference<Context> contextRef;
         private LineGraphOptions options;
 
         private SuntimesRiseSetDataset t_data = null;
+
+        public LineGraphTask(Context context) {
+            contextRef = new WeakReference<>(context);
+        }
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -425,7 +431,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
                         data = new SuntimesRiseSetDataset(data);
                         data.setTodayIs(calendar);
-                        data.calculateData();
+                        data.calculateData(contextRef.get());
                         t_data = data;
                     }
                 }

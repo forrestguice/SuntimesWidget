@@ -834,7 +834,7 @@ public class EquinoxView extends LinearLayout
 
             SuntimesEquinoxSolsticeDataset retValue = new SuntimesEquinoxSolsticeDataset(context, 0);
             retValue.setTodayIs(date);
-            retValue.calculateData();
+            retValue.calculateData(context);
             return retValue;
         }
 

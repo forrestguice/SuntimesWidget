@@ -114,7 +114,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void setData( SuntimesMoonData data )
     {
         if (data != null && !data.isCalculated() && data.isImplemented()) {
-            data.calculate();
+            data.calculate(getActivity());
         }
         this.data = data;
     }

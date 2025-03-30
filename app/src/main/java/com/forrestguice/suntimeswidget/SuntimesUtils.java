@@ -18,14 +18,12 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -38,7 +36,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -64,21 +61,20 @@ import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -101,7 +97,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -1245,6 +1240,11 @@ public class SuntimesUtils
      *   %s .. the data source
      *   %i .. moon illumination (SuntimesMoonData only)
      *
+     *   %h .. observer height setting (meters)
+     *   %H .. observer height setting (formatted, meters or feet depending on settings)
+     *   %es@event .. shadow length at event (unformatted, meters)
+     *   %eS@event .. shadow length at event (formatted, meters or feet depending on settings)
+     *
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
@@ -1257,23 +1257,35 @@ public class SuntimesUtils
         String[] patterns = new String[] { modePattern, modePatternShort, orderPattern };
 
         SolarEvents[] events = { SolarEvents.SUNRISE, SolarEvents.NOON, SolarEvents.SUNSET };
-        HashMap<SolarEvents, String> patterns_em = getPatternsForEvent_em(events);
-        HashMap<SolarEvents, String> patterns_et = getPatternsForEvent_et(events);
-        HashMap<SolarEvents, String> patterns_eT = getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns_eA = getPatternsForEvent_eA(events);   // angle/elevation
-        HashMap<SolarEvents, String> patterns_eZ = getPatternsForEvent_eZ(events);   // azimuth
-        HashMap<SolarEvents, String> patterns_eD = getPatternsForEvent_eD(events);   // declination
-        HashMap<SolarEvents, String> patterns_eR = getPatternsForEvent_eR(events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, events);
+        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_et_at, events);
+        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eT_at, events);
+        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ea_at, events);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eA_at, events);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ez_at, events);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eZ_at, events);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ed_at, events);   // declination
+        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eD_at, events);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_er_at, events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eR_at, events);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_es_at, events);   // shadow length (meters)
+        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eS_at, events);   // shadow length display (formatted, meters or feet)
 
         if (data == null) {
-            displayString = removePatterns(displayString, Arrays.asList(patterns));
-            displayString = removePatterns(displayString, patterns_em.values());
-            displayString = removePatterns(displayString, patterns_et.values());
-            displayString = removePatterns(displayString, patterns_eT.values());
-            displayString = removePatterns(displayString, patterns_eA.values());
-            displayString = removePatterns(displayString, patterns_eZ.values());
-            displayString = removePatterns(displayString, patterns_eD.values());
-            displayString = removePatterns(displayString, patterns_eR.values());
+            displayString = DataSubstitutions.removePatterns(displayString, Arrays.asList(patterns));
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_em.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_et.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eT.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ea.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eA.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ez.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eZ.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ed.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eD.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_er.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eR.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_es.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eS.values());
             return displayString;
         }
 
@@ -1300,13 +1312,24 @@ public class SuntimesUtils
             String pattern_em = patterns_em.get(event);
             String pattern_et = patterns_et.get(event);
             String pattern_eT = patterns_eT.get(event);
+            String pattern_ea = patterns_ea.get(event);
             String pattern_eA = patterns_eA.get(event);
+            String pattern_ez = patterns_ez.get(event);
             String pattern_eZ = patterns_eZ.get(event);
+            String pattern_ed = patterns_ed.get(event);
             String pattern_eD = patterns_eD.get(event);
+            String pattern_er = patterns_er.get(event);
             String pattern_eR = patterns_eR.get(event);
+            String pattern_es = patterns_es.get(event);
+            String pattern_eS = patterns_eS.get(event);
 
-            if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                    && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)) {
+            if (!displayString.contains(pattern_em)
+                    && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT)
+                    && !displayString.contains(pattern_ea) && !displayString.contains(pattern_eA)
+                    && !displayString.contains(pattern_ez) && !displayString.contains(pattern_eZ)
+                    && !displayString.contains(pattern_ed) && !displayString.contains(pattern_eD)
+                    && !displayString.contains(pattern_er) && !displayString.contains(pattern_eR)
+                    && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                 continue;
             }
 
@@ -1329,38 +1352,55 @@ public class SuntimesUtils
                 if (displayString.contains(pattern_eT)) {
                     displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
-                if (displayString.contains(pattern_eA)) {
+                if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
                     Double angle = (d.angle() != null ? Double.valueOf(d.angle()) : getAltitudeForEvent(event, d));
+                    displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
                     displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
                 }
-                if (displayString.contains(pattern_eZ)) {
+                if (displayString.contains(pattern_ez) || displayString.contains(pattern_eZ)) {
                     Double value = getAzimuthForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_ez, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eZ, (value != null ? formatAsDirection(value, 1) : ""));
                 }
-                if (displayString.contains(pattern_eD)) {
+                if (displayString.contains(pattern_ed) || displayString.contains(pattern_eD)) {
                     Double value = getDeclinationForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_ed, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eD, (value != null ? formatAsDeclination(value, 1).toString() : ""));
                 }
-                if (displayString.contains(pattern_eR)) {
+                if (displayString.contains(pattern_er) || displayString.contains(pattern_eR)) {
                     Double value = getRightAscensionForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_er, (value != null ? value + "" : ""));
                     displayString = displayString.replaceAll(pattern_eR, (value != null ? formatAsRightAscension(value, 1).toString() : ""));
+                }
+                if (displayString.contains(pattern_es) || displayString.contains(pattern_eS))
+                {
+                    WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    Double value = getShadowLengthForEvent(context, event, d);
+                    displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                    displayString = displayString.replaceAll(pattern_eS, (value != null ? formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                 }
 
             } else {
                 displayString = displayString.replaceAll(pattern_em, "");
                 displayString = displayString.replaceAll(pattern_et, "");
                 displayString = displayString.replaceAll(pattern_eT, "");
+                displayString = displayString.replaceAll(pattern_ea, "");
                 displayString = displayString.replaceAll(pattern_eA, "");
+                displayString = displayString.replaceAll(pattern_ez, "");
                 displayString = displayString.replaceAll(pattern_eZ, "");
+                displayString = displayString.replaceAll(pattern_ed, "");
                 displayString = displayString.replaceAll(pattern_eD, "");
+                displayString = displayString.replaceAll(pattern_er, "");
                 displayString = displayString.replaceAll(pattern_eR, "");
+                displayString = displayString.replaceAll(pattern_es, "");
+                displayString = displayString.replaceAll(pattern_eS, "");
             }
 
         }
 
         return displayString;
     }
-    
+
     public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
@@ -1428,85 +1468,126 @@ public class SuntimesUtils
     }*/
 
     @Nullable
-    public static Double getAltitudeForEvent(SolarEvents event, @Nullable SuntimesRiseSetData data)
+    public static <T extends SuntimesData> SuntimesCalculator.Position getPositionForEvent(SolarEvents event, @Nullable T data)
     {
+        if (data != null)
+        {
+            SuntimesCalculator calculator = data.calculator();
+            Calendar datetime = getCalendarForEvent(event, data);
+            return (datetime != null && calculator != null ? calculator.getSunPosition(datetime) : null);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static <T extends SuntimesData> Double getAltitudeForEvent(SolarEvents event, @Nullable T data)
+    {
+        //switch (event)
+        //{
+            //case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return WidgetSettings.TimeMode.ASTRONOMICAL.angle();
+            //case MORNING_NAUTICAL: case EVENING_NAUTICAL: return  WidgetSettings.TimeMode.NAUTICAL.angle();
+            //case MORNING_BLUE8: case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8.angle();
+            //case MORNING_CIVIL: case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL.angle();
+            //case MORNING_BLUE4: case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4.angle();
+            //case MORNING_GOLDEN: case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD.angle();
+            //case SUNRISE: case SUNSET: case MOONRISE: case MOONSET: return 0d;
+            //case NOON: // case MIDNIGHT:   // TODO: solar midnight
+            //case MOONNIGHT: case MOONNOON:
+            //default:
+                SuntimesCalculator.Position position = getPositionForEvent(event, data);
+                return (position != null ? position.elevation : null);
+        //}
+    }
+
+    @Nullable
+    public static <T extends SuntimesData> Double getAzimuthForEvent(SolarEvents event, @Nullable T data)
+    {
+        SuntimesCalculator.Position position = getPositionForEvent(event, data);
+        return (position != null ? position.azimuth : null);
+    }
+
+    @Nullable
+    public static <T extends SuntimesData> Double getDeclinationForEvent(SolarEvents event, @Nullable T data)
+    {
+        SuntimesCalculator.Position position = getPositionForEvent(event, data);
+        return (position != null ? position.declination : null);
+    }
+
+    @Nullable
+    public static <T extends SuntimesData> Double getRightAscensionForEvent(SolarEvents event, @Nullable T data)
+    {
+        SuntimesCalculator.Position position = getPositionForEvent(event, data);
+        return (position != null ? position.rightAscension : null);
+    }
+
+    @Nullable
+    public static Double getShadowLengthForEvent(Context context, SolarEvents event, @Nullable SuntimesRiseSetData data)
+    {
+        if (data != null)
+        {
+            SuntimesCalculator calculator = data.calculator();
+            Calendar datetime = getCalendarForEvent(event, data);
+            double objHeight = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());
+            return (datetime != null && calculator != null ? calculator.getShadowLength(objHeight, datetime) : null);
+
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static <T extends SuntimesData> Calendar getCalendarForEvent(SolarEvents event, @NonNull T data)
+    {
+        if (data == null || data.calculator() == null) {
+            return null;
+        }
+
         switch (event)
         {
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return  WidgetSettings.TimeMode.ASTRONOMICAL.angle();
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return  WidgetSettings.TimeMode.NAUTICAL.angle();
-            case MORNING_BLUE8: case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8.angle();
-            case MORNING_CIVIL: case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL.angle();
-            case MORNING_BLUE4: case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4.angle();
-            case MORNING_GOLDEN: case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD.angle();
-            case SUNRISE: case SUNSET: return 0d;
-            case NOON:
-                SuntimesCalculator calculator = (data != null ? data.calculator() : null);
-                Calendar noonTime = (data != null ? data.sunriseCalendarToday() : null);
-                SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
-                return (noonPosition != null ? noonPosition.elevation : null);
-            default: return null;
-        }
-    }
+            case NOON: return data.calculator().getSolarNoonCalendarForDate(data.calendar());
+            case SUNRISE: return data.calculator().getOfficialSunriseCalendarForDate(data.calendar());
+            case MORNING_CIVIL: return data.calculator().getCivilSunriseCalendarForDate(data.calendar());
+            case MORNING_NAUTICAL: return data.calculator().getNauticalSunriseCalendarForDate(data.calendar());
+            case MORNING_ASTRONOMICAL: return data.calculator().getAstronomicalSunriseCalendarForDate(data.calendar());
+            case MORNING_GOLDEN: return data.calculator().getMorningGoldenHourForDate(data.calendar());
+            case MORNING_BLUE8: return data.calculator().getMorningBlueHourForDate(data.calendar())[0];
+            case MORNING_BLUE4: return data.calculator().getMorningBlueHourForDate(data.calendar())[1];
 
-    @Nullable
-    public static Double getAzimuthForEvent(SolarEvents event, @Nullable SuntimesRiseSetData data)
-    {
-        if (data != null)
-        {
-            SuntimesCalculator calculator = data.calculator();
-            Calendar datetime = getCalendarForEvent(event, data);
-            SuntimesCalculator.SunPosition position = (datetime != null && calculator != null ? calculator.getSunPosition(datetime) : null);
-            return (position != null ? position.azimuth : null);
+            case SUNSET: return data.calculator().getOfficialSunsetCalendarForDate(data.calendar());
+            case EVENING_CIVIL: return data.calculator().getCivilSunsetCalendarForDate(data.calendar());
+            case EVENING_NAUTICAL: return data.calculator().getNauticalSunsetCalendarForDate(data.calendar());
+            case EVENING_ASTRONOMICAL: return data.calculator().getAstronomicalSunsetCalendarForDate(data.calendar());
+            case EVENING_GOLDEN: return data.calculator().getEveningGoldenHourForDate(data.calendar());
+            case EVENING_BLUE4: return data.calculator().getEveningBlueHourForDate(data.calendar())[0];
+            case EVENING_BLUE8: return data.calculator().getEveningBlueHourForDate(data.calendar())[1];
 
-        } else {
-            return null;
-        }
-    }
+            case MOONRISE: return data.calculator().getMoonTimesForDate(data.calendar()).riseTime;
+            case MOONSET: return data.calculator().getMoonTimesForDate(data.calendar()).setTime;
+            case MOONNOON:
+                if (data instanceof SuntimesMoonData) {
+                    return ((SuntimesMoonData) data).getLunarNoonToday();
+                } else return null;   // requires matching data
+            case MOONNIGHT:
+                if (data instanceof SuntimesMoonData) {
+                    return ((SuntimesMoonData) data).getLunarMidnightToday();
+                } else return null;   // requires matching data
 
-    @Nullable
-    public static Double getDeclinationForEvent(SolarEvents event, @Nullable SuntimesRiseSetData data)
-    {
-        if (data != null)
-        {
-            SuntimesCalculator calculator = data.calculator();
-            Calendar datetime = getCalendarForEvent(event, data);
-            SuntimesCalculator.SunPosition position = (datetime != null && calculator != null ? calculator.getSunPosition(datetime) : null);
-            return (position != null ? position.declination : null);
+            case FULLMOON: case NEWMOON: case FIRSTQUARTER: case THIRDQUARTER:
+                if (data instanceof SuntimesMoonData1) {
+                    return ((SuntimesMoonData1) data).moonPhaseCalendar(SolarEvents.toMoonPhase(event));
+                } else return data.calculator().getMoonPhaseNextDate(SolarEvents.toMoonPhase(event), data.calendar());
 
-        } else {
-            return null;
-        }
-    }
+            case CROSS_SUMMER: case CROSS_WINTER: case CROSS_AUTUMNAL: case CROSS_SPRING:
+                if (data instanceof SuntimesEquinoxSolsticeData) {
+                    return ((SuntimesEquinoxSolsticeData) data).eventCalendarThisYear();
+                } else return null;   // requires matching data
 
-    @Nullable
-    public static Double getRightAscensionForEvent(SolarEvents event, @Nullable SuntimesRiseSetData data)
-    {
-        if (data != null)
-        {
-            SuntimesCalculator calculator = data.calculator();
-            Calendar datetime = getCalendarForEvent(event, data);
-            SuntimesCalculator.SunPosition position = (datetime != null && calculator != null ? calculator.getSunPosition(datetime) : null);
-            return (position != null ? position.rightAscension : null);
+            case SOLSTICE_SUMMER: return data.calculator().getSummerSolsticeForYear(data.calendar());
+            case SOLSTICE_WINTER: return data.calculator().getWinterSolsticeForYear(data.calendar());
+            case EQUINOX_AUTUMNAL: return data.calculator().getAutumnalEquinoxForYear(data.calendar());
+            case EQUINOX_SPRING: return data.calculator().getSpringEquinoxForYear(data.calendar());
 
-        } else {
-            return null;
-        }
-    }
-
-    @Nullable
-    public static Calendar getCalendarForEvent(SolarEvents event, @NonNull SuntimesRiseSetData data)
-    {
-        switch (event)
-        {
-            case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL:
-            case MORNING_BLUE4: case MORNING_GOLDEN: case SUNRISE:
-                return data.sunriseCalendarToday();
-
-            case EVENING_ASTRONOMICAL: case EVENING_NAUTICAL: case EVENING_BLUE8: case EVENING_CIVIL:
-            case EVENING_BLUE4: case EVENING_GOLDEN: case NOON: case SUNSET:
-                return data.sunsetCalendarToday();
-
-            default: return null;
+            default: return data.calendar();
         }
     }
 
@@ -1523,6 +1604,7 @@ public class SuntimesUtils
             case EVENING_CIVIL: return prefix + "cs";
             case SUNRISE: return prefix + "sr";
             case NOON: return prefix + "sn";
+            //case MIDNIGHT: return prefix + "sm";    // TODO: midnight
             case SUNSET: return prefix + "ss";
             case MORNING_GOLDEN: return prefix + "gr";
             case EVENING_GOLDEN: return prefix + "gs";
@@ -1530,99 +1612,12 @@ public class SuntimesUtils
             case EVENING_BLUE4: return prefix + "b4s";
             case MORNING_BLUE8: return prefix + "b8r";
             case EVENING_BLUE8: return prefix + "b8s";
+            case MOONRISE: return prefix + "lr";
+            case MOONSET: return prefix + "ls";
+            case MOONNOON: return prefix + "ln";
+            case MOONNIGHT: return prefix + "lm";
             default: return null;
         }
-    }
-    @Nullable
-    public static String getPatternForEvent_em(SolarEvents event) {
-        return getPatternForEvent("%em@", event);    // miliseconds
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_em(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_em(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_et(SolarEvents event) {
-        return getPatternForEvent("%et@", event);    // formatted time
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_et(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_et(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eT(SolarEvents event) {
-        return getPatternForEvent("%eT@", event);    // formatted time (wth seconds)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eT(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_eT(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eA(SolarEvents event) {
-        return getPatternForEvent("%eA@", event);    // formatted angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eA(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_eA(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eZ(SolarEvents event) {
-        return getPatternForEvent("%eZ@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eZ(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_eZ(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eD(SolarEvents event) {
-        return getPatternForEvent("%eD@", event);
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eD(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_eD(event));
-        }
-        return patterns;
-    }
-
-    @Nullable
-    public static String getPatternForEvent_eR(SolarEvents event) {
-        return getPatternForEvent("%eR@", event);    // formatted angle (deg)
-    }
-    public static HashMap<SolarEvents, String> getPatternsForEvent_eR(SolarEvents[] events) {
-        HashMap<SolarEvents,String> patterns = new HashMap<>();
-        for (SolarEvents event : events) {
-            patterns.put(event, getPatternForEvent_eR(event));
-        }
-        return patterns;
-    }
-
-    public static String removePatterns(String displayString, Collection<String> patterns) {
-        String value = displayString;
-        for (String pattern : patterns) {
-            value = value.replaceAll(pattern, "");
-        }
-        return value;
     }
 
     @NonNull
@@ -1643,27 +1638,45 @@ public class SuntimesUtils
         String displayString = titlePattern;
 
         SolarEvents[] events = getRiseSetDatasetEvents();
-        HashMap<SolarEvents, String> patterns0 = getPatternsForEvent_em(events);
-        HashMap<SolarEvents, String> patterns1 = getPatternsForEvent_et(events);
-        HashMap<SolarEvents, String> patterns2 = getPatternsForEvent_eT(events);
-        HashMap<SolarEvents, String> patterns3 = getPatternsForEvent_eA(events);
-        HashMap<SolarEvents, String> patterns4 = getPatternsForEvent_eZ(events);
-        HashMap<SolarEvents, String> patterns5 = getPatternsForEvent_eD(events);
-        HashMap<SolarEvents, String> patterns6 = getPatternsForEvent_eR(events);
+        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, events);
+        HashMap<SolarEvents, String> patterns_et = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_et_at, events);
+        HashMap<SolarEvents, String> patterns_eT = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eT_at, events);
+        HashMap<SolarEvents, String> patterns_ea = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ea_at, events);   // angle/elevation
+        HashMap<SolarEvents, String> patterns_eA = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eA_at, events);   // angle/elevation (formatted)
+        HashMap<SolarEvents, String> patterns_ez = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ez_at, events);   // azimuth
+        HashMap<SolarEvents, String> patterns_eZ = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eZ_at, events);   // azimuth (formatted)
+        HashMap<SolarEvents, String> patterns_ed = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_ed_at, events);   // declination
+        HashMap<SolarEvents, String> patterns_eD = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eD_at, events);   // declination (formatted)
+        HashMap<SolarEvents, String> patterns_er = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_er_at, events);   // right-ascension
+        HashMap<SolarEvents, String> patterns_eR = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eR_at, events);   // right-ascension (formatted)
+        HashMap<SolarEvents, String> patterns_es = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_es_at, events);   // shadow length (meters)
+        HashMap<SolarEvents, String> patterns_eS = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_eS_at, events);   // shadow length display (formatted, meters or feet)
 
         if (dataset != null && dataset.isCalculated())
         {
-            for (SolarEvents event : patterns0.keySet())
+            for (SolarEvents event : patterns_em.keySet())
             {
-                String pattern_em = patterns0.get(event);   // %em .. eventMillis
-                String pattern_et = patterns1.get(event);   // %et .. eventTime (formatted)
-                String pattern_eT = patterns2.get(event);   // %eT .. eventTime (formatted)
-                String pattern_eA = patterns3.get(event);   // %eA .. event angle (formatted)
-                String pattern_eZ = patterns4.get(event);   // %eZ .. event azimuth (formatted)
-                String pattern_eD = patterns5.get(event);   // %eD .. event declination (formatted)
-                String pattern_eR = patterns6.get(event);   // %eR .. event right ascension (formatted)
-                if (!displayString.contains(pattern_em) && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT) && !displayString.contains(pattern_eA)
-                        && !displayString.contains(pattern_eZ) && !displayString.contains(pattern_eD) && !displayString.contains(pattern_eR)) {
+                String pattern_em = patterns_em.get(event);   // %em .. eventMillis
+                String pattern_et = patterns_et.get(event);   // %et .. eventTime (formatted)
+                String pattern_eT = patterns_eT.get(event);   // %eT .. eventTime (formatted)
+                String pattern_ea = patterns_ea.get(event);   // %eA .. event angle
+                String pattern_eA = patterns_eA.get(event);   // %eA .. event angle (formatted)
+                String pattern_ez = patterns_ez.get(event);   // %eZ .. event azimuth
+                String pattern_eZ = patterns_eZ.get(event);   // %eZ .. event azimuth (formatted)
+                String pattern_ed = patterns_ed.get(event);   // %eD .. event declination
+                String pattern_eD = patterns_eD.get(event);   // %eD .. event declination (formatted)
+                String pattern_er = patterns_er.get(event);   // %er .. event right ascension
+                String pattern_eR = patterns_eR.get(event);   // %eR .. event right ascension (formatted)
+                String pattern_es = patterns_es.get(event);   // %eS .. event shadow length (meters)
+                String pattern_eS = patterns_eS.get(event);   // %eS .. event shadow length (formatted)
+
+                if (!displayString.contains(pattern_em)
+                        && !displayString.contains(pattern_et) && !displayString.contains(pattern_eT)
+                        && !displayString.contains(pattern_ea) && !displayString.contains(pattern_eA)
+                        && !displayString.contains(pattern_ez) && !displayString.contains(pattern_eZ)
+                        && !displayString.contains(pattern_ed) && !displayString.contains(pattern_eD)
+                        && !displayString.contains(pattern_er) && !displayString.contains(pattern_eR)
+                        && !displayString.contains(pattern_es) && !displayString.contains(pattern_eS)) {
                     continue;
                 }
 
@@ -1683,40 +1696,63 @@ public class SuntimesUtils
                     if (displayString.contains(pattern_eT)) {
                         displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                     }
-                    if (displayString.contains(pattern_eA)) {
+                    if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
                         Double angle = getAltitudeForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ea, angle != null ? angle + "" : "");
                         displayString = displayString.replaceAll(pattern_eA, angle != null ? formatAsDegrees(angle, 1) : "");
                     }
-                    if (displayString.contains(pattern_eZ)) {
+                    if (displayString.contains(pattern_ez) || displayString.contains(pattern_eZ)) {
                         Double value = getAzimuthForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ez, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eZ, value != null ? formatAsDirection(value, 1) : "");
                     }
-                    if (displayString.contains(pattern_eD)) {
+                    if (displayString.contains(pattern_ed) || displayString.contains(pattern_eD)) {
                         Double value = getDeclinationForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_ed, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eD, value != null ? formatAsDeclination(value, 1).toString() : "");
                     }
-                    if (displayString.contains(pattern_eR)) {
+                    if (displayString.contains(pattern_er) || displayString.contains(pattern_eR)) {
                         Double value = getRightAscensionForEvent(event, data);
+                        displayString = displayString.replaceAll(pattern_er, (value != null ? value + "" : ""));
                         displayString = displayString.replaceAll(pattern_eR, value != null ? formatAsRightAscension(value, 1).toString() : "");
+                    }
+                    if (displayString.contains(pattern_es) || displayString.contains(pattern_eS))
+                    {
+                        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                        Double value = getShadowLengthForEvent(context, event, data);
+                        displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                        displayString = displayString.replaceAll(pattern_eS, (value != null ? formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                     }
                 } else {
                     displayString = displayString.replaceAll(pattern_em, "");
                     displayString = displayString.replaceAll(pattern_et, "");
                     displayString = displayString.replaceAll(pattern_eT, "");
+                    displayString = displayString.replaceAll(pattern_ea, "");
                     displayString = displayString.replaceAll(pattern_eA, "");
+                    displayString = displayString.replaceAll(pattern_ez, "");
                     displayString = displayString.replaceAll(pattern_eZ, "");
+                    displayString = displayString.replaceAll(pattern_ed, "");
                     displayString = displayString.replaceAll(pattern_eD, "");
+                    displayString = displayString.replaceAll(pattern_er, "");
                     displayString = displayString.replaceAll(pattern_eR, "");
+                    displayString = displayString.replaceAll(pattern_es, "");
+                    displayString = displayString.replaceAll(pattern_eS, "");
                 }
             }
         } else {
-            displayString = removePatterns(displayString, patterns0.values());
-            displayString = removePatterns(displayString, patterns1.values());
-            displayString = removePatterns(displayString, patterns2.values());
-            displayString = removePatterns(displayString, patterns3.values());
-            displayString = removePatterns(displayString, patterns4.values());
-            displayString = removePatterns(displayString, patterns5.values());
-            displayString = removePatterns(displayString, patterns6.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_em.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_et.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eT.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ea.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eA.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ez.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eZ.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_ed.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eD.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_er.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eR.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_es.values());
+            displayString = DataSubstitutions.removePatterns(displayString, patterns_eS.values());
         }
         return displayStringForTitlePattern(context, displayString, (dataset != null ? dataset.dataActual : null));
     }
@@ -1740,6 +1776,8 @@ public class SuntimesUtils
         String dateTimePattern = "%dT";
         String dateTimePatternShort = "%dt";
         String dateMillisPattern = "%dm";
+        String observerHeightPattern0 = "%h";
+        String observerHeightPattern1 = "%H";
         String percentPattern = "%%";
 
         if (data == null)
@@ -1747,6 +1785,7 @@ public class SuntimesUtils
             String[] patterns = new String[] { locPattern, latPattern, lonPattern, altPattern,          // in order of operation
                     timezoneIDPattern, datasourcePattern, widgetIDPattern,
                     dateTimePatternShort, dateTimePattern, dateDayPatternShort, dateDayPattern, dateYearPattern, dateMillisPattern, datePattern,
+                    observerHeightPattern0, observerHeightPattern1,
                     percentPattern };
 
             for (int i=0; i<patterns.length; i++) {
@@ -1756,7 +1795,7 @@ public class SuntimesUtils
         }
 
         if (!data.isCalculated()) {
-            data.calculate();
+            data.calculate(context);
         }
 
         Location location = data.location();
@@ -1796,6 +1835,14 @@ public class SuntimesUtils
             displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
             displayString = displayString.replaceAll(dateMillisPattern, Long.toString(data.calendar().getTimeInMillis()));
             displayString = displayString.replaceAll(datePattern, calendarDateDisplayString(context, data.calendar(), false).toString());
+        }
+
+        if (displayString.contains(observerHeightPattern0) || displayString.contains(observerHeightPattern1))
+        {
+            WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+            float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
+            displayString = displayString.replaceAll(observerHeightPattern0, height + "");
+            displayString = displayString.replaceAll(observerHeightPattern1, formatAsHeight(context, height, lengthUnit, 2, true).toString());    // %H
         }
 
         displayString = displayString.replaceAll(percentPattern, "%");

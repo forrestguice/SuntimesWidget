@@ -168,6 +168,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         timeFields.put(SolarEvents.MORNING_ASTRONOMICAL.name(), row_astro.getField(0));
         timeFields.put(SolarEvents.EVENING_ASTRONOMICAL.name(), row_astro.getField(1));
         timeFields.put(SolarEvents.NOON.name(), row_solarnoon.getField(1));
+        //timeFields.put(SolarEvents.MIDNIGHT.name(), row_solarmidnight.getField(1));    // TODO
         timeFields.put(SolarEvents.MORNING_GOLDEN.name(), row_gold.getField(0));
         timeFields.put(SolarEvents.EVENING_GOLDEN.name(), row_gold.getField(1));
         timeFields.put(SolarEvents.MORNING_BLUE8.name(), row_blue8.getField(0));
@@ -681,6 +682,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             case ASTRONOMICAL: return row_astro;
             case BLUE4: return row_blue4;
             case BLUE8: return row_blue8;
+            case MIDNIGHT: return null;  // TODO
             default: return null;
         }
     }

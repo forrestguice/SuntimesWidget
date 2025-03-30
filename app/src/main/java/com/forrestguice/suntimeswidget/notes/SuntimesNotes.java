@@ -169,6 +169,8 @@ public class SuntimesNotes
                 continue;
             else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
                 continue;
+            else if (!enabledNoon && (event.equals(SolarEvents.MIDNIGHT)))    // TODO: midnight option
+                continue;
             else if (!enabledAstro && (event.equals(SolarEvents.EVENING_ASTRONOMICAL) || event.equals(SolarEvents.MORNING_ASTRONOMICAL)))
                 continue;
             else if (!enabledNautical && (event.equals(SolarEvents.EVENING_NAUTICAL) || event.equals(SolarEvents.MORNING_NAUTICAL)))
@@ -472,6 +474,14 @@ public class SuntimesNotes
                     noteString = context.getString(R.string.untilEnd_goldhour);
                     break;
 
+                case MIDNIGHT:    // TODO: icon
+                    iconStroke = strokeWidthNoon;
+                    iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+                    iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+                    textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
+                    noteString = context.getString(R.string.until_midnight);
+                    break;
+
                 case NOON:
                     iconStroke = strokeWidthNoon;
                     iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
@@ -575,7 +585,7 @@ public class SuntimesNotes
                 // until
                 case MOONRISE: case MOONSET: case MOONNOON: case MOONNIGHT:
                 case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case EVENING_BLUE4: case MORNING_CIVIL:
-                case SUNRISE: case NOON: case EVENING_GOLDEN: case SUNSET:
+                case SUNRISE: case NOON: case MIDNIGHT: case EVENING_GOLDEN: case SUNSET:
                     prefix = context.getString(R.string.until);
                     break;
 
@@ -637,7 +647,7 @@ public class SuntimesNotes
                     break;
 
                 case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL: case MORNING_BLUE4:
-                case SUNRISE: case MORNING_GOLDEN: case NOON: case EVENING_GOLDEN:
+                case SUNRISE: case MORNING_GOLDEN: case NOON: case MIDNIGHT: case EVENING_GOLDEN:
                 case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
                     WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);

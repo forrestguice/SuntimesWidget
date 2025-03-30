@@ -168,7 +168,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         this.data.invalidateCalculation();
         this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
-        this.data.calculateData();
+        this.data.calculateData(context);
     }
 
     @NonNull @Override

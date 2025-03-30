@@ -1139,9 +1139,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             equinoxData.setLocation(forLocation);
         }
 
-        sunData.calculateData();
-        moonData.calculate();
-        equinoxData.calculateData();
+        sunData.calculateData(context);
+        moonData.calculate(context);
+        equinoxData.calculateData(context);
         dialog.setData(context, sunData, moonData, equinoxData);
         dialog.setUseAppLocation(useAppLocation());
     }
