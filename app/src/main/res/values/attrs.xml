@@ -264,6 +264,18 @@
         <attr name="maxValue" format="integer" />
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
+    <declare-styleable name="MillisecondPickerPreference1">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="zeroValueText" />
+        <attr name="resetDefaultsText" format="string" />
+        <attr name="resetDefaultsValue" format="integer" />
+        <attr name="allowPickSeconds" format="boolean" />
+        <attr name="allowPickMinutes" format="boolean" />
+        <attr name="allowPickHours" format="boolean" />
+        <attr name="allowPickDays" format="boolean" />
+        <attr name="allowPickBeforeAfter" format="boolean" />
+    </declare-styleable>
 
     <declare-styleable name="IntegerPickerPreference">
         <attr name="minValue" />
