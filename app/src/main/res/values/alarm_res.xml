@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="minAlarmReminderHours">0</integer>
     <integer name="minAlarmReminderMillis">0</integer>
     <integer name="maxAlarmReminderMillis">43200000</integer>    <!-- 12 hours -->
     <integer name="maxAlarmSnoozeLimit">5</integer>
-    <integer name="minAlarmSnoozeMinutes">2</integer>
-    <integer name="maxAlarmSnoozeMinutes">120</integer>
-    <integer name="minAlarmAutoDismissSeconds">5</integer>
-    <integer name="maxAlarmAutoDismissSeconds">43200</integer>   <!-- 12 hours -->
     <integer name="minAlarmSnoozeMillis">120000</integer>    <!-- 2 minutes -->
     <integer name="maxAlarmSnoozeMillis">14400000</integer>   <!-- 4 hours -->
     <integer name="minAlarmTimeoutMillis">60000</integer>     <!-- 1 minute -->
@@ -15,16 +10,12 @@
     <integer name="minAlarmAutoDismissMillis">5000</integer>
     <integer name="maxAlarmAutoDismissMillis">43200000</integer>   <!-- 12 hours -->
 
-    <integer name="minAlarmFullscreenFadeinSeconds">15</integer>
-    <integer name="maxAlarmFullscreenFadeinSeconds">180</integer>
     <integer name="minAlarmFullscreenFadeinMillis">15000</integer>
     <integer name="maxAlarmFullscreenFadeinMillis">180000</integer>
 
     <integer name="minSleepCycleMillis">300000</integer>     <!-- 5 min -->
     <integer name="maxSleepCycleMillis">10800000</integer>   <!-- 3 hour -->
 
-    <integer name="minSleepCycleMinutes">60</integer>
-    <integer name="maxSleepCycleMinutes">120</integer>
     <integer name="minFallAsleepMinutes">0</integer>
     <integer name="maxFallAsleepMinutes">90</integer>
     <integer name="minFallAsleepMillis">0</integer>
