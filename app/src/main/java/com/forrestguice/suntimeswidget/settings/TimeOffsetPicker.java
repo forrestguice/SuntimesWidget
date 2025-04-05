@@ -19,69 +19,140 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
-/**
- * A version of MillisecondPickerPreference that allows selecting a millisecond value as a
- * combination of hours, minutes, and seconds.
- */
+import java.util.ArrayList;
+
 @TargetApi(11)
-public class MillisecondPickerPreference1 extends DialogPreference
+public class TimeOffsetPicker extends LinearLayout
 {
-    private int value;
-
-    private int param_minMs = 1, param_maxMs = 10000;
-    private String param_zeroText = null;
-    private boolean param_showDirection = false;
-    private String param_resetText = null;
-    private Integer param_resetValue = null;
-
-    private boolean param_showSeconds = true;
-    private int param_maxSeconds = 59;
-
-    private boolean param_showMinutes = true;
-    private int param_maxMinutes = 59;
-
-    private boolean param_showHours = true;
-    private int param_maxHours = 22;
-
-    private boolean param_showDays = false;
-    private int param_maxDays = 19;
-
     @TargetApi(21)
-    public MillisecondPickerPreference1(Context context) {
+    public TimeOffsetPicker(Context context) {
         super(context);
+        initLayout(this);
     }
 
-    public MillisecondPickerPreference1(Context context, AttributeSet attrs) {
+    public TimeOffsetPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
         initParams(context, attrs);
+        initLayout(this);
     }
 
     @TargetApi(21)
-    public MillisecondPickerPreference1(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TimeOffsetPicker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initParams(context, attrs);
+        initLayout(this);
     }
 
     @TargetApi(21)
-    public MillisecondPickerPreference1(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TimeOffsetPicker(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initParams(context, attrs);
+        initLayout(this);
+    }
+
+    private int param_minMs = 1, param_maxMs = 10000;
+    private boolean param_showDirection = false;
+
+    private boolean param_showSeconds = true;
+    private int param_maxSeconds = MAX_SECONDS;
+    private static final int MAX_SECONDS = 59;
+
+    private boolean param_showMinutes = true;
+    private int param_maxMinutes = MAX_MINUTES;
+    public static final int MAX_MINUTES = 59;
+
+    private boolean param_showHours = true;
+    private int param_maxHours = MAX_HOURS;
+    public static final int MAX_HOURS = 23;
+
+    private boolean param_showDays = false;
+    private int param_maxDays = MAX_DAYS;
+    public static final int MAX_DAYS = 19;
+
+    protected void initParams(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TimeOffsetPicker, 0, 0);
+        try {
+            param_minMs = a.getInt(R.styleable.TimeOffsetPicker_minValue, param_minMs);
+            param_maxMs = a.getInt(R.styleable.TimeOffsetPicker_maxValue, param_maxMs);
+            param_showSeconds = a.getBoolean(R.styleable.TimeOffsetPicker_allowPickSeconds, param_showSeconds);
+            param_showMinutes = a.getBoolean(R.styleable.TimeOffsetPicker_allowPickMinutes, param_showMinutes);
+            param_showHours = a.getBoolean(R.styleable.TimeOffsetPicker_allowPickHours, param_showHours);
+            param_showDays = a.getBoolean(R.styleable.TimeOffsetPicker_allowPickDays, param_showDays);
+            param_showDirection = a.getBoolean(R.styleable.TimeOffsetPicker_allowPickBeforeAfter, param_showDirection);
+
+        } finally {
+            a.recycle();
+        }
+        initParams(context);
+    }
+    protected void initParams(Context context)
+    {
+        int numberOfSeconds = (param_maxMs / 1000) - 1;
+        int numberOfMinutes = numberOfSeconds / 60;
+        int numberOfHours = numberOfMinutes / 60;
+
+        param_maxDays = numberOfHours / 24;
+        if (param_maxDays == 0) {
+            param_showDays = false;
+            param_maxHours = numberOfHours % 24;
+        } else {
+            param_maxHours = MAX_HOURS;
+        }
+
+        if (param_maxHours == 0) {
+            param_showHours = false;
+            param_maxMinutes = numberOfMinutes % 60;
+        } else {
+            param_maxMinutes = MAX_MINUTES;
+        }
+        if (param_maxMinutes == 0) {
+            param_showMinutes = false;
+            param_maxSeconds = numberOfSeconds % 60;
+        } else {
+            param_maxSeconds = MAX_SECONDS;
+        }
+    }
+
+    /**
+     * setParams
+     * @param context Context
+     * @param min min millis
+     * @param max max millis
+     * @param showSeconds flag
+     * @param showMinutes flag
+     * @param showHours flag
+     * @param showDays flag
+     * @param showDirection  flag
+     */
+    public void setParams(Context context, int min, int max, boolean showSeconds, boolean showMinutes, boolean showHours, boolean showDays, boolean showDirection)
+    {
+        param_minMs = min;
+        param_maxMs = max;
+        param_showSeconds = showSeconds;
+        param_showMinutes = showMinutes;
+        param_showHours = showHours;
+        param_showDays = showDays;
+        param_showDirection = showDirection;
+        initParams(context);
+        initLayout(this);
+
+        Log.d("DEBUG", "setParams:" );
     }
 
     private static int[] secondsValues;
@@ -138,21 +209,18 @@ public class MillisecondPickerPreference1 extends DialogPreference
         }
     }
 
-    private TextView label;
     private NumberPicker pickDays, pickHours, pickMinutes, pickSeconds, pickDirection;
     private ImageButton addMinutes, addHours, addDays;
     private ViewFlipper flipDays, flipHours, flipMinutes;
 
-    @Override
-    protected View onCreateDialogView()
+    protected View initLayout(ViewGroup root)
     {
         Context context = getContext();
         initLocale(context);
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
+        View dialogView = inflater.inflate(R.layout.layout_view_timeoffset, root, false);
 
-        label = (TextView) dialogView.findViewById(R.id.text_label);
         pickDays = (NumberPicker) dialogView.findViewById(R.id.pick_offset_day);
         pickHours = (NumberPicker) dialogView.findViewById(R.id.pick_offset_hour);
         pickMinutes = (NumberPicker) dialogView.findViewById(R.id.pick_offset_minute);
@@ -222,6 +290,8 @@ public class MillisecondPickerPreference1 extends DialogPreference
             pickDirection.setOnValueChangedListener(onValueChanged);
         }
 
+        removeAllViews();
+        addView(dialogView);
         return dialogView;
     }
 
@@ -238,8 +308,8 @@ public class MillisecondPickerPreference1 extends DialogPreference
                         picker.setValue(1);
                     }
                 }
-                if (label != null) {
-                    label.setText(createSummaryString(clampValue(getSelectedMillisValue())));
+                for (MillisecondPickerViewListener listener : viewListeners) {
+                    listener.onValueChanged();
                 }
             }
         };
@@ -249,13 +319,38 @@ public class MillisecondPickerPreference1 extends DialogPreference
     {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-            if (label != null) {
-                label.setText(createSummaryString(clampValue(getSelectedMillisValue())));
+            for (MillisecondPickerViewListener listener : viewListeners) {
+                listener.onValueChanged();
             }
         }
     };
 
-    protected int getSelectedMillisValue()
+    /**
+     * ViewListener
+     */
+    public interface MillisecondPickerViewListener
+    {
+        void onValueChanged();
+    }
+
+    public void addViewListener(MillisecondPickerViewListener listener) {
+        if (!viewListeners.contains(listener)) {
+            viewListeners.add(listener);
+        }
+    }
+    public void removeViewListener(MillisecondPickerViewListener listener) {
+        viewListeners.remove(listener);
+    }
+    private final ArrayList<MillisecondPickerViewListener> viewListeners = new ArrayList<>();
+
+    /**
+     * getSelectedValue
+     * @return millisecond value
+     */
+    public long getSelectedValue() {
+        return getSelectedValue(true);
+    }
+    protected long getSelectedValue(boolean clampValue)
     {
         int changedValue = 0;
         if (pickSeconds != null) {
@@ -273,19 +368,16 @@ public class MillisecondPickerPreference1 extends DialogPreference
         if (param_showDirection && pickDirection != null) {
             changedValue *= ((pickDirection.getValue()) == 0 ? -1 : 1);
         }
-        return changedValue;
+        return (clampValue ? clampValue(changedValue) : changedValue);
     }
 
-    @Override
-    protected void onBindDialogView(View v)
+    /**
+     * setSelectedValue
+     * @param value milliseconds
+     */
+    public void setSelectedValue(long value)
     {
-        super.onBindDialogView(v);
-
-        if (label != null) {
-            label.setText(createSummaryString(getValue()));
-        }
-
-        int numberOfSeconds = getValue() / 1000;
+        int numberOfSeconds = (int) value / 1000;
         int numberOfMinutes = numberOfSeconds / 60;
         int numberOfHours = numberOfMinutes / 60;
         int numberOfDays = numberOfHours / 24;
@@ -317,125 +409,21 @@ public class MillisecondPickerPreference1 extends DialogPreference
         }
     }
 
-    protected void onPrepareDialogBuilder(AlertDialog.Builder builder)
-    {
-        super.onPrepareDialogBuilder(builder);
-        if (param_zeroText != null)
-        {
-            builder.setNeutralButton(param_zeroText, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setValue(0);
-                }
-            });
-
-        } else if (param_resetText != null) {
-            builder.setNeutralButton(param_resetText, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setValue(param_resetValue);
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onDialogClosed(boolean result)
-    {
-        if (result)
-        {
-            int changedValue = clampValue(getSelectedMillisValue());
-            if (callChangeListener(changedValue)) {
-                setValue(changedValue);
-            }
-        }
-    }
-
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int i) {
-        return a.getInt(i, getMin());
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setValue(restoreValue ? getPersistedInt(getMin()) : (Integer)defaultValue);
-    }
-
-    public int getMin() {
+    public long getMin() {
         return param_minMs;
     }
-    public int getMax() {
+    public long getMax() {
         return param_maxMs;
     }
 
-    protected int clampValue(int v) {
-        if (value > param_maxMs) {
+    protected int clampValue(int v)
+    {
+        if (v > param_maxMs) {
             v = param_maxMs;
         }
         if (v < param_minMs) {
             v = param_minMs;
         }
         return v;
-    }
-
-    public void setValue(int value)
-    {
-        this.value = value;
-        persistInt(this.value);
-        updateSummary();
-    }
-    public int getValue() {
-        return this.value;
-    }
-
-    public void initParams(Context context, AttributeSet attrs)
-    {
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MillisecondPickerPreference1, 0, 0);
-        try {
-            param_minMs = a.getInt(R.styleable.MillisecondPickerPreference1_minValue, param_minMs);
-            param_maxMs = a.getInt(R.styleable.MillisecondPickerPreference1_maxValue, param_maxMs);
-            param_zeroText = a.getString(R.styleable.MillisecondPickerPreference1_zeroValueText);
-            param_resetText = a.getString(R.styleable.MillisecondPickerPreference1_resetDefaultsText);
-            param_resetValue = a.getInt(R.styleable.MillisecondPickerPreference1_resetDefaultsValue, param_minMs);
-            param_showSeconds = a.getBoolean(R.styleable.MillisecondPickerPreference1_allowPickSeconds, param_showSeconds);
-            param_showMinutes = a.getBoolean(R.styleable.MillisecondPickerPreference1_allowPickMinutes, param_showMinutes);
-            param_showHours = a.getBoolean(R.styleable.MillisecondPickerPreference1_allowPickHours, param_showHours);
-            param_showDays = a.getBoolean(R.styleable.MillisecondPickerPreference1_allowPickDays, param_showDays);
-            param_showDirection = a.getBoolean(R.styleable.MillisecondPickerPreference1_allowPickBeforeAfter, param_showDirection);
-
-        } finally {
-            a.recycle();
-        }
-
-        int numberOfSeconds = (param_maxMs / 1000) - 1;
-        int numberOfMinutes = numberOfSeconds / 60;
-        int numberOfHours = numberOfMinutes / 60;
-
-        param_maxDays = numberOfHours / 24;
-        if (param_maxDays == 0) {
-            param_showDays = false;
-            param_maxHours = numberOfHours % 24;
-        }
-        if (param_maxHours == 0) {
-            param_showHours = false;
-            param_maxMinutes = numberOfMinutes % 60;
-        }
-        if (param_maxMinutes == 0) {
-            param_showMinutes = false;
-            param_maxSeconds = numberOfSeconds % 60;
-        }
-    }
-    
-    private String createSummaryString(int value)
-    {
-        if (value == 0 && param_zeroText != null) {
-            return param_zeroText;
-        } else {
-            return new SuntimesUtils().timeDeltaLongDisplayString(0, value, true).getValue();
-        }
-    }
-
-    private void updateSummary() {
-        setSummary(createSummaryString(getValue()));
     }
 }

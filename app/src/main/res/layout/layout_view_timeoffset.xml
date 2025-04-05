@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018-2025 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" />
+
+    <ViewFlipper
+        android:id="@+id/flip_offset_day"
+        android:layout_width="0dp" android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center" android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/add_offset_day"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                style="@style/ActionButton"
+                android:src="?attr/icActionNew" />
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_tiny"
+                android:text="days" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <NumberPicker android:theme="@style/TimePickerStyle"
+                android:id="@+id/pick_offset_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:descendantFocusability="blocksDescendants"
+                android:fadingEdge="vertical" />
+        </FrameLayout>
+
+    </ViewFlipper>
+
+    <ViewFlipper
+        android:id="@+id/flip_offset_hour"
+        android:layout_width="0dp" android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center" android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/add_offset_hour"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                style="@style/ActionButton"
+                android:src="?attr/icActionNew" />
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_tiny"
+                android:text="hours" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <NumberPicker android:theme="@style/TimePickerStyle"
+                android:id="@+id/pick_offset_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:descendantFocusability="blocksDescendants"
+                android:fadingEdge="vertical" />
+
+        </FrameLayout>
+    </ViewFlipper>
+
+    <ViewFlipper
+        android:id="@+id/flip_offset_minute"
+        android:layout_width="0dp" android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/add_offset_minute"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                style="@style/ActionButton"
+                android:src="?attr/icActionNew" />
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_tiny"
+                android:text="minutes" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <NumberPicker android:theme="@style/TimePickerStyle"
+                android:id="@+id/pick_offset_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:descendantFocusability="blocksDescendants"
+                android:fadingEdge="vertical" />
+
+        </FrameLayout>
+
+    </ViewFlipper>
+
+    <NumberPicker android:theme="@style/TimePickerStyle"
+        android:id="@+id/pick_offset_seconds"
+        android:layout_width="0dp" android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:descendantFocusability="blocksDescendants"
+        android:fadingEdge="vertical" />
+
+    <NumberPicker android:theme="@style/TimePickerStyle"
+        android:id="@+id/pick_offset_direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:descendantFocusability="blocksDescendants"
+        android:fadingEdge="vertical"
+        />
+
+    <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" />
+
+</LinearLayout>
