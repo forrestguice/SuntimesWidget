@@ -69,19 +69,27 @@ public class TimeOffsetPicker extends LinearLayout
     private boolean param_showDirection = false;
 
     private boolean param_showSeconds = true;
+    private int param_minSeconds = MIN_SECONDS;
     private int param_maxSeconds = MAX_SECONDS;
+    public static final int MIN_SECONDS = 0;
     private static final int MAX_SECONDS = 59;
 
     private boolean param_showMinutes = true;
+    private int param_minMinutes = MIN_MINUTES;
     private int param_maxMinutes = MAX_MINUTES;
+    public static final int MIN_MINUTES = 0;
     public static final int MAX_MINUTES = 59;
 
     private boolean param_showHours = true;
+    private int param_minHours = MIN_HOURS;
     private int param_maxHours = MAX_HOURS;
+    public static final int MIN_HOURS = 0;
     public static final int MAX_HOURS = 23;
 
     private boolean param_showDays = false;
+    private int param_minDays = MIN_DAYS;
     private int param_maxDays = MAX_DAYS;
+    public static final int MIN_DAYS = 0;
     public static final int MAX_DAYS = 19;
 
     protected void initParams(Context context, AttributeSet attrs)
@@ -103,28 +111,53 @@ public class TimeOffsetPicker extends LinearLayout
     }
     protected void initParams(Context context)
     {
-        int numberOfSeconds = (param_maxMs / 1000) - 1;
-        int numberOfMinutes = numberOfSeconds / 60;
-        int numberOfHours = numberOfMinutes / 60;
+        if (param_minMs > param_maxMs) {  // or assert(min <= max)
+            param_minMs = param_maxMs;
+        }
 
-        param_maxDays = numberOfHours / 24;
+        int minNumberOfSeconds = (param_minMs / 1000) + 1;
+        int minNumberOfMinutes = minNumberOfSeconds / 60;
+        int minNumberOfHours = minNumberOfMinutes / 60;
+        int minDays = minNumberOfHours / 24;
+        int minHours = minNumberOfHours % 24;
+        int minMinutes = minNumberOfMinutes % 60;
+        int minSeconds = minNumberOfSeconds % 60;
+
+        int maxNumberOfSeconds = (param_maxMs / 1000) - 1;
+        int maxNumberOfMinutes = maxNumberOfSeconds / 60;
+        int maxNumberOfHours = maxNumberOfMinutes / 60;
+        int maxDays = maxNumberOfHours / 24;
+        int maxHours = maxNumberOfHours % 24;
+        int maxMinutes = maxNumberOfMinutes % 60;
+        int maxSeconds = maxNumberOfSeconds % 60;
+
+        param_minDays = minDays;
+        param_maxDays = maxDays;
+
         if (param_maxDays == 0) {
             param_showDays = false;
-            param_maxHours = numberOfHours % 24;
+            param_minHours = minHours;
+            param_maxHours = maxHours;
         } else {
+            param_minHours = MIN_HOURS;
             param_maxHours = MAX_HOURS;
         }
 
         if (param_maxHours == 0) {
             param_showHours = false;
-            param_maxMinutes = numberOfMinutes % 60;
+            param_maxMinutes = minMinutes;
+            param_maxMinutes = maxMinutes;
         } else {
+            param_minMinutes = MIN_MINUTES;
             param_maxMinutes = MAX_MINUTES;
         }
+
         if (param_maxMinutes == 0) {
             param_showMinutes = false;
-            param_maxSeconds = numberOfSeconds % 60;
+            param_minSeconds = minSeconds;
+            param_maxSeconds = maxSeconds;
         } else {
+            param_minSeconds = MIN_SECONDS;
             param_maxSeconds = MAX_SECONDS;
         }
     }
@@ -172,39 +205,39 @@ public class TimeOffsetPicker extends LinearLayout
         SuntimesUtils.initDisplayStrings(context);
         SuntimesUtils utils = new SuntimesUtils();
 
-        secondsValues = new int[param_maxSeconds + 1];
-        secondsValues[0] = 0;
+        secondsValues = new int[(param_maxSeconds - param_minSeconds) + 1];
+        secondsValues[0] = param_minSeconds;
         secondsStrings = new String[secondsValues.length];
-        secondsStrings[0] = " ";
+        secondsStrings[0] = (param_minSeconds == 0 ? " " : utils.timeDeltaLongDisplayString(0, secondsValues[0] * 1000, true).getValue());
         for (int i=1; i<secondsValues.length; i++) {
-            secondsValues[i] = i;
+            secondsValues[i] = param_minSeconds + i;
             secondsStrings[i] = utils.timeDeltaLongDisplayString(0, secondsValues[i] * 1000, true).getValue();
         }
 
-        minuteValues = new int[param_maxMinutes + 1];
-        minuteValues[0] = 0;
+        minuteValues = new int[(param_maxMinutes - param_minMinutes) + 1];
+        minuteValues[0] = param_minMinutes;
         minuteStrings = new String[minuteValues.length];
-        minuteStrings[0] = " ";
+        minuteStrings[0] = (param_minMinutes == 0 ? " " : utils.timeDeltaLongDisplayString(minuteValues[0] * 1000 * 60));
         for (int i=1; i<minuteValues.length; i++) {
-            minuteValues[i] = i;
+            minuteValues[i] = param_minMinutes + i;
             minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60);
         }
 
-        hourValues = new int[param_maxHours + 1];
-        hourValues[0] = 0;
+        hourValues = new int[(param_maxHours - param_minHours) + 1];
+        hourValues[0] = param_minHours;
         hourStrings = new String[hourValues.length];
-        hourStrings[0] = " ";
+        hourStrings[0] = (param_minHours == 0 ? " " : utils.timeDeltaLongDisplayString(hourValues[0] * 1000 * 60 * 60));
         for (int i=1; i<hourValues.length; i++) {
-            hourValues[i] = i;
+            hourValues[i] = param_minHours + i;
             hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60);
         }
 
-        dayValues = new int[param_maxDays + 1];
-        dayValues[0] = 0;
+        dayValues = new int[(param_maxDays - param_minDays) + 1];
+        dayValues[0] = param_minDays;
         dayStrings = new String[dayValues.length];
-        dayStrings[0] = " ";
+        dayStrings[0] = (param_minDays == 0 ? " " : utils.timeDeltaLongDisplayString(dayValues[0] * 1000 * 60 * 60 * 24));
         for (int i=1; i<dayValues.length; i++) {
-            dayValues[i] = i;
+            dayValues[i] = param_minDays + i;
             dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24);
         }
     }
@@ -245,8 +278,8 @@ public class TimeOffsetPicker extends LinearLayout
         }
 
         if (pickDays != null) {
-            pickDays.setMinValue(0);
-            pickDays.setMaxValue(dayStrings.length-1);
+            pickDays.setMinValue(dayValues[0]);
+            pickDays.setMaxValue(dayValues[dayValues.length-1]);
             pickDays.setDisplayedValues(dayStrings);
             pickDays.setOnValueChangedListener(onValueChanged);
         }
@@ -255,8 +288,8 @@ public class TimeOffsetPicker extends LinearLayout
         }
 
         if (pickHours != null) {
-            pickHours.setMinValue(0);
-            pickHours.setMaxValue(hourStrings.length-1);
+            pickHours.setMinValue(hourValues[0]);
+            pickHours.setMaxValue(hourValues[hourValues.length-1]);
             pickHours.setDisplayedValues(hourStrings);
             pickHours.setOnValueChangedListener(onValueChanged);
         }
@@ -265,8 +298,8 @@ public class TimeOffsetPicker extends LinearLayout
         }
 
         if (pickMinutes != null) {
-            pickMinutes.setMinValue(0);
-            pickMinutes.setMaxValue(minuteStrings.length-1);
+            pickMinutes.setMinValue(minuteValues[0]);
+            pickMinutes.setMaxValue(minuteValues[minuteValues.length-1]);
             pickMinutes.setDisplayedValues(minuteStrings);
             pickMinutes.setOnValueChangedListener(onValueChanged);
         }
@@ -275,8 +308,8 @@ public class TimeOffsetPicker extends LinearLayout
         }
 
         if (pickSeconds != null) {
-            pickSeconds.setMinValue(0);
-            pickSeconds.setMaxValue(secondsStrings.length-1);
+            pickSeconds.setMinValue(secondsValues[0]);
+            pickSeconds.setMaxValue(secondsValues[secondsValues.length-1]);
             pickSeconds.setDisplayedValues(secondsStrings);
             pickSeconds.setVisibility(param_showSeconds ? View.VISIBLE : View.GONE);
             pickSeconds.setOnValueChangedListener(onValueChanged);
