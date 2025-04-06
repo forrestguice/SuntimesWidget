@@ -243,8 +243,8 @@ public class TimeOffsetPicker extends LinearLayout
     }
 
     private NumberPicker pickDays, pickHours, pickMinutes, pickSeconds, pickDirection;
-    private ImageButton addMinutes, addHours, addDays;
-    private ViewFlipper flipDays, flipHours, flipMinutes;
+    private ImageButton addSeconds, addMinutes, addHours, addDays;
+    private ViewFlipper flipDays, flipHours, flipMinutes, flipSeconds;
 
     protected View initLayout(ViewGroup root)
     {
@@ -264,12 +264,14 @@ public class TimeOffsetPicker extends LinearLayout
         addDays = (ImageButton) dialogView.findViewById(R.id.add_offset_day);
         addHours = (ImageButton) dialogView.findViewById(R.id.add_offset_hour);
         addMinutes = (ImageButton) dialogView.findViewById(R.id.add_offset_minute);
-        final ImageButton[] buttons = new ImageButton[] { addDays, addHours, addMinutes };
+        addSeconds = (ImageButton) dialogView.findViewById(R.id.add_offset_seconds);
+        final ImageButton[] buttons = new ImageButton[] { addDays, addHours, addMinutes, addSeconds };
 
         flipDays = (ViewFlipper) dialogView.findViewById(R.id.flip_offset_day);
         flipHours = (ViewFlipper) dialogView.findViewById(R.id.flip_offset_hour);
         flipMinutes = (ViewFlipper) dialogView.findViewById(R.id.flip_offset_minute);
-        final ViewFlipper[] flippers = new ViewFlipper[] {flipDays, flipHours, flipMinutes };
+        flipSeconds = (ViewFlipper) dialogView.findViewById(R.id.flip_offset_seconds);
+        final ViewFlipper[] flippers = new ViewFlipper[] {flipDays, flipHours, flipMinutes, flipSeconds };
 
         for (int i=0; i<buttons.length; i++) {
             if (buttons[i] != null) {
@@ -311,8 +313,10 @@ public class TimeOffsetPicker extends LinearLayout
             pickSeconds.setMinValue(secondsValues[0]);
             pickSeconds.setMaxValue(secondsValues[secondsValues.length-1]);
             pickSeconds.setDisplayedValues(secondsStrings);
-            pickSeconds.setVisibility(param_showSeconds ? View.VISIBLE : View.GONE);
             pickSeconds.setOnValueChangedListener(onValueChanged);
+        }
+        if (flipSeconds != null) {
+            flipSeconds.setVisibility(param_showSeconds ? View.VISIBLE : View.GONE);
         }
 
         if (pickDirection != null) {
@@ -398,10 +402,14 @@ public class TimeOffsetPicker extends LinearLayout
         if (param_showDays && pickDays != null) {
             changedValue += pickDays.getValue() * 24 * 60 * 60 * 1000;
         }
+
+        if (clampValue) {
+            changedValue = clampValue(changedValue);
+        }
         if (param_showDirection && pickDirection != null) {
             changedValue *= ((pickDirection.getValue()) == 0 ? -1 : 1);
         }
-        return (clampValue ? clampValue(changedValue) : changedValue);
+        return changedValue;
     }
 
     /**
@@ -410,6 +418,14 @@ public class TimeOffsetPicker extends LinearLayout
      */
     public void setSelectedValue(long value)
     {
+        boolean isBefore = (value <= 0);
+        if (isBefore) {
+            value *= -1;
+        }
+        if (pickDirection != null) {
+            pickDirection.setValue(isBefore ? 0 : 1);
+        }
+
         int numberOfSeconds = (int) value / 1000;
         int numberOfMinutes = numberOfSeconds / 60;
         int numberOfHours = numberOfMinutes / 60;

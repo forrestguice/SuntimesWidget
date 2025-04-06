@@ -95,6 +95,7 @@ public class TimeOffsetPickerDialog extends DialogFragment
         label = (TextView) dialogView.findViewById(R.id.text_label);
         if (label != null) {
             label.setText(createSummaryString(getValue()));
+            label.setVisibility(getShowLabel() ? View.VISIBLE : View.GONE);
         }
 
         pickMillis = (TimeOffsetPicker) dialogView.findViewById(R.id.pick_offset_millis);
@@ -153,6 +154,16 @@ public class TimeOffsetPickerDialog extends DialogFragment
     }
     public boolean allowDirection() {
         return getArguments().getBoolean("allowDirection", true);
+    }
+
+    public void setShowLabel(boolean value) {
+        getArguments().putBoolean("showlabel", value);
+        if (label != null) {
+            label.setVisibility(value ? View.VISIBLE : View.GONE);
+        }
+    }
+    public boolean getShowLabel() {
+        return getArguments().getBoolean("showlabel", true);
     }
 
     public void setZeroText(String text) {
