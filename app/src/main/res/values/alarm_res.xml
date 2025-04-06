@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="maxAlarmOffsetMillis">82800000</integer>   <!-- 23 hours -->
     <integer name="minAlarmReminderMillis">0</integer>
     <integer name="maxAlarmReminderMillis">43200000</integer>    <!-- 12 hours -->
     <integer name="maxAlarmSnoozeLimit">5</integer>
