@@ -80,7 +80,7 @@ public enum SolarEvents
     CROSS_AUTUMNAL("cross-quarter", "autumnal cross-quarter", R.attr.fallColor, 3, false),                        // 29
     CROSS_WINTER("cross-quarter", "winter cross-quarter", R.attr.winterColor, 3, false),                          // 30
 
-    MIDNIGHT("solar midnight", "solar midnight", R.attr.sunnoonIcon, 0, true),                                        // 31
+    MIDNIGHT("solar midnight", "solar midnight", R.attr.sunnightIcon, 0, true),                                        // 31
 
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 

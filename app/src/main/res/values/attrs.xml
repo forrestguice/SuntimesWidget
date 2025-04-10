@@ -75,6 +75,7 @@
     <attr name="sunsetIconLarge" format="reference" />
     <attr name="sunsetColor" format="reference" />
     <attr name="sunnoonIcon" format="reference" />
+    <attr name="sunnightIcon" format="reference" />
 
     <attr name="moonriseIcon" format="reference" />
     <attr name="moonriseColor" format="reference" />

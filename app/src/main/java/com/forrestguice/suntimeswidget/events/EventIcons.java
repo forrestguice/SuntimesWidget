@@ -62,7 +62,8 @@ public class EventIcons
             case FIRSTQUARTER: return (northward) ? R.drawable.svg_moon_q3 : R.drawable.svg_moon_q1;
             case THIRDQUARTER: return (northward) ? R.drawable.svg_moon_q1 : R.drawable.svg_moon_q3;
 
-            case NOON: case MIDNIGHT: return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
+            case NOON: return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
+            case MIDNIGHT: return getResID(context, R.attr.sunnightIcon, R.drawable.ic_midnight_large);
             case NEWMOON: return getResID(context, R.attr.moonPhaseIcon0, R.drawable.ic_moon_new);
             case FULLMOON: return getResID(context, R.attr.moonPhaseIcon2, R.drawable.ic_moon_full);
 

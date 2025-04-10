@@ -357,6 +357,8 @@
     <color name="sunIcon_color_noonBorder_dark">#ff9900</color>
     <color name="sunIcon_color_setting_dark">#ff9900</color>
     <color name="sunIcon_color_settingBorder_dark">#ffd500</color>
+    <color name="sunIcon_color_midnight_dark">@color/grey_850</color>
+    <color name="sunIcon_color_midnightBorder_dark">#ff9900</color>
 
 
     <color name="sunIcon_color_rising_light">#3277C7</color>
@@ -365,6 +367,8 @@
     <color name="sunIcon_color_noonBorder_light">#ff9900</color>
     <color name="sunIcon_color_setting_light">#CF4800</color>
     <color name="sunIcon_color_settingBorder_light">#3277C7</color>
+    <color name="sunIcon_color_midnight_light">@color/grey_850</color>
+    <color name="sunIcon_color_midnightBorder_light">#ff9900</color>
 
     <!-- timezone colors -->
     <array name="utcOffsetColors">

@@ -79,6 +79,7 @@
         <item name="sunsetIconSmall">@drawable/ic_sunset_ref</item>
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_ref</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_ref</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_ref</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_ref</item>
         <item name="moonriseColor">@color/moonIcon_color_rising</item>
@@ -314,6 +315,7 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
@@ -553,6 +555,7 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
