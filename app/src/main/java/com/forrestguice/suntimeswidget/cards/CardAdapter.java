@@ -616,6 +616,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showNoon = true;
         public boolean showGold = false;
         public boolean showBlue = false;
+        public boolean showMidnight = false;
 
         public int showHeaderText = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
         public boolean showHeaderIcon = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
@@ -652,6 +653,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showNoon = showFields[AppSettings.FIELD_NOON];
             showGold = showFields[AppSettings.FIELD_GOLD] && supportsGoldBlue;
             showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
+            showMidnight = showFields[AppSettings.FIELD_MIDNIGHT];
 
             showHeaderText = AppSettings.loadShowHeaderTextPref(context);
             showHeaderIcon = AppSettings.loadShowHeaderIconPref(context);
