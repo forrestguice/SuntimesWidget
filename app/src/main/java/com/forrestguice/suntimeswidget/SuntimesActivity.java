@@ -2688,16 +2688,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    private void adjustNoteIconSize(NoteData note, ImageView icon)
-    {
-        Resources resources = getResources();
-        int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-        int iconHeight = ((note.noteIconResource == resID_noonIcon) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
 
-        ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
-        iconParams.width = iconWidth;
-        iconParams.height = iconHeight;
-    }
 
     protected void updateNoteUI( NoteData note, int transition )
     {
@@ -2708,7 +2699,7 @@ public class SuntimesActivity extends AppCompatActivity
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
-            adjustNoteIconSize(note, ic_time2_note);
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
@@ -2725,7 +2716,7 @@ public class SuntimesActivity extends AppCompatActivity
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
-            adjustNoteIconSize(note, ic_time1_note);
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
