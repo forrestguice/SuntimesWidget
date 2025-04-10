@@ -80,6 +80,8 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_ref</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_ref</item>
         <item name="sunnightIcon">@drawable/ic_midnight_large_ref</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_ref</item>
         <item name="moonriseColor">@color/moonIcon_color_rising</item>
@@ -316,6 +318,8 @@
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
         <item name="sunnightIcon">@drawable/ic_midnight_large_light</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_light</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
@@ -556,6 +560,8 @@
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
         <item name="sunnightIcon">@drawable/ic_midnight_large</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_dark</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_dark</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>

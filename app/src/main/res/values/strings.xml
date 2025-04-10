@@ -864,6 +864,10 @@
     <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->
 
+    <string name="configLabel_themeColorGraphMidnightText">Midnight (Text)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightFill">Midnight (Fill)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Midnight (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+
     <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonPathDayFill">Moon Path (Day Fill)</string>         <!-- color label -->

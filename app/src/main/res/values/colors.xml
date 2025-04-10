@@ -84,6 +84,8 @@
 
     <color name="sunIcon_color_rising">@color/sunIcon_color_rising_light</color>
     <color name="sunIcon_color_setting">@color/sunIcon_color_setting_light</color>
+    <color name="sunIcon_color_midnight">@color/sunIcon_color_midnight_light</color>
+    <color name="sunIcon_color_midnightBorder">@color/sunIcon_color_midnightBorder_light</color>
 
     <color name="moonIcon_color_rising">@color/moonIcon_color_rising_light</color>
     <color name="moonIcon_color_setting">@color/moonIcon_color_setting_light</color>
