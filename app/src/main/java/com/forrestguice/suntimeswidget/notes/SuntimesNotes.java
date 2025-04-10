@@ -144,6 +144,7 @@ public class SuntimesNotes
         boolean enabledNautical = showFields[AppSettings.FIELD_NAUTICAL];
         boolean enabledAstro = showFields[AppSettings.FIELD_ASTRO];
         boolean enabledNoon = showFields[AppSettings.FIELD_NOON];
+        boolean enabledMidnight = showFields[AppSettings.FIELD_MIDNIGHT];
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         boolean enabledGold = showFields[AppSettings.FIELD_GOLD];
@@ -166,7 +167,7 @@ public class SuntimesNotes
                 continue;
             else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
                 continue;
-            else if (!enabledNoon && (event.equals(SolarEvents.MIDNIGHT)))    // TODO: midnight option
+            else if (!enabledMidnight && (event.equals(SolarEvents.MIDNIGHT)))
                 continue;
             else if (!enabledAstro && (event.equals(SolarEvents.EVENING_ASTRONOMICAL) || event.equals(SolarEvents.MORNING_ASTRONOMICAL)))
                 continue;
