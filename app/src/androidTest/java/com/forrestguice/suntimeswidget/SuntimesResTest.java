@@ -367,7 +367,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             {
                 assertNotNull(item);
                 String[] itemParts = BuildPlacesTask.splitCSV(item, ','); //item.split(",");
-                assertEquals(item + " should have 4 parts but has " + itemParts.length, 4, itemParts.length);
+                assertTrue(item + " should have at least 4 parts but has " + itemParts.length, itemParts.length >= 4);
+                assertTrue(item + " should have no more than 5 parts but has " + itemParts.length, itemParts.length <= 5);   // may contain optional comment
                 assertNotNull(itemParts[0]);
                 assertNotNull(itemParts[1]);
                 assertNotNull(itemParts[2]);

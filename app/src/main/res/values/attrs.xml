@@ -265,6 +265,28 @@
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="TimeOffsetPicker">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" format="boolean" />
+        <attr name="allowPickMinutes" format="boolean" />
+        <attr name="allowPickHours" format="boolean" />
+        <attr name="allowPickDays" format="boolean" />
+        <attr name="allowPickBeforeAfter" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="TimeOffsetPickerPreference">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" />
+        <attr name="allowPickMinutes" />
+        <attr name="allowPickHours" />
+        <attr name="allowPickDays" />
+        <attr name="allowPickBeforeAfter" />
+        <attr name="zeroValueText" />
+        <attr name="resetDefaultsText" format="string" />
+        <attr name="resetDefaultsValue" format="integer" />
+    </declare-styleable>
+
     <declare-styleable name="IntegerPickerPreference">
         <attr name="minValue" />
         <attr name="maxValue" />

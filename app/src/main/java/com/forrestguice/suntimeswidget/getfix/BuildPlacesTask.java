@@ -122,7 +122,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromGroup(Context context, @NonNull String[] groups, @NonNull ArrayList<Location> locations)
+    private void addPlacesFromGroup(Context context, @NonNull String[] groups, @NonNull ArrayList<PlaceItem> locations)
     {
         if (groups.length == 0) {
             addPlacesFromGroup(context, (String) null, locations);
@@ -135,7 +135,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromGroup(Context context, @Nullable String fromGroup, @NonNull ArrayList<Location> locations)
+    private void addPlacesFromGroup(Context context, @Nullable String fromGroup, @NonNull ArrayList<PlaceItem> locations)
     {
         Resources r = context.getResources();
         int groupID = (fromGroup == null) ? 0
@@ -161,7 +161,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             {
                 for (String item : items)
                 {
-                    Location location = csvItemToLocation(item);
+                    PlaceItem location = csvItemToPlaceItem(item);
                     if (location != null) {
                         locations.add(location);
                     }
@@ -170,7 +170,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<Location> locations)
+    private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<PlaceItem> locations)
     {
         try {
             InputStream in = context.getContentResolver().openInputStream(uri);
@@ -182,7 +182,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 String line = reader.readLine();
                 while (line != null)
                 {
-                    Location location = csvItemToLocation(line);
+                    PlaceItem location = csvItemToPlaceItem(line);
                     if (location != null && !locations.contains(location)) {
                         locations.add(location);
                     }
@@ -200,7 +200,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Nullable
-    public static Location csvItemToLocation(String csv_item)
+    public static PlaceItem csvItemToPlaceItem(String csv_item)
     {
         if (csv_item == null) {
             return null;
@@ -222,18 +222,22 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 
         String lat, lon;
         String alt = "0";
+        String comment = null;
         try {
             lat = "" + Double.parseDouble(parts[1]);
             lon = "" + Double.parseDouble(parts[2]);
             if (parts.length >= 4) {
                 alt = "" + Double.parseDouble(parts[3]);
             }
+            if (parts.length >= 5) {
+                comment = parts[4];
+            }
         } catch (NumberFormatException e) {
             Log.e("BuildPlacesTask", "Ignoring line " + csv_item + " .. " + e);
             return null;
         }
 
-        return new Location(label, lat, lon, alt);
+        return new PlaceItem(-1, new Location(label, lat, lon, alt), comment);
     }
 
     public static String[] splitCSV(String value, Character delimiter)
@@ -267,7 +271,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     private int buildPlaces(@Nullable Uri uri, @Nullable String[] groups)
     {
         int result = 0;
-        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<PlaceItem> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
             db.open();
@@ -277,26 +281,38 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             } else if (groups != null) {
                 addPlacesFromGroup(context, groups, locations);
             } else {
-                addPlacesFromRes(context, locations);
+                ArrayList<Location> locations0 = new ArrayList<>();
+                addPlacesFromRes(context, locations0);
+                for (Location location : locations0) {
+                    locations.add(new PlaceItem(-1, location));
+                }
             }
 
-            Collections.sort(locations, new Comparator<Location>()
+            Collections.sort(locations, new Comparator<PlaceItem>()
             {
                 @Override
-                public int compare(Location o1, Location o2)
-                {
-                    return o2.getLabel().compareTo(o1.getLabel());  // descending
+                public int compare(PlaceItem o1, PlaceItem o2) {
+                    return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
                 }
             });
 
             Cursor cursor = db.getAllPlaces(0, false);
             for (int i=0; i<locations.size(); i++)
             {
-                Location location = locations.get(i);
-                int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
+                PlaceItem item = locations.get(i);
+                if (item == null || item.location == null) {
+                    continue;
+                }
+                if (item.comment == null) {
+                    item.comment = PlaceItem.TAG_DEFAULT;
+                } else if (!item.comment.contains(PlaceItem.TAG_DEFAULT)) {
+                    item.comment = item.comment.concat(PlaceItem.TAG_DEFAULT);
+                }
+
+                int p = GetFixDatabaseAdapter.findPlaceByName(item.location.getLabel(), cursor);
                 if (p < 0)    // if not found
                 {                 // then add new place
-                    db.addPlace(location, PlaceItem.TAG_DEFAULT);
+                    db.addPlace(item.location, item.comment);
                     result++;
                 }
             }
