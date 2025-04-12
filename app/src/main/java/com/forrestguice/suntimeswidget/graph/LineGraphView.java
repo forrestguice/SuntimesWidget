@@ -58,6 +58,7 @@ import java.util.concurrent.locks.Lock;
 public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 {
     public static final int MINUTES_IN_DAY = 24 * 60;
+    public static final double MINUTES_IN_DAY_RATIO = 1d / (24 * 60);
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
@@ -1002,7 +1003,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         protected void drawLabels(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
         {
             if (options.axisX_labels_show) {
-                drawAxisXLabels(c, p, options);
+                drawAxisXLabels(now, data, c, p, options);
             }
             if (options.axisY_labels_show) {
                 drawAxisYLabels(c, p, options);
@@ -1011,12 +1012,11 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawAxisUnder(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
         {
-            double r = Math.sqrt(c.getWidth() * c.getHeight());
             if (options.axisY_show)
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_AXIS));
-                p.setStrokeWidth((float)(r / options.axisY_width));
+                p.setStrokeWidth((float)(c.getWidth() * options.axisY_width));
                 drawAxisY(now, data, c, p, options);
             }
         }
@@ -1027,39 +1027,39 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             {
                 p.setStyle(Paint.Style.STROKE);
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_AXIS));
-                p.setStrokeWidth((float)(r / options.axisX_width));
+                p.setStrokeWidth((float)(c.getWidth() * options.axisX_width));
                 drawAxisX(c, p, options);
             }
         }
 
         protected void drawGrid(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
         {
-            double r = Math.sqrt(c.getWidth() * c.getHeight());
+            double w = c.getWidth();
             if (options.gridX_minor_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth((float)(r / options.gridX_minor_width));
+                p.setStrokeWidth((float)(w * options.gridX_minor_width));
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MINOR));
                 drawGridX(c, p, options.gridX_minor_interval, options);
             }
             if (options.gridY_minor_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth((float)(r / options.gridY_minor_width));
+                p.setStrokeWidth((float)(w * options.gridY_minor_width));
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MINOR));
                 drawGridY(now, data, c, p, options.gridY_minor_interval, options);
             }
             if (options.gridX_major_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth((float)(r / options.gridX_major_width));
+                p.setStrokeWidth((float)(w * options.gridX_major_width));
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MAJOR));
                 drawGridX(c, p, options.gridX_major_interval, options);
             }
             if (options.gridY_major_show)
             {
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth((float)(r / options.gridY_major_width));
+                p.setStrokeWidth((float)(w * options.gridY_major_width));
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_GRID_MAJOR));
                 drawGridY(now, data, c, p, options.gridY_major_interval, options);
             }
@@ -1272,7 +1272,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         // X-Axis
         public boolean axisX_show = true;
-        public double axisX_width = 140;   // minutes
+        public double axisX_width = 5d * MINUTES_IN_DAY_RATIO;   // minutes ratio
 
         public boolean axisX_labels_show = true;
         public float axisX_labels_textsize_ratio = 10;
@@ -1280,7 +1280,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         // Y-Axis
         public boolean axisY_show = true;
-        public double axisY_width = 300;    // ~5m minutes
+        public double axisY_width = 7.5d * MINUTES_IN_DAY_RATIO;     // minutes ratio
         public int axisY_interval = 60 * 12;        // dp
 
         public boolean axisY_labels_show = true;
@@ -1289,20 +1289,20 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         // Grid-X
         public boolean gridX_major_show = true;
-        public double gridX_major_width = 300;        // minutes
+        public double gridX_major_width = 4d * MINUTES_IN_DAY_RATIO;        // minutes ratio
         public float gridX_major_interval = axisY_labels_interval;    // degrees
 
         public boolean gridX_minor_show = true;
-        public double gridX_minor_width = 400;        // minutes
+        public double gridX_minor_width = 2d * MINUTES_IN_DAY_RATIO;        // minutes ratio
         public float gridX_minor_interval = 5;    // degrees
 
         // Grid-Y
         public boolean gridY_major_show = true;
-        public double gridY_major_width = 300;       // minutes
+        public double gridY_major_width = 4d * MINUTES_IN_DAY_RATIO;       // minutes ratio
         public float gridY_major_interval = axisX_labels_interval;   // minutes
 
         public boolean gridY_minor_show = true;
-        public double gridY_minor_width = 400;       // minutes
+        public double gridY_minor_width = 2d * MINUTES_IN_DAY_RATIO;       // minutes ratio
         public float gridY_minor_interval = 60;   // minutes
 
         public boolean sunPath_show_line = true;
