@@ -35,7 +35,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -487,11 +486,11 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 options.graph_height = 180;
                 options.graph_y_offset = 0;*/
 
-                drawGrid(now, data.dataActual, c, p, options);
-                drawAxisUnder(now, data.dataActual, c, p, options);
+                drawGrid(now, data, c, p, options);
+                drawAxisUnder(now, data, c, p, options);
                 drawPaths(now, data.calculator(), c, p, options);
-                drawAxisOver(now, data.dataActual, c, p, options);
-                drawLabels(now, data.dataActual, c, paintText, options);
+                drawAxisOver(now, data, c, p, options);
+                drawLabels(now, data, c, paintText, options);
                 drawNow(now, data.calculator(), c, p, options);
             }
 
@@ -1000,7 +999,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void drawLabels(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawLabels(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
             if (options.axisX_labels_show) {
                 drawAxisXLabels(now, data, c, p, options);
@@ -1010,7 +1009,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void drawAxisUnder(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawAxisUnder(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
             if (options.axisY_show)
             {
@@ -1020,9 +1019,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 drawAxisY(now, data, c, p, options);
             }
         }
-        protected void drawAxisOver(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawAxisOver(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
-            double r = Math.sqrt(c.getWidth() * c.getHeight());
             if (options.axisX_show)
             {
                 p.setStyle(Paint.Style.STROKE);
@@ -1032,7 +1030,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void drawGrid(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawGrid(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
             double w = c.getWidth();
             if (options.gridX_minor_show)
@@ -1071,13 +1069,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             float y0 = (float) degreesToBitmapCoords(c, 0, options);
             c.drawLine(0, y0, w, y0, p);
         }
-        protected void drawAxisY(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawAxisY(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
             int h = c.getHeight();
 
             TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
             Calendar calendar = Calendar.getInstance(tz);
-            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
+            calendar.setTimeInMillis(graphTime(data, options).getTimeInMillis());
             toStartOfDay(calendar);
             int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
             boolean inDst0 = tz.inDaylightTime(calendar.getTime());
@@ -1103,14 +1101,14 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void drawAxisXLabels(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
+        protected void drawAxisXLabels(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, LineGraphOptions options)
         {
             int h = c.getHeight();
             float textSize = textSize(c, options.axisX_labels_textsize_ratio);
 
             TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
             Calendar calendar = Calendar.getInstance(tz);
-            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
+            calendar.setTimeInMillis(graphTime(data, options).getTimeInMillis());
             toStartOfDay(calendar);
             int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
             boolean inDst0 = tz.inDaylightTime(calendar.getTime());
@@ -1188,11 +1186,11 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             return lmt;
         }
 
-        protected void drawGridY(Calendar now, SuntimesData data, Canvas c, Paint p, float interval, LineGraphOptions options)
+        protected void drawGridY(Calendar now, SuntimesRiseSetDataset data, Canvas c, Paint p, float interval, LineGraphOptions options)
         {
             TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
             Calendar calendar = Calendar.getInstance(tz);
-            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
+            calendar.setTimeInMillis(graphTime(data, options).getTimeInMillis());
             toStartOfDay(calendar);
             int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
             boolean inDst0 = tz.inDaylightTime(calendar.getTime());
