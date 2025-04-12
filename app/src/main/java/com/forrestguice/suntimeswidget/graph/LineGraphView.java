@@ -1344,6 +1344,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         public Location location = null;
+        public TimeZone timezone = null;
 
         public long offsetMinutes = 0;
         public long now = -1L;

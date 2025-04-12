@@ -906,6 +906,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 LineGraphView.LineGraphOptions options1 = graphView.getOptions();
                 options1.now = options.now;
+                options1.timezone = getSelectedTZ(context, data);
                 options1.is24 = SuntimesUtils.is24();
                 options1.offsetMinutes = options.offsetMinutes;
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
