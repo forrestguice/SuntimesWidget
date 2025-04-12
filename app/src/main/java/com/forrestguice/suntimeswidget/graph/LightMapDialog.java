@@ -1572,6 +1572,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         else field_night.highlight(true);
     }
 
+    protected String getSelectedTZID(Context context) {
+        return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+    }
+    protected TimeZone getSelectedTZ(Context context, @NonNull SuntimesRiseSetDataset data)
+    {
+        String tzId = getSelectedTZID(context);
+        return WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+    }
+
     protected void updateTimeText(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
@@ -1590,9 +1600,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         String suffix = "";
         boolean nowIsAfter = false;
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+        TimeZone tz = getSelectedTZ(context, data);
         Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);
