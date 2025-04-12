@@ -1075,45 +1075,71 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         {
             int h = c.getHeight();
 
-            if (drawAxisY_calendar == null) {
-                drawAxisY_calendar = Calendar.getInstance(now.getTimeZone());
-            }
-            drawAxisY_calendar.set(Calendar.HOUR_OF_DAY, (options.axisY_interval / 60));
-            drawAxisY_calendar.set(Calendar.MINUTE, (options.axisY_interval % 60));
-            drawAxisY_calendar.set(Calendar.SECOND, 0);
+            TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
+            Calendar calendar = Calendar.getInstance(tz);
+            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
+            toStartOfDay(calendar);
+            int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
+            boolean inDst0 = tz.inDaylightTime(calendar.getTime());
 
             Calendar lmt = lmt(data.location());
-            lmt.setTimeInMillis(drawAxisY_calendar.getTimeInMillis());
+            lmt.setTimeInMillis(calendar.getTimeInMillis());
 
-            int n = 2 * MINUTES_IN_DAY;
-            int hour = lmt.get(Calendar.HOUR_OF_DAY);
-            int i = (hour * 60) + lmt.get(Calendar.MINUTE);
-            while (i <= n)
+            int hours = lmt.get(Calendar.HOUR_OF_DAY);
+            int i = (hours * 60) + lmt.get(Calendar.MINUTE) - (hours > 0 ? MINUTES_IN_DAY : 0);
+            while (i <= MINUTES_IN_DAY)
             {
+                boolean inDst = tz.inDaylightTime(calendar.getTime());
+                if (inDst != inDst0) {
+                    i += (inDst ? -1 : 1) * dstOffsetMin;
+                    calendar.add(Calendar.MINUTE, (inDst ? -1 : 1) * dstOffsetMin);
+                }
+                inDst0 = inDst;
+
                 float x = (float) minutesToBitmapCoords(c, i, options);
                 c.drawLine(x, 0, x, h, p);
                 i += options.axisY_interval;
+                calendar.add(Calendar.MINUTE, (int) options.axisY_interval);
             }
         }
-        private Calendar drawAxisY_calendar = null;
 
-        protected void drawAxisXLabels(Canvas c, Paint p, LineGraphOptions options)
+        protected void drawAxisXLabels(Calendar now, SuntimesData data, Canvas c, Paint p, LineGraphOptions options)
         {
-            int n = (int) (2 * MINUTES_IN_DAY - options.axisX_labels_interval);
             int h = c.getHeight();
             float textSize = textSize(c, options.axisX_labels_textsize_ratio);
-            int i = (int) options.axisX_labels_interval;
-            while (i <= n)
+
+            TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
+            Calendar calendar = Calendar.getInstance(tz);
+            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
+            toStartOfDay(calendar);
+            int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
+            boolean inDst0 = tz.inDaylightTime(calendar.getTime());
+
+            Calendar lmt = lmt(data.location());
+            lmt.setTimeInMillis(calendar.getTimeInMillis());
+
+            int hours = lmt.get(Calendar.HOUR_OF_DAY);
+            int i = (hours * 60) + lmt.get(Calendar.MINUTE) - (hours > 0 ? MINUTES_IN_DAY : 0);
+            while (i <= MINUTES_IN_DAY)
             {
-                float x = (float) minutesToBitmapCoords(c, i, options);
-                int hour = (options.is24 ? (i / 60) % 24 : (i / 60) % 12);
-                if (!options.is24 && hour == 0) {
-                    hour = 12;
+                boolean inDst = tz.inDaylightTime(calendar.getTime());
+                if (inDst != inDst0) {
+                    i += (inDst ? -1 : 1) * dstOffsetMin;
+                    calendar.add(Calendar.MINUTE, (inDst ? -1 : 1) * dstOffsetMin);
                 }
+                inDst0 = inDst;
+
+                int hourLabel = (options.is24 ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR));
+                if (!options.is24 && hourLabel == 0) {
+                    hourLabel = 12;
+                }
+
+                float x = (float) minutesToBitmapCoords(c, i, options);
                 p.setColor(options.getColor(LineGraphColorValues.COLOR_LABELS));
-                p.setTextSize((float)textSize);
-                c.drawText("" + hour, x - textSize/2, h - textSize/4, p);
+                p.setTextSize((float) textSize);
+                c.drawText(hourLabel + "", x - textSize/2, h - textSize/4, p);
                 i += options.axisX_labels_interval;
+                calendar.add(Calendar.MINUTE, (int) options.axisX_labels_interval);
             }
         }
         protected void drawAxisYLabels(Canvas c, Paint p, LineGraphOptions options)
@@ -1164,21 +1190,32 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawGridY(Calendar now, SuntimesData data, Canvas c, Paint p, float interval, LineGraphOptions options)
         {
-            Calendar calendar = Calendar.getInstance(now.getTimeZone());
+            TimeZone tz = (options.timezone != null) ? options.timezone : now.getTimeZone();
+            Calendar calendar = Calendar.getInstance(tz);
+            calendar.setTimeInMillis(data.calendar().getTimeInMillis());
             toStartOfDay(calendar);
+            int dstOffsetMin = tz.getDSTSavings() / (1000 * 60);
+            boolean inDst0 = tz.inDaylightTime(calendar.getTime());
 
             Calendar lmt = lmt(data.location());
             lmt.setTimeInMillis(calendar.getTimeInMillis());
 
-            int n = 2 * MINUTES_IN_DAY;
             int h = c.getHeight();
             int hours = lmt.get(Calendar.HOUR_OF_DAY);
             int i = (hours * 60) + lmt.get(Calendar.MINUTE) - (hours > 0 ? MINUTES_IN_DAY : 0);
-            while (i < n)
+            while (i < MINUTES_IN_DAY)
             {
+                boolean inDst = tz.inDaylightTime(calendar.getTime());
+                if (inDst != inDst0) {
+                    i += (inDst ? -1 : 1) * dstOffsetMin;
+                    calendar.add(Calendar.MINUTE, (inDst ? -1 : 1) * dstOffsetMin);
+                }
+                inDst0 = inDst;
+
                 float x = (float) minutesToBitmapCoords(c, i, options);
                 c.drawLine(x, 0, x, h, p);
                 i += interval;
+                calendar.add(Calendar.MINUTE, (int) interval);
             }
         }
 
