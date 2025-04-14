@@ -93,7 +93,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public TextView txt_date;
 
     public ArrayList<TimeFieldRow> rows;
-    public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon;
+    public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon, row_midnight;
     public TimeFieldRow row_gold, row_blue8, row_blue4;
     public HashMap<String, TextView> timeFields;
     public View noonClickArea;
@@ -153,6 +153,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_gold = new TimeFieldRow(view, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
+        rows.add(row_midnight = new TimeFieldRow(view, R.id.text_time_label_midnight, R.id.text_time_midnight));
 
         Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext());
         customRows = new CustomRows(view, options);
@@ -168,6 +169,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         timeFields.put(SolarEvents.MORNING_ASTRONOMICAL.name(), row_astro.getField(0));
         timeFields.put(SolarEvents.EVENING_ASTRONOMICAL.name(), row_astro.getField(1));
         timeFields.put(SolarEvents.NOON.name(), row_solarnoon.getField(1));
+        timeFields.put(SolarEvents.MIDNIGHT.name(), row_midnight.getField(0));
         timeFields.put(SolarEvents.MORNING_GOLDEN.name(), row_gold.getField(0));
         timeFields.put(SolarEvents.EVENING_GOLDEN.name(), row_gold.getField(1));
         timeFields.put(SolarEvents.MORNING_BLUE8.name(), row_blue8.getField(0));
@@ -218,6 +220,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         row_nautical.setVisible(options.showNautical);
         row_astro.setVisible(options.showAstro);
         row_solarnoon.setVisible(options.showNoon);
+        row_midnight.setVisible(options.showMidnight);
         row_blue8.setVisible(options.showBlue);
         row_blue4.setVisible(options.showBlue);
         row_gold.setVisible(options.showGold);
@@ -255,7 +258,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 row_astro.updateFields(sunriseString_astroTime.toString(), sunsetString_astroTime.toString());
             }
 
-            if (options.showNoon) {
+            if (options.showNoon)
+            {
                 Calendar noonTime = sun.dataNoon.sunriseCalendarToday();
                 String noonString = utils.calendarTimeShortDisplayString(context, noonTime, options.showSeconds).toString();
 
@@ -270,7 +274,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
                 row_solarnoon.updateFields(positionSpan, noonString);
             }
-            noonClickArea.setVisibility(options.showNoon ? View.VISIBLE : View.GONE);
+            if (options.showMidnight)
+            {
+                Calendar midnightTime = sun.dataMidnight.sunriseCalendarToday();
+                String midnightString = utils.calendarTimeShortDisplayString(context, midnightTime, options.showSeconds).toString();
+                row_midnight.updateFields(midnightString);
+            }
+            noonClickArea.setVisibility((options.showNoon || options.showMidnight) ? View.VISIBLE : View.GONE);
 
             if (options.showBlue) {
                 String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();
@@ -681,6 +691,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             case ASTRONOMICAL: return row_astro;
             case BLUE4: return row_blue4;
             case BLUE8: return row_blue8;
+            case MIDNIGHT: return null;  // TODO
             default: return null;
         }
     }
@@ -749,7 +760,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 this.fields = new TextView[fieldIDs.length];
 
                 for (int i=0; i<fieldIDs.length; i++) {
-                    this.fields[i] = (TextView) parent.findViewById(fieldIDs[i]);
+                    this.fields[i] = ((fieldIDs[i] != 0) ? (TextView) parent.findViewById(fieldIDs[i]) : null);
                 }
             }
         }

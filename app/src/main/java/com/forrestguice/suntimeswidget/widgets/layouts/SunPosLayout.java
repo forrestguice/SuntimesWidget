@@ -50,7 +50,7 @@ public abstract class SunPosLayout extends PositionLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
-        dataset.calculateData();
+        dataset.calculateData(context);
     }
 
     /**

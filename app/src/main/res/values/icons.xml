@@ -25,6 +25,7 @@
     <drawable name="ic_sunset_ref">@drawable/ic_sunset_light</drawable>
     <drawable name="ic_sunset_large_ref">@drawable/ic_sunset_large_light</drawable>
     <drawable name="ic_noon_large_ref">@drawable/ic_noon_large_light</drawable>
+    <drawable name="ic_midnight_large_ref">@drawable/ic_midnight_large_light</drawable>
 
     <drawable name="ic_moon_rise_ref">@drawable/ic_moon_rise_light</drawable>
     <drawable name="ic_moon_set_ref">@drawable/ic_moon_set_light</drawable>

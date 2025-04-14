@@ -67,15 +67,15 @@ public class SuntimesEquinoxSolsticeDataset1 extends SuntimesEquinoxSolsticeData
     }
 
     @Override
-    public void calculateData()
+    public void calculateData(Context context)
     {
-        super.calculateData();
+        super.calculateData(context);
         SuntimesCalculator calculator = dataEquinoxSpring.calculator();
         SuntimesCalculatorDescriptor descriptor = dataEquinoxSpring.calculatorMode();
         for (SuntimesEquinoxSolsticeData data : dataCrossQuarterDays)
         {
             data.setCalculator(calculator, descriptor);
-            data.calculate();
+            data.calculate(context);
         }
     }
 

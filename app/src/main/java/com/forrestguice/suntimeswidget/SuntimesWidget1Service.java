@@ -87,7 +87,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         int viewCount0 = 1;
 
         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, appWidgetId);
-        data0.calculate();
+        data0.calculate(context);
         dataset0.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
         viewCount0++;
 
@@ -96,7 +96,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         {
             SuntimesRiseSetData data1 = new SuntimesRiseSetData(data0);
             data1.setTimeMode(WidgetSettings.TimeMode.NOON);
-            data1.calculate();
+            data1.calculate(context);
             dataset0.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
             viewCount0++;
         }

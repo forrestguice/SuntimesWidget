@@ -197,6 +197,7 @@
     <string name="until_nauticalTwilight">nautical twilight</string>
     <string name="until_sunrise">sunrise</string>
     <string name="until_noon">solar noon</string>
+    <string name="until_midnight">solar midnight</string>    <!-- TODO -->
     <string name="until_sunset">sunset</string>
     <string name="untilEnd_civilTwilight">civil twilight</string>
     <string name="untilEnd_nauticalTwilight">nautical twilight</string>
@@ -421,6 +422,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
     <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Midnight</string>                    <!-- setting -->   <!-- TODO -->
+    <string name="timeMode_midnight">Solar Midnight</string>                    <!-- setting -->   <!-- TODO -->
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
@@ -860,6 +863,10 @@
     <string name="configLabel_themeColorGraphSunPathDayStroke">Sun Path (Day Stroke)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->
+
+    <string name="configLabel_themeColorGraphMidnightText">Midnight (Text)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightFill">Midnight (Fill)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Midnight (Stroke)</string>         <!-- color label -->    <!-- TODO -->
 
     <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->
