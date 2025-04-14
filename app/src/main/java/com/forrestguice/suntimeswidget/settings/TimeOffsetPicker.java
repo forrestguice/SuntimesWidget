@@ -443,7 +443,7 @@ public class TimeOffsetPicker extends LinearLayout
         if (param_showMinutes && pickMinutes != null) {
             pickMinutes.setValue(remainingMinutes);
         }
-        if (pickSeconds != null) {
+        if (param_showSeconds && pickSeconds != null) {
             pickSeconds.setValue(remainingSeconds);
         }
 
@@ -455,6 +455,9 @@ public class TimeOffsetPicker extends LinearLayout
         }
         if (flipMinutes != null) {
             flipMinutes.setDisplayedChild(remainingMinutes != 0 ? 1 : 0);
+        }
+        if (flipSeconds != null) {
+            flipSeconds.setDisplayedChild(remainingSeconds != 0 ? 1 : 0);
         }
     }
 

@@ -43,8 +43,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -906,6 +908,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 LineGraphView.LineGraphOptions options1 = graphView.getOptions();
                 options1.now = options.now;
+                options1.timezone = getSelectedTZ(context, data);
+                options1.is24 = SuntimesUtils.is24();
                 options1.offsetMinutes = options.offsetMinutes;
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
                 options1.graph_width = LineGraphView.MINUTES_IN_DAY;
@@ -1571,6 +1575,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
         else field_night.highlight(true);
     }
 
+    protected String getSelectedTZID(Context context) {
+        return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+    }
+    protected TimeZone getSelectedTZ(Context context, @NonNull SuntimesRiseSetDataset data)
+    {
+        String tzId = getSelectedTZID(context);
+        return WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+    }
+
+    protected static boolean useDST(TimeZone timezone) {
+        return (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+    }
+    public static boolean inDST(TimeZone timezone, Calendar calendar) {
+        return useDST(timezone) && timezone.inDaylightTime(calendar.getTime());
+    }
+
     protected void updateTimeText(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
@@ -1589,9 +1610,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         String suffix = "";
         boolean nowIsAfter = false;
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+        TimeZone tz = getSelectedTZ(context, data);
         Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);
@@ -1605,10 +1624,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
         if (sunTime != null)
         {
-            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
+            TimeZone timezone = mapTime.getTimeZone();
+            CharSequence tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
+
+            CharSequence dstIcon = null;
+            if (inDST(timezone, mapTime))
+            {
+                int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+                SuntimesUtils.ImageSpanTag[] spanTags = {
+                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                };
+                String spanString = " " + SuntimesUtils.SPANTAG_DST;
+                dstIcon = SuntimesUtils.createSpan(context, spanString, spanTags);
+            }
+
+            CharSequence timeDisplay;
             if (suffix.isEmpty())
-                sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else sunTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
+                timeDisplay = getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay);
+            else timeDisplay = SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning);
+
+            if (dstIcon != null) {
+                timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
+            }
+
+            sunTime.setText(timeDisplay);
         }
 
         if (offsetTime != null)
@@ -1753,16 +1792,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
         context.startActivity(intent);
     }
 
+    @SuppressLint("ResourceType")
     protected void showHelp(Context context)
     {
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
-        int[] iconAttrs = { R.attr.icActionShadow };
+        int[] iconAttrs = { R.attr.icActionShadow, R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0);
+        int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
         SuntimesUtils.ImageSpanTag[] helpTags = {
                 new SuntimesUtils.ImageSpanTag("[Icon Shadow]", shadowIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
 
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
@@ -1771,11 +1814,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
         String shadowHelp = getString(R.string.help_shadowlength, shadowSummary);
         SpannableStringBuilder shadowHelpSpan = SuntimesUtils.createSpan(context, shadowHelp, helpTags);
-        shadowHelpSpan.append("\n\n");
-        shadowHelpSpan.append(SuntimesUtils.fromHtml(getString(R.string.help_general_twilight)));
+
+        CharSequence dstHelp = "\n" + SuntimesUtils.fromHtml(getString(R.string.help_general_dst));
+        SpannableStringBuilder dstHelpSpan = SuntimesUtils.createSpan(context, dstHelp, helpTags);
+
+        CharSequence twilightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight));
+        CharSequence helpSpan = TextUtils.concat(shadowHelpSpan, dstHelpSpan, twilightHelp);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(shadowHelpSpan);
+        helpDialog.setContent(helpSpan);
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
