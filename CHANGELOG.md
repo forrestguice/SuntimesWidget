@@ -3,9 +3,11 @@
 ### v0.16.6 (2025-04-14)
 * adds option for "solar midnight" (#835).
 * adds world places: ~100 places; US state capitols, major US cities, and others.
-* increases maximum "auto-dismiss after" notification value from 5 minutes to 12 hours (#726).
-* improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+* adds an indicator to sun dialog when the displayed time is adjusted by DST.
 * fixes bug where "sun position grid does not re-align when DST changes" (#867).
+* fixes bug where "sun position graph labels are always displayed using 12h time".
+* improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+* increases maximum "auto-dismiss after" notification value from 5 minutes to 12 hours (#726).
 * enhances `%e` data patterns to work with all widget types (no longer limited to sun widgets).
 * adds data patterns: `%es`, `%eS`, `%h`, and `%H`; shadow length, and observer height.
 * adds data patterns: `%ea`, `%ez`, `%ed`, and `%er`; altitude, azimuth, declination, right-ascension.
