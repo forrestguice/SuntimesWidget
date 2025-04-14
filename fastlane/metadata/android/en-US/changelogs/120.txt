@@ -1,0 +1,4 @@
+- adds option for "solar midnight".
+- adds ~100 world places; US state capitols, and major US cities.
+- improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+- fixes bug where "sun position grid does not re-align when DST changes" (#867).
