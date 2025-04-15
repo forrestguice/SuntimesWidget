@@ -36,6 +36,7 @@
     <string-array name="place_group_NA">
         <item>places_NA, place_label_NA</item>                <!-- North America (unsorted) -->
         <item>places_NA_CA, place_label_NA_CA</item>          <!-- North America; Canada -->
+        <item>places_NA_MX, place_label_NA_MX</item>          <!-- North America; Mexico -->
         <item>places_NA_US, place_label_NA_US</item>          <!-- North America; US -->
         <item>places_NA_US_W, place_label_NA_US_W</item>
         <item>places_NA_US_MW, place_label_NA_US_MW</item>
@@ -276,7 +277,6 @@
         <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0</item>
         <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0</item>
         <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0</item>
-        <item>"México City", 19.3204, -99.2926, 2904</item>
         <item>"Nassau", 25.0322, -77.4763, 6</item>
         <item>"Nuuk", 64.1789, -51.7412, 5</item>
         <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0</item>
@@ -285,6 +285,48 @@
         <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
         <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0</item>
     </string-array>
+
+    <string-array name="places_NA_MX">
+        <item>"Acapulco", 16.85802, -99.87352, 30</item>                <!-- Guerrero -->
+        <item>"Aguascalientes", 21.87959, -102.30324, 1890</item>       <!-- Aguascalientes -->
+        <item>"Campeche", 19.85627, -90.52714, 10</item>                <!-- Campeche -->
+        <item>"Cancún", 21.16363, -86.82578, 0</item>                   <!-- Quintana Roo -->
+        <item>"Chetumal", 18.50194, -88.28108, 10</item>                <!-- Quintana Roo -->
+        <item>"Chihuahua City", 28.64026, -106.08664, 1410</item>       <!-- Chihuahua -->
+        <item>"Chilpancingo", 17.55595, -99.50405, 1250</item>          <!-- Guerrero -->
+        <item>"Colima City", 19.24001, -103.72458, 1000</item>          <!-- Colima -->
+        <item>"Cuernavaca", 18.93046, -99.22218, 1500</item>            <!-- Morelos -->
+        <item>"Culiacán", 24.80909, -107.4016, 70</item>                <!-- Sinaloa -->
+        <item>"Hermosillo", 29.07864, -110.94772, 200</item>            <!-- Sonora -->
+        <item>"Juárez City", 31.71903, -106.48947, 1440</item>          <!-- Chihuahua -->
+        <item>"Guadalajara", 20.68019, -103.34068, 1560</item>          <!-- Jalisco -->
+        <item>"Guanajuato", 21.01772, -101.25607, 2040</item>           <!-- Guanajuato -->
+        <item>"La Paz", 24.15556, -110.32298, 30</item>                 <!-- Baja California Sur -->
+        <item>"León de Los Aldama", 21.13201, -101.68925, 1810</item>   <!-- Guanajuato -->
+        <item>"Pachuca", 20.09602, -98.76601, 2400</item>               <!-- Hidalgo -->
+        <item>"Manzanillo, Colima", 19.06161, -104.30534, 0</item>      <!-- Colima -->
+        <item>"Mérida, Yucatán", 20.96702, -89.6236, 10</item>          <!-- Yucatán -->
+        <item>"Mexicali", 32.63173, -115.441, 10</item>                 <!-- Baja California -->
+        <item>"México City", 19.3204, -99.2926, 2904</item>
+        <item>"Monterrey", 25.67607, -100.32115, 1770</item>            <!-- Nuevo León -->
+        <item>"Morelia", 19.70249, -101.19364, 1900</item>              <!-- Michoacán -->
+        <item>"Oaxaca City", 17.06055, -96.72548, 1550</item>           <!-- Oaxaca -->
+        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130</item>    <!-- Puebla -->
+        <item>"Querétaro", 20.58799, -100.38798, 1820</item>            <!-- Querétaro -->
+        <item>"Saltillo", 25.42523, -101.00848, 1600</item>             <!-- Coahuila -->
+        <item>"San Luis Potosí", 22.15167, -100.97118, 1860</item>      <!-- San Luis Potosí -->
+        <item>"Tepic", 21.50721, -104.89311, 900</item>                 <!-- Nayarit -->
+        <item>"Tijuana", 32.49916, -116.99265, 20</item>                <!-- Baja California -->
+        <item>"Toluca", 19.29005, -99.66173, 2650</item>                <!-- Mexico -->
+        <item>"Tlaxcala", 19.31692, -98.23812, 2200</item>              <!-- Tlaxcala -->
+        <item>"Tuxtla", 16.75465, -93.11565, 520</item>                 <!-- Chiapas -->
+        <item>"Veracruz", 19.1948, -96.13569, 10</item>                 <!-- Veracruz -->
+        <item>"Victoria de Durango", 24.02084, -104.66887, 1900</item>  <!-- Durango -->
+        <item>"Villahermosa", 17.9771, -92.94272, 20</item>             <!-- Tabasco -->
+        <item>"Xalapa", 19.53233, -96.93015, 1420</item>                <!-- Veracruz -->
+        <item>"Zacatecas", 22.77308, -102.57658, 2400</item>            <!-- Zacatecas -->
+    </string-array>
+
     <string-array name="places_NA_CA">
         <item>"Calgary", 51.04519, -114.04585, 1000</item>
         <item>"Edmonton", 53.54199, -113.48061, 645</item>
@@ -444,7 +486,7 @@
         <item>"Santiago", -33.4724, -70.9100, 635</item>
         <item>"São Paulo", -23.6821, -46.8754, 815</item>
         <item>"San José", 9.9356, -84.1483, 1017</item>
-        <item>"San Salvador", 13.6914, -89.2847, 1019</item>
+        <item>"San Salvador", 13.7013,-89.22475, 1019</item>
         <item>"Sucre", -19.0206, -65.3298, 2841</item>
         <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
         <item>"Quito", -0.1865, -78.5706, 4092.0</item>

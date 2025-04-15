@@ -1553,6 +1553,7 @@
     <string name="place_label_EU_UK">Europe (United Kingdom)</string>
     <string name="place_label_NA">North America</string>
     <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_MX">North America (Mexico)</string>    <!-- TODO -->
     <string name="place_label_NA_US">North America (US)</string>
     <string name="place_label_NA_US_W">North America (US, West)</string>    <!-- TODO -->
     <string name="place_label_NA_US_S">North America (US, South)</string>    <!-- TODO -->
