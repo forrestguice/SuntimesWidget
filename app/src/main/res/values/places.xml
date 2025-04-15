@@ -272,78 +272,87 @@
     <!-- North America -->
     <string-array name="places_NA">
         <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0</item>
-        <item>"Havana", 23.0504, -82.6129, 0</item>
+        <item>\"Havana, Cuba\", 23.0504, -82.6129, 0</item>
         <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18</item>
         <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0</item>
         <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0</item>
         <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0</item>
-        <item>"Nassau", 25.0322, -77.4763, 6</item>
-        <item>"Nuuk", 64.1789, -51.7412, 5</item>
+        <item>\"Nassau, The Bahamas\", 25.0322, -77.4763, 6</item>
+        <item>\"Nuuk, Greenland\", 64.1789, -51.7412, 5</item>
         <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0</item>
-        <item>"Port-au-Prince", 18.54242, -72.33583, 0</item>
+        <item>\"Port-au-Prince, Haiti\", 18.54242, -72.33583, 0</item>
         <item>"Road Town", 18.4243, -64.6333, 255</item>
         <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
         <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0</item>
     </string-array>
 
     <string-array name="places_NA_MX">
-        <item>"Acapulco", 16.85802, -99.87352, 30</item>                <!-- Guerrero -->
-        <item>"Aguascalientes", 21.87959, -102.30324, 1890</item>       <!-- Aguascalientes -->
-        <item>"Campeche", 19.85627, -90.52714, 10</item>                <!-- Campeche -->
-        <item>"Cancún", 21.16363, -86.82578, 0</item>                   <!-- Quintana Roo -->
-        <item>"Chetumal", 18.50194, -88.28108, 10</item>                <!-- Quintana Roo -->
-        <item>"Chihuahua City", 28.64026, -106.08664, 1410</item>       <!-- Chihuahua -->
-        <item>"Chilpancingo", 17.55595, -99.50405, 1250</item>          <!-- Guerrero -->
-        <item>"Colima City", 19.24001, -103.72458, 1000</item>          <!-- Colima -->
-        <item>"Cuernavaca", 18.93046, -99.22218, 1500</item>            <!-- Morelos -->
-        <item>"Culiacán", 24.80909, -107.4016, 70</item>                <!-- Sinaloa -->
-        <item>"Hermosillo", 29.07864, -110.94772, 200</item>            <!-- Sonora -->
-        <item>"Juárez City", 31.71903, -106.48947, 1440</item>          <!-- Chihuahua -->
-        <item>"Guadalajara", 20.68019, -103.34068, 1560</item>          <!-- Jalisco -->
-        <item>"Guanajuato", 21.01772, -101.25607, 2040</item>           <!-- Guanajuato -->
-        <item>"La Paz", 24.15556, -110.32298, 30</item>                 <!-- Baja California Sur -->
-        <item>"León de Los Aldama", 21.13201, -101.68925, 1810</item>   <!-- Guanajuato -->
-        <item>"Pachuca", 20.09602, -98.76601, 2400</item>               <!-- Hidalgo -->
-        <item>"Manzanillo, Colima", 19.06161, -104.30534, 0</item>      <!-- Colima -->
-        <item>"Mérida, Yucatán", 20.96702, -89.6236, 10</item>          <!-- Yucatán -->
-        <item>"Mexicali", 32.63173, -115.441, 10</item>                 <!-- Baja California -->
-        <item>"México City", 19.3204, -99.2926, 2904</item>
-        <item>"Monterrey", 25.67607, -100.32115, 1770</item>            <!-- Nuevo León -->
-        <item>"Morelia", 19.70249, -101.19364, 1900</item>              <!-- Michoacán -->
-        <item>"Oaxaca City", 17.06055, -96.72548, 1550</item>           <!-- Oaxaca -->
-        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130</item>    <!-- Puebla -->
-        <item>"Querétaro", 20.58799, -100.38798, 1820</item>            <!-- Querétaro -->
-        <item>"Saltillo", 25.42523, -101.00848, 1600</item>             <!-- Coahuila -->
-        <item>"San Luis Potosí", 22.15167, -100.97118, 1860</item>      <!-- San Luis Potosí -->
-        <item>"Tepic", 21.50721, -104.89311, 900</item>                 <!-- Nayarit -->
-        <item>"Tijuana", 32.49916, -116.99265, 20</item>                <!-- Baja California -->
-        <item>"Toluca", 19.29005, -99.66173, 2650</item>                <!-- Mexico -->
-        <item>"Tlaxcala", 19.31692, -98.23812, 2200</item>              <!-- Tlaxcala -->
-        <item>"Tuxtla", 16.75465, -93.11565, 520</item>                 <!-- Chiapas -->
-        <item>"Veracruz", 19.1948, -96.13569, 10</item>                 <!-- Veracruz -->
-        <item>"Victoria de Durango", 24.02084, -104.66887, 1900</item>  <!-- Durango -->
-        <item>"Villahermosa", 17.9771, -92.94272, 20</item>             <!-- Tabasco -->
-        <item>"Xalapa", 19.53233, -96.93015, 1420</item>                <!-- Veracruz -->
-        <item>"Zacatecas", 22.77308, -102.57658, 2400</item>            <!-- Zacatecas -->
+        <item>"Acapulco", 16.85802, -99.87352, 30</item>                           <!-- Guerrero -->
+        <item>"Aguascalientes", 21.87959, -102.30324, 1890, [capitol]</item>       <!-- Aguascalientes -->
+        <item>"Campeche", 19.85627, -90.52714, 10, [capitol]</item>                <!-- Campeche -->
+        <item>"Cancún", 21.16363, -86.82578, 0</item>                              <!-- Quintana Roo -->
+        <item>"Chetumal", 18.50194, -88.28108, 10, [capitol]</item>                <!-- Quintana Roo -->
+        <item>"Chihuahua City", 28.64026, -106.08664, 1410, [capitol]</item>       <!-- Chihuahua -->
+        <item>"Chilpancingo", 17.55595, -99.50405, 1250, [capitol]</item>          <!-- Guerrero -->
+        <item>"Colima City", 19.24001, -103.72458, 1000, [capitol]</item>          <!-- Colima -->
+        <item>"Cuernavaca", 18.93046, -99.22218, 1500, [capitol]</item>            <!-- Morelos -->
+        <item>"Culiacán", 24.80909, -107.4016, 70, [capitol]</item>                <!-- Sinaloa -->
+        <item>"Hermosillo", 29.07864, -110.94772, 200, [capitol]</item>            <!-- Sonora -->
+        <item>"Juárez City", 31.71903, -106.48947, 1440</item>                     <!-- Chihuahua -->
+        <item>"Guadalajara", 20.68019, -103.34068, 1560, [capitol]</item>          <!-- Jalisco -->
+        <item>"Guanajuato", 21.01772, -101.25607, 2040, [capitol]</item>           <!-- Guanajuato -->
+        <item>"La Paz", 24.15556, -110.32298, 30, [capitol]</item>                 <!-- Baja California Sur -->
+        <item>"León de Los Aldama", 21.13201, -101.68925, 1810</item>              <!-- Guanajuato -->
+        <item>"Pachuca", 20.09602, -98.76601, 2400, [capitol]</item>               <!-- Hidalgo -->
+        <item>\"Manzanillo, Colima\", 19.06161, -104.30534, 0</item>               <!-- Colima -->
+        <item>\"Mérida, Yucatán\", 20.96702, -89.6236, 10, [capitol]</item>        <!-- Yucatán -->
+        <item>"Mexicali", 32.63173, -115.441, 10, [capitol]</item>                 <!-- Baja California -->
+        <item>"México City", 19.3204, -99.2926, 2904, [capitol]</item>
+        <item>"Monterrey", 25.67607, -100.32115, 1770, [capitol]</item>            <!-- Nuevo León -->
+        <item>"Morelia", 19.70249, -101.19364, 1900, [capitol]</item>              <!-- Michoacán -->
+        <item>"Oaxaca City", 17.06055, -96.72548, 1550, [capitol]</item>           <!-- Oaxaca -->
+        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130, [capitol]</item>    <!-- Puebla -->
+        <item>"Querétaro", 20.58799, -100.38798, 1820, [capitol]</item>            <!-- Querétaro -->
+        <item>"Saltillo", 25.42523, -101.00848, 1600, [capitol]</item>             <!-- Coahuila -->
+        <item>"San Luis Potosí", 22.15167, -100.97118, 1860, [capitol]</item>      <!-- San Luis Potosí -->
+        <item>"Tepic", 21.50721, -104.89311, 900, [capitol]</item>                 <!-- Nayarit -->
+        <item>"Tijuana", 32.49916, -116.99265, 20</item>                           <!-- Baja California -->
+        <item>"Toluca", 19.29005, -99.66173, 2650, [capitol]</item>                <!-- Mexico -->
+        <item>"Tlaxcala", 19.31692, -98.23812, 2200, [capitol]</item>              <!-- Tlaxcala -->
+        <item>"Tuxtla", 16.75465, -93.11565, 520, [capitol]</item>                 <!-- Chiapas -->
+        <item>"Veracruz", 19.1948, -96.13569, 10</item>                            <!-- Veracruz -->
+        <item>"Victoria de Durango", 24.02084, -104.66887, 1900, [capitol]</item>  <!-- Durango -->
+        <item>"Villahermosa", 17.9771, -92.94272, 20, [capitol]</item>             <!-- Tabasco -->
+        <item>"Xalapa", 19.53233, -96.93015, 1420, [capitol]</item>                <!-- Veracruz -->
+        <item>"Zacatecas", 22.77308, -102.57658, 2400, [capitol]</item>            <!-- Zacatecas -->
     </string-array>
 
     <string-array name="places_NA_CA">
-        <item>"Calgary", 51.04519, -114.04585, 1000</item>
-        <item>"Edmonton", 53.54199, -113.48061, 645</item>
-        <item>"Kuujjuaq", 58.1, -68.4, 40</item>
-        <item>"Montreal", 45.5600, -73.8521, 30</item>
-        <item>"Ottawa", 45.41625, -75.71416, 70</item>
-        <item>"Québec City", 46.80170, -71.21773, 98</item>
-        <item>"Saskatoon", 52.14982, -106.68429, 480</item>
-        <item>"Toronto", 43.6159, -79.3769, 78</item>
-        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670</item>
-        <item>"Winnipeg", 49.89908, -97.12469, 239</item>
-        <item>"Vancouver", 49.27934, -123.13920, 0</item>
+        <item>"Calgary", 51.04519, -114.04585, 1000</item>                                <!-- Alberta -->
+        <item>"Charlottetown", 46.23231, -63.12129, 0, [capitol]</item>                   <!-- Prince Edward Island -->
+        <item>"Edmonton", 53.54199, -113.48061, 645, [capitol]</item>                     <!-- Alberta -->
+        <item>"Fredericton", 45.95697, -66.6649, 50, [capitol]</item>                     <!-- New Brunswick -->
+        <item>\"Halifax, Nova Scotia\", 44.64946, -63.58516, 240, [capitol]</item>        <!-- Nova Scotia -->
+        <item>"Iqaluit", 63.73904, -68.51471, 30, [capitol]</item>                        <!-- Nunavut -->
+        <item>"Kuujjuaq", 58.1, -68.4, 40</item>                                          <!-- Quebec -->
+        <item>"Moncton", 46.10622, -64.78438, 0</item>                                    <!-- New Brunswick -->
+        <item>"Montreal", 45.5600, -73.8521, 30</item>                                    <!-- Quebec -->
+        <item>"Ottawa", 45.41625, -75.71416, 70, [capitol]</item>
+        <item>"Québec City", 46.80170, -71.21773, 98, [capitol]</item>                    <!-- Quebec -->
+        <item>\"Regina, Saskatchewan\", 50.46446, -104.61158, 580, [capitol]</item>       <!-- Saskatchewan -->
+        <item>"Saskatoon", 52.14982, -106.68429, 480</item>                               <!-- Saskatchewan -->
+        <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capitol]</item>     <!-- Newfoundland and Labrador -->
+        <item>"Toronto", 43.6159, -79.3769, 78, [capitol]</item>                          <!-- Ontario -->
+        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670</item>                     <!-- Yukon -->
+        <item>"Winnipeg", 49.89908, -97.12469, 239, [capitol]</item>                      <!-- Manitoba -->
+        <item>"Vancouver", 49.27934, -123.13920, 0</item>                                 <!-- British Columbia -->
+        <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capitol]</item>   <!-- British Columbia -->
+        <item>"Yellowknife", 62.45498, -114.36085, 200, [capitol]</item>                  <!-- Northwest Territories -->
     </string-array>
 
     <string-array name="places_NA_US">
         <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
-        <item>"San Juan", 18.3848, -66.1283, 30</item>
+        <item>\"San Juan, Puerto Rico\", 18.3848, -66.1283, 30</item>
     </string-array>
     <string-array name="places_NA_US_W">
         <item>\"Anchorage, AK\", 61.15496, -150.05585, 31</item>
@@ -471,6 +480,7 @@
     <!-- South and Central America -->
     <string-array name="places_SA">
         <item>"Asuncion", -25.2968, -57.6681, 65</item>
+        <item>"Belize City", 17.49181, -88.18155, 0</item>
         <item>"Bogotá", 4.71111, -74.07222, 2640</item>
         <item>"Buenos Aires", -34.6156, -58.5734, 29</item>
         <item>"Caracas", 10.49474, -66.89362, 900</item>
