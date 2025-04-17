@@ -1,8 +1,8 @@
 ### ~
 
-### v0.16.6 (2025-04-14)
+### v0.16.6 (2025-04-16)
 * adds option for "solar midnight" (#835).
-* adds world places: ~100 places; US state capitols, major US cities, and others.
+* adds world places: ~110 places; North American capitols, major cities, and others.
 * adds an indicator to sun dialog when the displayed time is adjusted by DST.
 * fixes bug where "sun position grid does not re-align when DST changes" (#867).
 * fixes bug where "sun position graph labels are always displayed using 12h time".
