@@ -51,6 +51,7 @@
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
         <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
         <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
+        <item>places_SA_BO, place_label_SA_BO</item>          <!-- South and Central America; Bolivia -->
         <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
     </string-array>
     <string-array name="place_group_unsorted">
@@ -304,7 +305,7 @@
         <item>"Juárez City", 31.71903, -106.48947, 1440</item>                     <!-- Chihuahua -->
         <item>"Guadalajara", 20.68019, -103.34068, 1560, [capital]</item>          <!-- Jalisco -->
         <item>"Guanajuato", 21.01772, -101.25607, 2040, [capital]</item>           <!-- Guanajuato -->
-        <item>"La Paz", 24.15556, -110.32298, 30, [capital]</item>                 <!-- Baja California Sur -->
+        <item>\"La Paz, Baja California\", 24.15556, -110.32298, 30, [capital]</item>  <!-- Baja California Sur -->
         <item>"León de Los Aldama", 21.13201, -101.68925, 1810</item>              <!-- Guanajuato -->
         <item>"Pachuca", 20.09602, -98.76601, 2400, [capital]</item>               <!-- Hidalgo -->
         <item>\"Manzanillo, Colima\", 19.06161, -104.30534, 0</item>               <!-- Colima -->
@@ -497,12 +498,24 @@
         <item>"Paramaribo", 5.84737, -55.16054, 0</item>
         <item>"San José", 9.9356, -84.1483, 1017</item>
         <item>"San Salvador", 13.7013,-89.22475, 1019</item>
-        <item>"Sucre", -19.0206, -65.3298, 2841</item>
         <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
         <item>"Quito", -0.1865, -78.5706, 4092.0</item>
         <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
     </string-array>
-    <string-array name="places_SA_BR">
+
+    <string-array name="places_SA_BO">    <!-- Bolivia -->
+        <item>\"Trinidad, Beni\", -14.8349, -64.90411, 130, [capital]</item>           <!-- Beni -->
+        <item>\"Cochabamba\", -17.38229, -66.15182, 2560, [capital]</item>             <!-- Cochabamba -->
+        <item>\"Sucre\", -19.0206, -65.3298, 2841, [capital]</item>                    <!-- Chuquisaca -->
+        <item>\"La Paz\", -16.49571, -68.13333, 3640</item>                            <!-- La Paz -->
+        <item>\"Oruro\", -17.96964, -67.1147, 3740, [capital]</item>                   <!-- Oruro -->
+        <item>\"Cobija\", -11.02993, -68.7626, 280, [capital]</item>                   <!-- Pando -->
+        <item>\"Potosí\", -19.58899, -65.75343, 4090, [capital]</item>                 <!-- Potosí -->
+        <item>\"Santa Cruz de la Sierra\", -17.7833, -63.18222, 400, [capital]</item>  <!-- Santa Cruz -->
+        <item>\"Tarija\", -21.53535, -64.73212, 1850, [capital]</item>                 <!-- Tarija -->
+    </string-array>
+
+    <string-array name="places_SA_BR">    <!-- Brazil -->
         <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capital]</item>        <!-- Acre (AC) -->
         <item>\"Maceió\", -9.6702521,-35.737055, 0, [capital]</item>                  <!-- Alagoas (AL) -->
         <item>\"Macapá\", 0.03693, -51.0482, 0, [capital]</item>                      <!-- Amapá (AP) -->
@@ -531,7 +544,7 @@
         <item>\"Aracaju\", -10.92422, -37.04408, 0, [capital]</item>                  <!-- Sergipe (SE) -->
         <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capital]</item>      <!-- Tocantins (TO) -->
     </string-array>
-    <string-array name="places_SA_AR">
+    <string-array name="places_SA_AR">    <!-- Argentina -->
         <item>\"Buenos Aires\", -34.6156, -58.5734, 29, [capital]</item>
         <item>\"La Plata\", -34.92133, -57.95464, 25, [capital]</item>                  <!-- Buenos Aires -->
         <item>\"Ciudad de Catamarca\", -28.46968, -65.78708, 500, [capital]</item>      <!-- Catamarca -->
