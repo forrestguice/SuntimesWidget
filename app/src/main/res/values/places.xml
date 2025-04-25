@@ -55,6 +55,7 @@
         <item>places_SA_CO, place_label_SA_CO</item>          <!-- South and Central America; Colombia -->
         <item>places_SA_EC, place_label_SA_EC</item>          <!-- South and Central America; Ecuador -->
         <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
+        <item>places_SA_PE, place_label_SA_PE</item>          <!-- South and Central America; Peru -->
         <item>places_SA_VE, place_label_SA_VE</item>          <!-- South and Central America; Venezuela -->
     </string-array>
     <string-array name="place_group_unsorted">
@@ -491,7 +492,6 @@
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
         <item>\"Kralendijk, Bonaire\", 12.14558, -68.27616, 0</item>
-        <item>"Lima", -12.0553, -77.0802, 77</item>
         <item>"Managua", 12.0961, -86.3985, 410</item>
         <item>"Montevideo", -34.8198, -56.3702, 17</item>
         <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0</item>
@@ -604,6 +604,21 @@
         <item>\"Puerto Montt\", -41.47865, -72.95118, 15, [capital]</item>       <!-- Los Lagos -->
         <item>\"Coyhaique\", -45.5709,-72.06834, 300, [capital]</item>           <!-- Aysén -->
         <item>\"Punta Arenas\", -53.16281, -70.90869, 35, [capital]</item>       <!-- Magallanes -->
+    </string-array>
+    <string-array name="places_SA_PE">    <!-- Peru -->
+        <item>"Lima", -12.0553, -77.0802, 77, [capital]</item>
+        <item>"Arequipa", -16.4035, -71.54836, 2335, [capital]</item>           <!-- Arequipa -->
+        <item>"Chimbote", -9.07456, -78.59356, 5, [capital]</item>              <!-- Chimbote -->
+        <item>"Cusco", -13.53171, -71.96829, 3400, [capital]</item>             <!-- Cusco -->
+        <item>"Huancayo", -12.06811, -75.21007, 3260, [capital]</item>          <!-- Huancayo -->
+        <item>\"Ica, Peru\", -14.06406, -75.72915, 405, [capital]</item>        <!-- Ica -->
+        <item>"Trujillo, Peru", -8.11184, -79.02877, 35, [capital]</item>       <!-- La Libertad -->
+        <item>"Chiclayo", -6.77155, -79.84794, 25, [capital]</item>             <!-- Lambayeque -->
+        <item>"Iquitos", -3.74931, -73.24456, 100, [capital]</item>             <!-- Loreto -->
+        <item>"Piura", -5.17472, -80.66198, 55, [capital]</item>                <!-- Piura -->
+        <item>"Juliaca", -15.49313, -70.13547, 3825, [capital]</item>           <!-- San Román -->
+        <item>"Tacna", -18.00988, -70.24546, 550, [capital]</item>              <!-- Tacna -->
+        <item>"Pucallpa", -8.39247, -74.55638, 155, [capital]</item>            <!-- Ucayali -->
     </string-array>
     <string-array name="places_SA_VE">    <!-- Venezuela -->
         <item>"Caracas", 10.49474, -66.89362, 900, [capital]</item>
