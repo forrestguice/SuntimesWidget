@@ -52,6 +52,7 @@
         <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
         <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
         <item>places_SA_BO, place_label_SA_BO</item>          <!-- South and Central America; Bolivia -->
+        <item>places_SA_CO, place_label_SA_CO</item>          <!-- South and Central America; Colombia -->
         <item>places_SA_EC, place_label_SA_EC</item>          <!-- South and Central America; Ecuador -->
         <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
     </string-array>
@@ -486,7 +487,6 @@
     <string-array name="places_SA">
         <item>"Asuncion", -25.2968, -57.6681, 65</item>
         <item>"Belize City", 17.49181, -88.18155, 0</item>
-        <item>"Bogotá", 4.71111, -74.07222, 2640</item>
         <item>"Caracas", 10.49474, -66.89362, 900</item>
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
@@ -506,6 +506,20 @@
         <item>\"Cuenca, Ecuador\", -2.89749, -79.00449, 2400, [capital]</item>          <!-- Azuay -->
         <item>\"Quito\", -0.1865, -78.5706, 4092.0, [capital]</item>                    <!-- Pichincha -->
         <item>\"Guayaquil\", -2.18996, -79.88765, 5, [capital]</item>                   <!-- Guayas -->
+    </string-array>
+    <string-array name="places_SA_CO">    <!-- Colombia -->
+        <item>"Medellín", 6.23913, -75.58993, 1495, [capital]</item>                  <!-- Antioquia -->
+        <item>"Barranquilla", 11.01386, -74.81382, 20, [capital]</item>               <!-- Atlántico -->
+        <item>\"Cartagena, Colombia\", 3.43845, -76.52295, 0, [capital]</item>        <!-- Bolívar -->
+        <item>"Bogotá", 4.71111, -74.07222, 2640, [capital]</item>                    <!-- Capital District -->
+        <item>"Montería", 8.7439, -75.87742, 20, [capital]</item>                     <!-- Córdoba -->
+        <item>"Santa Marta", 11.24255, -74.21555, 15, [capital]</item>                <!-- Magdalena -->
+        <item>"Villavicencio", 4.1386,-73.61934, 465, [capital]</item>                <!-- Meta -->
+        <item>"San Juan de Pasto", 1.21044, -77.2766, 2525, [capital]</item>          <!-- Nariño -->
+        <item>"Cúcuta", 7.88779, -72.50756, 320, [capital]</item>                     <!-- Norte de Santander -->
+        <item>"Bucaramanga", 7.1251, -73.11909, 960, [capital]</item>                 <!-- Santander -->
+        <item>"Ibagué", 4.43284, -75.22758, 1285, [capital]</item>                    <!-- Tolima -->
+        <item>"Santiago de Cali", 3.43845, -76.52295, 1020, [capital]</item>          <!-- Valle del Cauca -->
     </string-array>
     <string-array name="places_SA_BO">    <!-- Bolivia -->
         <item>\"Trinidad, Beni\", -14.8349, -64.90411, 130, [capital]</item>           <!-- Beni -->
