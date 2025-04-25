@@ -1564,7 +1564,8 @@
     <string name="place_label_SA">South and Central America</string>
     <string name="place_label_SA_AR">South American (Argentina)</string>   <!-- TODO -->
     <string name="place_label_SA_BR">South American (Brazil)</string>   <!-- TODO -->
-    <string name="place_label_SA_BR">South American (Bolivia)</string>   <!-- TODO -->
+    <string name="place_label_SA_BO">South American (Bolivia)</string>   <!-- TODO -->
+    <string name="place_label_SA_EC">South American (Ecuador)</string>   <!-- TODO -->
     <string name="place_label_SA_CL">South America (Chile)</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 

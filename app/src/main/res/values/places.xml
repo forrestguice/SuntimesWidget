@@ -52,6 +52,7 @@
         <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
         <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
         <item>places_SA_BO, place_label_SA_BO</item>          <!-- South and Central America; Bolivia -->
+        <item>places_SA_EC, place_label_SA_EC</item>          <!-- South and Central America; Ecuador -->
         <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
     </string-array>
     <string-array name="place_group_unsorted">
@@ -499,10 +500,13 @@
         <item>"San José", 9.9356, -84.1483, 1017</item>
         <item>"San Salvador", 13.7013,-89.22475, 1019</item>
         <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
-        <item>"Quito", -0.1865, -78.5706, 4092.0</item>
         <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
     </string-array>
-
+    <string-array name="places_SA_EC">    <!-- Ecuador -->
+        <item>\"Cuenca, Ecuador\", -2.89749, -79.00449, 2400, [capital]</item>          <!-- Azuay -->
+        <item>\"Quito\", -0.1865, -78.5706, 4092.0, [capital]</item>                    <!-- Pichincha -->
+        <item>\"Guayaquil\", -2.18996, -79.88765, 5, [capital]</item>                   <!-- Guayas -->
+    </string-array>
     <string-array name="places_SA_BO">    <!-- Bolivia -->
         <item>\"Trinidad, Beni\", -14.8349, -64.90411, 130, [capital]</item>           <!-- Beni -->
         <item>\"Cochabamba\", -17.38229, -66.15182, 2560, [capital]</item>             <!-- Cochabamba -->
@@ -514,7 +518,6 @@
         <item>\"Santa Cruz de la Sierra\", -17.7833, -63.18222, 400, [capital]</item>  <!-- Santa Cruz -->
         <item>\"Tarija\", -21.53535, -64.73212, 1850, [capital]</item>                 <!-- Tarija -->
     </string-array>
-
     <string-array name="places_SA_BR">    <!-- Brazil -->
         <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capital]</item>        <!-- Acre (AC) -->
         <item>\"Maceió\", -9.6702521,-35.737055, 0, [capital]</item>                  <!-- Alagoas (AL) -->
@@ -570,7 +573,7 @@
         <item>\"Ushuaia\", -54.80941, -68.31165, 20, [capital]</item>                   <!-- Tierra del Fuego -->
         <item>\"San Miguel de Tucumán\", -26.82592, -65.22504, 430, [capital]</item>    <!-- Tucumán -->
     </string-array>
-    <string-array name="places_SA_CL">
+    <string-array name="places_SA_CL">    <!-- Chile -->
         <item>\"Santiago\", -33.4724, -70.9100, 635, [capital]</item>            <!-- Metropolitan -->
         <item>\"Arica\", -18.47818, -70.30993, 5, [capital]</item>               <!-- Arica and Parinacota -->
         <item>\"Iquique\", -20.23172, -70.14696, 0, [capital]</item>             <!-- Tarapacá -->
