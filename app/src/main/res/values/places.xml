@@ -55,6 +55,7 @@
         <item>places_SA_CO, place_label_SA_CO</item>          <!-- South and Central America; Colombia -->
         <item>places_SA_EC, place_label_SA_EC</item>          <!-- South and Central America; Ecuador -->
         <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
+        <item>places_SA_VE, place_label_SA_VE</item>          <!-- South and Central America; Venezuela -->
     </string-array>
     <string-array name="place_group_unsorted">
         <item>places_unsorted, place_label_other</item>    <!-- all others -->
@@ -487,7 +488,6 @@
     <string-array name="places_SA">
         <item>"Asuncion", -25.2968, -57.6681, 65</item>
         <item>"Belize City", 17.49181, -88.18155, 0</item>
-        <item>"Caracas", 10.49474, -66.89362, 900</item>
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
         <item>\"Kralendijk, Bonaire\", 12.14558, -68.27616, 0</item>
@@ -604,6 +604,20 @@
         <item>\"Puerto Montt\", -41.47865, -72.95118, 15, [capital]</item>       <!-- Los Lagos -->
         <item>\"Coyhaique\", -45.5709,-72.06834, 300, [capital]</item>           <!-- Aysén -->
         <item>\"Punta Arenas\", -53.16281, -70.90869, 35, [capital]</item>       <!-- Magallanes -->
+    </string-array>
+    <string-array name="places_SA_VE">    <!-- Venezuela -->
+        <item>"Caracas", 10.49474, -66.89362, 900, [capital]</item>
+        <item>"Puerto Ayacucho", 5.66656, -67.62857, 520, [capital]</item>            <!-- Amazonas  -->
+        <item>"San Fernando de Apure", 7.88975, -67.47176, 50, [capital]</item>       <!-- Apure -->
+        <item>"Maracay", 10.24932, -67.59338, 435, [capital]</item>                   <!-- Aragua -->
+        <item>\"Barinas, Barinas\", 8.63512, -70.23679, 187, [capital]</item>         <!-- Barinas -->
+        <item>"Ciudad Bolívar", 8.14362, -63.55158, 55, [capital]</item>              <!-- Bolívar -->
+        <item>"Ciudad Guayana", 8.35519, -62.63061, 5</item>                          <!-- Bolívar -->
+        <item>\"Valencia, Venezuela\", 10.16552, -68.00053, 520, [capital]</item>     <!-- Carabobo -->
+        <item>"Barquisimeto", 10.06093, -69.33239, 565, [capital]</item>              <!-- Lara -->
+        <item>"Maturín", 9.74757, -63.1819, 65, [capital]</item>                      <!-- Monagas -->
+        <item>"Cumaná", 10.4591, -64.17615, 45, [capital]</item>                      <!-- Sucre -->
+        <item>"Maracaibo", 10.66582, -71.60626, 5, [capital]</item>                   <!-- Zulia -->
     </string-array>
 
     <!-- Unsorted -->

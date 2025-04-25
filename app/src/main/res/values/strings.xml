@@ -1568,6 +1568,7 @@
     <string name="place_label_SA_CO">South American (Colombia)</string>   <!-- TODO -->
     <string name="place_label_SA_CL">South America (Chile)</string>   <!-- TODO -->
     <string name="place_label_SA_EC">South American (Ecuador)</string>   <!-- TODO -->
+    <string name="place_label_SA_VE">South American (Venezuela)</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
