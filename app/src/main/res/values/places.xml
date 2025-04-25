@@ -49,6 +49,7 @@
     </string-array>
     <string-array name="place_group_SA">
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
+        <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
     </string-array>
     <string-array name="place_group_unsorted">
         <item>places_unsorted, place_label_other</item>    <!-- all others -->
@@ -494,7 +495,6 @@
         <item>"Panama City", 9.0831, -79.5924, 98</item>
         <item>"Paramaribo", 5.84737, -55.16054, 0</item>
         <item>"Santiago", -33.4724, -70.9100, 635</item>
-        <item>"São Paulo", -23.6821, -46.8754, 815</item>
         <item>"San José", 9.9356, -84.1483, 1017</item>
         <item>"San Salvador", 13.7013,-89.22475, 1019</item>
         <item>"Sucre", -19.0206, -65.3298, 2841</item>
@@ -502,6 +502,36 @@
         <item>"Quito", -0.1865, -78.5706, 4092.0</item>
         <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
     </string-array>
+    <string-array name="places_SA_BR">
+        <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capitol]</item>        <!-- Acre (AC) -->
+        <item>\"Maceió\", -9.6702521,-35.737055, 0, [capitol]</item>                  <!-- Alagoas (AL) -->
+        <item>\"Macapá\", 0.03693, -51.0482, 0, [capitol]</item>                      <!-- Amapá (AP) -->
+        <item>\"Manaus\", -3.13041, -60.02245, 90, [capitol] </item>                  <!-- Amazonas (A<) -->
+        <item>\"Salvador, Bahia\", -13.01148, -38.49575, 0, </item>                   <!-- Bahia (BA) -->
+        <item>\"Fortaleza\", -3.72115, -38.50768, 0, [capitol]</item>                 <!-- Ceará (CE) -->
+        <item>\"Brasília\", -15.79707, -47.87281, 1170, [capitol] </item>             <!-- Distrito Federal (DF) -->
+        <item>\"Vitória, Espírito Santo\", -20.31724, -40.3292, 0, [capitol]</item>   <!-- Espírito Santo (ES) -->
+        <item>\"Goiânia\", -16.68049, -49.25642, 750, [capitol]</item>                <!-- Goiás (GO) -->
+        <item>\"São Luís, Maranhão\", -2.52646, -44.30691, 0, [capitol]</item>        <!-- Maranhão (MA) -->
+        <item>\"Cuiabá\", -15.59674, -56.09209, 165, [capitol]</item>                 <!-- Mato Grosso (MT) -->
+        <item>\"Campo Grande\", -20.46466, -54.61635, 590, [capitol]</item>           <!-- Mato Grosso do Sul (MS) -->
+        <item>\"Belo Horizonte\", -19.92275, -43.9451, 850, [capitol]</item>          <!-- Minas Gerais (MG) -->
+        <item>\"Belém\", -1.4630032,-48.503798, 10, [capitol]</item>                  <!-- Pará (PA) -->
+        <item>\"João Pessoa, Paraíba\", -7.12487, -34.82312, 0, [capitol]</item>      <!-- Paraíba (PB) -->
+        <item>\"Curitiba\", -25.43596, -49.27321, 930, [capitol]</item>               <!-- Paraná (PR) -->
+        <item>\"Recife\", -8.0632248, -34.87113, 0, [capitol]</item>                  <!-- Pernambuco (PE) -->
+        <item>\"Teresina\", -5.09173, -42.81295, 85, [capitol] </item>                <!-- Piauí (PI) -->
+        <item>\"Rio de Janeiro\", -22.92322, -43.1687, 0, [capitol]</item>            <!-- Rio de Janeiro (RJ) -->
+        <item>\"Natal, Rio Grande do Norte\", -5.78176, -35.19244, 0</item>           <!-- Rio Grande do Norte (RN) -->
+        <item>\"Porto Alegre\", -30.05602, -51.23345, 0, [capitol]</item>             <!-- Rio Grande do Sul (RS) -->
+        <item>\"Porto Velho\", -8.76561, -63.90831, 80, [capitol]</item>              <!-- Rondônia (RO) -->
+        <item>\"Boa Vista, Roraima\", 2.82068, -60.67253, 90, [capitol]</item>        <!-- Roraima (RR) -->
+        <item>\"Florianópolis\", -27.59226, -48.56023, 5, [capitol]</item>            <!-- Santa Catarina (SC) -->
+        <item>\"São Paulo\", -23.6821, -46.8754, 815, [capitol]</item>                <!-- São Paulo (SP) -->
+        <item>\"Aracaju\", -10.92422, -37.04408, 0, [capitol]</item>                  <!-- Sergipe (SE) -->
+        <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capitol]</item>      <!-- Tocantins (TO) -->
+    </string-array>
+
 
     <!-- Unsorted -->
     <string-array name="places_unsorted">

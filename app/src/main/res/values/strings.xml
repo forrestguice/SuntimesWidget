@@ -1562,6 +1562,7 @@
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_SA_BR">South and Central America (Brazil)</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
