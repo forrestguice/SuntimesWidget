@@ -49,6 +49,7 @@
     </string-array>
     <string-array name="place_group_SA">
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
+        <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
         <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
     </string-array>
     <string-array name="place_group_unsorted">
@@ -529,6 +530,32 @@
         <item>\"São Paulo\", -23.6821, -46.8754, 815, [capital]</item>                <!-- São Paulo (SP) -->
         <item>\"Aracaju\", -10.92422, -37.04408, 0, [capital]</item>                  <!-- Sergipe (SE) -->
         <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capital]</item>      <!-- Tocantins (TO) -->
+    </string-array>
+    <string-array name="places_SA_AR">
+        <item>\"Buenos Aires\", -34.6156, -58.5734, 29, [capital]</item>
+        <item>\"La Plata\", -34.92133, -57.95464, 25, [capital]</item>                  <!-- Buenos Aires -->
+        <item>\"Ciudad de Catamarca\", -28.46968, -65.78708, 500, [capital]</item>      <!-- Catamarca -->
+        <item>\"Resistencia, Chaco\", -27.46276, -58.98451, 25, [capital]</item>        <!-- Chaco -->
+        <item>\"Rawson, Chubut\", -43.29978, -65.10573, 5, [capital]</item>             <!-- Chubut -->
+        <item>\"Córdoba, Argentina\", -31.42864, -64.18487, 350, [capital]</item>       <!-- Córdoba -->
+        <item>\"Corrientes\", -27.48446, -58.7825, 50, [capital]</item>                 <!-- Corrientes -->
+        <item>\"Paraná, Entre Ríos\", -31.74013, -60.52750, 78, [capital]</item>        <!-- Entre Ríos -->
+        <item>\"Formosa, Argentina\", -26.18554, -58.20302, 55, [capital]</item>        <!-- Formosa -->
+        <item>\"San Salvador de Jujuy\", -24.18285, -65.3147, 1260, [capital]</item>    <!-- Jujuy -->
+        <item>\"Santa Rosa, La Pampa\", -36.62039, -64.29061, 175, [capital]</item>     <!-- La Pampa -->
+        <item>\"La Rioja, Argentina\", -29.41563, -66.85977, [capital]</item>           <!-- La Rioja -->
+        <item>\"Mendoza, Argentina\", -32.88984, -68.84462, 745, [capital]</item>       <!-- Mendoza -->
+        <item>\"Posadas, Misiones\", -27.36893, -55.89768, 120, [capital]</item>        <!-- Misiones -->
+        <item>\"Neuquén\", -38.95244, -68.05423, 270, [capital]</item>                  <!-- Neuquén -->
+        <item>\"Viedma, Río Negro\", -40.80857,-62.99469, 10, [capital]</item>          <!-- Río Negro -->
+        <item>\"Salta\", -24.78921, -65.42813, 1150, [capital]</item>                   <!-- Salta -->
+        <item>\"San Juan, Argentina\", -31.53718, -68.52509, 640, [capital]</item>      <!-- San Juan -->
+        <item>\"San Luis, Argentina\", -33.30214, -66.33692, 710, [capital]</item>      <!-- San Luis -->
+        <item>\"Río Gallegos, Santa Cruz\", -51.62336, -69.21611, 20, [capital]</item>  <!-- Santa Cruz -->
+        <item>\"Santa Fe, Argentina\", -31.63713,-60.71, 25, [capital]</item>           <!-- Santa Fe -->
+        <item>\"Santiago del Estero\", -27.7877, -64.2597, 180, [capital]</item>        <!-- Santiago del Estero -->
+        <item>\"Ushuaia\", -54.80941, -68.31165, 20, [capital]</item>                   <!-- Tierra del Fuego -->
+        <item>\"San Miguel de Tucumán\", -26.82592, -65.22504, 430, [capital]</item>    <!-- Tucumán -->
     </string-array>
 
 
