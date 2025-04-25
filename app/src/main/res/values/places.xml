@@ -487,7 +487,8 @@
 
     <!-- South and Central America -->
     <string-array name="places_SA">
-        <item>"Asuncion", -25.2968, -57.6681, 65</item>
+        <item>"Asuncion", -25.2968, -57.6681, 65, [capital]</item>  <!-- Paraguay -->
+        <item>"Ciudad del Este", -25.50433, -54.66376, 65</item>    <!-- Alto Paraná (Paraguay) -->
         <item>"Belize City", 17.49181, -88.18155, 0</item>
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
