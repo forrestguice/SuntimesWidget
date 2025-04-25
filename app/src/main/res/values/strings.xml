@@ -1564,6 +1564,7 @@
     <string name="place_label_SA">South and Central America</string>
     <string name="place_label_SA_AR">South American (Argentina)</string>   <!-- TODO -->
     <string name="place_label_SA_BR">South American (Brazil)</string>   <!-- TODO -->
+    <string name="place_label_SA_CL">South America (Chile)</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->

@@ -51,6 +51,7 @@
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
         <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
         <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
+        <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
     </string-array>
     <string-array name="place_group_unsorted">
         <item>places_unsorted, place_label_other</item>    <!-- all others -->
@@ -494,7 +495,6 @@
         <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0</item>
         <item>"Panama City", 9.0831, -79.5924, 98</item>
         <item>"Paramaribo", 5.84737, -55.16054, 0</item>
-        <item>"Santiago", -33.4724, -70.9100, 635</item>
         <item>"San José", 9.9356, -84.1483, 1017</item>
         <item>"San Salvador", 13.7013,-89.22475, 1019</item>
         <item>"Sucre", -19.0206, -65.3298, 2841</item>
@@ -557,7 +557,24 @@
         <item>\"Ushuaia\", -54.80941, -68.31165, 20, [capital]</item>                   <!-- Tierra del Fuego -->
         <item>\"San Miguel de Tucumán\", -26.82592, -65.22504, 430, [capital]</item>    <!-- Tucumán -->
     </string-array>
-
+    <string-array name="places_SA_CL">
+        <item>\"Santiago\", -33.4724, -70.9100, 635, [capital]</item>            <!-- Metropolitan -->
+        <item>\"Arica\", -18.47818, -70.30993, 5, [capital]</item>               <!-- Arica and Parinacota -->
+        <item>\"Iquique\", -20.23172, -70.14696, 0, [capital]</item>             <!-- Tarapacá -->
+        <item>\"Antofagasta\", -23.65153, -70.39778, 40, [capital]</item>        <!-- Antofagasta -->
+        <item>\"Copiapó\", -27.36663, -70.33204, 390, [capital]</item>           <!-- Atacama -->
+        <item>\"La Serena, Chile\", -29.90269, -71.25198, 30, [capital]</item>   <!-- Coquimbo -->
+        <item>\"Valparaíso\", -33.04259, -71.60884, 0, [capital]</item>          <!-- Valparaíso -->
+        <item>\"Rancagua\", -34.16903, -70.72266, 570, [capital]</item>          <!-- O'Higgins -->
+        <item>\"Talca\", -35.42657, -71.66592, 100, [capital]</item>             <!-- Maule -->
+        <item>\"Chillán\", -36.60952,-72.10903, 125, [capital]</item>            <!-- Ñuble -->
+        <item>\"Concepción, Chile\", -36.81572, -73.03151, 10, [capital]</item>  <!-- Biobío -->
+        <item>\"Temuco\", -38.74002, -72.59036, 360, [capital]</item>            <!-- Araucanía -->
+        <item>\"Valdivia\", -39.81418, -73.24582, 5, [capital]</item>            <!-- Los Ríos -->
+        <item>\"Puerto Montt\", -41.47865, -72.95118, 15, [capital]</item>       <!-- Los Lagos -->
+        <item>\"Coyhaique\", -45.5709,-72.06834, 300, [capital]</item>           <!-- Aysén -->
+        <item>\"Punta Arenas\", -53.16281, -70.90869, 35, [capital]</item>       <!-- Magallanes -->
+    </string-array>
 
     <!-- Unsorted -->
     <string-array name="places_unsorted">
