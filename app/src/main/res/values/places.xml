@@ -59,15 +59,15 @@
 
     <!-- Antarctica -->
     <string-array name="places_AN">
-        <item>"Casey Station", -66.28222, 110.52347, 32</item>
-        <item>"Davis Station", -68.57669, 77.96725, 27</item>
-        <item>"Halley Station", -75.61241, -26.19852, 37</item>
-        <item>"Mawson Station", -67.60307, 62.87119, 15</item>
-        <item>"McMurdo Station", -77.84553, 166.67017, 10</item>
-        <item>"Mirny Station", -66.55318, 93.00892, 35</item>
-        <item>"Orcadas Base", -60.73789, -44.73870, 8</item>
-        <item>"Syowa Station", -69.00448, 39.57996, 29</item>
-        <item>"Vostok Station", -78.46433, 106.83598, 3490</item>
+        <item>"Casey Station", -66.28222, 110.52347, 32, [misc]</item>
+        <item>"Davis Station", -68.57669, 77.96725, 27, [misc]</item>
+        <item>"Halley Station", -75.61241, -26.19852, 37, [misc]</item>
+        <item>"Mawson Station", -67.60307, 62.87119, 15, [misc]</item>
+        <item>"McMurdo Station", -77.84553, 166.67017, 10, [misc]</item>
+        <item>"Mirny Station", -66.55318, 93.00892, 35, [misc]</item>
+        <item>"Orcadas Base", -60.73789, -44.73870, 8, [misc]</item>
+        <item>"Syowa Station", -69.00448, 39.57996, 29, [misc]</item>
+        <item>"Vostok Station", -78.46433, 106.83598, 3490, [misc]</item>
     </string-array>
 
     <!-- Africa -->
@@ -289,66 +289,66 @@
 
     <string-array name="places_NA_MX">
         <item>"Acapulco", 16.85802, -99.87352, 30</item>                           <!-- Guerrero -->
-        <item>"Aguascalientes", 21.87959, -102.30324, 1890, [capitol]</item>       <!-- Aguascalientes -->
-        <item>"Campeche", 19.85627, -90.52714, 10, [capitol]</item>                <!-- Campeche -->
+        <item>"Aguascalientes", 21.87959, -102.30324, 1890, [capital]</item>       <!-- Aguascalientes -->
+        <item>"Campeche", 19.85627, -90.52714, 10, [capital]</item>                <!-- Campeche -->
         <item>"Cancún", 21.16363, -86.82578, 0</item>                              <!-- Quintana Roo -->
-        <item>"Chetumal", 18.50194, -88.28108, 10, [capitol]</item>                <!-- Quintana Roo -->
-        <item>"Chihuahua City", 28.64026, -106.08664, 1410, [capitol]</item>       <!-- Chihuahua -->
-        <item>"Chilpancingo", 17.55595, -99.50405, 1250, [capitol]</item>          <!-- Guerrero -->
-        <item>"Colima City", 19.24001, -103.72458, 1000, [capitol]</item>          <!-- Colima -->
-        <item>"Cuernavaca", 18.93046, -99.22218, 1500, [capitol]</item>            <!-- Morelos -->
-        <item>"Culiacán", 24.80909, -107.4016, 70, [capitol]</item>                <!-- Sinaloa -->
-        <item>"Hermosillo", 29.07864, -110.94772, 200, [capitol]</item>            <!-- Sonora -->
+        <item>"Chetumal", 18.50194, -88.28108, 10, [capital]</item>                <!-- Quintana Roo -->
+        <item>"Chihuahua City", 28.64026, -106.08664, 1410, [capital]</item>       <!-- Chihuahua -->
+        <item>"Chilpancingo", 17.55595, -99.50405, 1250, [capital]</item>          <!-- Guerrero -->
+        <item>"Colima City", 19.24001, -103.72458, 1000, [capital]</item>          <!-- Colima -->
+        <item>"Cuernavaca", 18.93046, -99.22218, 1500, [capital]</item>            <!-- Morelos -->
+        <item>"Culiacán", 24.80909, -107.4016, 70, [capital]</item>                <!-- Sinaloa -->
+        <item>"Hermosillo", 29.07864, -110.94772, 200, [capital]</item>            <!-- Sonora -->
         <item>"Juárez City", 31.71903, -106.48947, 1440</item>                     <!-- Chihuahua -->
-        <item>"Guadalajara", 20.68019, -103.34068, 1560, [capitol]</item>          <!-- Jalisco -->
-        <item>"Guanajuato", 21.01772, -101.25607, 2040, [capitol]</item>           <!-- Guanajuato -->
-        <item>"La Paz", 24.15556, -110.32298, 30, [capitol]</item>                 <!-- Baja California Sur -->
+        <item>"Guadalajara", 20.68019, -103.34068, 1560, [capital]</item>          <!-- Jalisco -->
+        <item>"Guanajuato", 21.01772, -101.25607, 2040, [capital]</item>           <!-- Guanajuato -->
+        <item>"La Paz", 24.15556, -110.32298, 30, [capital]</item>                 <!-- Baja California Sur -->
         <item>"León de Los Aldama", 21.13201, -101.68925, 1810</item>              <!-- Guanajuato -->
-        <item>"Pachuca", 20.09602, -98.76601, 2400, [capitol]</item>               <!-- Hidalgo -->
+        <item>"Pachuca", 20.09602, -98.76601, 2400, [capital]</item>               <!-- Hidalgo -->
         <item>\"Manzanillo, Colima\", 19.06161, -104.30534, 0</item>               <!-- Colima -->
-        <item>\"Mérida, Yucatán\", 20.96702, -89.6236, 10, [capitol]</item>        <!-- Yucatán -->
-        <item>"Mexicali", 32.63173, -115.441, 10, [capitol]</item>                 <!-- Baja California -->
-        <item>"México City", 19.3204, -99.2926, 2904, [capitol]</item>
-        <item>"Monterrey", 25.67607, -100.32115, 1770, [capitol]</item>            <!-- Nuevo León -->
-        <item>"Morelia", 19.70249, -101.19364, 1900, [capitol]</item>              <!-- Michoacán -->
-        <item>"Oaxaca City", 17.06055, -96.72548, 1550, [capitol]</item>           <!-- Oaxaca -->
-        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130, [capitol]</item>    <!-- Puebla -->
-        <item>"Querétaro", 20.58799, -100.38798, 1820, [capitol]</item>            <!-- Querétaro -->
-        <item>"Saltillo", 25.42523, -101.00848, 1600, [capitol]</item>             <!-- Coahuila -->
-        <item>"San Luis Potosí", 22.15167, -100.97118, 1860, [capitol]</item>      <!-- San Luis Potosí -->
-        <item>"Tepic", 21.50721, -104.89311, 900, [capitol]</item>                 <!-- Nayarit -->
+        <item>\"Mérida, Yucatán\", 20.96702, -89.6236, 10, [capital]</item>        <!-- Yucatán -->
+        <item>"Mexicali", 32.63173, -115.441, 10, [capital]</item>                 <!-- Baja California -->
+        <item>"México City", 19.3204, -99.2926, 2904, [capital]</item>
+        <item>"Monterrey", 25.67607, -100.32115, 1770, [capital]</item>            <!-- Nuevo León -->
+        <item>"Morelia", 19.70249, -101.19364, 1900, [capital]</item>              <!-- Michoacán -->
+        <item>"Oaxaca City", 17.06055, -96.72548, 1550, [capital]</item>           <!-- Oaxaca -->
+        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130, [capital]</item>    <!-- Puebla -->
+        <item>"Querétaro", 20.58799, -100.38798, 1820, [capital]</item>            <!-- Querétaro -->
+        <item>"Saltillo", 25.42523, -101.00848, 1600, [capital]</item>             <!-- Coahuila -->
+        <item>"San Luis Potosí", 22.15167, -100.97118, 1860, [capital]</item>      <!-- San Luis Potosí -->
+        <item>"Tepic", 21.50721, -104.89311, 900, [capital]</item>                 <!-- Nayarit -->
         <item>"Tijuana", 32.49916, -116.99265, 20</item>                           <!-- Baja California -->
-        <item>"Toluca", 19.29005, -99.66173, 2650, [capitol]</item>                <!-- Mexico -->
-        <item>"Tlaxcala", 19.31692, -98.23812, 2200, [capitol]</item>              <!-- Tlaxcala -->
-        <item>"Tuxtla", 16.75465, -93.11565, 520, [capitol]</item>                 <!-- Chiapas -->
+        <item>"Toluca", 19.29005, -99.66173, 2650, [capital]</item>                <!-- Mexico -->
+        <item>"Tlaxcala", 19.31692, -98.23812, 2200, [capital]</item>              <!-- Tlaxcala -->
+        <item>"Tuxtla", 16.75465, -93.11565, 520, [capital]</item>                 <!-- Chiapas -->
         <item>"Veracruz", 19.1948, -96.13569, 10</item>                            <!-- Veracruz -->
-        <item>"Victoria de Durango", 24.02084, -104.66887, 1900, [capitol]</item>  <!-- Durango -->
-        <item>"Villahermosa", 17.9771, -92.94272, 20, [capitol]</item>             <!-- Tabasco -->
-        <item>"Xalapa", 19.53233, -96.93015, 1420, [capitol]</item>                <!-- Veracruz -->
-        <item>"Zacatecas", 22.77308, -102.57658, 2400, [capitol]</item>            <!-- Zacatecas -->
+        <item>"Victoria de Durango", 24.02084, -104.66887, 1900, [capital]</item>  <!-- Durango -->
+        <item>"Villahermosa", 17.9771, -92.94272, 20, [capital]</item>             <!-- Tabasco -->
+        <item>"Xalapa", 19.53233, -96.93015, 1420, [capital]</item>                <!-- Veracruz -->
+        <item>"Zacatecas", 22.77308, -102.57658, 2400, [capital]</item>            <!-- Zacatecas -->
     </string-array>
 
     <string-array name="places_NA_CA">
         <item>"Calgary", 51.04519, -114.04585, 1000</item>                                <!-- Alberta -->
-        <item>"Charlottetown", 46.23231, -63.12129, 0, [capitol]</item>                   <!-- Prince Edward Island -->
-        <item>"Edmonton", 53.54199, -113.48061, 645, [capitol]</item>                     <!-- Alberta -->
-        <item>"Fredericton", 45.95697, -66.6649, 50, [capitol]</item>                     <!-- New Brunswick -->
-        <item>\"Halifax, Nova Scotia\", 44.64946, -63.58516, 240, [capitol]</item>        <!-- Nova Scotia -->
-        <item>"Iqaluit", 63.73904, -68.51471, 30, [capitol]</item>                        <!-- Nunavut -->
+        <item>"Charlottetown", 46.23231, -63.12129, 0, [capital]</item>                   <!-- Prince Edward Island -->
+        <item>"Edmonton", 53.54199, -113.48061, 645, [capital]</item>                     <!-- Alberta -->
+        <item>"Fredericton", 45.95697, -66.6649, 50, [capital]</item>                     <!-- New Brunswick -->
+        <item>\"Halifax, Nova Scotia\", 44.64946, -63.58516, 240, [capital]</item>        <!-- Nova Scotia -->
+        <item>"Iqaluit", 63.73904, -68.51471, 30, [capital]</item>                        <!-- Nunavut -->
         <item>"Kuujjuaq", 58.1, -68.4, 40</item>                                          <!-- Quebec -->
         <item>"Moncton", 46.10622, -64.78438, 0</item>                                    <!-- New Brunswick -->
         <item>"Montreal", 45.5600, -73.8521, 30</item>                                    <!-- Quebec -->
-        <item>"Ottawa", 45.41625, -75.71416, 70, [capitol]</item>
-        <item>"Québec City", 46.80170, -71.21773, 98, [capitol]</item>                    <!-- Quebec -->
-        <item>\"Regina, Saskatchewan\", 50.46446, -104.61158, 580, [capitol]</item>       <!-- Saskatchewan -->
+        <item>"Ottawa", 45.41625, -75.71416, 70, [capital]</item>
+        <item>"Québec City", 46.80170, -71.21773, 98, [capital]</item>                    <!-- Quebec -->
+        <item>\"Regina, Saskatchewan\", 50.46446, -104.61158, 580, [capital]</item>       <!-- Saskatchewan -->
         <item>"Saskatoon", 52.14982, -106.68429, 480</item>                               <!-- Saskatchewan -->
-        <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capitol]</item>     <!-- Newfoundland and Labrador -->
-        <item>"Toronto", 43.6159, -79.3769, 78, [capitol]</item>                          <!-- Ontario -->
+        <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capital]</item>     <!-- Newfoundland and Labrador -->
+        <item>"Toronto", 43.6159, -79.3769, 78, [capital]</item>                          <!-- Ontario -->
         <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670</item>                     <!-- Yukon -->
-        <item>"Winnipeg", 49.89908, -97.12469, 239, [capitol]</item>                      <!-- Manitoba -->
+        <item>"Winnipeg", 49.89908, -97.12469, 239, [capital]</item>                      <!-- Manitoba -->
         <item>"Vancouver", 49.27934, -123.13920, 0</item>                                 <!-- British Columbia -->
-        <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capitol]</item>   <!-- British Columbia -->
-        <item>"Yellowknife", 62.45498, -114.36085, 200, [capitol]</item>                  <!-- Northwest Territories -->
+        <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capital]</item>   <!-- British Columbia -->
+        <item>"Yellowknife", 62.45498, -114.36085, 200, [capital]</item>                  <!-- Northwest Territories -->
     </string-array>
 
     <string-array name="places_NA_US">
@@ -358,100 +358,100 @@
     <string-array name="places_NA_US_W">
         <item>\"Anchorage, AK\", 61.15496, -150.05585, 31</item>
         <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6</item>
-        <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capitol]</item>
-        <item>"Phoenix", 33.45579, -111.94580, 385, [capitol]</item>
+        <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capital]</item>
+        <item>"Phoenix", 33.45579, -111.94580, 385, [capital]</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044</item>
         <item>\"Tucson, AZ\", 32.28142, -110.93382, 728</item>
         <item>"Los Angeles", 34.05094, -118.2506, 93</item>
-        <item>\"Sacramento, CA\", 38.5755, -121.49126, 10, [capitol]</item>
+        <item>\"Sacramento, CA\", 38.5755, -121.49126, 10, [capital]</item>
         <item>"San Diego", 32.70585, -117.16723, 0</item>
         <item>"San Francisco", 37.80907, -122.41289, 0</item>
         <item>\"San Jose, CA\", 37.34325, -121.90372, 0</item>
-        <item>\"Denver, CO\", 39.73914, -104.98874, 1600, [capitol]</item>
+        <item>\"Denver, CO\", 39.73914, -104.98874, 1600, [capital]</item>
         <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
-        <item>\"Boise, ID\", 43.61714, -116.20022, 824, [capitol]</item>
-        <item>\"Helena, MT\", 46.58654, -112.01834, 1218, [capitol]</item>
+        <item>\"Boise, ID\", 43.61714, -116.20022, 824, [capital]</item>
+        <item>\"Helena, MT\", 46.58654, -112.01834, 1218, [capital]</item>
         <item>\"Albuquerque, NM\", 35.13037, -106.68346, 1620</item>
-        <item>\"Santa Fe, NM\", 35.68739, -105.93855, 2133, [capitol]</item>
-        <item>\"Carson City, NV\", 39.16278, -119.76614, 1427, [capitol]</item>
+        <item>\"Santa Fe, NM\", 35.68739, -105.93855, 2133, [capital]</item>
+        <item>\"Carson City, NV\", 39.16278, -119.76614, 1427, [capital]</item>
         <item>"Las Vegas", 36.16823, -115.18886, 610</item>
         <item>\"Reno, NV\", 39.54412, -119.81675, 1373</item>
         <item>\"Portland, OR\", 45.51883, -122.67915, 50</item>
-        <item>\"Salem, OR\", 44.94154, -123.04313, 50, [capitol]</item>
-        <item>"Salt Lake City", 40.76153, -111.90117, 1300, [capitol]</item>
-        <item>\"Olympia, WA\", 47.03652, -122.90324, 30, [capitol]</item>
+        <item>\"Salem, OR\", 44.94154, -123.04313, 50, [capital]</item>
+        <item>"Salt Lake City", 40.76153, -111.90117, 1300, [capital]</item>
+        <item>\"Olympia, WA\", 47.03652, -122.90324, 30, [capital]</item>
         <item>"Seattle", 47.59338, -122.31852, 0</item>
-        <item>\"Cheyenne, WY\", 41.14, -104.81986, 1855, [capitol]</item>
+        <item>\"Cheyenne, WY\", 41.14, -104.81986, 1855, [capital]</item>
     </string-array>
     <string-array name="places_NA_US_NE">
-        <item>\"Hartford, CT\", 41.77408, -72.6667, 0, [capitol]</item>
-        <item>\"Washington, DC\", 38.88953, -77.03525, 0, [capitol]</item>
-        <item>\"Dover, DE\", 39.16751, -75.52066, 10, [capitol]</item>
-        <item>\"Boston\", 42.35514, -71.0656, 0, [capitol]</item>
-        <item>\"Annapolis, MD\", 38.97432, -76.48709, 0, [capitol]</item>
+        <item>\"Hartford, CT\", 41.77408, -72.6667, 0, [capital]</item>
+        <item>\"Washington, DC\", 38.88953, -77.03525, 0, [capital]</item>
+        <item>\"Dover, DE\", 39.16751, -75.52066, 10, [capital]</item>
+        <item>\"Boston\", 42.35514, -71.0656, 0, [capital]</item>
+        <item>\"Annapolis, MD\", 38.97432, -76.48709, 0, [capital]</item>
         <item>\"Baltimore, MD\", 39.28923, -76.5817, 0</item>
-        <item>\"Augusta, ME\", 44.31623, -69.76809, 37, [capitol]</item>
-        <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capitol]</item>
-        <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capitol]</item>
-        <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capitol]</item>
+        <item>\"Augusta, ME\", 44.31623, -69.76809, 37, [capital]</item>
+        <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capital]</item>
+        <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capital]</item>
+        <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capital]</item>
         <item>"New York City", 40.68620, -74.02619, 0</item>
-        <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capitol]</item>
+        <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capital]</item>
         <item>"Philadelphia", 39.94704, -75.15252, 12</item>
         <item>"Pittsburgh", 40.43997, -79.97385, 300</item>
-        <item>\"Providence, RI\", 41.82034, -71.40712, 0, [capitol]</item>
-        <item>\"Montpelier, VT\", 44.26184, -72.58080, 160, [capitol]</item>
+        <item>\"Providence, RI\", 41.82034, -71.40712, 0, [capital]</item>
+        <item>\"Montpelier, VT\", 44.26184, -72.58080, 160, [capital]</item>
     </string-array>
     <string-array name="places_NA_US_MW">
-        <item>\"Des Moines, IA\", 41.58929, -93.60334, 242, [capitol]</item>
-        <item>"Indianapolis", 39.772, -86.1569, 220, [capitol]</item>
+        <item>\"Des Moines, IA\", 41.58929, -93.60334, 242, [capital]</item>
+        <item>"Indianapolis", 39.772, -86.1569, 220, [capital]</item>
         <item>"Chicago", 41.86859, -87.61582, 176</item>
         <item>"Detroit", 42.3318, -83.0467, 200</item>
-        <item>\"Springfield, IL\", 39.79779, -89.65408, 183, [capitol]</item>
-        <item>\"Topeka, KS\", 39.04932, -95.67765, 286, [capitol]</item>
+        <item>\"Springfield, IL\", 39.79779, -89.65408, 183, [capital]</item>
+        <item>\"Topeka, KS\", 39.04932, -95.67765, 286, [capital]</item>
         <item>"Cincinnati", 39.10153, -84.49811, 226</item>
         <item>"Cleveland", 41.49918, -81.71361, 200</item>
-        <item>\"Columbus, OH\", 39.95645, -83.00415, 240, [capitol]</item>
-        <item>\"Lansing, MI\", 42.73363, -84.55644, 260, [capitol]</item>
+        <item>\"Columbus, OH\", 39.95645, -83.00415, 240, [capital]</item>
+        <item>\"Lansing, MI\", 42.73363, -84.55644, 260, [capital]</item>
         <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
-        <item>\"St. Paul, MN\", 44.95362, -93.10223, 250, [capitol]</item>
-        <item>\"Jefferson City, MO\", 38.5787, -92.17359, 192, [capitol]</item>
+        <item>\"St. Paul, MN\", 44.95362, -93.10223, 250, [capital]</item>
+        <item>\"Jefferson City, MO\", 38.5787, -92.17359, 192, [capital]</item>
         <item>\"Kansas City, MO\", 39.11523, -94.55513, 277</item>
         <item>\"St. Louis, MO\", 38.60653, -90.25826, 0</item>
-        <item>\"Lincoln, NE\", 40.82562, -96.73025, 366, [capitol]</item>
-        <item>\"Bismarck, ND\", 46.81772, -100.78280, 532, [capitol]</item>
-        <item>\"Pierre, SD\", 44.36136, -100.36171, 500, [capitol]</item>
+        <item>\"Lincoln, NE\", 40.82562, -96.73025, 366, [capital]</item>
+        <item>\"Bismarck, ND\", 46.81772, -100.78280, 532, [capital]</item>
+        <item>\"Pierre, SD\", 44.36136, -100.36171, 500, [capital]</item>
         <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
         <item>\"Sioux Falls, SD\", 43.54604, -96.72092, 446</item>
-        <item>\"Madison, WI\", 43.074, -89.38327, 266, [capitol]</item>
+        <item>\"Madison, WI\", 43.074, -89.38327, 266, [capital]</item>
         <item>\"Milwaukee, WI\", 43.0338, -87.89532, 188</item>
     </string-array>
     <string-array name="places_NA_US_S">
-        <item>\"Montgomery, AL\", 32.37624, -86.30344, 70, [capitol]</item>
-        <item>\"Little Rock, AR\", 34.74511, -92.28837, 85, [capitol]</item>
+        <item>\"Montgomery, AL\", 32.37624, -86.30344, 70, [capital]</item>
+        <item>\"Little Rock, AR\", 34.74511, -92.28837, 85, [capital]</item>
         <item>\"Jacksonville, FL\", 30.32936, -81.65925, 0</item>
         <item>\"Miami, FL\", 25.77613, -80.18594, 0</item>
-        <item>\"Tallahassee, FL\", 30.45352, -84.2757, 60, [capitol]</item>
-        <item>"Atlanta", 33.7485, -84.38719, 320, [capitol]</item>
-        <item>\"Frankfort, KY\", 38.20006, -84.87667, 154, [capitol]</item>
+        <item>\"Tallahassee, FL\", 30.45352, -84.2757, 60, [capital]</item>
+        <item>"Atlanta", 33.7485, -84.38719, 320, [capital]</item>
+        <item>\"Frankfort, KY\", 38.20006, -84.87667, 154, [capital]</item>
         <item>\"Louisville, KY\", 38.26080, -85.74276, 142</item>
-        <item>\"Baton Rouge, LA\", 30.45552, -91.18725, 15, [capitol]</item>
+        <item>\"Baton Rouge, LA\", 30.45552, -91.18725, 15, [capital]</item>
         <item>\"New Orleans\", 30.00173, -90.09298, 0</item>
-        <item>\"Jackson, MS\", 32.29806, -90.21307, 110, [capitol]</item>
+        <item>\"Jackson, MS\", 32.29806, -90.21307, 110, [capital]</item>
         <item>\"Charlotte, NC\", 35.1868, -80.77201, 0</item>
-        <item>\"Raleigh, NC\", 35.77763, -78.64253, 100, [capitol]</item>
-        <item>\"Oklahoma City, OK\", 35.47431, -97.5719, 365, [capitol]</item>
+        <item>\"Raleigh, NC\", 35.77763, -78.64253, 100, [capital]</item>
+        <item>\"Oklahoma City, OK\", 35.47431, -97.5719, 365, [capital]</item>
         <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
-        <item>\"Columbia, SC\", 34.00112, -81.03335, 90, [capitol]</item>
+        <item>\"Columbia, SC\", 34.00112, -81.03335, 90, [capital]</item>
         <item>\"Memphis, TN\", 35.14758, -89.9923, 100</item>
-        <item>\"Nashville, TN\", 36.16662, -86.7783, 170, [capitol]</item>
-        <item>\"Austin, TX\", 30.28528, -97.7344, 185, [capitol]</item>
+        <item>\"Nashville, TN\", 36.16662, -86.7783, 170, [capital]</item>
+        <item>\"Austin, TX\", 30.28528, -97.7344, 185, [capital]</item>
         <item>\"Dallas, TX\", 32.77274, -96.78683, 147</item>
         <item>"Houston", 29.76010, -95.37176, 32</item>
         <item>\"El Paso, TX\", 31.75961, -106.48835, 1185</item>
         <item>\"San Antonio\", 29.428, -98.48916, 220</item>
-        <item>\"Richmond, VA\", 37.53832, -77.4341, 65, [capitol]</item>
-        <item>\"Charleston, WV\", 38.33012, -81.58262, 180, [capitol]</item>
+        <item>\"Richmond, VA\", 37.53832, -77.4341, 65, [capital]</item>
+        <item>\"Charleston, WV\", 38.33012, -81.58262, 180, [capital]</item>
     </string-array>
 
     <!-- Oceania -->
@@ -461,7 +461,7 @@
         <item>\"Hagåtña, Guam\", 13.47916, 144.75, 0</item>
         <item>\"Hanga Roa, Easter Island\", -27.15157, -109.43997, 0</item>
         <item>\"Honiara, Solomons\", -9.4351, 159.9382, 67</item>
-        <item>"Honolulu", 21.3280, -157.8691, 0, [capitol]</item>
+        <item>"Honolulu", 21.3280, -157.8691, 0, [capital]</item>
         <item>"Pago Pago", -14.27176, -170.70223, 0</item>
         <item>\"Palikir, Micronesia\", 6.9192, 158.1412, 20</item>
         <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
@@ -483,7 +483,6 @@
         <item>"Asuncion", -25.2968, -57.6681, 65</item>
         <item>"Belize City", 17.49181, -88.18155, 0</item>
         <item>"Bogotá", 4.71111, -74.07222, 2640</item>
-        <item>"Buenos Aires", -34.6156, -58.5734, 29</item>
         <item>"Caracas", 10.49474, -66.89362, 900</item>
         <item>"Cayenne", 4.9436, -52.33112, 0</item>
         <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
@@ -503,64 +502,64 @@
         <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
     </string-array>
     <string-array name="places_SA_BR">
-        <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capitol]</item>        <!-- Acre (AC) -->
-        <item>\"Maceió\", -9.6702521,-35.737055, 0, [capitol]</item>                  <!-- Alagoas (AL) -->
-        <item>\"Macapá\", 0.03693, -51.0482, 0, [capitol]</item>                      <!-- Amapá (AP) -->
-        <item>\"Manaus\", -3.13041, -60.02245, 90, [capitol] </item>                  <!-- Amazonas (A<) -->
+        <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capital]</item>        <!-- Acre (AC) -->
+        <item>\"Maceió\", -9.6702521,-35.737055, 0, [capital]</item>                  <!-- Alagoas (AL) -->
+        <item>\"Macapá\", 0.03693, -51.0482, 0, [capital]</item>                      <!-- Amapá (AP) -->
+        <item>\"Manaus\", -3.13041, -60.02245, 90, [capital] </item>                  <!-- Amazonas (A<) -->
         <item>\"Salvador, Bahia\", -13.01148, -38.49575, 0, </item>                   <!-- Bahia (BA) -->
-        <item>\"Fortaleza\", -3.72115, -38.50768, 0, [capitol]</item>                 <!-- Ceará (CE) -->
-        <item>\"Brasília\", -15.79707, -47.87281, 1170, [capitol] </item>             <!-- Distrito Federal (DF) -->
-        <item>\"Vitória, Espírito Santo\", -20.31724, -40.3292, 0, [capitol]</item>   <!-- Espírito Santo (ES) -->
-        <item>\"Goiânia\", -16.68049, -49.25642, 750, [capitol]</item>                <!-- Goiás (GO) -->
-        <item>\"São Luís, Maranhão\", -2.52646, -44.30691, 0, [capitol]</item>        <!-- Maranhão (MA) -->
-        <item>\"Cuiabá\", -15.59674, -56.09209, 165, [capitol]</item>                 <!-- Mato Grosso (MT) -->
-        <item>\"Campo Grande\", -20.46466, -54.61635, 590, [capitol]</item>           <!-- Mato Grosso do Sul (MS) -->
-        <item>\"Belo Horizonte\", -19.92275, -43.9451, 850, [capitol]</item>          <!-- Minas Gerais (MG) -->
-        <item>\"Belém\", -1.4630032,-48.503798, 10, [capitol]</item>                  <!-- Pará (PA) -->
-        <item>\"João Pessoa, Paraíba\", -7.12487, -34.82312, 0, [capitol]</item>      <!-- Paraíba (PB) -->
-        <item>\"Curitiba\", -25.43596, -49.27321, 930, [capitol]</item>               <!-- Paraná (PR) -->
-        <item>\"Recife\", -8.0632248, -34.87113, 0, [capitol]</item>                  <!-- Pernambuco (PE) -->
-        <item>\"Teresina\", -5.09173, -42.81295, 85, [capitol] </item>                <!-- Piauí (PI) -->
-        <item>\"Rio de Janeiro\", -22.92322, -43.1687, 0, [capitol]</item>            <!-- Rio de Janeiro (RJ) -->
+        <item>\"Fortaleza\", -3.72115, -38.50768, 0, [capital]</item>                 <!-- Ceará (CE) -->
+        <item>\"Brasília\", -15.79707, -47.87281, 1170, [capital] </item>             <!-- Distrito Federal (DF) -->
+        <item>\"Vitória, Espírito Santo\", -20.31724, -40.3292, 0, [capital]</item>   <!-- Espírito Santo (ES) -->
+        <item>\"Goiânia\", -16.68049, -49.25642, 750, [capital]</item>                <!-- Goiás (GO) -->
+        <item>\"São Luís, Maranhão\", -2.52646, -44.30691, 0, [capital]</item>        <!-- Maranhão (MA) -->
+        <item>\"Cuiabá\", -15.59674, -56.09209, 165, [capital]</item>                 <!-- Mato Grosso (MT) -->
+        <item>\"Campo Grande\", -20.46466, -54.61635, 590, [capital]</item>           <!-- Mato Grosso do Sul (MS) -->
+        <item>\"Belo Horizonte\", -19.92275, -43.9451, 850, [capital]</item>          <!-- Minas Gerais (MG) -->
+        <item>\"Belém\", -1.4630032,-48.503798, 10, [capital]</item>                  <!-- Pará (PA) -->
+        <item>\"João Pessoa, Paraíba\", -7.12487, -34.82312, 0, [capital]</item>      <!-- Paraíba (PB) -->
+        <item>\"Curitiba\", -25.43596, -49.27321, 930, [capital]</item>               <!-- Paraná (PR) -->
+        <item>\"Recife\", -8.0632248, -34.87113, 0, [capital]</item>                  <!-- Pernambuco (PE) -->
+        <item>\"Teresina\", -5.09173, -42.81295, 85, [capital] </item>                <!-- Piauí (PI) -->
+        <item>\"Rio de Janeiro\", -22.92322, -43.1687, 0, [capital]</item>            <!-- Rio de Janeiro (RJ) -->
         <item>\"Natal, Rio Grande do Norte\", -5.78176, -35.19244, 0</item>           <!-- Rio Grande do Norte (RN) -->
-        <item>\"Porto Alegre\", -30.05602, -51.23345, 0, [capitol]</item>             <!-- Rio Grande do Sul (RS) -->
-        <item>\"Porto Velho\", -8.76561, -63.90831, 80, [capitol]</item>              <!-- Rondônia (RO) -->
-        <item>\"Boa Vista, Roraima\", 2.82068, -60.67253, 90, [capitol]</item>        <!-- Roraima (RR) -->
-        <item>\"Florianópolis\", -27.59226, -48.56023, 5, [capitol]</item>            <!-- Santa Catarina (SC) -->
-        <item>\"São Paulo\", -23.6821, -46.8754, 815, [capitol]</item>                <!-- São Paulo (SP) -->
-        <item>\"Aracaju\", -10.92422, -37.04408, 0, [capitol]</item>                  <!-- Sergipe (SE) -->
-        <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capitol]</item>      <!-- Tocantins (TO) -->
+        <item>\"Porto Alegre\", -30.05602, -51.23345, 0, [capital]</item>             <!-- Rio Grande do Sul (RS) -->
+        <item>\"Porto Velho\", -8.76561, -63.90831, 80, [capital]</item>              <!-- Rondônia (RO) -->
+        <item>\"Boa Vista, Roraima\", 2.82068, -60.67253, 90, [capital]</item>        <!-- Roraima (RR) -->
+        <item>\"Florianópolis\", -27.59226, -48.56023, 5, [capital]</item>            <!-- Santa Catarina (SC) -->
+        <item>\"São Paulo\", -23.6821, -46.8754, 815, [capital]</item>                <!-- São Paulo (SP) -->
+        <item>\"Aracaju\", -10.92422, -37.04408, 0, [capital]</item>                  <!-- Sergipe (SE) -->
+        <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capital]</item>      <!-- Tocantins (TO) -->
     </string-array>
 
 
     <!-- Unsorted -->
     <string-array name="places_unsorted">
-        <item>"Grasberg mine", -4.05876, 137.11323, 4270</item>    <!-- Indonesia -->
+        <item>"Grasberg mine", -4.05876, 137.11323, 4270, [misc]</item>    <!-- Indonesia -->
     </string-array>
 
     <string-array name="places_deeps">    <!-- deepest places -->
-        <item>\"Challenger Deep, West Pacific\", 11.37333, 142.59166, -10925</item>
-        <item>\"Horizon Deep, South West Pacific\", -23.25833, -174.72666, -10820</item>
-        <item>\"Sirena Deep, West Pacific\", 12.0654, 144.58113, -10714</item>
-        <item>\"Brownson Deep, Atlantic Ocean\", 19.58333, -66.5, -8376</item>
-        <item>\"Weber Deep, Banda Sea\", -5.43927, 131.01452, -7351</item>
-        <item>\"Molloy Deep, Greenland Sea\", 79.13666, 2.8166, -5550</item>
-        <item>\"Litke Deep, Arctic Ocean\", 82.4, 19.51666, -5449</item>
-        <item>\"Calypso Deep, Mediterranean Sea\", 36.56666, 21.13333, -5200</item>
-        <item>\"Sigsbee Deep, Gulf of Mexico\", 23.86666, -91.58333, -4384</item>
+        <item>\"Challenger Deep, West Pacific\", 11.37333, 142.59166, -10925, [misc]</item>
+        <item>\"Horizon Deep, South West Pacific\", -23.25833, -174.72666, -10820, [misc]</item>
+        <item>\"Sirena Deep, West Pacific\", 12.0654, 144.58113, -10714, [misc]</item>
+        <item>\"Brownson Deep, Atlantic Ocean\", 19.58333, -66.5, -8376, [misc]</item>
+        <item>\"Weber Deep, Banda Sea\", -5.43927, 131.01452, -7351, [misc]</item>
+        <item>\"Molloy Deep, Greenland Sea\", 79.13666, 2.8166, -5550, [misc]</item>
+        <item>\"Litke Deep, Arctic Ocean\", 82.4, 19.51666, -5449, [misc]</item>
+        <item>\"Calypso Deep, Mediterranean Sea\", 36.56666, 21.13333, -5200, [misc]</item>
+        <item>\"Sigsbee Deep, Gulf of Mexico\", 23.86666, -91.58333, -4384, [misc]</item>
     </string-array>
 
     <string-array name="places_mount">    <!-- highest places -->
-        <item>"Mount Everest", 27.98833, 86.92527, 8848.86</item>    <!-- Asia -->
-        <item>"Aconcagua", -32.65332, -70.012, 6960.8</item>         <!-- South America -->
-        <item>"Chimborazo", -1.46916, -78.8175, 6263.47</item>       <!-- South America -->
-        <item>"Denali", 63.06919, -151.00713, 6190.0</item>          <!-- North America -->
-        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895</item>    <!-- Africa -->
-        <item>"Mount Elbrus", 43.355, 42.43916, 5642</item>          <!-- Russia -->
-        <item>"Vinson Massif", -78.52607, -85.6274, 4892</item>      <!-- Antarctica -->
-        <item>"Puncak Jaya", -4.07888, 137.15833, 4884</item>        <!-- Indonesia -->
-        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59</item>        <!-- Europe -->
-        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228</item>  <!-- Australia -->
+        <item>"Mount Everest", 27.98833, 86.92527, 8848.86, [misc]</item>    <!-- Asia -->
+        <item>"Aconcagua", -32.65332, -70.012, 6960.8, [misc]</item>         <!-- South America -->
+        <item>"Chimborazo", -1.46916, -78.8175, 6263.47, [misc]</item>       <!-- South America -->
+        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc]</item>          <!-- North America -->
+        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895, [misc]</item>    <!-- Africa -->
+        <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc]</item>          <!-- Russia -->
+        <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc]</item>      <!-- Antarctica -->
+        <item>"Puncak Jaya", -4.07888, 137.15833, 4884, [misc]</item>        <!-- Indonesia -->
+        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc]</item>        <!-- Europe -->
+        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228, [misc]</item>  <!-- Australia -->
     </string-array>
 
 </resources>
