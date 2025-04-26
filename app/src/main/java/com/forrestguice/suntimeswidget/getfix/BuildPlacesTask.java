@@ -36,6 +36,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
+import android.widget.ListView;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -457,7 +459,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         final boolean[] checked = new boolean[groups.length];
         for (int i=0; i<groups.length; i++)
         {
-            checked[i] = true;
+            checked[i] = false;
             String[] itemParts = (groups[i] != null) ? groups[i].split(",") : new String[] {""};
             int labelID = (itemParts.length > 1) ? context.getResources().getIdentifier(itemParts[1].trim(), "string", context.getPackageName()) : 0;
             String label = (labelID != 0 ? context.getString(labelID) : "");
@@ -474,24 +476,54 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         int iconResID = a.getResourceId(0, R.drawable.ic_action_map);
         a.recycle();
 
+        DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener = new DialogInterface.OnMultiChoiceClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                int i = items.get(which).first;
+                checked[i] = isChecked;
+            }
+        };
+
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.configLabel_places_build))
                 .setIcon(iconResID)
-                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        int i = items.get(which).first;
-                        checked[i] = isChecked;
-                    }
-                })
-                .setPositiveButton(context.getString(R.string.configLabel_places_build), new DialogInterface.OnClickListener()
+                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
+                .setPositiveButton(context.getString(R.string.configAction_addPlace), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, groups, checked);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-        confirm.show();
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null)
+                .setNeutralButton(context.getString(R.string.configAction_checkAll), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
+                });
+
+        final AlertDialog d = confirm.create();
+        d.setOnShowListener(new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow(DialogInterface dialog)
+            {
+                final AlertDialog d = (AlertDialog) dialog;
+                final View.OnClickListener toggleListener = new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        ListView list = d.getListView();
+                        for (int i=0; i<list.getCount(); i++)
+                        {
+                            list.setItemChecked(i, true);
+                            checked[i] = true;
+                        }
+                    }
+                };
+                d.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
+            }
+        });
+        d.show();
     }
 
     public interface ChooseGroupsDialogListener {

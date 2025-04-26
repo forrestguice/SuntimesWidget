@@ -41,6 +41,8 @@
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
+    <string name="configAction_checkNone">None</string>    <!-- TODO -->
+    <string name="configAction_checkAll">All</string>    <!-- TODO -->
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
