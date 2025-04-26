@@ -418,17 +418,29 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             @Override
             public void onClick(DialogInterface dialog, int which, String[] groups, boolean[] checked)
             {
-                ArrayList<String> items = new ArrayList<>();
-                for (int i=0; i<groups.length; i++) {
-                    if (checked[i]) {
-                        items.add(groups[i]);
+                if (hasChecked(checked))
+                {
+                    ArrayList<String> items = new ArrayList<>();
+                    for (int i=0; i<groups.length; i++) {
+                        if (checked[i]) {
+                            items.add(groups[i]);
+                        }
                     }
+                    BuildPlacesTask task = new BuildPlacesTask(context);
+                    task.setTaskListener(l);
+                    task.execute(false, null, items.toArray(new String[0]));
                 }
-                BuildPlacesTask task = new BuildPlacesTask(context);
-                task.setTaskListener(l);
-                task.execute(false, null, items.toArray(new String[0]));
             }
         });
+    }
+
+    protected static boolean hasChecked(boolean[] values) {
+        for (boolean v : values) {
+            if (v) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
