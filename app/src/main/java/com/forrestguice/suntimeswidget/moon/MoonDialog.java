@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
@@ -510,14 +512,20 @@ public class MoonDialog extends BottomSheetDialogFragment
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, dialogTime);
+        String timeText = utils.calendarDateTimeDisplayString(context, dialogTime).toString();
         if (text_dialogTime != null)
         {
-            //String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, moonTime.getTimeZone());
-            if (suffix.isEmpty()) {
-                text_dialogTime.setText(timeText.toString());
-                // dialogTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            } else text_dialogTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText.toString(), suffix), suffix, warningColor));
+            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
+            if (inDST(dialogTime.getTimeZone(), dialogTime))
+            {
+                int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+                SuntimesUtils.ImageSpanTag[] spanTags = {
+                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                };
+                CharSequence dstIcon = SuntimesUtils.createSpan(context, " " + SuntimesUtils.SPANTAG_DST, spanTags);
+                timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
+            }
+            text_dialogTime.setText(timeDisplay);
         }
 
         if (text_dialogTimeOffset != null) {
@@ -529,6 +537,13 @@ public class MoonDialog extends BottomSheetDialogFragment
                 text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
             } else text_dialogTimeOffset.setText(" ");
         }
+    }
+
+    protected static boolean useDST(TimeZone timezone) {
+        return (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+    }
+    public static boolean inDST(TimeZone timezone, Calendar calendar) {
+        return useDST(timezone) && timezone.inDaylightTime(calendar.getTime());
     }
 
     protected long getNow() {
