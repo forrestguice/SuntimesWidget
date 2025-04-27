@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="place_tags">
+        <item>[AO]|Angola, Africa</item>
+        <item>[AE]|United Arab Emirates, Asia</item>
+        <item>[AF]|Afghanistan, Asia</item>
+        <item>[AL]|Albania, Mediterranean, Europe</item>
+        <item>[AM]|Armenia, Europe</item>
+        <item>[AS]|Solomon Islands, Melanesia, Pacific Ocean, Oceania</item>
+        <item>[AT]|Austria, Europe</item>
+        <item>[AW]|Aruba, Caribbean, South America, Netherlands</item>
+        <item>[AZ]|Azerbaijan, Asia</item>
+        <item>[BA]|Bosnia and Herzegovina, Mediterranean, Europe</item>
+        <item>[BE]|Belgium, Europe</item>
+        <item>[BD]|Bangladesh, Asia</item>
+        <item>[BG]|Bulgaria, Europe</item>
+        <item>[BH]|Bahrain, Asia</item>
+        <item>[BI]|Burundi, Africa</item>
+        <item>[BM]|Bermuda, Atlantic Ocean, North America</item>
+        <item>[BS]|The Bahamas, Caribbean, North America</item>
+        <item>[BQ]|Caribbean, South America, Netherlands</item>
+        <item>[BY]|Belarus, Europe</item>
+        <item>[CD]|Democratic Republic of the Congo, Africa</item>
+        <item>[CF]|Central African Republic, Africa</item>
+        <item>[CG]|Republic of the Congo, Africa</item>
+        <item>[CH]|Switzerland, Europe</item>
+        <item>[CI]|Ivory Coast, Africa</item>
+        <item>[CM]|Cameroon, Africa</item>
+        <item>[CR]|Costa Rica, Caribbean, Central America</item>
+        <item>[CU]|Cuba, Caribbean, North America</item>
+        <item>[CW]|Curaçao, Caribbean, South America, Netherlands</item>
+        <item>[CY]|Cyprus, Mediterranean, Asia</item>
+        <item>[CZ]|Czech Republic, Europe</item>
+        <item>[DE]|Germany, Europe</item>
+        <item>[DK]|Denmark, Nordic, Scandinavia, Europe</item>
+        <item>[DO]|Dominican Republic, Caribbean, North America</item>
+        <item>[DZ]|Algeria, Mediterranean, Africa</item>
+        <item>[EE]|Estonia, Europe</item>
+        <item>[EG]|Egypt, Mediterranean, Africa</item>
+        <item>[FI]|Finland, Nordic, Europe</item>
+        <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
+        <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
+        <item>[FO]|Faroe Islands, Nordic, Europe</item>
+        <item>[GE]|Georgia, Europe</item>
+        <item>[GN]|Guinea, Africa</item>
+        <item>[GL]|Greenland, North America, Nordic, Denmark</item>
+        <item>[GR]|Greece, Mediterranean, Europe</item>
+        <item>[HT]|Haiti, Caribbean, North America</item>
+        <item>[HN]|Honduras, Central America</item>
+        <item>[HN-FM]|Francisco Morazán</item>
+        <item>[HR]|Croatia, Mediterranean, Europe</item>
+        <item>[HU]|Hungary, Europe</item>
+        <item>[ID]|Indonesia, Asia</item>
+        <item>[IE]|Republic of Ireland, Europe</item>
+        <item>[IL]|Israel, Mediterranean, Asia</item>
+        <item>[IQ]|Iraq, Asia</item>
+        <item>[IR]|Iran, Asia</item>
+        <item>[IS]|Iceland, Nordic, Europe</item>
+        <item>[IT]|Italy, Mediterranean, Europe</item>
+        <item>[JM]|Jamaica, Caribbean, North America</item>
+        <item>[JP]|Japan, Asia</item>
+        <item>[KE]|Kenya, Africa</item>
+        <item>[KG]|Kyrgyzstan, Asia</item>
+        <item>[KH]|Cambodia, Asia</item>
+        <item>[KP]|North Korea, Asia</item>
+        <item>[KR]|South Korea, Asia</item>
+        <item>[KW]|Kuwait, Asia</item>
+        <item>[KZ]|Kazakhstan, Asia</item>
+        <item>[LB]|Lebanon, Mediterranean, Asia</item>
+        <item>[LI]|Liechtenstein, Europe</item>
+        <item>[LT]|Lithuania, Europe</item>
+        <item>[LU]|Luxembourg, Europe</item>
+        <item>[LV]|Latvia, Europe</item>
+        <item>[LY]|Libya, Mediterranean, Africa</item>
+        <item>[NZ]|New Zealand, Pacific Ocean, Oceania</item>
+        <item>[MA]|Morocco, Mediterranean, Africa</item>
+        <item>[MC]|Monaco, Mediterranean, Europe</item>
+        <item>[MD]|Moldova, Europe</item>
+        <item>[ML]|Mali, Africa</item>
+        <item>[MM]|Myanmar, Asia</item>
+        <item>[MM]|Mongolia, Asia</item>
+        <item>[MR]|Mauritania, Africa</item>
+        <item>[MT]|Malta, Mediterranean, Europe</item>
+        <item>[MZ]|Mozambique, Africa</item>
+        <item>[NA]|Namibia, Africa</item>
+        <item>[NE]|Niger, Africa</item>
+        <item>[NG]|Nigeria, Africa</item>
+        <item>[NI]|Nicaragua, Caribbean, Central America</item>
+        <item>[NL]|Kingdom of the Netherlands, Europe</item>
+        <item>[NO]|Norway, Nordic, Scandinavia, Europe</item>
+        <item>[NP]|Nepal, Asia</item>
+        <item>[OM]|Oman, Asia</item>
+        <item>[PA]|Panama, Caribbean, Central America</item>
+        <item>[PH]|Philippines, Asia</item>
+        <item>[PK]|Pakistan, Asia</item>
+        <item>[PL]|Poland, Europe</item>
+        <item>[PS]|Palestine, Mediterranean, Asia</item>
+        <item>[PT]|Portugal, Europe</item>
+        <item>[PY]|Paraguay, South America</item>
+        <item>[QA]|Qatar, Asia</item>
+        <item>[RO]|Romania, Europe</item>
+        <item>[RW]|Rwanda, Africa</item>
+        <item>[SA]|Saudi Arabia, Asia</item>
+        <item>[SD]|Sudan, Africa</item>
+        <item>[SE]|Sweden, Nordic, Scandinavia, Europe</item>
+        <item>[SN]|Senegal, Africa</item>
+        <item>[SO]|Somalia, Africa</item>
+        <item>[SR]|Suriname, Caribbean, Central America</item>
+        <item>[SV]|El Salvador, Central America</item>
+        <item>[SX]|Sint Maarten, Caribbean, North America, Netherlands</item>
+        <item>[SY]|Syria, Mediterranean, Asia</item>
+        <item>[TH]|Thailand, Asia</item>
+        <item>[TJ]|Tajikistan, Asia</item>
+        <item>[TM]|Turkmenistan, Asia</item>
+        <item>[TN]|Tunisia, Mediterranean, Africa</item>
+        <item>[TR]|Turkey, Mediterranean, Asia, Europe</item>
+        <item>[TW]|Taiwan, Asia</item>
+        <item>[TZ]|Tanzania, Africa</item>
+        <item>[UA]|Ukraine, Europe</item>
+        <item>[UG]|Uganda, Africa</item>
+        <item>[UY]|Uruguay, South America</item>
+        <item>[UZ]|Uzbekistan, Asia</item>
+        <item>[VN]|Vietnam, Asia</item>
+        <item>[WS]|Samoa, Polynesia, Pacific Ocean, Oceania</item>
+        <item>[YE]|Yemen, Asia</item>
+        <item>[ZA]|South Africa</item>
+        <item>[ZM]|Zambia, Africa</item>
+        <item>[ZW]|Zimbabwe, Africa</item>
+    </string-array>
+
+    <string-array name="place_tags_AR">
+        <item>[AR]|Argentina, South America</item>
+        <item>[AR-B]|Buenos Aires</item>
+        <item>[AR-K]|Catamarca</item>
+        <item>[AR-H]|Chaco</item>
+        <item>[AR-U]|Chubut</item>
+        <item>[AR-X]|Córdoba</item>
+        <item>[AR-W]|Corrientes</item>
+        <item>[AR-E]|Entre Ríos</item>
+        <item>[AR-P]|Formosa</item>
+        <item>[AR-Y]|Jujuy</item>
+        <item>[AR-L]|La Pampa</item>
+        <item>[AR-F]|La Rioja</item>
+        <item>[AR-M]|Mendoza</item>
+        <item>[AR-N]|Misiones</item>
+        <item>[AR-Q]|Neuquén</item>
+        <item>[AR-R]|Río Negro</item>
+        <item>[AR-A]|Salta</item>
+        <item>[AR-J]|San Juan</item>
+        <item>[AR-D]|San Luis</item>
+        <item>[AR-Z]|Santa Cruz</item>
+        <item>[AR-S]|Santa Fe</item>
+        <item>[AR-G]|Santiago del Estero</item>
+        <item>[AR-V]|Tierra del Fuego</item>
+        <item>[AR-T]|Tucumán</item>
+    </string-array>
+
+    <string-array name="place_tags_AU">
+        <item>[AU]|Australia</item>
+        <item>[AU-ACT]|Australian Capital Territory</item>
+        <item>[AU-AAT]|Australian Antarctic Territory, Antarctica</item>
+        <item>[AU-NSW]|New South Wales</item>
+        <item>[AU-NT]|Northern Territory</item>
+        <item>[AU-QLD]|Queensland</item>
+        <item>[AU-VIC]|Victoria</item>
+        <item>[AU-WA]|Western Australia</item>
+        <item>[AU-SA]|South Australia</item>
+        <item>[AU-TAS]|Tasmania</item>
+    </string-array>
+
+    <string-array name="place_tags_BO">
+        <item>[BO]|Bolivia, South America</item>
+        <item>[BO-B]|Beni</item>
+        <item>[BO-C]|Cochabamba</item>
+        <item>[BO-H]|Chuquisaca</item>
+        <item>[BO-L]|La Paz</item>
+        <item>[BO-O]|Oruro</item>
+        <item>[BO-N]|Pando</item>
+        <item>[BO-P]|Potosí</item>
+        <item>[BO-S]|Santa Cruz</item>
+        <item>[BO-T]|Tarija</item>
+    </string-array>
+
+    <string-array name="place_tags_BR">
+        <item>[BR]|Brazil, South America</item>
+        <item>[BR-AC]|Acre</item>
+        <item>[BR-AL]|Alagoas</item>
+        <item>[BR-AP]|Amapá</item>
+        <item>[BR-AM]|Amazonas</item>
+        <item>[BR-BA]|Bahia</item>
+        <item>[BR-CE]|Ceará</item>
+        <item>[BR-DF]|Distrito Federal</item>
+        <item>[BR-ES]|Espírito Santo</item>
+        <item>[BR-GO]|Goiás</item>
+        <item>[BR-MA]|Maranhão</item>
+        <item>[BR-MT]|Mato Grosso</item>
+        <item>[BR-MS]|Mato Grosso do Sul</item>
+        <item>[BR-MG]|Minas Gerais</item>
+        <item>[BR-PA]|Pará</item>
+        <item>[BR-PB]|Paraíba</item>
+        <item>[BR-PR]|Paraná</item>
+        <item>[BR-PE]|Pernambuco</item>
+        <item>[BR-PI]|Piauí</item>
+        <item>[BR-RJ]|Rio de Janeiro</item>
+        <item>[BR-RN]|Rio Grande do Norte</item>
+        <item>[BR-RS]|Rio Grande do Sul</item>
+        <item>[BR-RO]|Rondônia</item>
+        <item>[BR-RR]|Roraima</item>
+        <item>[BR-SC]|Santa Catarina</item>
+        <item>[BR-SP]|São Paulo</item>
+        <item>[BR-SE]|Sergipe</item>
+        <item>[BR-TO]|Tocantins</item>
+    </string-array>
+
+    <string-array name="place_tags_CA">
+        <item>[CA]|Canada, North America</item>
+        <item>[CA-AB]|Alberta</item>
+        <item>[CA-BC]|British Columbia</item>
+        <item>[CA-MB]|Manitoba</item>
+        <item>[CA-NB]|New Brunswick</item>
+        <item>[CA-NL]|Newfoundland and Labrador</item>
+        <item>[CA-NS]|Novia Scotia</item>
+        <item>[CA-NT]|Northwest Territories</item>
+        <item>[CA-NU]|Nunavut</item>
+        <item>[CA-ON]|Ontario</item>
+        <item>[CA-PE]|Prince Edward Island</item>
+        <item>[CA-QC]|Quebec</item>
+        <item>[CA-SK]|Saskatchewan</item>
+        <item>[CA-YT]|Yukon</item>
+    </string-array>
+
+    <string-array name="place_tags_CN">
+        <item>[CN]|China, Asia</item>
+        <item>[CN-GD]|Guangdong</item>
+        <item>[CN-HB]|Hubei</item>
+        <item>[CN-XJ]|Xinjiang</item>
+        <item>[CN-XZ]|Tibet</item>
+    </string-array>
+
+    <string-array name="place_tags_CO">
+        <item>[CO]|Colombia, Caribbean, South America</item>
+        <item>[CO-ANT]|Antioquia</item>
+        <item>[CO-ATL]|Atlántico</item>
+        <item>[CO-BOL]|Bolívar</item>
+        <item>[CO-DC]|Capital District</item>
+        <item>[CO-COR]|Córdoba</item>
+        <item>[CO-MAG]|Magdalena</item>
+        <item>[CO-MET]|Meta</item>
+        <item>[CO-NAR]|Nariño</item>
+        <item>[CO-NSA]|Norte de Santander</item>
+        <item>[CO-SAN]|Santander</item>
+        <item>[CO-TOL]|Tolima</item>
+        <item>[CO-VAC]|Valle del Cauca</item>
+    </string-array>
+
+    <string-array name="place_tags_CL">
+        <item>[CL]|Chile, South America</item>
+        <item>[CL-RM]|Metropolitan</item>
+        <item>[CL-AP]|Arica and Parinacota</item>
+        <item>[CL-TA]|Tarapacá</item>
+        <item>[CL-AN]|Antofagasta</item>
+        <item>[CL-AT]|Atacama</item>
+        <item>[CL-CO]|Coquimbo</item>
+        <item>[CL-VS]|Valparaíso</item>
+        <item>[CL-LI]|O\'Higgins</item>
+        <item>[CL-ML]|Maule</item>
+        <item>[CL-NB]|Ñuble</item>
+        <item>[CL-BI]|Biobío</item>
+        <item>[CL-AR]|Araucanía</item>
+        <item>[CL-LR]|Los Ríos</item>
+        <item>[CL-LL]|Los Lagos</item>
+        <item>[CL-AI]|Aysén</item>
+        <item>[CL-MA]|Magallanes</item>
+    </string-array>
+
+    <string-array name="place_tags_EC">
+        <item>[EC]|Ecuador, South America</item>
+        <item>[EC-A]|Azuay</item>
+        <item>[EC-P]|Pichincha</item>
+        <item>[EC-G]|Guayas</item>
+    </string-array>
+
+    <string-array name="place_tags_ES">
+        <item>[ES]|Spain, Europe</item>
+        <item>[ES-AR]|Aragon</item>
+        <item>[ES-AS]|Asturias</item>
+        <item>[ES-CT]|Catalonia</item>
+        <item>[ES-GA]|Galicia</item>
+        <item>[ES-MD]|Madrid</item>
+    </string-array>
+
+    <string-array name="place_tags_FR">
+        <item>[FR]|France, Mediterranean, Europe</item>
+        <item>[GF]|French Guiana, South America, France</item>
+        <item>[GP]|Guadeloupe, Caribbean, North America, France</item>
+        <item>[MF]|Saint Martin, Caribbean, North America, France</item>
+        <item>[MQ]|Martinique, Caribbean, North America, France</item>
+        <item>[PF]|French Polynesia, Pacific Ocean, Oceania</item>
+    </string-array>
+
+    <string-array name="place_tags_GB">
+        <item>[GB]|Great Britain, United Kingdom, Europe</item>
+        <item>[GB-ENG]|England</item>
+        <item>[GB-NIR]|Northern Ireland</item>
+        <item>[GB-SCT]|Scotland</item>
+        <item>[GB-WLS]|Wales</item>
+        <item>[IM]|Isle of Man, Mann, Great Britain, United Kingdom</item>
+        <item>[MS]|Montserrat, Caribbean, North America, Great Britain, United Kingdom</item>
+        <item>[VG]|British Virgin Islands, Caribbean, Great Britain, United Kingdom</item>
+    </string-array>
+
+    <string-array name="place_tags_IN">
+        <item>[IN]|India, Asia</item>
+        <item>[IN-AS]|Assam</item>
+        <item>[IN-DL]|Delhi</item>
+        <item>[IN-GJ]|Gujarāt</item>
+        <item>[IN-KA]|Karnātaka</item>
+        <item>[IN-KL]|Kerala</item>
+        <item>[IN-MH]|Mahārāshtra</item>
+        <item>[IN-TN]|Tamil Nādu</item>
+        <item>[IN-WB]|West Bengal</item>
+    </string-array>
+
+    <string-array name="place_tags_MX">
+        <item>[MX]|Mexico, North America</item>
+        <item>[MX-AGU]|Aguascalientes</item>
+        <item>[MX-BCN]|Baja California</item>
+        <item>[MX-BCS]|Baja California Sur</item>
+        <item>[MX-CAM]|Campeche</item>
+        <item>[MX-CHH]|Chihuahua</item>
+        <item>[MX-CHP]|Chiapas</item>
+        <item>[MX-CMX]|Ciudad de México</item>
+        <item>[MX-COA]|Coahuila</item>
+        <item>[MX-COL]|Colima</item>
+        <item>[MX-DUR]|Durango</item>
+        <item>[MX-GRO]|Guerrero</item>
+        <item>[MX-GUA]|Guanajuato</item>
+        <item>[MX-HID]|Hidalgo</item>
+        <item>[MX-JAL]|Jalisco</item>
+        <item>[MX-MEX]|Mexico</item>
+        <item>[MX-MIC]|Michoacán</item>
+        <item>[MX-MOR]|Morelos</item>
+        <item>[MX-NAY]|Nayarit</item>
+        <item>[MX-NLE]|Nuevo León</item>
+        <item>[MX-OAX]|Oaxaca</item>
+        <item>[MX-PUE]|Puebla</item>
+        <item>[MX-QUE]|Querétaro</item>
+        <item>[MX-ROO]|Quintana Roo</item>
+        <item>[MX-SIN]|Sinaloa</item>
+        <item>[MX-SLP]|San Luis Potosí</item>
+        <item>[MX-SON]|Sonora</item>
+        <item>[MX-TAB]|Tabasco</item>
+        <item>[MX-TLA]|Tlaxcala</item>
+        <item>[MX-VER]|Veracruz</item>
+        <item>[MX-YUC]|Yucatán</item>
+        <item>[MX-ZAC]|Zacatecas</item>
+    </string-array>
+
+    <string-array name="place_tags_PE">
+        <item>[PE]|Peru, South America</item>
+        <item>[PE-LIM]|Lima</item>
+        <item>[PE-ARE]|Arequipa</item>
+        <item>[PE-ANC]|Ancash</item>
+        <item>[PE-CUS]|Cusco</item>
+        <item>[PE-JUN]|Junín</item>
+        <item>[PE-ICA]|Ica</item>
+        <item>[PE-LAL]|La Libertad</item>
+        <item>[PE-LAM]|Lambayeque</item>
+        <item>[PE-LOR]|Loreto</item>
+        <item>[PE-PIU]|Piura</item>
+        <item>[PE-PUN]|Puno</item>
+        <item>[PE-TAC]|Tacna</item>
+        <item>[PE-UCA]|Ucayali</item>
+    </string-array>
+
+    <string-array name="place_tags_RU">
+        <item>[RU]|Russia</item>
+        <item>[RU-BA]|Bashkortostan</item>
+        <item>[RU-CU]|Chuvashia</item>
+        <item>[RU-SA]|Sakha</item>
+        <item>[RU-TA]|Tatarstan</item>
+    </string-array>
+
+    <string-array name="place_tags_US">
+        <item>[US]|United States, North America</item>
+        <item>[US-AL]|Alabama</item>
+        <item>[US-AK]|Alaska</item>
+        <item>[US-AZ]|Arizona</item>
+        <item>[US-AR]|Arkansas</item>
+        <item>[US-CA]|California</item>
+        <item>[US-CO]|Colorado</item>
+        <item>[US-CT]|Connecticut</item>
+        <item>[US-DE]|Delaware</item>
+        <item>[US-FL]|Florida</item>
+        <item>[US-GA]|Georgia</item>
+        <item>[US-HI]|Hawaii</item>
+        <item>[US-ID]|Idaho</item>
+        <item>[US-IL]|Illinois</item>
+        <item>[US-IN]|Indiana</item>
+        <item>[US-IA]|Iowa</item>
+        <item>[US-KS]|Kansas</item>
+        <item>[US-KY]|Kentucky</item>
+        <item>[US-LA]|Louisiana</item>
+        <item>[US-ME]|Maine</item>
+        <item>[US-MD]|Maryland</item>
+        <item>[US-MA]|Massachusetts</item>
+        <item>[US-MI]|Michigan</item>
+        <item>[US-MN]|Minnesota</item>
+        <item>[US-MS]|Mississippi</item>
+        <item>[US-MO]|Missouri</item>
+        <item>[US-MT]|Montana</item>
+        <item>[US-NE]|Nebraska</item>
+        <item>[US-NV]|Nevada</item>
+        <item>[US-NH]|New Hampshire</item>
+        <item>[US-NJ]|New Jersey</item>
+        <item>[US-NM]|New Mexico</item>
+        <item>[US-NY]|New York</item>
+        <item>[US-NC]|North Carolina</item>
+        <item>[US-ND]|North Dakota</item>
+        <item>[US-OH]|Ohio</item>
+        <item>[US-OK]|Oklahoma</item>
+        <item>[US-OR]|Oregon</item>
+        <item>[US-PA]|Pennsylvania</item>
+        <item>[US-PR]|Puerto Rico</item>
+        <item>[US-RI]|Rhode Island</item>
+        <item>[US-SC]|South Carolina</item>
+        <item>[US-SD]|South Dakota</item>
+        <item>[US-TN]|Tennessee</item>
+        <item>[US-TX]|Texas</item>
+        <item>[US-UT]|Utah</item>
+        <item>[US-VI]|Virgin Islands</item>
+        <item>[US-VT]|Vermont</item>
+        <item>[US-VA]|Virginia</item>
+        <item>[US-WA]|Washington</item>
+        <item>[US-WV]|West Virginia</item>
+        <item>[US-WI]|Wisconsin</item>
+        <item>[US-WY]|Wyoming</item>
+        <item>[AS]|American Samoa, Polynesia, Pacific Ocean, Oceania</item>
+        <item>[GU]|Guam, Micronesia, Pacific Ocean, Oceania</item>
+    </string-array>
+
+    <string-array name="place_tags_VE">
+        <item>[VE]|Venezuela, Caribbean, South America</item>
+        <item>[VE-A]|Greater Caracas</item>
+        <item>[VE-Z]|Amazonas</item>
+        <item>[VE-C]|Apure</item>
+        <item>[VE-D]|Aragua</item>
+        <item>[VE-E]|Barinas</item>
+        <item>[VE-F]|Bolívar</item>
+        <item>[VE-G]|Carabobo</item>
+        <item>[VE-K]|Lara</item>
+        <item>[VE-N]|Monagas</item>
+        <item>[VE-R]|Sucre</item>
+        <item>[VE-V]|Zulia</item>
+    </string-array>
+
+</resources>

@@ -1549,10 +1549,14 @@
     <string name="place_label_AS_IN">Asia (India)</string>
     <string name="place_label_AS_JP">Asia (Japan)</string>
     <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
     <string name="place_label_EU_ES">Europe (Spain)</string>
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_EU_FR">Europe (France)</string>    <!-- TODO -->
+    <string name="place_label_EU_GB">Europe (United Kingdom)</string>
+    <string name="place_label_EU_IT">Europe (Italy)</string>    <!-- TODO -->
+    <string name="place_label_EU_RU">Europe (Russia)</string>    <!-- TODO -->
     <string name="place_label_NA">North America</string>
     <string name="place_label_NA_CA">North America (Canada)</string>
     <string name="place_label_NA_MX">North America (Mexico)</string>    <!-- TODO -->
@@ -1564,14 +1568,14 @@
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
-    <string name="place_label_SA_AR">South American (Argentina)</string>   <!-- TODO -->
-    <string name="place_label_SA_BR">South American (Brazil)</string>   <!-- TODO -->
-    <string name="place_label_SA_BO">South American (Bolivia)</string>   <!-- TODO -->
-    <string name="place_label_SA_CO">South American (Colombia)</string>   <!-- TODO -->
-    <string name="place_label_SA_CL">South America (Chile)</string>   <!-- TODO -->
-    <string name="place_label_SA_EC">South American (Ecuador)</string>   <!-- TODO -->
-    <string name="place_label_SA_PE">South American (Peru)</string>   <!-- TODO -->
-    <string name="place_label_SA_VE">South American (Venezuela)</string>   <!-- TODO -->
+    <string name="place_label_SA_AR">Argentina</string>   <!-- TODO -->
+    <string name="place_label_SA_BR">Brazil</string>   <!-- TODO -->
+    <string name="place_label_SA_BO">Bolivia</string>   <!-- TODO -->
+    <string name="place_label_SA_CO">Colombia</string>   <!-- TODO -->
+    <string name="place_label_SA_CL">Chile</string>   <!-- TODO -->
+    <string name="place_label_SA_EC">Ecuador</string>   <!-- TODO -->
+    <string name="place_label_SA_PE">Peru</string>   <!-- TODO -->
+    <string name="place_label_SA_VE">Venezuela</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
