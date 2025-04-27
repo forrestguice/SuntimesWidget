@@ -2798,7 +2798,7 @@
     ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+          [Icon DST] is shown when the current time applies <b>Daylight Saving</b>, or has been adjusted by a similar rule.<br/><br/>
     ]]></string>
     <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>

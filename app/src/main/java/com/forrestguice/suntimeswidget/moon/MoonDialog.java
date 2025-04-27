@@ -1158,7 +1158,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void showHelp(Context context)
     {
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
-        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon, R.attr.icActionShare };
+        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon, R.attr.icActionShare,
+                R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
         int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
@@ -1167,6 +1168,8 @@ public class MoonDialog extends BottomSheetDialogFragment
         ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
         ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
         ImageSpan shareIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
+        int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
         SuntimesUtils.ImageSpanTag[] helpTags = {
@@ -1175,12 +1178,14 @@ public class MoonDialog extends BottomSheetDialogFragment
                 new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Share]", shareIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        String helpString = getString(R.string.help_general_moondialog);
-        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
+        SpannableStringBuilder helpSpan0 = SuntimesUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
+        SpannableStringBuilder helpSpan1 = SuntimesUtils.createSpan(context, SuntimesUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
+        CharSequence helpDisplay = TextUtils.concat(helpSpan0, "\n\n", helpSpan1);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpSpan);
+        helpDialog.setContent(helpDisplay);
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
