@@ -1,142 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="place_tags">
-        <item>[AO]|Angola, Africa</item>
-        <item>[AE]|United Arab Emirates, Asia</item>
+        <item>[AO]|Angola, Atlantic Ocean, Africa</item>
+        <item>[AE]|United Arab Emirates, Persian Gulf, Asia</item>
         <item>[AF]|Afghanistan, Asia</item>
-        <item>[AL]|Albania, Mediterranean, Europe</item>
+        <item>[AL]|Albania, Mediterranean Sea, Europe</item>
         <item>[AM]|Armenia, Europe</item>
         <item>[AS]|Solomon Islands, Melanesia, Pacific Ocean, Oceania</item>
         <item>[AT]|Austria, Europe</item>
-        <item>[AW]|Aruba, Caribbean, South America, Netherlands</item>
-        <item>[AZ]|Azerbaijan, Asia</item>
-        <item>[BA]|Bosnia and Herzegovina, Mediterranean, Europe</item>
-        <item>[BE]|Belgium, Europe</item>
-        <item>[BD]|Bangladesh, Asia</item>
-        <item>[BG]|Bulgaria, Europe</item>
+        <item>[AW]|Aruba, Caribbean Sea, South America, Netherlands</item>
+        <item>[AZ]|Azerbaijan, Caspian Sea, Asia</item>
+        <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea, Europe</item>
+        <item>[BE]|Belgium, North Sea, Europe</item>
+        <item>[BD]|Bangladesh, Indian Ocean, Asia</item>
+        <item>[BG]|Bulgaria, Black Sea, Europe</item>
         <item>[BH]|Bahrain, Asia</item>
         <item>[BI]|Burundi, Africa</item>
-        <item>[BM]|Bermuda, Atlantic Ocean, North America</item>
-        <item>[BS]|The Bahamas, Caribbean, North America</item>
-        <item>[BQ]|Caribbean, South America, Netherlands</item>
+        <item>[BS]|The Bahamas, Caribbean Sea, North America</item>
+        <item>[BQ]|Caribbean Sea, South America, Netherlands</item>
+        <item>[BZ]|Belize, Caribbean Sea, Central America</item>
         <item>[BY]|Belarus, Europe</item>
         <item>[CD]|Democratic Republic of the Congo, Africa</item>
         <item>[CF]|Central African Republic, Africa</item>
         <item>[CG]|Republic of the Congo, Africa</item>
         <item>[CH]|Switzerland, Europe</item>
-        <item>[CI]|Ivory Coast, Africa</item>
-        <item>[CM]|Cameroon, Africa</item>
-        <item>[CR]|Costa Rica, Caribbean, Central America</item>
-        <item>[CU]|Cuba, Caribbean, North America</item>
-        <item>[CW]|Curaçao, Caribbean, South America, Netherlands</item>
-        <item>[CY]|Cyprus, Mediterranean, Asia</item>
+        <item>[CI]|Ivory Coast, Atlantic Ocean, Africa</item>
+        <item>[CM]|Cameroon, Atlantic Ocean, Africa</item>
+        <item>[CR]|Costa Rica, Caribbean Sea, Pacific Ocean, Central America</item>
+        <item>[CU]|Cuba, Caribbean Sea, Gulf of Mexico, North America</item>
+        <item>[CW]|Curaçao, Caribbean Sea, South America, Netherlands</item>
+        <item>[CY]|Cyprus, Mediterranean Sea, Asia</item>
         <item>[CZ]|Czech Republic, Europe</item>
-        <item>[DE]|Germany, Europe</item>
-        <item>[DK]|Denmark, Nordic, Scandinavia, Europe</item>
-        <item>[DO]|Dominican Republic, Caribbean, North America</item>
-        <item>[DZ]|Algeria, Mediterranean, Africa</item>
-        <item>[EE]|Estonia, Europe</item>
-        <item>[EG]|Egypt, Mediterranean, Africa</item>
-        <item>[FI]|Finland, Nordic, Europe</item>
+        <item>[DE]|Germany, North Sea, Baltic Sea, Europe</item>
+        <item>[DK]|Denmark, North Sea, Baltic Sea, Nordic, Scandinavia, Europe</item>
+        <item>[DO]|Dominican Republic, Caribbean Sea, North America</item>
+        <item>[DZ]|Algeria, Mediterranean Sea, Sahara Desert, Africa</item>
+        <item>[EE]|Estonia, Baltic Sea, Europe</item>
+        <item>[EG]|Egypt, Mediterranean Sea, Red Sea, Sahara Desert, Africa</item>
+        <item>[FI]|Finland, Nordic, Baltic Sea, Europe</item>
         <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
         <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
-        <item>[FO]|Faroe Islands, Nordic, Europe</item>
-        <item>[GE]|Georgia, Europe</item>
-        <item>[GN]|Guinea, Africa</item>
-        <item>[GL]|Greenland, North America, Nordic, Denmark</item>
-        <item>[GR]|Greece, Mediterranean, Europe</item>
-        <item>[HT]|Haiti, Caribbean, North America</item>
-        <item>[HN]|Honduras, Central America</item>
+        <item>[FO]|Faroe Islands, Nordic, Atlantic Ocean, Europe, Denmark</item>
+        <item>[GE]|Georgia, Black Sea, Europe</item>
+        <item>[GN]|Guinea, Atlantic Ocean, Africa</item>
+        <item>[GL]|Greenland, Atlantic Ocean, North America, Arctic, Nordic, Denmark</item>
+        <item>[GR]|Greece, Mediterranean Sea, Europe</item>
+        <item>[GT]|Guatemala, Pacific Ocean, Central America</item>
+        <item>[HT]|Haiti, Caribbean Sea, Atlantic Ocean, North America</item>
+        <item>[HN]|Honduras, Pacific Ocean, Central America</item>
         <item>[HN-FM]|Francisco Morazán</item>
-        <item>[HR]|Croatia, Mediterranean, Europe</item>
+        <item>[HR]|Croatia, Mediterranean Sea, Europe</item>
         <item>[HU]|Hungary, Europe</item>
-        <item>[ID]|Indonesia, Asia</item>
+        <item>[ID]|Indonesia, Indian Ocean, Asia</item>
         <item>[IE]|Republic of Ireland, Europe</item>
-        <item>[IL]|Israel, Mediterranean, Asia</item>
-        <item>[IQ]|Iraq, Asia</item>
-        <item>[IR]|Iran, Asia</item>
-        <item>[IS]|Iceland, Nordic, Europe</item>
-        <item>[IT]|Italy, Mediterranean, Europe</item>
-        <item>[JM]|Jamaica, Caribbean, North America</item>
-        <item>[JP]|Japan, Asia</item>
-        <item>[KE]|Kenya, Africa</item>
+        <item>[IL]|Israel, Mediterranean Sea, Asia</item>
+        <item>[IQ]|Iraq, Persian Gulf, Asia</item>
+        <item>[IR]|Iran, Persia, Persian Gulf, Caspian Sea, Asia</item>
+        <item>[IS]|Iceland, Atlantic Ocean, Nordic, Arctic, Europe</item>
+        <item>[IT]|Italy, Mediterranean Sea, Europe</item>
+        <item>[JM]|Jamaica, Caribbean Sea, North America</item>
+        <item>[JP]|Japan, Pacific Ocean, Asia</item>
+        <item>[KE]|Kenya, Indian Ocean, Africa</item>
         <item>[KG]|Kyrgyzstan, Asia</item>
         <item>[KH]|Cambodia, Asia</item>
         <item>[KP]|North Korea, Asia</item>
         <item>[KR]|South Korea, Asia</item>
-        <item>[KW]|Kuwait, Asia</item>
-        <item>[KZ]|Kazakhstan, Asia</item>
-        <item>[LB]|Lebanon, Mediterranean, Asia</item>
+        <item>[KW]|Kuwait, Persian Gulf, Asia</item>
+        <item>[KZ]|Kazakhstan, Caspian Sea, Asia</item>
+        <item>[LB]|Lebanon, Mediterranean Sea, Asia</item>
         <item>[LI]|Liechtenstein, Europe</item>
-        <item>[LT]|Lithuania, Europe</item>
+        <item>[LT]|Lithuania, Baltic Sea, Europe</item>
         <item>[LU]|Luxembourg, Europe</item>
-        <item>[LV]|Latvia, Europe</item>
-        <item>[LY]|Libya, Mediterranean, Africa</item>
+        <item>[LV]|Latvia, Baltic Sea, Europe</item>
+        <item>[LY]|Libya, Mediterranean Sea, Sahara Desert, Africa</item>
         <item>[NZ]|New Zealand, Pacific Ocean, Oceania</item>
-        <item>[MA]|Morocco, Mediterranean, Africa</item>
-        <item>[MC]|Monaco, Mediterranean, Europe</item>
-        <item>[MD]|Moldova, Europe</item>
-        <item>[ML]|Mali, Africa</item>
-        <item>[MM]|Myanmar, Asia</item>
+        <item>[MA]|Morocco, Mediterranean Sea, Atlantic Ocean, Sahara Desert, Africa</item>
+        <item>[MC]|Monaco, Mediterranean Sea, Europe</item>
+        <item>[MD]|Moldova, Black Sea, Europe</item>
+        <item>[ML]|Mali, Sahara Desert, Africa</item>
+        <item>[MM]|Myanmar, Indian Ocean, Asia</item>
         <item>[MM]|Mongolia, Asia</item>
-        <item>[MR]|Mauritania, Africa</item>
-        <item>[MT]|Malta, Mediterranean, Europe</item>
-        <item>[MZ]|Mozambique, Africa</item>
-        <item>[NA]|Namibia, Africa</item>
-        <item>[NE]|Niger, Africa</item>
-        <item>[NG]|Nigeria, Africa</item>
-        <item>[NI]|Nicaragua, Caribbean, Central America</item>
-        <item>[NL]|Kingdom of the Netherlands, Europe</item>
-        <item>[NO]|Norway, Nordic, Scandinavia, Europe</item>
+        <item>[MR]|Mauritania, Atlantic Ocean, Sahara Desert, Africa</item>
+        <item>[MT]|Malta, Mediterranean Sea, Europe</item>
+        <item>[MZ]|Mozambique, Indian Ocean, Africa</item>
+        <item>[NA]|Namibia, Atlantic Ocean, Africa</item>
+        <item>[NE]|Niger, Sahara Desert, Africa</item>
+        <item>[NG]|Nigeria, Atlantic Ocean, Africa</item>
+        <item>[NI]|Nicaragua, Caribbean Sea, Pacific Ocean, Central America</item>
+        <item>[NL]|Kingdom of the Netherlands, North Sea, Europe</item>
+        <item>[NO]|Norway, North Sea, Norwegian Sea, Nordic, Scandinavia, Europe</item>
         <item>[NP]|Nepal, Asia</item>
-        <item>[OM]|Oman, Asia</item>
-        <item>[PA]|Panama, Caribbean, Central America</item>
-        <item>[PH]|Philippines, Asia</item>
-        <item>[PK]|Pakistan, Asia</item>
-        <item>[PL]|Poland, Europe</item>
-        <item>[PS]|Palestine, Mediterranean, Asia</item>
-        <item>[PT]|Portugal, Europe</item>
+        <item>[OM]|Oman, Indian Ocean, Asia</item>
+        <item>[PA]|Panama, Caribbean Sea, Pacific Ocean, Central America</item>
+        <item>[PH]|Philippines, Pacific Ocean, Asia</item>
+        <item>[PK]|Pakistan, Indian Ocean, Asia</item>
+        <item>[PL]|Poland, Baltic Sea, Europe</item>
+        <item>[PS]|Palestine, Mediterranean Sea, Asia</item>
+        <item>[PT]|Portugal, Atlantic Ocean, Europe</item>
         <item>[PY]|Paraguay, South America</item>
         <item>[QA]|Qatar, Asia</item>
-        <item>[RO]|Romania, Europe</item>
+        <item>[RO]|Romania, Black Sea, Europe</item>
         <item>[RW]|Rwanda, Africa</item>
-        <item>[SA]|Saudi Arabia, Asia</item>
-        <item>[SD]|Sudan, Africa</item>
-        <item>[SE]|Sweden, Nordic, Scandinavia, Europe</item>
-        <item>[SN]|Senegal, Africa</item>
-        <item>[SO]|Somalia, Africa</item>
-        <item>[SR]|Suriname, Caribbean, Central America</item>
-        <item>[SV]|El Salvador, Central America</item>
-        <item>[SX]|Sint Maarten, Caribbean, North America, Netherlands</item>
-        <item>[SY]|Syria, Mediterranean, Asia</item>
+        <item>[SA]|Saudi Arabia, Red Sea, Persian Gulf, Asia</item>
+        <item>[SD]|Sudan, Red Sea, Sahara Desert, Africa</item>
+        <item>[SE]|Sweden, North Sea, Baltic Sea, Nordic, Scandinavia, Europe</item>
+        <item>[SN]|Senegal, Atlantic Ocean, Africa</item>
+        <item>[SO]|Somalia, Indian Ocean, Africa</item>
+        <item>[SR]|Suriname, Caribbean Sea, Atlantic Ocean, Central America</item>
+        <item>[SV]|El Salvador, Pacific Ocean, Central America</item>
+        <item>[SX]|Sint Maarten, Caribbean Sea, North America, Netherlands</item>
+        <item>[SY]|Syria, Mediterranean Sea, Asia</item>
         <item>[TH]|Thailand, Asia</item>
         <item>[TJ]|Tajikistan, Asia</item>
-        <item>[TM]|Turkmenistan, Asia</item>
-        <item>[TN]|Tunisia, Mediterranean, Africa</item>
-        <item>[TR]|Turkey, Mediterranean, Asia, Europe</item>
-        <item>[TW]|Taiwan, Asia</item>
-        <item>[TZ]|Tanzania, Africa</item>
-        <item>[UA]|Ukraine, Europe</item>
+        <item>[TM]|Turkmenistan, Caspian Sea, Asia</item>
+        <item>[TN]|Tunisia, Mediterranean Sea, Sahara Desert, Africa</item>
+        <item>[TR]|Turkey, Mediterranean Sea, Black Sea, Asia, Europe</item>
+        <item>[TW]|Taiwan, Pacific Ocean, Asia</item>
+        <item>[TZ]|Tanzania, Indian Ocean, Africa</item>
+        <item>[UA]|Ukraine, Black Sea, Europe</item>
         <item>[UG]|Uganda, Africa</item>
-        <item>[UY]|Uruguay, South America</item>
+        <item>[UY]|Uruguay, Atlantic Ocean, South America</item>
         <item>[UZ]|Uzbekistan, Asia</item>
         <item>[VN]|Vietnam, Asia</item>
         <item>[WS]|Samoa, Polynesia, Pacific Ocean, Oceania</item>
-        <item>[YE]|Yemen, Asia</item>
-        <item>[ZA]|South Africa</item>
+        <item>[YE]|Yemen, Red Sea, Indian Ocean, Asia</item>
+        <item>[ZA]|South Africa, Atlantic Ocean, Indian Ocean, Africa</item>
         <item>[ZM]|Zambia, Africa</item>
         <item>[ZW]|Zimbabwe, Africa</item>
     </string-array>
 
     <string-array name="place_tags_AR">
         <item>[AR]|Argentina, South America</item>
-        <item>[AR-B]|Buenos Aires</item>
+        <item>[AR-B]|Buenos Aires, Atlantic Ocean</item>
         <item>[AR-K]|Catamarca</item>
         <item>[AR-H]|Chaco</item>
-        <item>[AR-U]|Chubut</item>
+        <item>[AR-U]|Chubut, Atlantic Ocean</item>
         <item>[AR-X]|Córdoba</item>
         <item>[AR-W]|Corrientes</item>
-        <item>[AR-E]|Entre Ríos</item>
+        <item>[AR-E]|Entre Ríos, Atlantic Ocean</item>
         <item>[AR-P]|Formosa</item>
         <item>[AR-Y]|Jujuy</item>
         <item>[AR-L]|La Pampa</item>
@@ -144,14 +145,14 @@
         <item>[AR-M]|Mendoza</item>
         <item>[AR-N]|Misiones</item>
         <item>[AR-Q]|Neuquén</item>
-        <item>[AR-R]|Río Negro</item>
+        <item>[AR-R]|Río Negro, Atlantic Ocean</item>
         <item>[AR-A]|Salta</item>
         <item>[AR-J]|San Juan</item>
         <item>[AR-D]|San Luis</item>
-        <item>[AR-Z]|Santa Cruz</item>
+        <item>[AR-Z]|Santa Cruz, Atlantic Ocean</item>
         <item>[AR-S]|Santa Fe</item>
         <item>[AR-G]|Santiago del Estero</item>
-        <item>[AR-V]|Tierra del Fuego</item>
+        <item>[AR-V]|Tierra del Fuego, Atlantic Ocean</item>
         <item>[AR-T]|Tucumán</item>
     </string-array>
 
@@ -159,13 +160,13 @@
         <item>[AU]|Australia</item>
         <item>[AU-ACT]|Australian Capital Territory</item>
         <item>[AU-AAT]|Australian Antarctic Territory, Antarctica</item>
-        <item>[AU-NSW]|New South Wales</item>
-        <item>[AU-NT]|Northern Territory</item>
-        <item>[AU-QLD]|Queensland</item>
-        <item>[AU-VIC]|Victoria</item>
-        <item>[AU-WA]|Western Australia</item>
-        <item>[AU-SA]|South Australia</item>
-        <item>[AU-TAS]|Tasmania</item>
+        <item>[AU-NSW]|New South Wales, Pacific Ocean</item>
+        <item>[AU-NT]|Northern Territory, Indian Ocean</item>
+        <item>[AU-QLD]|Queensland, Pacific Ocean</item>
+        <item>[AU-VIC]|Victoria, Indian Ocean, Pacific</item>
+        <item>[AU-WA]|Western Australia, Indian Ocean</item>
+        <item>[AU-SA]|South Australia, Indian Ocean</item>
+        <item>[AU-TAS]|Tasmania, Indian Ocean, Pacific</item>
     </string-array>
 
     <string-array name="place_tags_BO">
@@ -184,49 +185,49 @@
     <string-array name="place_tags_BR">
         <item>[BR]|Brazil, South America</item>
         <item>[BR-AC]|Acre</item>
-        <item>[BR-AL]|Alagoas</item>
-        <item>[BR-AP]|Amapá</item>
+        <item>[BR-AL]|Alagoas, Atlantic Ocean</item>
+        <item>[BR-AP]|Amapá, Atlantic Ocean</item>
         <item>[BR-AM]|Amazonas</item>
-        <item>[BR-BA]|Bahia</item>
-        <item>[BR-CE]|Ceará</item>
+        <item>[BR-BA]|Bahia, Atlantic Ocean</item>
+        <item>[BR-CE]|Ceará, Atlantic Ocean</item>
         <item>[BR-DF]|Distrito Federal</item>
-        <item>[BR-ES]|Espírito Santo</item>
+        <item>[BR-ES]|Espírito Santo, Atlantic Ocean</item>
         <item>[BR-GO]|Goiás</item>
-        <item>[BR-MA]|Maranhão</item>
+        <item>[BR-MA]|Maranhão, Atlantic Ocean</item>
         <item>[BR-MT]|Mato Grosso</item>
         <item>[BR-MS]|Mato Grosso do Sul</item>
         <item>[BR-MG]|Minas Gerais</item>
-        <item>[BR-PA]|Pará</item>
-        <item>[BR-PB]|Paraíba</item>
-        <item>[BR-PR]|Paraná</item>
-        <item>[BR-PE]|Pernambuco</item>
-        <item>[BR-PI]|Piauí</item>
-        <item>[BR-RJ]|Rio de Janeiro</item>
-        <item>[BR-RN]|Rio Grande do Norte</item>
-        <item>[BR-RS]|Rio Grande do Sul</item>
+        <item>[BR-PA]|Pará, Atlantic Ocean</item>
+        <item>[BR-PB]|Paraíba, Atlantic Ocean</item>
+        <item>[BR-PR]|Paraná, Atlantic Ocean</item>
+        <item>[BR-PE]|Pernambuco, Atlantic Ocean</item>
+        <item>[BR-PI]|Piauí, Atlantic Ocean</item>
+        <item>[BR-RJ]|Rio de Janeiro, Atlantic Ocean</item>
+        <item>[BR-RN]|Rio Grande do Norte, Atlantic Ocean</item>
+        <item>[BR-RS]|Rio Grande do Sul, Atlantic Ocean</item>
         <item>[BR-RO]|Rondônia</item>
         <item>[BR-RR]|Roraima</item>
-        <item>[BR-SC]|Santa Catarina</item>
-        <item>[BR-SP]|São Paulo</item>
-        <item>[BR-SE]|Sergipe</item>
+        <item>[BR-SC]|Santa Catarina, Atlantic Ocean</item>
+        <item>[BR-SP]|São Paulo, Atlantic Ocean</item>
+        <item>[BR-SE]|Sergipe, Atlantic Ocean</item>
         <item>[BR-TO]|Tocantins</item>
     </string-array>
 
     <string-array name="place_tags_CA">
         <item>[CA]|Canada, North America</item>
         <item>[CA-AB]|Alberta</item>
-        <item>[CA-BC]|British Columbia</item>
-        <item>[CA-MB]|Manitoba</item>
-        <item>[CA-NB]|New Brunswick</item>
-        <item>[CA-NL]|Newfoundland and Labrador</item>
-        <item>[CA-NS]|Novia Scotia</item>
-        <item>[CA-NT]|Northwest Territories</item>
-        <item>[CA-NU]|Nunavut</item>
-        <item>[CA-ON]|Ontario</item>
-        <item>[CA-PE]|Prince Edward Island</item>
-        <item>[CA-QC]|Quebec</item>
+        <item>[CA-BC]|British Columbia, Pacific Ocean</item>
+        <item>[CA-MB]|Manitoba, Hudson Bay</item>
+        <item>[CA-NB]|New Brunswick, Atlantic Ocean</item>
+        <item>[CA-NL]|Newfoundland and Labrador, Atlantic Ocean</item>
+        <item>[CA-NS]|Novia Scotia, Gulf of St Lawrence, Atlantic Ocean</item>
+        <item>[CA-NT]|Northwest Territories, Arctic</item>
+        <item>[CA-NU]|Nunavut, Hudson Bay, Northwestern Passage, Arctic</item>
+        <item>[CA-ON]|Ontario, Great Lakes, Hudson Bay</item>
+        <item>[CA-PE]|Prince Edward Island, Gulf of St Lawrence, Atlantic Ocean</item>
+        <item>[CA-QC]|Quebec, Gulf of St Lawrence, Hudson Bay, Atlantic Ocean</item>
         <item>[CA-SK]|Saskatchewan</item>
-        <item>[CA-YT]|Yukon</item>
+        <item>[CA-YT]|Yukon, Pacific Ocean, Arctic</item>
     </string-array>
 
     <string-array name="place_tags_CN">
@@ -238,23 +239,23 @@
     </string-array>
 
     <string-array name="place_tags_CO">
-        <item>[CO]|Colombia, Caribbean, South America</item>
-        <item>[CO-ANT]|Antioquia</item>
-        <item>[CO-ATL]|Atlántico</item>
-        <item>[CO-BOL]|Bolívar</item>
+        <item>[CO]|Colombia, South America</item>
+        <item>[CO-ANT]|Antioquia, Caribbean Sea</item>
+        <item>[CO-ATL]|Atlántico, Caribbean Sea</item>
+        <item>[CO-BOL]|Bolívar, Caribbean Sea</item>
         <item>[CO-DC]|Capital District</item>
-        <item>[CO-COR]|Córdoba</item>
-        <item>[CO-MAG]|Magdalena</item>
+        <item>[CO-COR]|Córdoba, Caribbean Sea</item>
+        <item>[CO-MAG]|Magdalena, Caribbean Sea</item>
         <item>[CO-MET]|Meta</item>
-        <item>[CO-NAR]|Nariño</item>
+        <item>[CO-NAR]|Nariño, Pacific Ocean</item>
         <item>[CO-NSA]|Norte de Santander</item>
         <item>[CO-SAN]|Santander</item>
         <item>[CO-TOL]|Tolima</item>
-        <item>[CO-VAC]|Valle del Cauca</item>
+        <item>[CO-VAC]|Valle del Cauca, Pacific Ocean</item>
     </string-array>
 
     <string-array name="place_tags_CL">
-        <item>[CL]|Chile, South America</item>
+        <item>[CL]|Chile, Pacific Ocean, South America</item>
         <item>[CL-RM]|Metropolitan</item>
         <item>[CL-AP]|Arica and Parinacota</item>
         <item>[CL-TA]|Tarapacá</item>
@@ -274,7 +275,7 @@
     </string-array>
 
     <string-array name="place_tags_EC">
-        <item>[EC]|Ecuador, South America</item>
+        <item>[EC]|Ecuador, Pacific Ocean, South America</item>
         <item>[EC-A]|Azuay</item>
         <item>[EC-P]|Pichincha</item>
         <item>[EC-G]|Guayas</item>
@@ -283,93 +284,96 @@
     <string-array name="place_tags_ES">
         <item>[ES]|Spain, Europe</item>
         <item>[ES-AR]|Aragon</item>
-        <item>[ES-AS]|Asturias</item>
-        <item>[ES-CT]|Catalonia</item>
-        <item>[ES-GA]|Galicia</item>
+        <item>[ES-AS]|Asturias, Atlantic Ocean</item>
+        <item>[ES-CT]|Catalonia, Mediterranean Sea</item>
+        <item>[ES-GA]|Galicia, Atlantic Ocean</item>
         <item>[ES-MD]|Madrid</item>
     </string-array>
 
     <string-array name="place_tags_FR">
-        <item>[FR]|France, Mediterranean, Europe</item>
-        <item>[GF]|French Guiana, South America, France</item>
-        <item>[GP]|Guadeloupe, Caribbean, North America, France</item>
-        <item>[MF]|Saint Martin, Caribbean, North America, France</item>
-        <item>[MQ]|Martinique, Caribbean, North America, France</item>
+        <item>[FR]|France, Mediterranean Sea, Europe</item>
+        <item>[GF]|French Guiana, Atlantic Ocean, South America, France</item>
+        <item>[GP]|Guadeloupe, Caribbean Sea, Atlantic Ocean, North America, France</item>
+        <item>[MF]|Saint Martin, Caribbean Sea, North America, France</item>
+        <item>[MQ]|Martinique, Caribbean Sea, North America, France</item>
         <item>[PF]|French Polynesia, Pacific Ocean, Oceania</item>
     </string-array>
 
     <string-array name="place_tags_GB">
-        <item>[GB]|Great Britain, United Kingdom, Europe</item>
-        <item>[GB-ENG]|England</item>
+        <item>[GB]|Great Britain, United Kingdom, Irish Sea, Atlantic Ocean, Europe</item>
+        <item>[GB-ENG]|England, North Sea</item>
         <item>[GB-NIR]|Northern Ireland</item>
-        <item>[GB-SCT]|Scotland</item>
+        <item>[GB-SCT]|Scotland, North Sea</item>
         <item>[GB-WLS]|Wales</item>
-        <item>[IM]|Isle of Man, Mann, Great Britain, United Kingdom</item>
-        <item>[MS]|Montserrat, Caribbean, North America, Great Britain, United Kingdom</item>
-        <item>[VG]|British Virgin Islands, Caribbean, Great Britain, United Kingdom</item>
+        <item>[GI]|Gibraltar, Mediterranean Sea, Europe, Great Britain, United Kingdom</item>
+        <item>[BM]|Bermuda, Atlantic Ocean, North America, Great Britain, United Kingdom</item>
+        <item>[IM]|Isle of Man, Mann, Irish Sea, Europe, Great Britain, United Kingdom</item>
+        <item>[MS]|Montserrat, Caribbean Sea, North America, Great Britain, United Kingdom</item>
+        <item>[VG]|British Virgin Islands, Caribbean Sea, Atlantic Ocean, Great Britain, United Kingdom</item>
     </string-array>
 
     <string-array name="place_tags_IN">
         <item>[IN]|India, Asia</item>
         <item>[IN-AS]|Assam</item>
         <item>[IN-DL]|Delhi</item>
-        <item>[IN-GJ]|Gujarāt</item>
-        <item>[IN-KA]|Karnātaka</item>
-        <item>[IN-KL]|Kerala</item>
-        <item>[IN-MH]|Mahārāshtra</item>
-        <item>[IN-TN]|Tamil Nādu</item>
-        <item>[IN-WB]|West Bengal</item>
+        <item>[IN-GJ]|Gujarāt, Indian Ocean</item>
+        <item>[IN-KA]|Karnātaka, Indian Ocean</item>
+        <item>[IN-KL]|Kerala, Indian Ocean</item>
+        <item>[IN-MH]|Mahārāshtra, Indian Ocean</item>
+        <item>[IN-TN]|Tamil Nādu, Indian Ocean</item>
+        <item>[IN-WB]|West Bengal, Indian Ocean</item>
     </string-array>
 
     <string-array name="place_tags_MX">
         <item>[MX]|Mexico, North America</item>
         <item>[MX-AGU]|Aguascalientes</item>
-        <item>[MX-BCN]|Baja California</item>
-        <item>[MX-BCS]|Baja California Sur</item>
-        <item>[MX-CAM]|Campeche</item>
+        <item>[MX-BCN]|Baja California, Pacific Ocean</item>
+        <item>[MX-BCS]|Baja California Sur, Pacific Ocean</item>
+        <item>[MX-CAM]|Campeche, Gulf of Mexico</item>
         <item>[MX-CHH]|Chihuahua</item>
-        <item>[MX-CHP]|Chiapas</item>
+        <item>[MX-CHP]|Chiapas, Pacific Ocean</item>
         <item>[MX-CMX]|Ciudad de México</item>
         <item>[MX-COA]|Coahuila</item>
-        <item>[MX-COL]|Colima</item>
+        <item>[MX-COL]|Colima, Pacific Ocean</item>
         <item>[MX-DUR]|Durango</item>
-        <item>[MX-GRO]|Guerrero</item>
+        <item>[MX-GRO]|Guerrero, Pacific Ocean</item>
         <item>[MX-GUA]|Guanajuato</item>
         <item>[MX-HID]|Hidalgo</item>
-        <item>[MX-JAL]|Jalisco</item>
+        <item>[MX-JAL]|Jalisco, Pacific Ocean</item>
         <item>[MX-MEX]|Mexico</item>
-        <item>[MX-MIC]|Michoacán</item>
+        <item>[MX-MIC]|Michoacán, Pacific Ocean</item>
         <item>[MX-MOR]|Morelos</item>
-        <item>[MX-NAY]|Nayarit</item>
+        <item>[MX-NAY]|Nayarit, Pacific Ocean</item>
         <item>[MX-NLE]|Nuevo León</item>
-        <item>[MX-OAX]|Oaxaca</item>
+        <item>[MX-OAX]|Oaxaca, Pacific Ocean</item>
         <item>[MX-PUE]|Puebla</item>
         <item>[MX-QUE]|Querétaro</item>
-        <item>[MX-ROO]|Quintana Roo</item>
-        <item>[MX-SIN]|Sinaloa</item>
+        <item>[MX-ROO]|Quintana Roo, Gulf of Mexico, Caribbean Sea</item>
+        <item>[MX-SIN]|Sinaloa, Pacific Ocean</item>
         <item>[MX-SLP]|San Luis Potosí</item>
-        <item>[MX-SON]|Sonora</item>
-        <item>[MX-TAB]|Tabasco</item>
+        <item>[MX-SON]|Sonora, Pacific Ocean</item>
+        <item>[MX-TAM]|Tamaulipas, Gulf of Mexico</item>
+        <item>[MX-TAB]|Tabasco, Gulf of Mexico</item>
         <item>[MX-TLA]|Tlaxcala</item>
-        <item>[MX-VER]|Veracruz</item>
-        <item>[MX-YUC]|Yucatán</item>
+        <item>[MX-VER]|Veracruz, Gulf of Mexico</item>
+        <item>[MX-YUC]|Yucatán, Gulf of Mexico</item>
         <item>[MX-ZAC]|Zacatecas</item>
     </string-array>
 
     <string-array name="place_tags_PE">
         <item>[PE]|Peru, South America</item>
-        <item>[PE-LIM]|Lima</item>
-        <item>[PE-ARE]|Arequipa</item>
-        <item>[PE-ANC]|Ancash</item>
+        <item>[PE-LIM]|Lima, Pacific Ocean</item>
+        <item>[PE-ARE]|Arequipa, Pacific Ocean</item>
+        <item>[PE-ANC]|Ancash, Pacific Ocean</item>
         <item>[PE-CUS]|Cusco</item>
         <item>[PE-JUN]|Junín</item>
-        <item>[PE-ICA]|Ica</item>
-        <item>[PE-LAL]|La Libertad</item>
-        <item>[PE-LAM]|Lambayeque</item>
+        <item>[PE-ICA]|Ica, Pacific Ocean</item>
+        <item>[PE-LAL]|La Libertad, Pacific Ocean</item>
+        <item>[PE-LAM]|Lambayeque, Pacific Ocean</item>
         <item>[PE-LOR]|Loreto</item>
-        <item>[PE-PIU]|Piura</item>
+        <item>[PE-PIU]|Piura, Pacific Ocean</item>
         <item>[PE-PUN]|Puno</item>
-        <item>[PE-TAC]|Tacna</item>
+        <item>[PE-TAC]|Tacna, Pacific Ocean</item>
         <item>[PE-UCA]|Ucayali</item>
     </string-array>
 
@@ -383,75 +387,75 @@
 
     <string-array name="place_tags_US">
         <item>[US]|United States, North America</item>
-        <item>[US-AL]|Alabama</item>
-        <item>[US-AK]|Alaska</item>
+        <item>[US-AL]|Alabama, Gulf of Mexico</item>
+        <item>[US-AK]|Alaska, Bering Sea, Pacific Ocean, Arctic</item>
         <item>[US-AZ]|Arizona</item>
         <item>[US-AR]|Arkansas</item>
-        <item>[US-CA]|California</item>
+        <item>[US-CA]|California, Pacific Ocean</item>
         <item>[US-CO]|Colorado</item>
-        <item>[US-CT]|Connecticut</item>
-        <item>[US-DE]|Delaware</item>
-        <item>[US-FL]|Florida</item>
-        <item>[US-GA]|Georgia</item>
-        <item>[US-HI]|Hawaii</item>
+        <item>[US-CT]|Connecticut, Atlantic Ocean</item>
+        <item>[US-DE]|Delaware, Atlantic Ocean</item>
+        <item>[US-FL]|Florida, Gulf of Mexico, Atlantic Ocean</item>
+        <item>[US-GA]|Georgia, Atlantic Ocean</item>
+        <item>[US-HI]|Hawaii, Pacific Ocean</item>
         <item>[US-ID]|Idaho</item>
-        <item>[US-IL]|Illinois</item>
-        <item>[US-IN]|Indiana</item>
+        <item>[US-IL]|Illinois, Great Lakes</item>
+        <item>[US-IN]|Indiana, Great Lakes</item>
         <item>[US-IA]|Iowa</item>
         <item>[US-KS]|Kansas</item>
         <item>[US-KY]|Kentucky</item>
-        <item>[US-LA]|Louisiana</item>
-        <item>[US-ME]|Maine</item>
-        <item>[US-MD]|Maryland</item>
-        <item>[US-MA]|Massachusetts</item>
-        <item>[US-MI]|Michigan</item>
-        <item>[US-MN]|Minnesota</item>
-        <item>[US-MS]|Mississippi</item>
+        <item>[US-LA]|Louisiana, Gulf of Mexico</item>
+        <item>[US-ME]|Maine, Atlantic Ocean</item>
+        <item>[US-MD]|Maryland, Atlantic Ocean</item>
+        <item>[US-MA]|Massachusetts, Atlantic Ocean</item>
+        <item>[US-MI]|Michigan, Great Lakes</item>
+        <item>[US-MN]|Minnesota, Great Lakes</item>
+        <item>[US-MS]|Mississippi, Gulf of Mexico</item>
         <item>[US-MO]|Missouri</item>
         <item>[US-MT]|Montana</item>
         <item>[US-NE]|Nebraska</item>
         <item>[US-NV]|Nevada</item>
-        <item>[US-NH]|New Hampshire</item>
-        <item>[US-NJ]|New Jersey</item>
+        <item>[US-NH]|New Hampshire, Atlantic Ocean</item>
+        <item>[US-NJ]|New Jersey, Atlantic Ocean</item>
         <item>[US-NM]|New Mexico</item>
-        <item>[US-NY]|New York</item>
-        <item>[US-NC]|North Carolina</item>
+        <item>[US-NY]|New York, Great Lakes</item>
+        <item>[US-NC]|North Carolina, Atlantic Ocean</item>
         <item>[US-ND]|North Dakota</item>
-        <item>[US-OH]|Ohio</item>
+        <item>[US-OH]|Ohio, Great Lakes</item>
         <item>[US-OK]|Oklahoma</item>
-        <item>[US-OR]|Oregon</item>
-        <item>[US-PA]|Pennsylvania</item>
-        <item>[US-PR]|Puerto Rico</item>
-        <item>[US-RI]|Rhode Island</item>
-        <item>[US-SC]|South Carolina</item>
+        <item>[US-OR]|Oregon, Pacific Ocean</item>
+        <item>[US-PA]|Pennsylvania, Great Lakes</item>
+        <item>[US-PR]|Puerto Rico, Caribbean Sea, Atlantic Ocean</item>
+        <item>[US-RI]|Rhode Island, Atlantic Ocean</item>
+        <item>[US-SC]|South Carolina, Atlantic Ocean</item>
         <item>[US-SD]|South Dakota</item>
         <item>[US-TN]|Tennessee</item>
-        <item>[US-TX]|Texas</item>
+        <item>[US-TX]|Texas, Gulf of Mexico</item>
         <item>[US-UT]|Utah</item>
-        <item>[US-VI]|Virgin Islands</item>
+        <item>[US-VI]|Virgin Islands, Caribbean Sea, Atlantic Ocean</item>
         <item>[US-VT]|Vermont</item>
-        <item>[US-VA]|Virginia</item>
-        <item>[US-WA]|Washington</item>
+        <item>[US-VA]|Virginia, Atlantic Ocean</item>
+        <item>[US-WA]|Washington, Pacific Ocean</item>
         <item>[US-WV]|West Virginia</item>
-        <item>[US-WI]|Wisconsin</item>
+        <item>[US-WI]|Wisconsin, Great Lakes</item>
         <item>[US-WY]|Wyoming</item>
         <item>[AS]|American Samoa, Polynesia, Pacific Ocean, Oceania</item>
         <item>[GU]|Guam, Micronesia, Pacific Ocean, Oceania</item>
     </string-array>
 
     <string-array name="place_tags_VE">
-        <item>[VE]|Venezuela, Caribbean, South America</item>
-        <item>[VE-A]|Greater Caracas</item>
+        <item>[VE]|Venezuela, South America</item>
+        <item>[VE-A]|Greater Caracas, Caribbean Sea</item>
         <item>[VE-Z]|Amazonas</item>
         <item>[VE-C]|Apure</item>
-        <item>[VE-D]|Aragua</item>
+        <item>[VE-D]|Aragua, Caribbean Sea</item>
         <item>[VE-E]|Barinas</item>
         <item>[VE-F]|Bolívar</item>
-        <item>[VE-G]|Carabobo</item>
+        <item>[VE-G]|Carabobo, Caribbean Sea</item>
         <item>[VE-K]|Lara</item>
-        <item>[VE-N]|Monagas</item>
-        <item>[VE-R]|Sucre</item>
-        <item>[VE-V]|Zulia</item>
+        <item>[VE-N]|Monagas, Caribbean Sea</item>
+        <item>[VE-R]|Sucre, Caribbean Sea</item>
+        <item>[VE-V]|Zulia, Caribbean Sea</item>
     </string-array>
 
 </resources>
