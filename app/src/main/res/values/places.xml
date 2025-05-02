@@ -24,7 +24,10 @@
         <item>places_AS, place_label_AS</item>                <!-- Asia (unsorted) -->
         <item>places_AS_CN, place_label_AS_CN</item>          <!-- Asia; China -->
         <item>places_AS_IN, place_label_AS_IN</item>          <!-- Asia; India -->
+        <item>places_AS_IR, place_label_AS_IR</item>          <!-- Asia; Iran -->
+        <item>places_AS_IQ, place_label_AS_IQ</item>          <!-- Asia; Iraq -->
         <item>places_AS_JP, place_label_AS_JP</item>          <!-- Asia; Japan -->
+        <item>places_AS_PK, place_label_AS_PK</item>          <!-- Asia; Pakistan -->
         <item>places_AS_SA, place_label_AS_SA</item>          <!-- Asia; Saudi Arabia -->
         <item>places_AS_RU, place_label_AS_EU</item>          <!-- Asia; Russia -->
         <item>places_AS_VN, place_label_AS_VN</item>          <!-- Asia; Vietnam -->
@@ -128,8 +131,6 @@
         <item>"Ankara", 39.92668, 32.86314, 938, [capital][TR]</item>
         <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
-        <item>"Baghdad", 33.27353, 44.38063, 34, [capital][IQ]</item>
-        <item>"Basra", 30.56576, 47.74777, 5, [IQ]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
         <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
@@ -142,13 +143,10 @@
         <item>"Jakarta", -6.2297, 106.7594, 20, [capital][ID]</item>
         <item>"Jerusalem", 31.7962, 35.1053, 643, [capital][IL][PS]</item>
         <item>"Kabul", 34.51569, 69.13544, 1791, [capital][AF]</item>
-        <item>"Karachi", 25.0108, 66.7845, 97, [PK-SD]</item>
         <item>"Kathmandu", 27.73078, 85.32092, 1400, [capital][NP]</item>
         <item>"Kuwait City", 29.36950, 47.99377, 0, [capital][KW]</item>
-        <item>"Lahore", 31.55091, 74.34373, 217, [PK-PB]</item>
         <item>"Manama", 26.28596, 50.57698, 0, [capital][BH]</item>
         <item>"Manila", 14.5964, 120.9094, 0, [capital][PH]</item>
-        <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>
         <item>"Muscat", 23.60333, 58.40487, 0, [capital][OM]</item>
         <item>"Nicosia", 35.1922, 33.3273, 140, [capital][CY]</item>
         <item>"Phnom Penh", 11.57604, 104.92290, 27, [capital][KH]</item>
@@ -158,7 +156,6 @@
         <item>"Singapore", 1.2976, 103.9053, 10, [capital][SG]</item>
         <item>"Taipei", 25.0330, 121.5654, 0, [capital][TW]</item>
         <item>"Tashkent", 41.31026, 69.2805, 455, [capital][UZ]</item>
-        <item>"Tehran", 35.70251, 51.35131, 900, [capital][IR]</item>
         <item>"Ulaanbaatar", 47.90029, 106.94324, 1350, [capital][MN]</item>
         <item>"Yangon", 16.79525, 96.15955, 23, [capital][MM]</item>
     </string-array>
@@ -188,6 +185,20 @@
         <item>"Mumbai", 19.1246, 72.7932, 0, [capital][IN-MH]</item>
         <item>"Pune", 18.52023, 73.85529, 570, [IN-MH]</item>
     </string-array>
+    <string-array name="places_AS_IR">    <!-- Iran -->
+        <item>"Ahvaz", 31.32103, 48.67098, 15, [IR]</item>                      <!-- Khuzestan -->
+        <item>"Isfahan", 32.66434, 51.66906, 1570, [IR]</item>                  <!-- Isfahan -->
+        <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>                   <!-- Razavi Khorasan -->
+        <item>"Shiraz", 29.60519, 52.53324, 1500, [IR]</item>                   <!-- Fars -->
+        <item>"Tabriz", 38.07682, 46.28055, 1350, [IR]</item>                   <!-- East Azarbaijan -->
+        <item>"Tehran", 35.70251, 51.35131, 900, [capital][IR]</item>           <!-- Tehran -->
+    </string-array>
+    <string-array name="places_AS_IQ">    <!-- Iraq -->
+        <item>"Baghdad", 33.27353, 44.38063, 34, [capital][IQ]</item>
+        <item>"Basra", 30.56576, 47.74777, 5, [IQ]</item>
+        <item>"Erbil", 36.18305, 44.00976, 390, [IQ]</item>
+        <item>"Mosul", 36.33859, 43.13503, 220, [IQ]</item>
+    </string-array>
     <string-array name="places_AS_JP">    <!-- Japan -->
         <item>"Kyoto", 35.02304, 135.76201, 9, [JP]</item>
         <item>"Nagoya", 35.16373, 136.89961, 17, [JP]</item>
@@ -195,6 +206,12 @@
         <item>"Sapporo", 43.06317, 141.34262, 31, [JP]</item>
         <item>"Tokyo", 35.6732, 139.5703, 49, [JP]</item>
         <item>"Yokohama", 35.42296, 139.63807, 15, [JP]</item>
+    </string-array>
+    <string-array name="places_AS_PK">    <!-- Pakistan -->
+        <item>"Islamabad", 33.6936, 73.06797, 500, [capital][PK-IS]</item>
+        <item>"Karachi", 25.0108, 66.7845, 97, [PK-SD]</item>
+        <item>"Lahore", 31.55091, 74.34373, 217, [PK-PB]</item>
+        <item>"Multan", 30.19769, 71.47397, 0, [PK-PB]</item>
     </string-array>
     <string-array name="places_AS_SA">    <!-- Saudi Arabia -->
         <item>"Jeddah", 21.53003, 39.15633, 12, [SA]</item>
@@ -227,6 +244,7 @@
         <item>"Chisinau", 46.9998, 28.7881, 215, [capital][MD]</item>    <!-- Moldova -->
         <item>"Copenhagen", 55.6712, 12.4907, 9, [capital][DK]</item>    <!-- Denmark -->
         <item>"Dublin", 53.33348, -6.20512, 0, [capital][IE]</item>      <!-- Republic of Ireland -->
+        <item>"Gibraltar", 36.11072, -5.34687, 0, [GI]</item>
         <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI]</item>      <!-- Finland -->
         <item>"Istanbul", 41.0039, 28.4517, 0, [TR]</item>               <!-- Turkey -->
         <item>"Kyiv", 50.4496, 30.5252, 179, [capital][UA]</item>        <!-- Ukraine -->
@@ -317,6 +335,7 @@
         <item>"Colima City", 19.24001, -103.72458, 1000, [capital][MX-COL]</item>          <!-- Colima -->
         <item>"Cuernavaca", 18.93046, -99.22218, 1500, [capital][MX-MOR]</item>            <!-- Morelos -->
         <item>"Culiacán", 24.80909, -107.4016, 70, [capital][MX-SIN]</item>                <!-- Sinaloa -->
+        <item>"Ciudad Victoria", 23.72496, -99.15286, 315, [capital][MX-TAM]</item>        <!-- Tamaulipas -->
         <item>"Hermosillo", 29.07864, -110.94772, 200, [capital][MX-SON]</item>            <!-- Sonora -->
         <item>"Juárez City", 31.71903, -106.48947, 1440, [MX-CHH]</item>                   <!-- Chihuahua -->
         <item>"Guadalajara", 20.68019, -103.34068, 1560, [capital][MX-JAL]</item>          <!-- Jalisco -->
@@ -375,7 +394,7 @@
         <item>\"San Juan, Puerto Rico\", 18.3848, -66.1283, 30, [capital][US-PR]</item>
     </string-array>
     <string-array name="places_NA_US_W">
-        <item>\"Anchorage, AK\", 61.15496, -150.05585, 31, [US-AL]</item>
+        <item>\"Anchorage, AK\", 61.15496, -150.05585, 31, [US-AK]</item>
         <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
         <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capital][US-AK]</item>
         <item>"Phoenix", 33.45579, -111.94580, 385, [capital][US-AZ]</item>

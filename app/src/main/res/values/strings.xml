@@ -1547,7 +1547,10 @@
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (China)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_IR">Asia (Iran)</string>    <!-- TODO -->
+    <string name="place_label_AS_IQ">Asia (Iraq)</string>    <!-- TODO -->
     <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_PK">Asia (Pakistan)</string>    <!-- TODO -->
     <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
     <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
