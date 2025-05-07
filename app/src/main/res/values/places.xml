@@ -312,7 +312,7 @@
         <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0, [MQ]</item>
         <item>\"Havana, Cuba\", 23.0504, -82.6129, 0, [capital][CU]</item>
         <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18, [capital][JM]</item>
-        <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0, [MS]</item>
+        <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0, [capital][MS]</item>
         <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0, [GP]</item>
         <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0, [capital][MF]</item>
         <item>\"Nassau, The Bahamas\", 25.0322, -77.4763, 6, [capital][BS]</item>
@@ -685,16 +685,16 @@
     </string-array>
 
     <string-array name="places_mount">    <!-- highest places -->
-        <item>"Mount Everest", 27.98833, 86.92527, 8848.86, [misc]</item>    <!-- Asia -->
-        <item>"Aconcagua", -32.65332, -70.012, 6960.8, [misc]</item>         <!-- South America -->
-        <item>"Chimborazo", -1.46916, -78.8175, 6263.47, [misc]</item>       <!-- South America -->
-        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc]</item>          <!-- North America -->
-        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895, [misc]</item>    <!-- Africa -->
-        <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc]</item>          <!-- Russia -->
-        <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc]</item>      <!-- Antarctica -->
-        <item>"Puncak Jaya", -4.07888, 137.15833, 4884, [misc]</item>        <!-- Indonesia -->
-        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc]</item>        <!-- Europe -->
-        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228, [misc]</item>  <!-- Australia -->
+        <item>"Mount Everest", 27.98833, 86.92527, 8848.86, [misc][summit]</item>    <!-- Asia -->
+        <item>"Aconcagua", -32.65332, -70.012, 6960.8, [misc][summit]</item>         <!-- South America -->
+        <item>"Chimborazo", -1.46916, -78.8175, 6263.47, [misc][summit]</item>       <!-- South America -->
+        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc][summit]</item>          <!-- North America -->
+        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895, [misc][summit]</item>    <!-- Africa -->
+        <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc][summit]</item>          <!-- Russia -->
+        <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc][summit]</item>      <!-- Antarctica -->
+        <item>"Puncak Jaya", -4.07888, 137.15833, 4884, [misc][summit]</item>        <!-- Indonesia -->
+        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc][summit]</item>        <!-- Europe -->
+        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228, [misc][summit]</item>  <!-- Australia -->
     </string-array>
 
 </resources>
