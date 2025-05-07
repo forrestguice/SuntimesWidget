@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1509,7 +1510,7 @@ public class PlacesListFragment extends Fragment
             protected FilterResults performFiltering(CharSequence constraint)
             {
                 FilterResults results = new FilterResults();
-                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT)) : items0);
+                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT).trim()) : items0);
                 return results;
             }
 
@@ -1521,18 +1522,25 @@ public class PlacesListFragment extends Fragment
                 List<PlaceItem> values3  = new ArrayList<>();
                 List<PlaceItem> values4  = new ArrayList<>();
                 List<PlaceItem> values5  = new ArrayList<>();
+
                 for (PlaceItem item : items0)
                 {
                     String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
+                    String label0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
+                    label0 = label0.replaceAll("\\p{M}", "");          // and remove them; e.g. Rīga -> Riga
 
-                    if (label.equals(constraint) || filterExceptions.contains(item.rowID)) {
+                    if (label.equals(constraint) || label0.equals(constraint) || filterExceptions.contains(item.rowID)) {
                         values0.add(0, item);
+                        continue;
 
-                    } else if (label.startsWith(constraint)) {
-                        values0.add(item);
-
-                    } else if (label.contains(constraint)) {
+                    } else if (label.startsWith(constraint) || label0.startsWith(constraint)) {
                         values1.add(item);
+                        continue;
+
+                    } else if (label.contains(constraint) || label0.contains(constraint)) {
+                        values2.add(item);
+                        continue;
+                    }
 
                     String comment = item.comment;
                     if (comment != null)
@@ -1546,8 +1554,7 @@ public class PlacesListFragment extends Fragment
 
                         if (comment.equals(constraint) || comment0.equals(constraint)
                                 || comment.equals("[" + constraint + "]") || comment0.equals("[" + constraint + "]")
-                                || comment.contains("[" + constraint + "]") || comment0.contains("[" + constraint + "]"))
-                        {
+                                || comment.contains("[" + constraint + "]") || comment0.contains("[" + constraint + "]")) {
                             values3.add(0, item);
                             continue;
 
