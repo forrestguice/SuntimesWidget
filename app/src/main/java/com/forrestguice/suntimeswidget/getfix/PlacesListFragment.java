@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,12 +18,14 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -71,6 +73,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -1545,38 +1548,64 @@ public class PlacesListFragment extends Fragment
     {
         public TextView label;
         public TextView summary;
-        public ImageView icon_default, icon_userdefined;
+        public ImageView icon;
         public boolean selected = false;
+
+        public static HashMap<String, String> tagMap = null;
 
         public PlacesListViewHolder(View itemView)
         {
             super(itemView);
             label = (TextView) itemView.findViewById(android.R.id.text1);
             summary = (TextView) itemView.findViewById(android.R.id.text2);
-            icon_userdefined = (ImageView) itemView.findViewById(R.id.icon1);
-            icon_default = (ImageView) itemView.findViewById(R.id.icon2);
+            icon = (ImageView) itemView.findViewById(R.id.icon2);
         }
 
-        public void bindViewHolder(@Nullable Context context, @Nullable PlaceItem item )
+        public void bindViewHolder(@Nullable Context context, @Nullable PlaceItem item)
         {
             this.itemView.setSelected(selected);
             if (label != null) {
                 label.setText(context == null || item == null || item.location == null ? ""
                         : item.location.getLabel());
             }
-            if (summary != null) {
-                summary.setText(context == null || item == null || item.location == null ? ""
-                        : locationDisplayString(context, item.location, true));
-            }
-
-            if (item != null)
+            if (summary != null)
             {
-                if (icon_default != null) {
-                    icon_default.setVisibility(item.isDefault() ? View.VISIBLE : View.GONE);
+                boolean showLatLon = true;
+                CharSequence latLonDisplay = null;
+                if (showLatLon && (context != null && item != null && item.location != null)) {
+                    latLonDisplay = locationDisplayString(context, item.location, true);
                 }
-                if (icon_userdefined != null) {
-                    icon_userdefined.setVisibility(item.isDefault() ? View.GONE : View.VISIBLE);
+
+                boolean showTags = true;
+                CharSequence tagDisplay = null;
+                if (showTags && (context != null && item != null))
+                {
+                    if (tagMap == null) {
+                        tagMap = PlaceTags.loadTagMap(context);
+                    }
+                    ArrayList<String> tags = item.getTags(tagMap, false, false);
+                    tagDisplay = (tags != null && !tags.isEmpty() ? PlaceTags.tagDisplayString(context, tags, PlaceTags.DEFAULT_TAGS) : null);
                 }
+
+                if (latLonDisplay != null && tagDisplay != null) {
+                    summary.setText(latLonDisplay + "\n" + tagDisplay);
+                    summary.setVisibility(View.VISIBLE);
+
+                } else if (latLonDisplay != null) {
+                    summary.setText(latLonDisplay);
+                    summary.setVisibility(View.VISIBLE);
+
+                } else if (tagDisplay != null) {
+                    summary.setText(tagDisplay);
+                    summary.setVisibility(View.VISIBLE);
+
+                } else {
+                    summary.setText("");
+                    summary.setVisibility(View.GONE);
+                }
+            }
+            if (context != null && item != null && icon != null) {
+                icon.setImageResource(getIconResID(context, item));
             }
         }
 
@@ -1584,6 +1613,36 @@ public class PlacesListFragment extends Fragment
             selected = false;
             bindViewHolder(null, null);
         }
+
+        @SuppressLint("ResourceType")
+        protected static int getIconResID(Context context, PlaceItem item)
+        {
+            int[] attrs = new int[] { R.attr.icPlaceCity, R.attr.icPlaceUser, R.attr.icPlaceCapital,
+                    R.attr.icPlaceMisc, R.attr.icPlaceGPS, R.attr.icPlaceInfo, R.attr.icPlaceHome };
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int icDefault = a.getResourceId(0, R.drawable.ic_action_locale);
+            int icUserDefined = a.getResourceId(1, R.drawable.ic_action_place);
+            int icCapital = a.getResourceId(2, R.drawable.ic_action_stars_dark);
+            int icMisc = a.getResourceId(3, R.drawable.ic_action_flagcircle_dark);
+            int icGPS = a.getResourceId(4, R.drawable.ic_action_location_found);
+            int icInfo = a.getResourceId(5, R.drawable.ic_action_about);
+            int icHome = a.getResourceId(6, R.drawable.ic_action_home);
+            a.recycle();
+
+            if (item.hasTag(PlaceTags.TAG_CAPITAL)) {
+                return icCapital;
+
+            } else if (item.hasTag(PlaceTags.TAG_MISC)) {
+                return icMisc;
+
+            } else if (item.hasTag(PlaceTags.TAG_GPS)) {
+                return icGPS;
+
+            } else if (item.isDefault()) {
+                return icDefault;
+            } else return icUserDefined;
+        }
+
         public static int suggestedLayoutResID() {
             return R.layout.layout_listitem_places;
         }
