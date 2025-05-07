@@ -1380,7 +1380,7 @@ public class PlacesListFragment extends Fragment
         public PlacesListViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
-            View view = layout.inflate(R.layout.layout_listitem_places, parent, false);
+            View view = layout.inflate(PlacesListViewHolder.suggestedLayoutResID(), parent, false);
             return new PlacesListViewHolder(view);
         }
 
@@ -1583,6 +1583,9 @@ public class PlacesListFragment extends Fragment
         public void unbindViewHolder() {
             selected = false;
             bindViewHolder(null, null);
+        }
+        public static int suggestedLayoutResID() {
+            return R.layout.layout_listitem_places;
         }
     }
 
