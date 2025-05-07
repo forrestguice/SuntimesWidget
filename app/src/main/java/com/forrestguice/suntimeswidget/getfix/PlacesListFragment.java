@@ -1494,6 +1494,12 @@ public class PlacesListFragment extends Fragment
             return new PlacesFilter();
         }
 
+        private HashMap<String, String> tags = null;
+        protected void initTags(Context context) {
+            Log.d("DEBUG", "initTags");
+            tags = PlaceTags.loadTagMap(context);
+        }
+
         /**
          * PlacesFilter
          */
@@ -1511,6 +1517,10 @@ public class PlacesListFragment extends Fragment
             {
                 List<PlaceItem> values0  = new ArrayList<>();
                 List<PlaceItem> values1  = new ArrayList<>();
+                List<PlaceItem> values2  = new ArrayList<>();
+                List<PlaceItem> values3  = new ArrayList<>();
+                List<PlaceItem> values4  = new ArrayList<>();
+                List<PlaceItem> values5  = new ArrayList<>();
                 for (PlaceItem item : items0)
                 {
                     String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
@@ -1523,10 +1533,42 @@ public class PlacesListFragment extends Fragment
 
                     } else if (label.contains(constraint)) {
                         values1.add(item);
+
+                    String comment = item.comment;
+                    if (comment != null)
+                    {
+                        if (tags == null) {
+                            initTags(contextRef.get());
+                        }
+                        comment = PlaceTags.expandTags(comment, tags, true).toLowerCase(Locale.ROOT);
+                        String comment0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
+                        comment0 = comment0.replaceAll("\\p{M}", "");        // and remove them; e.g. Rīga -> Riga
+
+                        if (comment.equals(constraint) || comment0.equals(constraint)
+                                || comment.equals("[" + constraint + "]") || comment0.equals("[" + constraint + "]")
+                                || comment.contains("[" + constraint + "]") || comment0.contains("[" + constraint + "]"))
+                        {
+                            values3.add(0, item);
+                            continue;
+
+                        } else if (comment.startsWith(constraint) || comment0.startsWith(constraint)
+                                || comment.startsWith("[" + constraint + "]") || comment0.startsWith("[" + constraint + "]")
+                        ) {
+                            values4.add(item);
+                            continue;
+
+                        } else if (comment.contains(constraint) || comment0.contains(constraint)) {
+                            values5.add(item);
+                            continue;
+                        }
                     }
                 }
                 List<PlaceItem> values = new ArrayList<>(values0);
                 values.addAll(values1);
+                values.addAll(values2);
+                values.addAll(values3);
+                values.addAll(values4);
+                values.addAll(values5);
                 return values;
             }
 
