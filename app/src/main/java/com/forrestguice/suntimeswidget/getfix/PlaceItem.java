@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,8 +20,12 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlaceItem implements Parcelable
 {
@@ -58,6 +62,30 @@ public class PlaceItem implements Parcelable
     }
     public boolean hasTag(String tag) {
         return (comment != null && comment.contains(tag));
+    }
+
+    public ArrayList<String> getTags() {
+        return getTags(null, true, false);
+    }
+    public ArrayList<String> getTags(@Nullable HashMap<String, String> expandedMap, boolean includeOriginal, boolean includeOptional)
+    {
+        if (comment != null && comment.contains("[") && comment.contains("]"))
+        {
+            String block = comment.substring(comment.indexOf("["), comment.lastIndexOf("]"));
+            ArrayList<String> tags = PlaceTags.splitTags(block);
+            ArrayList<String> r = new ArrayList<>();
+            for (int i=0; i<tags.size(); i++)
+            {
+                if (expandedMap != null) {
+                    for (String tag1 : PlaceTags.splitTags(PlaceTags.expandTags(tags.get(i), expandedMap, includeOriginal))) {
+                        if (includeOptional || !tag1.endsWith("*]")) {
+                            r.add(tag1);
+                        }
+                    }
+                } else r.add(tags.get(i));
+            }
+            return r;
+        } else return new ArrayList<>();
     }
 
     @Override
