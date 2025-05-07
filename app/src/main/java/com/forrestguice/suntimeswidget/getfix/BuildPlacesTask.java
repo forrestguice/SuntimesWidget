@@ -164,12 +164,19 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 for (String item : items)
                 {
                     PlaceItem location = csvItemToPlaceItem(item);
-                    if (location != null) {
+                    if (location != null)
+                    {
+                        location.comment = (location.comment == null) ? getDefaultComment(fromGroup)
+                                : location.comment.concat(getDefaultComment(fromGroup));
                         locations.add(location);
                     }
                 }
             }
         }
+    }
+
+    private String getDefaultComment(String fromGroup) {
+        return PlaceItem.TAG_DEFAULT; // + "[" + fromGroup + "]";
     }
 
     private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<PlaceItem> locations)
