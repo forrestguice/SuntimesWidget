@@ -183,6 +183,9 @@
         <item name="icPlaceCity">@drawable/ic_action_locale_ref</item>
         <item name="icPlaceCapital">@drawable/ic_action_stars_ref</item>
         <item name="icPlaceMisc">@drawable/ic_action_flagcircle_ref</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_ref</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_ref</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_ref</item>
 
         <item name="icActionPlay">@drawable/ic_action_play_ref</item>
         <item name="icActionPause">@drawable/ic_action_pause_ref</item>
@@ -426,6 +429,9 @@
         <item name="icPlaceCity">@drawable/ic_action_locale_light</item>
         <item name="icPlaceCapital">@drawable/ic_action_stars_light</item>
         <item name="icPlaceMisc">@drawable/ic_action_flagcircle_light</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_light</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_light</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_light</item>
 
         <item name="icActionPlay">@drawable/ic_action_play_light</item>
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
@@ -673,6 +679,9 @@
         <item name="icPlaceCity">@drawable/ic_action_locale</item>
         <item name="icPlaceCapital">@drawable/ic_action_stars_dark</item>
         <item name="icPlaceMisc">@drawable/ic_action_flagcircle_dark</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about</item>
+        <item name="icPlaceHome">@drawable/ic_action_home</item>
 
         <item name="icActionPlay">@drawable/ic_action_play</item>
         <item name="icActionPause">@drawable/ic_action_pause</item>

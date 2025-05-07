@@ -193,6 +193,9 @@
     <attr name="icPlaceCity" format="reference" />
     <attr name="icPlaceCapital" format="reference" />
     <attr name="icPlaceMisc" format="reference" />
+    <attr name="icPlaceGPS" format="reference" />
+    <attr name="icPlaceInfo" format="reference" />
+    <attr name="icPlaceHome" format="reference" />
 
     <attr name="checkFavorite" format="reference" />
     <attr name="checkAltitude" format="reference" />
