@@ -609,6 +609,7 @@
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->
+    <string name="configLabel_location_comment">Comment</string>   <!-- edittext hint -->    <!-- TODO -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
