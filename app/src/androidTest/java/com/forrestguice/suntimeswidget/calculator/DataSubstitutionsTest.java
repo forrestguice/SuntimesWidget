@@ -39,14 +39,36 @@ public class DataSubstitutionsTest
         context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
     }
 
-    public static final String[] patterns = new String[] { "%loc", "%lat", "%lon", "%lel", "%t", "%s", "%id", "%d", "%dY", "%dD", "%dd", "%dT", "%dt", "%dm", "%%" };
+    public static final String[] patterns = new String[] { "%loc", "%lat", "%lon", "%lel", "%t", "%s", "%id", "%d", "%dY", "%dD", "%dd", "%dT", "%dt", "%dm", "%h", "%H", "%eot", "%eot_m", "%%" };
     public static String getPatternString(String[] patterns)
     {
-        StringBuilder pattern0 = new StringBuilder();
+        StringBuilder pattern = new StringBuilder();
         for (int i=0; i<patterns.length; i++) {
-            pattern0.append(patterns[i]);
+            pattern.append(patterns[i]);
         }
-        return pattern0.toString();
+        return pattern.toString();
+    }
+    public static String getPatternAtString(String[] patternsAt, String[] suffixes)
+    {
+        StringBuilder pattern = new StringBuilder();
+        for (String patternAt : patternsAt) {
+            for (String suffix : suffixes) {
+                pattern.append(patternAt).append(suffix);
+            }
+        }
+        return pattern.toString();
+    }
+
+    @Test
+    public void test_displayStringForTitlePattern0()
+    {
+        String pattern0 = getPatternString(patterns) + getPatternAtString(DataSubstitutions.ALL_PATTERNS_AT, DataSubstitutions.ALL_AT_SUFFIXES);
+        String[] result0 = new String[] {
+                DataSubstitutions.displayStringForTitlePattern0(context, pattern0, (SuntimesData) null)
+        };
+        for (String r0 : result0) {
+            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
+        }
     }
 
     @Test
@@ -55,6 +77,18 @@ public class DataSubstitutionsTest
         String pattern0 = getPatternString(patterns);
         String[] result0 = new String[] {
                 DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) null),
+        };
+        for (String r0 : result0) {
+            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
+        }
+    }
+
+    @Test
+    public void test_displayStringForTitlePattern_clockData()
+    {
+        String pattern0 = getPatternString(patterns);
+        String[] result0 = new String[] {
+                DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", (SuntimesClockData) null),
         };
         for (String r0 : result0) {
             assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""

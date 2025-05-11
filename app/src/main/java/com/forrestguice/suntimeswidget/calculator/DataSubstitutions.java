@@ -101,6 +101,21 @@ public class DataSubstitutions
     public static final String SUFFIX_MOONNOON = "ln";
     public static final String SUFFIX_MOONNIGHT = "lm";
 
+    public static final String[] ALL_PATTERNS_AT = new String[] { PATTERN_em_at, PATTERN_et_at, PATTERN_eT_at,
+            PATTERN_ea_at, PATTERN_eA_at, PATTERN_ez_at, PATTERN_eZ_at, PATTERN_ed_at, PATTERN_eD_at,
+            PATTERN_er_at, PATTERN_eR_at, PATTERN_es_at, PATTERN_eS_at,
+    };
+    public static final String[] ALL_AT_SUFFIXES = new String[] {
+            SUFFIX_MORNING_ASTRONOMICAL, SUFFIX_EVENING_ASTRONOMICAL,
+            SUFFIX_MORNING_NAUTICAL, SUFFIX_EVENING_NAUTICAL,
+            SUFFIX_MORNING_CIVIL, SUFFIX_EVENING_CIVIL,
+            SUFFIX_SUNRISE, SUFFIX_NOON, SUFFIX_MIDNIGHT, SUFFIX_SUNSET,
+            SUFFIX_MORNING_GOLDEN, SUFFIX_EVENING_GOLDEN,
+            SUFFIX_MORNING_BLUE4, SUFFIX_EVENING_BLUE4,
+            SUFFIX_MORNING_BLUE8, SUFFIX_EVENING_BLUE8,
+            SUFFIX_MOONRISE, SUFFIX_MOONSET, SUFFIX_MOONNOON, SUFFIX_MOONNIGHT
+    };
+
     @Nullable
     public static <T extends SuntimesData> SuntimesCalculator.Position getPositionForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
