@@ -102,7 +102,7 @@ public class DataSubstitutions
     public static final String SUFFIX_MOONNIGHT = "lm";
 
     @Nullable
-    public static <T extends SuntimesData> SuntimesCalculator.Position getPositionForEvent(SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> SuntimesCalculator.Position getPositionForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
         if (data != null)
         {
@@ -114,35 +114,35 @@ public class DataSubstitutions
     }
 
     @Nullable
-    public static <T extends SuntimesData> Double getAltitudeForEvent(SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> Double getAltitudeForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
         SuntimesCalculator.Position position = getPositionForEvent(event, data);
         return (position != null ? position.elevation : null);
     }
 
     @Nullable
-    public static <T extends SuntimesData> Double getAzimuthForEvent(SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> Double getAzimuthForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
         SuntimesCalculator.Position position = getPositionForEvent(event, data);
         return (position != null ? position.azimuth : null);
     }
 
     @Nullable
-    public static <T extends SuntimesData> Double getDeclinationForEvent(SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> Double getDeclinationForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
         SuntimesCalculator.Position position = getPositionForEvent(event, data);
         return (position != null ? position.declination : null);
     }
 
     @Nullable
-    public static <T extends SuntimesData> Double getRightAscensionForEvent(SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> Double getRightAscensionForEvent(@NonNull SolarEvents event, @Nullable T data)
     {
         SuntimesCalculator.Position position = getPositionForEvent(event, data);
         return (position != null ? position.rightAscension : null);
     }
 
     @Nullable
-    public static Double getShadowLengthForEvent(Context context, SolarEvents event, @Nullable SuntimesRiseSetData data)
+    public static Double getShadowLengthForEvent(Context context, @NonNull SolarEvents event, @Nullable SuntimesRiseSetData data)
     {
         if (data != null)
         {
@@ -157,7 +157,7 @@ public class DataSubstitutions
     }
 
     @Nullable
-    public static <T extends SuntimesData> Calendar getCalendarForEvent(SolarEvents event, @NonNull T data)
+    public static <T extends SuntimesData> Calendar getCalendarForEvent(@NonNull SolarEvents event, @NonNull T data)
     {
         if (data == null || data.calculator() == null) {
             return null;
@@ -214,7 +214,7 @@ public class DataSubstitutions
     }
 
     @Nullable
-    public static String getPatternForEvent(@NonNull String prefix, SolarEvents event)
+    public static String getPatternForEvent(@NonNull String prefix, @NonNull SolarEvents event)
     {
         switch (event)
         {
@@ -266,14 +266,14 @@ public class DataSubstitutions
         });
     }
 
-    public static String removePatterns(String displayString, Collection<String> patterns) {
+    public static String removePatterns(@NonNull String displayString, @NonNull Collection<String> patterns) {
         String value = displayString;
         for (String pattern : patterns) {
             value = value.replaceAll(pattern, "");
         }
         return value;
     }
-    public static String removePattern(String displayString, String pattern) {
+    public static String removePattern(@NonNull String displayString, String pattern) {
         return displayString.replaceAll(pattern, "");
     }
 
@@ -282,7 +282,8 @@ public class DataSubstitutions
      * @param appendTo the list that non-null patterns will be appended to
      * @return input patterns for method chaining
      */
-    public static HashMap<SolarEvents, String> appendTo(HashMap<SolarEvents, String> patterns, List<String> appendTo)
+    @NonNull
+    public static HashMap<SolarEvents, String> appendTo(@NonNull HashMap<SolarEvents, String> patterns, @NonNull List<String> appendTo)
     {
         for (String pattern : patterns.values()) {
             if (pattern != null) {
@@ -297,7 +298,7 @@ public class DataSubstitutions
      * @param patterns list of patterns to look for
      * @return true if the string contains at least one of the patterns, false if there were none
      */
-    public static boolean containsAtLeastOne(String displayString, List<String> patterns)
+    public static boolean containsAtLeastOne(@NonNull String displayString, @NonNull List<String> patterns)
     {
         for (String pattern : patterns) {
             if (displayString.contains(pattern)) {
