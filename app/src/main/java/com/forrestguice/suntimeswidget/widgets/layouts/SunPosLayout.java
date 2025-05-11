@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -64,7 +65,7 @@ public abstract class SunPosLayout extends PositionLayout
     {
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(context, titlePattern, dataset);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, dataset.dataActual);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2024 Forrest Guice
+    Copyright (C) 2014-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify

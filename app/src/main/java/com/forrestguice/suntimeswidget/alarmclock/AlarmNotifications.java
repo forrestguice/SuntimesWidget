@@ -66,6 +66,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -1256,7 +1257,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 data.calculate(context);
             }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
-            notificationMsg = utils.displayStringForTitlePattern(context, notificationMsg, data);
+            notificationMsg = DataSubstitutions.displayStringForTitlePattern0(context, notificationMsg, data);
         }
         int notificationIcon = alarm.getIcon();
 
