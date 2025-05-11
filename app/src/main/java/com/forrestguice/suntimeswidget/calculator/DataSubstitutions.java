@@ -554,7 +554,7 @@ public class DataSubstitutions
      */
     public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetData data)
     {
-        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesRiseSetData) data);
+        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
 
         String[] patterns = new String[] { PATTERN_M, PATTERN_m, PATTERN_o };
         if (data == null) {
