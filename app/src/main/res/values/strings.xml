@@ -1372,6 +1372,9 @@
     <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>
     <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_clearall">Clear Alarms</string>    <!-- TODO -->
+    <string name="configLabel_alarms_clearall_summary">Clear the list of alarms and notifications.</string>     <!-- TODO -->
+
     <!--
       BEDTIME
     -->
