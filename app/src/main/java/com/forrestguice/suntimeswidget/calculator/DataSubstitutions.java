@@ -258,7 +258,7 @@ public class DataSubstitutions
     }
 
     public interface PatternForEventInterface {
-        String getPatternForEvent(SolarEvents event);
+        @Nullable String getPatternForEvent(SolarEvents event);
     }
     public static HashMap<SolarEvents, String> getPatternsForEvent(SolarEvents[] events, HashMap<SolarEvents,String> patterns, PatternForEventInterface methodInterface)
     {
@@ -274,7 +274,9 @@ public class DataSubstitutions
 
     public static HashMap<SolarEvents, String> getPatternsForEvent(final String pattern, SolarEvents[] events)
     {
-        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface() {
+        return getPatternsForEvent(events, new HashMap<SolarEvents, String>(), new PatternForEventInterface()
+        {
+            @Nullable
             public String getPatternForEvent(SolarEvents event) {
                 return DataSubstitutions.getPatternForEvent(pattern, event);
             }
@@ -412,52 +414,69 @@ public class DataSubstitutions
 
             if (eventTime != null)
             {
-                if (displayString.contains(pattern_em)) {
+                if (pattern_em != null && displayString.contains(pattern_em)) {
                     displayString = displayString.replaceAll(pattern_em, eventTime.getTimeInMillis() + "");
                 }
-                if (displayString.contains(pattern_et)) {
+                if (pattern_et != null && displayString.contains(pattern_et)) {
                     displayString = displayString.replaceAll(pattern_et, utils.calendarTimeShortDisplayString(context, eventTime, false).toString());
                 }
-                if (displayString.contains(pattern_eT)) {
+                if (pattern_eT != null && displayString.contains(pattern_eT)) {
                     displayString = displayString.replaceAll(pattern_eT, utils.calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
-                if (displayString.contains(pattern_ez) || displayString.contains(pattern_eZ)) {
+                if (pattern_ez != null && displayString.contains(pattern_ez)) {
                     Double value = getAzimuthForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_ez, (value != null ? value + "" : ""));
+                }
+                if (pattern_eZ != null && displayString.contains(pattern_eZ)) {
+                    Double value = getAzimuthForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_eZ, (value != null ? utils.formatAsDirection(value, 1) : ""));
                 }
-                if (displayString.contains(pattern_ed) || displayString.contains(pattern_eD)) {
+                if (pattern_ed != null && displayString.contains(pattern_ed)) {
                     Double value = getDeclinationForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_ed, (value != null ? value + "" : ""));
+                }
+                if (pattern_eD != null && displayString.contains(pattern_eD)) {
+                    Double value = getDeclinationForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_eD, (value != null ? utils.formatAsDeclination(value, 1).toString() : ""));
                 }
-                if (displayString.contains(pattern_er) || displayString.contains(pattern_eR)) {
+                if (pattern_er != null && displayString.contains(pattern_er)) {
                     Double value = getRightAscensionForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_er, (value != null ? value + "" : ""));
+                }
+                if (pattern_eR != null && displayString.contains(pattern_eR)) {
+                    Double value = getRightAscensionForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_eR, (value != null ? utils.formatAsRightAscension(value, 1).toString() : ""));
                 }
 
                 if (d instanceof SuntimesRiseSetData)
                 {
                     SuntimesRiseSetData d0 = (SuntimesRiseSetData) d;
-                    if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
+                    if (pattern_ea != null && displayString.contains(pattern_ea)) {
                         Double angle = (d0.angle() != null ? Double.valueOf(d0.angle()) : getAltitudeForEvent(event, d));
                         displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
+                    }
+                    if (pattern_eA != null && displayString.contains(pattern_eA)) {
+                        Double angle = (d0.angle() != null ? Double.valueOf(d0.angle()) : getAltitudeForEvent(event, d));
                         displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
                     }
 
-                    if (displayString.contains(pattern_es) || displayString.contains(pattern_eS))
-                    {
-                        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    if (pattern_es != null && displayString.contains(pattern_es)) {
                         Double value = getShadowLengthForEvent(context, event, d0);
                         displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                    }
+                    if (pattern_eS != null && displayString.contains(pattern_eS)) {
+                        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                        Double value = getShadowLengthForEvent(context, event, d0);
                         displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                     }
 
                 } else {
-                    if (displayString.contains(pattern_ea) || displayString.contains(pattern_eA)) {
+                    if (pattern_ea != null && displayString.contains(pattern_ea)) {
                         Double angle = getAltitudeForEvent(event, d);
                         displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
+                    }
+                    if (pattern_eA != null && displayString.contains(pattern_eA)) {
+                        Double angle = getAltitudeForEvent(event, d);
                         displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
                     }
                 }
