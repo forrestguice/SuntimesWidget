@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -44,7 +45,7 @@ public class DataSubstitutionsTest
     {
         StringBuilder pattern = new StringBuilder();
         for (int i=0; i<patterns.length; i++) {
-            pattern.append(patterns[i]);
+            pattern.append(patterns[i]).append(" ");
         }
         return pattern.toString();
     }
@@ -53,7 +54,7 @@ public class DataSubstitutionsTest
         StringBuilder pattern = new StringBuilder();
         for (String patternAt : patternsAt) {
             for (String suffix : suffixes) {
-                pattern.append(patternAt).append(suffix);
+                pattern.append(patternAt).append(suffix).append(" ");
             }
         }
         return pattern.toString();
@@ -63,72 +64,83 @@ public class DataSubstitutionsTest
     public void test_displayStringForTitlePattern0()
     {
         String pattern0 = getPatternString(patterns) + getPatternAtString(DataSubstitutions.ALL_PATTERNS_AT, DataSubstitutions.ALL_AT_SUFFIXES);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern0(context, pattern0, (SuntimesData) null)
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern0(context, pattern0, (SuntimesData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesRiseSetData data1 = new SuntimesRiseSetData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern0(context, pattern0 + "%M%o%m", data1);
+        assertFalse("result should not be empty", result1.isEmpty());
+        assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }
 
     @Test
     public void test_displayStringForTitlePattern_data()
     {
         String pattern0 = getPatternString(patterns);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) null),
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesClockData data1 = new SuntimesClockData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) data1);
+        assertFalse("result should not be empty", result1.isEmpty());
     }
 
     @Test
     public void test_displayStringForTitlePattern_clockData()
     {
         String pattern0 = getPatternString(patterns);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", (SuntimesClockData) null),
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", (SuntimesClockData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesClockData data1 = new SuntimesClockData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", data1);
+        assertFalse("result should not be empty", result1.isEmpty());
+        assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m"));
     }
 
     @Test
     public void test_displayStringForTitlePattern_sunData()
     {
         String pattern0 = getPatternString(patterns);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesRiseSetData) null),
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesRiseSetData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesRiseSetData data1 = new SuntimesRiseSetData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", data1);
+        assertFalse("result should not be empty", result1.isEmpty());
+        assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }
 
     @Test
     public void test_displayStringForTitlePattern_moonData()
     {
         String pattern0 = getPatternString(patterns);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m%i", (SuntimesMoonData) null)
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m%i", (SuntimesMoonData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesMoonData data1 = new SuntimesMoonData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m%i", data1);
+        assertFalse("result should not be empty", result1.isEmpty());
+        assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o") || result1.contains("%i"));
     }
 
     @Test
     public void test_displayStringForTitlePattern_equinoxData()
     {
         String pattern0 = getPatternString(patterns);
-        String[] result0 = new String[] {
-                DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesEquinoxSolsticeData) null)
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
+        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesEquinoxSolsticeData) null);
+        assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
+
+        SuntimesEquinoxSolsticeData data1 = new SuntimesEquinoxSolsticeData(context, 0);
+        data1.calculate(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", data1);
+        assertFalse("result should not be empty", result1.isEmpty());
+        assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }
 
 }
