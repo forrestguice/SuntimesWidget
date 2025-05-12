@@ -1,8 +1,16 @@
 ### ~
 
+### v0.16.7 (2025-05-12)
+* fixes app crash when twilight alarms have an attached note (#872).
+* improves searching places when names contain special characters.
+* adds world places; ~120 places; South American capitals and other major cities.
+* adds "check all" button to the world places dialog; fixes bug where dialog allows all items unchecked.
+* adds an indicator to the moon dialog when the displayed time is adjusted by DST (#870).
+* adds an additional "clear alarms" preference to alarm settings.
+
 ### v0.16.6 (2025-04-16)
 * adds option for "solar midnight" (#835).
-* adds world places: ~110 places; North American capitols, major cities, and others.
+* adds world places: ~110 places; North American capitals, major cities, and others.
 * adds an indicator to sun dialog when the displayed time is adjusted by DST.
 * fixes bug where "sun position grid does not re-align when DST changes" (#867).
 * fixes bug where "sun position graph labels are always displayed using 12h time".
