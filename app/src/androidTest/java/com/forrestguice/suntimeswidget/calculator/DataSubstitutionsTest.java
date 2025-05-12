@@ -45,7 +45,7 @@ public class DataSubstitutionsTest
     {
         StringBuilder pattern = new StringBuilder();
         for (int i=0; i<patterns.length; i++) {
-            pattern.append(patterns[i]).append(" ");
+            pattern.append(patterns[i]);
         }
         return pattern.toString();
     }
@@ -54,7 +54,7 @@ public class DataSubstitutionsTest
         StringBuilder pattern = new StringBuilder();
         for (String patternAt : patternsAt) {
             for (String suffix : suffixes) {
-                pattern.append(patternAt).append(suffix).append(" ");
+                pattern.append(patternAt).append(suffix);
             }
         }
         return pattern.toString();
