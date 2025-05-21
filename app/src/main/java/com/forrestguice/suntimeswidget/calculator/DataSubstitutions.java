@@ -157,7 +157,7 @@ public class DataSubstitutions
     }
 
     @Nullable
-    public static Double getShadowLengthForEvent(Context context, @NonNull SolarEvents event, @Nullable SuntimesRiseSetData data)
+    public static <T extends SuntimesData> Double getShadowLengthForEvent(Context context, @NonNull SolarEvents event, @Nullable T data)
     {
         if (data != null)
         {
@@ -378,7 +378,7 @@ public class DataSubstitutions
         for (SolarEvents event : events)
         {
             if (!DataSubstitutions.containsAtLeastOne(displayString, positionPatterns)) {
-                continue;
+                break;
             }
 
             String pattern_em = patterns_em.get(event);
@@ -395,22 +395,8 @@ public class DataSubstitutions
             String pattern_es = patterns_es.get(event);
             String pattern_eS = patterns_eS.get(event);
 
-            Calendar eventTime;
+            Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
-            if (data instanceof SuntimesRiseSetData)
-            {
-                SuntimesRiseSetData data0 = (SuntimesRiseSetData) data;
-                d = (T) (event == SolarEvents.NOON && data0.getLinked() != null ? data0.getLinked() : data0);
-                if (event == SolarEvents.SUNRISE) {
-                    event = SolarEvents.valueOf(data0.timeMode(), true);
-                } else if (event == SolarEvents.SUNSET) {
-                    event = SolarEvents.valueOf(data0.timeMode(), false);
-                }
-                eventTime = ((SuntimesRiseSetData) d).getEvents(event.isRising())[0];
-
-            } else {
-                eventTime = getCalendarForEvent(event, data);
-            }
 
             if (eventTime != null)
             {
@@ -447,38 +433,22 @@ public class DataSubstitutions
                     Double value = getRightAscensionForEvent(event, d);
                     displayString = displayString.replaceAll(pattern_eR, (value != null ? utils.formatAsRightAscension(value, 1).toString() : ""));
                 }
-
-                if (d instanceof SuntimesRiseSetData)
-                {
-                    SuntimesRiseSetData d0 = (SuntimesRiseSetData) d;
-                    if (pattern_ea != null && displayString.contains(pattern_ea)) {
-                        Double angle = (d0.angle() != null ? Double.valueOf(d0.angle()) : getAltitudeForEvent(event, d));
-                        displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
-                    }
-                    if (pattern_eA != null && displayString.contains(pattern_eA)) {
-                        Double angle = (d0.angle() != null ? Double.valueOf(d0.angle()) : getAltitudeForEvent(event, d));
-                        displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
-                    }
-
-                    if (pattern_es != null && displayString.contains(pattern_es)) {
-                        Double value = getShadowLengthForEvent(context, event, d0);
-                        displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
-                    }
-                    if (pattern_eS != null && displayString.contains(pattern_eS)) {
-                        WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
-                        Double value = getShadowLengthForEvent(context, event, d0);
-                        displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
-                    }
-
-                } else {
-                    if (pattern_ea != null && displayString.contains(pattern_ea)) {
-                        Double angle = getAltitudeForEvent(event, d);
-                        displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
-                    }
-                    if (pattern_eA != null && displayString.contains(pattern_eA)) {
-                        Double angle = getAltitudeForEvent(event, d);
-                        displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
-                    }
+                if (pattern_ea != null && displayString.contains(pattern_ea)) {
+                    Double angle = getAltitudeForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_ea, (angle != null ? angle + "" : ""));
+                }
+                if (pattern_eA != null && displayString.contains(pattern_eA)) {
+                    Double angle = getAltitudeForEvent(event, d);
+                    displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
+                }
+                if (pattern_es != null && displayString.contains(pattern_es)) {
+                    Double value = getShadowLengthForEvent(context, event, d);
+                    displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
+                }
+                if (pattern_eS != null && displayString.contains(pattern_eS)) {
+                    WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    Double value = getShadowLengthForEvent(context, event, d);
+                    displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                 }
 
             } else {
