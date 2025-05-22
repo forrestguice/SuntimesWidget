@@ -44,7 +44,6 @@
         <item>[GE]|Georgia, Black Sea*, Europe</item>
         <item>[GN]|Guinea, Atlantic Ocean*, Africa</item>
         <item>[GL]|Greenland, Atlantic Ocean*, North America, Arctic*, Nordic*, Denmark</item>
-        <item>[GR]|Greece, Mediterranean Sea*, Europe</item>
         <item>[GT]|Guatemala, Pacific Ocean*, Central America</item>
         <item>[HT]|Haiti, Caribbean Sea, Atlantic Ocean*, North America</item>
         <item>[HN]|Honduras, Pacific Ocean*, Central America</item>
@@ -310,6 +309,15 @@
         <item>[IM]|Isle of Man, Mann*, Irish Sea*, Europe, Great Britain, United Kingdom</item>
         <item>[MS]|Montserrat, Caribbean Sea, North America, Great Britain, United Kingdom</item>
         <item>[VG]|British Virgin Islands, Caribbean Sea, Atlantic Ocean*, Great Britain, United Kingdom</item>
+    </string-array>
+
+    <string-array name="place_tags_GR">
+        <item>[GR]|Greece, Mediterranean Sea*, Europe</item>
+        <item>[GR-B]|Central Macedonia</item>
+        <item>[GR-G]|Western Greece</item>
+        <item>[GR-H]|Central Greece</item>
+        <item>[GR-I]|Attica</item>
+        <item>[GR-M]|Crete</item>
     </string-array>
 
     <string-array name="place_tags_IN">

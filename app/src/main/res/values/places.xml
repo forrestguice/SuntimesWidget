@@ -38,6 +38,7 @@
         <item>places_EU_ES, place_label_EU_ES</item>          <!-- Europe; Spain -->
         <item>places_EU_FR, place_label_EU_FR</item>          <!-- Europe; France -->
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
+        <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
         <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
         <item>places_EU_RU, place_label_EU_RU</item>          <!-- Europe; Russia -->
     </string-array>
@@ -233,7 +234,6 @@
     <!-- Europe -->
     <string-array name="places_EU">
         <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL]</item>       <!-- Kingdom of the Netherlands -->
-        <item>"Athens", 37.9908, 23.7033, 41, [capital][GR]</item>       <!-- Greece -->
         <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL]</item>           <!-- Poland -->
         <item>"Bergen", 60.38713, 5.32006, 0, [NO]</item>                <!-- Norway -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
@@ -322,6 +322,13 @@
         <item>"Swansea", 51.613,-3.98091, 180, [GB-WLS]</item>
         <item>"Truro", 50.2648, -5.0827, 64, [GB-ENG]</item>
         <item>"Wrexham", 53.04318, -3.0008, 140, [GB-WLS]</item>
+    </string-array>
+    <string-array name="places_EU_GR">
+        <item>"Athens", 37.9908, 23.7033, 41, [capital][GR-I]</item>              <!-- Attica -->
+        <item>"Heraklion", 35.34305, 25.13447, 0, [capital][GR-M]</item>          <!-- Crete -->
+        <item>"Lamia", 38.89945, 22.4335, 20, [capital][GR-H]</item>              <!-- Central Greece -->
+        <item>"Patras", 38.250699, 21.73267, 0, [capital][GR-G]</item>            <!-- Western Greece -->
+        <item>"Thessaloniki", 40.63652, 22.94464, 250, [capital][GR-B]</item>     <!-- Macedonia -->
     </string-array>
     <string-array name="places_EU_IT">    <!-- Italy -->
         <item>"Alghero", 40.55984, 8.31647, 7, [IT]</item>
