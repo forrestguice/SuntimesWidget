@@ -301,11 +301,27 @@
         <item>"Toulouse", 43.60437, 1.44327, 151, [FR]</item>
     </string-array>
     <string-array name="places_EU_GB">    <!-- United Kingdom -->
+        <item>"Aberdeen", 57.15414, -2.12045, 65, [GB-SCT]</item>
+        <item>"Belfast", 54.59676, -5.9356, 0, [capital][GB-NIR]</item>
+        <item>"Birmingham", 52.47998, -1.90998, 140, [GB-ENG]</item>
+        <item>"Bristol", 51.45055, -2.59468, 48, [GB-ENG]</item>
         <item>"Cardiff", 51.5022, -3.2694, 51, [capital][GB-WLS]</item>
+        <item>"Derry", 54.99641, -7.3124, 5, [GB-NIR]</item>
         <item>\"Douglas, Isle of Man\", 54.15705, -4.47684, 0, [capital][IM]</item>
+        <item>"Dundee", 56.46493, -2.98523, 45, [GB-SCT]</item>
+        <item>"Edinburgh", 55.94951, -3.19877, 23, [capital][GB-SCT]</item>
         <item>"Glasgow", 55.86111, -4.25000, 8, [GB-SCT]</item>
+        <item>"Inverness", 57.49536, -4.23725, 12, [GB-SCT]</item>
+        <item>"Liverpool", 53.40885, -2.98146, 30, [GB-ENG]</item>
+        <item>"Leeds", 53.79884, -1.55179, 50, [GB-ENG]</item>
         <item>"London", 51.5073, -0.1276, 18, [capital][GB-ENG]</item>
+        <item>"Manchester", 53.47784, -2.25281, 118, [GB-ENG]</item>
+        <item>\"Newport, Wales\", 51.57923, -3.001285, 60, [GB-WLS]</item>
+        <item>"Nottingham", 52.94977, -1.15329, 60, [GB-ENG]</item>
+        <item>"Sheffield", 53.3835, -1.46015, 130, [GB-ENG]</item>
+        <item>"Swansea", 51.613,-3.98091, 180, [GB-WLS]</item>
         <item>"Truro", 50.2648, -5.0827, 64, [GB-ENG]</item>
+        <item>"Wrexham", 53.04318, -3.0008, 140, [GB-WLS]</item>
     </string-array>
     <string-array name="places_EU_IT">    <!-- Italy -->
         <item>"Alghero", 40.55984, 8.31647, 7, [IT]</item>
