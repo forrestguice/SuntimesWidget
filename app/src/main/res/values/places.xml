@@ -34,6 +34,7 @@
     </string-array>
     <string-array name="place_group_EU">
         <item>places_EU, place_label_EU</item>                <!-- Europe (unsorted) -->
+        <item>places_EU_DE, place_label_EU_DE</item>          <!-- Europe; Germany -->
         <item>places_EU_ES, place_label_EU_ES</item>          <!-- Europe; Spain -->
         <item>places_EU_FR, place_label_EU_FR</item>          <!-- Europe; France -->
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
@@ -234,7 +235,6 @@
         <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL]</item>       <!-- Kingdom of the Netherlands -->
         <item>"Athens", 37.9908, 23.7033, 41, [capital][GR]</item>       <!-- Greece -->
         <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL]</item>           <!-- Poland -->
-        <item>"Berlin", 52.5243, 13.4105, 40.0, [capital][DE]</item>     <!-- Germany -->
         <item>"Bergen", 60.38713, 5.32006, 0, [NO]</item>                <!-- Norway -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
         <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
@@ -271,6 +271,20 @@
         <item>"Yerevan", 40.1533, 44.4185, 865, [capital][AM]</item>     <!-- Armenia -->
         <item>"Zagreb", 45.8401, 15.8942, 330, [capital][HR]</item>      <!-- Croatia -->
         <item>"Zurich", 47.3774, 8.4666, 559, [CH]</item>                <!-- Switzerland -->
+    </string-array>
+    <string-array name="places_EU_DE">    <!-- Germany -->
+        <item>"Berlin", 52.5243, 13.4105, 40.0, [capital][DE]</item>        <!-- Berlin -->
+        <item>"Bremen", 53.08107, 8.80278, 12, [capital][DE-HB]</item>      <!-- Bremen -->
+        <item>"Cologne", 50.94594, 6.95008, 37, [DE-NW]</item>              <!-- North Rhine-Westphalia -->
+        <item>"Düsseldorf", 51.22293, 6.77891, 38, [capital][DE-NW]</item>  <!-- North Rhine-Westphalia -->
+        <item>"Dresden", 51.05281, 13.74511, 110, [capital][DE-SN]</item>   <!-- Saxony -->
+        <item>"Frankfurt", 50.10909, 8.69103, 110, [DE-HE]</item>           <!-- Hesse -->
+        <item>"Hamburg", 53.54684, 9.97856, 10, [capital][DE-HH]</item>     <!-- Hamburg -->
+        <item>"Hanover", 53.54926, 9.97125, 10, [capital][DE-HB]</item>     <!-- Lower Saxony -->
+        <item>"Leipzig", 51.3423926, 12.3821, [DE-SN]</item>                <!-- Saxony -->
+        <item>"Munich", 48.14183, 11.56438, 520, [capital][DE-BY]</item>    <!-- Bavaria -->
+        <item>"Nuremberg", 49.45092, 11.08949, 300, [DE-BY]</item>          <!-- Bavaria -->
+        <item>"Stuttgart", 48.77856, 9.17955, 245, [capital][DE-BW]</item>  <!-- Baden-Württemberg -->
     </string-array>
     <string-array name="places_EU_ES">    <!-- Spain -->
         <item>"A Coruña", 43.36914, -8.4092, 0, [ES-GA]</item>

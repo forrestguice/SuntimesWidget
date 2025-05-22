@@ -1558,6 +1558,7 @@
     <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_DE">Europe (Germany)</string>   <!-- TODO -->
     <string name="place_label_EU_ES">Europe (Spain)</string>
     <string name="place_label_EU_FR">Europe (France)</string>    <!-- TODO -->
     <string name="place_label_EU_GB">Europe (United Kingdom)</string>    <!-- TODO -->
