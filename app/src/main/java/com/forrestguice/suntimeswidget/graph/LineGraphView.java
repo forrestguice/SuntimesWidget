@@ -281,21 +281,29 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public void resetAnimation( boolean updateTime )
+    public void resetAnimation( final boolean updateTime )
     {
         //Log.d(LineGraphView.class.getSimpleName(), "resetAnimation");
         stopAnimation();
         options.offsetMinutes = 0;
-        if (updateTime)
+
+        post(new Runnable()
         {
-            options.now = -1;
-            if (data != null) {
-                Calendar calendar = Calendar.getInstance(data.timezone());
-                data.setTodayIs(calendar);
-                data.calculateData(getContext());
+            @Override
+            public void run()
+            {
+                if (updateTime)
+                {
+                    options.now = -1;
+                    if (data != null) {
+                        Calendar calendar = Calendar.getInstance(data.timezone());
+                        data.setTodayIs(calendar);
+                        data.calculateData(getContext());
+                    }
+                }
+                updateViews(true);
             }
-        }
-        updateViews(true);
+        });
     }
 
     @Override
