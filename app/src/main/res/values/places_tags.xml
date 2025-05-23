@@ -31,7 +31,6 @@
         <item>[CW]|Curaçao, Caribbean Sea*, South America, Netherlands</item>
         <item>[CY]|Cyprus, Mediterranean Sea*, Asia</item>
         <item>[CZ]|Czech Republic, Europe</item>
-        <item>[DE]|Germany, North Sea*, Baltic Sea*, Europe</item>
         <item>[DK]|Denmark, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[DO]|Dominican Republic, Caribbean Sea, North America</item>
         <item>[DZ]|Algeria, Mediterranean Sea*, Sahara Desert*, Africa</item>
@@ -270,6 +269,19 @@
         <item>[CL-LL]|Los Lagos</item>
         <item>[CL-AI]|Aysén</item>
         <item>[CL-MA]|Magallanes</item>
+    </string-array>
+
+    <string-array name="place_tags_DE">
+        <item>[DE]|Germany, North Sea*, Baltic Sea*, Europe</item>
+        <item>[DE-BE]|Berlin</item>
+        <item>[DE-BW]|Baden-Württemberg</item>
+        <item>[DE-BY]|Bavaria</item>
+        <item>[DE-HB]|Bremen</item>
+        <item>[DE-HE]|Hesse</item>
+        <item>[DE-HH]|Hamburg</item>
+        <item>[DE-NI]|Lower Saxony</item>
+        <item>[DE-NW]|North Rhine-Westphalia</item>
+        <item>[DE-SN]|Saxony</item>
     </string-array>
 
     <string-array name="place_tags_EC">
