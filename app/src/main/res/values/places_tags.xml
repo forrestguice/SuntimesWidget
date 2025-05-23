@@ -95,7 +95,6 @@
         <item>[PK]|Pakistan, Indian Ocean*, Asia</item>
         <item>[PL]|Poland, Baltic Sea*, Europe</item>
         <item>[PS]|Palestine, Mediterranean Sea*, Asia</item>
-        <item>[PT]|Portugal, Atlantic Ocean*, Europe</item>
         <item>[PY]|Paraguay, South America</item>
         <item>[QA]|Qatar, Asia</item>
         <item>[RO]|Romania, Black Sea*, Europe</item>
@@ -383,6 +382,14 @@
         <item>[PE-PUN]|Puno</item>
         <item>[PE-TAC]|Tacna, Pacific Ocean*</item>
         <item>[PE-UCA]|Ucayali</item>
+    </string-array>
+
+    <string-array name="place_tags_PT">
+        <item>[PT]|Portugal, Atlantic Ocean*, Europe</item>
+        <item>[PT-06]|Coimbra</item>
+        <item>[PT-08]|Faro</item>
+        <item>[PT-11]|Lisbon</item>
+        <item>[PT-13]|Porto</item>
     </string-array>
 
     <string-array name="place_tags_RU">

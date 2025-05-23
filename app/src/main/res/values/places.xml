@@ -40,6 +40,7 @@
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
         <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
         <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
+        <item>places_EU_PT, place_label_EU_PT</item>          <!-- Europe; Portugal -->
         <item>places_EU_RU, place_label_EU_RU</item>          <!-- Europe; Russia -->
     </string-array>
     <string-array name="place_group_NA">
@@ -248,7 +249,6 @@
         <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI]</item>      <!-- Finland -->
         <item>"Istanbul", 41.0039, 28.4517, 0, [TR]</item>               <!-- Turkey -->
         <item>"Kyiv", 50.4496, 30.5252, 179, [capital][UA]</item>        <!-- Ukraine -->
-        <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT]</item>       <!-- Portugal -->
         <item>"Luxembourg", 49.61056, 6.13048, 230, [LU]</item>          <!-- Luxembourg -->
         <item>"Minsk", 53.8838, 27.4548, 242, [capital][BY]</item>       <!-- Belarus -->
         <item>"Monaco", 43.73233, 7.42731, 0, [MC]</item>                <!-- Monaco -->
@@ -336,6 +336,11 @@
         <item>"Naples", 40.83526, 14.2515, 0, [IT]</item>
         <item>"Udine", 46.06595, 13.23763, 113, [IT]</item>
         <item>"Rome", 41.9099, 12.3959, 79, [capital][IT]</item>
+    <string-array name="places_EU_PT">    <!-- Portugal -->
+        <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT-11]</item>
+        <item>"Porto", 41.1579, -8.62913, 100, [PT-13]</item>
+        <item>"Coimbra", 40.2057, -8.42131, 10, [PT-06]</item>
+        <item>\"Faro, Portugal\", 37.02148, -7.93097, [PT-08]</item>
     </string-array>
     <string-array name="places_EU_RU">    <!-- Russia -->
         <item>"Grozny", 43.3125, 45.698611, 130, [capital][RU]</item>
