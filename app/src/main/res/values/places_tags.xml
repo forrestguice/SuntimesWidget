@@ -290,11 +290,17 @@
 
     <string-array name="place_tags_ES">
         <item>[ES]|Spain, Europe</item>
+        <item>[ES-AN]|Andalusia</item>
         <item>[ES-AR]|Aragon</item>
         <item>[ES-AS]|Asturias, Atlantic Ocean*</item>
+        <item>[ES-CN]|Canary Islands</item>
         <item>[ES-CT]|Catalonia, Mediterranean Sea*</item>
         <item>[ES-GA]|Galicia, Atlantic Ocean*</item>
+        <item>[ES-IB]|Balearic Islands</item>
         <item>[ES-MD]|Madrid</item>
+        <item>[ES-MC]|Region of Murcia</item>
+        <item>[ES-PV]|Basque Country</item>
+        <item>[ES-VC]|Valencian Community</item>
     </string-array>
 
     <string-array name="place_tags_FI">

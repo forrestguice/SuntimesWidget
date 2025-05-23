@@ -302,12 +302,21 @@
         <item>"Stuttgart", 48.77856, 9.17955, 245, [capital][DE-BW]</item>  <!-- Baden-Württemberg -->
     </string-array>
     <string-array name="places_EU_ES">    <!-- Spain -->
-        <item>"A Coruña", 43.36914, -8.4092, 0, [ES-GA]</item>
-        <item>"Barcelona", 41.3825, 2.1769, 31, [capital][ES-CT]</item>
-        <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258, [ES]</item>
-        <item>"Oviedo", 43.36135, -5.85050, 232, [capital][ES-AS]</item>
-        <item>"Madrid", 40.4378, -3.8196, 681, [capital][ES-MD]</item>
-        <item>"Zaragoza", 41.64881, -0.87935, 243, [capital][ES-AR]</item>
+        <item>"A Coruña", 43.36914, -8.4092, 0, [ES-GA]</item>               <!-- Galicia -->
+        <item>"Alicante", 38.34465, -0.4784, 0, [ES-VC]</item>               <!-- Valencian Community-->
+        <item>"Barcelona", 41.3825, 2.1769, 31, [capital][ES-CT]</item>      <!-- Catalonia -->
+        <item>"Bilbao", 43.26302, -2.93485, 20, [ES-PV]</item>               <!-- Basque Country -->
+        <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258, [ES-PV]</item>
+        <item>"Oviedo", 43.36135, -5.85050, 232, [capital][ES-AS]</item>     <!-- Asturias -->
+        <item>"Palma", 39.56563, 2.65005, 12, [capital][ES-IB]</item>        <!-- Balearic Islands -->
+        <item>"Las Palmas", 28.12976, -15.42897, 0, [capital][ES-CN]</item>  <!-- Canary Islands -->
+        <item>"Madrid", 40.4378, -3.8196, 681, [capital][ES-MD]</item>       <!-- Community of Madrid -->
+        <item>"Málaga", 36.71591, -4.42942, 0, [ES-AN]</item>                <!-- Andalusia -->
+        <item>"Murcia", 37.99229, -1.13067, 42, [capital][ES-MC]</item>      <!-- Region of Murcia -->
+        <item>"Seville", 37.38008, -5.99771, 6, [capital][ES-AN]</item>      <!-- Andalusia -->
+        <item>"Valencia", 39.47464, -0.37544, 15, [capital][ES-VC]</item>    <!-- Valencian Community -->
+        <item>"Zaragoza", 41.64881, -0.87935, 243, [capital][ES-AR]</item>   <!-- Aragon -->
+    </string-array>
     <string-array name="places_EU_FI">    <!-- Finland -->
         <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI-18]</item>      <!-- Uusimaa -->
         <item>"Oulu", 65.00913, 25.4543, 0, [FI-14]</item>                  <!-- North Ostrobothnia -->
