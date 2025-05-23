@@ -280,7 +280,7 @@
         <item>"Dresden", 51.05281, 13.74511, 110, [capital][DE-SN]</item>   <!-- Saxony -->
         <item>"Frankfurt", 50.10909, 8.69103, 110, [DE-HE]</item>           <!-- Hesse -->
         <item>"Hamburg", 53.54684, 9.97856, 10, [capital][DE-HH]</item>     <!-- Hamburg -->
-        <item>"Hanover", 53.54926, 9.97125, 10, [capital][DE-HB]</item>     <!-- Lower Saxony -->
+        <item>"Hanover", 53.54926, 9.97125, 10, [capital][DE-NI]</item>     <!-- Lower Saxony -->
         <item>"Leipzig", 51.3423926, 12.3821, [DE-SN]</item>                <!-- Saxony -->
         <item>"Munich", 48.14183, 11.56438, 520, [capital][DE-BY]</item>    <!-- Bavaria -->
         <item>"Nuremberg", 49.45092, 11.08949, 300, [DE-BY]</item>          <!-- Bavaria -->
@@ -295,10 +295,18 @@
         <item>"Zaragoza", 41.64881, -0.87935, 243, [capital][ES-AR]</item>
     </string-array>
     <string-array name="places_EU_FR">    <!-- France -->
-        <item>"Ajaccio", 41.91805, 8.73605, 0, [FR]</item>
-        <item>"Paris", 48.8566, 2.3518, 41, [capital][FR]</item>
-        <item>"Rennes", 48.1159, -1.7234, 46, [FR]</item>
-        <item>"Toulouse", 43.60437, 1.44327, 151, [FR]</item>
+        <item>"Ajaccio", 41.91805, 8.73605, 0, [FR]</item>                    <!-- Corsica -->
+        <item>"Bordeaux", 44.84509, -0.57778, 7, [FR]</item>                  <!-- Nouvelle-Aquitaine -->
+        <item>"Lille", 50.61834, 3.05012, 30, [FR]</item>                     <!-- Hauts-de-France -->
+        <item>"Lyon", 45.76854, 4.84207, 170, [FR]</item>                     <!-- Auvergne-Rhône-Alpes -->
+        <item>"Marseille", 43.30504, 5.37308, 0, [FR]</item>                  <!-- Provence-Alpes-Côte d'Azur -->
+        <item>"Montpellier", 43.61448, 3.87197, 15, [FR]</item>               <!-- Occitanie -->
+        <item>"Nantes", 47.21951, -1.54288, 20, [FR]</item>                   <!-- Pays de la Loire -->
+        <item>"Nice", 43.69463, 7.26718, 0, [FR]</item>                       <!-- Provence-Alpes-Côte d'Azur -->
+        <item>"Paris", 48.8566, 2.3518, 41, [capital][FR]</item>              <!-- Île-de-France -->
+        <item>"Rennes", 48.1159, -1.7234, 46, [FR]</item>                     <!-- Brittany -->
+        <item>"Strasbourg", 48.5791, 7.76648, 150, [FR]</item>                <!-- Grand Est -->
+        <item>"Toulouse", 43.60437, 1.44327, 151, [FR]</item>                 <!-- Occitania -->
     </string-array>
     <string-array name="places_EU_GB">    <!-- United Kingdom -->
         <item>"Aberdeen", 57.15414, -2.12045, 65, [GB-SCT]</item>
