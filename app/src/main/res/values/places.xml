@@ -35,14 +35,18 @@
     <string-array name="place_group_EU">
         <item>places_EU, place_label_EU</item>                <!-- Europe (unsorted) -->
         <item>places_EU_DE, place_label_EU_DE</item>          <!-- Europe; Germany -->
+        <item>places_EU_DK, place_label_EU_DK</item>          <!-- Europe; Denmark -->
         <item>places_EU_ES, place_label_EU_ES</item>          <!-- Europe; Spain -->
+        <item>places_EU_FI, place_label_EU_FI</item>          <!-- Europe; Finland -->
         <item>places_EU_FR, place_label_EU_FR</item>          <!-- Europe; France -->
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
         <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
         <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
+        <item>places_EU_NO, place_label_EU_NO</item>          <!-- Europe; Norway -->
         <item>places_EU_PL, place_label_EU_PL</item>          <!-- Europe; Poland -->
         <item>places_EU_PT, place_label_EU_PT</item>          <!-- Europe; Portugal -->
         <item>places_EU_RU, place_label_EU_RU</item>          <!-- Europe; Russia -->
+        <item>places_EU_SE, place_label_EU_SE</item>          <!-- Europe; Sweden -->
     </string-array>
     <string-array name="place_group_NA">
         <item>places_NA, place_label_NA</item>                <!-- North America (unsorted) -->
@@ -236,23 +240,19 @@
     <!-- Europe -->
     <string-array name="places_EU">
         <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL]</item>       <!-- Kingdom of the Netherlands -->
-        <item>"Bergen", 60.38713, 5.32006, 0, [NO]</item>                <!-- Norway -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
         <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
         <item>"Bucharest", 44.4378, 26.0245, 94, [capital][RO]</item>    <!-- Romania -->
         <item>"Brussels", 50.8549, 4.3053, 86, [capital][BE]</item>      <!-- Belgium -->
         <item>"Chur", 46.8531, 9.4978, 564, [CH]</item>                  <!-- Switzerland -->
         <item>"Chisinau", 46.9998, 28.7881, 215, [capital][MD]</item>    <!-- Moldova -->
-        <item>"Copenhagen", 55.6712, 12.4907, 9, [capital][DK]</item>    <!-- Denmark -->
         <item>"Dublin", 53.33348, -6.20512, 0, [capital][IE]</item>      <!-- Republic of Ireland -->
         <item>"Gibraltar", 36.11072, -5.34687, 0, [GI]</item>
-        <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI]</item>      <!-- Finland -->
         <item>"Istanbul", 41.0039, 28.4517, 0, [TR]</item>               <!-- Turkey -->
         <item>"Kyiv", 50.4496, 30.5252, 179, [capital][UA]</item>        <!-- Ukraine -->
         <item>"Luxembourg", 49.61056, 6.13048, 230, [LU]</item>          <!-- Luxembourg -->
         <item>"Minsk", 53.8838, 27.4548, 242, [capital][BY]</item>       <!-- Belarus -->
         <item>"Monaco", 43.73233, 7.42731, 0, [MC]</item>                <!-- Monaco -->
-        <item>"Oslo", 59.8937, 10.6450, 0, [capital][NO]</item>          <!-- Norway -->
         <item>"Prague", 50.0595, 14.3255, 361, [capital][CZ]</item>      <!-- Czech Republic -->
         <item>"Reykjavik", 64.1322, -21.9224, 17, [capital][IS]</item>   <!-- Iceland -->
         <item>"Rīga", 56.9713, 23.9890, 7, [capital][LV]</item>          <!-- Latvia -->
@@ -260,7 +260,6 @@
         <item>"Schaan", 47.1521, 9.5201, 557, [LI]</item>                <!-- Liechtenstein -->
         <item>"Sevastopol", 44.61195, 33.49049, 100, [UA]</item>         <!-- Ukraine -->
         <item>"Sofia", 42.6953, 23.1838, 695, [capital][BG]</item>       <!-- Bulgaria -->
-        <item>"Stockholm", 59.3260, 17.8474, 20, [capital][SE]</item>    <!-- Sweden -->
         <item>"Tallinn", 59.4248, 24.5981, 17, [capital][EE]</item>      <!-- Estonia -->
         <item>"Tbilisi", 41.74824, 44.78995, 380, [capital][GE]</item>   <!-- Georgia -->
         <item>"Tiranë", 41.3309, 19.7828, 84, [capital][AL]</item>       <!-- Albania -->
@@ -270,6 +269,12 @@
         <item>"Yerevan", 40.1533, 44.4185, 865, [capital][AM]</item>     <!-- Armenia -->
         <item>"Zagreb", 45.8401, 15.8942, 330, [capital][HR]</item>      <!-- Croatia -->
         <item>"Zurich", 47.3774, 8.4666, 559, [CH]</item>                <!-- Switzerland -->
+    </string-array>
+
+    <string-array name="places_EU_DK">    <!-- Denmark -->
+        <item>"Aarhus", 56.15649, 10.21021, 6, [DK]</item>
+        <item>"Copenhagen", 55.6712, 12.4907, 9, [capital][DK]</item>
+        <item>"Odense", 55.39477, 10.39034, 12, [DK]</item> 
     </string-array>
 
     <string-array name="places_EU_PL">    <!-- Poland -->
@@ -303,6 +308,11 @@
         <item>"Oviedo", 43.36135, -5.85050, 232, [capital][ES-AS]</item>
         <item>"Madrid", 40.4378, -3.8196, 681, [capital][ES-MD]</item>
         <item>"Zaragoza", 41.64881, -0.87935, 243, [capital][ES-AR]</item>
+    <string-array name="places_EU_FI">    <!-- Finland -->
+        <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI-18]</item>      <!-- Uusimaa -->
+        <item>"Oulu", 65.00913, 25.4543, 0, [FI-14]</item>                  <!-- North Ostrobothnia -->
+        <item>"Tampere", 61.50216, 23.78038, 85, [FI-11]</item>             <!-- Pirkanmaa -->
+        <item>"Turku", 60.44945, 22.2502, 10, [FI-19]</item>                <!-- Southwest Finland -->
     </string-array>
     <string-array name="places_EU_FR">    <!-- France -->
         <item>"Ajaccio", 41.91805, 8.73605, 0, [FR]</item>                    <!-- Corsica -->
@@ -354,6 +364,12 @@
         <item>"Naples", 40.83526, 14.2515, 0, [IT]</item>
         <item>"Udine", 46.06595, 13.23763, 113, [IT]</item>
         <item>"Rome", 41.9099, 12.3959, 79, [capital][IT]</item>
+    <string-array name="places_EU_NO">    <!-- Norway -->
+        <item>"Bergen", 60.38713, 5.32006, 0, [NO-46]</item>                <!-- Vestland -->
+        <item>"Stavanger", 58.96696, 5.72154, 0, [NO-11]</item>             <!-- Rogaland -->
+        <item>"Trondheim", 63.43048, 10.39511, 0, [NO-50]</item>            <!-- Trøndelag -->
+        <item>"Oslo", 59.8937, 10.6450, 0, [capital][NO-03]</item>          <!-- Oslo -->
+    </string-array>
     <string-array name="places_EU_PT">    <!-- Portugal -->
         <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT-11]</item>
         <item>"Porto", 41.1579, -8.62913, 100, [PT-13]</item>
@@ -365,6 +381,12 @@
         <item>"Moscow", 55.7656, 37.6040, 186, [capital][RU]</item>
         <item>"Kazan", 55.79638, 49.10888, 60, [capital][RU-TA]</item>       <!-- Tatarstan -->
         <item>"Cheboksary", 56.15384, 47.24776, 150, [capital][RU-CU]</item> <!-- Chuvashia -->
+    </string-array>
+    <string-array name="places_EU_SE">    <!-- Sweden -->
+        <item>"Gothenburg", 57.70687, 11.96932, 12, [SE]</item>
+        <item>"Stockholm", 59.3260, 17.8474, 20, [capital][SE]</item>
+        <item>"Malmö", 55.59009, 12.98881, 10, [SE]</item>
+        <item>"Uppsala", 59.85844, 17.6455, 15, [SE]</item>
     </string-array>
 
     <!-- North America -->

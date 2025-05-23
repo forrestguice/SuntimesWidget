@@ -36,7 +36,6 @@
         <item>[DZ]|Algeria, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[EE]|Estonia, Baltic Sea*, Europe</item>
         <item>[EG]|Egypt, Mediterranean Sea*, Red Sea*, Sahara Desert*, Africa</item>
-        <item>[FI]|Finland, Nordic*, Baltic Sea*, Europe</item>
         <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
         <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
         <item>[FO]|Faroe Islands, Nordic*, Atlantic Ocean, Europe, Denmark</item>
@@ -86,7 +85,6 @@
         <item>[NG]|Nigeria, Atlantic Ocean*, Africa</item>
         <item>[NI]|Nicaragua, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[NL]|Kingdom of the Netherlands, North Sea*, Europe</item>
-        <item>[NO]|Norway, North Sea*, Norwegian Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[NP]|Nepal, Asia</item>
         <item>[OM]|Oman, Indian Ocean*, Asia</item>
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
@@ -299,6 +297,14 @@
         <item>[ES-MD]|Madrid</item>
     </string-array>
 
+    <string-array name="place_tags_FI">
+        <item>[FI]|Finland, Nordic*, Baltic Sea*, Europe</item>
+        <item>[FI-11]|Pirkanmaa</item>
+        <item>[FI-14]|North Ostrobothnia</item>
+        <item>[FI-18]|Uusimaa</item>
+        <item>[FI-19]|Southwest Finland</item>
+    </string-array>
+
     <string-array name="place_tags_FR">
         <item>[FR]|France, Mediterranean Sea*, Europe</item>
         <item>[GF]|French Guiana, Atlantic Ocean*, South America, France</item>
@@ -376,6 +382,14 @@
         <item>[MX-VER]|Veracruz, Gulf of Mexico*</item>
         <item>[MX-YUC]|Yucatán, Gulf of Mexico*</item>
         <item>[MX-ZAC]|Zacatecas</item>
+    </string-array>
+
+    <string-array name="place_tags_NO">
+        <item>[NO]|Norway, North Sea*, Norwegian Sea*, Nordic*, Scandinavia*, Europe</item>
+        <item>[NO-03]|Oslo</item>
+        <item>[NO-11]|Rogaland</item>
+        <item>[NO-46]|Vestland</item>
+        <item>[NO-50]|Trøndelag</item>
     </string-array>
 
     <string-array name="place_tags_PE">
