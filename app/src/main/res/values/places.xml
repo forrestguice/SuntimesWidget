@@ -40,6 +40,7 @@
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
         <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
         <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
+        <item>places_EU_PL, place_label_EU_PL</item>          <!-- Europe; Poland -->
         <item>places_EU_PT, place_label_EU_PT</item>          <!-- Europe; Portugal -->
         <item>places_EU_RU, place_label_EU_RU</item>          <!-- Europe; Russia -->
     </string-array>
@@ -235,7 +236,6 @@
     <!-- Europe -->
     <string-array name="places_EU">
         <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL]</item>       <!-- Kingdom of the Netherlands -->
-        <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL]</item>           <!-- Poland -->
         <item>"Bergen", 60.38713, 5.32006, 0, [NO]</item>                <!-- Norway -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
         <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
@@ -266,12 +266,22 @@
         <item>"Tiranë", 41.3309, 19.7828, 84, [capital][AL]</item>       <!-- Albania -->
         <item>"Tórshavn", 62.01692, -6.75492, 0, [capital][FO]</item>    <!-- Faroe Islands -->
         <item>"Vienna", 48.19992, 16.36757, 151, [capital][AT]</item>    <!-- Austria -->
-        <item>"Warszawa", 52.2319, 21.0067, 143, [capital][PL]</item>    <!-- Poland -->
         <item>"Vilnius", 54.7000, 25.1128, 170, [capital][LT]</item>     <!-- Lithuania -->
         <item>"Yerevan", 40.1533, 44.4185, 865, [capital][AM]</item>     <!-- Armenia -->
         <item>"Zagreb", 45.8401, 15.8942, 330, [capital][HR]</item>      <!-- Croatia -->
         <item>"Zurich", 47.3774, 8.4666, 559, [CH]</item>                <!-- Switzerland -->
     </string-array>
+
+    <string-array name="places_EU_PL">    <!-- Poland -->
+        <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL-20]</item>           <!-- Podlaskie -->
+        <item>"Kraków", 50.06274, 19.91763, 200, [PL-12]</item>             <!-- Lesser Poland -->
+        <item>"Łódź", 51.77079, 19.4656, 170, [PL-10]</item>                <!-- Łódź -->
+        <item>"Lublin", 51.23725, 22.55945, 170, [PL-06]</item>             <!-- Lublin -->
+        <item>"Poznań", 52.40528, 16.93531, 80, [PL-30]</item>              <!-- Greater Poland -->
+        <item>"Warsaw", 52.2319, 21.0067, 143, [capital][PL-14]</item>      <!-- Masovian -->
+        <item>"Wrocław", 51.11128, 17.03841, 110, [PL-02]</item>            <!-- Lower Silesian -->
+    </string-array>
+
     <string-array name="places_EU_DE">    <!-- Germany -->
         <item>"Berlin", 52.5243, 13.4105, 40.0, [capital][DE]</item>        <!-- Berlin -->
         <item>"Bremen", 53.08107, 8.80278, 12, [capital][DE-HB]</item>      <!-- Bremen -->

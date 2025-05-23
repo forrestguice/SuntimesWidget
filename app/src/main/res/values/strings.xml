@@ -1565,6 +1565,7 @@
     <string name="place_label_EU_GR">Europe (Greece)</string>    <!-- TODO -->
     <string name="place_label_EU_UK">Europe (United Kingdom)</string>   <!-- deprecated; TODO: remove all references -->
     <string name="place_label_EU_IT">Europe (Italy)</string>    <!-- TODO -->
+    <string name="place_label_EU_PL">Europe (Poland)</string>   <!-- TODO -->
     <string name="place_label_EU_PT">Europe (Portugal)</string>   <!-- TODO -->
     <string name="place_label_EU_RU">Europe (Russia)</string>    <!-- TODO -->
     <string name="place_label_NA">North America</string>

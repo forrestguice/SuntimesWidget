@@ -92,7 +92,6 @@
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[PH]|Philippines, Pacific Ocean*, Asia</item>
         <item>[PK]|Pakistan, Indian Ocean*, Asia</item>
-        <item>[PL]|Poland, Baltic Sea*, Europe</item>
         <item>[PS]|Palestine, Mediterranean Sea*, Asia</item>
         <item>[PY]|Paraguay, South America</item>
         <item>[QA]|Qatar, Asia</item>
@@ -394,6 +393,17 @@
         <item>[PE-PUN]|Puno</item>
         <item>[PE-TAC]|Tacna, Pacific Ocean*</item>
         <item>[PE-UCA]|Ucayali</item>
+    </string-array>
+
+    <string-array name="places_tags_PL">
+        <item>[PL]|Poland, Baltic Sea*, Europe</item>
+        <item>[PL-02]|Lower Silesian</item>
+        <item>[PL-06]|Lublin</item>
+        <item>[PL-10]|Łódź</item>
+        <item>[PL-12]|Lesser Poland</item>
+        <item>[PL-14]|Masovian</item>
+        <item>[PL-20]|Podlaskie</item>
+        <item>[PL-30]|Greater Poland</item>
     </string-array>
 
     <string-array name="place_tags_PT">
