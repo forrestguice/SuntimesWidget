@@ -83,7 +83,6 @@
         <item>[NE]|Niger, Sahara Desert*, Africa</item>
         <item>[NG]|Nigeria, Atlantic Ocean*, Africa</item>
         <item>[NI]|Nicaragua, Caribbean Sea*, Pacific Ocean*, Central America</item>
-        <item>[NL]|Kingdom of the Netherlands, North Sea*, Europe</item>
         <item>[NP]|Nepal, Asia</item>
         <item>[OM]|Oman, Indian Ocean*, Asia</item>
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
@@ -367,6 +366,13 @@
         <item>[IT-75]|Apulia</item>
         <item>[IT-82]|Sicily</item>
         <item>[IT-88]|Sardinia</item>
+    </string-array>
+
+    <string-array name="place_tags_NL">
+        <item>[NL]|Kingdom of the Netherlands, North Sea*, Europe</item>
+        <item>[NL-NH]|North Holland</item>
+        <item>[NL-ZH]|South Holland</item>
+        <item>[NL-UT]|Utrecht</item>
     </string-array>
 
     <string-array name="place_tags_MX">

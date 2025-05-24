@@ -42,6 +42,7 @@
         <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
         <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
         <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
+        <item>places_EU_NL, place_label_EU_NL</item>          <!-- Europe; Netherlands -->
         <item>places_EU_NO, place_label_EU_NO</item>          <!-- Europe; Norway -->
         <item>places_EU_PL, place_label_EU_PL</item>          <!-- Europe; Poland -->
         <item>places_EU_PT, place_label_EU_PT</item>          <!-- Europe; Portugal -->
@@ -239,7 +240,6 @@
 
     <!-- Europe -->
     <string-array name="places_EU">
-        <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL]</item>       <!-- Kingdom of the Netherlands -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
         <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
         <item>"Bucharest", 44.4378, 26.0245, 94, [capital][RO]</item>    <!-- Romania -->
@@ -370,6 +370,12 @@
         <item>"Rome", 41.9099, 12.3959, 79, [capital][IT-62]</item>                  <!-- Lazio -->
         <item>"Turin", 45.06562, 7.671, 240, [IT-21]</item>                          <!-- Piedmont -->
         <item>"Venice", 45.43758, 12.32985, 1, [IT-34]</item>                        <!-- Veneto -->
+    </string-array>
+    <string-array name="places_EU_NL">    <!-- Kingdom of the Netherlands -->
+        <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL-NH]</item>       <!-- North Holland -->
+        <item>"Rotterdam", 51.92444, 4.47778, 1, [NL-ZH]</item>             <!-- South Holland -->
+        <item>"The Hague", 52.08633, 4.24238, 0, [capital][NL-ZH]</item>    <!-- South Holland -->
+        <item>"Utrecht", 52.0895, 5.1284, 5, [capital][NL-UT]</item>        <!-- Utrecht -->
     </string-array>
     <string-array name="places_EU_NO">    <!-- Norway -->
         <item>"Bergen", 60.38713, 5.32006, 0, [NO-46]</item>                <!-- Vestland -->
