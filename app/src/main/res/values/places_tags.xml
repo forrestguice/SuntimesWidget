@@ -54,7 +54,6 @@
         <item>[IQ]|Iraq, Persian Gulf*, Asia</item>
         <item>[IR]|Iran, Persia*, Persian Gulf*, Caspian Sea*, Asia</item>
         <item>[IS]|Iceland, Atlantic Ocean, Nordic*, Arctic*, Europe</item>
-        <item>[IT]|Italy, Mediterranean Sea*, Europe</item>
         <item>[JM]|Jamaica, Caribbean Sea, North America</item>
         <item>[JP]|Japan, Pacific Ocean*, Asia</item>
         <item>[KE]|Kenya, Indian Ocean*, Africa</item>
@@ -352,6 +351,22 @@
         <item>[IN-MH]|Mahārāshtra, Indian Ocean*</item>
         <item>[IN-TN]|Tamil Nādu, Indian Ocean*</item>
         <item>[IN-WB]|West Bengal, Indian Ocean*</item>
+    </string-array>
+
+    <string-array name="place_tags_IT">
+        <item>[IT]|Italy, Mediterranean Sea*, Europe</item>
+        <item>[IT-21]|Piedmont</item>
+        <item>[IT-25]|Lombardy</item>
+        <item>[IT-34]|Veneto</item>
+        <item>[IT-36]|Friuli-Venezia Giulia</item>
+        <item>[IT-42]|Liguria</item>
+        <item>[IT-45]|Emilia-Romagna</item>
+        <item>[IT-52]|Tuscany</item>
+        <item>[IT-62]|Lazio</item>
+        <item>[IT-72]|Campania</item>
+        <item>[IT-75]|Apulia</item>
+        <item>[IT-82]|Sicily</item>
+        <item>[IT-88]|Sardinia</item>
     </string-array>
 
     <string-array name="place_tags_MX">

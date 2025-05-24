@@ -368,11 +368,21 @@
         <item>"Thessaloniki", 40.63652, 22.94464, 250, [capital][GR-B]</item>     <!-- Macedonia -->
     </string-array>
     <string-array name="places_EU_IT">    <!-- Italy -->
-        <item>"Alghero", 40.55984, 8.31647, 7, [IT]</item>
-        <item>"Cagliari", 39.22138, 9.11069, 4, [IT]</item>
-        <item>"Naples", 40.83526, 14.2515, 0, [IT]</item>
-        <item>"Udine", 46.06595, 13.23763, 113, [IT]</item>
-        <item>"Rome", 41.9099, 12.3959, 79, [capital][IT]</item>
+        <item>"Alghero", 40.55984, 8.31647, 7, [IT-88]</item>                        <!-- Sardinia -->
+        <item>"Bari", 41.12551, 16.86188, 5, [capital][IT-75]</item>                 <!-- Apulia -->
+        <item>"Bologna", 44.4938, 11.34303, 55, [capital][IT-45]</item>              <!-- Emilia-Romagna -->
+        <item>"Cagliari", 39.22138, 9.11069, 4, [capital][IT-88]</item>              <!-- Sardinia -->
+        <item>"Catania", 37.51681, 15.1057, 5, [IT-82]</item>                        <!-- Sicily -->
+        <item>"Florence", 43.78389, 11.26189, 50, [capital][IT-52]</item>            <!-- Tuscany -->
+        <item>"Genoa", 44.40297, 8.94501, 20, [capital][IT-42]</item>                <!-- Liguria -->
+        <item>"Milan", 45.48353, 9.18931, 120, [capital][IT-25]</item>               <!-- Lombardy -->
+        <item>"Naples", 40.83526, 14.2515, 0, [capital][IT-72]</item>                <!-- Campania -->
+        <item>"Palermo", 38.11746, 13.37461, 15, [capital][IT-82]</item>             <!-- Sicily -->
+        <item>"Udine", 46.06595, 13.23763, 113, [IT-36]</item>                       <!-- Friuli-Venezia Giulia -->
+        <item>"Rome", 41.9099, 12.3959, 79, [capital][IT-62]</item>                  <!-- Lazio -->
+        <item>"Turin", 45.06562, 7.671, 240, [IT-21]</item>                          <!-- Piedmont -->
+        <item>"Venice", 45.43758, 12.32985, 1, [IT-34]</item>                        <!-- Veneto -->
+    </string-array>
     <string-array name="places_EU_NO">    <!-- Norway -->
         <item>"Bergen", 60.38713, 5.32006, 0, [NO-46]</item>                <!-- Vestland -->
         <item>"Stavanger", 58.96696, 5.72154, 0, [NO-11]</item>             <!-- Rogaland -->
