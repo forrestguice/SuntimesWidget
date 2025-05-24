@@ -263,30 +263,18 @@
         <item>"Tallinn", 59.4248, 24.5981, 17, [capital][EE]</item>      <!-- Estonia -->
         <item>"Tbilisi", 41.74824, 44.78995, 380, [capital][GE]</item>   <!-- Georgia -->
         <item>"Tiranë", 41.3309, 19.7828, 84, [capital][AL]</item>       <!-- Albania -->
-        <item>"Tórshavn", 62.01692, -6.75492, 0, [capital][FO]</item>    <!-- Faroe Islands -->
         <item>"Vienna", 48.19992, 16.36757, 151, [capital][AT]</item>    <!-- Austria -->
         <item>"Vilnius", 54.7000, 25.1128, 170, [capital][LT]</item>     <!-- Lithuania -->
         <item>"Yerevan", 40.1533, 44.4185, 865, [capital][AM]</item>     <!-- Armenia -->
         <item>"Zagreb", 45.8401, 15.8942, 330, [capital][HR]</item>      <!-- Croatia -->
         <item>"Zurich", 47.3774, 8.4666, 559, [CH]</item>                <!-- Switzerland -->
     </string-array>
-
     <string-array name="places_EU_DK">    <!-- Denmark -->
         <item>"Aarhus", 56.15649, 10.21021, 6, [DK]</item>
         <item>"Copenhagen", 55.6712, 12.4907, 9, [capital][DK]</item>
-        <item>"Odense", 55.39477, 10.39034, 12, [DK]</item> 
+        <item>"Odense", 55.39477, 10.39034, 12, [DK]</item>
+        <item>"Tórshavn", 62.01692, -6.75492, 0, [capital][FO]</item>    <!-- Faroe Islands -->
     </string-array>
-
-    <string-array name="places_EU_PL">    <!-- Poland -->
-        <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL-20]</item>           <!-- Podlaskie -->
-        <item>"Kraków", 50.06274, 19.91763, 200, [PL-12]</item>             <!-- Lesser Poland -->
-        <item>"Łódź", 51.77079, 19.4656, 170, [PL-10]</item>                <!-- Łódź -->
-        <item>"Lublin", 51.23725, 22.55945, 170, [PL-06]</item>             <!-- Lublin -->
-        <item>"Poznań", 52.40528, 16.93531, 80, [PL-30]</item>              <!-- Greater Poland -->
-        <item>"Warsaw", 52.2319, 21.0067, 143, [capital][PL-14]</item>      <!-- Masovian -->
-        <item>"Wrocław", 51.11128, 17.03841, 110, [PL-02]</item>            <!-- Lower Silesian -->
-    </string-array>
-
     <string-array name="places_EU_DE">    <!-- Germany -->
         <item>"Berlin", 52.5243, 13.4105, 40.0, [capital][DE]</item>        <!-- Berlin -->
         <item>"Bremen", 53.08107, 8.80278, 12, [capital][DE-HB]</item>      <!-- Bremen -->
@@ -388,6 +376,15 @@
         <item>"Stavanger", 58.96696, 5.72154, 0, [NO-11]</item>             <!-- Rogaland -->
         <item>"Trondheim", 63.43048, 10.39511, 0, [NO-50]</item>            <!-- Trøndelag -->
         <item>"Oslo", 59.8937, 10.6450, 0, [capital][NO-03]</item>          <!-- Oslo -->
+    </string-array>
+    <string-array name="places_EU_PL">    <!-- Poland -->
+        <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL-20]</item>           <!-- Podlaskie -->
+        <item>"Kraków", 50.06274, 19.91763, 200, [PL-12]</item>             <!-- Lesser Poland -->
+        <item>"Łódź", 51.77079, 19.4656, 170, [PL-10]</item>                <!-- Łódź -->
+        <item>"Lublin", 51.23725, 22.55945, 170, [PL-06]</item>             <!-- Lublin -->
+        <item>"Poznań", 52.40528, 16.93531, 80, [PL-30]</item>              <!-- Greater Poland -->
+        <item>"Warsaw", 52.2319, 21.0067, 143, [capital][PL-14]</item>      <!-- Masovian -->
+        <item>"Wrocław", 51.11128, 17.03841, 110, [PL-02]</item>            <!-- Lower Silesian -->
     </string-array>
     <string-array name="places_EU_PT">    <!-- Portugal -->
         <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT-11]</item>
