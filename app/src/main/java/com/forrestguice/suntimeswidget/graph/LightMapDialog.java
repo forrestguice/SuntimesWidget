@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2024 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -66,6 +67,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -315,6 +317,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (data != null && !lightmap.isAnimated())
             {
                 updateLightmapViews(data);
+                updateGraphViews(data);
                 updateSunPositionViews(data);
                 updateTimeText(data);
             }
@@ -462,7 +465,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
-                    //Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
+                    updateLightmapKeyViews(data);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
+                    }
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
                     //    graphView.updateViews(data);
                     //}
@@ -559,6 +565,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public void onClick(View v)
         {
             stopMap(true);
+            updateLightmapKeyViews(data);
             if (AppSettings.isTelevision(getActivity())) {
                 if (playButton != null) {
                     playButton.requestFocus();
@@ -1412,6 +1419,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         updateLightmapViews(data);
+        updateGraphViews(data);
         updateSunPositionViews(data);
         updateTimeText(data);
         startUpdateTask();
@@ -1444,30 +1452,85 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
-        if (context == null) {
+        if (context == null || data == null) {
             return;
         }
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "updateLightmapViews");
+        }
 
-        if (lightmap != null)
-        {
-            field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
-            field_civil.highlight(false);
-
-            field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
-            field_nautical.highlight(false);
-
-            field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
-            field_astro.highlight(false);
-
-            field_night.updateInfo(context, createInfoArray(new long[] {data.nightLength()}));
-            field_night.highlight(false);
-
-            long dayDelta = data.dayLengthOther() - data.dayLength();
-            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRisingLabel));
-            field_day.highlight(false);
-
+        updateLightmapKeyViews(data);
+        if (lightmap != null) {
             lightmap.updateViews(data);
-            //Log.d("DEBUG", "LightMapDialog updated");
+        }
+    }
+    protected void updateLightmapKeyViews(@NonNull SuntimesRiseSetDataset data)
+    {
+        Context context = getContext();
+        if (context == null || data == null) {
+            return;
+        }
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "updateLightmapKeyViews");
+        }
+
+        field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
+        field_civil.highlight(false);
+
+        field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
+        field_nautical.highlight(false);
+
+        field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
+        field_astro.highlight(false);
+
+        CharSequence nightLabel = null;
+        Drawable nightDrawable = null;
+        boolean replaceNightLabel;
+        if (replaceNightLabel = (data.nightLength() == 0))
+        {
+            if (data.civilTwilightLength()[1] <= 0) {
+                nightDrawable = field_day.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnightsun);
+
+            } else if (data.nauticalTwilightLength()[1] <= 0) {
+                nightDrawable = field_civil.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight_whitenight);
+
+            } else if (data.astroTwilightLength()[1] <= 0) {
+                nightDrawable = field_nautical.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
+
+            } else {
+                nightDrawable = field_astro.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
+            }
+        }
+
+        field_night.setLabelText(replaceNightLabel ? nightLabel : null);    // null resets label
+        field_night.updateInfo(context, createInfoArray(new long[]{data.nightLength()}), " ");
+        field_night.setIconDrawable(replaceNightLabel ? nightDrawable : null);    // null resets icon
+        field_night.highlight(false);
+
+        CharSequence dayLabel = null;
+        Drawable dayDrawable = null;
+        boolean replaceDayLabel;
+        if (replaceDayLabel = (data.dayLength() == 0))
+        {
+            dayDrawable = field_civil.getDefaultIconDrawable();
+            dayLabel = context.getString(R.string.timeMode_polarnight);
+        }
+
+        long dayDelta = data.dayLengthOther() - data.dayLength();
+        field_day.setLabelText(replaceDayLabel ? dayLabel : null);    // null resets label
+        field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRisingLabel), " ");
+        field_day.setIconDrawable(replaceDayLabel ? dayDrawable : null);    // null resets icon
+        field_day.highlight(false);
+    }
+    protected void updateGraphViews(@NonNull SuntimesRiseSetDataset data)
+    {
+        Context context = getContext();
+        if (context == null || data == null) {
+            return;
         }
         if (graphView != null) {
             graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
@@ -1819,7 +1882,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SpannableStringBuilder dstHelpSpan = SuntimesUtils.createSpan(context, dstHelp, helpTags);
 
         CharSequence twilightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight));
-        CharSequence helpSpan = TextUtils.concat(shadowHelpSpan, dstHelpSpan, twilightHelp);
+        CharSequence nightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight_more));
+        CharSequence helpSpan = TextUtils.concat(twilightHelp, nightHelp, dstHelpSpan, shadowHelpSpan);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
@@ -1837,11 +1901,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         protected TextView label;
         protected TextView text;
 
+        protected CharSequence defaultLabel = "";
+        protected Drawable defaultIcon = null;
+
         public LightMapKey(ImageView icon, TextView label, TextView duration)
         {
             this.icon = icon;
             this.label = label;
             this.text = duration;
+            this.defaultLabel = label.getText();
+            this.defaultIcon = icon.getBackground();
         }
 
         public LightMapKey(@NonNull View parent, int iconRes, int labelRes, int durationRes)
@@ -1849,6 +1918,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
             icon = (ImageView)parent.findViewById(iconRes);
             label = (TextView)parent.findViewById(labelRes);
             text = (TextView)parent.findViewById(durationRes);
+            if (label != null) {
+                defaultLabel = label.getText();
+            }
+            if (icon != null) {
+                defaultIcon = icon.getBackground();
+            }
         }
 
         public void themeViews(SuntimesTheme theme)
@@ -1877,6 +1952,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
 
+        public void setIconDrawable(@Nullable Drawable d)
+        {
+            if (icon != null && (d != null || defaultIcon != null)) {
+                icon.setBackgroundDrawable(d != null ? d : defaultIcon);
+            }
+        }
+        public Drawable getDefaultIconDrawable() {
+            return defaultIcon;
+        }
+
+        public void setLabelText(@Nullable CharSequence text)
+        {
+            if (label != null) {
+                label.setText(text != null ? text : defaultLabel);
+            }
+        }
+        public void setLabelVisible(boolean visible)
+        {
+            int visibility = (visible ? View.VISIBLE : View.INVISIBLE);
+            if (label != null) {
+                label.setVisibility(visibility);
+            }
+        }
+
         public void highlight(boolean highlight)
         {
             if (label != null)
@@ -1891,7 +1990,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 //text.setTypeface(null, (highlight ? Typeface.BOLD : Typeface.NORMAL));
         }
 
-        public void updateInfo(Context context, LightMapKeyInfo[] info)
+        public void updateInfo(Context context, LightMapKeyInfo[] info) {
+            updateInfo(context, info, "");
+        }
+        public void updateInfo(Context context, LightMapKeyInfo[] info, CharSequence noneText)
         {
             if (text == null || info == null || context == null)
                 return;
@@ -1926,8 +2028,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 setVisible(true);
 
             } else {
-                text.setText(new SpannableString(""));
-                setVisible(false);
+                text.setText(new SpannableString(noneText != null ? noneText : ""));
+                setVisible(noneText != null && !noneText.toString().isEmpty());
             }
         }
     }

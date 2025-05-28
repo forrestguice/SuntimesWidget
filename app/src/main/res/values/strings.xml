@@ -444,6 +444,11 @@
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">None</string>                 <!-- label -->
 
+    <string name="timeMode_polarnight">Polar Night</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnightsun">Midnight Sun</string>                 <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight">Midnight Twilight</string>       <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight_whitenight">White Night</string>  <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
     <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
@@ -2820,10 +2825,18 @@
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>
+          The <b>rising times</b> indicate the beginning of each twilight period (<b>dawn</b>), and <b>setting times</b> indicate their end (<b>dusk</b>).<br/><br/>
+          <b>Civil Twilight:</b> The sun is less than 6 degrees below the horizon. The brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 6 to 12 degrees below the horizon. Object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 12 to 18 degrees below the horizon. Near darkness of night.<br/><br/>
+          <b>Night:</b> The sun is more than 18 degrees below the horizon. The faintest stars are visible.<br/><br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>White Night:</b> The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.<br/><br/>
+          <b>Midnight Twilight:</b> The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.<br/><br/>
+          <b>Midnight Sun:</b> The sun does not set below the horizon (24 hours of daylight). This is also called <b>polar day</b>.<br/><br/>
+          <b>Polar night:</b> The sun does not rise above the horizon (24 hours of darkness).<br/><br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
