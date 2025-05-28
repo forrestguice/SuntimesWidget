@@ -829,21 +829,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
                 int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
                 int y = h / 2;
+                drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
 
-                p.setStyle(Paint.Style.FILL);
-                p.setColor(fillColor);
-                c.drawCircle(x, y, radius, p);
-
-                p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(strokeWidth);
-                p.setColor(strokeColor);
-
-                if (strokeEffect != null) {
-                    p.setPathEffect(strokeEffect);
+                if (x + radius > w) {    // point cropped at image bounds, so translate and draw it again
+                    drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                } else if (x - radius < 0) {
+                    drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 }
-
-                c.drawCircle(x, y, radius, p);
             }
+        }
+        protected void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+        {
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(fillColor);
+            c.drawCircle(x, y, radius, p);
+
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(strokeWidth);
+            p.setColor(strokeColor);
+
+            if (strokeEffect != null) {
+                p.setPathEffect(strokeEffect);
+            }
+
+            c.drawCircle(x, y, radius, p);
         }
 
         private LightMapTaskListener listener = null;
