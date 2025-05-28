@@ -240,10 +240,11 @@
 
     <!-- Europe -->
     <string-array name="places_EU">
+        <item>"Antwerp", 51.21189, 4.41452, 8, [BE-VLG]</item>           <!-- Belgium -->
         <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
         <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
         <item>"Bucharest", 44.4378, 26.0245, 94, [capital][RO]</item>    <!-- Romania -->
-        <item>"Brussels", 50.8549, 4.3053, 86, [capital][BE]</item>      <!-- Belgium -->
+        <item>"Brussels", 50.8549, 4.3053, 86, [capital][BE-BRU]</item>  <!-- Belgium -->
         <item>"Chur", 46.8531, 9.4978, 564, [CH]</item>                  <!-- Switzerland -->
         <item>"Chisinau", 46.9998, 28.7881, 215, [capital][MD]</item>    <!-- Moldova -->
         <item>"Dublin", 53.33348, -6.20512, 0, [capital][IE]</item>      <!-- Republic of Ireland -->

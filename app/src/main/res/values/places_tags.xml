@@ -11,7 +11,6 @@
         <item>[AW]|Aruba, Caribbean Sea*, South America, Netherlands</item>
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
-        <item>[BE]|Belgium, North Sea*, Europe</item>
         <item>[BD]|Bangladesh, Indian Ocean*, Asia</item>
         <item>[BG]|Bulgaria, Black Sea*, Europe</item>
         <item>[BH]|Bahrain, Asia</item>
@@ -159,6 +158,13 @@
         <item>[AU-WA]|Western Australia, Indian Ocean*</item>
         <item>[AU-SA]|South Australia, Indian Ocean*</item>
         <item>[AU-TAS]|Tasmania, Indian Ocean*, Pacific Ocean*</item>
+    </string-array>
+
+    <string-array name="place_tags_BE">
+        <item>[BE]|Belgium, North Sea*, Europe</item>
+        <item>[BE-BRU]|Brussels</item>
+        <item>[BE-VLG]|Flanders</item>
+        <item>[BE-WAL]|Wallonia</item>
     </string-array>
 
     <string-array name="place_tags_BO">
