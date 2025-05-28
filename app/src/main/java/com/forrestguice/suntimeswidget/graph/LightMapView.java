@@ -602,6 +602,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     }
                 }
 
+                // draw solar noon
+                if (colors.option_drawNoon)
+                {
+                    int lineWidth = (int)Math.ceil(c.getWidth() / (24d * 12d));     // a line that is 5 minutes wide
+                    p.setColor(colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE));
+                    drawVerticalLine(data.dataNoon.sunriseCalendarToday(), data.dataNoon, lineWidth, c, p);
+                }
+
                 // draw now marker
                 if (colors.option_drawNow > 0)
                 {
@@ -747,6 +755,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             int w = c.getWidth();
             int h = c.getHeight();
             c.drawRect(0, 0, w, h, p);
+        }
+
+        protected void drawVerticalLine(Calendar calendar0,  SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
+        {
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
+            calendar.setTimeInMillis(calendar0.getTimeInMillis());
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -895,6 +912,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int option_drawNow = DRAW_SUN1;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
+
+        public boolean option_drawNoon = true;
 
         public long offsetMinutes = 0;
         public long now = -1L;
