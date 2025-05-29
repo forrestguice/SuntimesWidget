@@ -777,10 +777,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                 case LightMapColors.DRAW_SUN_LINE_DASHED:
                     dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                    drawPoint(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_FILL), options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
                     drawVerticalLine(x, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
                     break;
 
                 case LightMapColors.DRAW_SUN_LINE_SOLID:
+                    drawPoint(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_FILL), options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
                     drawVerticalLine(x, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
                     break;
 
