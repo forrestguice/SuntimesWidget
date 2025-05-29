@@ -300,6 +300,20 @@ public class WorldMapWidgetSettings
         prefs.apply();
     }
 
+    public static void saveMapIntValue(Context context, int appWidgetId, String key, String mapTag, int value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        prefs.putInt(prefs_prefix + key + mapTag, value);
+        prefs.apply();
+    }
+    public static int loadMapIntValue(Context context, int appWidgetId, String key, String mapTag, int defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        return prefs.getInt(prefs_prefix + key + mapTag, defaultValue);
+    }
+
     public static void saveWorldMapString(Context context, int appWidgetId, String key, String mapTag, String value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();

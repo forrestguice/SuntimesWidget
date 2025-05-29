@@ -45,6 +45,33 @@
                     android:icon="?attr/icActionAppearance"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/graphOption_sunSymbol"
+                    android:icon="?attr/icActionSettings"
+                    android:title="Symbol"
+                    app:showAsAction="never">
+                    <menu>
+                        <group android:checkableBehavior="single">
+
+                            <item android:id="@+id/graphOption_sunSymbol_default"
+                                android:title="Circle"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_cross"
+                                android:title="Cross"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_circledot"
+                                android:title="Dot"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_line"
+                                android:title="Line"
+                                app:showAsAction="never" />
+
+                        </group>
+                    </menu>
+                </item>
+
                 <item android:id="@+id/action_showgraph"
                     android:icon="?attr/icActionGraph"
                     android:title="@string/configAction_lineGraph"

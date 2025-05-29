@@ -533,6 +533,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     public static final boolean DEF_KEY_WORLDMAP_MINORGRID = false;
 
+    public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
+    public static final int DEF_KEY_GRAPH_SUNSYMBOL = LightMapView.LightMapColors.DRAW_SUN1;
+
     private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
@@ -687,6 +690,26 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.graphOption_sunSymbol_default:
+                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_circledot:
+                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_cross:
+                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID);
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_line:
+                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID);
+                    updateViews();
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
@@ -760,12 +783,43 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
         }
 
+        int sunSymbol = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+        MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
+        if (selectedSymbol != null) {
+            selectedSymbol.setChecked(true);
+        }
+
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
         if (submenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 MenuAddon.populateSubMenu(submenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } //else submenuItem.setVisible(false);
+        }
+    }
+
+    @Nullable
+    protected MenuItem getMenuItemForSymbol(Menu menu, int sunSymbol)
+    {
+        switch (sunSymbol)
+        {
+            case LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID:
+            case LightMapView.LightMapColors.DRAW_SUN_LINE_DASHED:
+                return menu.findItem(R.id.graphOption_sunSymbol_line);
+
+            case LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID:
+            case LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_DASHED:
+                return menu.findItem(R.id.graphOption_sunSymbol_circledot);
+
+            case LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID:
+            case LightMapView.LightMapColors.DRAW_SUN_CROSS_DASHED:
+                return menu.findItem(R.id.graphOption_sunSymbol_cross);
+
+            case LightMapView.LightMapColors.DRAW_SUN1:
+            case LightMapView.LightMapColors.DRAW_SUN_CIRCLE_DASHED:
+                return menu.findItem(R.id.graphOption_sunSymbol_default);
+
+            default: return null;
         }
     }
 
@@ -907,6 +961,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
+            options.option_drawNow = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
