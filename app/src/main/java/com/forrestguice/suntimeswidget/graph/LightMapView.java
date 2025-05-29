@@ -764,6 +764,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     drawPoint(x, y, pointStroke, 0, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
                     break;
 
+                case LightMapColors.DRAW_SUN_CROSS_DASHED:
+                    dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                    drawPoint(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_FILL), options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
+                    drawCross(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
+                    break;
+
+                case LightMapColors.DRAW_SUN_CROSS_SOLID:
+                    drawPoint(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_FILL), options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                    drawCross(x, y, pointRadius, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
+                    break;
+
                 case LightMapColors.DRAW_SUN_LINE_DASHED:
                     dashed = new DashPathEffect(new float[] {4, 2}, 0);
                     drawVerticalLine(x, pointStroke, c, p, options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
@@ -893,30 +904,28 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
         }*/
 
-        protected void drawCross(Calendar calendar, int width, int radius, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        protected void drawCross(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
         {
-            if (calendar != null)
-            {
-                int w = c.getWidth();
-                int h = c.getHeight();
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int cX = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            int cY = c.getHeight() / 2;
+            drawCross(cX, cY, radius, strokeWidth, c, p, color, effect);
+        }
 
-                double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                int cX = (int) Math.round((minute / MINUTES_IN_DAY) * w);
-                int cY = h / 2;
+        protected static void drawCross(int cX, int cY, int radius, int strokeWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(strokeWidth);
+            p.setColor(color);
 
-                p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(width);
-                p.setColor(color);
-
-                if (effect != null) {
-                    p.setPathEffect(effect);
-                }
-
-                c.drawLine(cX, cY, cX + radius, cY, p);
-                c.drawLine(cX, cY, cX - radius, cY, p);
-                c.drawLine(cX, cY, cX, cY + radius, p);
-                c.drawLine(cX, cY, cX, cY - radius, p);
+            if (effect != null) {
+                p.setPathEffect(effect);
             }
+
+            c.drawLine(cX, cY, cX + radius, cY, p);
+            c.drawLine(cX, cY, cX - radius, cY, p);
+            c.drawLine(cX, cY, cX, cY + radius, p);
+            c.drawLine(cX, cY, cX, cY - radius, p);
         }
 
 
@@ -996,6 +1005,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public static final int DRAW_SUN_LINE_DASHED = 4;
         public static final int DRAW_SUN_CIRCLEDOT_SOLID = 5;
         public static final int DRAW_SUN_CIRCLEDOT_DASHED = 6;
+        public static final int DRAW_SUN_CROSS_SOLID = 7;   // TODO
+        public static final int DRAW_SUN_CROSS_DASHED = 8;   // TODO
 
         public int option_drawNow = DRAW_SUN_CIRCLEDOT_SOLID;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
