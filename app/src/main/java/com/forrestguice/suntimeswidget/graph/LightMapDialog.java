@@ -783,6 +783,29 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
         }
 
+        int iconSize = context.getResources().getDimensionPixelSize(R.dimen.menuIcon_size);
+        MenuItem graphOption_sunSymbol = menu.findItem(R.id.graphOption_sunSymbol);
+        if (graphOption_sunSymbol != null) {
+            int symbol = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+            graphOption_sunSymbol.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors()));
+        }
+        MenuItem graphOption_sunSymbol_default = menu.findItem(R.id.graphOption_sunSymbol_default);
+        if (graphOption_sunSymbol_default != null) {
+            graphOption_sunSymbol_default.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN1, iconSize, iconSize, lightmap.getColors()));
+        }
+        MenuItem graphOption_sunSymbol_circledot = menu.findItem(R.id.graphOption_sunSymbol_circledot);
+        if (graphOption_sunSymbol_circledot != null) {
+            graphOption_sunSymbol_circledot.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors()));
+        }
+        MenuItem graphOption_sunSymbol_cross = menu.findItem(R.id.graphOption_sunSymbol_cross);
+        if (graphOption_sunSymbol_cross != null) {
+            graphOption_sunSymbol_cross.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors()));
+        }
+        MenuItem graphOption_sunSymbol_line = menu.findItem(R.id.graphOption_sunSymbol_line);
+        if (graphOption_sunSymbol_line != null) {
+            graphOption_sunSymbol_line.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors()));
+        }
+
         int sunSymbol = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
         MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
         if (selectedSymbol != null) {

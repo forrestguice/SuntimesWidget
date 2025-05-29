@@ -23,6 +23,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -797,6 +799,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     break;
             }
         }
+
+        public static Drawable makeSunSymbolDrawable(Context context, int symbol, int w, int h, LightMapColors options)
+        {
+            Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(b);
+            drawSunSymbol(symbol, w/2, h/2, (w/2) - (w/6), c, makeSunSymbolDrawable_p, options);
+            return new BitmapDrawable(context.getResources(), b);
+        }
+        private static final Paint makeSunSymbolDrawable_p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         /////////////////////////////////////////////
 
