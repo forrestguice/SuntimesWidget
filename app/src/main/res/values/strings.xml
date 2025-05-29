@@ -2295,6 +2295,12 @@
     <string name="graph_option_filledpath">Filled Path</string>
     <string name="graph_option_moon">Show Moon</string>
 
+    <string name="graph_option_symbol">Symbol</string>   <!-- TODO -->
+    <string name="graph_option_symbol_circle">Circle</string>   <!-- TODO -->
+    <string name="graph_option_symbol_dot">Dot</string>   <!-- TODO -->
+    <string name="graph_option_symbol_cross">Cross</string>   <!-- TODO -->
+    <string name="graph_option_symbol_line">Line</string>   <!-- TODO -->
+
     <string name="seekAltitude_configHint">degrees</string>
     <string name="seekAltitude_suffix">°∠</string>
     <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>

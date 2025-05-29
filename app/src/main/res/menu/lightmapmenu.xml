@@ -47,25 +47,25 @@
 
                 <item android:id="@+id/graphOption_sunSymbol"
                     android:icon="?attr/icActionSettings"
-                    android:title="Symbol"
+                    android:title="@string/graph_option_symbol"
                     app:showAsAction="never">
                     <menu>
                         <group android:checkableBehavior="single">
 
                             <item android:id="@+id/graphOption_sunSymbol_default"
-                                android:title="Circle"
+                                android:title="@string/graph_option_symbol_circle"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_cross"
-                                android:title="Cross"
+                                android:title="@string/graph_option_symbol_cross"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_circledot"
-                                android:title="Dot"
+                                android:title="@string/graph_option_symbol_dot"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_line"
-                                android:title="Line"
+                                android:title="@string/graph_option_symbol_line"
                                 app:showAsAction="never" />
 
                         </group>
