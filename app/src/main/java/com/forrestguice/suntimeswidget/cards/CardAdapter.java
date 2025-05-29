@@ -38,7 +38,6 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -99,6 +98,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         options.init(context);
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
@@ -113,6 +113,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return retValue;
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
@@ -142,20 +143,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         for (String id : sun.getDataModes()) {
             sun.getData(id).setCompareMode(options.comparisonMode);
         }
-        sun.calculateData();
+        sun.calculateData(context);
 
         SuntimesMoonData moon = null;
         if (options.showMoon)
         {
             moon = new SuntimesMoonData(context, 0, "moon");
             moon.setTodayIs(date);
-            moon.calculate();
+            moon.calculate(context);
         }
 
         return new Pair<>(sun, moon);
     }
 
-    public long findDateForPosition(Context context, int position)
+    public Long findDateForPosition(Context context, int position)
     {
         if (position < 0) {
             position = 0;     // clamp invalid positions
@@ -175,6 +176,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
+        if (data_today == null) {
+            return TODAY_POSITION;
+        }
+
         Calendar today = Calendar.getInstance(data_today.first.timezone());
         today.setTimeInMillis(data_today.first.calendar().getTimeInMillis());
         today.set(Calendar.HOUR_OF_DAY, 12);
@@ -282,7 +287,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
                     found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
                 }
 
-            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) ||
+            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) || SolarEvents.MIDNIGHT.name().equals(eventID) ||
                     SolarEvents.MORNING_CIVIL.name().equals(eventID) || SolarEvents.EVENING_CIVIL.name().equals(eventID) || SolarEvents.MORNING_NAUTICAL.name().equals(eventID) ||
                     SolarEvents.EVENING_NAUTICAL.name().equals(eventID) || SolarEvents.MORNING_ASTRONOMICAL.name().equals(eventID) || SolarEvents.EVENING_ASTRONOMICAL.name().equals(eventID) ||
                     SolarEvents.MORNING_BLUE4.name().equals(eventID) || SolarEvents.EVENING_BLUE4.name().equals(eventID) || SolarEvents.MORNING_BLUE8.name().equals(eventID) ||
@@ -611,6 +616,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showNoon = true;
         public boolean showGold = false;
         public boolean showBlue = false;
+        public boolean showMidnight = false;
 
         public int showHeaderText = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
         public boolean showHeaderIcon = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
@@ -647,6 +653,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showNoon = showFields[AppSettings.FIELD_NOON];
             showGold = showFields[AppSettings.FIELD_GOLD] && supportsGoldBlue;
             showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
+            showMidnight = showFields[AppSettings.FIELD_MIDNIGHT];
 
             showHeaderText = AppSettings.loadShowHeaderTextPref(context);
             showHeaderIcon = AppSettings.loadShowHeaderIconPref(context);

@@ -24,12 +24,15 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SolsticeLayout extends SuntimesLayout
 {
+    public static final boolean PREF_DEF_CALENDAR_SHOWDATE = true;
+
     protected float titleSizeSp = 12;
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
@@ -63,7 +66,7 @@ public abstract class SolsticeLayout extends SuntimesLayout
     {
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);

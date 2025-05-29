@@ -110,6 +110,11 @@
             android:title="@string/configLabel_ui_showgoldhour"
             android:defaultValue="@bool/def_app_ui_showgoldhour" />
 
+        <CheckBoxPreference
+            android:key="app_ui_showfields_7"
+            android:title="@string/timeMode_midnight"
+            android:defaultValue="@bool/def_app_ui_showmidnight" />
+
     </PreferenceCategory>
 
     <!--<PreferenceCategory
@@ -185,6 +190,12 @@
             android:title="@string/configLabel_ui_showEquinox"
             android:summary="@string/configLabel_ui_showEquinox_summary"
             android:defaultValue="@bool/def_app_ui_showequinox" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showequinox_date"
+            android:title="@string/configLabel_ui_showEquinoxDate"
+            android:summary="@string/configLabel_ui_showEquinoxDate_summary"
+            android:defaultValue="@bool/def_app_ui_showequinox_date" />
 
         <CheckBoxPreference
             android:key="app_ui_showcrossquarter"

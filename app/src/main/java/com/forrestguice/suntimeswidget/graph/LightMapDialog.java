@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2024 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -43,8 +44,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -64,6 +67,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -168,7 +172,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         this.data.invalidateCalculation();
         this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
-        this.data.calculateData();
+        this.data.calculateData(context);
     }
 
     @NonNull @Override
@@ -313,6 +317,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (data != null && !lightmap.isAnimated())
             {
                 updateLightmapViews(data);
+                updateGraphViews(data);
                 updateSunPositionViews(data);
                 updateTimeText(data);
             }
@@ -460,7 +465,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
-                    //Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
+                    updateLightmapKeyViews(data);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
+                    }
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE) {
                     //    graphView.updateViews(data);
                     //}
@@ -557,6 +565,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public void onClick(View v)
         {
             stopMap(true);
+            updateLightmapKeyViews(data);
             if (AppSettings.isTelevision(getActivity())) {
                 if (playButton != null) {
                     playButton.requestFocus();
@@ -906,6 +915,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 LineGraphView.LineGraphOptions options1 = graphView.getOptions();
                 options1.now = options.now;
+                options1.timezone = getSelectedTZ(context, data);
+                options1.is24 = SuntimesUtils.is24();
                 options1.offsetMinutes = options.offsetMinutes;
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
                 options1.graph_width = LineGraphView.MINUTES_IN_DAY;
@@ -1408,6 +1419,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         updateLightmapViews(data);
+        updateGraphViews(data);
         updateSunPositionViews(data);
         updateTimeText(data);
         startUpdateTask();
@@ -1440,30 +1452,85 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
-        if (context == null) {
+        if (context == null || data == null) {
             return;
         }
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "updateLightmapViews");
+        }
 
-        if (lightmap != null)
-        {
-            field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
-            field_civil.highlight(false);
-
-            field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
-            field_nautical.highlight(false);
-
-            field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
-            field_astro.highlight(false);
-
-            field_night.updateInfo(context, createInfoArray(new long[] {data.nightLength()}));
-            field_night.highlight(false);
-
-            long dayDelta = data.dayLengthOther() - data.dayLength();
-            field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRisingLabel));
-            field_day.highlight(false);
-
+        updateLightmapKeyViews(data);
+        if (lightmap != null) {
             lightmap.updateViews(data);
-            //Log.d("DEBUG", "LightMapDialog updated");
+        }
+    }
+    protected void updateLightmapKeyViews(@NonNull SuntimesRiseSetDataset data)
+    {
+        Context context = getContext();
+        if (context == null || data == null) {
+            return;
+        }
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "updateLightmapKeyViews");
+        }
+
+        field_civil.updateInfo(context, createInfoArray(data.civilTwilightLength()));
+        field_civil.highlight(false);
+
+        field_nautical.updateInfo(context, createInfoArray(data.nauticalTwilightLength()));
+        field_nautical.highlight(false);
+
+        field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
+        field_astro.highlight(false);
+
+        CharSequence nightLabel = null;
+        Drawable nightDrawable = null;
+        boolean replaceNightLabel;
+        if (replaceNightLabel = (data.nightLength() == 0))
+        {
+            if (data.civilTwilightLength()[1] <= 0) {
+                nightDrawable = field_day.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnightsun);
+
+            } else if (data.nauticalTwilightLength()[1] <= 0) {
+                nightDrawable = field_civil.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight_whitenight);
+
+            } else if (data.astroTwilightLength()[1] <= 0) {
+                nightDrawable = field_nautical.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
+
+            } else {
+                nightDrawable = field_astro.getDefaultIconDrawable();
+                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
+            }
+        }
+
+        field_night.setLabelText(replaceNightLabel ? nightLabel : null);    // null resets label
+        field_night.updateInfo(context, createInfoArray(new long[]{data.nightLength()}), " ");
+        field_night.setIconDrawable(replaceNightLabel ? nightDrawable : null);    // null resets icon
+        field_night.highlight(false);
+
+        CharSequence dayLabel = null;
+        Drawable dayDrawable = null;
+        boolean replaceDayLabel;
+        if (replaceDayLabel = (data.dayLength() == 0))
+        {
+            dayDrawable = field_civil.getDefaultIconDrawable();
+            dayLabel = context.getString(R.string.timeMode_polarnight);
+        }
+
+        long dayDelta = data.dayLengthOther() - data.dayLength();
+        field_day.setLabelText(replaceDayLabel ? dayLabel : null);    // null resets label
+        field_day.updateInfo(context, createInfoArray(data.dayLength(), dayDelta, colorRisingLabel), " ");
+        field_day.setIconDrawable(replaceDayLabel ? dayDrawable : null);    // null resets icon
+        field_day.highlight(false);
+    }
+    protected void updateGraphViews(@NonNull SuntimesRiseSetDataset data)
+    {
+        Context context = getContext();
+        if (context == null || data == null) {
+            return;
         }
         if (graphView != null) {
             graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
@@ -1571,6 +1638,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
         else field_night.highlight(true);
     }
 
+    protected String getSelectedTZID(Context context) {
+        return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+    }
+    protected TimeZone getSelectedTZ(Context context, @NonNull SuntimesRiseSetDataset data)
+    {
+        String tzId = getSelectedTZID(context);
+        return WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+    }
+
+    protected static boolean useDST(TimeZone timezone) {
+        return (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+    }
+    public static boolean inDST(TimeZone timezone, Calendar calendar) {
+        return useDST(timezone) && timezone.inDaylightTime(calendar.getTime());
+    }
+
     protected void updateTimeText(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
@@ -1589,9 +1673,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         String suffix = "";
         boolean nowIsAfter = false;
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
-        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+        TimeZone tz = getSelectedTZ(context, data);
         Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);
@@ -1605,10 +1687,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
         if (sunTime != null)
         {
-            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
+            TimeZone timezone = mapTime.getTimeZone();
+            CharSequence tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
+
+            CharSequence dstIcon = null;
+            if (inDST(timezone, mapTime))
+            {
+                int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+                SuntimesUtils.ImageSpanTag[] spanTags = {
+                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                };
+                String spanString = " " + SuntimesUtils.SPANTAG_DST;
+                dstIcon = SuntimesUtils.createSpan(context, spanString, spanTags);
+            }
+
+            CharSequence timeDisplay;
             if (suffix.isEmpty())
-                sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else sunTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
+                timeDisplay = getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay);
+            else timeDisplay = SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning);
+
+            if (dstIcon != null) {
+                timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
+            }
+
+            sunTime.setText(timeDisplay);
         }
 
         if (offsetTime != null)
@@ -1753,16 +1855,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
         context.startActivity(intent);
     }
 
+    @SuppressLint("ResourceType")
     protected void showHelp(Context context)
     {
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
-        int[] iconAttrs = { R.attr.icActionShadow };
+        int[] iconAttrs = { R.attr.icActionShadow, R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0);
+        int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
         SuntimesUtils.ImageSpanTag[] helpTags = {
                 new SuntimesUtils.ImageSpanTag("[Icon Shadow]", shadowIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
 
         final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
@@ -1771,11 +1877,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
         String shadowHelp = getString(R.string.help_shadowlength, shadowSummary);
         SpannableStringBuilder shadowHelpSpan = SuntimesUtils.createSpan(context, shadowHelp, helpTags);
-        shadowHelpSpan.append("\n\n");
-        shadowHelpSpan.append(SuntimesUtils.fromHtml(getString(R.string.help_general_twilight)));
+
+        CharSequence dstHelp = "\n" + SuntimesUtils.fromHtml(getString(R.string.help_general_dst));
+        SpannableStringBuilder dstHelpSpan = SuntimesUtils.createSpan(context, dstHelp, helpTags);
+
+        CharSequence twilightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight));
+        CharSequence nightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight_more));
+        CharSequence helpSpan = TextUtils.concat(twilightHelp, nightHelp, dstHelpSpan, shadowHelpSpan);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(shadowHelpSpan);
+        helpDialog.setContent(helpSpan);
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
@@ -1790,11 +1901,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         protected TextView label;
         protected TextView text;
 
+        protected CharSequence defaultLabel = "";
+        protected Drawable defaultIcon = null;
+
         public LightMapKey(ImageView icon, TextView label, TextView duration)
         {
             this.icon = icon;
             this.label = label;
             this.text = duration;
+            this.defaultLabel = label.getText();
+            this.defaultIcon = icon.getBackground();
         }
 
         public LightMapKey(@NonNull View parent, int iconRes, int labelRes, int durationRes)
@@ -1802,6 +1918,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
             icon = (ImageView)parent.findViewById(iconRes);
             label = (TextView)parent.findViewById(labelRes);
             text = (TextView)parent.findViewById(durationRes);
+            if (label != null) {
+                defaultLabel = label.getText();
+            }
+            if (icon != null) {
+                defaultIcon = icon.getBackground();
+            }
         }
 
         public void themeViews(SuntimesTheme theme)
@@ -1830,6 +1952,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
 
+        public void setIconDrawable(@Nullable Drawable d)
+        {
+            if (icon != null && (d != null || defaultIcon != null)) {
+                icon.setBackgroundDrawable(d != null ? d : defaultIcon);
+            }
+        }
+        public Drawable getDefaultIconDrawable() {
+            return defaultIcon;
+        }
+
+        public void setLabelText(@Nullable CharSequence text)
+        {
+            if (label != null) {
+                label.setText(text != null ? text : defaultLabel);
+            }
+        }
+        public void setLabelVisible(boolean visible)
+        {
+            int visibility = (visible ? View.VISIBLE : View.INVISIBLE);
+            if (label != null) {
+                label.setVisibility(visibility);
+            }
+        }
+
         public void highlight(boolean highlight)
         {
             if (label != null)
@@ -1844,7 +1990,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 //text.setTypeface(null, (highlight ? Typeface.BOLD : Typeface.NORMAL));
         }
 
-        public void updateInfo(Context context, LightMapKeyInfo[] info)
+        public void updateInfo(Context context, LightMapKeyInfo[] info) {
+            updateInfo(context, info, "");
+        }
+        public void updateInfo(Context context, LightMapKeyInfo[] info, CharSequence noneText)
         {
             if (text == null || info == null || context == null)
                 return;
@@ -1879,8 +2028,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 setVisible(true);
 
             } else {
-                text.setText(new SpannableString(""));
-                setVisible(false);
+                text.setText(new SpannableString(noneText != null ? noneText : ""));
+                setVisible(noneText != null && !noneText.toString().isEmpty());
             }
         }
     }

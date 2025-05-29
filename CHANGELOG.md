@@ -1,5 +1,57 @@
 ### ~
 
+### v0.16.7 (2025-05-12)
+* fixes app crash when twilight alarms have an attached note (#872).
+* improves searching places when names contain special characters.
+* adds world places; ~120 places; South American capitals and other major cities.
+* adds "check all" button to the world places dialog; fixes bug where dialog allows all items unchecked.
+* adds an indicator to the moon dialog when the displayed time is adjusted by DST (#870).
+* adds an additional "clear alarms" preference to alarm settings.
+
+### v0.16.6 (2025-04-16)
+* adds option for "solar midnight" (#835).
+* adds world places: ~110 places; North American capitals, major cities, and others.
+* adds an indicator to sun dialog when the displayed time is adjusted by DST.
+* fixes bug where "sun position grid does not re-align when DST changes" (#867).
+* fixes bug where "sun position graph labels are always displayed using 12h time".
+* improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+* increases maximum "auto-dismiss after" notification value from 5 minutes to 12 hours (#726).
+* enhances `%e` data patterns to work with all widget types (no longer limited to sun widgets).
+* adds data patterns: `%es`, `%eS`, `%h`, and `%H`; shadow length, and observer height.
+* adds data patterns: `%ea`, `%ez`, `%ed`, and `%er`; altitude, azimuth, declination, right-ascension.
+
+### v0.16.5 (2025-02-14)
+* adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
+* adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.
+* enhances the alarm dismiss activity to display the current time using the alarm's time zone (#849).
+* enhances the "custom event" alarm selector to display a time preview.
+* fixes app crash when using menu actions while refreshing location (#862).
+* fixes app crash when toggling wallpaper from the theme configuration activity.
+* fixes bug where "warnings only show the first message when multiple warnings are queued".
+* fixes bug where "gradually increase volume" is only applied to the left channel.
+* fixes bug where "flippable widget fails to change views" (#855).
+* fixes bug where the moon dialog opens with today's information instead of the selected day (#858).
+* fixes bug where the color collection activity loses the current selection; fixes bug where the share action is disabled for default colors.
+* fixes bug where alarm edit screen layout is cropped in landscape mode; input chips may now flow to use space more efficiently.
+* fixes bug where the "location dialog shows the wrong icon when 'use app location' is checked".
+* changes defaults; "bright alarms" are now enabled by default.
+* changes defaults; "gradually increase brightness" changed from 60 to 30 seconds.
+* changes defaults; "gradually increase volume" changed from 10 to 30 seconds.
+* extends UI test coverage (#864).
+
+### v0.16.4 (2024-12-04)
+* fixes bug "boot completed hangs after phone restart" (#842).
+* fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
+* fixes bug where "moon dialog displays the wrong phase label" (#843).
+* fixes bug where custom color labels are invisible when ellipsized (missing text).
+* fixes bug where text is cropped in moon day widget (#845).
+* fixes bugs in widget previews; missing padding, missing map foreground.
+* adds "preview" action to the "bright alarm colors" selector.
+* adds `AFTER_BOOT_COMPLETED`; changes `ACTION_BOOT_COMPLETED` so that it defers scheduling alarms until a few moments later (#842).
+* adds time-out when querying various content providers to avoid potential ANRs if a provider fails to respond.
+* updates build; replaces jitpack.io artifacts, adds git submodule.
+* updates translation to Polish and Esperanto (eo, pl) (#841 by Verdulo).
+
 ### v0.16.3 (2024-11-04)
 * enhances the quick settings tiles to support displaying their dialogs over the lock screen.
 * improves the appearance of the quick settings tile dialogs (replaces AlertDialog).

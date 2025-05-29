@@ -83,7 +83,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
             {
                 RemoteViews views = getWidgetViews(context, null, appWidgetId);
                 views.showNext(R.id.view_flip);
-                AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(appWidgetId, views);
+                AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, views);
                 return true;
             }
         }

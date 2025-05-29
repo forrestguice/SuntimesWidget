@@ -30,21 +30,13 @@ import java.util.HashMap;
 
 public class SuntimesMoonData0 extends SuntimesData
 {
-    protected Context context;
-
-    public SuntimesMoonData0(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesMoonData0(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesMoonData0(SuntimesMoonData0 other)
-    {
-        this.context = other.context;
+    public SuntimesMoonData0(SuntimesMoonData0 other) {
         initFromOther(other);
     }
 
@@ -96,9 +88,10 @@ public class SuntimesMoonData0 extends SuntimesData
 
     /**
      * calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         initCalculator(context);
         initTimezone(context);
@@ -113,7 +106,7 @@ public class SuntimesMoonData0 extends SuntimesData
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        super.calculate();
+        super.calculate(context);
     }
 
     public static boolean isSuperMoon( @NonNull SuntimesCalculator.MoonPosition position )

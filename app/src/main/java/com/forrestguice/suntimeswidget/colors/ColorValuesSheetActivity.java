@@ -23,6 +23,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +52,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     public static final String EXTRA_SUBTITLE = "activitySubtitle";
     public static final String EXTRA_PREVIEW_KEYS = "previewKeys";
     public static final String EXTRA_PREVIEW_MODE = "previewMode";
+    public static final String EXTRA_PREVIEW_INTENTBUILDER = "previewIntentBuilder";
 
     public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
@@ -80,6 +82,10 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         editViewModel.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
         editViewModel.setPreviewMode(intent.getIntExtra(EXTRA_PREVIEW_MODE, ColorValuesEditFragment.ColorValuesEditViewModel.PREVIEW_TEXT));
+
+        if (intent.hasExtra(EXTRA_PREVIEW_INTENTBUILDER)) {
+            previewIntentBuilder = intent.getParcelableExtra(EXTRA_PREVIEW_INTENTBUILDER);
+        }
 
         colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
@@ -185,6 +191,41 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         finish();
     }
 
+    @Nullable
+    protected String getSelectedColorID()
+    {
+        if (colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT)
+        {
+            if (!colorSheet.editDialog.onSaveColorValues()) {
+                return null;
+            }
+            ColorValues values = colorSheet.editDialog.getColorValues();
+            return (values != null) ? values.getID() : null;
+
+        } else {
+            return colorSheet.listDialog.getSelectedID();
+        }
+    }
+
+    public interface PreviewColorsIntentBuilder extends Parcelable {
+        Intent getIntent(Context context, String colorsID);
+    }
+    public void setPreviewIntentBuilder(PreviewColorsIntentBuilder value) {
+        previewIntentBuilder = value;
+    }
+    protected PreviewColorsIntentBuilder previewIntentBuilder;
+
+    protected void previewColors()
+    {
+        if (previewIntentBuilder != null)
+        {
+            Intent intent = previewIntentBuilder.getIntent(this, getSelectedColorID());
+            if (intent != null) {
+                startActivity(intent);
+            }
+        }
+    }
+
     @Override
     public void onBackPressed()
     {
@@ -212,6 +253,11 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
         }
 
+        MenuItem previewItem = menu.findItem(R.id.action_colors_preview);
+        if (previewItem != null) {
+            previewItem.setVisible(previewIntentBuilder != null);
+        }
+
         return true;
     }
 
@@ -220,6 +266,10 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_colors_preview:
+                previewColors();
+                return true;
+
             case R.id.action_colors_select:
                 selectColorID();
                 return true;

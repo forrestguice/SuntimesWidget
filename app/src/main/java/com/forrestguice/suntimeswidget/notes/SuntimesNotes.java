@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.notes;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -33,7 +35,6 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
-import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -63,10 +64,6 @@ public class SuntimesNotes
     private SuntimesMoonData moondata;         // may be null
 
     private CardColorValues colors;
-    //private int colorSunrise, colorSunriseStroke;
-    //private int colorSunset, colorSunsetStroke;
-    //private int colorMoonrise, colorMoonset;
-    //private int colorNoon, colorNoonStroke;
     private int strokeWidthRising, strokeWidthSetting, strokeWidthNoon;
 
     public SuntimesNotes(Context context)
@@ -147,6 +144,7 @@ public class SuntimesNotes
         boolean enabledNautical = showFields[AppSettings.FIELD_NAUTICAL];
         boolean enabledAstro = showFields[AppSettings.FIELD_ASTRO];
         boolean enabledNoon = showFields[AppSettings.FIELD_NOON];
+        boolean enabledMidnight = showFields[AppSettings.FIELD_MIDNIGHT];
 
         boolean hasGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
         boolean enabledGold = showFields[AppSettings.FIELD_GOLD];
@@ -168,6 +166,8 @@ public class SuntimesNotes
             else if ((!enabledLunarNoon) && (event.equals(SolarEvents.MOONNOON) || event.equals(SolarEvents.MOONNIGHT)))
                 continue;
             else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
+                continue;
+            else if (!enabledMidnight && (event.equals(SolarEvents.MIDNIGHT)))
                 continue;
             else if (!enabledAstro && (event.equals(SolarEvents.EVENING_ASTRONOMICAL) || event.equals(SolarEvents.MORNING_ASTRONOMICAL)))
                 continue;
@@ -379,6 +379,7 @@ public class SuntimesNotes
         int textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
         int iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
         int iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);  // _STROKE
+        boolean iconIsSquare = false;
         String untilString = prefixString(eventID, false);
         String noteString = "";
 
@@ -472,12 +473,22 @@ public class SuntimesNotes
                     noteString = context.getString(R.string.untilEnd_goldhour);
                     break;
 
+                case MIDNIGHT:    // TODO: icon
+                    iconStroke = strokeWidthNoon;
+                    iconColor = colors.getColor(CardColorValues.COLOR_MIDNIGHT_FILL);
+                    iconColor2 = colors.getColor(CardColorValues.COLOR_MIDNIGHT_STROKE);
+                    textColor = colors.getColor(CardColorValues.COLOR_MIDNIGHT_TEXT);
+                    noteString = context.getString(R.string.until_midnight);
+                    iconIsSquare = true;
+                    break;
+
                 case NOON:
                     iconStroke = strokeWidthNoon;
                     iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.until_noon);
+                    iconIsSquare = true;
                     break;
 
                 case EVENING_GOLDEN:
@@ -558,7 +569,7 @@ public class SuntimesNotes
         }
 
         SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
-        return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke);
+        return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
     }
 
     private String prefixString(String eventID, boolean useSince)
@@ -575,7 +586,7 @@ public class SuntimesNotes
                 // until
                 case MOONRISE: case MOONSET: case MOONNOON: case MOONNIGHT:
                 case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case EVENING_BLUE4: case MORNING_CIVIL:
-                case SUNRISE: case NOON: case EVENING_GOLDEN: case SUNSET:
+                case SUNRISE: case NOON: case MIDNIGHT: case EVENING_GOLDEN: case SUNSET:
                     prefix = context.getString(R.string.until);
                     break;
 
@@ -637,7 +648,7 @@ public class SuntimesNotes
                     break;
 
                 case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL: case MORNING_BLUE4:
-                case SUNRISE: case MORNING_GOLDEN: case NOON: case EVENING_GOLDEN:
+                case SUNRISE: case MORNING_GOLDEN: case NOON: case MIDNIGHT: case EVENING_GOLDEN:
                 case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
                     WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);
@@ -767,5 +778,22 @@ public class SuntimesNotes
     {
         currentNote = note;
         changedListener.onNoteChanged(currentNote, transition);
+    }
+
+    public static void adjustNoteIconSize(Context context, NoteData note, ImageView icon)
+    {
+        //int[] attrs = new int[] { R.attr.sunnoonIcon };
+        //TypedArray a = context.obtainStyledAttributes(attrs);
+        //int resID_noonIcon = a.getResourceId(0, R.drawable.ic_noon_large);
+        //a.recycle();
+
+        Resources resources = context.getResources();
+        int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+        //int iconHeight = ((note.noteIconResource == resID_noonIcon) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
+        int iconHeight = (note.squareIcon ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
+
+        ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
+        iconParams.width = iconWidth;
+        iconParams.height = iconHeight;
     }
 }

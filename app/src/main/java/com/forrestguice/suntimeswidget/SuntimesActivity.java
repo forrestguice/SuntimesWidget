@@ -1382,22 +1382,6 @@ public class SuntimesActivity extends AppCompatActivity
         });
     }
 
-    private View.OnClickListener onMoonriseClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v) {
-            showMoonDialog();
-        }
-    });
-    private View.OnLongClickListener onMoonriseLongClick = new View.OnLongClickListener()
-    {
-        @Override
-        public boolean onLongClick(View v) {
-            showMoonDialog();
-            return true;
-        }
-    };
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -1499,11 +1483,18 @@ public class SuntimesActivity extends AppCompatActivity
     }
     protected void showDate(@Nullable Long datetime)
     {
+        Long startDate = card_adapter.findDateForPosition(this, 0);
+        Long endDate = card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1);
+
         final TimeDateDialog datePicker = new TimeDateDialog();
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
         datePicker.setTimezone(dataset.timezone());
-        datePicker.setMinDate( card_adapter.findDateForPosition(this, 0) );
-        datePicker.setMaxDate( card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1) );
+        if (startDate != null) {
+            datePicker.setMinDate(startDate);
+        }
+        if (endDate != null) {
+            datePicker.setMaxDate(endDate);
+        }
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
 
         if (datetime != null) {
@@ -1884,8 +1875,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         card_adapter.initData(context);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
-        dataset = cardData.first;
-        dataset_moon = cardData.second;
+        if (cardData != null) {
+            dataset = cardData.first;
+            dataset_moon = cardData.second;
+        }
 
         initNotes();
     }
@@ -1950,6 +1943,7 @@ public class SuntimesActivity extends AppCompatActivity
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
         showEquinoxView(enableEquinox && card_equinoxSolstice.isImplemented(context));
+        card_equinoxSolstice.setShowDate(AppSettings.loadShowEquinoxDatePref(context));
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(context);
         card_equinoxSolstice.post(updateEquinoxViewColumnWidth);
@@ -2185,20 +2179,13 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
-            onMoonHeaderAction(adapter, position);
+            showMoonPositionAt(adapter, position);
         }
         @Override
         public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
         {
-            onMoonHeaderAction(adapter, position);
+            showMoonPositionAt(adapter, position);
             return true;
-        }
-        protected void onMoonHeaderAction(CardAdapter adapter, int position)
-        {
-            Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
-            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
-                showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
-            } else showMoonDialog();
         }
 
         @Override
@@ -2352,7 +2339,7 @@ public class SuntimesActivity extends AppCompatActivity
             dialog.setData(SuntimesActivity.this, dataset);
         } else {
             SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
-            data.calculateData();
+            data.calculateData(this);
             dialog.setData(SuntimesActivity.this, data);
         }
 
@@ -2409,7 +2396,7 @@ public class SuntimesActivity extends AppCompatActivity
             lightMapDialog.setData(SuntimesActivity.this, dataset);
         } else {
             SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
-            data.calculateData();
+            data.calculateData(this);
             lightMapDialog.setData(SuntimesActivity.this, data);
         }
         lightMapDialog.setDialogListener(lightMapListener);
@@ -2595,7 +2582,8 @@ public class SuntimesActivity extends AppCompatActivity
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
-        SuntimesMoonData d = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition()).second;
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
+        SuntimesMoonData d = (data != null ? data.second : null);
         moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
@@ -2636,6 +2624,16 @@ public class SuntimesActivity extends AppCompatActivity
         }
         dialog = showMoonDialog();
         dialog.showPositionAt(dateTime);
+    }
+    protected void showMoonPositionAt(CardAdapter adapter, int position)
+    {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = ((adapter != null) ? adapter.initData(SuntimesActivity.this, position) : null);
+        if (cardData != null) {
+            showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
+        } else showMoonDialog();
+    }
+    protected void showMoonPositionAt() {
+        showMoonPositionAt(card_adapter, card_layout.findFirstVisibleItemPosition());
     }
 
     /**
@@ -2690,16 +2688,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    private void adjustNoteIconSize(NoteData note, ImageView icon)
-    {
-        Resources resources = getResources();
-        int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-        int iconHeight = ((note.noteIconResource == resID_noonIcon) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
 
-        ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
-        iconParams.width = iconWidth;
-        iconParams.height = iconHeight;
-    }
 
     protected void updateNoteUI( NoteData note, int transition )
     {
@@ -2710,7 +2699,7 @@ public class SuntimesActivity extends AppCompatActivity
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
-            adjustNoteIconSize(note, ic_time2_note);
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
@@ -2727,7 +2716,7 @@ public class SuntimesActivity extends AppCompatActivity
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
-            adjustNoteIconSize(note, ic_time1_note);
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);

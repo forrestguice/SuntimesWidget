@@ -37,7 +37,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -355,7 +354,8 @@ public class AlarmEventProvider extends ContentProvider
             {
                 case COLUMN_EVENT_TIMEMILLIS:
                     if (cursor != null) {
-                        row[i] = cursor.getLong(cursor.getColumnIndex(COLUMN_EVENT_TIMEMILLIS));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_TIMEMILLIS);
+                        row[i] = (j >= 0) ? cursor.getLong(j) : null;
                     } else row[i] = null;
                     break;
 
@@ -369,44 +369,51 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_PHRASE:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_PHRASE));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE);
+                        row[i] = (j >= 0) ? cursor.getString(j) : event.getLabel();
                     } else row[i] = event.getLabel();
                     break;
 
                 case COLUMN_EVENT_PHRASE_GENDER:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_PHRASE_GENDER));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE_GENDER);
+                        row[i] = (j >= 0) ? cursor.getString(j) : "other";
                     } else row[i] = "other";
                     break;
 
                 case COLUMN_EVENT_PHRASE_QUANTITY:
                     if (cursor != null) {
-                        row[i] = cursor.getInt(cursor.getColumnIndex(COLUMN_EVENT_PHRASE_QUANTITY));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_PHRASE_QUANTITY);
+                        row[i] = (j >= 0) ? cursor.getInt(j) : 1;
                     } else row[i] = 1;
                     break;
 
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     if (cursor != null) {
-                        row[i] = cursor.getInt(cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_REPEATING));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_REPEATING);
+                        row[i] = (j >= 0) ? cursor.getInt(j) : REPEAT_SUPPORT_DAILY;
                     } else row[i] = REPEAT_SUPPORT_DAILY;
                     break;
 
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_OFFSETDAYS));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUPPORTS_OFFSETDAYS);
+                        row[i] = (j >= 0) ? cursor.getString(j) : Boolean.toString(false);
                     } else row[i] = Boolean.toString(false);
                     break;
 
                 case COLUMN_EVENT_REQUIRES_LOCATION:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_REQUIRES_LOCATION));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_REQUIRES_LOCATION);
+                        row[i] = (j >= 0) ? cursor.getString(j) : Boolean.toString(true);
                     } else row[i] = Boolean.toString(true);
                     break;
 
                 case COLUMN_EVENT_SUMMARY:
                 default:
                     if (cursor != null) {
-                        row[i] = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT_SUMMARY));
+                        int j = cursor.getColumnIndex(COLUMN_EVENT_SUMMARY);
+                        row[i] = (j >= 0) ? cursor.getString(j) : null;
                     } else row[i] = null;
                     break;
             }
@@ -768,7 +775,7 @@ public class AlarmEventProvider extends ContentProvider
 
         Calendar day = Calendar.getInstance();
         sunData.setTodayIs(day);
-        sunData.calculate();
+        sunData.calculate(context);
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
         if (eventTime != null)
         {
@@ -790,7 +797,7 @@ public class AlarmEventProvider extends ContentProvider
             Log.w(AlarmNotifications.TAG, "updateAlarmTime: sunElevationEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
-            sunData.calculate();
+            sunData.calculate(context);
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
             if (eventTime != null)
             {
@@ -945,7 +952,7 @@ public class AlarmEventProvider extends ContentProvider
 
         Calendar day = Calendar.getInstance();
         data.setTodayIs(day);
-        data.calculate();
+        data.calculate(context);
 
         eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                       : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
@@ -969,7 +976,7 @@ public class AlarmEventProvider extends ContentProvider
             Log.w(AlarmNotifications.TAG, "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
-            data.calculate();
+            data.calculate(context);
             eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                           : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
             if (eventTime != null)

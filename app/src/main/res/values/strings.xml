@@ -41,6 +41,8 @@
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
+    <string name="configAction_checkNone">None</string>    <!-- TODO -->
+    <string name="configAction_checkAll">All</string>    <!-- TODO -->
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
@@ -197,6 +199,7 @@
     <string name="until_nauticalTwilight">nautical twilight</string>
     <string name="until_sunrise">sunrise</string>
     <string name="until_noon">solar noon</string>
+    <string name="until_midnight">solar midnight</string>    <!-- TODO -->
     <string name="until_sunset">sunset</string>
     <string name="untilEnd_civilTwilight">civil twilight</string>
     <string name="untilEnd_nauticalTwilight">nautical twilight</string>
@@ -421,6 +424,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
     <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Midnight</string>                    <!-- setting -->   <!-- TODO -->
+    <string name="timeMode_midnight">Solar Midnight</string>                    <!-- setting -->   <!-- TODO -->
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
@@ -438,6 +443,11 @@
     <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">None</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Polar Night</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnightsun">Midnight Sun</string>                 <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight">Midnight Twilight</string>       <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight_whitenight">White Night</string>  <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -861,6 +871,10 @@
     <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->
 
+    <string name="configLabel_themeColorGraphMidnightText">Midnight (Text)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightFill">Midnight (Fill)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Midnight (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+
     <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonPathDayFill">Moon Path (Day Fill)</string>         <!-- color label -->
@@ -1268,6 +1282,16 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarms_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string-array name="fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
+        <item>Linear</item>
+        <item>Cubic</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="fadeInMethod_values" translatable="false">
+        <item>0</item>    <!-- handler (linear) -->
+        <item>1</item>    <!-- handler (cubic) -->
+    </string-array>
+
     <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>
@@ -1277,6 +1301,10 @@
 
     <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="configAction_preview">Preview</string>    <!-- TODO -->
+    <string name="configAction_previewColors">@string/configAction_preview</string>
+
     <string-array name="brightMode_colors_previewKeys" translatable="false">
         <item>color_bright_bg_end</item>
         <!--<item>color_sounding_pulse_start</item>
@@ -1348,6 +1376,9 @@
 
     <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>
     <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_clearall">Clear Alarms</string>    <!-- TODO -->
+    <string name="configLabel_alarms_clearall_summary">Clear the list of alarms and notifications.</string>     <!-- TODO -->
 
     <!--
       BEDTIME
@@ -1524,18 +1555,49 @@
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (China)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_IR">Asia (Iran)</string>    <!-- TODO -->
+    <string name="place_label_AS_IQ">Asia (Iraq)</string>    <!-- TODO -->
     <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_PK">Asia (Pakistan)</string>    <!-- TODO -->
     <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_BE">Europe (Belgium)</string>   <!-- TODO -->
+    <string name="place_label_EU_DE">Europe (Germany)</string>   <!-- TODO -->
+    <string name="place_label_EU_DK">Europe (Denmark)</string>   <!-- TODO -->
     <string name="place_label_EU_ES">Europe (Spain)</string>
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_EU_FI">Europe (Finland)</string>    <!-- TODO -->
+    <string name="place_label_EU_FR">Europe (France)</string>    <!-- TODO -->
+    <string name="place_label_EU_GB">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_EU_GR">Europe (Greece)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>   <!-- deprecated; use _GB instead; TODO: remove all references -->
+    <string name="place_label_EU_IT">Europe (Italy)</string>    <!-- TODO -->
+    <string name="place_label_EU_NL">Europe (Netherlands)</string>   <!-- TODO -->
+    <string name="place_label_EU_NO">Europe (Norway)</string>   <!-- TODO -->
+    <string name="place_label_EU_PL">Europe (Poland)</string>   <!-- TODO -->
+    <string name="place_label_EU_PT">Europe (Portugal)</string>   <!-- TODO -->
+    <string name="place_label_EU_RU">Europe (Russia)</string>    <!-- TODO -->
+    <string name="place_label_EU_SE">Europe (Sweden)</string>    <!-- TODO -->
     <string name="place_label_NA">North America</string>
     <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_MX">North America (Mexico)</string>    <!-- TODO -->
     <string name="place_label_NA_US">North America (US)</string>
+    <string name="place_label_NA_US_W">North America (US, West)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_S">North America (US, South)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_NE">North America (US, North East)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_MW">North America (US, Midwest)</string>    <!-- TODO -->
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_SA_AR">Argentina</string>   <!-- TODO -->
+    <string name="place_label_SA_BR">Brazil</string>   <!-- TODO -->
+    <string name="place_label_SA_BO">Bolivia</string>   <!-- TODO -->
+    <string name="place_label_SA_CO">Colombia</string>   <!-- TODO -->
+    <string name="place_label_SA_CL">Chile</string>   <!-- TODO -->
+    <string name="place_label_SA_EC">Ecuador</string>   <!-- TODO -->
+    <string name="place_label_SA_PE">Peru</string>   <!-- TODO -->
+    <string name="place_label_SA_VE">Venezuela</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
@@ -1581,6 +1643,10 @@
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
@@ -1588,6 +1654,10 @@
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+
+    <!-- App Setting: Show Equinox / Solstice (date) -->
+    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -2283,6 +2353,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
@@ -2316,6 +2387,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>start of morning astronomical twilight</item>
@@ -2349,6 +2421,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
@@ -2384,6 +2457,7 @@
         <item>other</item>    <!-- cross summer -->
         <item>other</item>    <!-- cross autumn -->
         <item>other</item>    <!-- cross winter -->
+        <item>other</item>    <!-- midnight -->
     </string-array>
     <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
         <item>1</item>    <!-- start of astronomical twilight -->
@@ -2417,6 +2491,7 @@
         <item>1</item>    <!-- cross summer -->
         <item>1</item>    <!-- cross autumn -->
         <item>1</item>    <!-- cross winter -->
+        <item>1</item>    <!-- midnight -->
     </integer-array>
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
@@ -2745,16 +2820,24 @@
     ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+          [Icon DST] is shown when the current time applies <b>Daylight Saving</b>, or has been adjusted by a similar rule.<br/><br/>
     ]]></string>
     <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>
+          The <b>rising times</b> indicate the beginning of each twilight period (<b>dawn</b>), and <b>setting times</b> indicate their end (<b>dusk</b>).<br/><br/>
+          <b>Civil Twilight:</b> The sun is less than 6 degrees below the horizon. The brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 6 to 12 degrees below the horizon. Object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 12 to 18 degrees below the horizon. Near darkness of night.<br/><br/>
+          <b>Night:</b> The sun is more than 18 degrees below the horizon. The faintest stars are visible.<br/><br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>White Night:</b> The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.<br/><br/>
+          <b>Midnight Twilight:</b> The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.<br/><br/>
+          <b>Midnight Sun:</b> The sun does not set below the horizon (24 hours of daylight). This is also called <b>polar day</b>.<br/><br/>
+          <b>Polar night:</b> The sun does not rise above the horizon (24 hours of darkness).<br/><br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>

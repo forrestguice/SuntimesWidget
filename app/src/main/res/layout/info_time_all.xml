@@ -708,13 +708,33 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <TextView
+            android:id="@+id/text_time_label_midnight"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
+            android:text="@string/timeMode_midnight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_position_noon"
+            />
+
+        <TextView
+            android:id="@+id/text_time_midnight"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginEnd="@dimen/table_set_rightMargin"
+            android:layout_marginRight="@dimen/table_set_rightMargin"
+            android:textColor="?attr/table_nightColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_midnight"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            tools:text="00:00 PM"/>
+
         <View
             android:id="@+id/noon_clickArea" android:orientation="horizontal"
             android:layout_width="0dp" android:layout_height="0dp" android:elevation="2dp"
             android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_time_label_noon"
-            app:layout_constraintBottom_toBottomOf="@+id/text_time_label_noon" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_time_label_midnight" />
 
         <!-- Moon -->
         <TextView
@@ -724,7 +744,7 @@
             android:layout_marginBottom="0dp" android:paddingBottom="0dp"
             android:text="@string/timeMode_moon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon" />
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_midnight" />
 
         <com.forrestguice.suntimeswidget.moon.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationRange="true"

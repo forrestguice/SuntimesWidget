@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ContentValues;
@@ -28,6 +29,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -248,6 +251,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
         initLocale();
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_themeconfig);
@@ -274,16 +278,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data0 = new SuntimesRiseSetDataset(context, 0);  // use app configuration
-        data0.calculateData();
+        data0.calculateData(context);
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, 0, "moon");
-        data2.calculate();
+        data2.calculate(context);
     }
 
     private void initLocale()
@@ -841,7 +845,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
@@ -1849,14 +1853,26 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initWallpaper()
     {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-        if (wallpaperManager != null)
+        ImageView background = (ImageView)findViewById(R.id.preview_background);
+
+        if (Build.VERSION.SDK_INT > 18)
         {
-            ImageView background = (ImageView)findViewById(R.id.preview_background);
-            Drawable wallpaper = wallpaperManager.getDrawable();
-            if (background != null && wallpaper != null)
-            {
-                background.setImageDrawable(wallpaper);
+            background.setVisibility(View.GONE);
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        } else {
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+                if (wallpaperManager != null)
+                {
+                    @SuppressLint("MissingPermission")
+                    Drawable wallpaper = wallpaperManager.getDrawable();
+                    if (background != null && wallpaper != null) {
+                        background.setImageDrawable(wallpaper);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("initWallpaper", "failed to init wallpaper; " + e);
             }
         }
     }

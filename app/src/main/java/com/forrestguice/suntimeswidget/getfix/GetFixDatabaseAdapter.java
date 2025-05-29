@@ -68,6 +68,10 @@ public class GetFixDatabaseAdapter
      *
      */
     private final Context context;
+    public Context getContext() {
+        return context;
+    }
+
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 

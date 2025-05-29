@@ -33,8 +33,9 @@ public class NoteData
     public int textColor, iconColor, iconColor2;
     public Date time;
     public boolean tomorrow = false;
+    public boolean squareIcon = false;
 
-    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke)
+    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
@@ -45,6 +46,7 @@ public class NoteData
         this.iconColor = iconColor;
         this.iconColor2 = iconColor2;
         this.noteIconStroke = noteIconStroke;
+        this.squareIcon = squareIcon;
     }
 
     public NoteData( NoteData other )
@@ -58,6 +60,7 @@ public class NoteData
         this.iconColor = other.iconColor;
         this.iconColor2 = other.iconColor2;
         this.noteIconStroke = other.noteIconStroke;
+        this.squareIcon = other.squareIcon;
     }
 
     @Override

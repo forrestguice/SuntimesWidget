@@ -573,7 +573,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0, modes);
                     data.setTimeZone(context, timezone);
                     data.setTodayIs(date);
-                    data.calculateData();
+                    data.calculateData(context);
                     yearData[i] = data;
                 }
 

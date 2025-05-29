@@ -119,16 +119,16 @@ public class WidgetThemePreview
     {
         this.appWidgetId = appWidgetId;
         data0 = new SuntimesRiseSetDataset(context, appWidgetId);  // use app configuration
-        data0.calculateData();
+        data0.calculateData(context);
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, appWidgetId, "moon");
-        data2.calculate();
+        data2.calculate(context);
 
         showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
         showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
@@ -266,7 +266,7 @@ public class WidgetThemePreview
                 colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
             }
 
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
@@ -296,6 +296,7 @@ public class WidgetThemePreview
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
             options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR));
+            options.foregroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR);
             options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR));
             options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR));
 
@@ -443,7 +444,7 @@ public class WidgetThemePreview
             options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
             options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
 
-            LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask();
+            LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask(context);
             drawTask.setListener(new LineGraphView.LineGraphTaskListener() 
             {
                 @Override
@@ -528,7 +529,7 @@ public class WidgetThemePreview
                 {
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
                     //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
-                    data.calculateData();
+                    data.calculateData(context);
                     drawTask.setData(LightGraphView.LightGraphTask.createYearData(context, data));
                     handler.post(new Runnable()
                     {
