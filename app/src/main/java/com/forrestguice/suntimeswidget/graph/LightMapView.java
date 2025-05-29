@@ -1011,6 +1011,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("WeakerAccess")
     public static class LightMapColors
     {
+        public static final String MAPTAG_LIGHTMAP = "_lightmap";
+
+        public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
+        public static final int DEF_KEY_GRAPH_SUNSYMBOL = LightMapView.LightMapColors.DRAW_SUN1;
+
         public static final int DRAW_NONE = 0;
         public static final int DRAW_SUN1 = 1;    // (circle) solid stroke
         public static final int DRAW_SUN_CIRCLE_DASHED = 2;    // (circle) dashed stroke

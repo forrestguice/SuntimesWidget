@@ -105,6 +105,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.DEF_KEY_GRAPH_SUNSYMBOL;
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.PREF_KEY_GRAPH_SUNSYMBOL;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
@@ -513,7 +515,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    public static final String MAPTAG_LIGHTMAP = "_lightmap";
+    public static final String MAPTAG_LIGHTMAP = LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
     public static final String PREF_KEY_LIGHTMAP_SHOWGRAPH = "showgraph";
     public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
@@ -532,9 +534,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final boolean DEF_KEY_GRAPH_FILLPATH = true;
 
     public static final boolean DEF_KEY_WORLDMAP_MINORGRID = false;
-
-    public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
-    public static final int DEF_KEY_GRAPH_SUNSYMBOL = LightMapView.LightMapColors.DRAW_SUN1;
 
     private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
