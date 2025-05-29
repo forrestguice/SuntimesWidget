@@ -31,10 +31,15 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.DEF_KEY_GRAPH_SUNSYMBOL;
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.PREF_KEY_GRAPH_SUNSYMBOL;
 
 /**
  * A 3x1 layout with the lightmap graph.
@@ -157,6 +162,8 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
         colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
         colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
+
+        colors.option_drawNow = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
     }
 
 }
