@@ -52,7 +52,7 @@
                     <menu>
                         <group android:checkableBehavior="single">
 
-                            <item android:id="@+id/graphOption_sunSymbol_default"
+                            <item android:id="@+id/graphOption_sunSymbol_circle"
                                 android:title="@string/graph_option_symbol_circle"
                                 app:showAsAction="never" />
 

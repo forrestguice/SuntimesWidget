@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -81,6 +80,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
+import com.forrestguice.suntimeswidget.map.SunSymbol;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -105,8 +105,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.DEF_KEY_GRAPH_SUNSYMBOL;
-import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.PREF_KEY_GRAPH_SUNSYMBOL;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
@@ -689,23 +689,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
-                case R.id.graphOption_sunSymbol_default:
-                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+                case R.id.graphOption_sunSymbol_circle:
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CIRCLE.name());
                     updateViews();
                     return true;
 
                 case R.id.graphOption_sunSymbol_circledot:
-                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID);
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.DOT.name());
                     updateViews();
                     return true;
 
                 case R.id.graphOption_sunSymbol_cross:
-                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID);
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CROSS.name());
                     updateViews();
                     return true;
 
                 case R.id.graphOption_sunSymbol_line:
-                    WorldMapWidgetSettings.saveMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID);
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.LINE.name());
                     updateViews();
                     return true;
 
@@ -782,15 +782,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
         }
 
+        SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
         int iconSize = context.getResources().getDimensionPixelSize(R.dimen.menuIcon_size);
         MenuItem graphOption_sunSymbol = menu.findItem(R.id.graphOption_sunSymbol);
         if (graphOption_sunSymbol != null) {
-            int symbol = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+            int symbol = LightMapView.LightMapColors.fromSunSymbol(sunSymbol);
             graphOption_sunSymbol.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors()));
         }
-        MenuItem graphOption_sunSymbol_default = menu.findItem(R.id.graphOption_sunSymbol_default);
-        if (graphOption_sunSymbol_default != null) {
-            graphOption_sunSymbol_default.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN1, iconSize, iconSize, lightmap.getColors()));
+        MenuItem graphOption_sunSymbol_circle = menu.findItem(R.id.graphOption_sunSymbol_circle);
+        if (graphOption_sunSymbol_circle != null) {
+            graphOption_sunSymbol_circle.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN1, iconSize, iconSize, lightmap.getColors()));
         }
         MenuItem graphOption_sunSymbol_circledot = menu.findItem(R.id.graphOption_sunSymbol_circledot);
         if (graphOption_sunSymbol_circledot != null) {
@@ -805,7 +806,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_sunSymbol_line.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors()));
         }
 
-        int sunSymbol = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
         MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
         if (selectedSymbol != null) {
             selectedSymbol.setChecked(true);
@@ -821,26 +821,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     @Nullable
-    protected MenuItem getMenuItemForSymbol(Menu menu, int sunSymbol)
+    protected MenuItem getMenuItemForSymbol(Menu menu, SunSymbol sunSymbol)
     {
-        switch (sunSymbol)
-        {
-            case LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID:
-            case LightMapView.LightMapColors.DRAW_SUN_LINE_DASHED:
-                return menu.findItem(R.id.graphOption_sunSymbol_line);
-
-            case LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID:
-            case LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_DASHED:
-                return menu.findItem(R.id.graphOption_sunSymbol_circledot);
-
-            case LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID:
-            case LightMapView.LightMapColors.DRAW_SUN_CROSS_DASHED:
-                return menu.findItem(R.id.graphOption_sunSymbol_cross);
-
-            case LightMapView.LightMapColors.DRAW_SUN1:
-            case LightMapView.LightMapColors.DRAW_SUN_CIRCLE_DASHED:
-                return menu.findItem(R.id.graphOption_sunSymbol_default);
-
+        switch (sunSymbol) {
+            case LINE: return menu.findItem(R.id.graphOption_sunSymbol_line);
+            case DOT: return menu.findItem(R.id.graphOption_sunSymbol_circledot);
+            case CROSS: return menu.findItem(R.id.graphOption_sunSymbol_cross);
+            case CIRCLE: return menu.findItem(R.id.graphOption_sunSymbol_circle);
             default: return null;
         }
     }
@@ -983,7 +970,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
-            options.option_drawNow = WorldMapWidgetSettings.loadMapIntValue(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SUNSYMBOL);
+            options.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;

@@ -70,6 +70,9 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
     public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
 
+    public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
+    public static final SunSymbol PREF_DEF_GRAPH_SUNSYMBOL = SunSymbol.CIRCLE;
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;

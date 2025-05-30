@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.map.SunSymbol;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -1013,9 +1014,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         public static final String MAPTAG_LIGHTMAP = "_lightmap";
 
-        public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
-        public static final int DEF_KEY_GRAPH_SUNSYMBOL = LightMapView.LightMapColors.DRAW_SUN1;
-
         public static final int DRAW_NONE = 0;
         public static final int DRAW_SUN1 = 1;    // (circle) solid stroke
         public static final int DRAW_SUN_CIRCLE_DASHED = 2;    // (circle) dashed stroke
@@ -1025,6 +1023,22 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public static final int DRAW_SUN_CIRCLEDOT_DASHED = 6;
         public static final int DRAW_SUN_CROSS_SOLID = 7;   // TODO
         public static final int DRAW_SUN_CROSS_DASHED = 8;   // TODO
+
+        public static int fromSunSymbol(@Nullable SunSymbol symbol)
+        {
+            if (symbol == null) {
+                return DRAW_NONE;
+            }
+            switch (symbol) {
+                case LINE: return DRAW_SUN_LINE_SOLID;
+                case DOT: return DRAW_SUN_CIRCLEDOT_SOLID;
+                case CROSS: return DRAW_SUN_CROSS_SOLID;
+                case CIRCLE: default: return DRAW_SUN1;
+            }
+        }
+        public void setOption_drawNow(SunSymbol symbol) {
+            option_drawNow = LightMapView.LightMapColors.fromSunSymbol(symbol);
+        }
 
         public int option_drawNow = DRAW_SUN_CIRCLEDOT_SOLID;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
