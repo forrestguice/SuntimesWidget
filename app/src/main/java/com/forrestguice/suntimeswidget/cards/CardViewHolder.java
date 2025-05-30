@@ -46,7 +46,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.graph.LightMapView;
-import com.forrestguice.suntimeswidget.map.SunSymbol;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.suntimeswidget.graph.SunSymbolBitmap;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
@@ -387,8 +388,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
 
         SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
-        int symbol = LightMapView.LightMapColors.fromSunSymbol(sunSymbol);
-        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? symbol : LightMapView.LightMapColors.DRAW_SUN_CIRCLE_DASHED;
+        int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
+        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? symbol : SunSymbolBitmap.DRAW_SUN_CIRCLE_DASHED;
 
         lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);

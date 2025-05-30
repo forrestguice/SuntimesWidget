@@ -80,7 +80,6 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
-import com.forrestguice.suntimeswidget.map.SunSymbol;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -786,24 +785,24 @@ public class LightMapDialog extends BottomSheetDialogFragment
         int iconSize = context.getResources().getDimensionPixelSize(R.dimen.menuIcon_size);
         MenuItem graphOption_sunSymbol = menu.findItem(R.id.graphOption_sunSymbol);
         if (graphOption_sunSymbol != null) {
-            int symbol = LightMapView.LightMapColors.fromSunSymbol(sunSymbol);
-            graphOption_sunSymbol.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors()));
+            int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
+            graphOption_sunSymbol.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_circle = menu.findItem(R.id.graphOption_sunSymbol_circle);
         if (graphOption_sunSymbol_circle != null) {
-            graphOption_sunSymbol_circle.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN1, iconSize, iconSize, lightmap.getColors()));
+            graphOption_sunSymbol_circle.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN1, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_circledot = menu.findItem(R.id.graphOption_sunSymbol_circledot);
         if (graphOption_sunSymbol_circledot != null) {
-            graphOption_sunSymbol_circledot.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors()));
+            graphOption_sunSymbol_circledot.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_cross = menu.findItem(R.id.graphOption_sunSymbol_cross);
         if (graphOption_sunSymbol_cross != null) {
-            graphOption_sunSymbol_cross.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors()));
+            graphOption_sunSymbol_cross.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_line = menu.findItem(R.id.graphOption_sunSymbol_line);
         if (graphOption_sunSymbol_line != null) {
-            graphOption_sunSymbol_line.setIcon(LightMapView.LightMapTask.makeSunSymbolDrawable(context, LightMapView.LightMapColors.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors()));
+            graphOption_sunSymbol_line.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
 
         MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
