@@ -25,11 +25,19 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e More \u003e Data \u003e Data Sources",
-    "content": " Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on “Almanac for Computers” by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on “Almanac for Computers” by the USNO. time4a-noaa Partially Recommended Same algorithm used by ca.rmen.sunrisesunset with reasonable precision. Does not support altitude. Based on the algorithms published by NOAA. time4a-cc Recommended Good precision taking the altitude of locations into account. Based on “Calendrical Calculations” by Dershowitz/Reingold. Supports all features. time4a-time4j Recommended Default Best precision taking the altitude of locations, the elliptic shape of the earth and typical weather conditions into account. Based on “Astronomical Algorithm” by Jean Meeus. Supports all features. github.com/MenoData/Time4A A few important details:\nDo not expect precision better than minutes. The app hides seconds by default (but this can be enabled). The precision of the USNO and NOAA algorithms tends to be very inaccurate in polar regions. The time4j and cc algorithms may differ substantially (up to 10 minutes) from algorithms that do not account for altitude. One difference between the time4j and cc algorithms is that cc only assumes the altitude of the observer by an approximated geodetic model, while time4j does it using a spheroid (WGS84) and the assumption of a standard atmosphere (for refraction). None of these algorithms are able to account for local topology (a mountain directly in front of you), or deviating local weather conditions. ",
+    "content": " Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on “Almanac for Computers” by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on “Almanac for Computers” by the USNO. time4a-noaa Partially Recommended Same algorithm used by ca.rmen.sunrisesunset with reasonable precision. Does not support altitude. Based on the algorithms published by NOAA. time4a-cc Recommended Good precision taking the altitude of locations into account. Based on “Calendrical Calculations” by Dershowitz/Reingold. Supports all features. time4a-time4j Recommended Default Best precision taking the altitude of locations, the elliptic shape of the earth and typical weather conditions into account. Based on “Astronomical Algorithm” by Jean Meeus. Supports all features. github.com/MenoData/Time4A A few important details:\nDo not expect precision better than minutes. The app hides seconds by default (but this can be enabled). The precision of the USNO and NOAA algorithms tends to be very inaccurate in polar regions. The time4j and cc algorithms may differ substantially from algorithms that do not account for altitude (up to 10 minutes). The time4j and cc algorithms differ from each other in that cc assumes the altitude of the observer by an approximated geodetic model, while time4j does it using a spheroid (WGS84) and the assumption of a standard atmosphere (for refraction). None of these algorithms are able to account for local topography (a mountain directly in front of you), or deviating local weather conditions. ",
     "description": "",
     "tags": "advanced",
     "title": "Available Data Sources",
     "uri": "/Suntimes/help/more/data/datasources/availablesources/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons \u003e Natural Hour",
+    "content": " Location Time Format Hours of Equal Length Hours of Unequal Length Location The location is configured from Suntimes.\nTime Format Natural Hour can display time using 6-hour, 12-hour, or 24-hour format.\nHours of Equal Length The inner dial displays hours of equal length. Standard options include system time, local mean time, or time zones configured by Suntimes.\nOthers options:\nBabylonian hours are counted from sunrise. Italic hours are counted from sunset. Italian Civil hours are counted from civil dusk. Julian hours are counted from solar noon. Hours of Unequal Length The outer dial displays hours of unequal length. These are known as Roman hours, temporal hours, or seasonal hours.\nDaytime, the period between sunrise and sunset, is divided evenly into 12 hours. The first hour (I) of the day begins with sunrise, while the twelfth hour (XII) ends at sunset.\nSimilarly, nighttime is also divided into 12 hours. The first hour (I) of the night begins with sunset, and the twelfth hour (XII) ends at sunrise.\nThese daytime and nighttime hours are not the same, with length depending on latitude and varying with the seasons. For example, in the winter the daytime hours are shorter and nighttime hours longer, and vice versa in the summer.\nHours Begin Natural Hour can be configured to start counting Roman hours:\nat sunrise \u0026 sunset (12) at civil dawn \u0026 civil dusk (12) at civil dawn (24) at sunrise (24) at noon (24) at sunset (24) at civil dusk (24) ",
+    "description": "",
+    "tags": null,
+    "title": "Configuration",
+    "uri": "/Suntimes/help/addons/naturalhour/configuration/index.html"
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
@@ -48,14 +56,6 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/more/settings/general/index.html"
   },
   {
-    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
-    "content": " Add-ons are separate applications that integrate with or extend Suntimes through the use of public interfaces. Add-ons may start intents, use content-providers, or implement content-provider contracts.\nAdd-ons must declare the READ_CALCULATOR permission. This permission is granted during installation.\nSee https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces for a list of interfaces available to add-ons (and other applications).\n",
-    "description": "",
-    "tags": "Advanced",
-    "title": "Interfaces",
-    "uri": "/Suntimes/help/addons/interfaces/index.html"
-  },
-  {
     "breadcrumb": "Suntimes \u003e Help \u003e App Dialogs",
     "content": " Location Current Time Next Event Sunrise, Sunset, Twilight Moon Solstice, Equinox Location Suntimes displays the location name and coordinates in the action bar.\nTap to change the location.\nTap to update the current location.\nTap to show the location on a map. Visibility of the map button can be changed from Suntimes -\u003e Settings User Interface -\u003e Show Map Button.\nCurrent Time Suntimes displays the current time and time zone in the upper left.\nTap the time zone, or use : -\u003e Set Time Zone to change the time zone.\nTip Suntimes will display an info icon when daylight saving (or a similar rule) is in effect. Suntimes will display a warning icon when the time zone disagrees with local mean time. This is a common misconfiguration. Tip Suntimes will announce the time (and other changes to the UI) when using verbose TalkBack. Suntimes -\u003e Settings User Interface -\u003e Verbose TalkBack.\nNext Event Suntimes tracks the time until the next event in the upper right.\nTap the event field, or swipe left or swipe right, to step through events.\nSunrise, Sunset, Twilight Suntimes displays today’s sunrise, sunset, and twilight times.\nUse : -\u003e View date to scroll to a specific day, or swipe left or swipe right to see past and future days. Tap or to reset to today.\nTap the column headers to show the time until sunrise or sunset.\nTap noon or the lightmap to open the sun dialog.\nTip Suntimes can also display custom events. Suntimes -\u003e Settings User Interface -\u003e Manage Events\nTip Visibility of the twilight fields can be changed from the User Interface settings. Suntimes -\u003e Settings User Interface -\u003e Display. The lightmap can be toggled from User Interface -\u003e Show Light Map.\nSuntimes can also put emphasis on one of the fields. This can be changed from User Interface -\u003e Emphasize Field.\nMoon Suntimes displays moonrise, moonset, phase and illumination. Tapping this info opens the moon dialog.\nTip Visibility of the moon info can be toggled from the User Interface settings. Suntimes -\u003e Settings User Interface -\u003e Show Moon.\nSolstice, Equinox Suntimes displays the next solstice, equinox, or cross-quarter day. Tapping this field opens the solstice dialog.\nTip Visibility of solstice tracking can be toggled from the User Interface settings. Suntimes -\u003e Settings User Interface -\u003e Show Solstice / Equinox.\nData Source Suntimes displays the data source in the lower right. Tapping this field opens General settings.\nThe use elevation option can be toggled from the lower left. Altitude-based refinements will be applied when enabled.\nTip Visibility of the data source can be changed from the User Interface settings. Suntimes -\u003e Settings User Interface -\u003e Show Data Source.\n",
     "description": "",
@@ -64,12 +64,28 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/dialogs/main/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons \u003e Suntimes Calendars",
+    "content": " Calendar Integration Add Calendars Remove Calendars Open Calendar Calendar Integration Suntimes Calendars works by integrating with the calendar app to provide its own custom calendars.\nIt provides calendars for:\nAstronomical Twilight Nautical Twilight Civil Twilight Daylight (sunrise, noon, sunset) Golden Hour Blue Hour Moon (rising / setting) Moon Phases Moon Apsis (apogee / perigee) Solstices / Equinoxes Tip Additional calendars are available using add-ons. For example, Solunar Periods provides a “Hunting and Fishing” calendar.\nNote Suntimes Calendars requires calendar permissions to add, remove, or update calendars. Permissions must be granted before performing these actions (but may be safely revoked at other times).\nAdd Calendars When calendar integration is disabled, select multiple items, then enable integration to add all calendars at once. When calendar integration is enabled, select items to add them individually. Tip Updating calendars may take several minutes. It is safe to close the app while waiting; the update will continue in the background.\nRemove Calendars While calendar integration is enabled, de-select calendars to remove them individually. Disable calendar integration to remove all custom calendars at once. Tip Uninstalling Suntimes Calendars leaves calendars untouched. The app must be re-installed to remove them.\nOpen Calendar A separate calendar app is required to view calendars.\nTap : -\u003e Open Calendar to open the default app.\nTip Events should appear in most calendar apps automatically. Check troubleshooting if calendars fail to appear.\n",
+    "description": "",
+    "tags": null,
+    "title": "Manage Calendars",
+    "uri": "/Suntimes/help/addons/suntimescalendars/manage/index.html"
+  },
+  {
     "breadcrumb": "Suntimes \u003e Help \u003e Widgets",
     "content": " Add Remove Resize Reconfigure Create Backup Restore Backup Add To add a widget, navigate to the home screen, long-press to show the widget menu, then hold and drag the widget to a position on the screen.\nThe configuration screen will be shown. Tap to add the widget.\nRemove To remove a widget, long press on it, then hold and drag it to the zone at the top of the screen.\nResize To resize a widget, long press on it to reveal the control frame, then hold and drag the controls.\nTip Widgets can be configured to swap layouts, or scale text and icons, to use all available space.\nWidgets can also be aligned to an edge or corner when there is extra space.\nReconfigure Suntimes -\u003e Settings -\u003e Widgets to show the widget list.\nTap on a widget in the list to configure it.\nTap to configure widget actions.\nTap to configure widget themes.\nCreate Backup Suntimes -\u003e Settings -\u003e Widgets to show the widget list, then : -\u003e Create Backup to save widgets (and other settings) to file.\nRestore Backup Suntimes -\u003e Settings -\u003e Widgets to show the widget list, then : -\u003e Restore Backup to import settings from file.\nAfter selecting a backup file you will be prompted to select an import method:\nRestore Backup. Imported settings will be cached for now and restored later when requested by the launcher. The launcher must support this option.\nBest Guess. Imported settings will be applied to existing widgets by type.\nDirect Import. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.\n",
     "description": "",
     "tags": null,
     "title": "Manage Widgets",
     "uri": "/Suntimes/help/widgets/manage/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": "A 24-hour clock and Roman timekeeping add-on for Suntimes.\nConfiguration Natural Hour can be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.\nNatural Hour source code is available under GPLv3.\n",
+    "description": "",
+    "tags": "add-on",
+    "title": "Natural Hour",
+    "uri": "/Suntimes/help/addons/naturalhour/index.html"
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e Alarms",
@@ -192,12 +208,28 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/dialogs/moon/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons \u003e Suntimes Calendars",
+    "content": " Location Window Color Event Flags Event Strings Event Template Reminders Location The location is configured from Suntimes.\nNote The location is applied when calendars are added.\nWindow Tap Calendar Window to change the time period of included events.\nNote The calendar window is applied when calendars are added.\nColor Tap -\u003e Color to change the calendar’s display color.\nTitle Tap -\u003e Title to change the calendar’s display title.\nEvent Flags Tap -\u003e Event Flags to customize included calendar events.\nUncheck events that should be omitted from the calendar.\nNote Event flags are applied when calendars are added.\nEvent Strings Tap -\u003e Event Flags -\u003e Event Strings to customize event display strings.\nEvent strings are available to the calendar template using %M.\nNote Event strings are applied when calendars are added.\nEvent Template Tap -\u003e Event Template to customize the template.\nEach event template supplies:\nName: A short event title. Location: The event’s location (optional). Description: The expanded event description. Templates use % substitutions:\n%cal calendar name %summary calendar summary %color calendar color hex %% % character %loc location name %lat location latitude %lon location longitude %lel location elevation %M event title (supplied by event strings) %em event milliseconds %eZ event azimuth %eA event altitude %eR event right ascension %eD event declination %dist moon distance %illum moon illumination % %phase moon minor phase Note Event templates are applied when calendars are added.\nReminders Tap -\u003e Reminders to configure calendar reminders.\nTap Add Reminder to add a reminder to all events in a calendar. Tap to remove reminders.\nTap to apply changes when done. Reminders will be updated immediately if the calendar is already enabled.\nTip Updating reminders may take several minutes. It is safe to close the app while waiting; the update will continue in the background.\n",
+    "description": "",
+    "tags": null,
+    "title": "Options",
+    "uri": "/Suntimes/help/addons/suntimescalendars/options/index.html"
+  },
+  {
     "breadcrumb": "Suntimes \u003e Help \u003e Configuration",
     "content": "Suntimes requires location data to configure dialogs, alarms, and widgets.\nIt is recommended to configure the app to some user-defined location (such as a local park, intersection, or city center). Suntimes can also periodically query and update using the current location.\nUser-Defined Location Current (last known) User-Defined Location Suntimes is configured to a user-defined location by default. The use of location permissions is optional.\nConfigure the location using:\nPrevious place: choose a previously used place from the drop-down list. Places list: tap to open the places list, select an item, then tap to choose that place. Manual input: Tap to edit the displayed place. Change the place’s coordinates and label, then tap to save. The modified label will be added as a new place. Current location: Tap to edit the displayed place, then tap to query the device’s current location. Change the place’s label, then tap to save. The modified label will be added as a new place. Tip You can also use a separate app to pick the location. Sharing a location with Suntimes will open the location dialog to the selected coordinates.\nTip Suntimes supports coordinates with meter accuracy but this level of detail is optional. For best results, specify coordinates within 60 miles of your current position.\nCurrent (last known) Suntimes can be configured to use the current (last known) location. Location permissions are required.\nWhen configured to current (last known), the application will periodically query the current location whenever launched or resumed, and widgets will use the last known location when updated.\nChange the place settings to configure current (last known) behavior.\n",
     "description": "",
     "tags": null,
     "title": "Select a Place",
     "uri": "/Suntimes/help/configuration/selectplace/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": "An add-on that supplies events to the Calendar app.\nManage Calendars Options Troubleshooting Suntime Calendars can also be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.\nSuntimes Calendars source code is available under GPLv3.\n",
+    "description": "",
+    "tags": "add-on",
+    "title": "Suntimes Calendars",
+    "uri": "/Suntimes/help/addons/suntimescalendars/index.html"
   },
   {
     "breadcrumb": "Suntimes",
@@ -254,6 +286,14 @@ var relearn_search_index = [
     "tags": null,
     "title": "Widget Themes",
     "uri": "/Suntimes/help/widgets/themes/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons \u003e Suntimes Calendars",
+    "content": " Calendars are not shown (missing calendars) Calendars are not shown (missing calendars) The calendars managed by Suntimes Calendars should automatically appear in your Calendar app. For some apps however they may fail to appear without extra configuration.\nFossify Calendar Fossify Calendar (and other forks of Simple Calendar) require enabling CalDAV sync.\nadd calendars from Suntimes Calendars. from Fossify Calendar verify that : -\u003e Settings -\u003e CalDAV -\u003e CalDAV sync is checked. from Fossify Calendar navigate to Settings -\u003e Manage synced calendars and enable each calendar entry. from Fossify Calendar use : -\u003e Refresh CalDAV calendars. Google Calendar (Android 15) Some versions of Google Calendar may require enabling the Suntimes local account.\nadd calendars from Suntimes Calendars. from Google Calendar navigate to Settings -\u003e Manage accounts. enable the Suntimes account (listed under Non-Google accounts). ",
+    "description": "",
+    "tags": null,
+    "title": "Troubleshooting",
+    "uri": "/Suntimes/help/addons/suntimescalendars/troubleshooting/index.html"
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e More \u003e Settings",
@@ -321,7 +361,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": " Suntimes Calendars\nAn add-on that supplies events to the Calendar app.",
+    "content": " Natural Hour\nA 24-hour clock \u0026 Roman timekeeping add-on app.",
     "description": "",
     "tags": null,
     "title": "Add-ons",
@@ -361,15 +401,23 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e More",
-    "content": "This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.\nYou can help improve it by reporting typos, dead links, and other errors.\nMirrors This user manual is published to:\nhttps://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.0 (latest), 2024-05-01, written for Suntimes v0.15.14. ",
+    "content": "This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.\nYou can help improve it by reporting typos, dead links, and other errors.\nMirrors This user manual is published to:\nhttps://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.1, 2025-06-03; minor updates; adds pages for Natural Hour and Suntimes Calendars. v0.1.0, 2024-05-01, written for Suntimes v0.15.14. ",
     "description": "",
     "tags": null,
     "title": "Documentation",
     "uri": "/Suntimes/help/more/documentation/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": " Add-ons are separate applications that integrate with or extend Suntimes through the use of public interfaces. Add-ons may start intents, use content-providers, or implement content-provider contracts.\nAdd-ons must declare the READ_CALCULATOR permission. This permission is granted during installation.\nSee https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces for a list of interfaces available to add-ons (and other applications).\n",
+    "description": "",
+    "tags": "Advanced",
+    "title": "Interfaces",
+    "uri": "/Suntimes/help/addons/interfaces/index.html"
+  },
+  {
     "breadcrumb": "",
-    "content": "\nSuntimes is an Android app that displays sunrise and sunset, twilight, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. It includes an alarm clock, and a large collection of widgets and add-ons.\nSuntimes Calendars\nAn add-on that supplies events to the Calendar app.",
+    "content": "\nSuntimes is an Android app that displays sunrise and sunset, twilight, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. It includes an alarm clock, and a large collection of widgets and add-ons.\nNatural Hour\nA 24-hour clock \u0026 Roman timekeeping add-on app.",
     "description": "",
     "tags": null,
     "title": "Suntimes",
@@ -398,6 +446,14 @@ var relearn_search_index = [
     "tags": "advanced",
     "title": "Add Actions",
     "uri": "/Suntimes/help/more/actions/addaction/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Tags",
+    "content": "",
+    "description": "",
+    "tags": null,
+    "title": "Tag :: Add-On",
+    "uri": "/Suntimes/tags/add-on/index.html"
   },
   {
     "breadcrumb": "Suntimes",

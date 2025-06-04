@@ -14,7 +14,9 @@
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</loc>
-    <lastmod>2024-03-16T16:03:18-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/naturalhour/configuration/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/index.html</loc>
@@ -23,13 +25,16 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/general/index.html</loc>
   </url>
   <url>
-    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</loc>
-  </url>
-  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/main/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/manage/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/manage/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/naturalhour/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/setalarm/index.html</loc>
@@ -82,7 +87,13 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/moon/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/options/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/selectplace/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/index.html</loc>
@@ -106,6 +117,9 @@
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html</loc>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/troubleshooting/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/settings/userinterface/index.html</loc>
@@ -155,6 +169,9 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/index.html</loc>
     <lastmod>2024-03-16T18:53:18-07:00</lastmod>
   </url>
@@ -169,6 +186,9 @@
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/actions/addaction/index.html</loc>
     <lastmod>2024-03-16T16:00:20-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/tags/add-on/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/categories/index.html</loc>

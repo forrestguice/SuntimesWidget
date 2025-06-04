@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Suntimes Calendars on Suntimes</title>
+    <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/index.html</link>
+    <description>Recent content in Suntimes Calendars on Suntimes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manage Calendars</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/manage/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/manage/index.html</guid>
+      <description>Calendar Integration Add Calendars Remove Calendars Open Calendar Calendar Integration Suntimes Calendars works by integrating with the calendar app to provide its own custom calendars.
+It provides calendars for:
+Astronomical Twilight Nautical Twilight Civil Twilight Daylight (sunrise, noon, sunset) Golden Hour Blue Hour Moon (rising / setting) Moon Phases Moon Apsis (apogee / perigee) Solstices / Equinoxes Tip Additional calendars are available using add-ons. For example, Solunar Periods provides a &amp;ldquo;Hunting and Fishing&amp;rdquo; calendar.</description>
+    </item>
+    <item>
+      <title>Options</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/options/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/options/index.html</guid>
+      <description>Location Window Color Event Flags Event Strings Event Template Reminders Location The location is configured from Suntimes.
+Note The location is applied when calendars are added.
+Window Tap Calendar Window to change the time period of included events.
+Note The calendar window is applied when calendars are added.
+Color Tap -&amp;gt; Color to change the calendar&amp;rsquo;s display color.
+Title Tap -&amp;gt; Title to change the calendar&amp;rsquo;s display title.
+Event Flags Tap -&amp;gt; Event Flags to customize included calendar events.</description>
+    </item>
+    <item>
+      <title>Troubleshooting</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/troubleshooting/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/troubleshooting/index.html</guid>
+      <description>Calendars are not shown (missing calendars) Calendars are not shown (missing calendars) The calendars managed by Suntimes Calendars should automatically appear in your Calendar app. For some apps however they may fail to appear without extra configuration.
+Fossify Calendar Fossify Calendar (and other forks of Simple Calendar) require enabling CalDAV sync.
+add calendars from Suntimes Calendars. from Fossify Calendar verify that : -&amp;gt; Settings -&amp;gt; CalDAV -&amp;gt; CalDAV sync is checked.</description>
+    </item>
+  </channel>
+</rss>

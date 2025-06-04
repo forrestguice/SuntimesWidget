@@ -11,9 +11,9 @@
     <item>
       <title>Available Data Sources</title>
       <link>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</link>
-      <pubDate>Sat, 16 Mar 2024 16:03:18 -0700</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasources/availablesources/index.html</guid>
-      <description>Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate and sometimes buggy. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO.</description>
+      <description>Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO.</description>
     </item>
     <item>
       <title>Adding Data Sources</title>

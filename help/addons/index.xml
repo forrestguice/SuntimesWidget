@@ -8,6 +8,26 @@
     <language>en</language>
     <atom:link href="https://forrestguice.codeberg.page/Suntimes/help/addons/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Natural Hour</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/naturalhour/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/naturalhour/index.html</guid>
+      <description>A 24-hour clock and Roman timekeeping add-on for Suntimes.
+Configuration Natural Hour can be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
+Natural Hour source code is available under GPLv3.</description>
+    </item>
+    <item>
+      <title>Suntimes Calendars</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/index.html</guid>
+      <description>An add-on that supplies events to the Calendar app.
+Manage Calendars Options Troubleshooting Suntime Calendars can also be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
+Suntimes Calendars source code is available under GPLv3.</description>
+    </item>
+    <item>
       <title>Interfaces</title>
       <link>https://forrestguice.codeberg.page/Suntimes/help/addons/interfaces/index.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
