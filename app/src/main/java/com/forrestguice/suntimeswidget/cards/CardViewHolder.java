@@ -403,7 +403,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     {
         SuntimesUtils.TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
-        String compareString = data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
+        String compareString = (data.dayLengthToday() == data.dayLengthOther())
+                ? data.dayDeltaPrefix() + " " + deltaText.getSuffix()
+                : data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
         return SuntimesUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
     }
 

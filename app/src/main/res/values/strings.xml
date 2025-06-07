@@ -158,6 +158,7 @@
     <string name="delta_day_yesterday">Yesterday was</string>
     <string name="delta_day_shorter">shorter</string>
     <string name="delta_day_longer">longer</string>
+    <string name="delta_day_same">the same length</string>    <!-- TODO -->
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
