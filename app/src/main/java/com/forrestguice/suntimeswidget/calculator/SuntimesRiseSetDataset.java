@@ -29,7 +29,6 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -144,9 +143,6 @@ public class SuntimesRiseSetDataset
         SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
 
         boolean first = true;
-        ArrayList<WidgetSettings.TimeMode> events0 = new ArrayList<WidgetSettings.TimeMode>();
-        ArrayList<WidgetSettings.TimeMode> events1 = new ArrayList<WidgetSettings.TimeMode>();
-
         for (SuntimesRiseSetData data : dataset.values())
         {
             if (first && descriptor == null)
@@ -160,57 +156,10 @@ public class SuntimesRiseSetDataset
                 data.setCalculator(calculator, descriptor);
                 data.calculate(context);
             }
-
-            WidgetSettings.TimeMode mode = data.timeMode();
-            if (mode == WidgetSettings.TimeMode.NOON || mode == WidgetSettings.TimeMode.MIDNIGHT || mode == WidgetSettings.TimeMode.GOLD
-                    || mode == WidgetSettings.TimeMode.BLUE4 || mode == WidgetSettings.TimeMode.BLUE8)
-                continue;
-
-            if (data.sunriseCalendarToday() != null || data.sunsetCalendarToday() != null) {
-                events0.add(mode);
-            }
-            if (data.sunriseCalendarOther() != null || data.sunsetCalendarOther() != null) {
-                events1.add(mode);
-            }
         }
 
-        if (events0.isEmpty())
-        {
-            SuntimesCalculator.SunPosition position0 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.calendar())) : null);
-            if (position0 == null) {
-                dataActual.dayLengthToday = -1;
-                dataCivil.dayLengthToday = -1;
-
-            } else if (position0.elevation > 0) {
-                dataActual.dayLengthToday = SuntimesData.DAY_MILLIS;    // perpetual day
-                dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;
-
-            } else if (position0.elevation > -6) {
-                dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;    // perpetual civil twilight
-            }
-
-        } else if (events0.contains(WidgetSettings.TimeMode.OFFICIAL) && !events0.contains(WidgetSettings.TimeMode.CIVIL)) {
-            dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;
-        }
-
-        if (events1.isEmpty())
-        {
-            SuntimesCalculator.SunPosition position1 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.getOtherCalendar())) : null);
-            if (position1 == null) {
-                dataActual.dayLengthOther = -1;
-                dataCivil.dayLengthOther = -1;
-
-            } else if (position1.elevation > 0) {
-                dataActual.dayLengthOther = SuntimesData.DAY_MILLIS;    // perpetual day
-                dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;
-
-            } else if (position1.elevation > -6) {
-                dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;    // perpetual civil twilight
-            }
-
-        } else if (events1.contains(WidgetSettings.TimeMode.OFFICIAL) && !events0.contains(WidgetSettings.TimeMode.CIVIL)) {
-            dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;
-        }
+        makeDayLengthCorrections(this, calculator, false);
+        makeDayLengthCorrections(this, calculator, true);
     }
 
     public boolean isCalculated()
@@ -596,6 +545,90 @@ public class SuntimesRiseSetDataset
     public String toString()
     {
         return "" + date().getTime();
+    }
+
+    public static int NONE_DAY = 0;      // no daylength because the sun doesn't set lower
+    public static int NONE_NIGHT = -1;    // no daylength because the sun doesn't rise higher
+
+    public static void makeDayLengthCorrections(SuntimesRiseSetDataset data, SuntimesCalculator calculator, boolean isOther)
+    {
+        SuntimesRiseSetData dataActual = data.dataActual;
+        SuntimesRiseSetData dataCivil = data.dataCivil;
+        SuntimesRiseSetData dataNautical = data.dataNautical;
+        SuntimesRiseSetData dataAstro = data.dataAstro;
+
+        Calendar calendar = (isOther ? dataActual.getOtherCalendar() : dataActual.calendar());
+        Calendar midnight = (calculator != null ? calculator.getSolarMidnightCalendarForDate(calendar) : null);
+        SuntimesCalculator.SunPosition atMidnight = (calculator != null && midnight != null ? calculator.getSunPosition(midnight) : null);
+        if (atMidnight != null)
+        {
+            if (atMidnight.elevation > -2) {                              // [0, ...]
+                if (dayLengthIs(dataActual, isOther, 0)) {
+                    setDayLength(dataActual, isOther, SuntimesData.DAY_MILLIS);     // polar day (midnight sun)
+                    setDayLength(dataCivil, isOther, NONE_DAY);
+                    setDayLength(dataNautical, isOther, NONE_DAY);
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -6) {                       // (-6, 0]
+                if (dayLengthIs(dataCivil, isOther, 0)) {
+                    setDayLength(dataCivil, isOther, SuntimesData.DAY_MILLIS);       // midnight twilight
+                    setDayLength(dataNautical, isOther, NONE_DAY);
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -12) {                      // (-12, -6]
+                if (dayLengthIs(dataNautical, isOther, 0)) {
+                    setDayLength(dataNautical, isOther, SuntimesData.DAY_MILLIS);    // midnight twilight
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -18) {                      // (-18, 12]
+                if (dayLengthIs(dataAstro, isOther, 0)) {
+                    setDayLength(dataAstro, isOther, SuntimesData.DAY_MILLIS);       // midnight twilight
+                }
+            }
+        }
+
+        Calendar noon = (calculator != null ? calculator.getSolarNoonCalendarForDate(calendar) : null);
+        SuntimesCalculator.SunPosition atNoon = (calculator != null && noon != null ? calculator.getSunPosition(noon) : null);
+        if (atNoon != null)
+        {
+            if (atNoon.elevation <= 0) {                                             // polar night
+                if (dayLengthIs(dataActual, isOther, 0)) {
+                    setDayLength(dataActual, isOther, NONE_NIGHT);
+                }
+
+                if (atNoon.elevation < -6) {
+                    if (dayLengthIs(dataCivil, isOther, 0)) {
+                        setDayLength(dataCivil, isOther, NONE_NIGHT);
+                    }
+
+                    if (atNoon.elevation < -12) {
+                        if (dayLengthIs(dataNautical, isOther, 0)) {
+                            setDayLength(dataNautical, isOther, NONE_NIGHT);
+                        }
+
+                        if (atNoon.elevation < -18 && dayLengthIs(dataAstro, isOther, 0)) {
+                            setDayLength(dataAstro, isOther, NONE_NIGHT);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean dayLengthIs(SuntimesRiseSetData data,  boolean other, long length) {
+        return other ? (data.dayLengthOther == length)
+                : (data.dayLengthToday == length);
+    }
+    public static void setDayLength(SuntimesRiseSetData data, boolean other, long length)
+    {
+        if (other) {
+            data.dayLengthOther = length;
+        } else {
+            data.dayLengthToday = length;
+        }
     }
 
 }
