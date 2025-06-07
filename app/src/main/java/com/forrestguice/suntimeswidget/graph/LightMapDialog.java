@@ -1116,13 +1116,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         } else return null;
     }
     public Long seekNoon(Context context) {
-        return seekDateTime(context, data.dataNoon.sunriseCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataNoon.sunriseCalendarToday());
     }
     public Long seekSunrise(Context context) {
-        return seekDateTime(context, data.dataActual.sunriseCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataActual.sunriseCalendarToday());
     }
     public Long seekSunset(Context context) {
-        return seekDateTime(context, data.dataActual.sunsetCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataActual.sunsetCalendarToday());
+    }
+    public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
+        return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
     }
     public Long seekDateTime( Context context, Long datetime )
     {
