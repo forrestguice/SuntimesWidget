@@ -382,6 +382,7 @@
         <item>"Bergen", 60.38713, 5.32006, 0, [NO-46]</item>                <!-- Vestland -->
         <item>"Stavanger", 58.96696, 5.72154, 0, [NO-11]</item>             <!-- Rogaland -->
         <item>"Trondheim", 63.43048, 10.39511, 0, [NO-50]</item>            <!-- Trøndelag -->
+        <item>"Longyearbyen", 78.22933, 15.60139, 0, [NO-21]</item>         <!-- Svalbard -->
         <item>"Oslo", 59.8937, 10.6450, 0, [capital][NO-03]</item>          <!-- Oslo -->
     </string-array>
     <string-array name="places_EU_PL">    <!-- Poland -->
