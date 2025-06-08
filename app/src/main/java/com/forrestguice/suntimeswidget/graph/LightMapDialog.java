@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -364,14 +363,17 @@ public class LightMapDialog extends BottomSheetDialogFragment
         View clickArea_rising = dialogView.findViewById(R.id.clickArea_rising);
         if (clickArea_rising != null) {
             clickArea_rising.setOnClickListener(onSunriseLayoutClick);
+            clickArea_rising.setOnLongClickListener(onSunriseLayoutLongClick);
         }
         View clickArea_noon = dialogView.findViewById(R.id.clickArea_noon);
         if (clickArea_noon != null) {
             clickArea_noon.setOnClickListener(onNoonLayoutClick);
+            clickArea_noon.setOnLongClickListener(onNoonLayoutLongClick);
         }
         View clickArea_setting = dialogView.findViewById(R.id.clickArea_setting);
         if (clickArea_setting != null) {
             clickArea_setting.setOnClickListener(onSunsetLayoutClick);
+            clickArea_setting.setOnLongClickListener(onSunsetLayoutLongClick);
         }
 
         View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
@@ -781,6 +783,106 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return true;
     }
 
+    protected boolean showSeekNoonMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_noon, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
+        updateNoonMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private void updateNoonMenu(Context context, PopupMenu menu) {  // TODO
+    }
+
+    protected boolean showSeekDawnMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_dawn, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
+        updateDawnMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private void updateDawnMenu(Context context, PopupMenu menu) {  // TODO
+    }
+
+    protected boolean showSeekDuskMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_dusk, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
+        updateDuskMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private void updateDuskMenu(Context context, PopupMenu menu) {  // TODO
+    }
+
+    private final PopupMenu.OnMenuItemClickListener onSeekEventMenuClick()
+    {
+        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                switch (item.getItemId())
+                {
+                    case R.id.seek_midnight:
+                        seekMidnight(getActivity());
+                        return true;
+
+                    case R.id.seek_dawn_astronomical:
+                        seekRising(getActivity(), data.dataAstro);
+                        return true;
+
+                    case R.id.seek_dawn_nautical:
+                        seekRising(getActivity(), data.dataNautical);
+                        return true;
+
+                    case R.id.seek_dawn_civil:
+                        seekRising(getActivity(), data.dataCivil);
+                        return true;
+
+                    case R.id.seek_dawn_actual:
+                        seekSunrise(getActivity());
+                        return true;
+
+                    case R.id.seek_noon:
+                        seekNoon(getActivity());
+                        return true;
+
+                    case R.id.seek_dusk_actual:
+                        seekSunset(getActivity());
+                        return true;
+
+                    case R.id.seek_dusk_civil:
+                        seekSetting(getActivity(), data.dataCivil);
+                        return true;
+
+                    case R.id.seek_dusk_nautical:
+                        seekSetting(getActivity(), data.dataNautical);
+                        return true;
+
+                    case R.id.seek_dusk_astronomical:
+                        seekSetting(getActivity(), data.dataAstro);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
     protected boolean showSpeedMenu(final Context context, View view)
     {
         PopupMenu menu = new PopupMenu(context, view);
@@ -1008,6 +1110,31 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     });
 
+    private final View.OnLongClickListener onSunriseLayoutLongClick = new View.OnLongClickListener()
+    {
+        @Override
+        public boolean onLongClick(View v) {
+            showSeekDawnMenu(getActivity(), v);
+            return false;
+        }
+    };
+    private final View.OnLongClickListener onSunsetLayoutLongClick = new View.OnLongClickListener()
+    {
+        @Override
+        public boolean onLongClick(View v) {
+            showSeekDuskMenu(getActivity(), v);
+            return false;
+        }
+    };
+    private final View.OnLongClickListener onNoonLayoutLongClick = new View.OnLongClickListener()
+    {
+        @Override
+        public boolean onLongClick(View v) {
+            showSeekNoonMenu(getActivity(), v);
+            return false;
+        }
+    };
+
     private final View.OnClickListener onAltitudeLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
@@ -1108,6 +1235,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         };
     }
 
+    @Nullable
     public Long seekAltitude( Context context, @Nullable Double degrees, boolean rising )
     {
         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, (degrees != null ? degrees + "" : ""));
@@ -1115,19 +1243,36 @@ public class LightMapDialog extends BottomSheetDialogFragment
             return seekDateTime(context, lightmap.findAltitude(context, (int)((double)degrees), rising));
         } else return null;
     }
+    @Nullable
     public Long seekNoon(Context context) {
         return seekDateTime(context, data.dataNoon.sunriseCalendarToday());
     }
+    @Nullable
+    public Long seekMidnight(Context context) {
+        return seekDateTime(context, data.dataMidnight.sunriseCalendarToday());
+    }
+    @Nullable
     public Long seekSunrise(Context context) {
         return seekDateTime(context, data.dataActual.sunriseCalendarToday());
     }
+    @Nullable
     public Long seekSunset(Context context) {
         return seekDateTime(context, data.dataActual.sunsetCalendarToday());
     }
+    @Nullable
+    public Long seekRising(Context context, @Nullable SuntimesRiseSetData data) {
+        return (data != null ? seekDateTime(context, data.sunriseCalendarToday()) : null);
+    }
+    @Nullable
+    public Long seekSetting(Context context, @Nullable SuntimesRiseSetData data) {
+        return (data != null ? seekDateTime(context, data.sunsetCalendarToday()) : null);
+    }
+    @Nullable
     public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
         return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
     }
-    public Long seekDateTime( Context context, Long datetime )
+    @Nullable
+    public Long seekDateTime( Context context, @Nullable Long datetime )
     {
         if (datetime != null)
         {
