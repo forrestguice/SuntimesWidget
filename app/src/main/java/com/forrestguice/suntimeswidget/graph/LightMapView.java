@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.graph;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
@@ -606,19 +605,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 // draw now marker
                 if (colors.option_drawNow > 0)
                 {
-                    int pointRadius;
-                    if (colors.option_drawNow_pointSizePx <= 0)
-                    {
-                        pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
-                        int maxPointRadius = (int)(c.getHeight() / 2d);
-                        if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
-                            pointRadius = (maxPointRadius - (pointRadius/3));
-                        }
-                    } else {
-                        pointRadius = colors.option_drawNow_pointSizePx;
-                    }
-                    int pointStroke = (int)Math.ceil(pointRadius / 3d);
-
                     //if (colors.option_lmt)
                     //{
                         TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
@@ -627,17 +613,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                         now = nowLmt;
                     //}
 
-                    switch (colors.option_drawNow) {
-                        case LightMapColors.DRAW_SUN2:
-                            DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
-                            break;
-
-                        case LightMapColors.DRAW_SUN1:
-                        default:
-                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_FILL), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
-                            break;
-                    }
+                    drawSunSymbol(colors.option_drawNow, now, c, p, colors);
                 }
             }
 
@@ -743,6 +719,36 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         /////////////////////////////////////////////
 
+        protected void drawSunSymbol(int symbol, Calendar calendar, Canvas c, Paint p, LightMapColors options)
+        {
+            int pointRadius;
+            if (colors.option_drawNow_pointSizePx <= 0)
+            {
+                pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
+                int maxPointRadius = (int)(c.getHeight() / 2d);
+                if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
+                    pointRadius = (maxPointRadius - (pointRadius/3));
+                }
+            } else {
+                pointRadius = colors.option_drawNow_pointSizePx;
+            }
+
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            int y = c.getHeight() / 2;
+
+            SunSymbolBitmap.drawSunSymbol(symbol, x, y, pointRadius, c, p, options.values);
+
+            int w = c.getWidth();
+            if (x + pointRadius > w) {    // point cropped at image bounds, so translate and draw it again
+                SunSymbolBitmap.drawSunSymbol(symbol, x - w, y, pointRadius, c, p, options.values);
+            } else if (x - pointRadius < 0) {
+                SunSymbolBitmap.drawSunSymbol(symbol, x + w, y, pointRadius, c, p, options.values);
+            }
+        }
+
+        /////////////////////////////////////////////
+
         protected void drawRect(Canvas c, Paint p)
         {
             int w = c.getWidth();
@@ -820,6 +826,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
+        protected void drawVerticalLine(Calendar calendar, int lineWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            SunSymbolBitmap.drawVerticalLine(x, lineWidth, c, p, color, effect);
+        }
+
+        protected void drawCross(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int cX = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            int cY = c.getHeight() / 2;
+            SunSymbolBitmap.drawCross(cX, cY, radius, strokeWidth, c, p, color, effect);
+        }
+
         protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
             if (calendar != null)
@@ -830,30 +851,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
                 int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
                 int y = h / 2;
-                drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                SunSymbolBitmap.drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
 
                 if (x + radius > w) {    // point cropped at image bounds, so translate and draw it again
-                    drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                    SunSymbolBitmap.drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 } else if (x - radius < 0) {
-                    drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                    SunSymbolBitmap.drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 }
             }
-        }
-        protected void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
-        {
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(fillColor);
-            c.drawCircle(x, y, radius, p);
-
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(strokeWidth);
-            p.setColor(strokeColor);
-
-            if (strokeEffect != null) {
-                p.setPathEffect(strokeEffect);
-            }
-
-            c.drawCircle(x, y, radius, p);
         }
 
         private LightMapTaskListener listener = null;
@@ -889,11 +894,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("WeakerAccess")
     public static class LightMapColors
     {
-        public static final int DRAW_NONE = 0;
-        public static final int DRAW_SUN1 = 1;    // solid stroke
-        public static final int DRAW_SUN2 = 2;    // dashed stroke
+        public static final String MAPTAG_LIGHTMAP = "_lightmap";
 
-        public int option_drawNow = DRAW_SUN1;
+        public void setOption_drawNow(SunSymbol symbol) {
+            option_drawNow = SunSymbolBitmap.fromSunSymbol(symbol);
+        }
+
+        public int option_drawNow = SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
 

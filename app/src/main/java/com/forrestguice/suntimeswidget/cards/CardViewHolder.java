@@ -46,6 +46,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.graph.LightMapView;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.suntimeswidget.graph.SunSymbolBitmap;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
@@ -74,6 +77,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
@@ -387,7 +393,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         updateLightmapColors(context, colors);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
-        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
+
+        SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
+        int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
+        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? symbol : SunSymbolBitmap.DRAW_SUN_CIRCLE_DASHED;
+
         lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);
         //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));

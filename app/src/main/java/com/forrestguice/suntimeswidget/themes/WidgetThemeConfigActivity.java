@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.SunSymbolBitmap;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
@@ -840,7 +841,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
 
-            colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
+            colors.option_drawNow = SunSymbolBitmap.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
             int dpWidth = 256;

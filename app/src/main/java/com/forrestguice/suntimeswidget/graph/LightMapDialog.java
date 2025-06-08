@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -105,6 +104,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
@@ -513,7 +514,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    public static final String MAPTAG_LIGHTMAP = "_lightmap";
+    public static final String MAPTAG_LIGHTMAP = LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
     public static final String PREF_KEY_LIGHTMAP_SHOWGRAPH = "showgraph";
     public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
@@ -687,6 +688,26 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.graphOption_sunSymbol_circle:
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CIRCLE.name());
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_circledot:
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.DOT.name());
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_cross:
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CROSS.name());
+                    updateViews();
+                    return true;
+
+                case R.id.graphOption_sunSymbol_line:
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.LINE.name());
+                    updateViews();
+                    return true;
+
                 case R.id.action_date:
                     if (dialogListener != null) {
                         dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
@@ -760,12 +781,53 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
         }
 
+        SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
+        int iconSize = context.getResources().getDimensionPixelSize(R.dimen.menuIcon_size);
+        MenuItem graphOption_sunSymbol = menu.findItem(R.id.graphOption_sunSymbol);
+        if (graphOption_sunSymbol != null) {
+            int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
+            graphOption_sunSymbol.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors().values));
+        }
+        MenuItem graphOption_sunSymbol_circle = menu.findItem(R.id.graphOption_sunSymbol_circle);
+        if (graphOption_sunSymbol_circle != null) {
+            graphOption_sunSymbol_circle.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN1, iconSize, iconSize, lightmap.getColors().values));
+        }
+        MenuItem graphOption_sunSymbol_circledot = menu.findItem(R.id.graphOption_sunSymbol_circledot);
+        if (graphOption_sunSymbol_circledot != null) {
+            graphOption_sunSymbol_circledot.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors().values));
+        }
+        MenuItem graphOption_sunSymbol_cross = menu.findItem(R.id.graphOption_sunSymbol_cross);
+        if (graphOption_sunSymbol_cross != null) {
+            graphOption_sunSymbol_cross.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors().values));
+        }
+        MenuItem graphOption_sunSymbol_line = menu.findItem(R.id.graphOption_sunSymbol_line);
+        if (graphOption_sunSymbol_line != null) {
+            graphOption_sunSymbol_line.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors().values));
+        }
+
+        MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
+        if (selectedSymbol != null) {
+            selectedSymbol.setChecked(true);
+        }
+
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
         if (submenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 MenuAddon.populateSubMenu(submenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } //else submenuItem.setVisible(false);
+        }
+    }
+
+    @Nullable
+    protected MenuItem getMenuItemForSymbol(Menu menu, SunSymbol sunSymbol)
+    {
+        switch (sunSymbol) {
+            case LINE: return menu.findItem(R.id.graphOption_sunSymbol_line);
+            case DOT: return menu.findItem(R.id.graphOption_sunSymbol_circledot);
+            case CROSS: return menu.findItem(R.id.graphOption_sunSymbol_cross);
+            case CIRCLE: return menu.findItem(R.id.graphOption_sunSymbol_circle);
+            default: return null;
         }
     }
 
@@ -907,6 +969,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
+            options.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;

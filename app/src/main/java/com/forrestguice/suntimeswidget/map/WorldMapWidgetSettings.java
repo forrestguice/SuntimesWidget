@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -69,6 +70,9 @@ public class WorldMapWidgetSettings
 
     public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
     public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
+
+    public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
+    public static final SunSymbol PREF_DEF_GRAPH_SUNSYMBOL = SunSymbol.CIRCLE;
 
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
@@ -298,6 +302,20 @@ public class WorldMapWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
         prefs.remove(prefs_prefix + key + mapTag);
         prefs.apply();
+    }
+
+    public static void saveMapIntValue(Context context, int appWidgetId, String key, String mapTag, int value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        prefs.putInt(prefs_prefix + key + mapTag, value);
+        prefs.apply();
+    }
+    public static int loadMapIntValue(Context context, int appWidgetId, String key, String mapTag, int defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        return prefs.getInt(prefs_prefix + key + mapTag, defaultValue);
     }
 
     public static void saveWorldMapString(Context context, int appWidgetId, String key, String mapTag, String value)

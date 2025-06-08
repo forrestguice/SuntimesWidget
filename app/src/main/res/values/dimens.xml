@@ -139,6 +139,7 @@
 
     <dimen name="aboutIcon_margin">0dip</dimen>
 
+    <dimen name="menuIcon_size">24dp</dimen>
     <dimen name="statusIcon_size">16dp</dimen>
     <dimen name="warningIcon_size">18dp</dimen>
     <dimen name="chipIcon_size">20dp</dimen>
