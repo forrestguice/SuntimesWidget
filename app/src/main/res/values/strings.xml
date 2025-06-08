@@ -38,6 +38,10 @@
     <string name="configAction_lightGraphDialog">Sunlight</string>
     <string name="configAction_lightGraph">Light Graph</string>
     <string name="configAction_lineGraph">Altitude Graph</string>
+    <string name="configAction_seek">Seek</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDawn">Seek Dawn</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDusk">Seek Dusk</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekNoon">Seek Noon</string>        <!-- checkbox label -->    <!-- TODO -->
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>

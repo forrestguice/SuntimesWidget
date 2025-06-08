@@ -79,10 +79,32 @@
             </menu>
         </item>
 
-        <item android:id="@+id/action_seekaltitude"
+        <item android:id="@+id/action_seek"
             android:icon="?attr/icActionSearch"
-            android:title="@string/configAction_seekAltitude"
-            app:showAsAction="never" />
+            android:title="@string/configAction_seek"
+            app:showAsAction="never">
+            <menu>
+                <item android:id="@+id/action_seekaltitude"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekAltitude"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdawn"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekDawn"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seeknoon"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekNoon"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdusk"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekDusk"
+                    app:showAsAction="never" />
+            </menu>
+        </item>
 
         <item android:id="@+id/action_observerheight"
             android:icon="?attr/icActionShadow"

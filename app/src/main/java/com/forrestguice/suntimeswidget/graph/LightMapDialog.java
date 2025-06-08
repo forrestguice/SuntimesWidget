@@ -710,6 +710,18 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     showSeekAltitudePopup(context, sunElevation);
                     return true;
 
+                case R.id.action_seekdawn:
+                    showSeekDawnMenu(context, riseIcon);
+                    return true;
+
+                case R.id.action_seekdusk:
+                    showSeekDuskMenu(context, setIcon);
+                    return true;
+
+                case R.id.action_seeknoon:
+                    showSeekNoonMenu(context, sunElevationAtNoon);
+                    return true;
+
                 case R.id.action_moon:
                     if (dialogListener != null) {
                         dialogListener.onShowMoonInfo(getMapTime(System.currentTimeMillis()));
