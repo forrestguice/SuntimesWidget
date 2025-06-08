@@ -94,6 +94,23 @@ public enum SolarEvents
     public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
     public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 
+    public static final int[] types() {
+        return new int[] { TYPE_SUN, TYPE_MOON, TYPE_MOONPHASE, TYPE_SEASON };
+    }
+    public static CharSequence getTypeLabel(Context context, @Nullable Integer type)
+    {
+        if (type == null) {
+            return "";
+        }
+        switch (type) {
+            case TYPE_SUN: return context.getString(R.string.eventType_default_sun);
+            case TYPE_MOON: return context.getString(R.string.eventType_default_moon);
+            case TYPE_MOONPHASE: return context.getString(R.string.eventType_default_moonphases);
+            case TYPE_SEASON: return context.getString(R.string.eventType_default_seasons);
+            default: return type + context.getString(R.string.eventType_default);
+        }
+    }
+
     private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource, int type, boolean rising)
     {
         this.shortDisplayString = shortDisplayString;
@@ -123,6 +140,22 @@ public enum SolarEvents
                 case THIRDQUARTER: return FIRSTQUARTER.iconResource;
                 case NEWMOON: case FULLMOON: default: return iconResource;
             }
+        }
+    }
+
+    public static SolarEvents[] values(@Nullable Integer type)
+    {
+        if (type == null) {
+            return values();
+
+        } else {
+            ArrayList<SolarEvents> events = new ArrayList<>();
+            for (SolarEvents event : events) {
+                if (event.getType() == type) {
+                    events.add(event);
+                }
+            }
+            return events.toArray(new SolarEvents[0]);
         }
     }
 
