@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -801,11 +802,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.lightmapmenu_seek_dawn, menu.getMenu());
+        addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DAWN_ITEM_ID);
         menu.setOnMenuItemClickListener(onSeekEventMenuClick());
         updateDawnMenu(context, menu);
         menu.show();
         return true;
     }
+
     private void updateDawnMenu(Context context, PopupMenu menu) {  // TODO
     }
 
@@ -814,12 +817,64 @@ public class LightMapDialog extends BottomSheetDialogFragment
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.lightmapmenu_seek_dusk, menu.getMenu());
+        addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DUSK_ITEM_ID);
         menu.setOnMenuItemClickListener(onSeekEventMenuClick());
         updateDuskMenu(context, menu);
         menu.show();
         return true;
     }
     private void updateDuskMenu(Context context, PopupMenu menu) {  // TODO
+    }
+
+    private static final int SEEK_CUSTOM_DAWN_ITEM_ID = 100000;
+    private static final int SEEK_CUSTOM_DUSK_ITEM_ID = 200000;
+    private static final int SEEK_CUSTOM_MAX = 10;
+
+    protected void addCustomEventsToMenu(Context context, Menu m, int itemID0)
+    {
+        String[] eventIDs = EventSettings.loadVisibleEvents(context).toArray(new String[0]);
+        for (int i=0; i<eventIDs.length && i<SEEK_CUSTOM_MAX; i++)
+        {
+            EventSettings.EventAlias event = EventSettings.loadEvent(context, eventIDs[i]);
+            m.add(Menu.NONE, customEventIndexToMenuItemID(i, itemID0), 10 + i, event.getLabel());
+        }
+    }
+
+    /**
+     * @param i interal custom event ordering
+     * @param itemID0 root id
+     * @return menuItemID
+     */
+    protected int customEventIndexToMenuItemID(int i, int itemID0) {
+        return itemID0 + i;
+    }
+    /**
+     * @param menuItemID menuItemID
+     * @param itemID0 root id
+     * @return internal custom event ordering
+     */
+    protected int fromMenuItemID(int menuItemID, int itemID0) {
+        return menuItemID - itemID0;
+    }
+
+    @Nullable
+    protected String getCustomEventID(Context context, int menuItemID, int itemID0)
+    {
+        String eventID = null;
+        String[] eventIDs = EventSettings.loadVisibleEvents(context).toArray(new String[0]);
+        int d = fromMenuItemID(menuItemID, itemID0);
+        if (d >= 0 && d < eventIDs.length) {
+            eventID = eventIDs[d];
+        }
+        if (eventID != null) {
+            return eventID;
+        }
+        return null;
+    }
+
+    @Nullable
+    protected Long seekCustomEvent(Context context, int menuItemID, boolean dawn) {
+        return seekCustomEvent(context, getCustomEventID(context, menuItemID, (dawn ? SEEK_CUSTOM_DAWN_ITEM_ID : SEEK_CUSTOM_DUSK_ITEM_ID)), dawn);
     }
 
     private final PopupMenu.OnMenuItemClickListener onSeekEventMenuClick()
@@ -877,6 +932,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
                         return true;
 
                     default:
+                        if (item.getItemId() - SEEK_CUSTOM_DAWN_ITEM_ID < SEEK_CUSTOM_MAX) {
+                            seekCustomEvent(getActivity(), item.getItemId(), true);
+                            return true;
+
+                        } else if (item.getItemId() - SEEK_CUSTOM_DUSK_ITEM_ID < SEEK_CUSTOM_MAX) {
+                            seekCustomEvent(getActivity(), item.getItemId(), false);
+                            return true;
+                        }
                         return false;
                 }
             }
@@ -1283,6 +1346,18 @@ public class LightMapDialog extends BottomSheetDialogFragment
             lightmap.seekDateTime(context, datetime);
         }
         return datetime;
+    }
+    @Nullable
+    public Long seekCustomEvent(Context context, String eventID, boolean dawn)
+    {
+        if (eventID != null)
+        {
+            SuntimesRiseSetData d = new SuntimesRiseSetData(data.dataActual);
+            d.setDataMode(new WidgetSettings.EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
+            d.calculate(context);
+            return seekDateTime(context, (dawn ? d.sunriseCalendarToday() : d.sunsetCalendarToday()));
+        }
+        return null;
     }
 
     private final View.OnClickListener onShadowLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
