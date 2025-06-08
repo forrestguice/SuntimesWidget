@@ -673,7 +673,7 @@ public class CalculatorProviderTest
     {
         assertTrue(tag + " should return non-null cursor.", cursor != null);
         assertTrue(tag + " should have same number of columns as the projection", cursor.getColumnCount() == projection.length);
-        assertTrue("QUERY_MOONPHASE should return one or more rows.", cursor.getCount() >= 1);
+        assertTrue(tag + " should return one or more rows.", cursor.getCount() >= 1);
         cursor.moveToFirst();
         for (String column : projection) {
             assertTrue(tag + " results should contain " + column, cursor.getColumnIndex(column) >= 0);

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021-2023 Forrest Guice
+    Copyright (C) 2021-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -154,6 +154,7 @@ public class AlarmEventProvider extends ContentProvider
                 break;
 
             case URIMATCH_EVENT_TYPES:
+                //Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_TYPES: " + uri.getLastPathSegment());
                 retValue = queryEventTypes(uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
@@ -338,7 +339,7 @@ public class AlarmEventProvider extends ContentProvider
             {
                 case COLUMN_EVENT_TYPE:
                     if (type == EventType.SOLAREVENT) {
-                        row[i] = EventType.SOLAREVENT.name() + (subtype != null ? "_" + subtype : "");
+                        row[i] = EventType.SOLAREVENT.getSubtypeID(subtype + "");
                     } else {
                         row[i] = type.name();
                     }
@@ -389,7 +390,7 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = event.name();
                     break;
                 case COLUMN_EVENT_TYPE:
-                    row[i] = EventType.SOLAREVENT.name() + "_" + event.getType();
+                    row[i] = EventType.SOLAREVENT.getSubtypeID(event.getType() + "");
                     break;
                 case COLUMN_EVENT_TYPE_LABEL:
                     row[i] = EventType.SOLAREVENT.getDisplayString();
@@ -1155,6 +1156,11 @@ public class AlarmEventProvider extends ContentProvider
             SOLAREVENT.setDisplayString(context.getString(R.string.eventType_default));
             SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
             SHADOWLENGTH.setDisplayString(context.getString(R.string.eventType_sun_shadowlength));
+        }
+
+        public String getSubtypeID(@Nullable String subtype) {
+            return (subtype != null) ? name() + "_" + subtype
+                                     : name();
         }
 
         @Nullable

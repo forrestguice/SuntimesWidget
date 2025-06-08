@@ -150,7 +150,7 @@ public enum SolarEvents
 
         } else {
             ArrayList<SolarEvents> events = new ArrayList<>();
-            for (SolarEvents event : events) {
+            for (SolarEvents event : values()) {
                 if (event.getType() == type) {
                     events.add(event);
                 }
