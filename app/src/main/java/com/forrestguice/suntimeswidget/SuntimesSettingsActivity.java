@@ -296,18 +296,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     private void onManageEvents(int requestCode, int resultCode, @Nullable Intent data)
     {
-        boolean adapterModified = ((data != null) && data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false));
-
-        if (resultCode == RESULT_OK)
-        {
-            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
-            if (eventID != null) {
-                EventSettings.setShown(context, eventID, true);
-                adapterModified = true;
-            }
-        }
-
-        if (adapterModified) {
+        if (EventListActivity.onEventListActivityResult(this, requestCode, resultCode, data)) {
             setNeedsRecreateFlag();
             rebuildActivity();
         }

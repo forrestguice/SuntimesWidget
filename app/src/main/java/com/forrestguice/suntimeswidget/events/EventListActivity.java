@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -158,5 +159,22 @@ public class EventListActivity extends AppCompatActivity
     {
         PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    /**
+     * @return true adapter modified
+     */
+    public static boolean onEventListActivityResult(Context context, int requestCode, int resultCode, @Nullable Intent data)
+    {
+        boolean adapterModified = ((data != null) && data.getBooleanExtra(EventListActivity.ADAPTER_MODIFIED, false));
+        if (resultCode == RESULT_OK)
+        {
+            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
+            if (eventID != null) {
+                EventSettings.setShown(context, eventID, true);
+                adapterModified = true;
+            }
+        }
+        return adapterModified;
     }
 }
