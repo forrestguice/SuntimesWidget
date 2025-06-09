@@ -1376,7 +1376,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         } catch (NumberFormatException e) {
             intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
         }
-        intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, addAngle);
         startActivityForResult(intent, requestCode);
     }
 
