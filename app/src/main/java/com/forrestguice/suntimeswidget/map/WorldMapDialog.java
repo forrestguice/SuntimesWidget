@@ -63,6 +63,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
@@ -455,11 +456,24 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-        int color = speed_1d ? color_warning : color_accent;
+        int color = getColor(WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
         seekbar.setTrackColor(color);
         seekbar.setTickColor(color, color, color);
         seekbar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    private int getColor(MapSpeed value) {
+        switch (value) {
+            case ONE_WEEK: case ONE_DAY: return color_warning;
+            case FIVE_MINUTES: case ONE_MINUTE: default: return color_accent;
+        }
+    }
+
+    private int getFrameOffsetMinutes(MapSpeed value) {
+        switch (value) {
+            case FIVE_MINUTES: return 3;
+            default: return value.getStepMinutes();
+        }
     }
 
     @SuppressWarnings("ResourceType")
@@ -526,8 +540,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showGrid = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showDebugLines = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
-            options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
-                    ? 24 * 60 : 3;
+            options.anim_frameOffsetMinutes = getFrameOffsetMinutes(WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
 
             try {
                 options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
@@ -616,9 +629,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Context context = getContext();
         if (speedButton != null && context != null)
         {
-            boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
-            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
+            MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            speedButton.setText(mapSpeed.getDisplayString(context));
+            speedButton.setTextColor(getColor(mapSpeed));
         }
     }
 
@@ -830,16 +843,16 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void updateSpeedMenu(Context context, PopupMenu menu)
     {
         Menu m = menu.getMenu();
-        boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
 
         MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
         if (speed_15m != null) {
-            speed_15m.setChecked(!is1d);
+            speed_15m.setChecked(mapSpeed == MapSpeed.FIFTEEN_MINUTES);
         }
 
         MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
         if (speed_1d != null) {
-            speed_1d.setChecked(is1d);
+            speed_1d.setChecked(mapSpeed == MapSpeed.ONE_DAY);
         }
     }
 
@@ -856,13 +869,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             switch (item.getItemId())
             {
                 case R.id.mapSpeed_1d:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_DAY);
                     item.setChecked(true);
                     updateViews();
                     return true;
 
                 case R.id.mapSpeed_15m:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, false);
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.FIFTEEN_MINUTES);
                     item.setChecked(true);
                     updateViews();
                     return true;
@@ -1301,13 +1314,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         context.startActivity(intent);
     }
 
-    public static final int SEEK_STEPSIZE_5m = 5;
-
     public static final int SEEK_TOTALMINUTES_15m = 12 * 2 * 60;   // +- 12 hours
-    public static final int SEEK_STEPSIZE_15m = 15;
-
     public static final int SEEK_TOTALMINUTES_1d = 364 * 24 * 60;  // +- 182 days
-    public static final int SEEK_STEPSIZE_1d = 24 * 60;
 
     private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
     private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
@@ -1412,8 +1420,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + mapSpeed.getStepMinutes());
             }
         }
     };
@@ -1425,8 +1433,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - mapSpeed.getStepMinutes());
             }
         }
     };
@@ -1444,8 +1452,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             if (fromUser)
             {
                 long offset = progress - t_prevProgress;
-                boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / SEEK_STEPSIZE_1d) * SEEK_STEPSIZE_1d : offset);
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(getContext(), 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                boolean speed_1d = (mapSpeed == MapSpeed.ONE_DAY);
+                long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / mapSpeed.getStepMinutes()) * mapSpeed.getStepMinutes() : offset);
                 worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + scaledOffset);
                 updateTimeText();
             }
@@ -1491,7 +1500,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (context == null) {
             return;
         }
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean speed_1d = (WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2) == MapSpeed.ONE_DAY);
         long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
 
         //long offset = progress - t_prevProgress;

@@ -69,7 +69,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
@@ -689,14 +689,14 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            setOffsetMinutes(getOffsetMinutes() + WorldMapDialog.SEEK_STEPSIZE_5m);
+            setOffsetMinutes(getOffsetMinutes() + MapSpeed.FIVE_MINUTES.getStepMinutes());
         }
     };
     private final View.OnClickListener onPrevClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
-            setOffsetMinutes(getOffsetMinutes() - WorldMapDialog.SEEK_STEPSIZE_5m);
+            setOffsetMinutes(getOffsetMinutes() - MapSpeed.FIVE_MINUTES.getStepMinutes());
         }
     };
     private final View.OnClickListener onResetClicked = new View.OnClickListener() {

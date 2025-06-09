@@ -87,7 +87,7 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -600,10 +600,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP);
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + mapSpeed.getStepMinutes());
                 if (graphView != null) {
-                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() + mapSpeed.getStepMinutes());
                 }
             }
         }
@@ -615,10 +615,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP);
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - mapSpeed.getStepMinutes());
                 if (graphView != null) {
-                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
+                    graphView.setOffsetMinutes(graphView.getOffsetMinutes() - mapSpeed.getStepMinutes());
                 }
             }
         }
@@ -977,9 +977,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu_speed1, menu.getMenu());
+        inflater.inflate(R.menu.lightmapmenu_speed, menu.getMenu());
         menu.setOnMenuItemClickListener(onSpeedMenuClick);
-
         updateSpeedMenu(context, menu);
         menu.show();
         return true;
@@ -988,17 +987,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void updateSpeedMenu(Context context, PopupMenu menu)
     {
         Menu m = menu.getMenu();
-        boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
+        MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP);
         //Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
 
         MenuItem speed_5m = m.findItem(R.id.mapSpeed_5m);
         if (speed_5m != null) {
-            speed_5m.setChecked(!is1d);
+            speed_5m.setChecked(mapSpeed == MapSpeed.FIVE_MINUTES);
         }
 
         MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
         if (speed_1d != null) {
-            speed_1d.setChecked(is1d);
+            speed_1d.setChecked(mapSpeed == MapSpeed.ONE_DAY);
+        }
+
+        MenuItem speed_7d = m.findItem(R.id.mapSpeed_7d);
+        if (speed_7d != null) {
+            speed_7d.setChecked(mapSpeed == MapSpeed.ONE_WEEK);
         }
     }
 
@@ -1014,16 +1018,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
+                case R.id.mapSpeed_7d:
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_WEEK);
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
                 case R.id.mapSpeed_1d:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, true);
-                    //Log.d("DEBUG", "onSpeedMenuClick: is1d: true");
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_DAY);
                     item.setChecked(true);
                     updateViews();
                     return true;
 
                 case R.id.mapSpeed_5m:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, false);
-                    //Log.d("DEBUG", "onSpeedMenuClick: is1d: false");
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIVE_MINUTES);
                     item.setChecked(true);
                     updateViews();
                     return true;
@@ -1079,10 +1087,24 @@ public class LightMapDialog extends BottomSheetDialogFragment
         Context context = getContext();
         if (speedButton != null && context != null)
         {
-            boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-            //Log.d("DEBUG", "updateMediaButtons: is1d: " + speed_1d);
-            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_5m));
-            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
+            MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP);
+            speedButton.setText(mapSpeed.getDisplayString(context));
+            speedButton.setTextColor(getColor(mapSpeed));
+        }
+    }
+
+    private int getColor(MapSpeed value) {
+        switch (value) {
+            case ONE_WEEK: case ONE_DAY: return color_warning;
+            case FIVE_MINUTES: case ONE_MINUTE: default: return color_accent;
+        }
+    }
+
+    private int getFrameOffsetMinutes(MapSpeed value) {
+        switch (value) {
+            case FIVE_MINUTES: return 1;
+            case ONE_WEEK: return 2 * MapSpeed.ONE_DAY.getStepMinutes();
+            default: return value.getStepMinutes();
         }
     }
 
@@ -1100,8 +1122,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
             options.anim_lock = anim_lock;
-            options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
-                    ? 24 * 60 : 1;
+            options.anim_frameOffsetMinutes = getFrameOffsetMinutes(WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP));
 
             if (graphView != null && graphView.getVisibility() == View.VISIBLE)
             {
