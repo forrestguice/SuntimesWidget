@@ -737,6 +737,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     showTimeZoneMenu(context, sunTime);
                     return true;
 
+                case R.id.action_manage_events:
+                    startEventListActivityForResult(null, REQUEST_MANAGE_EVENTS);
+                    return true;
+
                 case R.id.action_help:
                     showHelp(getContext());
                     return true;
@@ -1350,13 +1354,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 switch (item.getItemId())
                 {
                     case R.id.addEvent_sunEvent:
-                        Intent intent = new Intent(getActivity(), EventListActivity.class);
-                        try {
-                            intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, Double.parseDouble(edit.getText().toString()));
-                        } catch (NumberFormatException e) {
-                            intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
-                        }
-                        startActivityForResult(intent, REQUEST_ADD_ANGLE_EVENT);
+                        startEventListActivityForResult(edit.getText().toString(), REQUEST_ADD_ANGLE_EVENT);
                         dismissSeekAltitudePopup();
                         return true;
 
@@ -1368,12 +1366,26 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     public static final int REQUEST_ADD_ANGLE_EVENT = 400;
+    public static final int REQUEST_MANAGE_EVENTS = 500;
+
+    protected void startEventListActivityForResult(@Nullable String addAngle, int requestCode)
+    {
+        Intent intent = new Intent(getActivity(), EventListActivity.class);
+        try {
+            intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, (addAngle != null ? Double.parseDouble(addAngle) : null));
+        } catch (NumberFormatException e) {
+            intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
+        }
+        intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, addAngle);
+        startActivityForResult(intent, requestCode);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode) {
             case REQUEST_ADD_ANGLE_EVENT:
+            case REQUEST_MANAGE_EVENTS:
                 EventListActivity.onEventListActivityResult(getActivity(), requestCode, resultCode, data);
                 break;
         }
