@@ -106,7 +106,7 @@
             </menu>
         </item>
 
-        <item android:id="@+id/action_observerheight"
+        <item android:id="@+id/action_shadow"
             android:icon="?attr/icActionShadow"
             android:title="@string/configLabel_general_observerheight"
             app:showAsAction="never" />

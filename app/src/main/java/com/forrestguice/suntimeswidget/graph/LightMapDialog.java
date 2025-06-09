@@ -733,6 +733,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     showShadowObjHeightPopup(context, sunShadowObj);
                     return true;
 
+                case R.id.action_shadow:
+                    showShadowLengthMenu(context, sunShadowObj);
+                    return true;
+
                 case R.id.action_timezone:
                     showTimeZoneMenu(context, sunTime);
                     return true;
@@ -1459,7 +1463,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                showShadowObjHeightPopup(context, v);
+                showShadowLengthMenu(context, v);
             }
         }
     });
@@ -1544,6 +1548,41 @@ public class LightMapDialog extends BottomSheetDialogFragment
     };
     private static final int SEEK_CENTIMETERS_MAX = 5 * 100;
     private static final int SEEK_CENTIMETERS_INC = 1;
+
+    protected boolean showShadowLengthMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_shadowlength, menu.getMenu());
+        menu.setOnMenuItemClickListener(onShadowLengthMenuClick());
+        menu.show();
+        return true;
+    }
+
+    private final PopupMenu.OnMenuItemClickListener onShadowLengthMenuClick()
+    {
+        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                switch (item.getItemId())
+                {
+                    case R.id.action_observerheight:
+                        showShadowObjHeightPopup(getActivity(), sunShadowObj);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
 
     @SuppressWarnings("ResourceType")
     public void themeViews(@Nullable Context context)
