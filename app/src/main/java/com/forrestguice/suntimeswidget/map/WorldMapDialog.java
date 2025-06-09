@@ -472,6 +472,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int getFrameOffsetMinutes(MapSpeed value) {
         switch (value) {
             case FIVE_MINUTES: return 3;
+            case ONE_WEEK: case ONE_DAY: return MapSpeed.ONE_DAY.getStepMinutes();
             default: return value.getStepMinutes();
         }
     }
@@ -854,6 +855,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (speed_1d != null) {
             speed_1d.setChecked(mapSpeed == MapSpeed.ONE_DAY);
         }
+
+        MenuItem speed_7d = m.findItem(R.id.mapSpeed_7d);
+        if (speed_7d != null) {
+            speed_7d.setChecked(mapSpeed == MapSpeed.ONE_WEEK);
+        }
     }
 
     private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
@@ -868,6 +874,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
+                case R.id.mapSpeed_7d:
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_WEEK);
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
                 case R.id.mapSpeed_1d:
                     WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_DAY);
                     item.setChecked(true);
@@ -1500,16 +1512,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (context == null) {
             return;
         }
-        boolean speed_1d = (WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2) == MapSpeed.ONE_DAY);
-        long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
+        MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean speed_days = (mapSpeed == MapSpeed.ONE_DAY || mapSpeed == MapSpeed.ONE_WEEK);
+        long offsetMinutes1 = (speed_days ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
 
         //long offset = progress - t_prevProgress;
 
         long progress = seek_now + offsetMinutes1;
         if (progress > seek_totalMinutes) {
-            seekbar.setProgress(!speed_1d ? seek_now : seek_totalMinutes);
+            seekbar.setProgress(!speed_days ? seek_now : seek_totalMinutes);
         } else if (progress < 0) {
-            seekbar.setProgress(!speed_1d ? seek_now : 0);
+            seekbar.setProgress(!speed_days ? seek_now : 0);
         } else {
             seekbar.setProgress((int)progress);
         }
