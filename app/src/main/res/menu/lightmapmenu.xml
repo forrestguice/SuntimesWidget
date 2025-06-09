@@ -103,6 +103,11 @@
                     android:icon="?attr/icActionSearch"
                     android:title="@string/configAction_seekDusk"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_seek_shadowlength"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekShadowLength"
+                    app:showAsAction="never" />
             </menu>
         </item>
 

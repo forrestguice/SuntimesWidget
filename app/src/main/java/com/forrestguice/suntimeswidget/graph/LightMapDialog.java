@@ -522,6 +522,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
     public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
+    public static final String PREF_KEY_LIGHTMAP_SEEKSHADOW = "seekshadow";
+    public static final String DEF_KEY_LIGHTMAP_SEEKSHADOW = "";
 
     public static final String PREF_KEY_GRAPH_SHOWMOON = "showmoon";
     public static final boolean DEF_KEY_GRAPH_SHOWMOON = false;
@@ -707,6 +709,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_seek_shadowlength:
+                    showShadowSeekPopup(getActivity(), sunShadowObj);
+                    return true;
+
                 case R.id.action_seekaltitude:
                     showSeekAltitudePopup(context, sunElevation);
                     return true;
@@ -742,7 +748,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.action_manage_events:
-                    startEventListActivityForResult(null, REQUEST_MANAGE_EVENTS);
+                    startEventListActivityForResult(null, null, REQUEST_MANAGE_EVENTS);
                     return true;
 
                 case R.id.action_help:
@@ -1231,6 +1237,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     });
 
+    //////////////////////////////////////////////////////////
+
     private PopupWindow seekAltitudePopup = null;
     protected void showSeekAltitudePopup(@NonNull final Context context, @NonNull View v)
     {
@@ -1358,7 +1366,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 switch (item.getItemId())
                 {
                     case R.id.addEvent_sunEvent:
-                        startEventListActivityForResult(edit.getText().toString(), REQUEST_ADD_ANGLE_EVENT);
+                        WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, edit.getText().toString());
+                        startEventListActivityForResult(edit.getText().toString(), null, REQUEST_ADD_ANGLE_EVENT);
                         dismissSeekAltitudePopup();
                         return true;
 
@@ -1369,16 +1378,24 @@ public class LightMapDialog extends BottomSheetDialogFragment
         });
     }
 
+    //////////////////////////////////////////////////////////
+
+    public static final int REQUEST_ADD_SHADOW_EVENT = 300;
     public static final int REQUEST_ADD_ANGLE_EVENT = 400;
     public static final int REQUEST_MANAGE_EVENTS = 500;
 
-    protected void startEventListActivityForResult(@Nullable String addAngle, int requestCode)
+    protected void startEventListActivityForResult(@Nullable String addAngle, @Nullable String addShadowMeters, int requestCode)
     {
         Intent intent = new Intent(getActivity(), EventListActivity.class);
         try {
             intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, (addAngle != null ? Double.parseDouble(addAngle) : null));
         } catch (NumberFormatException e) {
             intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
+        }
+        try {
+            intent.putExtra(EventListActivity.EXTRA_ADD_SHADOWLENGTH, (addShadowMeters != null ? Double.parseDouble(addShadowMeters) : null));
+        } catch (NumberFormatException e) {
+            intent.removeExtra(EventListActivity.EXTRA_ADD_SHADOWLENGTH);
         }
         startActivityForResult(intent, requestCode);
     }
@@ -1387,6 +1404,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode) {
+            case REQUEST_ADD_SHADOW_EVENT:
             case REQUEST_ADD_ANGLE_EVENT:
             case REQUEST_MANAGE_EVENTS:
                 EventListActivity.onEventListActivityResult(getActivity(), requestCode, resultCode, data);
@@ -1394,6 +1412,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
 
+    @Nullable
+    public Long seekShadowLength( Context context, @Nullable Double shadowMeters, boolean rising )
+    {
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        if (shadowMeters != null) {
+            return seekDateTime(context, lightmap.findShadow(context, shadowMeters, observerHeight, rising));
+        } else return null;
+    }
     @Nullable
     public Long seekAltitude( Context context, @Nullable Double degrees, boolean rising )
     {
@@ -1456,6 +1482,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return null;
     }
 
+    //////////////////////////////////////////////////////////
+
     private final View.OnClickListener onShadowLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
@@ -1467,6 +1495,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
     });
+
     protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -1549,12 +1578,158 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private static final int SEEK_CENTIMETERS_MAX = 5 * 100;
     private static final int SEEK_CENTIMETERS_INC = 1;
 
+    //////////////////////////////////////////////////////////
+
+    private PopupWindow seekShadowPopup = null;
+    protected void showShadowSeekPopup(@NonNull final Context context, @NonNull View v)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            PopupWindow popupWindow = new PopupWindow(createShadowSeekPopupView(context), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    seekShadowPopup = null;
+                }
+            });
+            seekShadowPopup = popupWindow;
+            popupWindow.showAsDropDown(v);
+        }
+    }
+    protected void dismissShadowSeekPopup()
+    {
+        if (seekShadowPopup != null) {
+            seekShadowPopup.dismiss();
+        }
+    }
+    protected View createShadowSeekPopupView(@NonNull final Context context)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            @SuppressLint("InflateParams")
+            View popupView = inflater.inflate(R.layout.layout_dialog_seekshadow, null);
+            if (popupView != null)
+            {
+                WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                String lastInput = WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKSHADOW);
+
+                final EditText editText = (EditText) popupView.findViewById(R.id.edit_shadowlength);
+                if (editText != null)
+                {
+                    editText.setText(lastInput);
+                    editText.selectAll();
+                    editText.requestFocus();
+                }
+
+                final TextView editSuffix = (TextView) popupView.findViewById(R.id.suffix_shadowlength);
+                if (editSuffix != null) {
+                    editSuffix.setText(context.getString(units == WidgetSettings.LengthUnit.IMPERIAL ? R.string.units_feet_short : R.string.units_meters_short));
+                }
+
+                final Button risingButton = (Button) popupView.findViewById(R.id.button_rising);
+                if (risingButton != null) {
+                    risingButton.setOnClickListener(onSeekShadowClicked(context, editText, true));
+                }
+                final Button settingButton = (Button) popupView.findViewById(R.id.button_setting);
+                if (settingButton != null) {
+                    settingButton.setOnClickListener(onSeekShadowClicked(context, editText, false));
+                }
+                final ImageButton menuButton = (ImageButton) popupView.findViewById(R.id.button_menu);
+                if (menuButton != null)
+                {
+                    menuButton.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            showShadowSeekMenu(context, editText);
+                        }
+                    });
+                }
+            }
+            return popupView;
+        }
+        return null;
+    }
+
+    protected View.OnClickListener onSeekShadowClicked(final Context context, final EditText edit, final boolean rising)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (edit != null)
+                {
+                    try {
+                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        double input = Double.parseDouble(edit.getText().toString());
+                        double meters = (units == WidgetSettings.LengthUnit.METRIC ? input : WidgetSettings.LengthUnit.feetToMeters(input));
+
+                        if (seekShadowLength(context, meters, rising) != null) {
+                            WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
+                            dismissShadowSeekPopup();
+                        } else {
+                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, SuntimesUtils.formatAsHeight(context, input, units, false, 2)), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (NumberFormatException e) {
+                        Log.w(getClass().getSimpleName(), "onSeekShadowClicked: Failed to parse input; " + e);
+                    }
+                }
+            }
+        };
+    }
+
+    protected boolean showShadowSeekMenu(final Context context, EditText edit)
+    {
+        PopupMenu menu = new PopupMenu(context, edit);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_shadowlength, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSeekShadowMenuClick(edit));
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+
+    private final PopupMenu.OnMenuItemClickListener onSeekShadowMenuClick(final EditText edit)
+    {
+        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                switch (item.getItemId())
+                {
+                    case R.id.addEvent_shadowEvent:
+                        WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
+                        startEventListActivityForResult(null, edit.getText().toString(), REQUEST_ADD_SHADOW_EVENT);
+                        dismissShadowSeekPopup();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
+    //////////////////////////////////////////////////////////
+
     protected boolean showShadowLengthMenu(final Context context, View view)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.lightmapmenu_shadowlength, menu.getMenu());
         menu.setOnMenuItemClickListener(onShadowLengthMenuClick());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -1573,6 +1748,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 switch (item.getItemId())
                 {
+                    case R.id.action_seek_shadowlength:
+                        showShadowSeekPopup(getActivity(), sunShadowObj);
+                        return true;
+
                     case R.id.action_observerheight:
                         showShadowObjHeightPopup(getActivity(), sunShadowObj);
                         return true;
@@ -1583,6 +1762,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         });
     }
+
+    //////////////////////////////////////////////////////////
 
     @SuppressWarnings("ResourceType")
     public void themeViews(@Nullable Context context)

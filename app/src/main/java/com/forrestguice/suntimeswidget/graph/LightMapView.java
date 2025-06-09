@@ -393,6 +393,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         } else return null;
     }
 
+    public Long findShadow( Context context, @Nullable Double shadowLengthMeters, @Nullable Double objHeightMeters, boolean rising )
+    {
+        if (data != null && shadowLengthMeters != null && objHeightMeters != null)
+        {
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+            Calendar event = rising ? data.calculator().getTimeOfShadowBeforeNoon(calendar, objHeightMeters, shadowLengthMeters)
+                                    : data.calculator().getTimeOfShadowAfterNoon(calendar, objHeightMeters, shadowLengthMeters);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
+    }
+
     public void setOffsetMinutes( long value ) {
         colors.offsetMinutes = value;
         updateViews(true);

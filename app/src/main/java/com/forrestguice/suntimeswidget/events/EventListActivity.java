@@ -52,7 +52,8 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
     public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;
 
-    public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";
+    public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";                  // degrees
+    public static final String EXTRA_ADD_SHADOWLENGTH = "addEventWithShadowLength";    // meters
 
     protected EventListFragment list;
 
@@ -103,12 +104,19 @@ public class EventListActivity extends AppCompatActivity
 
         final double extra_addEventWithAngle = intent.getDoubleExtra(EXTRA_ADD_ANGLE, -1);
         intent.removeExtra(EXTRA_ADD_ANGLE);
-        menuBar.post(new Runnable()
-        {
+
+        final double extra_addEventWithShadowLength = intent.getDoubleExtra(EXTRA_ADD_SHADOWLENGTH, -1);
+        intent.removeExtra(EXTRA_ADD_SHADOWLENGTH);
+
+        menuBar.post(new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
                 if (extra_addEventWithAngle != -1) {
                     list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null);
+
+                } else if (extra_addEventWithShadowLength != -1) {
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, extra_addEventWithShadowLength);
                 }
             }
         });

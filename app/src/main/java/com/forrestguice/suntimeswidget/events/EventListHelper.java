@@ -432,8 +432,11 @@ public class EventListHelper
                 }
                 if (shadowLength != null && saveDialog.edit_shadowLength != null) {
                     saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
+                    saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + shadowLength.intValue());
                     saveDialog.check_shown.setChecked(true);
+                    saveDialog.edit_label.selectAll();
                     saveDialog.setIsModified(true);
+                    saveDialog.edit_label.requestFocus();
                 }
             }
         });
