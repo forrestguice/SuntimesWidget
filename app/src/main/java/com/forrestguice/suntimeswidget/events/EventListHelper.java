@@ -426,7 +426,9 @@ public class EventListHelper
                     saveDialog.edit_angle.setText(Double.toString(angle));
                     saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + angle.intValue());
                     saveDialog.check_shown.setChecked(true);
+                    saveDialog.edit_label.selectAll();
                     saveDialog.setIsModified(true);
+                    saveDialog.edit_label.requestFocus();
                 }
                 if (shadowLength != null && saveDialog.edit_shadowLength != null) {
                     saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
