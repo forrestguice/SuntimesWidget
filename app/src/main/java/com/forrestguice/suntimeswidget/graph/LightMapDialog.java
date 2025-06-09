@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
@@ -1283,6 +1284,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 if (settingButton != null) {
                     settingButton.setOnClickListener(onSeekAltitudeClicked(context, editText, false));
                 }
+                final ImageButton menuButton = (ImageButton) popupView.findViewById(R.id.button_menu);
+                if (menuButton != null) {
+                    menuButton.setOnClickListener(onSeekAltitudeMenuButtonClicked(context, editText));
+                }
             }
             return popupView;
         }
@@ -1308,6 +1313,70 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 }
             }
         };
+    }
+
+    protected View.OnClickListener onSeekAltitudeMenuButtonClicked(final Context context, final EditText edit)
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSeekAltitudeMenu(context, edit);
+            }
+        };
+    }
+
+    protected boolean showSeekAltitudeMenu(final Context context, final EditText edit)
+    {
+        PopupMenu menu = new PopupMenu(context, edit);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_altitude, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSeekAltitudeMenuClick(edit));
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+    private final PopupMenu.OnMenuItemClickListener onSeekAltitudeMenuClick(final EditText edit)
+    {
+        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                switch (item.getItemId())
+                {
+                    case R.id.addEvent_sunEvent:
+                        Intent intent = new Intent(getActivity(), EventListActivity.class);
+                        try {
+                            intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, Double.parseDouble(edit.getText().toString()));
+                        } catch (NumberFormatException e) {
+                            intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
+                        }
+                        startActivityForResult(intent, REQUEST_ADD_ANGLE_EVENT);
+                        dismissSeekAltitudePopup();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
+    public static final int REQUEST_ADD_ANGLE_EVENT = 400;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode) {
+            case REQUEST_ADD_ANGLE_EVENT:
+                EventListActivity.onEventListActivityResult(getActivity(), requestCode, resultCode, data);
+                break;
+        }
     }
 
     @Nullable

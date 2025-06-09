@@ -33,4 +33,9 @@
         android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
         android:contentDescription="@string/seekAltitude_setting_contentDescription" />
 
+    <ImageButton
+        android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:contentDescription="@string/configAction_overflow" android:textColor="?attr/text_accentColor" />
+
 </LinearLayout>

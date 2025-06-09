@@ -139,6 +139,10 @@ public class EventListFragment extends Fragment
         inflater.inflate(R.menu.eventlist, menu);
     }
 
+    public void showAddEventDialog(AlarmEventProvider.EventType type, Double angle, Double shadowLength) {
+        helper.addEvent(type, angle, shadowLength);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -149,11 +153,11 @@ public class EventListFragment extends Fragment
             //    return true;
 
             case R.id.addEvent_sunEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+                showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, null, null);
                 return true;
 
             case R.id.addEvent_shadowEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
+                showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, null);
                 return true;
 
             case R.id.clearEvents:

@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -50,6 +51,8 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
     public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;
+
+    public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";
 
     protected EventListFragment list;
 
@@ -97,6 +100,18 @@ public class EventListActivity extends AppCompatActivity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        final double extra_addEventWithAngle = intent.getDoubleExtra(EXTRA_ADD_ANGLE, -1);
+        intent.removeExtra(EXTRA_ADD_ANGLE);
+        menuBar.post(new Runnable()
+        {
+            @Override
+            public void run() {
+                if (extra_addEventWithAngle != -1) {
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null);
+                }
+            }
+        });
     }
 
     @Override

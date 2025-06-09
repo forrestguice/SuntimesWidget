@@ -407,20 +407,37 @@ public class EventListHelper
     public void addEvent() {
         addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
     }
-    public void addEvent(AlarmEventProvider.EventType type)
+    public EditEventDialog addEvent(AlarmEventProvider.EventType type) {
+        return addEvent(type, null, null);
+    }
+    public EditEventDialog addEvent(AlarmEventProvider.EventType type, final Double angle, final Double shadowLength)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
         saveDialog.setType(type);
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
-        saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+        saveDialog.setOnShowListener(new DialogInterface.OnShowListener()
+        {
             @Override
-            public void onShow(DialogInterface dialog) {
+            public void onShow(DialogInterface dialog)
+            {
                 saveDialog.setIsModified(false);
+                if (angle != null && saveDialog.edit_angle != null) {
+                    saveDialog.edit_angle.setText(Double.toString(angle));
+                    saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + angle.intValue());
+                    saveDialog.check_shown.setChecked(true);
+                    saveDialog.setIsModified(true);
+                }
+                if (shadowLength != null && saveDialog.edit_shadowLength != null) {
+                    saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
+                    saveDialog.check_shown.setChecked(true);
+                    saveDialog.setIsModified(true);
+                }
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
         saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        return saveDialog;
     }
 
     protected void editEvent(final String eventID)
