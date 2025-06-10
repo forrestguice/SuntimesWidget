@@ -84,6 +84,11 @@
             android:title="@string/configAction_seek"
             app:showAsAction="never">
             <menu>
+                <item android:id="@+id/action_seektime"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekTime"
+                    app:showAsAction="never" />
+
                 <item android:id="@+id/action_seekaltitude"
                     android:icon="?attr/icActionSearch"
                     android:title="@string/configAction_seekAltitude"

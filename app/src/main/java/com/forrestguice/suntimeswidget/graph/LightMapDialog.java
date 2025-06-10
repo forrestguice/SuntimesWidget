@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.TimeDialog;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -110,6 +111,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class LightMapDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_COLORS = "lightmap_colors";
+    public static final String DIALOGTAG_TIME = "lightmap_time";
 
     public static final String DIALOGTAG_HELP = "lightmap_help";
     public static final int HELP_PATH_ID = R.string.help_sun_path;
@@ -218,6 +220,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null) {
+            timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
 
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
@@ -524,6 +531,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
     public static final String PREF_KEY_LIGHTMAP_SEEKSHADOW = "seekshadow";
     public static final String DEF_KEY_LIGHTMAP_SEEKSHADOW = "";
+    public static final String PREF_KEY_LIGHTMAP_SEEKTIME_HOUR = "seektime_hour";
+    public static final String DEF_KEY_LIGHTMAP_SEEKTIME_HOUR = "12";
+    public static final String PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE = "seektime_minute";
+    public static final String DEF_KEY_LIGHTMAP_SEEKTIME_MINUTE = "0";
 
     public static final String PREF_KEY_GRAPH_SHOWMOON = "showmoon";
     public static final boolean DEF_KEY_GRAPH_SHOWMOON = false;
@@ -711,6 +722,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 case R.id.action_seek_shadowlength:
                     showShadowSeekPopup(getActivity(), sunShadowObj);
+                    return true;
+
+                case R.id.action_seektime:
+                    showSeekTimeDialog(context);
                     return true;
 
                 case R.id.action_seekaltitude:
@@ -1055,13 +1070,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
         public boolean onMenuItemClick(MenuItem item)
         {
             Context context = getContext();
-            if (context != null) {
-                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
-                if (tzID != null) {
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, tzID);
-                    updateViews();
+            if (context != null)
+            {
+                if (item.getItemId() == R.id.action_seektime) {
+                    showSeekTimeDialog(getActivity());
+                    return true;
+
+                } else {
+                    String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                    if (tzID != null) {
+                        WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, tzID);
+                        updateViews();
+                    }
+                    return (tzID != null);
                 }
-                return (tzID != null);
             } else return false;
         }
     });
@@ -1257,6 +1279,35 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
     });
+
+    //////////////////////////////////////////////////////////
+
+    protected void showSeekTimeDialog(Context context)
+    {
+        final TimeDialog dialog = new TimeDialog();
+        String hour = WorldMapWidgetSettings.loadWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_HOUR, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKTIME_HOUR);
+        String minute = WorldMapWidgetSettings.loadWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKTIME_MINUTE);
+        dialog.setInitialTime(hour, minute);
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
+        dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+    }
+
+    private DialogInterface.OnClickListener onSeekTimeDialogAccepted(final TimeDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which) {
+                WorldMapWidgetSettings.saveWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_HOUR, MAPTAG_LIGHTMAP, dialog.getSelectedHour() + "");
+                WorldMapWidgetSettings.saveWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE, MAPTAG_LIGHTMAP, dialog.getSelectedMinute() + "");
+                Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
+                mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                seekDateTime(getActivity(), dialog.getSelectedHour(), dialog.getSelectedMinute(), mapTime);
+            }
+        };
+    }
 
     //////////////////////////////////////////////////////////
 
@@ -1472,6 +1523,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
     @Nullable
     public Long seekSetting(Context context, @Nullable SuntimesRiseSetData data) {
         return (data != null ? seekDateTime(context, data.sunsetCalendarToday()) : null);
+    }
+    @Nullable
+    public Long seekDateTime( Context context, int hour, int minute, Calendar now )
+    {
+        Calendar calendar = Calendar.getInstance(now.getTimeZone());
+        calendar.setTimeInMillis(now.getTimeInMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return seekDateTime(context, calendar.getTimeInMillis());
     }
     @Nullable
     public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
