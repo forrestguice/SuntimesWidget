@@ -38,6 +38,7 @@
     <string name="configAction_lightGraphDialog">Sunlight</string>
     <string name="configAction_lightGraph">Light Graph</string>
     <string name="configAction_lineGraph">Altitude Graph</string>
+    <string name="configAction_seekTime">Seek Time</string>        <!-- checkbox label -->    <!-- TODO -->
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
@@ -2521,6 +2522,8 @@
     <string name="timedate_dialog_title">Set Date</string>
     <string name="timedate_dialog_ok">Set</string>
     <string name="timedate_dialog_cancel">Cancel</string>
+
+    <string name="time_dialog_title">@string/configAction_seekTime</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Time Zone</string>
