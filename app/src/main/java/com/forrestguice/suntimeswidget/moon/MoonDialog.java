@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.TimeDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
@@ -79,6 +80,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -95,6 +97,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     public static final String ARG_PLAY_OFFSET = "offsetMinutes";
 
     public static final String DIALOGTAG_COLORS = "moon_colors";
+    public static final String DIALOGTAG_TIME = "moon_time";
 
     public static final String DIALOGTAG_HELP = "moon_help";
     public static final int HELP_PATH_ID = R.string.help_moon_path;
@@ -188,6 +191,11 @@ public class MoonDialog extends BottomSheetDialogFragment
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
             colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null) {
+            timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
 
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
@@ -705,6 +713,48 @@ public class MoonDialog extends BottomSheetDialogFragment
             stopMap(true);
         }
     };
+    private final View.OnClickListener onSearchClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showSeekTimeDialog(getActivity());
+        }
+    };
+
+    protected void showSeekTimeDialog(Context context)
+    {
+        TimeDialog dialog = new TimeDialog();
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
+        dialog.setInitialTime("12", "0");    // TODO: from prefs
+        dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+    }
+
+    private DialogInterface.OnClickListener onSeekTimeDialogAccepted(final TimeDialog dialog) {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                int hour = dialog.getSelectedHour();
+                int minute = dialog.getSelectedMinute();    // TODO: to prefs
+                //seekDateTime(getActivity(), hour, minute, getDialogCalendar());
+                seekDateTime(getActivity(), hour, minute, Calendar.getInstance());
+            }
+        };
+    }
+
+    protected void seekDateTime(Context context, int hour, int minute, Calendar now)
+    {
+        Calendar c = Calendar.getInstance(now.getTimeZone());
+        c.setTimeInMillis(now.getTimeInMillis());
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
+
+        long offsetMinutes = (c.getTimeInMillis() - now.getTimeInMillis()) / (60 * 1000);
+        setOffsetMinutes((int) offsetMinutes);
+        //showPositionAt(calendar.getTimeInMillis(), true);
+    }
 
     public void centerDialog()
     {
@@ -929,6 +979,13 @@ public class MoonDialog extends BottomSheetDialogFragment
                     prevButton.setOnClickListener(createMediaPopupListener(popupView, onPrevClicked));
                     TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
                     ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
+                }
+
+                ImageButton searchButton = (ImageButton) popupView.findViewById(R.id.media_search);
+                if (searchButton != null) {
+                    searchButton.setOnClickListener(createMediaPopupListener(popupView, onSearchClicked));
+                    TooltipCompat.setTooltipText(searchButton, searchButton.getContentDescription());
+                    ImageViewCompat.setImageTintList(searchButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
             }
             updateMediaPopupView(popupView);
