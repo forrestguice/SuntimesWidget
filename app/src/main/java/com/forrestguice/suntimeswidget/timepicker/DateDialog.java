@@ -38,6 +38,9 @@ public class DateDialog extends TimeDialogBase
     public static final String KEY_DIALOG_MONTH = "dialog_month";
     public static final String KEY_DIALOG_DAY = "dialog_day";
 
+    public static final String KEY_DIALOG_DATE_MIN = "dialog_minDate";
+    public static final String KEY_DIALOG_DATE_MAX = "dialog_maxDate";
+
     protected DatePicker datePicker;
 
     public DateDialog() {
@@ -56,7 +59,16 @@ public class DateDialog extends TimeDialogBase
     {
         super.initViews(context, dialogContent);
         datePicker = (DatePicker) dialogContent.findViewById(getDatePickerResID());
-        if (datePicker != null) {
+        if (datePicker != null)
+        {
+            long minDate = getArgs().getLong(KEY_DIALOG_DATE_MIN, -1);
+            if (minDate != -1) {
+                datePicker.setMinDate(minDate);
+            }
+            long maxDate = getArgs().getLong(KEY_DIALOG_DATE_MAX, -1);
+            if (minDate != -1) {
+                datePicker.setMaxDate(maxDate);
+            }
             datePicker.updateDate(getInitialYear(), getInitialMonth(), getInitialDay());
         }
     }
@@ -95,6 +107,30 @@ public class DateDialog extends TimeDialogBase
             prefs.putInt(KEY_DIALOG_MONTH, getSelectedMonth());
             prefs.putInt(KEY_DIALOG_DAY, getSelectedDay());
             prefs.apply();
+        }
+    }
+
+    public void setMinDate(Long value) {
+        if (value != null) {
+            getArgs().putLong(KEY_DIALOG_DATE_MIN, value);
+            if (datePicker != null) {
+                datePicker.setMinDate(value);
+            }
+        }
+    }
+
+    public void setMaxDate(Long value) {
+        if (value != null) {
+            getArgs().putLong(KEY_DIALOG_DATE_MAX, value);
+            if (datePicker != null) {
+                datePicker.setMaxDate(value);
+            }
+        }
+    }
+
+    public void setSelectedDate(int year, int month, int day) {
+        if (datePicker != null) {
+            datePicker.updateDate(year, month, day);
         }
     }
 

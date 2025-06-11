@@ -46,6 +46,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
 {
     public static final String KEY_DIALOG_TITLE = "dialog_title";
     public static final String KEY_DIALOG_IS24 = "dialog_is24";
+    private static final String KEY_DIALOG_NEUTRAL_LABEL = "dialog_neutral_label";
 
     protected ImageButton acceptButton;
 
@@ -95,6 +96,11 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
             }
         }
 
+        View dialogFooter = dialogContent.findViewById(R.id.dialog_footer);
+        if (dialogFooter != null) {
+            dialogFooter.setVisibility(getNeutralButtonLabel() != null ? View.VISIBLE : View.GONE);
+        }
+
         String title = getDialogTitle();
         TextView text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
         if (text_title != null && title != null) {
@@ -104,7 +110,10 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
 
     @Nullable
     protected CharSequence getNeutralButtonLabel() {
-        return null;
+        return getArgs().getCharSequence(KEY_DIALOG_NEUTRAL_LABEL);
+    }
+    public void setNeutralButtonLabel(CharSequence value) {
+        getArgs().putCharSequence(KEY_DIALOG_NEUTRAL_LABEL, value);
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -137,6 +146,11 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
     private DialogInterface.OnClickListener onCanceled = null;
     public void setOnCanceledListener( DialogInterface.OnClickListener listener ) {
         onCanceled = listener;
+    }
+
+    private DialogInterface.OnClickListener onNeutral = null;
+    public void setOnNeutralListener( DialogInterface.OnClickListener listener ) {
+        onNeutral = listener;
     }
 
     private DialogInterface.OnShowListener onShowListener;
@@ -175,7 +189,9 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
         }
     };
     protected void onDialogNeutralClick(View v) {
-        onDialogAcceptClick.onClick(v);
+        if (onNeutral != null) {
+            onNeutral.onClick(getDialog(), DialogInterface.BUTTON_NEUTRAL);
+        }
     }
 
     protected View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
