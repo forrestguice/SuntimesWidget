@@ -1020,6 +1020,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             speed_5m.setChecked(mapSpeed == MapSpeed.FIVE_MINUTES);
         }
 
+        MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
+        if (speed_15m != null) {
+            speed_15m.setChecked(mapSpeed == MapSpeed.FIFTEEN_MINUTES);
+        }
+
         MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
         if (speed_1d != null) {
             speed_1d.setChecked(mapSpeed == MapSpeed.ONE_DAY);
@@ -1057,6 +1062,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 case R.id.mapSpeed_5m:
                     WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIVE_MINUTES);
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
+                case R.id.mapSpeed_15m:
+                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIFTEEN_MINUTES);
                     item.setChecked(true);
                     updateViews();
                     return true;
@@ -1135,6 +1146,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private int getFrameOffsetMinutes(MapSpeed value) {
         switch (value) {
             case FIVE_MINUTES: return 1;
+            case FIFTEEN_MINUTES: return 3;
             case ONE_WEEK: return 2 * MapSpeed.ONE_DAY.getStepMinutes();
             default: return value.getStepMinutes();
         }
