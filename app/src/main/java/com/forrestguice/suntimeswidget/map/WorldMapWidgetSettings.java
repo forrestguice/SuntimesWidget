@@ -133,7 +133,7 @@ public class WorldMapWidgetSettings
 
     public static enum MapSpeed
     {
-        ONE_MINUTE, FIVE_MINUTES, FIFTEEN_MINUTES, ONE_DAY, ONE_WEEK;
+        ONE_MINUTE, FIVE_MINUTES, TEN_MINUTES, FIFTEEN_MINUTES, ONE_DAY, ONE_WEEK;
 
         /**
          * @return minutes
@@ -143,6 +143,7 @@ public class WorldMapWidgetSettings
                 case ONE_WEEK: return 7 * 24 * 60;
                 case ONE_DAY: return 24 * 60;
                 case FIFTEEN_MINUTES: return 15;
+                case TEN_MINUTES: return 10;
                 case FIVE_MINUTES: return 5;
                 case ONE_MINUTE: default: return 1;
             }
@@ -153,6 +154,7 @@ public class WorldMapWidgetSettings
                 case ONE_WEEK: return context.getString(R.string.worldmap_dialog_speed_7d);
                 case ONE_DAY: return context.getString(R.string.worldmap_dialog_speed_1d);
                 case FIFTEEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_15m);
+                case TEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_10m);
                 case FIVE_MINUTES: return context.getString(R.string.worldmap_dialog_speed_5m);
                 case ONE_MINUTE: default: return context.getString(R.string.worldmap_dialog_speed_1m);
             }
