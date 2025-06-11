@@ -514,7 +514,7 @@ public class AppSettings
     /**
      * Is the current device a television? This implies limited features.
      */
-    public static boolean isTelevision(@NonNull Context context)
+    public static boolean isTelevision(@Nullable Context context)
     {
         if (context != null)
         {

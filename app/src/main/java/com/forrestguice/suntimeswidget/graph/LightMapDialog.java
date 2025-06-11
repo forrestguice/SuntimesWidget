@@ -71,7 +71,9 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.TimeDialog;
+import com.forrestguice.suntimeswidget.timepicker.DateDialog;
+import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -83,6 +85,7 @@ import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -111,6 +114,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class LightMapDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_COLORS = "lightmap_colors";
+    public static final String DIALOGTAG_DATE = "lightmap_date";
     public static final String DIALOGTAG_TIME = "lightmap_time";
 
     public static final String DIALOGTAG_HELP = "lightmap_help";
@@ -221,6 +225,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        DateDialog dateDialog = (DateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        if (dateDialog != null) {
+            dateDialog.setOnAcceptedListener(onSeekDateDialogAccepted(dateDialog));
         }
 
         TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
@@ -578,10 +587,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final String DEF_KEY_LIGHTMAP_SEEKALTITUDE = "";
     public static final String PREF_KEY_LIGHTMAP_SEEKSHADOW = "seekshadow";
     public static final String DEF_KEY_LIGHTMAP_SEEKSHADOW = "";
-    public static final String PREF_KEY_LIGHTMAP_SEEKTIME_HOUR = "seektime_hour";
-    public static final String DEF_KEY_LIGHTMAP_SEEKTIME_HOUR = "12";
-    public static final String PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE = "seektime_minute";
-    public static final String DEF_KEY_LIGHTMAP_SEEKTIME_MINUTE = "0";
 
     public static final String PREF_KEY_GRAPH_SHOWMOON = "showmoon";
     public static final boolean DEF_KEY_GRAPH_SHOWMOON = false;
@@ -769,6 +774,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 case R.id.action_seek_shadowlength:
                     showShadowSeekPopup(getActivity(), sunShadowObj);
+                    return true;
+
+                case R.id.action_seekdate:
+                    showSeekDateDialog(context);
                     return true;
 
                 case R.id.action_seektime:
@@ -1341,12 +1350,35 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     //////////////////////////////////////////////////////////
 
+    protected void showSeekDateDialog(Context context)
+    {
+        final DateTimeDialog dialog = new DateTimeDialog();
+        dialog.loadSettings(getActivity());
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setDialogTitle(context.getString(R.string.configAction_seekDate));
+        dialog.setOnAcceptedListener(onSeekDateDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_DATE);
+    }
+
+    private DialogInterface.OnClickListener onSeekDateDialogAccepted(final DateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
+                mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                TimeDialogBase.TimeDialogResult dateTime = dialog.getSelected();
+                seekDateTime(getActivity(), dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), mapTime);
+            }
+        };
+    }
+
     protected void showSeekTimeDialog(Context context)
     {
         final TimeDialog dialog = new TimeDialog();
-        String hour = WorldMapWidgetSettings.loadWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_HOUR, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKTIME_HOUR);
-        String minute = WorldMapWidgetSettings.loadWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SEEKTIME_MINUTE);
-        dialog.setInitialTime(hour, minute);
+        dialog.loadSettings(getActivity());
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
         dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
@@ -1359,8 +1391,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             @Override
             public void onClick(DialogInterface d, int which) {
-                WorldMapWidgetSettings.saveWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_HOUR, MAPTAG_LIGHTMAP, dialog.getSelectedHour() + "");
-                WorldMapWidgetSettings.saveWorldMapString(getActivity(), 0, PREF_KEY_LIGHTMAP_SEEKTIME_MINUTE, MAPTAG_LIGHTMAP, dialog.getSelectedMinute() + "");
                 Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
                 mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
                 seekDateTime(getActivity(), dialog.getSelectedHour(), dialog.getSelectedMinute(), mapTime);
@@ -1593,6 +1623,29 @@ public class LightMapDialog extends BottomSheetDialogFragment
         calendar.set(Calendar.MINUTE, minute);
         return seekDateTime(context, calendar.getTimeInMillis());
     }
+    @Nullable
+    public Long seekDateTime( Context context, Integer year, Integer month, Integer day, Integer hour, Integer minute, Calendar now )
+    {
+        Calendar calendar = Calendar.getInstance(now.getTimeZone());
+        calendar.setTimeInMillis(now.getTimeInMillis());
+        if (year != null) {
+            calendar.set(Calendar.YEAR, year);
+        }
+        if (month != null) {
+            calendar.set(Calendar.MONTH, month);
+        }
+        if (day != null) {
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+        }
+        if (hour != null) {
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+        }
+        if (minute != null) {
+            calendar.set(Calendar.MINUTE, minute);
+        }
+        return seekDateTime(context, calendar.getTimeInMillis());
+    }
+
     @Nullable
     public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
         return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
