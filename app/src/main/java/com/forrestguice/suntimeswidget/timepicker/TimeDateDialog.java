@@ -26,24 +26,24 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.R;
 
 /**
- * A "date selection" bottom sheet dialog that offers a "Time" button (that then shows an additional dialog).
+ * A "time selection" bottom sheet dialog that offers a "Date" button (that then shows an additional dialog).
  */
-public class DateTimeDialog extends DateDialog
+public class TimeDateDialog extends TimeDialog
 {
-    public static final String DIALOGTAG_TIME = "dialog_time";
+    public static final String DIALOGTAG_DATE = "dialog_date";
 
-    public DateTimeDialog() {
+    public TimeDateDialog() {
         super();
     }
 
     @Nullable
     protected CharSequence getNeutralButtonLabel() {
-        return getString(R.string.configAction_time);
+        return getString(R.string.configAction_date);
     }
 
     @Override
     protected void onDialogNeutralClick(View v) {
-        showTimeDialog(getActivity());
+        showDateDialog(getActivity());
     }
 
     @Override
@@ -51,28 +51,29 @@ public class DateTimeDialog extends DateDialog
     {
         super.onResume();
         FragmentManager fragments = getChildFragmentManager();
-        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
-        if (timeDialog != null) {
-            timeDialog.setOnAcceptedListener(onTimeDialogAccepted(timeDialog));
+        DateDialog dateDialog = (DateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        if (dateDialog != null) {
+            dateDialog.setOnAcceptedListener(onDateDialogAccepted(dateDialog));
         }
     }
 
-    protected void showTimeDialog(Context context)
+    protected void showDateDialog(Context context)
     {
-        TimeDialog dialog = new TimeDialog();
+        DateDialog dialog = new DateDialog();
         dialog.loadSettings(getActivity());
-        dialog.setTimeIs24(timeIs24());
-        dialog.setOnAcceptedListener(onTimeDialogAccepted(dialog));
-        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+        dialog.setTimeIs24(timeIs24()); 
+        dialog.setOnAcceptedListener(onDateDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_DATE);
     }
 
-    private DialogInterface.OnClickListener onTimeDialogAccepted(final TimeDialog dialog) {
+    private DialogInterface.OnClickListener onDateDialogAccepted(final DateDialog dialog) {
         return new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface d, int which) {
-                getArgs().putInt(TimeDialog.KEY_DIALOG_HOUR, dialog.getSelectedHour());
-                getArgs().putInt(TimeDialog.KEY_DIALOG_MINUTE, dialog.getSelectedMinute());
+                getArgs().putInt(DateDialog.KEY_DIALOG_YEAR, dialog.getSelectedYear());
+                getArgs().putInt(DateDialog.KEY_DIALOG_MONTH, dialog.getSelectedMonth());
+                getArgs().putInt(DateDialog.KEY_DIALOG_DAY, dialog.getSelectedDay());
                 onDialogAccept();
             }
         };
@@ -85,29 +86,30 @@ public class DateTimeDialog extends DateDialog
         {
             @Override
             public Integer getYear() {
-                return getSelectedYear();
+                int value = getArgs().getInt(DateDialog.KEY_DIALOG_YEAR, -1);
+                return (value != -1 ? value : null);
             }
 
             @Override
             public Integer getMonth() {
-                return getSelectedMonth();
+                int value = getArgs().getInt(DateDialog.KEY_DIALOG_MONTH, -1);
+                return (value != -1 ? value : null);
             }
 
             @Override
             public Integer getDay() {
-                return getSelectedDay();
+                int value = getArgs().getInt(DateDialog.KEY_DIALOG_DAY, -1);
+                return (value != -1 ? value : null);
             }
 
             @Override
             public Integer getHour() {
-                int value = getArgs().getInt(TimeDialog.KEY_DIALOG_HOUR, -1);
-                return (value != -1 ? value : null);
+                return getSelectedHour();
             }
 
             @Override
             public Integer getMinute() {
-                int value = getArgs().getInt(TimeDialog.KEY_DIALOG_MINUTE, -1);
-                return (value != -1 ? value : null);
+                return getSelectedMinute();
             }
 
             @Override

@@ -95,6 +95,13 @@ public class TimeDialog extends TimeDialogBase
         }
     }
 
+    public void setSelectedTime(int hour, int minute) {
+        if (timePicker != null) {
+            timePicker.setHour(hour);
+            timePicker.setMinute(minute);
+        }
+    }
+
     public int getSelectedHour() {
         return (timePicker != null ? timePicker.getHour() : getInitialHour());
     }
