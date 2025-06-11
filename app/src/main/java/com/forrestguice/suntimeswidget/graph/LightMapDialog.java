@@ -139,6 +139,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private final Lock anim_lock = new ReentrantLock(true);    // synchronize animations
 
     private LightMapView lightmap;
+    private LightMapSeekbar seekbar;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
     private int colorNight, colorAstro, colorNautical, colorCivil, colorDay;
     private int colorRising, colorSetting;
@@ -230,6 +231,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
+
+        if (lightmap != null) {
+            lightmap.onResume();
+        }
+        if (seekbar != null) {
+            seekbar.onResume();
         }
 
         updateViews();
@@ -340,6 +348,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.sundialog_title);
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
+        seekbar = (LightMapSeekbar) dialogView.findViewById(R.id.info_time_lightmap1);
         graphView = (LineGraphView)dialogView.findViewById(R.id.info_time_graph);
         sunTime = (TextView)dialogView.findViewById(R.id.info_time_solar);
         if (sunTime != null) {
@@ -477,6 +486,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 public void onDataModified( SuntimesRiseSetDataset data ) {
                     LightMapDialog.this.data = data;
                     updateLightmapKeyViews(data);
+                    seekbar.updateViews(data);
                     if (BuildConfig.DEBUG) {
                         Log.d("DEBUG", "onDataModified: " + data.calendar().get(Calendar.DAY_OF_YEAR));
                     }
@@ -492,6 +502,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateTimeText(data);
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
+                    seekbar.resetThumb();
 
                     //if (graphView != null && graphView.getVisibility() == View.VISIBLE)
                     //{
@@ -502,6 +513,28 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 }
             });
         }
+
+        if (seekbar != null) {
+            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+            {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+                {
+                    if (fromUser) {
+                        seekDateTime(context, progress / 60, progress % 60, data.now());
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+        }
+
         updateOptions(getContext());
     }
 
@@ -521,6 +554,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
             ViewGroup.LayoutParams params = lightmap.getLayoutParams();
             params.height = SuntimesUtils.dpToPixels(context, (showGraph ? 14 : 32));
             lightmap.setLayoutParams(params);
+        }
+
+        if (seekbar != null) {
+            ViewGroup.LayoutParams params = seekbar.getLayoutParams();
+            params.height = SuntimesUtils.dpToPixels(context, (showGraph ? 14 : 32));
+            seekbar.setLayoutParams(params);
         }
     }
 
@@ -1135,6 +1174,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             LightMapView.LightMapColors options = lightmap.getColors();
+
+            if (seekbar != null) {
+                seekbar.setOptions(options);
+            }
+
             long now = getArguments().getLong(ARG_DATETIME);
             if (now != -1L)
             {
@@ -1197,6 +1241,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle state ) {
         lightmap.saveSettings(state);
+        seekbar.saveSettings(state);
         if (graphView != null) {
             graphView.saveSettings(state);
         }
@@ -1204,6 +1249,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected void loadSettings(Bundle bundle)
     {
         lightmap.loadSettings(getContext(), bundle);
+        seekbar.loadSettings(getContext(), bundle);
         if (graphView != null) {
             graphView.loadSettings(getContext(), bundle);
         }
@@ -1524,6 +1570,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public Long seekSetting(Context context, @Nullable SuntimesRiseSetData data) {
         return (data != null ? seekDateTime(context, data.sunsetCalendarToday()) : null);
     }
+
     @Nullable
     public Long seekDateTime( Context context, int hour, int minute, Calendar now )
     {
@@ -1924,6 +1971,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             sunAzimuthLabel.setTextSize(suffixSizeSp);
 
             lightmap.themeViews(context, themeOverride);
+            seekbar.themeViews(context, themeOverride);
             if (graphView != null) {
                 graphView.themeViews(context, themeOverride);
             }
@@ -2078,6 +2126,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         updateLightmapKeyViews(data);
         if (lightmap != null) {
             lightmap.updateViews(data);
+        }
+        if (seekbar != null) {
+            seekbar.updateViews(data);
         }
     }
     protected void updateLightmapKeyViews(@NonNull SuntimesRiseSetDataset data)

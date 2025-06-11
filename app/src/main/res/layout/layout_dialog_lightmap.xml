@@ -70,6 +70,14 @@
         app:layout_constraintTop_toBottomOf="@+id/info_time_graph"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
+    <com.forrestguice.suntimeswidget.graph.LightMapSeekbar
+        android:id="@+id/info_time_lightmap1" style="@style/LightMapSeekBar"
+        android:layout_width="0dp" android:layout_height="12dp"
+        android:layout_marginTop="@dimen/dialog_margin"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_graph"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
+
     <!-- media controls -->
     <include layout="@layout/layout_dialog_lightmap_controls" />
 

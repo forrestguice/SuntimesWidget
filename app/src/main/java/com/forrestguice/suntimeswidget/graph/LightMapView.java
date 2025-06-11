@@ -139,11 +139,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * themeViews
      */
-    public void themeViews( Context context, @NonNull SuntimesTheme theme )
-    {
+    public void themeViews( Context context, @NonNull SuntimesTheme theme ) {
         if (colors == null) {
             colors = new LightMapColors();
         }
+        themeViews(context, theme, colors);
+    }
+    public static void themeViews( Context context, @NonNull SuntimesTheme theme, @NonNull LightMapColors colors )
+    {
         colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
         colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
         colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
@@ -680,7 +683,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return retValue;
         }
 
-        protected Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
+        protected static Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
         {
             Calendar mapTime;
             if (options.now >= 0)
