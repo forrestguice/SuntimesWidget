@@ -543,11 +543,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private final SeekBar.OnSeekBarChangeListener onSeekBarChanged = new SeekBar.OnSeekBarChangeListener()
     {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (fromUser) {
-                seekDateTime(getActivity(), progress / 60, progress % 60, data.now());
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+        {
+            if (fromUser)
+            {
+                if (lmt == null) {
+                    lmt = WidgetTimezones.localMeanTime(getActivity(), data.location());
+                    calendar = Calendar.getInstance(lmt);
+                }
+                calendar.setTimeInMillis(getMapTime(System.currentTimeMillis()));
+                seekDateTime(getActivity(), progress / 60, progress % 60, calendar);
             }
         }
+        private TimeZone lmt = null;
+        private Calendar calendar = null;
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {}
