@@ -39,6 +39,9 @@
     <string name="configAction_lightGraph">Light Graph</string>
     <string name="configAction_lineGraph">Altitude Graph</string>
     <string name="configAction_seekTime">Seek Time</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_time">Time</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_date">Date</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDate">Seek Date</string>        <!-- checkbox label -->    <!-- TODO -->
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
