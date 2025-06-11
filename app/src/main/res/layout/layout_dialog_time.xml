@@ -47,6 +47,22 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/dialog_footer" android:visibility="gone"
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|end"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="8dp" android:paddingBottom="8dp">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_neutral"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/configAction_date" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

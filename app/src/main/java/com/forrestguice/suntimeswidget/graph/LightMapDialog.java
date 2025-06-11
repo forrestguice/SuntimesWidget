@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDateDialog;
 import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
@@ -1377,7 +1378,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     protected void showSeekTimeDialog(Context context)
     {
-        final TimeDialog dialog = new TimeDialog();
+        final TimeDateDialog dialog = new TimeDateDialog();
         dialog.loadSettings(getActivity());
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
         dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
@@ -1393,7 +1394,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
             public void onClick(DialogInterface d, int which) {
                 Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
                 mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                seekDateTime(getActivity(), dialog.getSelectedHour(), dialog.getSelectedMinute(), mapTime);
+                TimeDialogBase.TimeDialogResult dateTime = dialog.getSelected();
+                seekDateTime(getActivity(), dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), mapTime);
             }
         };
     }
