@@ -5,7 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
-    android:paddingStart="@dimen/dialog_margin" android:paddingEnd="@dimen/dialog_margin"
     android:gravity="center_vertical">
 
     <EditText android:id="@+id/edit_altitude"
@@ -33,9 +32,22 @@
         android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
         android:contentDescription="@string/seekAltitude_setting_contentDescription" />
 
-    <ImageButton
-        android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
-        android:layout_width="48dp" android:layout_height="48dp"
-        android:contentDescription="@string/configAction_overflow" android:textColor="?attr/text_accentColor" />
+    <LinearLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="?attr/colorPrimary">
+
+        <TextView android:id="@+id/text_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="?attr/text_size_small" android:textStyle="bold"
+            android:text="@string/configAction_seekAltitude" />
+
+        <ImageButton
+            android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
+            android:layout_width="48dp" android:layout_height="48dp"
+            android:contentDescription="@string/configAction_overflow" android:textColor="?attr/text_accentColor" />
+
+    </LinearLayout>
 
 </LinearLayout>

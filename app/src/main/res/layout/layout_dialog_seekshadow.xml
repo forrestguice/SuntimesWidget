@@ -5,7 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
-    android:paddingStart="@dimen/dialog_margin" android:paddingEnd="@dimen/dialog_margin"
     android:gravity="center_vertical">
 
     <EditText android:id="@+id/edit_shadowlength"
@@ -31,6 +30,12 @@
         android:background="?attr/selectableItemBackground"
         android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
         android:contentDescription="@string/seekAltitude_setting_contentDescription" />
+
+    <TextView android:id="@+id/text_title"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="?attr/text_size_small" android:textStyle="bold"
+        android:text="@string/editevent_dialog_length" />
 
     <ImageButton
         android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"

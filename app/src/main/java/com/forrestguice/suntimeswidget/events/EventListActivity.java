@@ -54,6 +54,7 @@ public class EventListActivity extends AppCompatActivity
 
     public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";                  // degrees
     public static final String EXTRA_ADD_SHADOWLENGTH = "addEventWithShadowLength";    // meters
+    public static final String EXTRA_ADD_OBJECTHEIGHT = "addEventWithObjectHeight";    // meters
 
     protected EventListFragment list;
 
@@ -108,6 +109,9 @@ public class EventListActivity extends AppCompatActivity
         final double extra_addEventWithShadowLength = intent.getDoubleExtra(EXTRA_ADD_SHADOWLENGTH, -1);
         intent.removeExtra(EXTRA_ADD_SHADOWLENGTH);
 
+        final double extra_addEventWithObjectHeight = intent.getDoubleExtra(EXTRA_ADD_OBJECTHEIGHT, -1);
+        intent.removeExtra(EXTRA_ADD_OBJECTHEIGHT);
+
         menuBar.post(new Runnable() {
             @Override
             public void run()
@@ -115,7 +119,8 @@ public class EventListActivity extends AppCompatActivity
                 if (extra_addEventWithAngle != -1) {
                     list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null);
 
-                } else if (extra_addEventWithShadowLength != -1) {
+                } else if (extra_addEventWithShadowLength != -1 || extra_addEventWithObjectHeight != -1) {
+                    // TODO: show dialog with extra_addEventWithObjectHeight
                     list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, extra_addEventWithShadowLength);
                 }
             }

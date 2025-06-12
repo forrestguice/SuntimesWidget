@@ -44,9 +44,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -106,6 +108,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -773,7 +776,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.action_manage_events:
-                    startEventListActivityForResult(null, null, REQUEST_MANAGE_EVENTS);
+                    startEventListActivityForResult(null, REQUEST_MANAGE_EVENTS);
                     return true;
 
                 case R.id.action_help:
@@ -1496,7 +1499,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 {
                     case R.id.addEvent_sunEvent:
                         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, edit.getText().toString());
-                        startEventListActivityForResult(edit.getText().toString(), null, REQUEST_ADD_ANGLE_EVENT);
+                        startEventListActivityForResult(getEventListExtras_addAngle(edit.getText().toString()), REQUEST_ADD_ANGLE_EVENT);
                         dismissSeekAltitudePopup();
                         return true;
 
@@ -1513,20 +1516,44 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public static final int REQUEST_ADD_ANGLE_EVENT = 400;
     public static final int REQUEST_MANAGE_EVENTS = 500;
 
-    protected void startEventListActivityForResult(@Nullable String addAngle, @Nullable String addShadowMeters, int requestCode)
+    protected void startEventListActivityForResult(@Nullable Bundle extras, int requestCode)
     {
         Intent intent = new Intent(getActivity(), EventListActivity.class);
-        try {
-            intent.putExtra(EventListActivity.EXTRA_ADD_ANGLE, (addAngle != null ? Double.parseDouble(addAngle) : null));
-        } catch (NumberFormatException e) {
-            intent.removeExtra(EventListActivity.EXTRA_ADD_ANGLE);
-        }
-        try {
-            intent.putExtra(EventListActivity.EXTRA_ADD_SHADOWLENGTH, (addShadowMeters != null ? Double.parseDouble(addShadowMeters) : null));
-        } catch (NumberFormatException e) {
-            intent.removeExtra(EventListActivity.EXTRA_ADD_SHADOWLENGTH);
+        if (extras != null) {
+            intent.putExtras(extras);
         }
         startActivityForResult(intent, requestCode);
+    }
+
+    protected Bundle getEventListExtras_addAngle(String addAngle)
+    {
+        Bundle bundle = new Bundle();
+        try {
+            bundle.putDouble(EventListActivity.EXTRA_ADD_ANGLE, (addAngle != null ? Double.parseDouble(addAngle) : null));
+        } catch (NumberFormatException e) {
+            bundle.remove(EventListActivity.EXTRA_ADD_ANGLE);
+        }
+        return bundle;
+    }
+    protected Bundle getEventListExtras_addShadowLength(String addShadowMeters)
+    {
+        Bundle bundle = new Bundle();
+        try {
+            bundle.putDouble(EventListActivity.EXTRA_ADD_SHADOWLENGTH, (addShadowMeters != null ? Double.parseDouble(addShadowMeters) : null));
+        } catch (NumberFormatException e) {
+            bundle.remove(EventListActivity.EXTRA_ADD_SHADOWLENGTH);
+        }
+        return bundle;
+    }
+    protected Bundle getEventListExtras_addObjectHeight(String addObjectHeight)
+    {
+        Bundle bundle = new Bundle();
+        try {
+            bundle.putDouble(EventListActivity.EXTRA_ADD_OBJECTHEIGHT, (addObjectHeight != null ? Double.parseDouble(addObjectHeight) : null));
+        } catch (NumberFormatException e) {
+            bundle.remove(EventListActivity.EXTRA_ADD_OBJECTHEIGHT);
+        }
+        return bundle;
     }
 
     @Override
@@ -1657,6 +1684,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     });
 
+    private PopupWindow objHeightPopup = null;
     protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -1665,9 +1693,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
             PopupWindow popupWindow = new PopupWindow(createShadowObjHeightPopupView(context), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
             popupWindow.setOutsideTouchable(true);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    objHeightPopup = null;
+                }
+            });
+            objHeightPopup = popupWindow;
             popupWindow.showAsDropDown(v);
         }
     }
+    protected void dismissShadowObjHeightPopup()
+    {
+        if (objHeightPopup != null) {
+            objHeightPopup.dismiss();
+        }
+    }
+
     protected View createShadowObjHeightPopupView(@NonNull final Context context)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -1677,10 +1719,21 @@ public class LightMapDialog extends BottomSheetDialogFragment
             View popupView = inflater.inflate(R.layout.layout_dialog_objheight, null);
             if (popupView != null)
             {
+                float meters = WidgetSettings.loadObserverHeightPref(context, 0);
+                EditText edit = (EditText) popupView.findViewById(R.id.edit_height);
+                if (edit != null) {
+                    updateShadowObjHeightEditView(context, edit, meters);
+                }
+
+                ImageButton menuButton = (ImageButton) popupView.findViewById(R.id.menu_button);
+                if (menuButton != null) {
+                    menuButton.setOnClickListener(onObjectHeightMenuButtonClicked(edit));
+                }
+
                 SeekBar seekbar = (SeekBar) popupView.findViewById(R.id.seek_objheight);
                 if (seekbar != null)
                 {
-                    int centimeters = (int) (WidgetSettings.loadObserverHeightPref(context, 0) * 100) + 1;
+                    int centimeters = (int) (meters * 100) + 1;
                     centimeters = (centimeters < 1 ? 1 : Math.min(centimeters, SEEK_CENTIMETERS_MAX));
                     seekbar.setMax(SEEK_CENTIMETERS_MAX);
                     if (Build.VERSION.SDK_INT >= 24) {
@@ -1688,56 +1741,144 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     } else {
                         seekbar.setProgress(centimeters);
                     }
-                    seekbar.setOnSeekBarChangeListener(onObjectHeightSeek);
+                    seekbar.setOnSeekBarChangeListener(onObjectHeightSeek(edit));
                 }
                 ImageButton moreButton = (ImageButton) popupView.findViewById(R.id.btn_more);
                 if (moreButton != null) {
-                    moreButton.setOnClickListener(onObjectHeightMoreLess(true));
+                    moreButton.setOnClickListener(onObjectHeightMoreLess(true, edit));
                 }
                 ImageButton lessButton = (ImageButton) popupView.findViewById(R.id.btn_less);
                 if (lessButton != null) {
-                    lessButton.setOnClickListener(onObjectHeightMoreLess(false));
+                    lessButton.setOnClickListener(onObjectHeightMoreLess(false, edit));
                 }
             }
             return popupView;
         }
         return null;
     }
-    private View.OnClickListener onObjectHeightMoreLess( final boolean more ) {
+    private void updateShadowObjHeightEditView(Context context, EditText edit, double meters)
+    {
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        double displayValue = (units == WidgetSettings.LengthUnit.IMPERIAL) ? WidgetSettings.LengthUnit.metersToFeet(meters) : meters;
+
+        edit.removeTextChangedListener(shadowObjHeightEditTextWatcher);
+        edit.setText(String.format(Locale.getDefault(), "%.2f", displayValue));
+        edit.addTextChangedListener(shadowObjHeightEditTextWatcher);
+    }
+    private final TextWatcher shadowObjHeightEditTextWatcher = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+        @Override
+        public void afterTextChanged(Editable s)
+        {
+            try {
+                float value = Float.parseFloat(s.toString());
+                WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getActivity(), 0);
+                float meters = (units == WidgetSettings.LengthUnit.METRIC) ? value : (float) WidgetSettings.LengthUnit.feetToMeters(value);
+                WidgetSettings.saveObserverHeightPref(getActivity(), 0, meters);
+                updateViews();
+
+            } catch (NumberFormatException e) {
+                Log.w(getClass().getSimpleName(), "invalid object height; ignore... " + e);
+            }
+        }
+    };
+    private View.OnClickListener onObjectHeightMenuButtonClicked(final EditText edit) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showObjectHeightMenu(getActivity(), edit);
+            }
+        };
+    }
+    private View.OnClickListener onObjectHeightMoreLess( final boolean more, final EditText edit ) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = getContext();
                 if (context != null) {
                     float currentHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-                    WidgetSettings.saveObserverHeightPref(getContext(), 0, currentHeight + ((more ? 1 : -1) * (SEEK_CENTIMETERS_INC / 100f)));
+                    float meters = currentHeight + ((more ? 1 : -1) * (SEEK_CENTIMETERS_INC / 100f));
+                    WidgetSettings.saveObserverHeightPref(getContext(), 0, meters);
+                    updateShadowObjHeightEditView(context, edit, meters);
                     updateViews();
                 }
             }
         };
     }
-    private SeekBar.OnSeekBarChangeListener onObjectHeightSeek = new SeekBar.OnSeekBarChangeListener()
+    private SeekBar.OnSeekBarChangeListener onObjectHeightSeek(final EditText edit)
     {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int centimeters, boolean fromUser)
+        return new SeekBar.OnSeekBarChangeListener()
         {
-            Context context = getContext();
-            if (fromUser && context != null)
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int centimeters, boolean fromUser)
             {
-                if (centimeters < 1) {
-                    centimeters = 1;
+                Context context = getContext();
+                if (fromUser && context != null)
+                {
+                    if (centimeters < 1) {
+                        centimeters = 1;
+                    }
+                    float meters = centimeters / 100f;
+                    WidgetSettings.saveObserverHeightPref(getContext(), 0, meters);
+                    updateShadowObjHeightEditView(context, edit, meters);
+                    updateViews();
                 }
-                WidgetSettings.saveObserverHeightPref(getContext(), 0, (centimeters / 100f));
-                updateViews();
             }
-        }
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {}
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {}
-    };
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        };
+    }
     private static final int SEEK_CENTIMETERS_MAX = 5 * 100;
     private static final int SEEK_CENTIMETERS_INC = 1;
+
+    protected boolean showObjectHeightMenu(final Context context, final EditText edit)
+    {
+        PopupMenu menu = new PopupMenu(context, edit);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu_seek_objheight, menu.getMenu());
+        menu.setOnMenuItemClickListener(onObjectHeightMenuClick(edit));
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+    private PopupMenu.OnMenuItemClickListener onObjectHeightMenuClick(final EditText edit)
+    {
+        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                switch (item.getItemId())
+                {
+                    case R.id.action_seek_shadowlength:
+                        showShadowSeekPopup(context, sunShadowObj);
+                        dismissShadowObjHeightPopup();
+                        return true;
+
+                    case R.id.addEvent_shadowEvent:
+                        startEventListActivityForResult(getEventListExtras_addObjectHeight(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
+                        dismissShadowObjHeightPopup();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
 
     //////////////////////////////////////////////////////////
 
@@ -1871,7 +2012,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 {
                     case R.id.addEvent_shadowEvent:
                         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
-                        startEventListActivityForResult(null, edit.getText().toString(), REQUEST_ADD_SHADOW_EVENT);
+                        startEventListActivityForResult(getEventListExtras_addShadowLength(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
                         dismissShadowSeekPopup();
                         return true;
 
