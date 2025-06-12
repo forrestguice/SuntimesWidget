@@ -845,11 +845,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.lightmapmenu_seek_noon, menu.getMenu());
         menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        updateNoonMenu(context, menu);
         menu.show();
         return true;
-    }
-    private void updateNoonMenu(Context context, PopupMenu menu) {  // TODO
     }
 
     protected boolean showSeekDawnMenu(final Context context, View view)
@@ -859,12 +856,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.lightmapmenu_seek_dawn, menu.getMenu());
         addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DAWN_ITEM_ID);
         menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        updateDawnMenu(context, menu);
         menu.show();
         return true;
-    }
-
-    private void updateDawnMenu(Context context, PopupMenu menu) {  // TODO
     }
 
     protected boolean showSeekDuskMenu(final Context context, View view)
@@ -874,11 +867,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.lightmapmenu_seek_dusk, menu.getMenu());
         addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DUSK_ITEM_ID);
         menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        updateDuskMenu(context, menu);
         menu.show();
         return true;
-    }
-    private void updateDuskMenu(Context context, PopupMenu menu) {  // TODO
     }
 
     private static final int SEEK_CUSTOM_DAWN_ITEM_ID = 100000;
