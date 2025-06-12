@@ -408,9 +408,9 @@ public class EventListHelper
         addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
     }
     public EditEventDialog addEvent(AlarmEventProvider.EventType type) {
-        return addEvent(type, null, null);
+        return addEvent(type, null, null, null);
     }
-    public EditEventDialog addEvent(AlarmEventProvider.EventType type, final Double angle, final Double shadowLength)
+    public EditEventDialog addEvent(AlarmEventProvider.EventType type, final Double angle, final Double shadowLength, final Double objHeight)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
@@ -430,9 +430,16 @@ public class EventListHelper
                     saveDialog.setIsModified(true);
                     saveDialog.edit_label.requestFocus();
                 }
-                if (shadowLength != null && saveDialog.edit_shadowLength != null) {
-                    saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
-                    saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + shadowLength.intValue());
+
+                if (shadowLength != null || objHeight != null)
+                {
+                    if (objHeight != null && saveDialog.edit_objHeight != null) {
+                        saveDialog.edit_objHeight.setText(Double.toString(objHeight));
+                    }
+                    if (shadowLength != null && saveDialog.edit_shadowLength != null) {
+                        saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
+                        saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + shadowLength.intValue());
+                    }
                     saveDialog.check_shown.setChecked(true);
                     saveDialog.edit_label.selectAll();
                     saveDialog.setIsModified(true);

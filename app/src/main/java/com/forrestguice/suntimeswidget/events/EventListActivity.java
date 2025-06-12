@@ -117,11 +117,12 @@ public class EventListActivity extends AppCompatActivity
             public void run()
             {
                 if (extra_addEventWithAngle != -1) {
-                    list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null);
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null, null);
 
                 } else if (extra_addEventWithShadowLength != -1 || extra_addEventWithObjectHeight != -1) {
-                    // TODO: show dialog with extra_addEventWithObjectHeight
-                    list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, extra_addEventWithShadowLength);
+                    Double shadowLength = ((extra_addEventWithShadowLength != -1) ? extra_addEventWithShadowLength : null);
+                    Double objHeight = ((extra_addEventWithObjectHeight != -1) ? extra_addEventWithObjectHeight : null);
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, shadowLength, objHeight);
                 }
             }
         });

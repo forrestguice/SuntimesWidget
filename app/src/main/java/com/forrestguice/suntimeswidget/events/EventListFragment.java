@@ -139,8 +139,8 @@ public class EventListFragment extends Fragment
         inflater.inflate(R.menu.eventlist, menu);
     }
 
-    public void showAddEventDialog(AlarmEventProvider.EventType type, Double angle, Double shadowLength) {
-        helper.addEvent(type, angle, shadowLength);
+    public void showAddEventDialog(AlarmEventProvider.EventType type, Double angle, Double shadowLength, Double objectHeight) {
+        helper.addEvent(type, angle, shadowLength, objectHeight);
     }
 
     @Override
@@ -153,11 +153,11 @@ public class EventListFragment extends Fragment
             //    return true;
 
             case R.id.addEvent_sunEvent:
-                showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, null, null);
+                showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, null, null, null);
                 return true;
 
             case R.id.addEvent_shadowEvent:
-                showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, null);
+                showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, null, null);
                 return true;
 
             case R.id.clearEvents:
