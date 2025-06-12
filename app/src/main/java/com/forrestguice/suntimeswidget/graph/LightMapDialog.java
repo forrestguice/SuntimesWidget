@@ -73,6 +73,8 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;
 import com.forrestguice.suntimeswidget.timepicker.TimeDateDialog;
@@ -103,6 +105,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import net.time4j.calendar.astro.SolarTime;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -936,6 +940,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 switch (item.getItemId())
                 {
+                    case R.id.seek_moon_rise:
+                        seekLunarRise(getActivity());
+                        return true;
+
+                    case R.id.seek_moon_set:
+                        seekLunarSet(getActivity());
+                        return true;
+
+                    case R.id.seek_moon_noon:
+                        seekLunarNoon(getActivity());
+                        return true;
+
+                    case R.id.seek_moon_midnight:
+                        seekLunarMidnight(getActivity());
+                        return true;
+
                     case R.id.seek_midnight:
                         seekMidnight(getActivity());
                         return true;
@@ -1573,6 +1593,35 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (degrees != null) {
             return seekDateTime(context, lightmap.findAltitude(context, (int)((double)degrees), rising));
         } else return null;
+    }
+    @Nullable
+    public Long seekLunarRise(Context context) {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setTodayIs(data.dataActual.calendar());
+        moonData.calculate(context);
+        return seekDateTime(context, moonData.moonriseCalendarToday());
+    }
+    @Nullable
+    public Long seekLunarSet(Context context) {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setTodayIs(data.dataActual.calendar());
+        moonData.calculate(context);
+        return seekDateTime(context, moonData.moonsetCalendarToday());
+    }
+    @Nullable
+    public Long seekLunarNoon(Context context) {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setTodayIs(data.dataActual.calendar());
+        moonData.calculate(context);
+        return seekDateTime(context, moonData.getLunarNoonToday());
+    }
+    @Nullable
+    public Long seekLunarMidnight(Context context)
+    {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setTodayIs(data.dataActual.calendar());
+        moonData.calculate(context);
+        return seekDateTime(context, moonData.getLunarMidnightToday());
     }
     @Nullable
     public Long seekNoon(Context context) {

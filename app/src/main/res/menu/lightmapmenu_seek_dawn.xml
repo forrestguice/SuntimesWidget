@@ -2,20 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/seek_dawn_actual"
-        android:title="@string/sunrise_short"
-        app:showAsAction="never" />
+    <group>
+        <item android:id="@+id/seek_dawn_actual"
+            android:title="@string/sunrise_short"
+            app:showAsAction="never" />
 
-    <item android:id="@+id/seek_dawn_civil"
-        android:title="@string/timeMode_civil"
-        app:showAsAction="never" />
+        <item android:id="@+id/seek_dawn_civil"
+            android:title="@string/timeMode_civil"
+            app:showAsAction="never" />
 
-    <item android:id="@+id/seek_dawn_nautical"
-        android:title="@string/timeMode_nautical"
-        app:showAsAction="never" />
+        <item android:id="@+id/seek_dawn_nautical"
+            android:title="@string/timeMode_nautical"
+            app:showAsAction="never" />
 
-    <item android:id="@+id/seek_dawn_astronomical"
-        android:title="@string/timeMode_astronomical"
-        app:showAsAction="never" />
+        <item android:id="@+id/seek_dawn_astronomical"
+            android:title="@string/timeMode_astronomical"
+            app:showAsAction="never" />
+    </group>
+
+    <group>
+        <item android:id="@+id/seek_moon_rise"
+            android:title="@string/moonrise"
+            app:showAsAction="never" />
+    </group>
 
 </menu>

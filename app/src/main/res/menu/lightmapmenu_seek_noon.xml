@@ -2,12 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/seek_noon"
-        android:title="@string/timeMode_noon"
-        app:showAsAction="never" />
+    <group>
+        <item android:id="@+id/seek_noon"
+            android:title="@string/timeMode_noon"
+            app:showAsAction="never" />
 
-    <item android:id="@+id/seek_midnight"
-        android:title="@string/timeMode_midnight"
-        app:showAsAction="never" />
+        <item android:id="@+id/seek_midnight"
+            android:title="@string/timeMode_midnight"
+            app:showAsAction="never" />
+    </group>
+
+    <group>
+        <item android:id="@+id/seek_moon_noon"
+            android:title="@string/timeMode_moon_noon"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/seek_moon_midnight"
+            android:title="@string/timeMode_moon_midnight"
+            app:showAsAction="never" />
+    </group>
 
 </menu>

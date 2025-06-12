@@ -499,6 +499,8 @@
     <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_noon">Lunar Noon</string>                    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_midnight">Lunar Midnight</string>                    <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->
     <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->
