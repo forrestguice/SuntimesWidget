@@ -66,6 +66,9 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
+import com.forrestguice.suntimeswidget.timepicker.TimeDateDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -95,6 +98,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public static final String ARG_DATETIME = "datetime";
 
     public static final String DIALOGTAG_COLORS = "worldmap_colors";
+    public static final String DIALOGTAG_TIME = "worldmap_time";
 
     public static final int REQUEST_BACKGROUND = 400;
 
@@ -780,15 +784,65 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             if (context == null) {
                 return false;
             }
-            String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
-            if (tzID != null)
-            {
-                WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
-                updateViews();
+
+            if (item.getItemId() == R.id.action_seektime) {
+                showSeekTimeDialog(getActivity());
+                return true;
+
+            } else {
+                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                if (tzID != null)
+                {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
+                    updateViews();
+                }
+                return (tzID != null);
             }
-            return (tzID != null);
         }
     });
+
+    protected void showSeekTimeDialog(Context context)
+    {
+        TimeDateDialog dialog = new TimeDateDialog();
+        dialog.loadSettings(getActivity());
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
+        dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+    }
+    private DialogInterface.OnClickListener onSeekTimeDialogAccepted(final TimeDialog dialog) {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                Context context = getActivity();
+                if (context != null)
+                {
+                    String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+                    TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                    Calendar mapTime = Calendar.getInstance(timezone);
+                    mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    seekDateTime(context, TimeDialog.getCalendar(dialog.getSelected(), mapTime));
+                }
+            }
+        };
+    }
+
+    @Nullable
+    public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
+        return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
+    }
+    @Nullable
+    public Long seekDateTime( Context context, @Nullable Long datetime )
+    {
+        if (datetime != null)
+        {
+            stopMap(false);
+            worldmap.seekDateTime(context, datetime);
+        }
+        return datetime;
+    }
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
@@ -1558,6 +1612,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             colorDialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        TimeDateDialog timeDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null) {
+            timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
     }
 

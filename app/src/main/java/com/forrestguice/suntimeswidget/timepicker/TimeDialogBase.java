@@ -41,6 +41,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.util.Calendar;
+
 @SuppressWarnings("Convert2Diamond")
 public abstract class TimeDialogBase extends BottomSheetDialogFragment
 {
@@ -282,4 +284,30 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
         Integer getSecond();
     }
 
+    @Nullable
+    public static Calendar getCalendar(TimeDialogResult dateTime, Calendar now) {
+        return getCalendar(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), now);
+    }
+    @Nullable
+    public static Calendar getCalendar(Integer year, Integer month, Integer day, Integer hour, Integer minute, Calendar now )
+    {
+        Calendar calendar = Calendar.getInstance(now.getTimeZone());
+        calendar.setTimeInMillis(now.getTimeInMillis());
+        if (year != null) {
+            calendar.set(Calendar.YEAR, year);
+        }
+        if (month != null) {
+            calendar.set(Calendar.MONTH, month);
+        }
+        if (day != null) {
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+        }
+        if (hour != null) {
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+        }
+        if (minute != null) {
+            calendar.set(Calendar.MINUTE, minute);
+        }
+        return calendar;
+    }
 }

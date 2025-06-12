@@ -1349,8 +1349,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
                 mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                TimeDialogBase.TimeDialogResult dateTime = dialog.getSelected();
-                seekDateTime(getActivity(), dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), mapTime);
+                seekDateTime(getActivity(), TimeDialog.getCalendar(dialog.getSelected(), mapTime));
             }
         };
     }
@@ -1373,8 +1372,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             public void onClick(DialogInterface d, int which) {
                 Calendar mapTime = Calendar.getInstance(getSelectedTZ(getActivity(), data));
                 mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                TimeDialogBase.TimeDialogResult dateTime = dialog.getSelected();
-                seekDateTime(getActivity(), dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), mapTime);
+                seekDateTime(getActivity(), TimeDialog.getCalendar(dialog.getSelected(), mapTime));
             }
         };
     }
@@ -1654,28 +1652,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         calendar.setTimeInMillis(now.getTimeInMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
-        return seekDateTime(context, calendar.getTimeInMillis());
-    }
-    @Nullable
-    public Long seekDateTime( Context context, Integer year, Integer month, Integer day, Integer hour, Integer minute, Calendar now )
-    {
-        Calendar calendar = Calendar.getInstance(now.getTimeZone());
-        calendar.setTimeInMillis(now.getTimeInMillis());
-        if (year != null) {
-            calendar.set(Calendar.YEAR, year);
-        }
-        if (month != null) {
-            calendar.set(Calendar.MONTH, month);
-        }
-        if (day != null) {
-            calendar.set(Calendar.DAY_OF_MONTH, day);
-        }
-        if (hour != null) {
-            calendar.set(Calendar.HOUR_OF_DAY, hour);
-        }
-        if (minute != null) {
-            calendar.set(Calendar.MINUTE, minute);
-        }
         return seekDateTime(context, calendar.getTimeInMillis());
     }
 
