@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_observerheight"
+        android:title="@string/editevent_dialog_height"
+        android:icon="?attr/icActionShadow"
+        app:showAsAction="never" />
+
     <item android:id="@+id/addEvent_shadowEvent"
         android:title="@string/configAction_addEvent_shadowEvent"
         android:icon="?attr/icActionNew"

@@ -2049,6 +2049,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
                 switch (item.getItemId())
                 {
+                    case R.id.action_observerheight:
+                        showShadowObjHeightPopup(context, sunShadowObj);
+                        dismissShadowSeekPopup();
+                        return true;
+
                     case R.id.addEvent_shadowEvent:
                         WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
                         startEventListActivityForResult(getEventListExtras_addShadowLength(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
