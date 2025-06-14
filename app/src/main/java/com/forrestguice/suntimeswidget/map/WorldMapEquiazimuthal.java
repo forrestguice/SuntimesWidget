@@ -92,6 +92,16 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return r;
     }
 
+    /**
+     * @param x image coordinate x
+     * @param y image coordinate y
+     * @return [longitude, latitude]
+     */
+    @Override
+    public double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h) {
+        return null;    // TODO: implement for clickable projection
+    }
+
     protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
     {
         int z = 0;
