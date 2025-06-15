@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -51,16 +52,11 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.getfix.GetFixTaskListener;
-import com.forrestguice.suntimeswidget.getfix.LocationHelper;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
-import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
-import com.forrestguice.suntimeswidget.getfix.GetFixUI;
-import com.forrestguice.suntimeswidget.getfix.LocationListTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
@@ -68,6 +64,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class LocationConfigView extends LinearLayout
@@ -411,6 +408,8 @@ public class LocationConfigView extends LinearLayout
     private ImageButton button_save;
     private ImageButton button_cancel;
 
+    private ImageButton button_map;
+
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
     private final GetFixUI getFixUI_editMode = new GetFixUI()
@@ -614,6 +613,13 @@ public class LocationConfigView extends LinearLayout
         TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
         button_save.setOnClickListener(onSaveButtonClicked);
 
+        // custom mode: get coordinates from map
+        button_map = (ImageButton) findViewById(R.id.appwidget_location_mapview);
+        if (button_map != null) {
+            TooltipCompat.setTooltipText(button_map, button_map.getContentDescription());
+            button_map.setOnClickListener(onMapButtonClicked);
+        }
+
         // custom mode: get GPS fix
         progress_getfix = (ProgressBar)findViewById(R.id.appwidget_location_getfixprogress);
         progress_getfix.setVisibility(View.GONE);
@@ -642,6 +648,39 @@ public class LocationConfigView extends LinearLayout
             setHideMode(hideMode);
         }
     }
+
+    protected View.OnClickListener onMapButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showMapCoordinateDialog();
+        }
+    };
+
+    public static final String DIALOGTAG_MAP = "MapDialog";
+    protected void showMapCoordinateDialog()
+    {
+        MapCoordinateDialog dialog = new MapCoordinateDialog();
+        dialog.setColorCollection(new WorldMapColorValuesCollection<>(getContext()));
+        dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
+        dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
+        dialog.show(getFragment().getChildFragmentManager(), DIALOGTAG_MAP);
+    }
+
+    private DialogInterface.OnClickListener onMapCoordinateDialogAccepted(final MapCoordinateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                double latitude = dialog.getSelectedLatitude();
+                double longitude = dialog.getSelectedLongitude();
+                text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
+                text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
+            }
+        };
+    }
+
 
     protected View.OnClickListener onGetFixClicked = new View.OnClickListener()
     {

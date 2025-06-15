@@ -251,11 +251,23 @@
                     <FrameLayout android:id="@+id/getFixProgress"
                         android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-                        <ImageButton android:id="@+id/appwidget_location_getfix"
-                                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                     android:src="?attr/icActionGPS_searching"
-                                     android:layout_gravity="center"
-                                     android:contentDescription="@string/configAction_getFix" />
+                        <LinearLayout
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:layout_gravity="center">
+
+                            <ImageButton android:id="@+id/appwidget_location_getfix"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:src="?attr/icActionGPS_searching"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/configAction_getFix" />
+
+                            <ImageButton android:id="@+id/appwidget_location_mapview"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:src="?attr/icActionWorldMap"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/configAction_mapLocation" />
+
+                        </LinearLayout>
 
                         <ProgressBar
                             android:id="@+id/appwidget_location_getfixprogress"
