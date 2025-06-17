@@ -31,6 +31,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -948,4 +949,25 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    public static CharSequence getLabel(Context context, SuntimesRiseSetDataset data)
+    {
+        if (data.dayLength() <= 0) {
+            return context.getString(R.string.timeMode_polarnight);
+
+        } else if (data.nightLength() == 0) {
+            if (data.civilTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnightsun);
+
+            } else if (data.nauticalTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnighttwilight_whitenight);
+
+            } else if (data.astroTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnighttwilight);
+
+            } else {
+                return context.getString(R.string.timeMode_midnighttwilight);
+            }
+        }
+        return null;
+    }
 }

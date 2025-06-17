@@ -240,8 +240,12 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                 sunrise[i] = calculator.getSunriseCalendarForDate(calendar[i], angle);
                 sunset[i] = calculator.getSunsetCalendarForDate(calendar[i], angle);
                 if (offset != 0) {
-                    sunrise[i].add(Calendar.MILLISECOND, offset);
-                    sunset[i].add(Calendar.MILLISECOND, offset);
+                    if (sunrise[i] != null) {
+                        sunrise[i].add(Calendar.MILLISECOND, offset);
+                    }
+                    if (sunset[i] != null) {
+                        sunset[i].add(Calendar.MILLISECOND, offset);
+                    }
                 }
                 continue;
             }
@@ -293,8 +297,12 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     break;
             }
             if (offset != 0) {
-                sunrise[i].add(Calendar.MILLISECOND, offset);
-                sunset[i].add(Calendar.MILLISECOND, offset);
+                if (sunrise[i] != null) {
+                    sunrise[i].add(Calendar.MILLISECOND, offset);
+                }
+                if (sunset[i] != null) {
+                    sunset[i].add(Calendar.MILLISECOND, offset);
+                }
             }
         }
 

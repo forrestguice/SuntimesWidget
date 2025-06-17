@@ -323,7 +323,14 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
 
             updateDayLengthViews(context, txt_daylength, sun.dataActual.dayLengthToday(), R.string.length_day, options.showSeconds, options.color_textTimeDelta);
-            updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
+
+            if (sun.dataActual.dayLengthToday() == SuntimesData.DAY_MILLIS
+                    || sun.dataCivil.dayLengthToday() == SuntimesData.DAY_MILLIS
+                    || sun.dataCivil.dayLengthToday() <= 0) {
+                txt_lightlength.setText(LightMapView.getLabel(context, sun));
+            } else {
+                updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
+            }
 
             if (txt_comparison != null) {
                 txt_comparison.setVisibility(options.showComparison ? View.VISIBLE : View.GONE);
@@ -413,7 +420,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     {
         SuntimesUtils.TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
-        String compareString = data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
+        String compareString = (data.dayLengthToday() == data.dayLengthOther())
+                ? data.dayDeltaPrefix() + " " + deltaText.getSuffix()
+                : data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
         return SuntimesUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
     }
 
