@@ -94,20 +94,20 @@ public class SuntimesEquinoxSolsticeDataset
         return dataEquinoxSpring.calculator();
     }
 
-    public void calculateData()
+    public void calculateData(Context context)
     {
-        dataEquinoxSpring.calculate();
+        dataEquinoxSpring.calculate(context);
         SuntimesCalculator calculator = dataEquinoxSpring.calculator();
         SuntimesCalculatorDescriptor descriptor = dataEquinoxSpring.calculatorMode();
 
         dataSolsticeSummer.setCalculator(calculator, descriptor);
-        dataSolsticeSummer.calculate();
+        dataSolsticeSummer.calculate(context);
 
         dataEquinoxAutumnal.setCalculator(calculator, descriptor);
-        dataEquinoxAutumnal.calculate();
+        dataEquinoxAutumnal.calculate(context);
         
         dataSolsticeWinter.setCalculator(calculator, descriptor);
-        dataSolsticeWinter.calculate();
+        dataSolsticeWinter.calculate(context);
     }
 
     public SuntimesEquinoxSolsticeData findSoonest(Calendar now) {

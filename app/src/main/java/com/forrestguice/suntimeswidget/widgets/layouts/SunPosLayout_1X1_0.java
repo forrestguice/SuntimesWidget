@@ -60,8 +60,8 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
         int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
         this.layoutID = chooseLayout(position);  // (scaleBase ? R.layout.layout_widget_sunpos_1x1_5_align_fill : R.layout.layout_widget_sunpos_1x1_5);
-        dataset.dataActual.calculate();
-        dataset.dataNoon.calculate();
+        dataset.dataActual.calculate(context);
+        dataset.dataNoon.calculate(context);
     }
 
     protected int chooseLayout(int position)

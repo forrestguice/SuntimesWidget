@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.SuntimesWidget2_3x1;
 import com.forrestguice.suntimeswidget.SuntimesWidget2_3x2;
 import com.forrestguice.suntimeswidget.SuntimesWidget2_3x3;
 
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
@@ -275,25 +276,25 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             if (widgetClass0.equals("SolsticeWidget0"))
             {
                 SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("MoonWidget0") || widgetClass0.equals("MoonWidget0_2x1") || widgetClass0.equals("MoonWidget0_3x1") || widgetClass0.equals("MoonWidget0_3x2")) {
                 SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")
                     || widgetClass0.equals("DateWidget0")
                     || widgetClass0.equals("AlarmWidget0") || widgetClass0.equals("AlarmWidget0_2x2") || widgetClass0.equals("AlarmWidget0_3x2")) {
                 SuntimesClockData data0 = new SuntimesClockData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
                 widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
                 data = data0;
 
             } else {
                 SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
                 data = data0;
             }
 

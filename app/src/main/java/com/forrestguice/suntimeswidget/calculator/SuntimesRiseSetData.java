@@ -31,26 +31,16 @@ import java.util.Calendar;
 
 public class SuntimesRiseSetData extends SuntimesData
 {
-    private Context context;
-
-    public SuntimesRiseSetData(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesRiseSetData(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesRiseSetData(SuntimesRiseSetData other)
-    {
-        this.context = other.context;
+    public SuntimesRiseSetData(SuntimesRiseSetData other) {
         initFromOther(other, other.layoutID);
     }
-    public SuntimesRiseSetData(SuntimesRiseSetData other, int layoutID)
-    {
-        this.context = other.context;
+    public SuntimesRiseSetData(SuntimesRiseSetData other, int layoutID) {
         initFromOther(other, layoutID);
     }
 
@@ -309,16 +299,12 @@ public class SuntimesRiseSetData extends SuntimesData
         }
     }
 
-    public void initCalculator()
-    {
-        initCalculator(context);
-    }
-
     /**
      * Calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -393,6 +379,11 @@ public class SuntimesRiseSetData extends SuntimesData
                     sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
                     break;
 
+                case MIDNIGHT:
+                    sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarMidnightCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarMidnightCalendarForDate(otherCalendar);
+                    break;
+
                 case CIVIL:
                     sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
                     sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
@@ -425,16 +416,24 @@ public class SuntimesRiseSetData extends SuntimesData
         }
 
         if (offset != 0) {
-            sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
-            sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
-            sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
-            sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            if (sunriseCalendarToday != null) {
+                sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarToday != null) {
+                sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunriseCalendarOther != null) {
+                sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarOther != null) {
+                sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
         }
 
         dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);
         dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
-        super.calculate();
+        super.calculate(context);
     }
 
     /**
