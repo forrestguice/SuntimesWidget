@@ -50,13 +50,18 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
     public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
     public static final String COLOR_SUN_STROKE = AppColorKeys.COLOR_SUN_STROKE;
 
+    public static final String COLOR_MIDNIGHT_TEXT = AppColorKeys.COLOR_MIDNIGHT_TEXT;
+    public static final String COLOR_MIDNIGHT_FILL = AppColorKeys.COLOR_MIDNIGHT_FILL;
+    public static final String COLOR_MIDNIGHT_STROKE = AppColorKeys.COLOR_MIDNIGHT_STROKE;
+
     public String[] getColorKeys() {
         return new String[] {
                 COLOR_RISING_SUN, COLOR_RISING_SUN_TEXT,
                 COLOR_SETTING_SUN, COLOR_SETTING_SUN_TEXT,
                 COLOR_RISING_MOON, COLOR_RISING_MOON_TEXT,
                 COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT,
-                COLOR_SUN_FILL, COLOR_SUN_STROKE
+                COLOR_SUN_FILL, COLOR_SUN_STROKE,
+                COLOR_MIDNIGHT_TEXT, COLOR_MIDNIGHT_FILL, COLOR_MIDNIGHT_STROKE
         };
     }
     public int[] getColorAttrs() {
@@ -66,6 +71,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.attr.moonriseColor, R.attr.table_moonRisingColor,
                 R.attr.moonsetColor, R.attr.table_moonSettingColor,
                 R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+                R.attr.table_nightColor, R.attr.sunnightColor0, R.attr.sunnightColor1
         };
     }
     public int[] getColorLabelsRes() {
@@ -74,7 +80,8 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.string.configLabel_themeColorSunset, R.string.configLabel_themeColorSunset_text,
                 R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
                 R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
-                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke
+                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
+                R.string.configLabel_themeColorGraphMidnightText, R.string.configLabel_themeColorGraphMidnightFill, R.string.configLabel_themeColorGraphMidnightStroke
         };
     }
     public int[] getColorRoles() {
@@ -83,7 +90,8 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 ROLE_FOREGROUND, ROLE_TEXT,
                 ROLE_FOREGROUND, ROLE_TEXT,
                 ROLE_FOREGROUND, ROLE_TEXT,
-                ROLE_FOREGROUND, ROLE_FOREGROUND
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_TEXT, ROLE_FOREGROUND, ROLE_FOREGROUND
         };
     }
     public int[] getColorsResDark() {
@@ -93,6 +101,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.moonIcon_color_rising_dark, R.color.table_moon_rising_dark,
                 R.color.moonIcon_color_setting_dark, R.color.table_moon_setting_dark,
                 R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
+                R.color.sunIcon_color_midnight_dark, R.color.sunIcon_color_midnight_dark, R.color.sunIcon_color_midnightBorder_dark
         };
     }
     public int[] getColorsResLight() {
@@ -102,6 +111,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.moonIcon_color_rising_light, R.color.table_moon_rising_light,
                 R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light,
                 R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
+                R.color.sunIcon_color_midnight_light, R.color.sunIcon_color_midnight_light, R.color.sunIcon_color_midnightBorder_light
         };
     }
     public int[] getColorsFallback() {
@@ -111,6 +121,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 Color.LTGRAY, Color.LTGRAY,
                 Color.DKGRAY, Color.DKGRAY,
                 Color.YELLOW, Color.BLACK,
+                Color.WHITE, Color.BLACK, Color.YELLOW
         };
     }
 

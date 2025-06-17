@@ -165,14 +165,15 @@ public class SunLayout_2x1_0 extends SunLayout
         updateViewsSunRiseSetText(context, views, data, showSeconds, order, timeFormat);
 
         // update day delta
+        boolean isSame = (data.dayLengthToday() == data.dayLengthOther());
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
         views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());   // TODO: refactor to use only a single TextView and SpannableString
-        views.setTextViewText(R.id.text_delta_day_value, (boldTime ? SuntimesUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue));
-        views.setTextViewText(R.id.text_delta_day_units, dayDeltaUnits);
+        views.setTextViewText(R.id.text_delta_day_value, (isSame ? "" : (boldTime ? SuntimesUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue)));
+        views.setTextViewText(R.id.text_delta_day_units, (isSame ? "" : dayDeltaUnits));
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
         views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));
 

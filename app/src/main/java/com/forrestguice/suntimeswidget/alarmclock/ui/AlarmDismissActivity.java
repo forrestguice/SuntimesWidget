@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -890,7 +891,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             offsetText.setText(formatOffsetDisplay(context));
 
             if (alarm.note != null) {
-                noteText.setText(utils.displayStringForTitlePattern(context, alarm.note, AlarmNotifications.getData(context, alarm)));
+                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(context, alarm.note, AlarmNotifications.getData(context, alarm)));
             } else noteText.setText("");
 
 

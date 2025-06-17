@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -67,7 +68,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);

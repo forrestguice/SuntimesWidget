@@ -1763,6 +1763,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>sortida de sol astronòmica</item>
@@ -1796,6 +1797,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>sortida de sol astronòmica</item>
@@ -1829,7 +1831,8 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
-    </string-array>   <!-- TODO -->
+        <item>@string/timeMode_midnight</item>
+    </string-array>
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS està desactivat. Activar-lo?</string>     <!-- TODO: "GPS is disabled" to "Location is disabled" -->

@@ -1603,7 +1603,8 @@ public class WidgetSettings
         NOON("Noon", "Solar Noon", null),
         GOLD("Golden", "Golden Hour", 6d),
         BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
+        BLUE4("Blue", "Blue Hour", -4d),      // 4 deg; morning end, evening start
+        MIDNIGHT("Midnight", "Solar Midnight", null);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -1659,6 +1660,9 @@ public class WidgetSettings
 
             NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
                     context.getString(R.string.timeMode_noon) );
+
+            MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
+                    context.getString(R.string.timeMode_midnight) );
 
             GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
                     context.getString(R.string.timeMode_golden) );

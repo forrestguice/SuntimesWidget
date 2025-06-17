@@ -3302,6 +3302,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
                 case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
                 case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
+                case MIDNIGHT: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);
                 case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
             }
         }
