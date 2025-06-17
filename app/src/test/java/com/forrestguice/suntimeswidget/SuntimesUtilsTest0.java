@@ -176,7 +176,7 @@ public class SuntimesUtilsTest0
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
         long date1 = Calendar.getInstance().getTimeInMillis();
 
-        test_timeDeltaLongDisplayString(date1,0, "1m shorter");
+        test_timeDeltaLongDisplayString(date1,0, "1m the same");
         test_timeDeltaLongDisplayString(date1,-1000 * 30, "30s shorter", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "30s longer", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "1m longer", false);
@@ -202,7 +202,9 @@ public class SuntimesUtilsTest0
         SuntimesUtils.TimeDisplayText text = utils.timeDeltaLongDisplayString(date, date + timeDelta, showSeconds);
         assertTrue("result should be " + expected + ", but was " + text.toString(), text.toString().equals(expected));
 
-        if (timeDelta <= 0)
+        if (timeDelta == 0)
+            assertTrue(text.getSuffix().equals("the same"));
+        else if (timeDelta < 0)
             assertTrue(text.getSuffix().equals("shorter"));
         else assertTrue(text.getSuffix().equals("longer"));
 
