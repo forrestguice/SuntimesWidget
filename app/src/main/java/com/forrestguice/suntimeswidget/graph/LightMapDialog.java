@@ -1116,13 +1116,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         } else return null;
     }
     public Long seekNoon(Context context) {
-        return seekDateTime(context, data.dataNoon.sunriseCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataNoon.sunriseCalendarToday());
     }
     public Long seekSunrise(Context context) {
-        return seekDateTime(context, data.dataActual.sunriseCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataActual.sunriseCalendarToday());
     }
     public Long seekSunset(Context context) {
-        return seekDateTime(context, data.dataActual.sunsetCalendarToday().getTimeInMillis());
+        return seekDateTime(context, data.dataActual.sunsetCalendarToday());
+    }
+    public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
+        return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
     }
     public Long seekDateTime( Context context, Long datetime )
     {
@@ -1483,26 +1486,22 @@ public class LightMapDialog extends BottomSheetDialogFragment
         field_astro.updateInfo(context, createInfoArray(data.astroTwilightLength()));
         field_astro.highlight(false);
 
-        CharSequence nightLabel = null;
+        CharSequence nightLabel = LightMapView.getLabel(context, data);
         Drawable nightDrawable = null;
         boolean replaceNightLabel;
         if (replaceNightLabel = (data.nightLength() == 0))
         {
             if (data.civilTwilightLength()[1] <= 0) {
                 nightDrawable = field_day.getDefaultIconDrawable();
-                nightLabel = context.getString(R.string.timeMode_midnightsun);
 
             } else if (data.nauticalTwilightLength()[1] <= 0) {
                 nightDrawable = field_civil.getDefaultIconDrawable();
-                nightLabel = context.getString(R.string.timeMode_midnighttwilight_whitenight);
 
             } else if (data.astroTwilightLength()[1] <= 0) {
                 nightDrawable = field_nautical.getDefaultIconDrawable();
-                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
 
             } else {
                 nightDrawable = field_astro.getDefaultIconDrawable();
-                nightLabel = context.getString(R.string.timeMode_midnighttwilight);
             }
         }
 
@@ -1514,7 +1513,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         CharSequence dayLabel = null;
         Drawable dayDrawable = null;
         boolean replaceDayLabel;
-        if (replaceDayLabel = (data.dayLength() == 0))
+        if (replaceDayLabel = (data.dayLength() <= 0))
         {
             dayDrawable = field_civil.getDefaultIconDrawable();
             dayLabel = context.getString(R.string.timeMode_polarnight);

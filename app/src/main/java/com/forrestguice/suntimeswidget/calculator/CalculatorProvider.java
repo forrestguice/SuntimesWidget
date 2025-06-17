@@ -495,6 +495,11 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
+                        case COLUMN_SUN_MIDNIGHT:
+                            calendar = calculator.getSolarMidnightCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
+                            break;
+
                         case COLUMN_SUN_GOLDEN_EVENING:
                             calendar = calculator.getEveningGoldenHourForDate(day);
                             row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
@@ -534,6 +539,12 @@ public class CalculatorProvider extends ContentProvider
                         case COLUMN_SUN_NOON_RA: case COLUMN_SUN_NOON_DEC:
                             calendar = calculator.getSolarNoonCalendarForDate(day);
                             row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_NOON, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_MIDNIGHT_AZ: case COLUMN_SUN_MIDNIGHT_ALT:
+                        case COLUMN_SUN_MIDNIGHT_RA: case COLUMN_SUN_MIDNIGHT_DEC:
+                            calendar = calculator.getSolarMidnightCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_MIDNIGHT, columns[i], positions);
                             break;
 
                         case COLUMN_SUN_ACTUAL_RISE_AZ: case COLUMN_SUN_ACTUAL_RISE_ALT:
@@ -661,6 +672,11 @@ public class CalculatorProvider extends ContentProvider
     public static final String COLUMN_SUN_NOON_ALT = COLUMN_SUN_NOON + _POSITION_ALT;
     public static final String COLUMN_SUN_NOON_RA = COLUMN_SUN_NOON + _POSITION_RA;
     public static final String COLUMN_SUN_NOON_DEC = COLUMN_SUN_NOON + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_MIDNIGHT_AZ = COLUMN_SUN_MIDNIGHT + _POSITION_AZ;
+    public static final String COLUMN_SUN_MIDNIGHT_ALT = COLUMN_SUN_MIDNIGHT + _POSITION_ALT;
+    public static final String COLUMN_SUN_MIDNIGHT_RA = COLUMN_SUN_MIDNIGHT + _POSITION_RA;
+    public static final String COLUMN_SUN_MIDNIGHT_DEC = COLUMN_SUN_MIDNIGHT + _POSITION_DEC;
 
     public static final String COLUMN_SUN_ACTUAL_RISE_AZ = COLUMN_SUN_ACTUAL_RISE + _POSITION_AZ;
     public static final String COLUMN_SUN_ACTUAL_RISE_ALT = COLUMN_SUN_ACTUAL_RISE + _POSITION_ALT;

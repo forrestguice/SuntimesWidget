@@ -95,6 +95,7 @@ public class SuntimesUtils
 
     protected static String strTimeShorter = "shorter";
     protected static String strTimeLonger = "longer";
+    protected static String strTimeSame = "the same";
     protected static String strSpace = "\u00A0";
     public static String strEmpty = "";
     protected static String strYears = "y";
@@ -154,6 +155,7 @@ public class SuntimesUtils
         Resources res = context.getResources();
         strTimeShorter = res.getString(R.string.delta_day_shorter);
         strTimeLonger = res.getString(R.string.delta_day_longer);
+        strTimeSame = res.getString(R.string.delta_day_same);
         strYears = res.getString(R.string.delta_years);
         strWeeks = res.getString(R.string.delta_weeks);
         strDays = res.getString(R.string.delta_days);
@@ -944,7 +946,8 @@ public class SuntimesUtils
         long timeInMillis = d.getTimeInMillis();
 
         long numberOfSeconds = timeInMillis / 1000;
-        suffix += ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);
+        suffix += (numberOfSeconds == 0) ? strTimeSame
+                : ((numberOfSeconds > 0) ? strTimeLonger : strTimeShorter);
         numberOfSeconds = Math.abs(numberOfSeconds);
 
         long numberOfMinutes = numberOfSeconds / 60;
