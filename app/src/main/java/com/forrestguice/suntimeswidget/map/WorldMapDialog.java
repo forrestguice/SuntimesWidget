@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,15 +39,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +60,11 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -75,6 +80,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,6 +92,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
     public static final String ARG_DATETIME = "datetime";
+
+    public static final String DIALOGTAG_COLORS = "worldmap_colors";
 
     public static final int REQUEST_BACKGROUND = 400;
 
@@ -138,6 +146,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
+        initColors(contextWrapper);
 
         initLocale(getContext());
         initViews(getContext(), dialogContent);
@@ -166,7 +175,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         worldmap.saveSettings(state);
     }
 
-    private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
@@ -174,6 +183,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Log.d(WorldMapView.LOGTAG, "onShowDialog: triggering update...");
             updateViews();
             startUpdateTask();
+
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.requestFocus();
+            }
         }
     };
 
@@ -216,13 +229,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void startUpdateTask()
     {
         stopUpdateTask();
-        if (dialogContent != null)
+        if (dialogContent != null) {
+            updateTask_isRunning = true;
             dialogContent.post(updateTask);
+        }
     }
     private void stopUpdateTask()
     {
-        if (dialogContent != null)
+        if (dialogContent != null) {
+            updateTask_isRunning = false;
             dialogContent.removeCallbacks(updateTask);
+        }
     }
 
     @Override
@@ -234,7 +251,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     public static final int UPDATE_RATE = 3000;
     public static final int RESET_THRESHOLD[] = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
-    private Runnable updateTask = new Runnable()
+    private final Runnable updateTask = new Runnable()
     {
         @Override
         public void run()
@@ -258,10 +275,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                 }
             }
-            if (dialogContent != null)
+            if (dialogContent != null && updateTask_isRunning) {
                 dialogContent.postDelayed(this, UPDATE_RATE);
+            }
         }
     };
+    private boolean updateTask_isRunning = false;
 
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
@@ -286,12 +305,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
 
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
-        utcTime.setOnClickListener(new View.OnClickListener() {
+        utcTime.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimeZoneMenu(context, v);
             }
-        });
+        }));
 
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
@@ -335,12 +354,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         modeButton = (ImageButton)dialogView.findViewById(R.id.map_modemenu);
         if (modeButton != null) {
-            modeButton.setOnClickListener(new View.OnClickListener() {
+            modeButton.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showMapModeMenu(context, modeButton);
                 }
-            });
+            }));
         }
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
@@ -406,9 +425,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
-        if (menuButton != null) {
+        if (menuButton != null)
+        {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
+            if (AppSettings.isTelevision(getActivity())) {
+                menuButton.setFocusableInTouchMode(true);
+            }
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.map_speed);
@@ -457,6 +480,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             utcTime.setTypeface(utcTime.getTypeface(), (themeOverride.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
             worldmap.themeViews(context, themeOverride);
+        } else {
+            worldmap.themeViews(context);
         }
 
         if (seekbar != null) {
@@ -521,8 +546,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 getArguments().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
-                Log.d("DEBUG", "updateOptions: now: " + now);
+                //Log.d("DEBUG", "updateOptions: now: " + now);
             }
+
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            WorldMapColorValues values = (WorldMapColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), WorldMapColorValues.TAG_WORLDMAP);
+            if (values != null) {
+                options.colors = values;
+            } else if (options.colors == null) {
+                options.init(context);
+            }
+            worldmap.themeViews(context);
 
             options.modified = true;
         }
@@ -614,7 +648,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
         TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
         Calendar mapTime = Calendar.getInstance(timezone);
         if (empty.getVisibility() != View.VISIBLE)
         {
@@ -723,7 +757,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -740,13 +774,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
             return (tzID != null);
         }
-    };
+    });
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
         updateMapModeMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -758,7 +792,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_mapmode.setChecked(true);
         }
     }
-    private PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -783,7 +817,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
@@ -809,7 +843,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -837,13 +871,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
 
     protected boolean showContextMenu(final Context context, View view)
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -1009,7 +1043,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_worldmap_background_url))));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_worldmap_background_path))));
                         }
                     })
                     .setNegativeButton(context.getString(R.string.dialog_cancel), null);
@@ -1126,7 +1160,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -1160,6 +1194,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                         dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
                         collapseSheet(getDialog());
                     }
+                    return true;
+
+                case R.id.action_calendar:
+                    openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
                     return true;
 
                 case R.id.action_timezone:
@@ -1246,11 +1284,22 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.mapOption_colors:
+                    showColorDialog(context);
+                    return true;
+
                 default:
                     return false;
             }
         }
-    };
+    });
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
 
     public static final int SEEK_STEPSIZE_5m = 5;
 
@@ -1263,24 +1312,39 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
     private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
-    private View.OnClickListener playClickListener = new View.OnClickListener()
+    private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             playMap();
+            if (AppSettings.isTelevision(getActivity())) {
+                if (pauseButton != null) {
+                    pauseButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
+    private final View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
     {
         @Override
         public boolean onLongClick(View v)
         {
             if (worldmap.isAnimated()) {
                 stopMap(false);
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (playButton != null) {
+                        playButton.requestFocus();
+                    }
+                }
 
             } else {
                 playMap();
                 shareMap();
+                if (AppSettings.isTelevision(getActivity())) {
+                    if (recordButton != null) {
+                        recordButton.requestFocus();
+                    }
+                }
             }
             return true;
         }
@@ -1291,18 +1355,28 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    private final View.OnClickListener pauseClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(false);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
-    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    private final View.OnClickListener resetClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             stopMap(true);
+            if (AppSettings.isTelevision(getActivity())) {
+                if (playButton != null) {
+                    playButton.requestFocus();
+                }
+            }
         }
     };
     private void stopMap(boolean reset)
@@ -1315,21 +1389,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    private final View.OnClickListener menuClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showContextMenu(getContext(), dialogTitle);
         }
-    };
+    });
 
-    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    private final View.OnClickListener speedClickListener = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             showSpeedMenu(getContext(), v);
         }
-    };
+    });
 
     private View.OnClickListener nextClickListener = new View.OnClickListener()
     {
@@ -1442,6 +1516,82 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void onShowDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}
+    }
+
+    /**
+     * onResume
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        Context context = getActivity();
+        FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
+            colorDialog.setColorCollection(colors);
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+    }
+
+    /**
+     * showColorDialog
+     */
+    protected void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
+        dialog.setColorCollection(colors);
+        dialog.setDialogListener(colorDialogListener);
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values) {
+            updateColors(values);
+        }
+
+        protected void updateColors(ColorValues values)
+        {
+            if (values != null) {
+                worldmap.getOptions().colors = new WorldMapColorValues(values);
+            } else {
+                worldmap.getOptions().init(getActivity());
+            }
+            worldmap.themeViews(getActivity());
+            worldmap.setMapMode(getActivity(), mapMode);
+            updateViews();
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new WorldMapColorValues(getActivity(), true);
+        }
+    };
+
+    private ColorValuesCollection<ColorValues> colors;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+        colors = collection;
+    }
+    public ColorValuesCollection<ColorValues> getColorCollection() {
+        return colors;
+    }
+    protected void initColors(Context context) {
+        colors = new WorldMapColorValuesCollection<WorldMapColorValues>(context);
     }
 
 }

@@ -16,30 +16,29 @@
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_gravity="center" android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/menu_button">
 
                 <ImageButton
                     android:id="@+id/info_time_prevbtn1"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="48dp" android:layout_height="48dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="?attr/icActionPrevious" android:contentDescription="@string/prevYear"
                     android:background="?attr/selectableItemBackground" />
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center" android:gravity="center"
-                    android:id="@+id/text_title1" android:text="2022"
-                    style="@style/TableHeadDateView" android:visibility="visible"
+                    android:id="@+id/text_title1" android:text="2022" tools:ignore="HardcodedText"
+                    style="@style/EquinoxDialogTitleStyle" android:visibility="visible"
                     android:paddingTop="8dp" android:paddingBottom="8dp"
-                    android:paddingLeft="32dp" android:paddingRight="32dp"
                     android:background="?attr/selectableItemBackground"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
                 <ImageButton
                     android:id="@+id/info_time_nextbtn1"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="48dp" android:layout_height="48dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="?attr/icActionNext" android:contentDescription="@string/nextYear"
                     android:background="?attr/selectableItemBackground" />
@@ -60,7 +59,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/info_equinoxsolstice_flipper1"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/equinoxList_topMargin"
             tools:listitem="@layout/info_time_solsticequinox2"
             android:elevation="5dp" />
 
@@ -88,7 +87,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
                     android:layout_margin="0dp" android:padding="0dp" android:gravity="start|center_vertical"
                     style="@style/SunsetTextView" android:textSize="?attr/text_size_small"
-                    android:text="365d 5h 41m\n365.24 days" />
+                    android:text="365d 5h 41m\n365.24 days" tools:ignore="HardcodedText" />
 
             </LinearLayout>
 

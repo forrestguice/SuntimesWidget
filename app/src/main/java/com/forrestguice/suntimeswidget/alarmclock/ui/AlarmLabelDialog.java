@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,11 +22,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -37,8 +39,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
@@ -49,11 +53,32 @@ public class AlarmLabelDialog extends DialogFragment
 
     public static final String KEY_COLORS = "alarmlabel_colors";
 
+    private static final String DIALOGTAG_HELP = "alarmlabelhelp";
+
     private EditText edit;
     private String label = PREF_DEF_ALARM_LABEL;
 
     public AlarmLabelDialog() {
         setArguments(new Bundle());
+    }
+
+    public void setShowHelp(boolean showHelp, CharSequence helpContent, String helpUrl, String helpTag) {
+        getArguments().putBoolean("showHelp", showHelp);
+        getArguments().putCharSequence("helpContent", helpContent);
+        getArguments().putString("helpUrl", helpUrl);
+        getArguments().putString("helpTag", helpTag);
+    }
+    public CharSequence helpContent() {
+        return getArguments().getCharSequence("helpContent");
+    }
+    public String helpUrl() {
+        return getArguments().getString("helpUrl");
+    }
+    public String helpTag() {
+        return getArguments().getString("helpTag");
+    }
+    public boolean showHelp() {
+        return getArguments().getBoolean("showHelp", false);
     }
 
     public void setDialogTitle(String value) {
@@ -127,6 +152,18 @@ public class AlarmLabelDialog extends DialogFragment
                 }
         );
 
+        if (showHelp())
+        {
+            dialog.setButton(AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener)null);
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                    button.setOnClickListener(onHelpButtonClicked);
+                }
+            });
+        }
+
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
         }
@@ -140,6 +177,43 @@ public class AlarmLabelDialog extends DialogFragment
         selectAll();
         return dialog;
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        FragmentManager fragments = getChildFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
+        }
+    }
+
+    protected void showHelpDialog()
+    {
+        CharSequence helpContent = helpContent();
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpContent != null ? helpContent : "");
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
+        helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
+    }
+
+    protected View.OnClickListener onlineHelpClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl())));
+        }
+    };
+
+    private final View.OnClickListener onHelpButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showHelpDialog();
+        }
+    };
 
     private int accentColor = -1;
     public void setAccentColor( int color ) {

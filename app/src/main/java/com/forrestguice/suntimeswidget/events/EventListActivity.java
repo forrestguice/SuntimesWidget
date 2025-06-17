@@ -32,9 +32,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 public class EventListActivity extends AppCompatActivity
 {
@@ -47,6 +48,7 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED = EventListFragment.EXTRA_SELECTED;
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
+    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;
 
     protected EventListFragment list;
 
@@ -77,6 +79,9 @@ public class EventListActivity extends AppCompatActivity
         list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
         list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
         list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
+
+        Location location = intent.getParcelableExtra(EXTRA_LOCATION);
+        list.setLocation(location);
 
         FragmentManager fragments = getSupportFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
@@ -151,7 +156,7 @@ public class EventListActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 }

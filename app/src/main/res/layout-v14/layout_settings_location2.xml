@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:labelFor="@+id/appwidget_location_mode"
+            <TextView android:labelFor="@+id/appwidget_location_mode" android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_location_mode"
                 android:layout_gravity="center_vertical" android:textSize="?attr/text_size_small" />
@@ -59,7 +59,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding"
-            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            android:baselineAligned="false">
 
 
             <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
@@ -70,13 +71,31 @@
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionPlace"
-                    android:contentDescription="@string/configAction_selectPlace" />
+                    android:contentDescription="@string/configAction_selectPlace"
+                    android:nextFocusUp="@+id/appwidget_location_mode" />
 
                 <ImageButton android:id="@+id/appwidget_location_cancel"
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionBack"
                     android:contentDescription="@string/dialog_cancel" />
+
+                <FrameLayout android:id="@+id/appwidget_location_auto_layout"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                    <ImageButton android:id="@+id/appwidget_location_auto"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        style="@android:style/Widget.ActionButton"
+                        android:src="?attr/icActionGPS"
+                        android:contentDescription="@string/configAction_getFix" />
+
+                    <ProgressBar
+                        android:id="@+id/appwidget_location_auto_progress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -112,23 +131,6 @@
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:orientation="horizontal" android:layout_gravity="center_vertical">
 
-                <FrameLayout android:id="@+id/appwidget_location_auto_layout"
-                    android:layout_width="fill_parent" android:layout_height="fill_parent">
-
-                    <ImageButton android:id="@+id/appwidget_location_auto"
-                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                 style="@android:style/Widget.ActionButton"
-                                 android:src="?attr/icActionGPS"
-                                 android:contentDescription="@string/configAction_getFix" />
-
-                    <ProgressBar
-                        android:id="@+id/appwidget_location_auto_progress"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-                </FrameLayout>
-
                 <ImageButton android:id="@+id/appwidget_location_add"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     style="@android:style/Widget.ActionButton"
@@ -139,7 +141,8 @@
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
                              android:src="?attr/icActionEdit"
-                             android:contentDescription="@string/configAction_editPlace" />
+                             android:contentDescription="@string/configAction_editPlace"
+                             android:nextFocusUp="@+id/appwidget_location_mode" />
 
                 <ImageButton android:id="@+id/appwidget_location_save"
                              style="@android:style/Widget.ActionButton"

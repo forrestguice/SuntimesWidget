@@ -38,9 +38,14 @@
           app:showAsAction="never" />
 
     <item android:id="@+id/action_sunposition"
-          android:icon="@drawable/ic_sun"
+          android:icon="?attr/icActionSun"
           android:title="@string/configAction_sunDialog"
           app:showAsAction="never" />
+
+    <item android:id="@+id/action_lightgraph"
+        android:icon="?attr/icActionSunChart"
+        android:title="@string/configAction_lightGraphDialog"
+        app:showAsAction="never" />
 
     <item android:id="@+id/action_equinox"
           android:icon="?attr/icActionAbout"
@@ -55,6 +60,7 @@
     <item android:id="@+id/action_settings"
           android:icon="?attr/icActionSettings"
           android:title="@string/configAction_settings"
+          android:visible="false"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_help"
@@ -65,6 +71,7 @@
     <item android:id="@+id/action_about"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_aboutWidget"
+          android:visible="false"
           app:showAsAction="never" />
 
 </menu>

@@ -34,6 +34,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
@@ -452,13 +453,13 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
-        paintGrid.setColor(options.gridXColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         for (int i=0; i<grid_x.size(); i++) {
             drawConnectedLines(c, grid_x.get(i), paintGrid);
         }
 
         paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        paintGrid.setColor(options.gridYColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         for (int i=0; i<grid_y.size(); i++) {
             drawConnectedLines(c, grid_y.get(i), paintGrid);
         }

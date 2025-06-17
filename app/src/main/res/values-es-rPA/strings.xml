@@ -5,5 +5,6 @@
     <string name="default_location_latitude">9.0831</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-79.5924</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">98</string>         <!-- meters -->
+    <string name="default_timezone">America/Panama</string>         <!-- tzid -->
 
 </resources>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020-2022 Forrest Guice
+    Copyright (C) 2020-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -51,11 +51,12 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.HelpDialog;
-import com.forrestguice.suntimeswidget.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
@@ -69,6 +70,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -81,6 +83,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final String TAG = "AlarmReceiverList";
 
     public static final String EXTRA_ITEM = "item";
+    public static final String EXTRA_ITEMID = "itemID";
     public static final String EXTRA_ISNEW = "isnew";
 
     public static final int REQUEST_RINGTONE = 10;
@@ -100,9 +103,13 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "alarmhelp";
+    private static final int HELP_PATH_ID = R.string.help_alarms_edit_path;
+
+    protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
+    private boolean isNew = false;
 
     private int colorAlarmEnabled, colorOn, colorOff, colorEnabled, colorDisabled, colorPressed;
     private int resAddIcon, resCloseIcon;
@@ -272,7 +279,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
-            boolean isNew = extras.getBoolean(EXTRA_ISNEW, false);
+            isNew = extras.getBoolean(EXTRA_ISNEW, false);
             editor.initFromItem(item, isNew);
         }
 
@@ -317,11 +324,18 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         returnItem(item);
     }
 
-    protected void returnItem(AlarmClockItem item)
+    /**
+     * returns an AlarmClockItem; calls finish.
+     * @param item the modified item this activity will return, or null if item was deleted
+     */
+    protected void returnItem(@Nullable AlarmClockItem item)
     {
         editor.saveSettings(AlarmEditActivity.this);
         Intent intent = getIntent();
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
+        if (item == null) {
+            intent.putExtra(AlarmNotifications.ACTION_DELETE, true);
+        }
         setResult(Activity.RESULT_OK, intent);
         supportFinishAfterTransition();
     }
@@ -361,6 +375,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null) {
             locationDialog.setDialogListener(onLocationChanged);
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
 
         if (Build.VERSION.SDK_INT >= 11)
@@ -432,7 +451,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return true;
 
             case R.id.action_delete:
-                AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+                if (isNew)
+                {
+                    setResult(RESULT_CANCELED);
+                    finish();
+
+                } else {
+                    AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+                }
                 return true;
 
             case R.id.setAlarmType:
@@ -500,7 +526,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
 
         AlarmClockItem item = editor.getItem();
         boolean alarmEnabled = (item != null && item.enabled);
@@ -600,6 +626,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -616,8 +644,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
        return new DialogInterface.OnClickListener()
        {
            public void onClick(DialogInterface dialog, int whichButton) {
-               setResult(AlarmEditActivity.RESULT_CANCELED);
-               supportFinishAfterTransition();
+               returnItem(null);
                sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DELETE, item.getUri()));
            }
        };
@@ -670,6 +697,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         });
         task.execute(item);
+        returnItem(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -710,7 +738,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             c++;
         }
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -719,9 +747,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 onDismissChallengeResult(itemID);
                 return true;
             }
-        });
+        }));
 
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 
@@ -744,7 +772,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.alarmsound, popup.getMenu());
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -765,8 +793,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 }
                 return false;
             }
-        });
-        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        }));
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
 
@@ -790,7 +818,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));    // TODO: setDefaultRingtoneUri may block (potential ANR)...
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
     }
@@ -958,9 +986,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      */
     protected void pickNote(@NonNull AlarmClockItem item)
     {
-        AlarmLabelDialog dialog = new AlarmLabelDialog();    // TODO: multi-line
+        AlarmLabelDialog dialog = new AlarmLabelDialog();
         dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
         dialog.setMultiLine(true);
+        dialog.setShowHelp(true, SuntimesUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_url) + getString(R.string.help_substitutions_path), HELPTAG_SUBSTITUTIONS);
         dialog.setAccentColor(colorAlarmEnabled);
         dialog.setLabel(item.note);
         dialog.setOnAcceptedListener(onNoteChanged);
@@ -1028,6 +1057,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
 
         dialog.setEvent(item.getEvent(), item.location);
+        dialog.setUseAppLocation(AlarmEditActivity.this, item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP));
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);
@@ -1044,6 +1074,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
+                if (dialog.useAppLocation()) {
+                    item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
+                }
                 AlarmCreateDialog.updateAlarmItem(dialog, item);
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
@@ -1068,7 +1101,67 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     /**
      * pickLocation
      */
-    protected void pickLocation(@NonNull AlarmClockItem item)
+    protected void pickLocation(@NonNull AlarmClockItem item) {
+        showAlarmLocationPopup(editor.itemView.chip_location, item);
+    }
+
+    public void showAlarmLocationPopup(View v, @NonNull final AlarmClockItem item)
+    {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
+
+        boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        MenuItem menuItem_fromApp = popup.getMenu().findItem(R.id.action_location_fromApp);
+        if (menuItem_fromApp != null) {
+            menuItem_fromApp.setChecked(useAppLocation);
+        }
+
+        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
+        if (menuItem_location != null) {
+            menuItem_location.setEnabled(!useAppLocation);
+        }
+
+        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_location_set:
+                        showLocationDialog(item);
+                        return true;
+
+                    case R.id.action_location_fromApp:
+                        toggleLocationFromApp(item);
+                        return true;
+                }
+                return false;
+            }
+        }));
+        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
+
+    protected void toggleLocationFromApp(@NonNull AlarmClockItem item)
+    {
+        boolean currentValue = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        if (!currentValue) {
+            item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
+        } else {
+            item.clearFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+        }
+        if (editor != null)
+        {
+            AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
+            editor.notifyItemChanged();
+            editor.triggerPreviewOffset();
+            invalidateOptionsMenu();
+        }
+    }
+
+    protected void showLocationDialog(@NonNull AlarmClockItem item)
     {
         final LocationConfigDialog dialog = new LocationConfigDialog();
         dialog.setHideTitle(true);
@@ -1077,7 +1170,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setDialogListener(onLocationChanged);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION + 1);
     }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)

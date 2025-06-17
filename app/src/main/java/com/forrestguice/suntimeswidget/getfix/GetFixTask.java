@@ -51,11 +51,11 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MAX_AGE_NONE = 0;
     public static final int MAX_AGE_ANY = -1;
 
-    private WeakReference<GetFixHelper> helperRef;
-    public GetFixTask(Context parent, GetFixHelper helper)
+    private WeakReference<LocationHelper> helperRef;
+    public GetFixTask(Context parent, LocationHelper helper)
     {
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
-        this.helperRef = new WeakReference<GetFixHelper>(helper);
+        this.helperRef = new WeakReference<LocationHelper>(helper);
     }
 
     public AsyncTask<Object, Location, Location> executeTask(Object... params)
@@ -158,7 +158,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     @Override
     protected void onPreExecute()
     {
-        final GetFixHelper helper = helperRef.get();
+        final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
             GetFixUI uiObj = helper.getUI();
@@ -170,7 +170,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         signalStarted();
         if (helper != null)
         {
-            helper.gettingFix = true;
+            helper.setGettingFix(true);
         }
         bestFix = null;
         elapsedTime = 0;
@@ -269,7 +269,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     @Override
     protected void onProgressUpdate(Location... locations)
     {
-        final GetFixHelper helper = helperRef.get();
+        final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
             GetFixUI uiObj = helper.getUI();
@@ -291,10 +291,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
-        final GetFixHelper helper = helperRef.get();
+        final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
-            helper.gettingFix = false;
+            helper.setGettingFix(false);
 
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
@@ -318,10 +318,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
-        GetFixHelper helper = helperRef.get();
+        LocationHelper helper = helperRef.get();
         if (helper != null)
         {
-            helper.gettingFix = false;
+            helper.setGettingFix(false);
 
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
@@ -345,7 +345,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
     public void addGetFixTaskListeners( List<GetFixTaskListener> listeners )
     {
-        for (GetFixTask.GetFixTaskListener listener : listeners)
+        for (GetFixTaskListener listener : listeners)
         {
             addGetFixTaskListener(listener);
         }
@@ -374,14 +374,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             if (listener != null)
                 listener.onCancelled();
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class GetFixTaskListener
-    {
-        public void onStarted() {}
-        public void onFinished(Location result) {}
-        public void onCancelled() {}
     }
 
     /**

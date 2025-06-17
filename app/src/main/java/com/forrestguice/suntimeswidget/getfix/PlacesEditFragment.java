@@ -56,6 +56,8 @@ import java.util.regex.Pattern;
 
 public class PlacesEditFragment extends BottomSheetDialogFragment
 {
+    public static final String KEY_DIALOGTHEME = "dialogtheme";
+
     public static final String KEY_LOCATION = "location";
     public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
@@ -67,6 +69,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private EditText text_locationLat;
     private EditText text_locationLon;
     private EditText text_locationName;
+
+    private ImageButton button_cancel, button_save;
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
@@ -80,7 +84,18 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         setArguments(new Bundle());
     }
 
-    private GetFixHelper getFixHelper;
+    protected LocationHelper getFixHelper = null;
+    public void setLocationHelper( @Nullable LocationHelper helper ) {
+        getFixHelper = helper;
+    }
+    @Nullable
+    protected LocationHelper createLocationHelper() {
+        return null;
+    }
+
+    public GetFixUI getFixUI() {
+        return getFixUI_editMode;
+    }
     private GetFixUI getFixUI_editMode = new GetFixUI()
     {
         @Override
@@ -146,7 +161,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (getFixHelper != null) {
+            getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
@@ -161,11 +178,25 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         super.onResume();
     }
 
+    public void setDialogThemOverride(@Nullable Integer resID)
+    {
+        if (resID != null) {
+            getArguments().putInt(KEY_DIALOGTHEME, resID);
+        } else getArguments().remove(KEY_DIALOGTHEME);
+    }
+    @Nullable
+    protected Integer getDialogThemeOverride()
+    {
+        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        return (resID >= 0 ? resID : null);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
-        View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_place, parent, false);
+        Integer appTheme = getDialogThemeOverride();
+        View view = ((appTheme != null) ? inflater.cloneInContext(new ContextThemeWrapper(getActivity(), appTheme)).inflate(R.layout.layout_dialog_place, parent, false)
+                                        : inflater.inflate(R.layout.layout_dialog_place, parent, false));
         initViews(getActivity(), view);
 
         if (savedInstanceState != null) {
@@ -192,13 +223,17 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         text_locationAlt = (EditText) content.findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)content.findViewById(R.id.appwidget_location_alt_units);
 
-        ImageButton button_save = (ImageButton) content.findViewById(R.id.save_button);
+        if (text_locationAlt != null) {
+            text_locationAlt.setNextFocusDownId(R.id.save_button);
+        }
+
+        button_save = (ImageButton) content.findViewById(R.id.save_button);
         if (button_save != null) {
             TooltipCompat.setTooltipText(button_save, button_save.getContentDescription());
             button_save.setOnClickListener(onSaveButtonClicked);
         }
 
-        ImageButton button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
+        button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
         if (button_cancel != null) {
             TooltipCompat.setTooltipText(button_cancel, button_cancel.getContentDescription());
             button_cancel.setOnClickListener(onCancelButtonClicked);
@@ -212,14 +247,17 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         button_getfix.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                getFixHelper.getFix(0);
+            public void onClick(View v) {
+                if (getFixHelper != null) {
+                    getFixHelper.getFix(0);
+                }
             }
         });
 
-        getFixHelper = new GetFixHelper(getActivity(), getFixUI_editMode);    // 0; getFixUI_editMode
-        getFixHelper.setFragment(this);
+        getFixHelper = createLocationHelper();
+        if (getFixHelper != null) {
+            getFixHelper.setFragment(this);
+        }
         updateGPSButtonIcons();
     }
 
@@ -244,7 +282,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         bundle.putString(KEY_LOCATION_LONGITUDE, text_locationLon.getText().toString());
         bundle.putString(KEY_LOCATION_ALTITUDE, text_locationAlt.getText().toString());
         bundle.putString(KEY_LOCATION_LABEL, text_locationName.getText().toString());
-        getFixHelper.saveSettings(bundle);
+        if (getFixHelper != null) {
+            getFixHelper.saveSettings(bundle);
+        }
         super.onSaveInstanceState(bundle);
     }
 
@@ -264,14 +304,21 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             else location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude);
             updateViews(location);
         }
-        getFixHelper.loadSettings(bundle);
+        if (getFixHelper != null) {
+            getFixHelper.loadSettings(bundle);
+        }
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             expandSheet(dialogInterface);
             disableTouchOutsideBehavior();
+
+            if (AppSettings.isTelevision(getActivity())) {
+                button_cancel.requestFocus();
+            }
         }
     };
 
@@ -306,19 +353,26 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
 
     public void cancelGetFix() {
-        getFixHelper.cancelGetFix();
+        if (getFixHelper != null) {
+            getFixHelper.cancelGetFix();
+        }
     }
 
     public void updateGPSButtonIcons()
     {
-        int icon = GetFixUI.ICON_GPS_SEARCHING;
-        if (!getFixHelper.isLocationEnabled(getContext())) {
-            icon = GetFixUI.ICON_GPS_DISABLED;
+        int icon = GetFixUI.ICON_GPS_DISABLED;
+        if (getFixHelper != null)
+        {
+            icon = GetFixUI.ICON_GPS_SEARCHING;
+            if (!getFixHelper.isLocationEnabled(getContext())) {
+                icon = GetFixUI.ICON_GPS_DISABLED;
 
-        } else if (getFixHelper.gotFix) {
-            icon = GetFixUI.ICON_GPS_FOUND;
+            } else if (getFixHelper.hasFix()) {
+                icon = GetFixUI.ICON_GPS_FOUND;
+            }
         }
         button_getfix.setImageResource(icon);
+        button_getfix.setVisibility(getFixHelper != null ? View.VISIBLE : View.GONE);
     }
 
     public static Bundle bundleData( Uri data, String label )
@@ -423,7 +477,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
                     WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
-            item.isDefault = item0.isDefault;
+            item.comment = item0.comment;
 
         } else {
             item.rowID = -1;
@@ -458,22 +512,26 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             }
         }
 
-        final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+        if (getFixHelper != null)
         {
-            @Override
-            public void onCancelled()
+            final GetFixTaskListener cancelGetFixListener = new GetFixTaskListener()
             {
-                if (validInput)
+                @Override
+                public void onCancelled()
                 {
-                    if (listener != null) {
-                        listener.onAccepted(returnValue);
+                    if (validInput)
+                    {
+                        if (listener != null) {
+                            listener.onAccepted(returnValue);
+                        }
                     }
                 }
-            }
-        };
-        getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
-        getFixHelper.addGetFixTaskListener(cancelGetFixListener);
-        getFixHelper.cancelGetFix();
+            };
+
+            getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.addGetFixTaskListener(cancelGetFixListener);
+            getFixHelper.cancelGetFix();
+        }
     }
 
     public boolean validateInput()

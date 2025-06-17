@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,26 +31,16 @@ import java.util.Calendar;
 
 public class SuntimesRiseSetData extends SuntimesData
 {
-    private Context context;
-
-    public SuntimesRiseSetData(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesRiseSetData(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesRiseSetData(SuntimesRiseSetData other)
-    {
-        this.context = other.context;
+    public SuntimesRiseSetData(SuntimesRiseSetData other) {
         initFromOther(other, other.layoutID);
     }
-    public SuntimesRiseSetData(SuntimesRiseSetData other, int layoutID)
-    {
-        this.context = other.context;
+    public SuntimesRiseSetData(SuntimesRiseSetData other, int layoutID) {
         initFromOther(other, layoutID);
     }
 
@@ -88,8 +78,14 @@ public class SuntimesRiseSetData extends SuntimesData
         if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
         {
             EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
-            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+            AlarmEventProvider.ElevationEvent event;
+            switch (alias.getType()) {
+                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                default: event = null; break;
+            }
             this.angle = (event == null ? null : event.getAngle());
+            this.offset = (event == null ? 0 : event.getOffset());
         }
         WidgetSettings.TimeMode mode = dataMode.getTimeMode();
         this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
@@ -101,12 +97,23 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: sun angle (overrides time mode)
      */
-    protected Integer angle = null;
-    public Integer angle() {
+    protected Double angle = null;
+    public Double angle() {
         return angle;
     }
-    public void setAngle( int value ) {
+    public void setAngle( double value ) {
         angle = value;
+    }
+
+    /**
+     * property: offset
+     */
+    protected int offset = 0;
+    public void setOffset(int millis) {
+        offset = millis;
+    }
+    public int getOffset() {
+        return offset;
     }
 
     /**
@@ -254,6 +261,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.offset = other.offset;
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
         this.sunsetCalendarToday = other.sunsetCalendarToday();
@@ -291,16 +299,12 @@ public class SuntimesRiseSetData extends SuntimesData
         }
     }
 
-    public void initCalculator()
-    {
-        initCalculator(context);
-    }
-
     /**
      * Calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -318,8 +322,8 @@ public class SuntimesRiseSetData extends SuntimesData
 
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         switch (compareMode)
@@ -375,6 +379,11 @@ public class SuntimesRiseSetData extends SuntimesData
                     sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
                     break;
 
+                case MIDNIGHT:
+                    sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarMidnightCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarMidnightCalendarForDate(otherCalendar);
+                    break;
+
                 case CIVIL:
                     sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
                     sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
@@ -406,10 +415,25 @@ public class SuntimesRiseSetData extends SuntimesData
             }
         }
 
+        if (offset != 0) {
+            if (sunriseCalendarToday != null) {
+                sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarToday != null) {
+                sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunriseCalendarOther != null) {
+                sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarOther != null) {
+                sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+        }
+
         dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);
         dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
-        super.calculate();
+        super.calculate(context);
     }
 
     /**

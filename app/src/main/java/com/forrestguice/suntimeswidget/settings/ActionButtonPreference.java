@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -27,28 +28,50 @@ import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
 
+/**
+ * A preference with an "action" button; should be provided with a `widgetLayout` containing
+ * ImageButton with id `actionButton0`.
+ */
 public class ActionButtonPreference extends ListPreference
 {
-    public ActionButtonPreference(Context context)
-    {
+    public ActionButtonPreference(Context context) {
         super(context);
     }
 
     public ActionButtonPreference(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        setParams(context, attrs);
     }
 
     @TargetApi(21)
     public ActionButtonPreference(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+        setParams(context, attrs);
     }
 
     @TargetApi(21)
     public ActionButtonPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
+        setParams(context, attrs);
+    }
+
+    public void setParams(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ColorListPreference, 0, 0);
+        try {
+            actionButtonContentDescription = a.getString(R.styleable.ActionButtonPreference_actionButtonContentDescription);
+
+        } finally {
+            a.recycle();
+        }
+    }
+
+    private String actionButtonContentDescription = null;
+    public String getActionButtonContentDescription() {
+        return actionButtonContentDescription;
     }
 
     @Override
@@ -61,6 +84,8 @@ public class ActionButtonPreference extends ListPreference
         {
             boolean enabled = isEnabled();
             actionButton.setEnabled(enabled);
+            actionButton.setContentDescription(actionButtonContentDescription);
+            actionButton.setTag(getKey());
 
             if (Build.VERSION.SDK_INT >= 11) {
                 actionButton.setAlpha(enabled ? 1f : 0f);
@@ -70,7 +95,7 @@ public class ActionButtonPreference extends ListPreference
         }
     }
 
-    private View.OnClickListener onActionClicked = new View.OnClickListener() {
+    private final View.OnClickListener onActionClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (actionButtonPreferenceListener != null) {

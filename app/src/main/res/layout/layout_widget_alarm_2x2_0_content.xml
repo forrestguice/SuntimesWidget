@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView style="@style/WidgetTitleTextView"
+              android:id="@+id/text_title" android:visibility="gone"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:gravity="start"
+              tools:text="title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
+
+        <TextView style="@style/WidgetTimeTextView2" android:visibility="visible"
+            android:id="@+id/text_label"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            android:text="@string/configLabel_alarmClock" android:labelFor="@+id/text_alarmtime"
+            android:gravity="start" android:layout_gravity="start" />
+
+        <TextView style="@style/WidgetTimeTextView" android:visibility="gone"
+            android:id="@+id/text_empty"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            android:text="@string/configLabel_alarms_nextAlarm_none"
+            android:gravity="start" android:layout_gravity="start" />
+
+        <ListView android:id="@+id/list_alarms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</merge>

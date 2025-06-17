@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout android:id="@+id/card"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+        android:background="?attr/alarmCardBackdrop"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:layout_margin="8dp"
+            android:orientation="vertical" android:animateLayoutChanges="true">
+
+            <TextView android:id="@+id/text_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:drawableLeft="?attr/icActionAlarm" android:drawableStart="?attr/icActionAlarm" android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:textSize="?attr/text_size_small"
+                android:text="@string/msg_bedtime_wakeup_set" />
+
+            <LinearLayout
+                android:id="@+id/text_time_layout"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="end"
+                android:minWidth="125dp" android:layout_gravity="center"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView android:id="@+id/text_time"
+                    style="@style/ClockTextView"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="" android:textSize="?attr/text_size_huge" android:textStyle="bold"
+                    tools:text="12:00" />
+
+                <TextView android:id="@+id/text_time_suffix" style="@style/ClockSuffixTextView"
+                    android:layout_gravity="center_vertical|bottom|end"
+                    android:text="" tools:text="p.m." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:gravity="end">
+
+                <LinearLayout android:id="@+id/layout_more"
+                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="bottom|end">
+
+                    <View android:background="?attr/hrColor"
+                        android:layout_marginTop="12dp" android:layout_marginBottom="4dp"
+                        android:layout_width="match_parent" android:layout_height="1dp" />
+
+                    <LinearLayout android:id="@+id/layout_status"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_gravity="bottom|end">
+
+                        <TextView android:id="@+id/status_sound"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="bottom" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                            android:drawableLeft="?attr/icActionSoundEnabled" android:drawableStart="?attr/icActionSoundEnabled" android:gravity="center_vertical"
+                            android:maxEms="9" android:maxLines="2" android:ellipsize="end"
+                            android:textSize="?attr/text_size_small" tools:text="Pixie Dust" />
+
+                        <ImageView android:id="@+id/status_silent"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                            android:src="?attr/icActionSoundDisabled"
+                            android:contentDescription="@string/alarmOption_ringtone_none" />
+
+                        <ImageView android:id="@+id/status_vibrate"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                            android:src="?attr/icActionVibrationEnabled"
+                            android:contentDescription="@string/alarmOption_vibrate" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:paddingRight="8dp" android:paddingEnd="8dp"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:clipToPadding="false">
+
+            <Switch android:id="@+id/switch_enabled"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
+                />
+
+            <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:tint="?attr/fab_foregroundColorAlt"
+                app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
+                android:scaleType="center"
+                android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="@string/configAction_setWakeUp" />
+
+            <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:tint="?attr/fab_foregroundColorAlt"
+                app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
+                android:scaleType="center"
+                android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="@string/configAction_editAlarm" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

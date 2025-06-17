@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -34,9 +34,14 @@ public class SuntimesConfigActivity0_3x1 extends SuntimesConfigActivity0_2x1
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return SuntimesWidget0_3x1.class;
+    }
+
+    @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0_3x1.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);
@@ -70,6 +75,11 @@ public class SuntimesConfigActivity0_3x1 extends SuntimesConfigActivity0_2x1
     @Override
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_1x1mode, spinner_1x1mode, label_2x1mode, spinner_2x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
+    }
+
+    @Override
+    public boolean getDefaultShowSolarNoon() {
+        return true;
     }
 
 }

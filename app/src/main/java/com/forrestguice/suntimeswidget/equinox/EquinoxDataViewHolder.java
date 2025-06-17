@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -79,12 +80,20 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
                 Calendar now = Calendar.getInstance();
                 SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
+                text_datetime.setVisibility(options.showDate ? View.VISIBLE : View.GONE);
                 text_label.setText(data.timeMode().getLongDisplayString());
                 updateNote(context, now, data, WidgetSettings.loadShowWeeksPref(context, 0), WidgetSettings.loadShowHoursPref(context, 0), options);
                 themeViews(context, data, options);
 
                 focusView.setVisibility(selected ? View.VISIBLE : View.GONE);
                 button_menu.setVisibility(selected ? View.VISIBLE : View.GONE);
+                
+                if (AppSettings.isTelevision(context)) {
+                    button_menu.setFocusableInTouchMode(true);
+                    if (selected) {
+                        button_menu.requestFocus();
+                    }
+                }
 
                 boolean enabled = (now.before(event));
                 text_label.setEnabled(enabled);

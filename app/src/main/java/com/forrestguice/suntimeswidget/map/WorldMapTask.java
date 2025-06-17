@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.map;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -164,17 +166,26 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
         public boolean modified = false;
 
+        public WorldMapOptions() {
+            colors = new WorldMapColorValues();
+        }
+        public WorldMapOptions(Context context) {
+            init(context);
+        }
+
+        public void init(Context context) {
+            colors = new WorldMapColorValues(context, true);
+        }
+        public WorldMapColorValues colors;
+        public int foregroundColor = Color.TRANSPARENT;
+
         public Drawable map = null;                  // BitmapDrawable
         public Drawable map_night = null;            // BitmapDrawable
-        public int backgroundColor = Color.BLUE;
-        public int foregroundColor = Color.TRANSPARENT;
         public boolean tintForeground = true;
         public boolean hasTransparentBaseMap = true;
         public boolean showDebugLines = false;
 
         public boolean showGrid = false;
-        public int gridXColor = Color.LTGRAY;
-        public int gridYColor = Color.WHITE;
 
         public boolean showMajorLatitudes = false;
         public int[] latitudeColors = { Color.DKGRAY, Color.WHITE, Color.DKGRAY };    // equator, tropics, polar circle
@@ -182,29 +193,20 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public float latitudeLineScale = 0.5f;
 
         public boolean showSunPosition = true;
-        public int sunFillColor = Color.YELLOW;
-        public int sunStrokeColor = Color.BLACK;
+        public boolean showSunShadow = true;
+        public boolean showMoonPosition = true;
+        public boolean showMoonLight = true;
+
         public int sunScale = 48;                     // 48; default 48 suns fit within the width of the image (which is 24 hr wide meaning the sun has diameter of a half-hour)
         public int sunStrokeScale = 3;                // 3; default 3 strokes fit within the radius of the sun (i.e. the stroke is 1/3 the width)
 
-        public boolean showSunShadow = true;
-        public int sunShadowColor = Color.BLACK;
-
-        public boolean showMoonPosition = true;
-        public int moonFillColor = Color.WHITE;
-        public int moonStrokeColor = Color.BLACK;
         public int moonScale = 72;                    // 72; default moonscale is 3/4 the size of the sun (48)
         public int moonStrokeScale = 3;               // 3; default 3 strokes fit within the radius of the moon
-
-        public boolean showMoonLight = true;
-        public int moonLightColor = Color.LTGRAY;
 
         public boolean translateToLocation = false;
 
         public double[] center = null;
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
-        public int locationFillColor = Color.MAGENTA;
-        public int locationStrokeColor = Color.BLACK;
         public double locationScale = 1 / 192d;
 
         public long offsetMinutes = 0;    // minutes offset from "now" (default 0)
@@ -377,7 +379,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 {
                     int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
                     drawLocation(c, point[0], point[1], p1, p2, options);
-                    Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
+                    //Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
                 }
             }
         }

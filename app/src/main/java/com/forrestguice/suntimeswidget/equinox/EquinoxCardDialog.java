@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +56,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -75,7 +84,11 @@ import java.util.List;
 
 public class EquinoxCardDialog extends BottomSheetDialogFragment
 {
+    public static final String DIALOGTAG_COLORS= "equinox_colors";
+
     public static final String DIALOGTAG_HELP = "equinox_help";
+    public static final int HELP_PATH_ID = R.string.help_solstice_path;
+
     protected static SuntimesUtils utils = new SuntimesUtils();
 
     protected TextView empty, text_title;
@@ -101,8 +114,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
             @Override
             public void onBackPressed() {
-                if (hasSelection()) {
+                if (hasSelection())
+                {
                     setSelection((Integer) null);
+                    if (AppSettings.isTelevision(getActivity())) {
+                        btn_menu.requestFocus();
+                    }
                 } else super.onBackPressed();
             }
         };
@@ -122,8 +139,17 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
+
         options.init(context);
         options.showSeconds = true;
+        options.showDate = true;
+
+        AppColorValuesCollection<AppColorValues> colors = new AppColorValuesCollection<>();
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValues values = colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
+        if (values != null) {
+            options.colors = new EquinoxColorValues(values);
+        }
 
         empty = (TextView)v.findViewById(R.id.txt_empty);
         text_title = (TextView)v.findViewById(R.id.text_title1);
@@ -144,9 +170,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             TooltipCompat.setTooltipText(btn_prev, btn_prev.getContentDescription());
             btn_prev.setOnClickListener(onPrevClicked);
         }
-        if (btn_menu != null) {
+        if (btn_menu != null)
+        {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_menu.setFocusableInTouchMode(true);
+            }
         }
 
         initCardView(context, v);
@@ -166,6 +196,22 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+
+        FragmentManager fragments = getChildFragmentManager();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        if (colorDialog != null)
+        {
+            boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
+            colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
+            colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+            colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
+            colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     private void expandSheet(DialogInterface dialog)
@@ -205,11 +251,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         return null;
     }
 
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener()
+    {
         @Override
-        public void onShow(DialogInterface dialogInterface) {
+        public void onShow(DialogInterface dialogInterface)
+        {
             Context context = getContext();
-            if (context != null) {
+            if (context != null)
+            {
                 updateViews(getContext());
                 text_title.post(new Runnable() {
                     @Override
@@ -217,12 +266,16 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                         ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
+
+                if (AppSettings.isTelevision(getActivity())) {
+                    btn_menu.requestFocus();
+                }
+
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
         }
     };
 
-
-    private View.OnClickListener onTitleClicked = new View.OnClickListener() {
+    private final View.OnClickListener onTitleClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onTitleClicked(currentCardPosition());
@@ -236,13 +289,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(seekPosition);
             } else {
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
                 card_scroller.setTargetPosition(seekPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
         }
     }
 
-    private View.OnClickListener onNextClicked = new View.OnClickListener() {
+    private final View.OnClickListener onNextClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onNextClicked(currentCardPosition());
@@ -254,7 +308,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onPrevClicked = new View.OnClickListener() {
+    private final View.OnClickListener onPrevClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onPrevClicked(currentCardPosition());
@@ -266,12 +320,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMenuClicked = new View.OnClickListener() {
+    private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getContext(), v);
         }
-    };
+    });
 
     private void themeViews(Context context)
     {
@@ -302,9 +356,12 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private SuntimesTheme themeOverride = null;
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        if (theme != null) {
+        if (theme != null)
+        {
             themeOverride = theme;
-            themeViews(context);
+            if (isAdded()) {
+                themeViews(context);
+            }
         }
     }
 
@@ -323,26 +380,29 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             layoutParams.width = options.columnWidthPx;
             text_year_length_label.setLayoutParams(layoutParams);
         }
-        Log.d("DEBUG", "EquinoxDialog updated");
+        //Log.d("DEBUG", "EquinoxDialog updated");
     }
 
-    protected boolean isImplemented(SuntimesEquinoxSolsticeDataset data) {
+    protected boolean isImplemented(@Nullable SuntimesEquinoxSolsticeDataset data) {
         return (data != null && data.isImplemented());
     }
-    protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data) {
+    protected void updateViews(@NonNull Context context,  SuntimesEquinoxSolsticeDataset data) {
         updateViews(context, data.dataEquinoxSpring);
     }
 
-    protected boolean isImplemented(SuntimesEquinoxSolsticeData data) {
+    protected boolean isImplemented(@Nullable SuntimesEquinoxSolsticeData data) {
         return (data != null && data.isImplemented());
     }
-    protected void updateViews(Context context, SuntimesEquinoxSolsticeData data)
+    protected void updateViews(@NonNull Context context, SuntimesEquinoxSolsticeData data)
     {
-        text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
-        text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
+        if (context != null)
+        {
+            text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
+            text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
+        }
     }
 
-    protected CharSequence styleYearDisplayText(Context context, long yearLengthMillis)
+    protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)
     {
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
@@ -377,6 +437,8 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -390,7 +452,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         inflater.inflate(R.menu.equinoxmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onOverflowMenuClick);
         updateOverflowMenu(context, menu);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
         return true;
     }
@@ -465,13 +527,17 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         });
     }
 
-    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
             switch (item.getItemId())
             {
+                case R.id.action_colors:
+                    showColorDialog(getActivity());
+                    return true;
+
                 case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
                     onTrackingModeChanged(getContext(), item.getItemId());
                     return true;
@@ -488,6 +554,50 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showColorDialog(Context context)
+    {
+        boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+        ColorValuesSheetDialog dialog = new ColorValuesSheetDialog();
+        dialog.setAppWidgetID((isNightMode ? 1 : 0));
+        dialog.setColorTag(AppColorValues.TAG_APPCOLORS);
+        dialog.setColorCollection(new AppColorValuesCollection<>(context));
+        dialog.setDialogListener(colorDialogListener);
+        dialog.setFilter(new EquinoxColorValues().getColorKeys());
+        dialog.show(getChildFragmentManager(), DIALOGTAG_COLORS);
+    }
+
+    private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
+    {
+        @Override
+        public void onColorValuesSelected(ColorValues values)
+        {
+            if (values != null) {
+                options.colors = new EquinoxColorValues(values);
+            } else {
+                options.init(getActivity());
+            }
+            card_adapter.notifyDataSetChanged();
+
+            if (dialogListener != null) {
+                dialogListener.onColorsModified(values);
+            }
+        }
+
+        public void requestPeekHeight(int height) {}
+        public void requestHideSheet() {}
+        public void requestExpandSheet() {}
+        public void onModeChanged(int mode) {}
+
+        @Nullable
+        @Override
+        public ColorValues getDefaultValues() {
+            return new AppColorValues(getActivity(), true);
+        }
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -501,7 +611,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         menu.setOnMenuItemClickListener(onContextMenuClick);
         menu.setOnDismissListener(onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         lockScrolling();   // prevent the popupmenu from nudging the view
         menu.show();
@@ -517,11 +627,16 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
+        MenuItem alarmItem = m.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(context));
+        }
+
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
             List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
+                PopupMenuCompat.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
         }
@@ -537,7 +652,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
+    private final PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
         public void onDismiss(PopupMenu menu) {
             text_title.post(new Runnable() {
@@ -549,7 +664,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     };
 
-    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)
@@ -593,6 +708,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     collapseSheet(getDialog());
                     return true;
 
+                case R.id.action_calendar:
+                    openCalendar(getActivity(), itemTime);
+                    return true;
+
                 case R.id.action_share:
                     shareItem(getContext(), itemData);
                     return true;
@@ -601,7 +720,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
                     return false;
             }
         }
-    };
+    });
+
+    protected void openCalendar(Context context, long itemMillis)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://com.android.calendar/time/" + itemMillis));
+        context.startActivity(intent);
+    }
 
     protected void shareItem(Context context, Intent itemData)
     {
@@ -639,7 +765,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     protected RecyclerView card_view;
     protected GridLayoutManager card_layout;
-    protected CardAdapter.CardViewScroller card_scroller;
 
     protected void initCardView(Context context, View v)
     {
@@ -648,7 +773,6 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         card_view.setItemViewCacheSize(7);
         card_view.addItemDecoration(new CardViewDecorator(context));
 
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
@@ -687,17 +811,26 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
-            int position = currentCardPosition();
+            final int position = currentCardPosition();
             if (position >= 0) {
-                Log.d("DEBUG", "onScrolled: position: " + position);
-                updateViews(getContext(), card_adapter.initData(getContext(), position));
+                //Log.d("DEBUG", "onScrolled: position: " + position);
+                text_title.post(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        Context context = getContext();
+                        if (context != null) {
+                            updateViews(context, card_adapter.initData(context, position));
+                        }
+                    }
+                });
             }
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -733,6 +866,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         int n = card_adapter.getItemCount();
         if (nextPosition < n) {
             setUserSwappedCard(true);
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
             card_scroller.setTargetPosition(nextPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -744,6 +878,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         int prevPosition = (position - card_itemsPerPage);
         if (prevPosition >= 0) {
             setUserSwappedCard(true);
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
             card_scroller.setTargetPosition(prevPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -829,5 +964,8 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
+        public void onColorsModified(ColorValues values) {}
     }
+
+
 }

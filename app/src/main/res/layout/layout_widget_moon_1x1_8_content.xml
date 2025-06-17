@@ -26,7 +26,8 @@
 
     <LinearLayout android:id="@+id/moonapsis_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/moonapsis_perigee_layout"

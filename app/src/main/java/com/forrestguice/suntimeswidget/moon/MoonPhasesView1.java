@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -64,6 +67,7 @@ public class MoonPhasesView1 extends LinearLayout
     private static SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
+    private int numColumns = 4;
 
     private RecyclerView card_view;
     private PhaseAdapter card_adapter;
@@ -87,6 +91,7 @@ public class MoonPhasesView1 extends LinearLayout
 
     private void init(Context context, AttributeSet attrs)
     {
+        setNumColumns(AppSettings.loadMoonPhaseColumnsPref(context));
         initLocale(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonphases1, this, true);
 
@@ -108,7 +113,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         card_adapter = new PhaseAdapter(context);
         card_adapter.setAdapterListener(card_listener);
-        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
+        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / numColumns);  // initial width; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
@@ -116,7 +121,6 @@ public class MoonPhasesView1 extends LinearLayout
         GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
-        //card_scroller = new CardAdapter.CardViewScroller(context);
         //card_view.setOnScrollListener(onCardScrollListener);
 
         forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
@@ -173,10 +177,12 @@ public class MoonPhasesView1 extends LinearLayout
     private void themeDrawables()
     {
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
-
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(backButton, colorBackground);
+
+        if (Build.VERSION.SDK_INT < 21) {
+            SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+            SuntimesUtils.colorizeImageView(backButton, colorBackground);
+        }
     }
 
     public void initLocale(Context context)
@@ -188,13 +194,27 @@ public class MoonPhasesView1 extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 
+    public int numColumns() {
+        return numColumns;
+    }
+    public void setNumColumns(int value)
+    {
+        if (value < 2) {
+            numColumns = 2;
+        } else if (value > 4) {
+            numColumns = 4;
+        } else {
+            numColumns = value;
+        }
+    }
+
     @Override
     public void onSizeChanged( int w, int h, int oldWidth, int oldHeight )
     {
         super.onSizeChanged(w, h, oldWidth, oldHeight);
         if (card_adapter != null) {
             int margin = 8;
-            card_adapter.setItemWidth((w - (margin * 2)) / 4);
+            card_adapter.setItemWidth((w - (margin * 2)) / numColumns);
         }
     }
 
@@ -202,6 +222,10 @@ public class MoonPhasesView1 extends LinearLayout
     {
         empty.setVisibility(show ? View.VISIBLE : View.GONE);
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    public void notifyDataSetChanged() {
+        card_adapter.notifyDataSetChanged();
     }
 
     public void updateViews( Context context )
@@ -262,7 +286,7 @@ public class MoonPhasesView1 extends LinearLayout
     private OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
-            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + 3);
+            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + (numColumns-1));
             card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
@@ -320,7 +344,8 @@ public class MoonPhasesView1 extends LinearLayout
         private HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
-        private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew, colorDisabled;
+        private MoonPhasesColorValues colors;
+        private int colorNote, colorTitle, colorTime, colorText, colorDisabled;
         private float strokePixelsNew, strokePixelsFull;
         private Float spTime = null, spText = null, spTitle = null, spSuffix = null;
         private boolean boldTime, boldTitle;
@@ -434,7 +459,7 @@ public class MoonPhasesView1 extends LinearLayout
                 moon.setTodayIs(date);
             }
 
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 
@@ -451,6 +476,7 @@ public class MoonPhasesView1 extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
+            colors = new MoonPhasesColorValues(context);
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
@@ -460,10 +486,6 @@ public class MoonPhasesView1 extends LinearLayout
             typedArray.recycle();
 
             strokePixelsFull = strokePixelsNew = context.getResources().getDimension(R.dimen.moonIcon_stroke_full);
-            colorWaxing = ContextCompat.getColor(context, R.color.moonIcon_color_waxing);
-            colorWaning = ContextCompat.getColor(context, R.color.moonIcon_color_waning);
-            colorFull = ContextCompat.getColor(context, R.color.moonIcon_color_full);
-            colorNew = ContextCompat.getColor(context, R.color.moonIcon_color_new);
         }
 
         protected void applyTheme(Context context, SuntimesTheme theme)
@@ -472,10 +494,10 @@ public class MoonPhasesView1 extends LinearLayout
             colorTitle = theme.getTitleColor();
             colorTime = theme.getTimeColor();
             colorText = theme.getTextColor();
-            colorWaxing = theme.getMoonWaxingColor();
-            colorWaning = theme.getMoonWaningColor();
-            colorFull = theme.getMoonFullColor();
-            colorNew = theme.getMoonNewColor();
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_WAXING, theme.getMoonWaxingColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_WANING, theme.getMoonWaningColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_FULL, theme.getMoonFullColor());
+            colors.setColor(MoonPhasesColorValues.COLOR_MOON_NEW, theme.getMoonNewColor());
             strokePixelsNew = theme.getMoonNewStrokePixels(context);
             strokePixelsFull = theme.getMoonFullStrokePixels(context);
             spTime = theme.getTimeSizeSp();
@@ -488,6 +510,11 @@ public class MoonPhasesView1 extends LinearLayout
 
         protected void themeViews(Context context, @NonNull PhaseField holder, boolean isAgo)
         {
+            int colorWaxing = colors.getColor(MoonPhasesColorValues.COLOR_MOON_WAXING);
+            int colorWaning = colors.getColor(MoonPhasesColorValues.COLOR_MOON_WANING);
+            int colorFull = colors.getColor(MoonPhasesColorValues.COLOR_MOON_FULL);
+            int colorNew = colors.getColor(MoonPhasesColorValues.COLOR_MOON_NEW);
+
             Bitmap bitmap;
             switch (holder.phase)
             {
@@ -532,6 +559,19 @@ public class MoonPhasesView1 extends LinearLayout
             adapterListener = listener;
         }
         private PhaseAdapterListener adapterListener = new PhaseAdapterListener();
+    }
+
+    public void setColors(Context context, @Nullable ColorValues colors)
+    {
+        if (card_adapter != null)
+        {
+            if (colors != null) {
+                card_adapter.colors = new MoonPhasesColorValues(colors);
+            } else {
+                card_adapter.initTheme(context);
+            }
+            card_adapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -587,6 +627,7 @@ public class MoonPhasesView1 extends LinearLayout
                 return;
             }
 
+            boolean showDate = AppSettings.loadShowMoonPhaseDatePref(context);
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
@@ -614,7 +655,7 @@ public class MoonPhasesView1 extends LinearLayout
                 }
             }
 
-            updateField(context, data.now(), phaseDate, showWeeks, showTime, showHours, showSeconds);
+            updateField(context, data.now(), phaseDate, showDate, showWeeks, showTime, showHours, showSeconds);
             setLabel(phaseLabel);
         }
 
@@ -638,11 +679,12 @@ public class MoonPhasesView1 extends LinearLayout
             icon.setImageBitmap(bitmap);
         }
 
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
+        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showDate, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
         {
             if (field != null)
             {
                 field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showTime, showSeconds).getValue());
+                field.setVisibility(showDate ? View.VISIBLE : View.GONE);
             }
 
             if (note != null)

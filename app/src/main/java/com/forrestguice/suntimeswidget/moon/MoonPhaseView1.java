@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
-import com.forrestguice.suntimeswidget.MoonPhaseView;
 import com.forrestguice.suntimeswidget.R;
 
 @SuppressWarnings("Convert2Diamond")

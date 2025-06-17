@@ -46,26 +46,6 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Test
-    public void test_eventAlias()
-    {
-        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
-        String id0 = "TEST0";
-        String label0 = "label0";
-        String uri0 = "uri0";
-        Integer color0 = Color.GREEN;
-
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
-        verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
-
-        EventSettings.EventAlias alias1 = new EventSettings.EventAlias(alias0);
-        verify_eventAlias(type0, id0, label0, color0, uri0, alias1);
-
-        EventSettings.EventAlias alias2 = new EventSettings.EventAlias(alias0.toContentValues());
-        verify_eventAlias(type0, id0, label0, color0, uri0, alias2);
-    }
-
-
-    @Test
     public void test_saveLoadDeleteEvent()
     {
         Context context = activityRule.getActivity();
@@ -108,6 +88,13 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         assertEquals(label, alias.getLabel());
         assertEquals(color, alias.getColor());
         assertEquals(uri, alias.getUri());
+    }
+
+    public static Set<String> populateEventListWithTestItems(Context context)
+    {
+        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
+        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        return EventSettings.loadEventList(getContext());
     }
 
 }

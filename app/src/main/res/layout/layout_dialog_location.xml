@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/dialogBackground">
 
-            <com.forrestguice.suntimeswidget.LocationConfigView
+            <com.forrestguice.suntimeswidget.getfix.LocationConfigView
                 android:id="@+id/locationConfig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

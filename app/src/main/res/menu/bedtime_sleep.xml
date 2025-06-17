@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item android:id="@+id/action_bedtime_sleepCycles"
+            android:title="@string/configLabel_sleepCycles"
+            app:showAsAction="never"
+            android:icon="?attr/icActionTime"
+            android:orderInCategory="1" />
+
+        <item android:id="@+id/action_bedtime_sleepCycleLength"
+            android:title="@string/configLabel_sleepCycle"
+            app:showAsAction="never"
+            android:icon="?attr/icActionTime"
+            android:orderInCategory="2" />
+
+        <item android:id="@+id/action_bedtime_sleep_offset"
+            android:title="@string/configLabel_sleepOffset"
+            app:showAsAction="never"
+            android:icon="?attr/icActionTime"
+            android:orderInCategory="3" />
+
+        <item android:id="@+id/action_bedtime_sleep_autooff"
+            android:title="@string/configLabel_sleepBedtimeAutoOff"
+            app:showAsAction="never"
+            android:checkable="true"
+            android:orderInCategory="4" />
+
+    </group>
+</menu>

@@ -20,31 +20,21 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-
 import java.util.Calendar;
 
 public class SuntimesClockData extends SuntimesData
 {
-    private Context context;
-
-    public SuntimesClockData(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesClockData(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesClockData(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesClockData(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesClockData(SuntimesClockData other)
-    {
-        this.context = other.context;
+    public SuntimesClockData(SuntimesClockData other) {
         initFromOther(other);
     }
 
-    public void calculate()
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
         //Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
@@ -60,14 +50,14 @@ public class SuntimesClockData extends SuntimesData
 
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        super.calculate();
+        super.calculate(context);
     }
 }
 

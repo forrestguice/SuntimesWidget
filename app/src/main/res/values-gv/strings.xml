@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Douglas</string>
-    <string name="default_location_latitude">54.1630</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-4.5150</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">86</string>         <!-- meters -->
+    <string name="default_location_label">Douglas, Isle of Man</string>
+    <string name="default_location_latitude">54.15705</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-4.47684</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>            <!-- meters -->
+    <string name="default_timezone">Europe/Isle_of_Man</string>         <!-- tzid -->
 
 </resources>

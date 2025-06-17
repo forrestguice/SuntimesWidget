@@ -1,0 +1,7 @@
+- adds option to the solstice and moon dialogs to only show the number of days remaining.
+- adds "gradually increase volume (curve)" to alarm options (defaults to cubic).
+- fixes bug where "gradually increase volume" is only applied to the left channel.
+- fixes app crash when using menu actions while refreshing location (#862).
+- fixes app crash when toggling wallpaper from the theme configuration activity.
+- fixes bug where "flippable widget fails to change views" (#855).
+- additional miscellaneous bug fixes.

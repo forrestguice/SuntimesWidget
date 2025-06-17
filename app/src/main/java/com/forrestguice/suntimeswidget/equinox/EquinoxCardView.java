@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -58,7 +62,6 @@ public class EquinoxCardView extends LinearLayout
     protected RecyclerView card_view;
     protected LinearLayoutManager card_layout;
     protected EquinoxDataAdapter card_adapter;
-    protected CardAdapter.CardViewScroller card_scroller;
     protected ImageButton resetBackButton, resetForwardButton;
 
     public EquinoxCardView(Context context) {
@@ -92,6 +95,11 @@ public class EquinoxCardView extends LinearLayout
         options.init(context);
         LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
 
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
+        if (colors != null) {
+            options.colors = new EquinoxColorValues(colors);
+        }
+
         if (attrs != null)
         {
             LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
@@ -105,6 +113,12 @@ public class EquinoxCardView extends LinearLayout
         resetForwardButton = (ImageButton) findViewById(R.id.info_time_nextbtn);
         resetForwardButton.setOnClickListener(onResetClicked);
         resetForwardButton.setVisibility(GONE);
+
+        if (AppSettings.isTelevision(getContext()))
+        {
+            resetBackButton.setFocusableInTouchMode(true);
+            resetForwardButton.setFocusableInTouchMode(true);
+        }
 
         empty = (TextView)findViewById(R.id.txt_empty);
         initCardView(context);
@@ -128,7 +142,6 @@ public class EquinoxCardView extends LinearLayout
         card_view.setItemViewCacheSize(7);
         card_view.addItemDecoration(new CardViewDecorator(context));
 
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
@@ -167,7 +180,7 @@ public class EquinoxCardView extends LinearLayout
         if (position != -1) {
             card_view.scrollToPosition(position);
         }
-        Log.d("DEBUG", "EquinoxCardView updated: position: " + position);
+        //Log.d("DEBUG", "EquinoxCardView updated: position: " + position);
     }
 
     protected void updateViews(Context context, SuntimesEquinoxSolsticeData data) {
@@ -320,6 +333,17 @@ public class EquinoxCardView extends LinearLayout
     }
 
     /**
+     * setShowDate
+     * @param value 
+     */
+    public void setShowDate(boolean value) {
+        options.showDate = value;
+    }
+    public boolean getShowDate() {
+        return options.showDate;
+    }
+
+    /**
      * setTrackingMode
      * @param mode
      */
@@ -328,6 +352,18 @@ public class EquinoxCardView extends LinearLayout
     }
     public WidgetSettings.TrackingMode getTrackingMode() {
         return options.trackingMode;
+    }
+
+    public void setColorValues(Context context, @Nullable ColorValues values)
+    {
+        if (values != null) {
+            options.colors = new EquinoxColorValues(values);
+        } else {
+            options.init(context);
+        }
+        if (card_adapter != null) {
+            card_adapter.notifyDataSetChanged();
+        }
     }
 
     /**

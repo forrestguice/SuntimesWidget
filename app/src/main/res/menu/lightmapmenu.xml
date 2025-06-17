@@ -26,20 +26,30 @@
                     android:title="@string/configAction_worldMap"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
             </menu>
         </item>
 
-        <item android:id="@+id/action_showgraph"
-            android:icon="?attr/icActionGraph"
-            android:title="@string/configAction_lineGraph"
-            android:checkable="true"
-            app:showAsAction="never" />
-
         <item android:id="@+id/optionsSubMenu"
-            android:icon="?attr/icActionGraph"
+            android:icon="?attr/icActionSettings"
             android:title="@string/configAction_options"
             app:showAsAction="never">
             <menu>
+
+                <item android:id="@+id/graphOption_colors"
+                    android:title="@string/configAction_colors"
+                    android:icon="?attr/icActionAppearance"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_showgraph"
+                    android:icon="?attr/icActionGraph"
+                    android:title="@string/configAction_lineGraph"
+                    android:checkable="true"
+                    app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showGrid"
                     android:title="@string/graph_option_grid"

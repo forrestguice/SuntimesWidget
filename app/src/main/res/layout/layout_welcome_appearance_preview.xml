@@ -4,7 +4,10 @@
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        style="@style/SunsetTimeCard" android:layout_margin="16dp"
+        style="@style/SunsetTimeCard"
+        android:layout_marginStart="@dimen/welcomeActivity_margin"
+        android:layout_marginEnd="@dimen/welcomeActivity_margin"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
         android:padding="8dp">
 
         <android.support.constraint.ConstraintLayout
@@ -149,7 +152,7 @@
                 android:textColor="?attr/table_risingColor"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
                 app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-                android:text="5:30 AM"/>
+                tools:text="5:30 AM"/>
 
             <TextView
                 android:id="@+id/text_time_sunset_civil"
@@ -159,7 +162,7 @@
                 android:textColor="?attr/table_settingColor"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_civil"
                 app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-                android:text="6:30 PM"/>
+                tools:text="6:30 PM"/>
 
             <!-- Official -->
             <TextView
@@ -179,7 +182,7 @@
                 android:textColor="?attr/table_risingColor" android:textSize="?attr/text_size_large"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
                 app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
-                android:text="6:00 AM"/>
+                tools:text="6:00 AM"/>
 
             <TextView
                 android:id="@+id/text_time_sunset_actual"
@@ -189,7 +192,7 @@
                 android:textColor="?attr/table_settingColor" android:textSize="?attr/text_size_large"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_official"
                 app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
-                android:text="6:00 PM"/>
+                tools:text="6:00 PM"/>
 
         </android.support.constraint.ConstraintLayout>
 

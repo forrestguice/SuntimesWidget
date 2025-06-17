@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesWidget2_3x2 extends SuntimesWidget2

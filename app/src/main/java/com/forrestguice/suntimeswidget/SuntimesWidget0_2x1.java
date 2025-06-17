@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
 
 /**
  * Widget receiver for resizable widget (that falls back to 2x1 layout).

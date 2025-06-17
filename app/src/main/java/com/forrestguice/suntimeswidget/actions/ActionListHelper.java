@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -29,6 +28,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
@@ -44,12 +44,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -251,7 +253,7 @@ public class ActionListHelper
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent1, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareOverflowMenu(context, menu.getMenu());
         menu.show();
     }
@@ -274,7 +276,7 @@ public class ActionListHelper
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -301,7 +303,7 @@ public class ActionListHelper
                     return false;
             }
         }
-    };
+    });
 
     public void addAction()
     {
@@ -566,6 +568,30 @@ public class ActionListHelper
                 } else if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMES)) {
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
 
+                } else if (item.hasTag(SuntimesActionsContract.TAG_CALENDAR)) {
+                    int[] attrs = { R.attr.icActionCalendar };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_calendar)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {
+                    int[] attrs = { R.attr.icActionPlace };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_place)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_ALARM)) {
+                    int[] attrs = { R.attr.icActionAlarm };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_alarms)));
+                    a.recycle();
+
+                } else if (item.hasTag(SuntimesActionsContract.TAG_SETTINGS)) {
+                    int[] attrs = { R.attr.icActionSettings };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_settings)));
+                    a.recycle();
+
                 } else {
                     int[] attrs = { R.attr.icActionExtension };
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
@@ -644,7 +670,7 @@ public class ActionListHelper
             String actionId = getIntentID();
             boolean isModifiable = (actionId != null && !actionId.trim().isEmpty());
 
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectAction);
             selectItem.setVisible( !disallowSelect );
 

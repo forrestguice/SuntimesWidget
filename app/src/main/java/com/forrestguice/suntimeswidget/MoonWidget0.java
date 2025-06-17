@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,10 +27,9 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -67,8 +66,12 @@ public class MoonWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
         layout.prepareForUpdate(context, appWidgetId, data);
 
         RemoteViews views = layout.getViews(context);

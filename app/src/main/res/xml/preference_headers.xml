@@ -2,7 +2,7 @@
 <preference-headers xmlns:tools="http://schemas.android.com/tools"
                     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$GeneralPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment"
             android:icon="?attr/icActionSettings"
             android:title="@string/configLabel_general"
             android:summary=""
@@ -10,35 +10,35 @@
 
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$AlarmPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment"
         android:icon="?attr/icActionAlarm"
         android:title="@string/configLabel_alarmClock"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$CalendarPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.CalendarPrefsFragment"
         android:icon="?attr/icActionCalendar"
         android:title="@string/configLabel_calendars"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$LocalePrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.LocalePrefsFragment"
             android:icon="?attr/icActionLocale"
             android:title="@string/configLabel_locale"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$PlacesPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.PlacesPrefsFragment"
             android:icon="?attr/icActionPlace"
             android:title="@string/configLabel_places"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>
 
-    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$UIPrefsFragment"
+    <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.UIPrefsFragment"
             android:icon="?attr/icActionAppearance"
             android:title="@string/configLabel_ui"
             android:summary=""

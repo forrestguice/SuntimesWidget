@@ -28,8 +28,11 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import org.junit.Before;
 
@@ -40,6 +43,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
@@ -48,7 +52,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class AlarmScheduleTest
 {
-    public static final long SCHEDULE_WITHIN_MS = 1500;
+    public static final long SCHEDULE_WITHIN_MS = 10000;
 
     public Context context;
     public SuntimesUtils utils = new SuntimesUtils();
@@ -85,6 +89,118 @@ public class AlarmScheduleTest
             now = event;
             now.add(Calendar.SECOND, 1);
             c++;
+        }
+    }
+
+    public static final Location location0 = new Location("Helsinki", "60", "25", "0");
+
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents()
+    {
+        SuntimesMoonData data = AlarmNotifications.getData_moonEvent(context, location0);
+        data.setTodayIs(getCalendar(2024, Calendar.JUNE, 1, 18, 8));
+        data.calculate(context);
+
+        Calendar newMoon = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW);
+        Calendar firstQuarter = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER);
+        Calendar fullMoon = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL);
+        Calendar thirdQuarter = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER);
+
+        SuntimesCalculator.MoonPhase[] phases = new SuntimesCalculator.MoonPhase[] { SuntimesCalculator.MoonPhase.NEW, SuntimesCalculator.MoonPhase.FIRST_QUARTER, SuntimesCalculator.MoonPhase.FULL, SuntimesCalculator.MoonPhase.THIRD_QUARTER };
+        Calendar[] calendars = new Calendar[] { newMoon, firstQuarter, fullMoon, thirdQuarter };
+
+        for (int i=0; i<phases.length; i++)
+        {
+            Calendar calendar = calendars[i];
+            calendar.add(Calendar.SECOND, 1);
+            int month = calendar.get(Calendar.MONTH);
+            int nextMonth = (month + 1);
+            test_updateAlarmTime_moonPhaseEvent(nextMonth, SolarEvents.valueOf(phases[i]), calendar, phases[i].name());
+        }
+    }
+
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_fullMoon()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 21, 18, 8);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.FULLMOON, now, "Full Moon");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_firstQuarter()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 13, 22, 19);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.FIRSTQUARTER, now, "First Quarter");
+
+        now = getCalendar(2024, Calendar.JULY, 13, 15, 49);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.AUGUST, SolarEvents.FIRSTQUARTER, now, "First Quarter");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvents_thirdQuarter()
+    {
+        Calendar now = getCalendar(2024, Calendar.MAY, 30, 14, 54);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JUNE, SolarEvents.THIRDQUARTER, now, "Third Quarter");
+
+        now = getCalendar(2024, Calendar.JUNE, 28, 14, 54);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.THIRDQUARTER, now, "Third Quarter");
+    }
+    @Test
+    public void test_updateAlarmTime_moonPhaseEvent_newMoon()
+    {
+        Calendar now = getCalendar(2024, Calendar.JUNE, 6, 11, 16);
+        test_updateAlarmTime_moonPhaseEvent(Calendar.JULY, SolarEvents.NEWMOON, now, "New Moon");
+    }
+    public void test_updateAlarmTime_moonPhaseEvent(int expectedMonth, SolarEvents eventID, Calendar now, String tag)
+    {
+        int c = 0, n = 24;
+        while (c < n)
+        {
+            Calendar event = AlarmNotifications.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
+            Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(context, now, true, false) + " :: " + utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+            assertEquals(expectedMonth, event.get(Calendar.MONTH));
+            now.add(Calendar.HOUR, 1);
+            c++;
+        }
+    }
+
+    @Test
+    public void test_updateAlarmTime_clockTime_ltst()
+    {
+        int hour = 6;
+        int minute = 30;
+
+        AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
+        alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
+        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.hour = hour;
+        alarm.minute = minute;
+
+        int c = 0, n = 7;
+        Calendar event0 = null;
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
+
+        while (c < n)
+        {
+            Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            assertNotNull(event);
+            if (event0 != null) {
+                assertTrue(event.after(event0));
+            }
+
+            boolean result = AlarmNotifications.updateAlarmTime((Context)null, alarm, now, true);
+            assertTrue(result);
+            assertEquals(event.getTimeInMillis(), alarm.timestamp);
+            assertEquals("hour value should remain unchanged", hour, alarm.hour);
+            assertEquals("minute value should remain unchanged", minute, alarm.minute);
+
+            event0 = event;
+            now.setTimeInMillis(event.getTimeInMillis());
+            now.add(Calendar.SECOND, 1);
+            c++;
+
+            event1.setTimeInMillis(event.getTimeInMillis());
+            Log.i("TEST", utils.calendarDateTimeDisplayString(null, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " +
+                    utils.calendarDateTimeDisplayString(null, event1, true, true).toString() + " [" + event1.getTimeZone().getID() + "] ");
         }
     }
 

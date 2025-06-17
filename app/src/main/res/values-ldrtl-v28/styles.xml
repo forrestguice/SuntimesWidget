@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.System" parent="AppThemeBase.System">
+        <item name="icActionNext">@drawable/ic_action_previous_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_next_item_ref</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
+        <item name="android:windowLightNavigationBar">@bool/not_nightmode</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="AppThemeBase.Light">
+        <item name="icActionNext">@drawable/ic_action_previous_item_light</item>
+        <item name="icActionPrevious">@drawable/ic_action_next_item_light</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_light</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
+        <item name="icActionNext">@drawable/ic_action_previous_item</item>
+        <item name="icActionPrevious">@drawable/ic_action_next_item</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+</resources>

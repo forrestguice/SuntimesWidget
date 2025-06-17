@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -41,12 +42,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.moon.MoonPhasesView1;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -216,10 +218,12 @@ public class MoonApsisView extends LinearLayout
     private void themeDrawables()
     {
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
-
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
-        SuntimesUtils.colorizeImageView(backButton, colorBackground);
+
+        if (Build.VERSION.SDK_INT < 21) {
+            SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+            SuntimesUtils.colorizeImageView(backButton, colorBackground);
+        }
     }
 
     public void updateViews( Context context ) { /* EMPTY */ }
@@ -291,7 +295,8 @@ public class MoonApsisView extends LinearLayout
         private HashMap<Integer, SuntimesMoonData0> data = new HashMap<>();
         private boolean isRising = false;
 
-        private int colorNote, colorTitle, colorTime, colorText, colorDisabled, colorMoonrise, colorMoonset;
+        private MoonApsisColorValues colors;
+        private int colorNote, colorTitle, colorTime, colorText, colorDisabled;
         private Float spTitle = null, spTime = null, spText = null, spSuffix = null;
         private boolean boldTitle = false, boldTime = false;
 
@@ -408,7 +413,7 @@ public class MoonApsisView extends LinearLayout
                     //Log.d("DEBUG", "minuteOffset: " + minuteOffset2 / 60d + " (" + minuteOffset0 / 60d + ", " + ((minuteOffset0 - minuteOffset2) / 60d) + ")");
                 }
             }
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 
@@ -437,14 +442,13 @@ public class MoonApsisView extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor, R.attr.table_moonRisingColor, R.attr.table_moonSettingColor };
+            colors = new MoonApsisColorValues(context);
+            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorNote = colorTitle = colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
             colorText = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
             colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorMoonrise = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorMoonset = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
             typedArray.recycle();
         }
 
@@ -454,8 +458,8 @@ public class MoonApsisView extends LinearLayout
             colorTitle = theme.getTitleColor();
             colorTime = theme.getTimeColor();
             colorText = theme.getTextColor();
-            colorMoonrise = theme.getMoonriseTextColor();
-            colorMoonset = theme.getMoonsetTextColor();
+            colors.setColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT, theme.getMoonriseTextColor());
+            colors.setColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT, theme.getMoonsetTextColor());
             spText = theme.getTextSizeSp();
             spTime = theme.getTimeSizeSp();
             spTitle = theme.getTitleSizeSp();
@@ -472,9 +476,9 @@ public class MoonApsisView extends LinearLayout
             int titleColor = isAgo ? colorDisabled : colorTitle;
             int timeColor = isAgo ? colorDisabled : colorTime;
             int textColor = isAgo ? colorDisabled : colorText;
-            int moonriseColor = isAgo ? colorDisabled : colorMoonrise;
-            int moonsetColor = isAgo ? colorDisabled : colorMoonset;
-            holder.themeView(titleColor, textColor, timeColor, moonriseColor, moonsetColor, spTitle, boldTitle, spTime, boldTime, spText, spSuffix);
+            int apogeeColor = isAgo ? colorDisabled : colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
+            int perigeeColor = isAgo ? colorDisabled : colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
+            holder.themeView(titleColor, textColor, timeColor, apogeeColor, perigeeColor, spTitle, boldTitle, spTime, boldTime, spText, spSuffix);
         }
 
         public boolean isRising() {
@@ -508,6 +512,24 @@ public class MoonApsisView extends LinearLayout
             adapterListener = listener;
         }
         private MoonApsisAdapterListener adapterListener = new MoonApsisAdapterListener();
+    }
+
+    public void setColors(Context context, @Nullable ColorValues colors)
+    {
+        if (card_adapter != null)
+        {
+            if (colors != null) {
+                card_adapter.colors = new MoonApsisColorValues(colors);
+            } else {
+                card_adapter.initTheme(context);
+            }
+            card_adapter.notifyDataSetChanged();
+        }
+    }
+    public ColorValues getColors() {
+        if (card_adapter != null) {
+            return card_adapter.colors;
+        } else return null;
     }
 
     /**
@@ -557,7 +579,7 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void themeView(int titleColor, int textColor, int timeColor, int moonriseColor, int moonsetColor, @Nullable Float titleSizeSp, boolean titleBold, @Nullable Float timeSizeSp, boolean timeBold, @Nullable Float textSizeSp, @Nullable Float suffixSizeSp)
+        public void themeView(int titleColor, int textColor, int timeColor, int risingColor, int settingColor, @Nullable Float titleSizeSp, boolean titleBold, @Nullable Float timeSizeSp, boolean timeBold, @Nullable Float textSizeSp, @Nullable Float suffixSizeSp)
         {
             this.timeColor = timeColor;
             timeView.setTextColor(timeColor);
@@ -566,7 +588,7 @@ public class MoonApsisView extends LinearLayout
                 timeView.setTypeface(timeView.getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
             }
 
-            positionView.setTextColor(isRising ? moonriseColor : moonsetColor);
+            positionView.setTextColor(isRising ? risingColor : settingColor);
             if (suffixSizeSp != null) {
                 positionView.setTextSize(suffixSizeSp);
             }

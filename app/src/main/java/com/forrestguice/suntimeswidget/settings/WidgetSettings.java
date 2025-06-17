@@ -18,48 +18,57 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_9;
-import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_3;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_4;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_5;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_9;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_1X1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_1X1_1;
 
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_1;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_2;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 /**
  * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
@@ -218,8 +227,8 @@ public class WidgetSettings
     public static final boolean PREF_DEF_TIMEZONE_FROMAPP = false;
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
-    public static final String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // TODO: candidate for initDefaults?
-    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
+    public static String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // reassigned later by initDefaults
+    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { };  // e.g. new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
     public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
@@ -241,6 +250,155 @@ public class WidgetSettings
 
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String[] ALL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_THEME,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWTITLE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TITLETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWLABELS,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUN1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_ALLOWRESIZE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALEBASE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TIMEFORMATMODE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_CALCULATOR,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_RISESETORDER,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE3,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMENOTE_RISE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMENOTE_SET,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_COMPAREMODE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWCOMPARE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWNOON,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWWEEKS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWHOURS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWSECONDS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWTIMEDATE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWABBRMONTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_UNITS_LENGTH,
+
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_MODE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LONGITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LATITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LABEL,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_MODE,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_CUSTOM,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_SOLARMODE,    // in _general
+
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MODE,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MONTH,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_NEXTUPDATE,
+
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
+
+            PREF_KEY_NEXTUPDATE
+    };
+    public static String[] BOOL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWTITLE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SHOWLABELS,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_ALLOWRESIZE,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALETEXT,
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_SCALEBASE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWCOMPARE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWNOON,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWWEEKS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWHOURS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWSECONDS,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWTIMEDATE,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_SHOWABBRMONTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE,
+
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
+            PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP
+    };
+    public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
+    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
+    public static String[] INT_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,   // enum as ordinal
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MONTH,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
+            PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return FLOAT_KEYS;
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            putType(types, Long.class, LONG_KEYS);
+            putType(types, Float.class, FLOAT_KEYS);
+            putType(types, Integer.class, INT_KEYS);
+            putType(types, Boolean.class, BOOL_KEYS);
+
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LATITUDE, String.class);    // double as String
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_LONGITUDE, String.class);   // double as String
+            types.put(PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE, String.class);    // double as String
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+    public static void putType(Map<String,Class> map, Class type, String... keys) {
+        for (String key : keys) {
+            map.put(key, type);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +778,8 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos3x2 implements WidgetModeDisplay
     {
-        MODE3x2_LINEGRAPH("Graph", R.layout.layout_widget_sunpos_3x2_1),
+        MODE3x2_LIGHTGRAPH("Light Graph", R.layout.layout_widget_sunpos_3x2_2),
+        MODE3x2_LINEGRAPH("Altitude Graph", R.layout.layout_widget_sunpos_3x2_1),
         MODE3x2_WORLDMAP("World Map", R.layout.layout_widget_sunpos_3x2_0);
 
         private final int layoutID;
@@ -650,6 +809,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            MODE3x2_LIGHTGRAPH.setDisplayString(context.getString(R.string.widgetMode3x2_lightgraph));
             MODE3x2_LINEGRAPH.setDisplayString(context.getString(R.string.widgetMode3x2_linegraph));
             MODE3x2_WORLDMAP.setDisplayString(context.getString(R.string.widgetMode3x2_worldmap));
         }
@@ -1302,23 +1462,23 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_spring_short),
-                    context.getString(R.string.timeMode_cross_spring));
+            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
+                    context.getString(R.string.timeMode_cross_midwinter));
             EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
                     context.getString(R.string.timeMode_equinox_vernal));
 
-            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_summer_short),
-                    context.getString(R.string.timeMode_cross_summer));
+            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
+                    context.getString(R.string.timeMode_cross_midspring));
             SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
                     context.getString(R.string.timeMode_solstice_summer));
 
-            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_autumnal_short),
-                    context.getString(R.string.timeMode_cross_autumnal) );
+            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
+                    context.getString(R.string.timeMode_cross_midsummer) );
             EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
                     context.getString(R.string.timeMode_equinox_autumnal) );
 
-            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_winter_short),
-                    context.getString(R.string.timeMode_cross_winter));
+            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
+                    context.getString(R.string.timeMode_cross_midautumnal));
             SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
                     context.getString(R.string.timeMode_solstice_winter));
         }
@@ -1442,7 +1602,8 @@ public class WidgetSettings
         NOON("Noon", "Solar Noon", null),
         GOLD("Golden", "Golden Hour", 6d),
         BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
+        BLUE4("Blue", "Blue Hour", -4d),      // 4 deg; morning end, evening start
+        MIDNIGHT("Midnight", "Solar Midnight", null);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -1498,6 +1659,9 @@ public class WidgetSettings
 
             NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
                     context.getString(R.string.timeMode_noon) );
+
+            MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
+                    context.getString(R.string.timeMode_midnight) );
 
             GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
                     context.getString(R.string.timeMode_golden) );
@@ -1888,6 +2052,7 @@ public class WidgetSettings
     {
         WidgetModeSunPos3x2 mode = loadSunPos3x2ModePref(context, appWidgetId);
         switch (mode) {
+            case MODE3x2_LIGHTGRAPH: return new SunPosLayout_3X2_2();
             case MODE3x2_LINEGRAPH: return new SunPosLayout_3X2_1();
             case MODE3x2_WORLDMAP: default: return new SunPosLayout_3X2_0();
         }
@@ -2917,11 +3082,14 @@ public class WidgetSettings
         prefs.putBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, showNoon);
         prefs.apply();
     }
-    public static boolean loadShowNoonPref(Context context, int appWidgetId)
+    public static boolean loadShowNoonPref(Context context, int appWidgetId) {
+        return loadShowNoonPref(context, appWidgetId, PREF_DEF_GENERAL_SHOWNOON);
+    }
+    public static boolean loadShowNoonPref(Context context, int appWidgetId, boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, PREF_DEF_GENERAL_SHOWNOON);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_GENERAL_SHOWNOON, defaultValue);
     }
     public static void deleteShowNoonPref(Context context, int appWidgetId)
     {
@@ -3252,6 +3420,8 @@ public class WidgetSettings
         deleteTimeNoteSetPref(context, appWidgetId);
 
         WidgetActions.deletePrefs(context, appWidgetId);
+        WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
+        AlarmWidgetSettings.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -3260,6 +3430,7 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
+        PREF_DEF_TIMEZONE_CUSTOM = context.getString(R.string.default_timezone);
         PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
 
         WidgetActions.initDefaults(context);
@@ -3292,5 +3463,7 @@ public class WidgetSettings
         RiseSetOrder.initDisplayStrings(context);
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
+        AlarmWidgetSettings.initDisplayStrings(context);
     }
+
 }

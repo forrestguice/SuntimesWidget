@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +35,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -56,6 +56,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -63,10 +69,12 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -79,6 +87,7 @@ public class EventListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
     public static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
@@ -130,9 +139,14 @@ public class EventListHelper
     }
 
     public void setSelected( String eventID ) {
-        Log.d("DEBUG", "setSelected: " + eventID);
+        //Log.d("DEBUG", "setSelected: " + eventID);
         selectedItem = adapter.findItemByID(eventID);
         adapter.setSelected(selectedItem);
+    }
+
+    private Location location = null;
+    public void setLocation(Location value) {
+        location = value;
     }
 
     public void onRestoreInstanceState(Bundle savedState)
@@ -166,6 +180,11 @@ public class EventListHelper
         EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
         if (editDialog != null) {
             editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
@@ -287,6 +306,8 @@ public class EventListHelper
     protected void initAdapter(Context context)
     {
         List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
             public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {
@@ -301,6 +322,7 @@ public class EventListHelper
         if (expanded)
         {
             ExpandableEventDisplayAdapter adapter0 = new ExpandableEventDisplayAdapter(context, R.layout.layout_listitem_events, R.layout.layout_listitem_events1, events);
+            adapter0.setLocation(location);
             ExpandableListView expandedList = (ExpandableListView) list;
             expandedList.setAdapter(adapter0);
             adapter = adapter0;
@@ -326,7 +348,7 @@ public class EventListHelper
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.eventlist, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         prepareOverflowMenu(context, menu.getMenu());
         menu.show();
     }
@@ -349,16 +371,16 @@ public class EventListHelper
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
-                case R.id.addEvent:
-                    addEvent();
-                    return true;
+                //case R.id.addEvent:
+                //    addEvent();
+                //    return true;
 
                 case R.id.editEvent:
                     editEvent(getEventID());
@@ -380,12 +402,16 @@ public class EventListHelper
                     return false;
             }
         }
-    };
+    });
 
-    public void addEvent()
+    public void addEvent() {
+        addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+    }
+    public void addEvent(AlarmEventProvider.EventType type)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();
+        saveDialog.setType(type);
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -402,12 +428,15 @@ public class EventListHelper
         final Context context = contextRef.get();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
+            final EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+
             final EditEventDialog saveDialog = new EditEventDialog();
             saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
+            saveDialog.setType(event.getType());
             saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    saveDialog.setEvent(EventSettings.loadEvent(context, eventID));
+                    saveDialog.setEvent(event);
                     saveDialog.setIsModified(false);
                 }
             });
@@ -425,6 +454,7 @@ public class EventListHelper
             public void onClick(DialogInterface dialog, int which) {
                 String eventID = saveDialog.getEventID();
                 EventSettings.saveEvent(context, saveDialog.getEvent());
+                //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
                 //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
                 initAdapter(context);
                 updateViews(context);
@@ -642,7 +672,7 @@ public class EventListHelper
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_IMPORT_MILLIS);
             snackbar.show();
         }
@@ -744,6 +774,8 @@ public class EventListHelper
 
             HelpDialog helpDialog = new HelpDialog();
             helpDialog.setContent(helpSpan);
+            helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
             helpDialog.show(fragmentManager, DIALOGTAG_HELP);
         }
     }
@@ -771,6 +803,7 @@ public class EventListHelper
         private List<EventSettings.EventAlias> objects;
         private EventSettings.EventAlias selectedItem;
         private int selectedChild = -1;
+        private final SuntimesUtils utils = new SuntimesUtils();
 
         public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventSettings.EventAlias> objects)
         {
@@ -778,6 +811,7 @@ public class EventListHelper
             this.groupResourceID = groupResourceID;
             this.childResourceID = childResourceID;
             this.objects = objects;
+            SuntimesUtils.initDisplayStrings(context);
         }
 
         @Override
@@ -859,6 +893,7 @@ public class EventListHelper
             if (icon != null) {
                 icon.setBackgroundColor(item.getColor());
             }
+
             return view;
         }
 
@@ -897,7 +932,32 @@ public class EventListHelper
                 icon.setImageDrawable( drawable );
             }
 
+            TextView timeText = (TextView)view.findViewById(R.id.time_preview);
+            if (timeText != null)
+            {
+                Calendar now = Calendar.getInstance();
+                String uri = item.getUri() + (rising ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
+                Calendar eventTime = AlarmNotifications.updateAlarmTime_addonEvent(context, context.getContentResolver(), uri, getLocation(context), 0, false, AlarmClockItem.everyday(), now);
+                boolean isSoon = (eventTime != null && (Math.abs(now.getTimeInMillis() - eventTime.getTimeInMillis()) < 1000 * 60 * 260 * 48));
+                timeText.setText(eventTime != null
+                        ? ( isSoon ? utils.calendarTimeShortDisplayString(context, eventTime).toString()
+                                   : utils.calendarDateTimeDisplayString(context, eventTime, false, true, false, true).getValue())
+                        : "");
+                timeText.setVisibility(eventTime != null ? View.VISIBLE : View.GONE);
+            }
+
             return view;
+        }
+
+        private Location location = null;
+        public void setLocation(@Nullable Location value) {
+            location = value;
+        }
+        public Location getLocation(Context context) {
+            if (location == null) {
+                location = WidgetSettings.loadLocationPref(context, 0);
+            }
+            return location;
         }
 
         public void setSelected( EventSettings.EventAlias item ) {
@@ -923,11 +983,11 @@ public class EventListHelper
             for (int i=0; i<objects.size(); i++) {
                 EventSettings.EventAlias item = objects.get(i);
                 if (item != null && item.getID().equals(eventID)) {
-                    Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
+                    //Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
                     return item;
                 }
             }
-            Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
+            //Log.d("DEBUG", "findItemByID: " + eventID + " .. null");
             return null;
         }
 
@@ -1143,7 +1203,7 @@ public class EventListHelper
 
         protected boolean onPrepareActionMode(Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectEvent);
             selectItem.setVisible( !disallowSelect );
 

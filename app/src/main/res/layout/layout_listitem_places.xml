@@ -18,7 +18,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/selectableItemCard"
+    android:background="?attr/selectableItemCard" android:focusable="true"
     android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
     android:padding="8dp">
 
@@ -51,8 +51,8 @@
 
         <TextView android:id="@android:id/text2"
             android:textAppearance="?android:attr/textAppearanceSmall"  android:textSize="?attr/text_size_small"
-            android:singleLine="true" android:duplicateParentState="true"
-            tools:text="summary"
+            android:maxLines="2" android:duplicateParentState="true"
+            tools:text="summary\nline2"
             android:layout_width="match_parent" android:layout_height="wrap_content" />
 
     </LinearLayout>

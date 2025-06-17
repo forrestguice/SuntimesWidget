@@ -58,7 +58,8 @@
             android:id="@+id/appwidget_location_name_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
+            android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding"
+            android:baselineAligned="false">
 
             <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

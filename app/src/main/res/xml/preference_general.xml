@@ -29,17 +29,17 @@
         <CheckBoxPreference
             android:key="appwidget_0_general_localize_hemisphere"
             android:title="@string/configLabel_general_localize_hemisphere"
-            android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@string/def_appwidget_0_general_localize_hemisphere" />
+            android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@bool/def_appwidget_0_general_localize_hemisphere" />
 
         <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
-            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
+            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@bool/def_appwidget_0_general_showseconds" />
 
         <CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
             android:title="@string/configLabel_general_altitude_enabled"
-            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
+            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@bool/def_appwidget_0_general_altitude_enabled" />
 
     </PreferenceCategory>
 
@@ -68,7 +68,8 @@
             android:title="@string/configLabel_general_calculator_help"
             android:icon="?attr/icActionHelp"
             app:helpText="@string/help_datasources"
-            app:helpLink="@string/help_datasources_url"
+            app:helpLink="@string/help_url"
+            app:helpPath="@string/help_datasources_path"
             app:moreHelpButtonText="@string/configAction_onlineHelp"
             />
 

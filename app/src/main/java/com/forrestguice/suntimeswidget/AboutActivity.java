@@ -38,6 +38,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -214,7 +216,7 @@ public class AboutActivity extends AppCompatActivity
                 nameView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AboutDialog.openLink(getActivity(), AboutDialog.WEBSITE_URL);
+                        AboutDialog.openLink(getActivity(), getString(R.string.help_app_url));
                     }
                 });
             }
@@ -230,22 +232,30 @@ public class AboutActivity extends AppCompatActivity
                 versionView.setText(SuntimesUtils.fromHtml(htmlVersionString()));
             }
 
-            TextView urlView = (TextView) dialogContent.findViewById(R.id.txt_about_url);
-            if (urlView != null) {
-                urlView.setMovementMethod(LinkMovementMethod.getInstance());
-                urlView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_url)));
-            }
-
-            TextView urlView1 = (TextView) dialogContent.findViewById(R.id.txt_about_url1);
-            if (urlView1 != null) {
-                urlView1.setMovementMethod(LinkMovementMethod.getInstance());
-                urlView1.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_source_url)));
-            }
-
             TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
             if (supportView != null) {
                 supportView.setMovementMethod(LinkMovementMethod.getInstance());
-                supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
+                supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
+            }
+
+            final TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
+            if (donateView != null) {
+                donateView.setVisibility(View.GONE);
+                donateView.setMovementMethod(LinkMovementMethod.getInstance());
+                donateView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
+            }
+
+            CheckBox checkDonate = (CheckBox) dialogContent.findViewById(R.id.check_donate);
+            if (checkDonate != null)
+            {
+                checkDonate.setChecked(false);
+                checkDonate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (donateView != null) {
+                            donateView.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                        }
+                    }
+                });
             }
 
             TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
@@ -283,16 +293,15 @@ public class AboutActivity extends AppCompatActivity
                 legalView4.setText(SuntimesUtils.fromHtml(privacy));
             }
 
-            TextView legalView5 = (TextView) dialogContent.findViewById(R.id.txt_about_legal5);
-            if (legalView5 != null) {
-                legalView5.setMovementMethod(LinkMovementMethod.getInstance());
-                legalView5.setText(SuntimesUtils.fromHtml(context.getString(R.string.privacy_url)));
+            int[] linkViews = new int[] { R.id.txt_help_url, R.id.txt_about_url, R.id.txt_about_url1, R.id.txt_about_legal5 };
+            for (int resID : linkViews)
+            {
+                TextView text = (TextView) dialogContent.findViewById(resID);
+                if (text != null) {
+                    text.setText(SuntimesUtils.fromHtml(AboutActivity.anchor(text.getText().toString())));
+                    text.setMovementMethod(LinkMovementMethod.getInstance());
+                }
             }
-        }
-
-        public static String anchor(String url, String text)
-        {
-            return "<a href=\"" + url + "\">" + text + "</a>";
         }
 
         protected static String smallText(String text)
@@ -302,14 +311,21 @@ public class AboutActivity extends AppCompatActivity
 
         public String htmlVersionString()
         {
-            String buildString = anchor(AboutDialog.COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
-            String versionString = anchor(AboutDialog.CHANGELOG_URL, BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
+            String buildString = anchor(getString(R.string.help_commit_url) + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
+            String versionString = anchor(getString(R.string.help_changelog_url), BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
             if (BuildConfig.DEBUG)
             {
                 versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
             }
             return getString(R.string.app_version, versionString);
         }
+    }
+
+    public static String anchor(String url) {
+        return anchor(url, url);
+    }
+    public static String anchor(String url, String text) {
+        return "<a href=\"" + url + "\">" + text + "</a>";
     }
 
 }

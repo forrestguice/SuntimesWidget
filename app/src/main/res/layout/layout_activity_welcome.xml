@@ -8,9 +8,11 @@
 
     <LinearLayout android:id="@+id/indicator_layout"
         android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="24dp"
         app:layout_constraintTop_toTopOf="@+id/button_next"
         app:layout_constraintBottom_toBottomOf="@+id/button_next"
-        android:orientation="horizontal" android:gravity="center" />
+        android:orientation="horizontal" android:gravity="center"
+        android:background="?attr/dialogBackgroundAlt" />
 
     <View
         android:layout_width="match_parent" android:layout_height="1dp"
@@ -22,6 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="?attr/selectableItemBackground"
+        android:textSize="?attr/text_size_small"
         android:text="@string/welcome_action_next" />
 
     <Button android:id="@+id/button_prev"
@@ -29,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="?attr/selectableItemBackground"
+        android:textSize="?attr/text_size_small"
         android:text="@string/welcome_action_prev" />
 
 </android.support.constraint.ConstraintLayout>

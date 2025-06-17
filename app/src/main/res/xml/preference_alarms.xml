@@ -31,7 +31,7 @@
             android:title="@string/configLabel_alarms_snoozeLimit"
             android:summary="@string/configLabel_alarms_snoozeLimit_summary"
             app:zeroValueText="@string/configLabel_alarms_snoozeLimit_none"
-            app:minValue="0" app:maxValue="5"
+            app:minValue="0" app:maxValue="@integer/maxAlarmSnoozeLimit"
             android:defaultValue="@string/def_app_alarms_snoozeLimit" />
 
         <!--<EditTextPreference
@@ -61,16 +61,84 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/alarmMode_notification1"
-        android:key="app_alarms_category2">
+    <!--<PreferenceCategory
+        android:title="@string/configLabel_bedtime"
+        android:key="app_alarms_category3">
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_bedtime_sleepCycleMillis"
+            android:title="@string/configLabel_sleepCycle"
+            android:summary="%s"
+            android:defaultValue="@string/def_app_bedtime_sleepCycleMillis"
+            app:mode="minutes" app:minValue="@integer/minSleepCycleMinutes"
+            app:maxValue="@integer/maxSleepCycleMinutes" />
+
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        android:title="@string/configLabel_bedtime"
+        android:key="app_bedtime_category">
+
+        <CheckBoxPreference
+            android:key="app_alarms_dnd_permission" android:persistent="false"
+            android:title="@string/configLabel_dnd"
+            android:summary="@string/configLabel_permissionGranted" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmFullscreen"
+        android:key="app_alarms_category3">
+
+        <CheckBoxPreference
+            android:key="app_alarms_bright"
+            android:title="@string/configLabel_alarms_brightMode"
+            android:summary="@string/configLabel_alarms_brightMode_summary"
+            android:defaultValue="@bool/def_app_alarms_bright" />
+
+        <com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference
+            android:key="app_alarms_bright_colors"
+            android:persistent="false"
+            app:colorTag="alarmcolors" app:appWidgetID="0" app:showAlpha="true"
+            android:widgetLayout="@layout/layout_pref_colors" app:previewKeys="@array/brightMode_colors_previewKeys"
+            android:title="@string/configLabel_alarms_brightMode_colors"
+            android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
+
+        <com.forrestguice.suntimeswidget.settings.TimeOffsetPickerPreference
+            android:key="app_alarms_bright_fadeinMillis"
+            android:title="@string/configLabel_alarms_brightMode_fadein"
+            android:summary="@string/configLabel_alarms_brightMode_fadein_summary"
+            app:minValue="@integer/minAlarmFullscreenFadeinMillis"
+            app:maxValue="@integer/maxAlarmFullscreenFadeinMillis"
+            android:defaultValue="@string/def_app_alarms_bright_fadein"
+            app:resetDefaultsValue="@string/def_app_alarms_autodismiss"
+            app:resetDefaultsText="@string/configAction_restoreDefaults"
+            />
+
+        <!--<com.forrestguice.suntimeswidget.settings.colors.ColorListPreference
+            android:key="app_alarms_bright_color_end"
+            android:title="@string/configLabel_alarms_brightMode_color"
+            android:summary="@string/configLabel_alarms_brightMode_color_summary"
+            android:numColumns="3"
+            app:colorValues="@array/alarm_bright_colors_list"
+            android:widgetLayout="@layout/layout_pref_color"
+            android:defaultValue="@color/def_app_alarms_bright_color_end" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmQuick_notification"
+        android:key="app_alarms_category2">
+
+        <com.forrestguice.suntimeswidget.settings.TimeOffsetPickerPreference
             android:key="app_alarms_notifyDismissMillis"
             android:title="@string/configLabel_alarms_autoDismissAfter"
             android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
             android:defaultValue="@string/def_app_alarms_autodismiss"
-            app:mode="seconds" app:minValue="5" />
+            app:resetDefaultsValue="@string/def_app_alarms_autodismiss"
+            app:resetDefaultsText="@string/configAction_restoreDefaults"
+            app:minValue="@integer/minAlarmAutoDismissMillis"
+            app:maxValue="@integer/maxAlarmAutoDismissMillis" />
 
     </PreferenceCategory>
 
@@ -87,7 +155,7 @@
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"
             android:summary="@string/configLabel_alarms_allRingtones_summary"
-            android:defaultValue="@string/def_app_alarms_allringtones" />
+            android:defaultValue="@bool/def_app_alarms_allringtones" />
 
     </PreferenceCategory>
 
@@ -105,6 +173,12 @@
             android:title="@string/configLabel_alarms_bootcompleted"
             android:summary="@string/configLabel_alarms_bootcompleted_summary"
             android:defaultValue="false" />
+
+        <Preference
+            android:key="app_alarms_clearall"
+            android:title="@string/configLabel_alarms_clearall"
+            android:summary="@string/configLabel_alarms_clearall_summary"
+            android:persistent="false" />
 
     </PreferenceCategory>
 

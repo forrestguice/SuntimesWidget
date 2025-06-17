@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017-2022 Forrest Guice
+    Copyright (C) 2017-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,8 +28,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -84,6 +84,10 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesEquinoxSolsticeData data = getSolsticeEquinoxData(context, appWidgetId);
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
@@ -102,17 +106,18 @@ public class SolsticeWidget0 extends SuntimesWidget0
         boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
         if (overrideMode)
         {
-            int eventTrackingLevel = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+            boolean showCrossQuarter = AppSettings.loadShowCrossQuarterPref(context);    // TODO: add "tracking level" ui to config activity
+            int eventTrackingLevel = showCrossQuarter ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN; //WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
             SuntimesEquinoxSolsticeDataset dataset = (eventTrackingLevel > 0 ? new SuntimesEquinoxSolsticeDataset1(context, appWidgetId)
                                                                              : new SuntimesEquinoxSolsticeDataset(context, appWidgetId));
-            dataset.calculateData();
+            dataset.calculateData(context);
 
             SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
             data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
 
         } else {
             data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-            data.calculate();
+            data.calculate(context);
         }
         return data;
     }

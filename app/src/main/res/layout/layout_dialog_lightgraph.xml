@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2024 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_layout"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="?attr/dialogBackground">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_header" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="0dp"
+        android:layout_marginStart="@dimen/dialog_margin" android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
+
+        <View android:id="@+id/dialogTopRightAnchor"
+            android:layout_width="1dp" android:layout_height="1dp"
+            android:background="@color/transparent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_margin="0dp"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_actionbar"
+            app:layout_constraintHorizontal_chainStyle="spread_inside">
+
+            <TextView android:id="@+id/dialog_title" style="@style/DialogTitleStyle"
+                android:text="@string/lightgraph_dialog_title" android:layout_marginTop="@dimen/dialog_margin" android:layout_marginBottom="0dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/info_time_graph"
+                style="@style/SunsetTimeTextView" android:layout_marginTop="2dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="start|left"
+                tools:text="June 3, 6:00 PM"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+                android:background="?attr/selectableItemBackground" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/dialog_actionbar" android:orientation="horizontal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible">
+
+            <ImageButton android:id="@+id/media_reset" android:visibility="gone"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:padding="12dp" android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/worldmap_dialog_action_reset"
+                android:src="?attr/icActionTimeReset" android:scaleType="fitXY" />
+
+            <ImageButton android:id="@+id/sunposition_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="?attr/icActionSun"
+                style="?attr/actionOverflowButtonStyle"
+                android:contentDescription="@string/configAction_sunDialog" />
+
+            <ImageButton android:id="@+id/menu_button"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                style="?attr/actionOverflowButtonStyle"
+                android:contentDescription="@string/configAction_overflow" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.forrestguice.suntimeswidget.graph.LightMapView
+        android:id="@+id/info_time_lightmap"
+        android:layout_width="match_parent" android:layout_height="12dp"
+        android:layout_marginBottom="@dimen/dialog_margin" />
+
+    <FrameLayout android:id="@+id/layout_graph"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+
+        <com.forrestguice.suntimeswidget.graph.LightGraphView
+            android:id="@+id/info_time_lightgraph"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:minHeight="200dp" />
+
+        <ProgressBar android:id="@+id/progress" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <include layout="@layout/layout_dialog_lightgraph_moreinfo" />
+
+</LinearLayout>

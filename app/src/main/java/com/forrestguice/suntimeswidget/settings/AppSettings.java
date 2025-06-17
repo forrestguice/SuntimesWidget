@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,12 +18,14 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.UiModeManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -31,8 +33,10 @@ import android.content.pm.PermissionInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -42,13 +46,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import com.forrestguice.suntimeswidget.views.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Shared preferences used by the app; uses getDefaultSharedPreferences (stored in com.forrestguice.suntimeswidget_preferences.xml).
@@ -84,6 +95,13 @@ public class AppSettings
     public static final String PREF_KEY_LOCALE = "app_locale";
     public static final String PREF_DEF_LOCALE = "en";
 
+    public static final String PREF_KEY_LAUNCHER_MODE = "app_launcher_mode";
+    public static final String PREF_DEF_LAUNCHER_MODE = "default";
+
+    public static final String NAVIGATION_SIMPLE = "SIMPLE";
+    public static final String NAVIGATION_SIDEBAR = "SIDEBAR";
+    public static final String PREF_KEY_NAVIGATION_MODE = "app_navigation_mode";
+
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
     public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.SWAP_CARD.name();
 
@@ -105,6 +123,8 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWEQUINOX = "app_ui_showequinox";
     public static final boolean PREF_DEF_UI_SHOWEQUINOX = true;
 
+    public static final String PREF_KEY_UI_SHOWEQUINOXDATE = "app_ui_showequinox_date";
+
     public static final String PREF_KEY_UI_SHOWCROSSQUARTER = "app_ui_showcrossquarter";
     public static final boolean PREF_DEF_UI_SHOWCROSSQUARTER = true;
 
@@ -113,6 +133,11 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_SHOWLUNARNOON = "app_ui_showmoon_noon";
     public static final boolean PREF_DEF_UI_SHOWLUNARNOON = false;
+
+    public static final String PREF_KEY_UI_MOONPHASECOLUMNS = "app_ui_showmoon_phases_columns";
+    public static final int PREF_DEF_UI_MOONPHASECOLUMNS = 4;
+
+    public static final String PREF_KEY_UI_MOONPHASE_SHOWDATE = "app_ui_showmoon_phases_showdate";
 
     public static final String PREF_KEY_UI_SHOWMAPBUTTON = "app_ui_showmapbutton";
     public static final boolean PREF_DEF_UI_SHOWMAPBUTTON = true;
@@ -133,7 +158,7 @@ public class AppSettings
     public static final String PREF_KEY_UI_EMPHASIZEFIELD = "app_ui_emphasizefield";
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
-    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00010011;
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b000010011;
     public static final int FIELD_ACTUAL = 0;  // bit positions
     public static final int FIELD_CIVIL = 1;
     public static final int FIELD_NAUTICAL = 2;
@@ -141,7 +166,8 @@ public class AppSettings
     public static final int FIELD_NOON = 4;
     public static final int FIELD_GOLD = 5;
     public static final int FIELD_BLUE = 6;
-    public static final int NUM_FIELDS = 7;
+    public static final int FIELD_MIDNIGHT = 7;
+    public static final int NUM_FIELDS = 8;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
@@ -149,12 +175,11 @@ public class AppSettings
     public static final String PREF_KEY_UI_TIMEZONESORT = "app_ui_timezonesort";
     public static final WidgetTimezones.TimeZoneSort PREF_DEF_UI_TIMEZONESORT = WidgetTimezones.TimeZoneSort.SORT_BY_ID;
 
-    public static final String PREF_KEY_GETFIX_MINELAPSED = "getFix_minElapsed";
-    public static final String PREF_KEY_GETFIX_MAXELAPSED = "getFix_maxElapsed";
-    public static final String PREF_KEY_GETFIX_MAXAGE = "getFix_maxAge";
-
-    public static final String PREF_KEY_GETFIX_PASSIVE = "getFix_passiveMode";
-    public static final boolean PREF_DEF_GETFIX_PASSIVE = false;
+    public static final String PREF_KEY_GETFIX_MINELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MIN_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MAX_ELAPSED;
+    public static final String PREF_KEY_GETFIX_MAXAGE = LocationHelperSettings.PREF_KEY_LOCATION_MAX_AGE;
+    public static final String PREF_KEY_GETFIX_TIME = LocationHelperSettings.PREF_KEY_LOCATION_TIME;
+    public static final String PREF_KEY_GETFIX_PASSIVE = LocationHelperSettings.PREF_KEY_LOCATION_PASSIVE;
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
     public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
@@ -170,6 +195,91 @@ public class AppSettings
 
     public static final String PREF_KEY_DIALOG = "dialog";
     public static final String PREF_KEY_DIALOG_DONOTSHOWAGAIN = "donotshowagain";
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_KEY_APPEARANCE_THEME, PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_KEY_APPEARANCE_THEME_DARK, PREF_KEY_APPEARANCE_TEXTSIZE,
+            PREF_KEY_LOCALE_MODE, PREF_KEY_LOCALE, PREF_KEY_UI_SHOWWARNINGS,
+            PREF_KEY_UI_DATETAPACTION, PREF_KEY_UI_DATETAPACTION1, PREF_KEY_UI_CLOCKTAPACTION, PREF_KEY_UI_NOTETAPACTION,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWEQUINOXDATE, PREF_KEY_UI_SHOWCROSSQUARTER, PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON,
+            PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWHEADER_TEXT,
+            PREF_KEY_UI_EMPHASIZEFIELD, PREF_KEY_UI_SHOWFIELDS, PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_UI_TIMEZONESORT,
+            PREF_KEY_UI_MOONPHASECOLUMNS, PREF_KEY_UI_MOONPHASE_SHOWDATE,
+            PREF_KEY_GETFIX_MINELAPSED, PREF_KEY_GETFIX_MAXELAPSED, PREF_KEY_GETFIX_MAXAGE, PREF_KEY_GETFIX_PASSIVE,
+            PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG, PREF_KEY_DIALOG_DONOTSHOWAGAIN,
+            //PREF_KEY_GETFIX_TIME,
+            PREF_KEY_NAVIGATION_MODE, PREF_KEY_LAUNCHER_MODE
+    };
+    public static final String[] INT_KEYS = new String[] {
+            PREF_KEY_UI_SHOWFIELDS,
+            PREF_KEY_UI_MOONPHASECOLUMNS
+    };
+    public static final String[] LONG_KEYS = new String[] {
+            //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
+    };
+    public static final String[] BOOL_KEYS = new String[]
+    {
+            PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON,
+            PREF_KEY_UI_SHOWLIGHTMAP, PREF_KEY_UI_SHOWEQUINOX, PREF_KEY_UI_SHOWEQUINOXDATE, PREF_KEY_UI_SHOWCROSSQUARTER,
+            PREF_KEY_UI_SHOWMOON, PREF_KEY_UI_SHOWLUNARNOON, PREF_KEY_UI_MOONPHASE_SHOWDATE,
+            PREF_KEY_ACCESSIBILITY_VERBOSE, PREF_KEY_GETFIX_PASSIVE, PREF_KEY_PLUGINS_ENABLESCAN, PREF_KEY_FIRST_LAUNCH, PREF_KEY_DIALOG_DONOTSHOWAGAIN
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo()
+        {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return LONG_KEYS;
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return BOOL_KEYS;
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : LONG_KEYS) {
+                types.put(key, Long.class);
+            }
+            for (String key : BOOL_KEYS) {
+                types.put(key, Boolean.class);
+            }
+
+            types.put(PREF_KEY_UI_SHOWHEADER_TEXT, String.class);   // int as String
+            types.put(PREF_KEY_GETFIX_MINELAPSED, String.class);    // int as String
+            types.put(PREF_KEY_GETFIX_MAXELAPSED, String.class);    // int as String
+            types.put(PREF_KEY_GETFIX_MAXAGE, String.class);        // int as String
+
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Text sizes
@@ -383,6 +493,42 @@ public class AppSettings
         return context.getResources().getBoolean(R.bool.is_rtl);
     }
 
+    /**
+     * @param context Context
+     * @return launcher class name
+     */
+    @NonNull
+    public static String loadLauncherModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
+    }
+
+    @NonNull
+    public static String loadNavModePref(Context context)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_NAVIGATION_MODE, context.getString(R.string.def_app_navigation_mode));
+    }
+
+    /**
+     * Is the current device a television? This implies limited features.
+     */
+    public static boolean isTelevision(@NonNull Context context)
+    {
+        if (context != null)
+        {
+            if (Build.VERSION.SDK_INT >= 21) {
+                return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK);
+
+            } else if (Build.VERSION.SDK_INT >= 13) {
+                UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+                return (uiModeManager != null && (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION));
+
+            } else return false;
+        } else return false;
+    }
+
     public static void saveTimeZoneSortPref(Context context, WidgetTimezones.TimeZoneSort sortMode )
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -422,6 +568,24 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOX, PREF_DEF_UI_SHOWEQUINOX);
     }
+    public static void saveShowEquinoxPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWEQUINOX, value);
+        pref.apply();
+    }
+
+    public static boolean loadShowEquinoxDatePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, context.getResources().getBoolean(R.bool.def_app_ui_showequinox_date));
+    }
+    public static void saveShowEquinoxDatePref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWEQUINOXDATE, value);
+        pref.apply();
+    }
 
     public static boolean loadShowCrossQuarterPref( Context context )
     {
@@ -440,6 +604,12 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWMOON, PREF_DEF_UI_SHOWMOON);
     }
+    public static void saveShowMoonPref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_SHOWMOON, value);
+        pref.apply();
+    }
 
     public static boolean loadShowLunarNoonPref( Context context )
     {
@@ -450,6 +620,30 @@ public class AppSettings
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putBoolean(PREF_KEY_UI_SHOWLUNARNOON, value);
+        pref.apply();
+    }
+
+    public static int loadMoonPhaseColumnsPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getInt(PREF_KEY_UI_MOONPHASECOLUMNS, PREF_DEF_UI_MOONPHASECOLUMNS);
+    }
+    public static void saveMoonPhaseColumnsPref( Context context, int value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putInt(PREF_KEY_UI_MOONPHASECOLUMNS, value);
+        pref.apply();
+    }
+
+    public static boolean loadShowMoonPhaseDatePref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_MOONPHASE_SHOWDATE, context.getResources().getBoolean(R.bool.def_app_ui_showmoon_phases_showdate));
+    }
+    public static void saveShowMoonPhaseDatePref( Context context, boolean value )
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_UI_MOONPHASE_SHOWDATE, value);
         pref.apply();
     }
 
@@ -490,8 +684,10 @@ public class AppSettings
     public static boolean[] loadShowFieldsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        int showFields = pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS);
-
+        return loadShowFields(pref.getInt(PREF_KEY_UI_SHOWFIELDS, PREF_DEF_UI_SHOWFIELDS));
+    }
+    public static boolean[] loadShowFields( int showFields )
+    {
         boolean[] retValue = new boolean[8];
         for (int i=0; i<retValue.length; i++)
         {
@@ -671,69 +867,6 @@ public class AppSettings
     }
 
     /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max age value if pref can't be loaded
-     * @return the gps max age value (milliseconds)
-     */
-    public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxAgeString = prefs.getString(PREF_KEY_GETFIX_MAXAGE, defaultValue+"");
-            retValue = Integer.parseInt(maxAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default min elapsed value if pref can't be loaded
-     * @return the gps min elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMinElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String minAgeString = prefs.getString(PREF_KEY_GETFIX_MINELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(minAgeString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @param prefs an instance of SharedPreferences
-     * @param defaultValue the default max elapsed value if pref can't be loaded
-     * @return the gps max elapsed value (milliseconds)
-     */
-    public static int loadPrefGpsMaxElapsed(SharedPreferences prefs, int defaultValue)
-    {
-        int retValue;
-        try {
-            String maxElapsedString = prefs.getString(PREF_KEY_GETFIX_MAXELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(maxElapsedString);
-        } catch (NumberFormatException e) {
-            Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
-            retValue = defaultValue;
-        }
-        return retValue;
-    }
-
-    /**
-     * @return true use the passive provider (don't prompt when other providers are disabled), false use the gps/network provider (prompt when disabled)
-     */
-    public static boolean loadPrefGpsPassiveMode( Context context )
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getBoolean(PREF_KEY_GETFIX_PASSIVE, PREF_DEF_GETFIX_PASSIVE);
-    }
-
-    /**
      * @return true; dialog should not be shown (user has check 'do not show again')
      */
     public static boolean checkDialogDoNotShowAgain( Context context, String dialogKey ) {
@@ -750,6 +883,7 @@ public class AppSettings
                                                        int iconResId, @Nullable String title, @NonNull String message, @Nullable final DialogInterface.OnClickListener onOkClicked)
     {
         final Context context = inflater.getContext();
+        @SuppressLint("InflateParams")
         View dialogView = inflater.inflate(R.layout.layout_dialog_alert, null);
         final CheckBox check_notagain = (CheckBox) dialogView.findViewById(R.id.check_donotshowagain);
 
@@ -768,7 +902,9 @@ public class AppSettings
                         if (check_notagain != null) {
                             AppSettings.setDialogDoNotShowAgain(context, key, check_notagain.isChecked());
                         }
-                        onOkClicked.onClick(dialog, which);
+                        if (onOkClicked != null) {
+                            onOkClicked.onClick(dialog, which);
+                        }
                     }
                 });
         return dialog;
@@ -877,6 +1013,46 @@ public class AppSettings
         return packageName;
     }
 
+    public static void openAppDetails(Activity activity)
+    {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
+    public static void saveLocationPref(final Context context, Location location) {
+        saveLocationPref(context, location, true);
+    }
+    public static void saveLocationPref(final Context context, Location location, boolean withSideEffects)
+    {
+        WidgetSettings.saveLocationPref(context, 0, location);
+
+        if (withSideEffects)
+        {
+            ExecutorService executor = Executors.newScheduledThreadPool(2);
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    long bench_start = System.nanoTime();
+                    WidgetListAdapter.updateAllWidgetAlarms(context);
+                    long bench_end = System.nanoTime();
+                    Log.d("DEBUG", "update all widgets :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                }
+            });
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run() {
+                    context.sendBroadcast(new Intent(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_LOCATION_CHANGED, null)));
+                }
+            });
+            executor.shutdown();
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -925,6 +1101,14 @@ public class AppSettings
     private static final AppThemeInfo info_dark1Theme = new DarkTheme1Info();
     private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
+
+    public static AppThemeInfo[] appThemeInfo()
+    {
+        return new AppThemeInfo[] {
+                info_systemTheme, info_darkTheme, info_lightTheme,
+                info_system1Theme, info_dark1Theme, info_light1Theme
+        };
+    }
 
     /**
      * AppThemeInfo

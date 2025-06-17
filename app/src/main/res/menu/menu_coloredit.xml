@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.forrestguice.suntimes.naturalhour.MainActivity">
+
+    <item
+        android:id="@+id/action_colors_share"
+        android:orderInCategory="100"
+        android:icon="?attr/icActionShare"
+        android:title="@string/configAction_share"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_colors_import"
+        android:orderInCategory="200"
+        android:icon="?attr/icActionNew"
+        android:title="@string/configAction_importColors"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_colors_delete"
+        android:orderInCategory="300"
+        android:icon="?attr/icActionDelete"
+        android:title="@string/configAction_deleteColors"
+        app:showAsAction="never" />
+
+    <!--<item
+        android:id="@+id/action_colors_copytheme"
+        android:orderInCategory="300"
+        android:icon="?attr/icActionNew"
+        android:title="@string/action_import_fromtheme"
+        app:showAsAction="never" />-->
+
+</menu>

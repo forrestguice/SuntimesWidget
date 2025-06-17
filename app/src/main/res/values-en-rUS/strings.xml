@@ -6,10 +6,12 @@
     <string name="default_location_longitude">-111.94580</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">385</string>           <!-- meters -->
     <string name="default_units_length">IMPERIAL</string>                <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/Phoenix</string>        <!-- tzid -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_equinox_autumnal">Fall Equinox</string>  <!-- setting -->
-    <string name="timeMode_cross_autumnal">Fall Cross-Quarter</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">Summer/Fall Cross-Quarter</string>  <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Fall/Winter Cross-Quarter</string>    <!-- setting -->
     <string name="solarevents_event_equinox_autumnal">fall equinox</string>
 
     <!-- App Setting: WidgetThemes -->
@@ -20,15 +22,22 @@
     <string name="configLabel_themeColorTitle">Title Color</string>     <!-- color label -->
     <string name="configLabel_themeColorText">Text Color</string>       <!-- color label -->
 
-    <string name="configLabel_themeColorSpring">Spring</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Summer</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Fall</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Fall (text)</string> <!-- color label -->
 
     <string name="configLabel_themeColorSuffix">Suffix Color</string>   <!-- color label -->
     <string name="configLabel_themeColorTime">Text Color2</string>      <!-- color label -->
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Color</string>
+
+    <string name="delta_minutes">m</string>
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Fall Cross-Quarter:</b> The midpoint between Summer Solstice and Fall Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Fall/Winter Cross-Quarter:</b> The midpoint between Fall Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
 </resources>

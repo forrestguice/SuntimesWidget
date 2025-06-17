@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -29,12 +30,12 @@ public class SunPositionTest
     /* Test Fix: add the geodetic angle before comparing elevations; brings twilight elevations into agreement with expected values. */
     public static final boolean APPLY_ALTITUDE_ANGLE = false;
 
-    public static final double TEST_TOLERANCE = 0.25;        // degrees
+    public static final double TEST_TOLERANCE = 0.01;        // degrees
     public static final double TEST_LATITUDE = 33.45579;
     public static final double TEST_LONGITUDE = -111.9485;    // Phoenix, AZ
     public static final int TEST_ALTITUDE = 360;
     public static final long TEST_DATE = 1639791526;         // Dec 17, 2021
-    public static final TimeZone TEST_TIMEZONE = TimeZone.getTimeZone("US/Arizona");
+    public static final TimeZone TEST_TIMEZONE = TimeZone.getTimeZone("UTC");
     public static final StdSolarCalculator TEST_CALCULATOR = StdSolarCalculator.TIME4J;
 
     @Before
@@ -44,6 +45,28 @@ public class SunPositionTest
     }
     private Calendar date = Calendar.getInstance();
     private SolarTime solarTime;
+
+    @Test
+    public void test_SunPosition()
+    {
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(1639791526);   // Dec 17, 2021
+        PlainDate plainDate = calendarToPlainDate(date, TimeZone.getTimeZone("UTC"));
+
+        Moment moment0 = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
+        net.time4j.calendar.astro.SunPosition position0 = net.time4j.calendar.astro.SunPosition.at(moment0, solarTime);
+        double elevation0 = position0.getElevation();
+
+        double geodeticAngle = TEST_CALCULATOR.getGeodeticAngle(TEST_LATITUDE, TEST_ALTITUDE);
+        double zenith = 90 + geodeticAngle - elevation0;
+
+        Moment moment1 = solarTime.getCalculator().sunrise(plainDate, TEST_LATITUDE, TEST_LONGITUDE, zenith);
+        net.time4j.calendar.astro.SunPosition position1 = net.time4j.calendar.astro.SunPosition.at(moment1, solarTime);
+        double elevation1 = position1.getElevation() + geodeticAngle;
+
+        assertTrue("expects value near " + elevation0 + " (within " + TEST_TOLERANCE + "); " + elevation1,
+                Math.abs(elevation0 - elevation1) < TEST_TOLERANCE);
+    }
 
     @Test
     public void test_sunPositionAtSunrise() {

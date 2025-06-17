@@ -23,7 +23,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="125dp"
         android:orientation="vertical" android:gravity="start"
-        android:background="?dialogBackground">
+        android:background="?dialogBackground"
+        tools:ignore="InconsistentLayout">
 
         <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
             android:text="@string/worldmap_dialog_title"
@@ -33,10 +34,12 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/SunsetTimeTextView" android:background="?attr/selectableItemBackground"
+            style="@style/SunsetTimeTextView"
             android:id="@+id/info_time_utc"
             android:layout_width="0dp" android:layout_height="wrap_content"
             tools:text="June 3, 6:00 PM UTC" android:gravity="start"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -64,6 +67,7 @@
             android:layout_width="wrap_content" android:minWidth="48dp" android:maxWidth="60dp" android:layout_height="48dp"
             android:padding="0dp"
             android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/media_actions"
             android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginTop="0dp" android:layout_marginBottom="0dp"

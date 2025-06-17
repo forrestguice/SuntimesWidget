@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/info_time_all_today"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <!-- card scroller -->
     <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
@@ -13,7 +15,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:elevation="1dp">
 
                 <LinearLayout style="@style/SunsetTimeCard"
                     android:layout_width="match_parent"
@@ -23,12 +26,25 @@
                     <include layout="@layout/info_time_all" />
 
                     <!-- day length -->
-                    <LinearLayout android:id="@+id/layout_daylength"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="7dp">
+                    <LinearLayout
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:orientation="horizontal" android:layout_marginTop="7dp">
 
-                        <include layout="@layout/info_time_daylength" />
+                        <LinearLayout android:id="@+id/layout_daylength"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/info_time_daylength" />
+
+                        </LinearLayout>
+
+                        <TextView android:id="@+id/text_comparison"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:layout_marginStart="16dp" android:layout_marginEnd="32dp"
+                            android:layout_marginLeft="16dp" android:layout_marginRight="32dp"
+                            android:textSize="?attr/text_size_small"
+                            tools:text="Tomorrow will be 1min 30s longer" />
 
                     </LinearLayout>
 
@@ -36,14 +52,15 @@
 
                 <!-- next/prev buttons -->
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:layout_gravity="end|bottom">
+                    android:orientation="horizontal" android:layout_gravity="end|bottom"
+                    android:padding="3dp">
 
                     <ImageButton
                         android:id="@+id/info_time_prevbtn"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:src="?attr/icActionPrevious"
-                        android:background="@null"
+                        android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                         android:padding="4dp"
                         android:contentDescription="@string/prevDay" />
 
@@ -52,7 +69,7 @@
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:src="?attr/icActionNext"
-                        android:background="@null"
+                        android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                         android:padding="4dp"
                         android:contentDescription="@string/nextDay" />
 
@@ -64,13 +81,13 @@
             <LinearLayout
                 android:id="@+id/info_time_lightmap_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/lightmap_clickable_height"
+                android:layout_height="@dimen/lightmap_clickable_height" android:elevation="1dp"
                 android:layout_marginTop="6dp" android:layout_marginBottom="-4dp"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true" android:focusable="true"
                 android:orientation="vertical">
 
-                <com.forrestguice.suntimeswidget.LightMapView
+                <com.forrestguice.suntimeswidget.graph.LightMapView
                     android:id="@+id/info_time_lightmap"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lightmap_height"

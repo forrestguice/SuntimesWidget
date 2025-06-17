@@ -21,11 +21,13 @@ package com.forrestguice.suntimeswidget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -40,12 +42,36 @@ public class SuntimesWarning
     public static final int ANNOUNCE_DELAY_MS = 500;
     public static final String KEY_WASDISMISSED = "userDismissedWarning";
     public static final String KEY_DURATION = "duration";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_CONTENT_DESCRIPTION = "contentDescription";
+    public static final String KEY_ACTION_LABEL = "actionLabel";
+    public static final String KEY_SHOULD_SHOW = "shouldShow";
 
-    public SuntimesWarning(String id)
-    {
+    public SuntimesWarning(String id) {
         this.id = id;
     }
-    protected String id = "";
+
+    public SuntimesWarning(String id, CharSequence message)
+    {
+        this.id = id;
+        setMessage(message);
+    }
+
+    public SuntimesWarning(String id, Context context, String msg)
+    {
+        this.id = id;
+        setMessage(context, msg);
+    }
+
+    protected String id;
+    public String getId() {
+        return id;
+    }
+
+    protected View parentView = null;
+    public View getParentView() {
+        return parentView;
+    }
 
     private Snackbar snackbar = null;
     public Snackbar getSnackbar() {
@@ -73,31 +99,54 @@ public class SuntimesWarning
         duration = value;
     }
 
-    protected String contentDescription = null;
-    protected View parentView = null;
-
-    public void initWarning(@NonNull Context context, View view, String msg)
+    protected CharSequence message = null;
+    protected CharSequence contentDescription = null;
+    public CharSequence getMessage() {
+        return message;
+    }
+    public void setMessage( CharSequence value ) {
+        message = value;
+        contentDescription = value;
+    }
+    public void setMessage( Context context, String msg )
     {
-        this.parentView = view;
         ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
-        SpannableStringBuilder message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
-        this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+        message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
+        contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+    }
 
+    protected CharSequence actionLabel = null;
+    public CharSequence getActionLabel() {
+        return actionLabel;
+    }
+    public void setActionLabel( @Nullable CharSequence value ) {
+        actionLabel = value;
+    }
+
+    public void initWarning(@NonNull Context context, View view, View.OnClickListener actionListener)
+    {
+        parentView = view;
         wasDismissed = false;
         snackbar = Snackbar.make(parentView, message, duration);
         snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
         themeWarning(context, snackbar);
+
+        if (actionLabel != null && actionListener != null) {
+            snackbar.setAction(actionLabel, actionListener);
+        }
     }
 
     @SuppressLint("ResourceType")
     private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
     {
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
         TypedArray a = context.obtainStyledAttributes(colorAttrs);
         int textColor = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
         int accentColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
         int backgroundColor = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
+        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
         a.recycle();
 
         View snackbarView = snackbarWarning.getView();
@@ -109,9 +158,17 @@ public class SuntimesWarning
             snackbarText.setTextColor(textColor);
             snackbarText.setMaxLines(5);
         }
+
+        View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
+        if (snackbarAction != null) {
+            if (Build.VERSION.SDK_INT >= 16) {
+                snackbarAction.setBackground(buttonDrawable);
+                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            }
+        }
     }
 
-    private Snackbar.Callback snackbarListener = new Snackbar.Callback()
+    private final Snackbar.Callback snackbarListener = new Snackbar.Callback()
     {
         @Override
         public void onDismissed(Snackbar snackbar, int event)
@@ -121,7 +178,12 @@ public class SuntimesWarning
             {
                 case DISMISS_EVENT_SWIPE:
                     wasDismissed = true;
-                    showNextWarning();
+                    snackbar.getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNextWarning();
+                        }
+                    });
                     break;
             }
         }
@@ -143,6 +205,12 @@ public class SuntimesWarning
     {
         if (snackbar != null) {
             snackbar.show();
+            snackbar.getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    snackbar.getView().requestFocus();
+                }
+            });
         }
         announceWarning();
     }
@@ -160,7 +228,7 @@ public class SuntimesWarning
         shouldShow = false;
     }
 
-    public void setContentDescription( String value )
+    public void setContentDescription( CharSequence value )
     {
         this.contentDescription = value;
         if (snackbar != null) {
@@ -190,8 +258,12 @@ public class SuntimesWarning
     {
         if (outState != null)
         {
-            outState.putBoolean(KEY_WASDISMISSED + id, wasDismissed);
-            outState.putInt(KEY_DURATION + id, duration);
+            outState.putCharSequence(id + "_" + KEY_MESSAGE, message);
+            outState.putCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION, contentDescription);
+            outState.putCharSequence(id + "_" + KEY_ACTION_LABEL, actionLabel);
+            outState.putBoolean(id + "_" + KEY_WASDISMISSED, wasDismissed);
+            outState.putBoolean(id + "_" + KEY_SHOULD_SHOW, shouldShow);
+            outState.putInt(id + "_" + KEY_DURATION, duration);
         }
     }
 
@@ -199,8 +271,12 @@ public class SuntimesWarning
     {
         if (savedState != null)
         {
-            wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
-            duration = savedState.getInt(KEY_DURATION + id, duration);
+            message = savedState.getCharSequence(id + "_" + KEY_MESSAGE);
+            contentDescription = savedState.getCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION);
+            actionLabel = savedState.getCharSequence(id + "_" + KEY_ACTION_LABEL);
+            wasDismissed = savedState.getBoolean(id + "_" + KEY_WASDISMISSED, false);
+            shouldShow = savedState.getBoolean(id + "_" + KEY_SHOULD_SHOW, false);
+            duration = savedState.getInt(id + "_" + KEY_DURATION, duration);
         }
     }
 

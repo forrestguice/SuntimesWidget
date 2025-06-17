@@ -21,7 +21,7 @@
               android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
               android:background="?attr/dialogBackground">
 
-    <com.forrestguice.suntimeswidget.EquinoxView
+    <com.forrestguice.suntimeswidget.equinox.EquinoxView
         android:id="@+id/info_time_equinox"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center"

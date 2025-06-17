@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/layout_listitem_alarmclock1">
+
+    <TextView style="@style/ChipTrayLabel"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/configLabel_alarmEdit_scheduleTray" />
+
+    <LinearLayout style="@style/ChipTray"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingLeft="4dp" android:paddingRight="4dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <android.support.constraint.helper.Flow
+                android:id="@+id/flow0"
+                app:constraint_referenced_ids="chip_offset,chip_event,chip_location,chip_repeat"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:flow_horizontalAlign="start" app:flow_horizontalBias="0"
+                app:flow_verticalBias="0" app:flow_verticalGap="0dp"
+                app:flow_horizontalGap="0dp" app:flow_maxElementsWrap="3" app:flow_wrapMode="chain" />
+
+            <FrameLayout
+                android:id="@+id/chip_offset"
+                android:contentDescription="@string/configAction_setAlarmOffset"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="start|center_vertical">
+
+                <TextView
+                    android:id="@+id/text_offset" style="@style/ChipText"
+                    android:gravity="center"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minWidth="100dp" android:minHeight="@dimen/chip_minHeight"
+                    tools:text="at" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/chip_event"
+                android:contentDescription="@string/configAction_setAlarmEvent"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_event" style="@style/ChipText1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="@dimen/chip_minHeight"
+                    android:drawableLeft="?attr/icActionTime" android:drawableStart="?attr/icActionTime"
+                    tools:text="Nautical Twilight (end)" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/chip_location"
+                android:contentDescription="@string/configAction_setAlarmLocation"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_location" style="@style/ChipText1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="@dimen/chip_minHeight"
+                    android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
+                    tools:text="Location" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/chip_repeat"
+                android:contentDescription="@string/configAction_setAlarmRepeat"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_gravity="start"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/text_repeat" style="@style/ChipText1"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:minHeight="@dimen/chip_minHeight"
+                    android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
+                    android:text="@string/alarmOption_repeat"
+                    tools:text="Sun, Mon, Tue, Wed, Thu, Fri" />
+
+            </FrameLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</merge>

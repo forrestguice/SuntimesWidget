@@ -117,6 +117,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSolarMidnightCalendarForDate(Calendar date) {
+        return null;    // TODO
+    }
+
+    @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
         Calendar[] civilTwilight = SunriseSunset.getCivilTwilight(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
@@ -268,6 +273,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar dateTime, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar dateTime, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
         Calendar[] riseset = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
@@ -316,13 +331,13 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public Calendar getSunriseCalendarForDate( Calendar date, int angle ) {
-        return null;   // TODO: supported by this lib?
+    public Calendar getSunriseCalendarForDate( Calendar date, double angle ) {
+        return SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle)[0];
     }
 
     @Override
-    public Calendar getSunsetCalendarForDate( Calendar date, int angle ) {
-        return null;   // TODO: supported by this lib?
+    public Calendar getSunsetCalendarForDate( Calendar date, double angle ) {
+        return SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle)[1];
     }
 
 }

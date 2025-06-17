@@ -6,10 +6,50 @@
         android:title="@string/moon_dialog_controls"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_lunarnoon_show"
-        android:title="@string/configLabel_ui_showmoon_noon"
-        android:checkable="true"
-        app:showAsAction="never" />
+    <item android:id="@+id/optionsSubMenu"
+        android:icon="?attr/icActionSettings"
+        android:title="@string/configAction_options"
+        app:showAsAction="never">
+        <menu>
+
+            <item android:id="@+id/action_colors"
+                android:title="@string/configAction_colors"
+                android:icon="?attr/icActionAppearance"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/action_lunarnoon_show"
+                android:title="@string/configLabel_ui_showmoon_noon"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/action_phase_showdate"
+                android:title="@string/configLabel_ui_showMoonPhaseDate"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/action_phase_columns"
+                android:title="@string/configLabel_ui_showmoon_phase_columns"
+                app:showAsAction="never">
+
+                <menu>
+                    <group android:id="@+id/action_phase_columns_group" android:checkableBehavior="single">
+                        <item android:id="@+id/action_phase_columns_2"
+                            android:title="@string/configLabel_ui_showmoon_phase_columns_2"
+                            app:showAsAction="never" />
+
+                        <item android:id="@+id/action_phase_columns_3"
+                            android:title="@string/configLabel_ui_showmoon_phase_columns_3"
+                            app:showAsAction="never" />
+
+                        <item android:id="@+id/action_phase_columns_4"
+                            android:title="@string/configLabel_ui_showmoon_phase_columns_4"
+                            app:showAsAction="never" />
+                    </group>
+                </menu>
+            </item>
+
+        </menu>
+    </item>
 
     <item android:id="@+id/action_help"
         android:title="@string/configAction_help"

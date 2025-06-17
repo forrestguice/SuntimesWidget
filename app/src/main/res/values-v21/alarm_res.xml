@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="minAlarmReminderHours">0</integer>
+    <integer name="minAlarmReminderMillis">0</integer>
 </resources>

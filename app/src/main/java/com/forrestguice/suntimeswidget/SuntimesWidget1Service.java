@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2014-2018 Forrest Guice
+ Copyright (C) 2014-2023 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,10 +28,10 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_2;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_4;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_1;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_4;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -79,11 +79,15 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged()
     {
+        if (SuntimesWidget0.isCurrentLocationMode(context, appWidgetId)) {
+            SuntimesWidget0.updateLocationToLastKnown(context, appWidgetId);
+        }
+
         ArrayList<SuntimesRiseSetData> dataset0 = new ArrayList<SuntimesRiseSetData>();
         int viewCount0 = 1;
 
         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, appWidgetId);
-        data0.calculate();
+        data0.calculate(context);
         dataset0.add(new SuntimesRiseSetData(data0, R.layout.layout_widget_1x1_1i));
         viewCount0++;
 
@@ -92,7 +96,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         {
             SuntimesRiseSetData data1 = new SuntimesRiseSetData(data0);
             data1.setTimeMode(WidgetSettings.TimeMode.NOON);
-            data1.calculate();
+            data1.calculate(context);
             dataset0.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
             viewCount0++;
         }
@@ -104,7 +108,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         viewCount = viewCount0;
 
         initLocale(context);
-        Log.d("DEBUG", "onDataSetChanged");
+        //Log.d("DEBUG", "onDataSetChanged");
     }
 
     private void initLocale( Context context )

@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2014-2024 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +48,7 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -57,6 +56,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 
 import org.json.JSONArray;
@@ -78,6 +78,25 @@ public class WidgetThemes
         if (initialized)
             return;
 
+        ThemeDescriptor[] defThemes = new ThemeDescriptor[] {
+                LightTheme.themeDescriptor(context),               // 0
+                LightThemeTrans.themeDescriptor(context),          // 1
+                DarkTheme.themeDescriptor(context),                // 2
+                DarkThemeTrans.themeDescriptor(context),           // 3
+                DarkThemeTranslucent.themeDescriptor(context),     // 4
+                DarkTheme1.themeDescriptor(context),               // 5
+                LightTheme1.themeDescriptor(context),              // 6
+        };
+        Class<?>[] defThemeClasses = new Class[] {
+                LightTheme.class,                                  // 0
+                LightThemeTrans.class,                             // 1
+                DarkTheme.class,                                   // 2
+                DarkThemeTrans.class,                              // 3
+                DarkThemeTranslucent.class,                        // 4
+                DarkTheme1.class,                                  // 5
+                LightTheme1.class,                                 // 6
+        };
+
         SharedPreferences themePref = getSharedPreferences(context);
         Set<String> themesToProcess = loadInstalledList(themePref);
         for (String themeName : themesToProcess)
@@ -91,39 +110,9 @@ public class WidgetThemes
             }
         }
 
-        boolean added = addValue(LightTheme.THEMEDEF_DESCRIPTOR);         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightTheme.THEMEDEF_DESCRIPTOR))
-        {
-            LightTheme theme = new LightTheme(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(LightThemeTrans.THEMEDEF_DESCRIPTOR) || added;   // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, LightThemeTrans.THEMEDEF_DESCRIPTOR))
-        {
-            LightThemeTrans theme = new LightThemeTrans(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkTheme.THEMEDEF_DESCRIPTOR) || added;         // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkTheme.THEMEDEF_DESCRIPTOR))
-        {
-            DarkTheme theme = new DarkTheme(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkThemeTrans.THEMEDEF_DESCRIPTOR) || added;    // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTrans.THEMEDEF_DESCRIPTOR))
-        {
-            DarkThemeTrans theme = new DarkThemeTrans(context);
-            theme.saveTheme(themePref);
-        }
-
-        added = addValue(DarkThemeTranslucent.THEMEDEF_DESCRIPTOR) || added;  // add default (if missing)
-        if (!SuntimesTheme.isInstalled(themePref, DarkThemeTranslucent.THEMEDEF_DESCRIPTOR))
-        {
-            DarkThemeTranslucent theme = new DarkThemeTranslucent(context);
-            theme.saveTheme(themePref);
+        boolean added = false;
+        for (int i=0; i<defThemes.length; i++) {
+            added = initTheme(context, themePref, defThemes[i], defThemeClasses[i]) || added;
         }
 
         if (added)
@@ -132,6 +121,23 @@ public class WidgetThemes
         }
         defaultTheme = new DarkTheme(context);
         initialized = true;
+    }
+
+    protected static boolean initTheme(Context context, SharedPreferences themePref, ThemeDescriptor themeDescriptor, Class<?> themeClass)
+    {
+        boolean added = addValue(themeDescriptor);
+        if (!SuntimesTheme.isInstalled(themePref, themeDescriptor))    // add default (if missing)
+        {
+            try {
+                SuntimesTheme theme = (SuntimesTheme) themeClass.getConstructor(Context.class).newInstance(context);
+                theme.saveTheme(themePref);
+                Log.i("initThemes", "initTheme: initialized " + theme.themeName());
+
+            } catch (Exception e) {
+                Log.e("initThemes", "initTheme: failed to init " + themeDescriptor.name() + ": " + e);
+            }
+        }
+        return added;
     }
 
     private static HashMap<String, ThemeDescriptor> themes = new HashMap<>();
@@ -270,7 +276,7 @@ public class WidgetThemes
         try {
             json.put("set", set);
             String jsonString = json.toString();
-            Log.d("DEBUG", "setToJson :: " + jsonString);
+            //Log.d("DEBUG", "setToJson :: " + jsonString);
             return jsonString;
 
         } catch (JSONException e) {
@@ -295,7 +301,7 @@ public class WidgetThemes
                 Log.e("jsonToSet", "Failed to read string as json object :: " + e);
             }
         }
-        Log.d("DEBUG", "jsonToSet :: " + set);
+        //Log.d("DEBUG", "jsonToSet :: " + set);
         return set;
     }
 

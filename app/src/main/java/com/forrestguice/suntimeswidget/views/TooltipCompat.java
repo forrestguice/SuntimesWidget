@@ -84,7 +84,7 @@ public class TooltipCompat
                     if (Build.VERSION.SDK_INT >= 23) {
                         message.setTextAppearance(R.style.TooltipTextAppearance);
                     } else {
-                        int paddingDp = (int)context.getResources().getDimension(R.dimen.tooltip_margin);
+                        int paddingDp = (int)context.getResources().getDimension(R.dimen.tooltip_margin0);
                         message.setTextAppearance(context, R.style.TooltipTextAppearance);
                         message.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
                         message.setTypeface(Typeface.DEFAULT);

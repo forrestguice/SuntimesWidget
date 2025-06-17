@@ -33,6 +33,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
@@ -69,7 +70,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     public void initPaint(WorldMapTask.WorldMapOptions options)
     {
         paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBackground.setColor(options.backgroundColor);
+        paintBackground.setColor(options.colors.getColor(WorldMapColorValues.COLOR_BACKGROUND));
         paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
 
         paintForeground = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -84,37 +85,37 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         paintMask_srcIn.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
         paintSunshadow = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintSunshadow.setColor(options.sunShadowColor);
+        paintSunshadow.setColor(options.colors.getColor(WorldMapColorValues.COLOR_SUN_SHADOW));
         paintSunshadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
         paintMoonlight = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintMoonlight.setColor(options.moonLightColor);
+        paintMoonlight.setColor(options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT));
         paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
         paintLocation_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLocation_fill.setStyle(Paint.Style.FILL);
-        paintLocation_fill.setColor(options.locationFillColor);
+        paintLocation_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_POINT_FILL));
 
         paintLocation_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLocation_stroke.setStyle(Paint.Style.STROKE);
-        paintLocation_stroke.setColor(options.locationStrokeColor);
+        paintLocation_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_POINT_STROKE));
         paintLocation_stroke.setStrokeWidth(0.5f);
 
         paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_fill.setStyle(Paint.Style.FILL);
-        paintSun_fill.setColor(options.sunFillColor);
+        paintSun_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_SUN_FILL));
 
         paintSun_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_stroke.setStyle(Paint.Style.STROKE);
-        paintSun_stroke.setColor(options.sunStrokeColor);
+        paintSun_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_SUN_STROKE));
 
         paintMoon_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMoon_fill.setStyle(Paint.Style.FILL);
-        paintMoon_fill.setColor(options.moonFillColor);
+        paintMoon_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_MOON_FILL));
 
         paintMoon_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMoon_stroke.setStyle(Paint.Style.STROKE);
-        paintMoon_stroke.setColor(options.moonStrokeColor);
+        paintMoon_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_MOON_STROKE));
 
         paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
@@ -392,7 +393,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
 
-        paintGrid.setColor(options.gridXColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         for (int i=0; i < 180; i = i + 15)
         {
@@ -403,7 +404,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             c.drawLine(westX, 0, westX, h, paintGrid);
         }
 
-        paintGrid.setColor(options.gridYColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
         for (int i=0; i < 90; i = i + 15)
         {

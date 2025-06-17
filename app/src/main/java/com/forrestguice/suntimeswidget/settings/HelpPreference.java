@@ -44,6 +44,7 @@ public class HelpPreference extends DialogPreference
 {
     private CharSequence helpText = "";
     private String helpLink = null;
+    private String helpPath = "";
     private TextView helpView;
 
     @TargetApi(21)
@@ -131,6 +132,7 @@ public class HelpPreference extends DialogPreference
             try {
                 this.helpText = SuntimesUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
                 helpLink = a.getString(R.styleable.HelpPreference_helpLink);
+                helpPath = a.getString(R.styleable.HelpPreference_helpPath);
                 buttonText = a.getString(R.styleable.HelpPreference_moreHelpButtonText);
             } finally {
                 a.recycle();
@@ -145,11 +147,14 @@ public class HelpPreference extends DialogPreference
     public void openHelpLink(Context context)
     {
         if (context != null && helpLink != null) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink)));
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink + helpPath)));
         }
     }
     public String getHelpLink() {
         return helpLink;
+    }
+    public String getHelpPath() {
+        return helpPath;
     }
 
 }

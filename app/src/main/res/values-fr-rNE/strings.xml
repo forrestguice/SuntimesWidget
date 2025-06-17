@@ -5,5 +5,6 @@
     <string name="default_location_latitude">13.5127</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">2.0489</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">192</string>         <!-- meters -->
+    <string name="default_timezone">Africa/Niamey</string>         <!-- tzid -->
 
 </resources>

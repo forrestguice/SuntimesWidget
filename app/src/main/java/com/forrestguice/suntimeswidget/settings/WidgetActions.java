@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2022 Forrest Guice
+    Copyright (C) 2019-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,15 +20,26 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -46,10 +57,16 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_ALARM;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_CALENDAR;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_DEFAULT;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_LOCATION;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SETTINGS;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMES;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMESALARMS;
 
@@ -99,6 +116,72 @@ public class WidgetActions
     public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
 
     public static final String PREF_KEY_ACTION_LAUNCH_LIST = "list";
+    public static final String PREF_KEY_ACTION_LAUNCH_ID = "id";
+    public static final String PREF_KEY_ACTION_LAUNCH_APPWIDGETID = "appWidgetId";
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[]
+    {
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TITLE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DESC,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_COLOR,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TAGS,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_PACKAGE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_ACTION,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_EXTRAS,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATA,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_DATATYPE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_TYPE,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_LIST,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_ID,
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_APPWIDGETID,
+    };
+
+    public static final String[] INT_KEYS = new String[] {
+            PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_0_" + PREF_KEY_ACTION_LAUNCH_COLOR,
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return INT_KEYS;
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : INT_KEYS) {
+                types.put(key, Integer.class);
+            }
+            for (String key : ALL_KEYS) {                // all others are type String
+                if (!types.containsKey(key)) {
+                    types.put(key, String.class);
+                }
+            }
+        }
+        return types;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,6 +283,34 @@ public class WidgetActions
         }
     }
 
+    public static boolean saveActionLaunchPref(Context context, @Nullable ContentValues values, int appWidgetId)
+    {
+        if (values != null)
+        {
+            String id = values.getAsString(PREF_KEY_ACTION_LAUNCH_ID);
+            //if (id != null)
+            //{
+                String tagString = values.getAsString(PREF_KEY_ACTION_LAUNCH_TAGS);
+                String[] tags = (tagString != null ? tagString.split("\\|") : new String[0]);
+
+                saveActionLaunchPref(context,
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_TITLE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DESC),
+                        values.getAsInteger(PREF_KEY_ACTION_LAUNCH_COLOR),
+                        tags, appWidgetId, id,
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_PACKAGE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_TYPE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_ACTION),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DATA),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_DATATYPE),
+                        values.getAsString(PREF_KEY_ACTION_LAUNCH_EXTRAS), true);
+                return true;
+            //}
+        }
+        return false;
+    }
+
     public static Set<String> loadActionTags(Context context, int appWidgetId, @Nullable String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
@@ -214,7 +325,28 @@ public class WidgetActions
         Set<String> actionList = getStringSet(prefs, listKey, null);
         return (actionList != null) ? new TreeSet<String>(actionList) : new TreeSet<String>();
     }
-    public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key)
+    public static ContentValues loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id)
+    {
+        ContentValues values = new ContentValues();
+        values.put(PREF_KEY_ACTION_LAUNCH_ID, id);
+        values.put(PREF_KEY_ACTION_LAUNCH, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH));
+        values.put(PREF_KEY_ACTION_LAUNCH_PACKAGE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        values.put(PREF_KEY_ACTION_LAUNCH_TYPE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_TYPE));
+        values.put(PREF_KEY_ACTION_LAUNCH_ACTION, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_ACTION));
+        values.put(PREF_KEY_ACTION_LAUNCH_DATA, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DATA));
+        values.put(PREF_KEY_ACTION_LAUNCH_DATATYPE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        values.put(PREF_KEY_ACTION_LAUNCH_EXTRAS, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_EXTRAS));
+        values.put(PREF_KEY_ACTION_LAUNCH_TITLE, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_TITLE));
+        values.put(PREF_KEY_ACTION_LAUNCH_DESC, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_DESC));
+        values.put(PREF_KEY_ACTION_LAUNCH_COLOR, loadActionLaunchPref(context, appWidgetId, id, PREF_KEY_ACTION_LAUNCH_COLOR));
+        values.put(PREF_KEY_ACTION_LAUNCH_TAGS, stringSetToString(loadActionTags(context, appWidgetId, id)));
+        return values;
+    }
+
+    public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key) {
+        return loadActionLaunchPref(context, appWidgetId, id, key, defaultLaunchPrefValue(key));
+    }
+    public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key, String defaultValue)
     {
         if (id == null) {
             id = "0";
@@ -225,34 +357,34 @@ public class WidgetActions
 
         if (key == null || key.isEmpty())
         {
-            return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, PREF_DEF_ACTION_LAUNCH);
+            return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, defaultValue);
 
         } else {
             switch (key)
             {
                 case PREF_KEY_ACTION_LAUNCH_PACKAGE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_PACKAGE, PREF_DEF_ACTION_LAUNCH_PACKAGE);
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_PACKAGE, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_TYPE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, SuntimesActionsContract.TYPE_ACTIVITY);
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_ACTION:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_ACTION, "");
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_ACTION, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_DATA:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATA, "");
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATA, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_DATATYPE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATATYPE, "");
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATATYPE, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_EXTRAS:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, "");
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_TITLE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE, PREF_DEF_ACTION_LAUNCH_TITLE);
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_DESC:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DESC, PREF_DEF_ACTION_LAUNCH_DESC);
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DESC, defaultValue);
 
                 case PREF_KEY_ACTION_LAUNCH_COLOR:
                     return Integer.toString(prefs.getInt(prefs_prefix + PREF_KEY_ACTION_LAUNCH_COLOR, PREF_DEF_ACTION_LAUNCH_COLOR));
@@ -260,6 +392,37 @@ public class WidgetActions
             return null;
         }
     }
+    public static String defaultLaunchPrefValue(@Nullable String key)
+    {
+        if (key == null || key.isEmpty()) {
+            return PREF_DEF_ACTION_LAUNCH;
+
+        } else {
+            switch (key)
+            {
+                case PREF_KEY_ACTION_LAUNCH: return PREF_DEF_ACTION_LAUNCH;
+                case PREF_KEY_ACTION_LAUNCH_PACKAGE: return  PREF_DEF_ACTION_LAUNCH_PACKAGE;
+                case PREF_KEY_ACTION_LAUNCH_TYPE: return SuntimesActionsContract.TYPE_ACTIVITY;
+                case PREF_KEY_ACTION_LAUNCH_ACTION: // return "";
+                case PREF_KEY_ACTION_LAUNCH_DATA: // return "";
+                case PREF_KEY_ACTION_LAUNCH_DATATYPE: // return "";
+                case PREF_KEY_ACTION_LAUNCH_EXTRAS: return "";
+                case PREF_KEY_ACTION_LAUNCH_TITLE: return PREF_DEF_ACTION_LAUNCH_TITLE;
+                case PREF_KEY_ACTION_LAUNCH_DESC: return PREF_DEF_ACTION_LAUNCH_DESC;
+                default: return "";
+            }
+        }
+    }
+    public static ContentValues defaultLaunchPrefValues()
+    {
+        String[] keys = new String[] {"", PREF_KEY_ACTION_LAUNCH, PREF_KEY_ACTION_LAUNCH_PACKAGE, PREF_KEY_ACTION_LAUNCH_TYPE, PREF_KEY_ACTION_LAUNCH_ACTION, PREF_KEY_ACTION_LAUNCH_DATA, PREF_KEY_ACTION_LAUNCH_DATATYPE, PREF_KEY_ACTION_LAUNCH_EXTRAS, PREF_KEY_ACTION_LAUNCH_TITLE, PREF_KEY_ACTION_LAUNCH_DESC };
+        ContentValues values = new ContentValues();
+        for (String key : keys) {
+            values.put(key, defaultLaunchPrefValue(key));
+        }
+        return values;
+    }
+
     public static void deleteActionLaunchPref(Context context, int appWidgetId, @Nullable String id)
     {
         if (id == null) {
@@ -458,8 +621,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            SuntimesUtils utils = new SuntimesUtils();
-            Uri dataUri = Uri.parse(Uri.decode(utils.displayStringForTitlePattern(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(context, dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -472,77 +634,92 @@ public class WidgetActions
             return;
         }
 
-        SuntimesUtils utils = new SuntimesUtils();
         String[] extras = extraString.split("&");
-        for (String extra : extras)
+        for (String extra : extras) {
+            applyExtra(context, intent, extra, data);
+        }
+    }
+
+    public static void applyExtra(Context context, Intent intent, String extra, @Nullable SuntimesData data)
+    {
+        String[] pair = extra.split("=");
+        if (pair.length == 2)
         {
-            String[] pair = extra.split("=");
-            if (pair.length == 2)
+            String key = pair[0];
+            String value = pair[1];
+
+            char c = value.charAt(0);
+            boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
+            if (isNumeric)
             {
-                String key = pair[0];
-                String value = pair[1];
-
-                char c = value.charAt(0);
-                boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
-                if (isNumeric)
+                if (value.endsWith("L") || value.endsWith("l"))
                 {
-                    if (value.endsWith("L") || value.endsWith("l"))
-                    {
-                        try {
-                            intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
-                            Log.i(TAG, "applyExtras: applied " + extra + " (long)");
+                    try {
+                        intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
+                        Log.i(TAG, "applyExtras: applied " + extra + " (long)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
+                    }
 
-                    } else if (value.endsWith("D") || value.endsWith("d")) {
-                        try {
-                            intent.putExtra(key, Double.parseDouble(value));  // double
-                            Log.i(TAG, "applyExtras: applied " + extra + " (double)");
+                } else if (value.endsWith("D") || value.endsWith("d")) {
+                    try {
+                        intent.putExtra(key, Double.parseDouble(value));  // double
+                        Log.i(TAG, "applyExtras: applied " + extra + " (double)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
+                    }
 
-                    } else if (value.endsWith("F") || value.endsWith("f")) {
-                        try {
-                            intent.putExtra(key, Float.parseFloat(value));  // float
-                            Log.i(TAG, "applyExtras: applied " + extra + " (float)");
+                } else if (value.endsWith("F") || value.endsWith("f")) {
+                    try {
+                        intent.putExtra(key, Float.parseFloat(value));  // float
+                        Log.i(TAG, "applyExtras: applied " + extra + " (float)");
 
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
-                        }
-
-                    } else {
-                        try {
-                            intent.putExtra(key, Integer.parseInt(value));  // int
-                            Log.i(TAG, "applyExtras: applied " + extra + " (int)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
-                        }
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
                     }
 
                 } else {
-                    String lowerCase = value.toLowerCase(Locale.getDefault());
-                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
-                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
-                        Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
+                    try {
+                        intent.putExtra(key, Integer.parseInt(value));  // int
+                        Log.i(TAG, "applyExtras: applied " + extra + " (int)");
 
-                    } else {
-                        intent.putExtra(key, utils.displayStringForTitlePattern(context, value, data));  // string (may contain % patterns)
-                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
+                    } catch (NumberFormatException e) {
+                        intent.putExtra(key, value);  // string
+                        Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
                     }
                 }
 
             } else {
-                Log.w(TAG, "applyExtras: skipping " + extra);
+                String lowerCase = value.toLowerCase(Locale.getDefault());
+                if (lowerCase.equals("true") || lowerCase.equals("false")) {
+                    intent.putExtra(key, lowerCase.equals("true"));  // boolean
+                    Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
+
+                } else {
+                    if (value.contains("%"))
+                    {
+                        String v = DataSubstitutions.displayStringForTitlePattern0(context, value, data);
+                        if (!v.contains("%")) {
+                            applyExtra(context, intent, key + "=" + v, data);    // recursive call
+
+                        } else {
+                            intent.putExtra(key, v);
+                            Log.w(TAG, "applyExtras: applied " + extra + " (String) (incomplete substitution)");
+                        }
+                    } else {
+                        intent.putExtra(key, value);
+                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
+                    }
+                }
             }
+
+        } else {
+            Log.w(TAG, "applyExtras: skipping " + extra);
         }
     }
 
@@ -611,18 +788,34 @@ public class WidgetActions
         SHOW_DIALOG_SOLSTICE("Suntimes", "Solstices Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         SHOW_DIALOG_MOON("Suntimes", "Moon Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         SHOW_DIALOG_SUN("Suntimes", "Sun Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        SHOW_DIALOG_SUNLIGHT("Suntimes", "Sunlight", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        OPEN_ALARM_LIST("Suntimes Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        OPEN_ALARM_LIST("Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
         OPEN_THEME_LIST("Suntimes", "Theme List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_ACTION_LIST("Suntimes", "Action List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         OPEN_SETTINGS("Suntimes", "Settings", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
-        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
-        SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
-        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true);
+        SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT, TAG_LOCATION}, true),
+        SNOOZE_ALARM("Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+        DISMISS_ALARM("Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+        UPDATE_WIDGETS("Suntimes", "Update widgets", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+
+        TRIGGER_BEDTIME("Bedtime", "Turn on bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        DISMISS_BEDTIME("Bedtime", "Turn off bedtime mode", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+
+        CREATE_CALENDAR_EVENT_RISING("Calendar Event", "Create a calendar event (rising time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+        CREATE_CALENDAR_EVENT_SETTING("Calendar Event", "Create a calendar event (setting time)", new String[] {TAG_DEFAULT, TAG_CALENDAR}, true),
+
+        SUNTIMES_ALARM_LIST("Suntimes Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        OPEN_TIMER_LIST("Alarms", "Timer List", new String[] {TAG_DEFAULT, TAG_ALARM}, true),
+
+        ANDROID_SETTINGS_DATE("Android", "Date Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_DISPLAY("Android", "Display Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_LOCALE("Android", "Locale Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ANDROID_SETTINGS_LOCATION("Android", "Location Settings", new String[] {TAG_DEFAULT, TAG_SETTINGS}, true),
+        ;
 
         private String title, desc;
         private String[] tags;
@@ -667,7 +860,7 @@ public class WidgetActions
             SuntimesAction[] actions = SuntimesAction.values();  // TODO
             String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
             String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
-            for (int i=0; i<desc.length; i++)
+            for (int i=0; i < desc.length; i++)
             {
                 if (i < actions.length)
                 {
@@ -677,102 +870,162 @@ public class WidgetActions
             }
         }
 
+        public ContentValues toContentValues()
+        {
+            LaunchType launchType = LaunchType.ACTIVITY;
+            String launchString = SuntimesActivity.class.getName();
+            String launchPackage = null, launchAction = null, launchData = null, launchMime = null, launchExtras = null;
+
+            switch (this)
+            {
+                case TRIGGER_BEDTIME:
+                    launchType = LaunchType.BROADCAST;
+                    launchString = BedtimeBroadcastReceiver.class.getName();
+                    launchAction = AlarmNotifications.ACTION_BEDTIME;
+                    break;
+
+                case DISMISS_BEDTIME:
+                    launchType = LaunchType.BROADCAST;
+                    launchString = BedtimeBroadcastReceiver.class.getName();
+                    launchAction = AlarmNotifications.ACTION_BEDTIME_DISMISS;
+                    break;
+
+                case SNOOZE_ALARM:
+                    launchString = null;
+                    launchAction = AlarmClockActivity.ACTION_SNOOZE_ALARM;
+                    launchExtras = AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION + "=" + (AlarmSettings.PREF_DEF_ALARM_SNOOZE / (1000 * 60));
+                    break;
+
+                case DISMISS_ALARM:
+                    launchString = null;
+                    launchAction = AlarmClockActivity.ACTION_DISMISS_ALARM;
+                    launchExtras = AlarmClockActivity.EXTRA_ALARM_SEARCH_MODE + "=" + AlarmClockActivity.ALARM_SEARCH_MODE_NEXT;
+                    break;
+
+                case SHOW_CALENDAR:
+                    launchString = null;
+                    launchAction = Intent.ACTION_VIEW;
+                    launchData = "content://com.android.calendar/time/%dm";
+                    break;
+
+                case SHOW_MAP:
+                    launchString = null;
+                    launchAction = Intent.ACTION_VIEW;
+                    launchData = "geo:%lat,%lon";
+                    break;
+
+                case SHOW_DIALOG_SUN: launchAction = SuntimesActivity.ACTION_VIEW_SUN; break;
+                case SHOW_DIALOG_SUNLIGHT: launchAction = SuntimesActivity.ACTION_VIEW_SUNLIGHT; break;
+                case SHOW_DIALOG_MOON: launchAction = SuntimesActivity.ACTION_VIEW_MOON; break;
+                case SHOW_DIALOG_SOLSTICE: launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE; break;
+                case SHOW_DIALOG_WORLDMAP: launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP; break;
+
+                case OPEN_ACTION_LIST:
+                    launchExtras = ActionListActivity.PARAM_NOSELECT + "=true";
+                    launchString = ActionListActivity.class.getName(); break;
+
+                case OPEN_THEME_LIST:
+                    launchExtras = WidgetThemeListActivity.PARAM_NOSELECT + "=true";
+                    launchString = WidgetThemeListActivity.class.getName();
+                    break;
+
+                case SUNTIMES_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
+                case OPEN_ALARM_LIST: launchString = null; launchAction = "android.intent.action.SHOW_ALARMS"; break;
+                case OPEN_TIMER_LIST: launchAction = "android.intent.action.SHOW_TIMERS"; break;
+                case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
+                case OPEN_SETTINGS: launchString = SuntimesSettingsActivity.class.getName(); break;
+
+                case UPDATE_WIDGETS:
+                    launchString = null;
+                    launchAction = SuntimesWidget0.SUNTIMES_ALARM_UPDATE;
+                    launchType = LaunchType.BROADCAST;
+                    break;
+
+                case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
+                case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;
+                case TIMEZONE: launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE; break;
+
+                case ALARM: launchAction = SuntimesActivity.ACTION_ADD_ALARM; break;
+                case NEXT_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
+                case PREV_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
+                case RESET_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
+                case SEEK_NOTE_SUNRISE: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
+                    launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNRISE.name();
+                    break;
+                case SEEK_NOTE_SUNSET: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
+                    launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNSET.name();
+                    break;
+
+                case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
+                case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
+                case SWAP_CARD: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
+
+                case SHOW_CARD:
+                    launchAction = SuntimesActivity.ACTION_CARD_SHOW;
+                    launchExtras = SuntimesActivity.EXTRA_SHOW_DATE + "=%dm";
+                    break;
+
+                case CREATE_CALENDAR_EVENT_RISING:
+                case CREATE_CALENDAR_EVENT_SETTING:
+                    launchString = null;
+                    launchAction = Intent.ACTION_INSERT;
+                    launchData = CalendarContract.Events.CONTENT_URI.toString();
+                    if (Build.VERSION.SDK_INT >= 14)
+                    {
+                        String eventString = (this == CREATE_CALENDAR_EVENT_RISING ? "sr" : "ss");
+                        launchExtras = CalendarContract.Events.TITLE  + "=%M"
+                                + "&" + CalendarContract.Events.EVENT_LOCATION + "=%loc"
+                                + "&" + CalendarContract.EXTRA_EVENT_BEGIN_TIME + "=%em@" + eventString + "L"
+                                + "&" + CalendarContract.EXTRA_EVENT_END_TIME + "=%em@" + eventString + "L";
+                    }
+                    break;
+
+                case ANDROID_SETTINGS_DATE: launchString = null; launchAction = Settings.ACTION_DATE_SETTINGS; break;
+                case ANDROID_SETTINGS_DISPLAY: launchString = null; launchAction = Settings.ACTION_DISPLAY_SETTINGS; break;
+                case ANDROID_SETTINGS_LOCALE: launchString = null; launchAction = Settings.ACTION_LOCALE_SETTINGS; break;
+                case ANDROID_SETTINGS_LOCATION: launchString = null; launchAction = Settings.ACTION_LOCATION_SOURCE_SETTINGS; break;
+
+                case NOTHING:
+                    launchType = null;
+                    break;
+                default:
+                    launchType = null;
+                    Log.w(TAG, "initDefaults: unhandled action: " + name());
+                    break;
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE, title());
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC, desc());
+            values.put("", launchString);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH, launchString);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE, (launchType != null ? launchType.name() : null));
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE, launchPackage);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION, launchAction);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, launchExtras);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, launchData);
+            values.put(WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, launchMime);
+            return values;
+        }
+
         public static void initDefaults( Context context )
         {
-            Log.d("DEBUG", "initDefaults");
+            //Log.d("DEBUG", "initDefaults");
             for (SuntimesAction action : SuntimesAction.values())
             {
                 if (!hasActionLaunchPref(context, 0, action.name()))
                 {
-                    LaunchType launchType = LaunchType.ACTIVITY;
-                    String launchString = SuntimesActivity.class.getName();
-                    String launchPackage = null, launchAction = null, launchData = null, launchMime = null, launchExtras = null;
-
-                    switch (action)
+                    ContentValues values = action.toContentValues();
+                    String launchType = values.getAsString(PREF_KEY_ACTION_LAUNCH_TYPE);
+                    if (launchType != null)
                     {
-                        case SNOOZE_ALARM:
-                            launchString = null;
-                            launchAction = AlarmClockActivity.ACTION_SNOOZE_ALARM;
-                            launchExtras = AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION + "=" + (AlarmSettings.PREF_DEF_ALARM_SNOOZE / (1000 * 60));
-                            break;
-
-                        case DISMISS_ALARM:
-                            launchString = null;
-                            launchAction = AlarmClockActivity.ACTION_DISMISS_ALARM;
-                            launchExtras = AlarmClockActivity.EXTRA_ALARM_SEARCH_MODE + "=" + AlarmClockActivity.ALARM_SEARCH_MODE_NEXT;
-                            break;
-
-                        case SHOW_CALENDAR:
-                            launchString = null;
-                            launchAction = Intent.ACTION_VIEW;
-                            launchData = "content://com.android.calendar/time/%dm";
-                            break;
-
-                        case SHOW_MAP:
-                            launchString = null;
-                            launchAction = Intent.ACTION_VIEW;
-                            launchData = "geo:%lat,%lon";
-                            break;
-
-                        case SHOW_DIALOG_SUN: launchAction = SuntimesActivity.ACTION_VIEW_SUN; break;
-                        case SHOW_DIALOG_MOON: launchAction = SuntimesActivity.ACTION_VIEW_MOON; break;
-                        case SHOW_DIALOG_SOLSTICE: launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE; break;
-                        case SHOW_DIALOG_WORLDMAP: launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP; break;
-
-                        case OPEN_ACTION_LIST:
-                            launchExtras = ActionListActivity.PARAM_NOSELECT + "=true";
-                            launchString = ActionListActivity.class.getName(); break;
-
-                        case OPEN_THEME_LIST:
-                            launchExtras = WidgetThemeListActivity.PARAM_NOSELECT + "=true";
-                            launchString = WidgetThemeListActivity.class.getName();
-                            break;
-
-                        case OPEN_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
-                        case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
-                        case OPEN_SETTINGS: launchString = SuntimesSettingsActivity.class.getName(); break;
-
-                        case UPDATE_WIDGETS:
-                            launchString = null;
-                            launchAction = SuntimesWidget0.SUNTIMES_ALARM_UPDATE;
-                            launchType = LaunchType.BROADCAST;
-                            break;
-
-                        case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
-                        case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;
-                        case TIMEZONE: launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE; break;
-
-                        case ALARM: launchAction = SuntimesActivity.ACTION_ADD_ALARM; break;
-                        case NEXT_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
-                        case PREV_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
-                        case RESET_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
-                        case SEEK_NOTE_SUNRISE: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
-                            launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNRISE.name();
-                            break;
-                        case SEEK_NOTE_SUNSET: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
-                            launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNSET.name();
-                            break;
-
-                        case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
-                        case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
-                        case SWAP_CARD: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
-
-                        case SHOW_CARD:
-                            launchAction = SuntimesActivity.ACTION_CARD_SHOW;
-                            launchExtras = SuntimesActivity.EXTRA_SHOW_DATE + "=%dm";
-                            break;
-
-                        case NOTHING:
-                            launchType = null;
-                            break;
-                        default:
-                            launchType = null;
-                            Log.w(TAG, "initDefaults: unhandled action: " + action.name());
-                            break;
-                    }
-
-                    if (launchType != null) {
-                        saveActionLaunchPref(context, action.title(), action.desc(), null, action.getTags(), 0, action.name(), launchString, launchPackage, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
+                        String launchString = values.getAsString(PREF_KEY_ACTION_LAUNCH);
+                        String launchPackage = values.getAsString(PREF_KEY_ACTION_LAUNCH_PACKAGE);
+                        String launchAction = values.getAsString(PREF_KEY_ACTION_LAUNCH_ACTION);
+                        String launchData = values.getAsString(PREF_KEY_ACTION_LAUNCH_DATA);
+                        String launchMime = values.getAsString(PREF_KEY_ACTION_LAUNCH_DATATYPE);
+                        String launchExtras = values.getAsString(PREF_KEY_ACTION_LAUNCH_EXTRAS);
+                        saveActionLaunchPref(context, action.title(), action.desc(), null, action.getTags(), 0, action.name(), launchString, launchPackage, launchType, launchAction, launchData, launchMime, launchExtras, action.listed());
                     }
                 }
             }
@@ -810,4 +1063,5 @@ public class WidgetActions
         System.arraycopy(b, 0, result, a.length, b.length);
         return result;
     }
+
 }

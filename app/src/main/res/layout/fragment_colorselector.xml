@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <ImageButton android:id="@+id/backButton"
+        android:src="?attr/icActionBack" style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:tooltipText="@string/dialog_cancel" tools:ignore="UnusedAttribute"
+        android:contentDescription="@string/dialog_cancel" />
+
+    <TextView android:id="@+id/color_values_selector_label" android:visibility="gone"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+        android:text="@string/configAction_colors" android:labelFor="@+id/colorvalues_selector" />
+
+    <Spinner android:id="@+id/colorvalues_selector"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        tools:listitem="@android:layout/simple_list_item_1" />
+
+    <ImageButton android:id="@+id/editButton"
+        android:src="?attr/icActionEdit" style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:tooltipText="@string/configAction_editColors"  tools:ignore="UnusedAttribute"
+        android:contentDescription="@string/configAction_editColors" />
+
+    <ImageButton android:id="@+id/addButton"
+        android:src="?attr/icActionNew" style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:tooltipText="@string/configAction_addColors" tools:ignore="UnusedAttribute"
+        android:contentDescription="@string/configAction_addColors" />
+
+    <ImageButton android:id="@+id/menuButton" android:visibility="gone"
+        style="@style/Widget.AppCompat.ActionButton.Overflow"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:contentDescription="@string/configAction_overflow" />
+
+</LinearLayout>

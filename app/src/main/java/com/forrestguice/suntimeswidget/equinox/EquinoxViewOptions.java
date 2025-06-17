@@ -37,9 +37,11 @@ public class EquinoxViewOptions
 
     public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
     public boolean showSeconds = false;
+    public boolean showDate = true;
 
     public int titleColor, noteColor, disabledColor, pressedColor;
-    public Integer[] seasonColors = new Integer[4];
+    public EquinoxColorValues colors = new EquinoxColorValues();
+    //public Integer[] seasonColors = new Integer[4];
     public Integer labelColor, textColor;
     public int resID_buttonPressColor;
 
@@ -52,6 +54,8 @@ public class EquinoxViewOptions
     @SuppressLint("ResourceType")
     public void init(Context context)
     {
+        colors = new EquinoxColorValues(context, true);
+
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor,
                              R.attr.table_springColor, R.attr.table_summerColor, R.attr.table_fallColor, R.attr.table_winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -59,10 +63,10 @@ public class EquinoxViewOptions
         disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
         resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
         pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
-        seasonColors[0] = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.springColor_dark));
-        seasonColors[1] = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.summerColor_dark));
-        seasonColors[2] = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.fallColor_dark));
-        seasonColors[3] =  ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.winterColor_dark));
+        //seasonColors[0] = ContextCompat.getColor(context, typedArray.getResourceId(3, R.color.springColor_dark));
+        //seasonColors[1] = ContextCompat.getColor(context, typedArray.getResourceId(4, R.color.summerColor_dark));
+        //seasonColors[2] = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.fallColor_dark));
+        //seasonColors[3] =  ContextCompat.getColor(context, typedArray.getResourceId(6, R.color.winterColor_dark));
         titleSizeSp = timeSizeSp = null;
         typedArray.recycle();
     }
@@ -76,10 +80,10 @@ public class EquinoxViewOptions
             labelColor = theme.getTitleColor();
             textColor = theme.getTextColor();
             pressedColor = theme.getActionColor();
-            seasonColors[0] = theme.getSpringColor();
-            seasonColors[1] = theme.getSummerColor();
-            seasonColors[2] = theme.getFallColor();
-            seasonColors[3] = theme.getWinterColor();
+            colors.setColor(EquinoxColorValues.COLOR_SPRING_TEXT, theme.getSpringColor());
+            colors.setColor(EquinoxColorValues.COLOR_SUMMER_TEXT, theme.getSummerColor());
+            colors.setColor(EquinoxColorValues.COLOR_AUTUMN_TEXT, theme.getFallColor());
+            colors.setColor(EquinoxColorValues.COLOR_WINTER_TEXT, theme.getWinterColor());
             timeSizeSp = theme.getTimeSizeSp();
             titleSizeSp = theme.getTitleSizeSp();
             titleBold = theme.getTitleBold();
@@ -89,11 +93,11 @@ public class EquinoxViewOptions
     public int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
     {
         switch (mode) {
-            case CROSS_WINTER: case SOLSTICE_WINTER: return seasonColors[3];
-            case CROSS_AUTUMN: case EQUINOX_AUTUMNAL: return seasonColors[2];
-            case CROSS_SUMMER: case SOLSTICE_SUMMER: return seasonColors[1];
+            case CROSS_WINTER: case SOLSTICE_WINTER: return colors.getColor(EquinoxColorValues.COLOR_WINTER_TEXT);
+            case CROSS_AUTUMN: case EQUINOX_AUTUMNAL: return colors.getColor(EquinoxColorValues.COLOR_AUTUMN_TEXT);
+            case CROSS_SUMMER: case SOLSTICE_SUMMER: return colors.getColor(EquinoxColorValues.COLOR_SUMMER_TEXT);
             case CROSS_SPRING: case EQUINOX_SPRING:
-            default: return seasonColors[0];
+            default: return colors.getColor(EquinoxColorValues.COLOR_SPRING_TEXT);
         }
     }
 }

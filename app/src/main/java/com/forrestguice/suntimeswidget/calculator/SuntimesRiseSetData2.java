@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -34,7 +33,6 @@ import java.util.Calendar;
  */
 public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 {
-    private Context context;
     private Calendar[] calendar = {null, null, null};
     private Calendar[] sunrise = {null, null, null};
     private Calendar[] sunset = {null, null, null};
@@ -43,25 +41,21 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     public SuntimesRiseSetData2(Context context, int appWidgetId)
     {
         super(context, appWidgetId);
-        this.context = context;
         initFromSettings(context, appWidgetId);
     }
     public SuntimesRiseSetData2(Context context, int appWidgetId, String calculatorName)
     {
         super(context, appWidgetId, calculatorName);
-        this.context = context;
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other)
     {
         super(other);
-        this.context = other.context;
         initFromOther(other, other.layoutID);
     }
     public SuntimesRiseSetData2(SuntimesRiseSetData2 other, int layoutID)
     {
         super(other, layoutID);
-        this.context = other.context;
         initFromOther(other, layoutID);
     }
 
@@ -158,6 +152,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.offset = other.offset;
 
         this.dayLengthToday = other.dayLengthToday();
         this.dayLengthOther = other.dayLengthOther();
@@ -187,9 +182,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
     /**
      * Calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -211,15 +207,11 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
         if (todayIsNotToday())
         {
-            int year = todayIs.get(Calendar.YEAR);
-            int month = todayIs.get(Calendar.MONTH);
-            int day = todayIs.get(Calendar.DAY_OF_MONTH);
-            for (int i=0; i<calendar.length; i++)
-            {
-                calendar[i].set(year, month, day);
+            for (int i=0; i<calendar.length; i++) {
+                calendar[i].setTimeInMillis(todayIs.getTimeInMillis());
             }
-            todaysCalendar.set(year, month, day);
-            otherCalendar.set(year, month, day);
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         switch (compareMode)
@@ -247,6 +239,14 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             {
                 sunrise[i] = calculator.getSunriseCalendarForDate(calendar[i], angle);
                 sunset[i] = calculator.getSunsetCalendarForDate(calendar[i], angle);
+                if (offset != 0) {
+                    if (sunrise[i] != null) {
+                        sunrise[i].add(Calendar.MILLISECOND, offset);
+                    }
+                    if (sunset[i] != null) {
+                        sunset[i].add(Calendar.MILLISECOND, offset);
+                    }
+                }
                 continue;
             }
 
@@ -271,6 +271,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunrise[i] = sunset[i] = calculator.getSolarNoonCalendarForDate(calendar[i]);
                     break;
 
+                case MIDNIGHT:
+                    sunrise[i] = sunset[i] = calculator.getSolarMidnightCalendarForDate(calendar[i]);
+                    break;
+
                 case CIVIL:
                     sunrise[i] = calculator.getCivilSunriseCalendarForDate(calendar[i]);
                     sunset[i] = calculator.getCivilSunsetCalendarForDate(calendar[i]);
@@ -292,13 +296,21 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunset[i] = calculator.getOfficialSunsetCalendarForDate(calendar[i]);
                     break;
             }
+            if (offset != 0) {
+                if (sunrise[i] != null) {
+                    sunrise[i].add(Calendar.MILLISECOND, offset);
+                }
+                if (sunset[i] != null) {
+                    sunset[i].add(Calendar.MILLISECOND, offset);
+                }
+            }
         }
 
         int i = indexOfOther();
         dayLengthToday = determineDayLength(sunrise[1], sunset[1]);
         dayLengthOther = determineDayLength(sunrise[i], sunset[i]);
 
-        super.calculate();
+        super.calculate(context);
     }
 
 }

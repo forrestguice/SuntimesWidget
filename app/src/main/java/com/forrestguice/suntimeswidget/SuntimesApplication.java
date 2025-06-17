@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -30,12 +31,10 @@ public class SuntimesApplication extends Application
         super.onCreate();
         ApplicationStarter.initialize(this, false);
 
-        /*if (BuildConfig.DEBUG) {
-            try {
-                Class.forName("dalvik.system.CloseGuard").getMethod("setEnabled", boolean.class).invoke(null, true);
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
+        if (BuildConfig.DEBUG)
+        {
+            StrictMode.enableDefaults();
+            StrictMode.allowThreadDiskWrites();
+        }
     }
 }
