@@ -1,0 +1,4 @@
+- fixes app crash when twilight alarms have an attached note (#872).
+- improves searching places when names contain special characters.
+- adds world places; ~120 places; South American capitals and other major cities.
+- adds an indicator to the moon dialog when the displayed time is adjusted by DST.

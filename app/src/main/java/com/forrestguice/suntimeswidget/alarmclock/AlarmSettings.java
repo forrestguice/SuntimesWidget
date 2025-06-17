@@ -168,6 +168,8 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_DISMISS_CHALLENGE = "app_alarms_dismiss_challenge";
     public static final DismissChallenge PREF_DEF_ALARM_DISMISS_CHALLENGE = DismissChallenge.NONE;
 
+    public static final String PREF_KEY_ALARM_CLEARALL = "app_alarms_clearall";
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static final String[] ALL_KEYS = new String[]

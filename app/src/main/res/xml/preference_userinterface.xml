@@ -110,6 +110,11 @@
             android:title="@string/configLabel_ui_showgoldhour"
             android:defaultValue="@bool/def_app_ui_showgoldhour" />
 
+        <CheckBoxPreference
+            android:key="app_ui_showfields_7"
+            android:title="@string/timeMode_midnight"
+            android:defaultValue="@bool/def_app_ui_showmidnight" />
+
     </PreferenceCategory>
 
     <!--<PreferenceCategory

@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 7 (0.6.0)
+ * @version 8 (0.6.1)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -54,7 +54,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *       content://suntimeswiget.calculator.provider/sun/[millis]-[millis]   .. get upcoming sun for range (timestamp)
  *
  *   The result will be one or more rows containing:
- *       COLUMN_SUN_NOON,
+ *       COLUMN_SUN_NOON,             COLUMN_SUN_MIDNIGHT,
  *       COLUMN_SUN_ACTUAL_RISE,      COLUMN_SUN_ACTUAL_SET,
  *       COLUMN_SUN_CIVIL_RISE,       COLUMN_SUN_CIVIL_SET,
  *       COLUMN_SUN_NAUTICAL_RISE,    COLUMN_SUN_NAUTICAL_SET,
@@ -230,13 +230,14 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   6 fixes ambiguity of COLUMN_SEASON_CROSS_* columns; e.g. CROSS_SUMMER is the midpoint between summer solstice and autumn equinox.
  *   7 adds COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE, COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE.
  *     adds _POSITION_KEYS; may be combined with COLUMN_MOON and COLUMN_SUN keys to specify position at time of event.
+ *   8 adds COLUMN_SUN_MIDNIGHT
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.6.0";
-    int VERSION_CODE = 7;
+    String VERSION_NAME = "v0.6.1";
+    int VERSION_CODE = 8;
 
     /**
      * CONFIG
@@ -303,6 +304,7 @@ public interface CalculatorProviderContract
     String COLUMN_SUN_NOON = "solarnoon";                   // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_SUN_ACTUAL_RISE = "sunrise";              // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_SUN_ACTUAL_SET = "sunset";                // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_MIDNIGHT = "midnight";                // long (timestamp)
 
     String COLUMN_SUN_CIVIL_RISE = "civilrise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
     String COLUMN_SUN_CIVIL_SET = "civilset";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
@@ -331,7 +333,8 @@ public interface CalculatorProviderContract
             COLUMN_SUN_NOON,
             COLUMN_SUN_GOLDEN_MORNING, COLUMN_SUN_GOLDEN_EVENING,
             COLUMN_SUN_BLUE8_RISE, COLUMN_SUN_BLUE8_SET,
-            COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET
+            COLUMN_SUN_BLUE4_RISE, COLUMN_SUN_BLUE4_SET,
+            COLUMN_SUN_MIDNIGHT
     };
 
     /**

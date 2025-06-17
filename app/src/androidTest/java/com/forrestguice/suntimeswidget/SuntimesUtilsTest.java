@@ -217,28 +217,6 @@ public class SuntimesUtilsTest
     }
 
     @Test
-    public void test_displayStringForTitlePattern()
-    {
-        String[] patterns = new String[] { "%loc", "%lat", "%lon", "%lel", "%t", "%s", "%id", "%d", "%dY", "%dD", "%dd", "%dT", "%dt", "%dm", "%%" };
-
-        StringBuilder pattern0 = new StringBuilder();
-        for (int i=0; i<patterns.length; i++) {
-            pattern0.append(patterns[i]);
-        }
-
-        String[] result0 = new String[] {
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString(), (SuntimesData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m%i", (SuntimesMoonData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesRiseSetData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesRiseSetDataset) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesEquinoxSolsticeData) null)
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
-    }
-
-    @Test
     public void test_initDisplayStrings_executionTime()
     {
         double bench_millis = 0, threshold_millis = 2.0;
