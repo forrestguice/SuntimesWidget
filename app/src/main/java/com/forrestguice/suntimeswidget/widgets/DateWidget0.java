@@ -71,7 +71,7 @@ public class DateWidget0 extends SuntimesWidget0
     protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, DateLayout layout)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);  // TODO: data
-        data.calculate();
+        data.calculate(context);
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 

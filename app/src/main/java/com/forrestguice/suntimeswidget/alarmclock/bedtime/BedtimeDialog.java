@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
+import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -178,12 +179,12 @@ public class BedtimeDialog extends DialogFragment
             addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
         }
 
-        MillisecondPickerDialog sleepOffsetDialog = (MillisecondPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_OFFSET);
+        TimeOffsetPickerDialog sleepOffsetDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_OFFSET);
         if (sleepOffsetDialog != null) {
             sleepOffsetDialog.setDialogListener(onSleepOffsetDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
 
-        MillisecondPickerDialog sleepCycleDialog = (MillisecondPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLE);
+        TimeOffsetPickerDialog sleepCycleDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLE);
         if (sleepCycleDialog != null) {
             sleepCycleDialog.setDialogListener(onSleepCycleDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
@@ -565,19 +566,20 @@ public class BedtimeDialog extends DialogFragment
     {
         FragmentManager fragments = getChildFragmentManager();
 
-        final MillisecondPickerDialog dialog = new MillisecondPickerDialog();
-        dialog.setMode(MillisecondPickerHelper.MODE_MINUTES);
-        dialog.setParamMinMax(getResources().getInteger(R.integer.minSleepCycleMinutes),
-                getResources().getInteger(R.integer.maxSleepCycleMinutes));
+        final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
+        dialog.setFlags(false, true, true, false, false);
+        dialog.setRange(getResources().getInteger(R.integer.minSleepCycleMillis),
+                        getResources().getInteger(R.integer.maxSleepCycleMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepCycleMs(context));
         dialog.setDialogListener(onSleepCycleDialogListener(item));
         dialog.setDialogTitle(getString(R.string.configLabel_sleepCycle));
+        dialog.setRestoreDefault(getString(R.string.configAction_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
         dialog.show(fragments, DIALOG_SLEEP_CYCLE);
     }
 
-    private MillisecondPickerDialog.DialogListener onSleepCycleDialogListener(final BedtimeItem item)
+    private TimeOffsetPickerDialog.DialogListener onSleepCycleDialogListener(final BedtimeItem item)
     {
-        return new MillisecondPickerDialog.DialogListener()
+        return new TimeOffsetPickerDialog.DialogListener()
         {
             @Override
             public void onDialogAccepted(long value) {
@@ -639,20 +641,20 @@ public class BedtimeDialog extends DialogFragment
     protected void showConfigureSleepOffsetDialog(Context context, final BedtimeItem item)
     {
         FragmentManager fragments = getChildFragmentManager();
-        final MillisecondPickerDialog dialog = new MillisecondPickerDialog();
-        dialog.setMode(MillisecondPickerHelper.MODE_MINUTES);
-        dialog.setParamMinMax(getResources().getInteger(R.integer.minFallAsleepMinutes),
-                getResources().getInteger(R.integer.maxFallAsleepMinutes));
+        final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
+        dialog.setFlags(false, true, true, false, false);
+        dialog.setRange(getResources().getInteger(R.integer.minFallAsleepMillis),
+                        getResources().getInteger(R.integer.maxFallAsleepMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepOffsetMs(context));
         dialog.setDialogListener(onSleepOffsetDialogListener(item));
         dialog.setDialogTitle(getString(R.string.configLabel_sleepOffset));
-        dialog.setParamZeroText(getString(R.string.cycleNone));
+        dialog.setZeroText(getString(R.string.cycleNone));
         dialog.show(fragments, DIALOG_SLEEP_OFFSET);
     }
 
-    private MillisecondPickerDialog.DialogListener onSleepOffsetDialogListener(final BedtimeItem item)
+    private TimeOffsetPickerDialog.DialogListener onSleepOffsetDialogListener(final BedtimeItem item)
     {
-        return new MillisecondPickerDialog.DialogListener()
+        return new TimeOffsetPickerDialog.DialogListener()
         {
             @Override
             public void onDialogAccepted(long value) {

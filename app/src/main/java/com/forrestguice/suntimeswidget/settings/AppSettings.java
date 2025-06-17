@@ -158,7 +158,7 @@ public class AppSettings
     public static final String PREF_KEY_UI_EMPHASIZEFIELD = "app_ui_emphasizefield";
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
-    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00010011;
+    public static final byte PREF_DEF_UI_SHOWFIELDS = 0b000010011;
     public static final int FIELD_ACTUAL = 0;  // bit positions
     public static final int FIELD_CIVIL = 1;
     public static final int FIELD_NAUTICAL = 2;
@@ -166,7 +166,8 @@ public class AppSettings
     public static final int FIELD_NOON = 4;
     public static final int FIELD_GOLD = 5;
     public static final int FIELD_BLUE = 6;
-    public static final int NUM_FIELDS = 7;
+    public static final int FIELD_MIDNIGHT = 7;
+    public static final int NUM_FIELDS = 8;
 
     public static final String PREF_KEY_ACCESSIBILITY_VERBOSE = "app_accessibility_verbose";
     public static final boolean PREF_DEF_ACCESSIBILITY_VERBOSE = false;
@@ -901,7 +902,9 @@ public class AppSettings
                         if (check_notagain != null) {
                             AppSettings.setDialogDoNotShowAgain(context, key, check_notagain.isChecked());
                         }
-                        onOkClicked.onClick(dialog, which);
+                        if (onOkClicked != null) {
+                            onOkClicked.onClick(dialog, which);
+                        }
                     }
                 });
         return dialog;

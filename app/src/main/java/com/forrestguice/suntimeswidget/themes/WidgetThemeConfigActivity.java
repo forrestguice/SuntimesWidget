@@ -278,16 +278,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data0 = new SuntimesRiseSetDataset(context, 0);  // use app configuration
-        data0.calculateData();
+        data0.calculateData(context);
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, 0, "moon");
-        data2.calculate();
+        data2.calculate(context);
     }
 
     private void initLocale()
@@ -845,7 +845,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override

@@ -72,7 +72,7 @@ public class ClockWidget0 extends SuntimesWidget0
     protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, ClockLayout layout)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
         layout.prepareForUpdate(context, appWidgetId, data, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
         RemoteViews views = layout.getViews(context);
 

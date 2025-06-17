@@ -109,14 +109,14 @@ public class SolsticeWidget0 extends SuntimesWidget0
             int eventTrackingLevel = showCrossQuarter ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN; //WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
             SuntimesEquinoxSolsticeDataset dataset = (eventTrackingLevel > 0 ? new SuntimesEquinoxSolsticeDataset1(context, appWidgetId)
                                                                              : new SuntimesEquinoxSolsticeDataset(context, appWidgetId));
-            dataset.calculateData();
+            dataset.calculateData(context);
 
             SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
             data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
 
         } else {
             data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-            data.calculate();
+            data.calculate(context);
         }
         return data;
     }

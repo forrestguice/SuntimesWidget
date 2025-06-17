@@ -71,7 +71,7 @@ public class MoonWidget0 extends SuntimesWidget0
         }
 
         SuntimesMoonData data = new SuntimesMoonData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
         layout.prepareForUpdate(context, appWidgetId, data);
 
         RemoteViews views = layout.getViews(context);

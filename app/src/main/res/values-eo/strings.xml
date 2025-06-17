@@ -1659,6 +1659,7 @@
         <item>mezo de somero</item>
         <item>mezo de aŭtuno</item>
         <item>mezo de vintro</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>astronomia sunleviĝo</item>
@@ -1692,6 +1693,7 @@
         <item>somer-mezo</item>
         <item>aŭtun-mezo</item>
         <item>vintr-mezo</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>astronomia sunleviĝo</item>
@@ -1725,6 +1727,7 @@
         <item>somer-mezo</item>
         <item>aŭtun-mezo</item>
         <item>vintr-mezo</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     
   <!-- App Setting: locale mode -->

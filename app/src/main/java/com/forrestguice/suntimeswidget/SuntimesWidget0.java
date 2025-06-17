@@ -293,7 +293,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
                     (extraString != null && !extraString.isEmpty() && extraString.contains("%")) )
             {
                 data = getData(context, appWidgetId);
-                data.calculate();
+                data.calculate(context);
             }
             WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass(), Intent.FLAG_ACTIVITY_NEW_TASK);
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
@@ -656,14 +656,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
 
         SuntimesRiseSetData data = getRiseSetData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
 
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon)
         {
             SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
             noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-            noonData.calculate();
+            noonData.calculate(context);
             data.linkData(noonData);
         }
 

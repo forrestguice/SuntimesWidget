@@ -99,7 +99,7 @@ public class AlarmScheduleTest
     {
         SuntimesMoonData data = AlarmNotifications.getData_moonEvent(context, location0);
         data.setTodayIs(getCalendar(2024, Calendar.JUNE, 1, 18, 8));
-        data.calculate();
+        data.calculate(context);
 
         Calendar newMoon = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW);
         Calendar firstQuarter = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER);

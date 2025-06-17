@@ -1,5 +1,25 @@
 ### ~
 
+### v0.16.7 (2025-05-12)
+* fixes app crash when twilight alarms have an attached note (#872).
+* improves searching places when names contain special characters.
+* adds world places; ~120 places; South American capitals and other major cities.
+* adds "check all" button to the world places dialog; fixes bug where dialog allows all items unchecked.
+* adds an indicator to the moon dialog when the displayed time is adjusted by DST (#870).
+* adds an additional "clear alarms" preference to alarm settings.
+
+### v0.16.6 (2025-04-16)
+* adds option for "solar midnight" (#835).
+* adds world places: ~110 places; North American capitals, major cities, and others.
+* adds an indicator to sun dialog when the displayed time is adjusted by DST.
+* fixes bug where "sun position grid does not re-align when DST changes" (#867).
+* fixes bug where "sun position graph labels are always displayed using 12h time".
+* improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+* increases maximum "auto-dismiss after" notification value from 5 minutes to 12 hours (#726).
+* enhances `%e` data patterns to work with all widget types (no longer limited to sun widgets).
+* adds data patterns: `%es`, `%eS`, `%h`, and `%H`; shadow length, and observer height.
+* adds data patterns: `%ea`, `%ez`, `%ed`, and `%er`; altitude, azimuth, declination, right-ascension.
+
 ### v0.16.5 (2025-02-14)
 * adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
 * adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.
