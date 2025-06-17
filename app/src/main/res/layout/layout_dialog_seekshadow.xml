@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:background="?attr/popupControlBackground"
+    android:gravity="center_vertical">
+
+    <EditText android:id="@+id/edit_shadowlength"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:singleLine="true" android:maxLines="1" android:gravity="end" tools:text="45"
+        android:inputType="numberSigned" android:minWidth="72dp" />
+
+    <TextView android:id="@+id/suffix_shadowlength"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+        tools:text="ft" />
+
+    <Button
+        android:id="@+id/button_rising"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/seekAltitude_rising" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_rising_contentDescription" />
+
+    <Button
+        android:id="@+id/button_setting"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_setting_contentDescription" />
+
+    <TextView android:id="@+id/text_title"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="?attr/text_size_small" android:textStyle="bold"
+        android:text="@string/editevent_dialog_length" />
+
+    <ImageButton
+        android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:contentDescription="@string/configAction_overflow" android:textColor="?attr/text_accentColor" />
+
+</LinearLayout>

@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <group>
+        <item android:id="@+id/action_seektime"
+            android:title="@string/configAction_seekTime"
+            android:icon="?attr/icActionSearch"
+            app:showAsAction="never" />
+    </group>
+
     <group android:id="@+id/group_tz" android:checkableBehavior="single">
 
         <item android:id="@+id/tz_item_utc"

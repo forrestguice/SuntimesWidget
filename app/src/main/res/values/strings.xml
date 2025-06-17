@@ -38,6 +38,15 @@
     <string name="configAction_lightGraphDialog">Sunlight</string>
     <string name="configAction_lightGraph">Light Graph</string>
     <string name="configAction_lineGraph">Altitude Graph</string>
+    <string name="configAction_seek">Seek</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDawn">Seek Dawn</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDusk">Seek Dusk</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekNoon">Seek Noon</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekShadowLength">Seek Shadow Length</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekTime">Seek Time</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_time">Time</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_date">Date</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configAction_seekDate">Seek Date</string>        <!-- checkbox label -->    <!-- TODO -->
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
@@ -490,6 +499,8 @@
     <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_noon">Lunar Noon</string>                    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_midnight">Lunar Midnight</string>                    <!-- setting -->    <!-- TODO -->
 
     <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->
     <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->
@@ -2261,9 +2272,12 @@
     <string name="worldmap_dialog_option_minorgrid">Graticule</string>
     <string name="worldmap_dialog_option_debuglines">Debug Lines</string>
     <string name="worldmap_dialog_option_tintmap">Tint</string>
+    <string name="worldmap_dialog_speed_1m">&#215; 1m</string>      <!-- menu item; "x 1d"; increments of 1 minute -->
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_10m">&#215; 10m</string>      <!-- menu item; "x 10m"; increments of 10 minutes -->    <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
+    <string name="worldmap_dialog_speed_7d">&#215; 7d</string>      <!-- menu item; "x 1d"; increments of 7 day -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
@@ -2527,6 +2541,8 @@
     <string name="timedate_dialog_title">Set Date</string>
     <string name="timedate_dialog_ok">Set</string>
     <string name="timedate_dialog_cancel">Cancel</string>
+
+    <string name="time_dialog_title">@string/configAction_seekTime</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Time Zone</string>

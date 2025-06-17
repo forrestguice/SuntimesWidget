@@ -48,7 +48,8 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_SUNSHADOW = "sunshadow";
     public static final String PREF_KEY_WORLDMAP_MOONLIGHT = "moonlight";
     public static final String PREF_KEY_WORLDMAP_LOCATION = "showlocation";
-    public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";
+    @Deprecated
+    public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";    // deprecated: this flag replaced by enum/string PREF_KEY_WORLDMAP_SPEED
 
     public static final String[][] PREF_DEF_WORLDMAP = new String[][] {
             new String[] {PREF_KEY_WORLDMAP_MAJORLATITUDES, "false"},
@@ -60,6 +61,9 @@ public class WorldMapWidgetSettings
             new String[] {PREF_KEY_WORLDMAP_LOCATION, "false"},
             new String[] {PREF_KEY_WORLDMAP_SPEED1D, "false"}
     };
+
+    public static final String PREF_KEY_WORLDMAP_SPEED = "speed_step";
+    public static final MapSpeed PREF_DEF_WORLDMAP_SPEED = MapSpeed.FIVE_MINUTES;
 
     public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
 
@@ -130,6 +134,36 @@ public class WorldMapWidgetSettings
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
+
+    public static enum MapSpeed
+    {
+        ONE_MINUTE, FIVE_MINUTES, TEN_MINUTES, FIFTEEN_MINUTES, ONE_DAY, ONE_WEEK;
+
+        /**
+         * @return minutes
+         */
+        public int getStepMinutes() {
+            switch (this) {
+                case ONE_WEEK: return 7 * 24 * 60;
+                case ONE_DAY: return 24 * 60;
+                case FIFTEEN_MINUTES: return 15;
+                case TEN_MINUTES: return 10;
+                case FIVE_MINUTES: return 5;
+                case ONE_MINUTE: default: return 1;
+            }
+        }
+
+        public String getDisplayString(Context context) {
+            switch (this) {
+                case ONE_WEEK: return context.getString(R.string.worldmap_dialog_speed_7d);
+                case ONE_DAY: return context.getString(R.string.worldmap_dialog_speed_1d);
+                case FIFTEEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_15m);
+                case TEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_10m);
+                case FIVE_MINUTES: return context.getString(R.string.worldmap_dialog_speed_5m);
+                case ONE_MINUTE: default: return context.getString(R.string.worldmap_dialog_speed_1m);
+            }
+        }
+    }
 
     /**
      * WorldMapWidgetMode
@@ -370,6 +404,20 @@ public class WorldMapWidgetSettings
         if (null == loadWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER)) {
             saveWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER, getDrawableUri(context, R.drawable.worldmap4).toString());
         }
+    }
+
+    public static MapSpeed loadMapSpeed(Context context, int appWidgetId, String tag)
+    {
+        String value = loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_SPEED, tag, PREF_DEF_WORLDMAP_SPEED.name());
+        try {
+            return MapSpeed.valueOf(value);
+        } catch (IllegalArgumentException e) {
+            Log.w("loadMapSpeed", "Failed to load value '" + value + "'; using default '" + PREF_DEF_WORLDMAP_SPEED.name() + "'.");
+            return PREF_DEF_WORLDMAP_SPEED;
+        }
+    }
+    public static void saveMapSpeed(Context context, int appWidgetId, String tag, MapSpeed value) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_SPEED, tag, value.name());
     }
 
     private static Uri getDrawableUri(Context context, int resId)

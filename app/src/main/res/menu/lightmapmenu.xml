@@ -4,11 +4,53 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
+        <item android:id="@+id/action_seek"
+            android:icon="?attr/icActionSearch"
+            android:title="@string/configAction_seek"
+            app:showAsAction="never">
+            <menu>
+                <item android:id="@+id/action_seekdate"
+                    android:icon="?attr/icActionCalendar"
+                    android:title="@string/configAction_seekDate"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seektime"
+                    android:icon="?attr/icActionTime"
+                    android:title="@string/configAction_seekTime"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekaltitude"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekAltitude"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdawn"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekDawn"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdusk"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekDusk"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seeknoon"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/configAction_seekNoon"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seek_shadowlength"
+                    android:icon="?attr/icActionShadow"
+                    android:title="@string/configAction_seekShadowLength"
+                    app:showAsAction="never" />
+
+            </menu>
+        </item>
+
         <item android:id="@+id/addonSubMenu"
             android:icon="?attr/icActionTimeReset"
             android:title="@string/configAction_viewDateWith"
-            app:showAsAction="never"
-            android:orderInCategory="0">
+            app:showAsAction="never">
             <menu>         <!-- submenu is populated at runtime -->
 
                 <item android:id="@+id/action_date"
@@ -106,14 +148,14 @@
             </menu>
         </item>
 
-        <item android:id="@+id/action_seekaltitude"
-            android:icon="?attr/icActionSearch"
-            android:title="@string/configAction_seekAltitude"
+        <item android:id="@+id/action_shadow"
+            android:icon="?attr/icActionShadow"
+            android:title="@string/configLabel_general_observerheight" android:visible="false"
             app:showAsAction="never" />
 
-        <item android:id="@+id/action_observerheight"
-            android:icon="?attr/icActionShadow"
-            android:title="@string/configLabel_general_observerheight"
+        <item android:id="@+id/action_manage_events"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/configAction_manageEvents"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_timezone"

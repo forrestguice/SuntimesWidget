@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -32,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -49,6 +51,10 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
     public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;
+
+    public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";                  // degrees
+    public static final String EXTRA_ADD_SHADOWLENGTH = "addEventWithShadowLength";    // meters
+    public static final String EXTRA_ADD_OBJECTHEIGHT = "addEventWithObjectHeight";    // meters
 
     protected EventListFragment list;
 
@@ -96,6 +102,30 @@ public class EventListActivity extends AppCompatActivity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        final double extra_addEventWithAngle = intent.getDoubleExtra(EXTRA_ADD_ANGLE, -1);
+        intent.removeExtra(EXTRA_ADD_ANGLE);
+
+        final double extra_addEventWithShadowLength = intent.getDoubleExtra(EXTRA_ADD_SHADOWLENGTH, -1);
+        intent.removeExtra(EXTRA_ADD_SHADOWLENGTH);
+
+        final double extra_addEventWithObjectHeight = intent.getDoubleExtra(EXTRA_ADD_OBJECTHEIGHT, -1);
+        intent.removeExtra(EXTRA_ADD_OBJECTHEIGHT);
+
+        menuBar.post(new Runnable() {
+            @Override
+            public void run()
+            {
+                if (extra_addEventWithAngle != -1) {
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null, null);
+
+                } else if (extra_addEventWithShadowLength != -1 || extra_addEventWithObjectHeight != -1) {
+                    Double shadowLength = ((extra_addEventWithShadowLength != -1) ? extra_addEventWithShadowLength : null);
+                    Double objHeight = ((extra_addEventWithObjectHeight != -1) ? extra_addEventWithObjectHeight : null);
+                    list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, shadowLength, objHeight);
+                }
+            }
+        });
     }
 
     @Override
@@ -158,5 +188,22 @@ public class EventListActivity extends AppCompatActivity
     {
         PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    /**
+     * @return true adapter modified
+     */
+    public static boolean onEventListActivityResult(Context context, int requestCode, int resultCode, @Nullable Intent data)
+    {
+        boolean adapterModified = ((data != null) && data.getBooleanExtra(EventListActivity.ADAPTER_MODIFIED, false));
+        if (resultCode == RESULT_OK)
+        {
+            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
+            if (eventID != null) {
+                EventSettings.setShown(context, eventID, true);
+                adapterModified = true;
+            }
+        }
+        return adapterModified;
     }
 }

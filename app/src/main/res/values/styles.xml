@@ -12,6 +12,7 @@
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_ref</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_ref</item>
         <item name="widgetBackground">@drawable/widget_bg_ref</item>
         <item name="settingsCardBackground">@color/card_bg</item>
@@ -462,6 +463,7 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_light</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_light</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
@@ -712,6 +714,7 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_dark</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_dark</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
@@ -1415,5 +1418,11 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
+
+    <style name="LightMapSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">@color/transparent</item>
+        <item name="android:progressTint">@color/transparent</item>
+    </style>
+
 
 </resources>

@@ -138,11 +138,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * themeViews
      */
-    public void themeViews( Context context, @NonNull SuntimesTheme theme )
-    {
+    public void themeViews( Context context, @NonNull SuntimesTheme theme ) {
         if (colors == null) {
             colors = new LightMapColors();
         }
+        themeViews(context, theme, colors);
+    }
+    public static void themeViews( Context context, @NonNull SuntimesTheme theme, @NonNull LightMapColors colors )
+    {
         colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
         colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
         colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
@@ -388,6 +391,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
             Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
                     : data.calculator().getSunsetCalendarForDate(calendar, degrees);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
+    }
+
+    public Long findShadow( Context context, @Nullable Double shadowLengthMeters, @Nullable Double objHeightMeters, boolean rising )
+    {
+        if (data != null && shadowLengthMeters != null && objHeightMeters != null)
+        {
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+            Calendar event = rising ? data.calculator().getTimeOfShadowBeforeNoon(calendar, objHeightMeters, shadowLengthMeters)
+                                    : data.calculator().getTimeOfShadowAfterNoon(calendar, objHeightMeters, shadowLengthMeters);
             return ((event != null) ? event.getTimeInMillis() : null);
         } else return null;
     }
@@ -644,7 +659,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return retValue;
         }
 
-        protected Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
+        protected static Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
         {
             Calendar mapTime;
             if (options.now >= 0)

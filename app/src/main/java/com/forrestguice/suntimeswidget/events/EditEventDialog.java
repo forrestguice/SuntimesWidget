@@ -255,7 +255,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         Context context = getActivity();
         if (edit_objHeight != null && context != null) {
-            edit_objHeight.setText(SuntimesUtils.formatAsHeight(getActivity(), objHeight, units, 1, true).getValue());
+            edit_objHeight.setText(SuntimesUtils.formatAsHeight(getActivity(), objHeight, units, 2, true).getValue());
         }
     }
     @Nullable
@@ -284,7 +284,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         Context context = getActivity();
         if (edit_shadowLength != null && context != null) {
-            edit_shadowLength.setText(SuntimesUtils.formatAsHeight(getActivity(), shadowLength, units, 1, true).getValue());
+            edit_shadowLength.setText(SuntimesUtils.formatAsHeight(getActivity(), shadowLength, units, 2, true).getValue());
         }
     }
     @Nullable

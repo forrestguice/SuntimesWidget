@@ -699,4 +699,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         return options.now;
     }
 
+    public void seekDateTime( Context context, long datetime )
+    {
+        long offsetMillis = datetime - options.now;
+        options.offsetMinutes = (offsetMillis / 1000 / 60);
+        updateViews(true);
+    }
 }

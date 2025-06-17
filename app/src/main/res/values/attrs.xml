@@ -10,6 +10,7 @@
     <attr name="dialogBackgroundAlt" format="reference" />
     <attr name="widgetBackground" format="reference" />
     <attr name="popupMenuBackground" format="reference" />
+    <attr name="popupControlBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
     <attr name="tileCardBackground" format="reference" />

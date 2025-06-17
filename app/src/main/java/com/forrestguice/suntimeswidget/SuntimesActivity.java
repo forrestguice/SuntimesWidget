@@ -86,6 +86,8 @@ import com.forrestguice.suntimeswidget.graph.LightGraphDialog;
 import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
+import com.forrestguice.suntimeswidget.timepicker.DateDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -539,12 +541,11 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
-        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
-        if (seekDateDialog != null)
-        {
-            seekDateDialog.setTimezone(dataset.timezone());
+        DateDialog seekDateDialog = (DateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        if (seekDateDialog != null) {
             seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
-            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+            seekDateDialog.setOnNeutralListener(onSeekDateToday(seekDateDialog));
+            //Log.d("DEBUG", "DateDialog listeners restored.");
         }
 
         if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
@@ -1486,34 +1487,51 @@ public class SuntimesActivity extends AppCompatActivity
         Long startDate = card_adapter.findDateForPosition(this, 0);
         Long endDate = card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1);
 
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final DateDialog datePicker = new DateDialog();
+        datePicker.loadSettings(this);
         datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
-        datePicker.setTimezone(dataset.timezone());
-        if (startDate != null) {
-            datePicker.setMinDate(startDate);
-        }
-        if (endDate != null) {
-            datePicker.setMaxDate(endDate);
-        }
+        datePicker.setMinDate(startDate);
+        datePicker.setMaxDate(endDate);
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
+        datePicker.setOnNeutralListener(onSeekDateToday(datePicker));
+        datePicker.setNeutralButtonLabel(getString(R.string.today));
 
         if (datetime != null) {
-            datePicker.setInitialDateTime(datetime);
+            Calendar calendar = Calendar.getInstance(dataset.timezone());
+            calendar.setTimeInMillis(datetime);
+            datePicker.setInitialDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         }
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
     }
-    DialogInterface.OnClickListener onSeekDate(final TimeDateDialog dialog)
+    private DialogInterface.OnClickListener onSeekDate(final DateDialog dialog)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
-                Calendar now = Calendar.getInstance(dialog.getTimeZone());
-                Calendar then = dialog.getDateInfo().getCalendar(dialog.getTimeZone(), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
-                then.set(Calendar.SECOND, now.get(Calendar.SECOND));
-                then.set(Calendar.MILLISECOND, now.get(Calendar.MILLISECOND));
-                scrollToDate(then.getTimeInMillis());
+                Calendar time = Calendar.getInstance(dataset.timezone());
+                Calendar date = Calendar.getInstance(dataset.timezone());
+                date.set(Calendar.YEAR, dialog.getSelectedYear());
+                date.set(Calendar.MONTH, dialog.getSelectedMonth());
+                date.set(Calendar.DAY_OF_MONTH, dialog.getSelectedDay());
+                date.set(Calendar.HOUR, time.get(Calendar.HOUR));
+                date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+                date.set(Calendar.SECOND, time.get(Calendar.SECOND));
+                date.set(Calendar.MILLISECOND, time.get(Calendar.MILLISECOND));
+                scrollToDate(date.getTimeInMillis());
+            }
+        };
+    }
+    private DialogInterface.OnClickListener onSeekDateToday(final DateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                Calendar now = Calendar.getInstance(dataset.timezone());
+                dialog.setSelectedDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
             }
         };
     }

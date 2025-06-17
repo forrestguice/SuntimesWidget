@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group>
+        <item android:id="@+id/seek_dusk_actual"
+            android:title="@string/sunset_short"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/seek_dusk_civil"
+            android:title="@string/timeMode_civil"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/seek_dusk_nautical"
+            android:title="@string/timeMode_nautical"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/seek_dusk_astronomical"
+            android:title="@string/timeMode_astronomical"
+            app:showAsAction="never" />
+    </group>
+
+    <group>
+        <item android:id="@+id/seek_moon_set"
+            android:title="@string/moonset"
+            app:showAsAction="never" />
+    </group>
+
+</menu>
