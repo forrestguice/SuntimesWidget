@@ -442,24 +442,36 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public void showProgress(boolean showProgress)
-        {
-            progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+        public void showProgress(boolean showProgress) {
+            if (progress_getfix != null) {
+                progress_getfix.setVisibility(showProgress ? View.VISIBLE : View.GONE);
+            }
         }
 
         @Override
         public void onStart()
         {
-            button_getfix.setVisibility(View.GONE);
+            if (button_getfix != null) {
+                button_getfix.setVisibility(View.GONE);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onResult(Location result, boolean wasCancelled)
         {
-            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
-            button_getfix.setVisibility(View.VISIBLE);
-            button_getfix.setEnabled(true);
+            if (button_getfix != null) {
+                button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+                button_getfix.setVisibility(View.VISIBLE);
+                button_getfix.setEnabled(true);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.VISIBLE);
+            }
         }
+
     };
 
     protected CharSequence getAltitudeString(Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
@@ -622,7 +634,9 @@ public class LocationConfigView extends LinearLayout
 
         // custom mode: get GPS fix
         progress_getfix = (ProgressBar)findViewById(R.id.appwidget_location_getfixprogress);
-        progress_getfix.setVisibility(View.GONE);
+        if (progress_getfix != null) {
+            progress_getfix.setVisibility(View.GONE);
+        }
 
         button_getfix = (ImageButton)findViewById(R.id.appwidget_location_getfix);
         button_getfix.setOnClickListener(onGetFixClicked);

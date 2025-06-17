@@ -127,20 +127,32 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         @Override
         public void showProgress(boolean showProgress) {
-            progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+            if (progress_getfix != null) {
+                progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+            }
         }
 
         @Override
         public void onStart() {
-            button_getfix.setVisibility(View.GONE);
+            if (button_getfix != null) {
+                button_getfix.setVisibility(View.GONE);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onResult(android.location.Location result, boolean wasCancelled)
         {
-            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
-            button_getfix.setVisibility(View.VISIBLE);
-            button_getfix.setEnabled(true);
+            if (button_getfix != null) {
+                button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+                button_getfix.setVisibility(View.VISIBLE);
+                button_getfix.setEnabled(true);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -264,7 +276,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         progress_getfix = (ProgressBar) content.findViewById(R.id.appwidget_location_getfixprogress);
-        progress_getfix.setVisibility(View.GONE);
+        if (progress_getfix != null) {
+            progress_getfix.setVisibility(View.GONE);
+        }
 
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
         TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
