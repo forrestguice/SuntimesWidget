@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -72,6 +71,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -79,6 +79,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -99,7 +100,9 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -907,6 +910,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
+            options.events = customEvents;
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
@@ -973,6 +977,40 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphView.loadSettings(getContext(), bundle);
         }
     }
+
+    private final LightMapView.LightMapEventInterface customEvents = new LightMapView.LightMapEventInterface()
+    {
+        private final HashMap<SuntimesRiseSetDataset, ArrayList<Calendar>> cached = new HashMap<>();
+        protected void clearCache() {
+            cached.clear();
+        }
+
+        @Override
+        public List<Calendar> getEvents(Context context, SuntimesRiseSetDataset data)
+        {
+            if (cached.containsKey(data)) {
+                return cached.get(data);
+            }
+
+            ArrayList<Calendar> retValue = new ArrayList<>();
+            if (context != null)
+            {
+                Set<String> eventIds = EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+                eventIds.addAll(EventSettings.loadVisibleEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+                for (String eventId : eventIds)
+                {
+                    EventSettings.EventAlias event = EventSettings.loadEvent(context, eventId);
+                    SuntimesRiseSetData d = new SuntimesRiseSetData(data.dataActual);
+                    d.setDataMode(new WidgetSettings.EventAliasTimeMode(event));
+                    d.calculate(context);
+                    retValue.add(d.sunriseCalendarToday());
+                    retValue.add(d.sunsetCalendarToday());
+                }
+                cached.put(data, retValue);
+            }
+            return retValue;
+        }
+    };
 
     private final View.OnClickListener onSunriseLayoutClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {

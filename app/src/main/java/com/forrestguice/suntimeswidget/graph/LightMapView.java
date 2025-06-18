@@ -36,12 +36,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
 
@@ -603,6 +605,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     }
                 }
 
+                // draw custom events
+                if (colors.option_drawEvents && colors.events != null)
+                {
+                    int lineWidth = (int)Math.ceil(c.getWidth() / (24d * 12d));     // a line that is 5 minutes wide
+                    for (Calendar event : colors.events.getEvents(contextRef.get(), data)) {
+                        if (event != null) {
+                            p.setColor(colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE));    // TODO: event color
+                            drawVerticalLine(event, data.dataNoon, lineWidth, c, p);
+                        }
+                    }
+                }
+
                 // draw solar noon
                 if (colors.option_drawNoon)
                 {
@@ -901,6 +915,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
+     * LightMapEventInterface
+     */
+    public interface LightMapEventInterface {
+        List<Calendar> getEvents(Context context, SuntimesRiseSetDataset data );
+    }
+
+    /**
      * LightMapColors
      */
     @SuppressWarnings("WeakerAccess")
@@ -915,6 +936,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public boolean option_lmt = false;
 
         public boolean option_drawNoon = true;
+        public boolean option_drawEvents = false;
+        public LightMapEventInterface events = null;
 
         public long offsetMinutes = 0;
         public long now = -1L;
