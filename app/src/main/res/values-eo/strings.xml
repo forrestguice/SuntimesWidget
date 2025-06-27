@@ -34,10 +34,13 @@
     <string name="configAction_closeNavDrawer">Fermi flankpanelon</string>
     <string name="configAction_clock">Horloĝo</string>
     <string name="configAction_lightGraphDialog">Sunlumo</string>
+    <string name="configAction_lightGraph">Diagramo de lumo</string>
     <string name="configAction_lineGraph">Diagramo de altitudo</string>
     <string name="configAction_seekAltitude">Serĉi altitudon</string>        <!-- checkbox label -->
     <string name="configAction_search">Serĉi</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Forviŝi elekton</string>
+    <string name="configAction_checkNone">Nenio</string>
+    <string name="configAction_checkAll">Ĉio</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
     <string name="configAction_onlineHelp">Helpo enrete</string>
@@ -111,6 +114,7 @@
     <string name="delta_day_yesterday">Hieraŭo estis je</string>
     <string name="delta_day_shorter">malpli longa.</string>
     <string name="delta_day_longer">pli longa.</string>
+    <string name="delta_day_same">la sama longo.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -152,6 +156,7 @@
     <string name="until_nauticalTwilight">naŭtika sunleviĝo</string>
     <string name="until_sunrise">sunleviĝo</string>
     <string name="until_noon">tagmezo vera</string>
+    <string name="until_midnight">noktmezo vera</string>
     <string name="until_sunset">sunsubiro</string>
     <string name="untilEnd_civilTwilight">civila sunsubiro</string>
     <string name="untilEnd_nauticalTwilight">naŭtika sunsubiro</string>
@@ -335,6 +340,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Tagmezo</string>                    <!-- setting -->
     <string name="timeMode_noon">Tagmezo vera (kulmino)</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Noktmezo</string>                    <!-- setting -->
+    <string name="timeMode_midnight">Noktmezo vera (malkulmino)</string>                    <!-- setting -->
     <string name="timeMode_official_short">Reala</string>              <!-- setting -->
     <string name="timeMode_official">Reala sunleviĝo/sunsubiro</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civila</string>                  <!-- setting -->
@@ -352,6 +359,11 @@
     <string name="timeMode_blue4_short">Blua (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blua horo (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">Neniu</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Polusa nokto</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnightsun">Polusa tago</string>                 <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight">Blanka nokto astronomia</string>       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight_whitenight">Blanka nokto</string>  <!-- a label (not an actual timeMode setting) -->
 
     <string name="timeMode_equinox_vernal">Printempa tagnoktegaleco</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Ekvinokso</string>       <!-- setting -->
@@ -465,7 +477,7 @@
 
     <string name="configLabel_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x2mode">2×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
@@ -475,7 +487,7 @@
     <string name="actionMode_update">Aktualigi fenestraĵon</string>           <!-- setting -->
     <string name="actionMode_update_all">Aktualigi ĉiujn fenestraĵojn</string>           <!-- setting -->
     <string name="actionMode_config">Reagordi fenestraĵon</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Plenumi agon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuligi vidon</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- Android-rilata termino, netradukita -->
@@ -554,21 +566,21 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">Kopta</string>
-    <string name="calendarMode_ethiopian">Etiopa</string>
-    <string name="calendarMode_gregorian">Gregoria</string>
-    <string name="calendarMode_hebrew">Juda (Hebrea)</string>
-    <string name="calendarMode_hijri_diyanet">Islama (turka)</string>
-    <string name="calendarMode_hijri_umalqura">Islama (Umm al-Qura)</string>
-    <string name="calendarMode_julian">Julia</string>
-    <string name="calendarMode_persian">Persa (Irana)</string>
-    <string name="calendarMode_thaisolar">Tajlanda suna</string>
-    <string name="calendarMode_chinese">Ĉina</string>
-    <string name="calendarMode_korean">Korea</string>
-    <string name="calendarMode_vietnamese">Vjetnama</string>
-    <string name="calendarMode_minguo">Respublik-Ĉinia (Minguo)</string>
-    <string name="calendarMode_indian">Hinda (Barata nacia)</string>
-    <string name="calendarMode_japanese">Japana</string>
+    <string name="calendarMode_coptic">kopta</string>
+    <string name="calendarMode_ethiopian">etiopa</string>
+    <string name="calendarMode_gregorian">gregoria</string>
+    <string name="calendarMode_hebrew">juda (hebrea)</string>
+    <string name="calendarMode_hijri_diyanet">islama (turka)</string>
+    <string name="calendarMode_hijri_umalqura">islama (Umm al-Qura)</string>
+    <string name="calendarMode_julian">julia</string>
+    <string name="calendarMode_persian">persa (irana)</string>
+    <string name="calendarMode_thaisolar">tajlanda suna</string>
+    <string name="calendarMode_chinese">ĉina</string>
+    <string name="calendarMode_korean">korea</string>
+    <string name="calendarMode_vietnamese">vjetnama</string>
+    <string name="calendarMode_minguo">respublik-ĉina (Minguo)</string>
+    <string name="calendarMode_indian">hinda (barata nacia)</string>
+    <string name="calendarMode_japanese">japana</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->
@@ -764,6 +776,10 @@
     <string name="configLabel_themeColorGraphSunPathDayStroke">Vojo de Suno (rando tage)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightFill">Vojo de Suno (plenigo nokte)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Vojo de Suno (rando nokte)</string>         <!-- color label -->
+
+    <string name="configLabel_themeColorGraphMidnightText">Meznokto (teksto)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightFill">Meznokto (plenigo)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Meznokto (rando)</string>         <!-- color label -->
 
     <string name="configLabel_themeColorGraphMoonFill">Luno (plenigo)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Luno (rando)</string>         <!-- color label -->
@@ -1655,11 +1671,11 @@
         <item>vintra solstico</item>
         <item>plejsupro de Luno</item>
         <item>plejmalsupro de Luno</item>
+        <item>mezo de vintro</item>
         <item>mezo de printempo</item>
         <item>mezo de somero</item>
         <item>mezo de aŭtuno</item>
-        <item>mezo de vintro</item>
-        <item>@string/timeMode_midnight</item>
+        <item>noktmezo vera</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>astronomia sunleviĝo</item>
@@ -1669,7 +1685,7 @@
         <item>matena blua horo (fino)</item>
         <item>sunleviĝo</item>
         <item>matena ora horo (fino)</item>
-        <item>tagmezo vera (kulmino)</item>
+        <item>tagmezo vera</item>
         <item>vespera ora horo (komenco)</item>
         <item>sunsubiro</item>
         <item>vespera blua horo (komenco)</item>
@@ -1687,13 +1703,13 @@
         <item>somera sunekstremo</item>
         <item>aŭtuna tagnoktegaleco</item>
         <item>vintra sunekstremo</item>
-        <item>kulmino supra de Luno</item>
-        <item>kulmino malsupra de Luno</item>
+        <item>plejsupro de Luno</item>
+        <item>plejmalsupro de Luno</item>
+        <item>vintr-mezo</item>
         <item>printemp-mezo</item>
         <item>somer-mezo</item>
         <item>aŭtun-mezo</item>
-        <item>vintr-mezo</item>
-        <item>@string/timeMode_midnight</item>
+        <item>noktmezo vera</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>astronomia sunleviĝo</item>
@@ -1723,11 +1739,11 @@
         <item>vintra sunekstremo</item>
         <item>kulmino supra de Luno</item>
         <item>kulmino malsupra de Luno</item>
-        <item>printemp-mezo</item>
-        <item>somer-mezo</item>
-        <item>aŭtun-mezo</item>
-        <item>vintr-mezo</item>
-        <item>@string/timeMode_midnight</item>
+        <item>mezo de vintro</item>
+        <item>mezo de printempo</item>
+        <item>mezo de somero</item>
+        <item>mezo de aŭtuno</item>
+        <item>noktmezo vera</item>
     </string-array>
     
   <!-- App Setting: locale mode -->
@@ -1889,7 +1905,7 @@
     <string name="themesexport_dialog_message">Elportado de haŭtoj al dosiero…</string>
 
     <!-- Dialog: Export -->
-    <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Konservita al <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
     <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
 
@@ -2021,6 +2037,7 @@
                 • <b>%dY</b> – jaro (ekz. 2018) <br/>
                 • <b>%dt</b> – tempo de lasta aktualigo <br/>
                 • <b>%dT</b> – tempo (kun sekundoj) de lasta aktualigo <br/>
+                • <b>%dm</b> – tempo (en milisekundoj) de lasta aktualigo <br/>
                 <br/>
                 • <b>%loc</b> – etikedo (ekz. Bjalistoko) <br/>
                 • <b>%lat</b> – latitudo <br/>
@@ -2030,6 +2047,8 @@
                 • <b>%s</b> – datum‑fonto (ekz. sunrisesunsetlib) <br/>
                 • <b>%t</b> – horzono (id) (ekz. Europe/Warsaw) <br/>
                 • <b>%id</b> – appWidgetID <br/>
+         <b>Dataj fenestraĵojt:</b> <br/>
+                • <b>%M</b> – kalendar-speco (ekz. gregoria) <br/>
          <br/>
          <b>Sunaj fenestraĵoj:</b> <br/>
                 • <b>%m</b> – reĝimo (mallonge) (ekz. civila) <br/>
@@ -2106,9 +2125,17 @@
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Astronomia krepusko:</b> la Suno estas 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
+          La <b>tempoj de sunleviĝoj</b> markas komencon por ĉiu <b>matena krepusko</b>, la <b>tempoj de sunsubiroj</b> markas finon de ĉiu <b>vespera krepusko</b>.<br/><br/>
+          <b>Civila krepusko:</b> la Suno estas malpli ol 6&nbsp;gradoj sub la horizonto. La plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Naŭtika krepusko:</b> la Suno estas inter 6 kaj 12&nbsp;gradoj sub la horizonto. Konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Astronomia krepusko:</b> la Suno estas inter 12 kaj 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
+          <b>Astronomia nokto:</b> la Suno estas pli ol 18&nbsp;gradoj sub la horizonto. La malplej helaj steloj estas videblaj.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight_more"><<![CDATA[
+        <b>Blanka nokto:</b> la Suno ne iras pli malsupre ol 6 gradoj sub la horizonto. Estas sufiĉe da lumo por plejparto da agadoj eksterdome dum la tuta nokto.<br/><br/>
+        <b>Blanka nokto astronomia:</b> la Suno ne iras pli malsupre ol 18 gradoj sub la horizonto. Estas krepusko dum la tuta nokto kaj la ĉielo ne iĝas plene nigra.<br/><br/>
+        <b>Polusa tago:</b> la Suno ne iras sub la horizonto (24 horoj da sunlumo). Ĝi ankaŭ nomiĝas <b>noktmeza Suno</b>.<br/><br/>
+        <b>Polusa nokto:</b> la Suno ne iras super la horizonto (24 horoj da mallumo).<br/><br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Hodiaŭa:</b> tempoj de leviĝo kaj subiro por la hodiaŭa dato.<br/><br/>
@@ -2125,11 +2152,11 @@
     ]]></string>
 
         <string name="help_general_solartime"><![CDATA[
-          <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
+          <b>Ŝajna suntempo:</b> tempo de sunhorloĝo. La tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
           Ŝajna movo de Suno ne estas konstanta. Ĝi ŝanĝiĝas laŭ sezonoj pro aksa kliniĝo de ekliptiko kaj pro discentreco de Tera orbito.
           Longo de ĉiu ŝajna suna tago – mezurita inter du tagmezoj – povas iomete malegali al 24&nbsp;horoj (maksimume je 30&nbsp;s).
           Tiuj etaj ŝanĝoj kolektiĝas kun ĉiu pasigita tago (kaj nuliĝas dum jaro).<br/><br/>
-          <b>Mezuma suntempo:</b> la tempo determinita el mezuma pozicio de Suno por agordita longitudo.<br/><br/>
+          <b>Mezuma suntempo:</b> horloĝa tempo. La tempo determinita el mezuma pozicio de Suno por agordita longitudo.<br/><br/>
           Mezuma movo de Suno enhavas korektojn por aksa kliniĝo kaj discentreco kaj estas egaligita.
           Longo de ĉiu mezuma suna tago estas ekzakte 24&nbsp;horoj.<br/><br/>
           <b>Ekvacio de tempo:</b> diferenco inter mezuma suntempo kaj ŝajna suntempo.
