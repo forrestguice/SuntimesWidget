@@ -2131,7 +2131,7 @@
           <b>Astronomia krepusko:</b> la Suno estas inter 12 kaj 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
           <b>Astronomia nokto:</b> la Suno estas pli ol 18&nbsp;gradoj sub la horizonto. La malplej helaj steloj estas videblaj.<br/><br/>
     ]]></string>
-    <string name="help_general_twilight_more"><<![CDATA[
+    <string name="help_general_twilight_more"><![CDATA[
         <b>Blanka nokto:</b> la Suno ne iras pli malsupre ol 6 gradoj sub la horizonto. Estas sufiĉe da lumo por plejparto da agadoj eksterdome dum la tuta nokto.<br/><br/>
         <b>Blanka nokto astronomia:</b> la Suno ne iras pli malsupre ol 18 gradoj sub la horizonto. Estas krepusko dum la tuta nokto kaj la ĉielo ne iĝas plene nigra.<br/><br/>
         <b>Polusa tago:</b> la Suno ne iras sub la horizonto (24 horoj da sunlumo). Ĝi ankaŭ nomiĝas <b>noktmeza Suno</b>.<br/><br/>
