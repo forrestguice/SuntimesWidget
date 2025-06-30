@@ -931,6 +931,7 @@ public class SuntimesActivity extends AppCompatActivity
      * Override the appearance of views if appThemeOverride is defined.
      * @param context Context
      */
+    @Deprecated
     protected void themeViews(Context context)
     {
         if (appThemeOverride != null)
