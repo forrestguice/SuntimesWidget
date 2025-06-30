@@ -64,7 +64,6 @@ import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -430,9 +429,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options)
     {
-        if (options.themeOverride != null) {
-            themeCardViews(context, options.themeOverride, options);
-        }
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
     }
@@ -472,6 +468,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         header_sunset.setTextColor(color_sunset);
     }
 
+    /*@Deprecated
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
     {
         options.color_textTimeDelta = theme.getTimeColor();
@@ -545,7 +542,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonlabel.setTypeface(moonlabel.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         lightmap.themeViews(context, theme);
-    }
+    }*/
 
     /**
      * @param context used to getStrings from resources
