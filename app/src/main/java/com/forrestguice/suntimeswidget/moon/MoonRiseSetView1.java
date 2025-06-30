@@ -229,6 +229,7 @@ public class MoonRiseSetView1 extends LinearLayout
     }
     private int colorEnabled, colorPressed, colorDisabled, colorBackground, colorAccent, colorWarning;
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         card_adapter.applyTheme(context, theme);
