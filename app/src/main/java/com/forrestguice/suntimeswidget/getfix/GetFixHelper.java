@@ -207,11 +207,12 @@ public class GetFixHelper implements LocationHelper
         if (locationManager != null)
         {
             try {
-                android.location.Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                t_locationProvider = LocationManager.PASSIVE_PROVIDER;
+                android.location.Location location = locationManager.getLastKnownLocation(t_locationProvider);
                 if (location == null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.NETWORK_PROVIDER);
                     if (location == null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.GPS_PROVIDER);
                     }
                 }
                 return location;
@@ -225,6 +226,7 @@ public class GetFixHelper implements LocationHelper
             return null;
         }
     }
+    protected static String t_locationProvider;
 
     /**
      * Cancel acquiring a location fix (cancels running task(s)).
