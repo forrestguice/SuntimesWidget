@@ -53,7 +53,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MAX_AGE_NONE = 0;
     public static final int MAX_AGE_ANY = -1;
 
-    private WeakReference<LocationHelper> helperRef;
+    private final WeakReference<LocationHelper> helperRef;
     public GetFixTask(Context parent, LocationHelper helper)
     {
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
@@ -110,8 +110,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
     private long startTime, stopTime, elapsedTime;
     private FilteredLocation bestFix;
-    private LocationManager locationManager;
-    private LocationListener locationListener = new LocationListener()
+    private final LocationManager locationManager;
+    private final LocationListener locationListener = new LocationListener()
     {
         @Override
         public void onLocationChanged(Location location)
@@ -350,7 +350,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         signalCancelled();
     }
 
-    private ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
+    private final ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
     public void addGetFixTaskListener( GetFixTaskListener listener )
     {
         if (!listeners.contains(listener))
