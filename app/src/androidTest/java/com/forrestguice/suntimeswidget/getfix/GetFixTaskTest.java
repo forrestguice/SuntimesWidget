@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +46,12 @@ public class GetFixTaskTest
     public void test_getFix()
     {
         AppCompatActivity activity = (AppCompatActivity) activityRule.getActivity();
-        LocationHelper helper = new GetFixHelper(activity, uiObj);
+        LocationHelper helper = new GetFixHelper(activity, uiObj) {
+            public int getMinElapsedTime() {
+                return 0;
+            }
+        };
+
         assertTrue("This test requires granting location permissions before running.", helper.hasLocationPermission(activity));
 
         helper.addGetFixTaskListener(taskListener);
