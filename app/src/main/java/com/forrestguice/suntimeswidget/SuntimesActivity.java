@@ -1093,7 +1093,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        GetFixUI getFixUI = new GetFixUI()
         {
             private MenuItem refreshItem = null;
 
@@ -1160,7 +1160,15 @@ public class SuntimesActivity extends AppCompatActivity
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
                 }
             }
-        });
+        };
+
+        getFixHelper = new GetFixHelper(this, getFixUI)
+        {
+            @Override
+            public int getMinElapsedTime() {
+                return 1000;
+            }
+        };
     }
 
     /**
