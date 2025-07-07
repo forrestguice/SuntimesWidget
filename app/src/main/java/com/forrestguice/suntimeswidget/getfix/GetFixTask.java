@@ -47,7 +47,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 {
     public static final String TAG = "GetFixTask";
 
-    public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
+    public static final int MIN_ELAPSED = 1000 * 3;        // wait at least 3s before settling on a fix
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 15;      // consider fixes over 15min be "too old"
     public static final int MAX_AGE_NONE = 0;
