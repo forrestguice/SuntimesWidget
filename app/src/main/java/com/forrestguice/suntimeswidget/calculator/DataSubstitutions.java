@@ -46,6 +46,9 @@ import java.util.TreeSet;
 
 public class DataSubstitutions
 {
+    public static final String PATTERN_MARKER = "%";
+    public static final String PATTERN_EVENT_MARKER = "@";
+
     public static final String PATTERN_m = "%m";    // mode (short)
     public static final String PATTERN_M = "%M";    // mode
     public static final String PATTERN_o = "%o";    // order
@@ -322,7 +325,7 @@ public class DataSubstitutions
      * @param patterns list of patterns to look for
      * @return true if the string contains at least one of the patterns, false if there were none
      */
-    public static boolean containsAtLeastOne(@NonNull String displayString, @NonNull List<String> patterns)
+    public static boolean containsAtLeastOne(@NonNull String displayString, @NonNull Iterable<String> patterns)
     {
         for (String pattern : patterns) {
             if (displayString.contains(pattern)) {
@@ -332,8 +335,12 @@ public class DataSubstitutions
         return false;
     }
 
-    public static String addToSet(Set<String> set, String value) {
-        set.add(value);
+    @Nullable
+    public static String addToSet(@NonNull Set<String> set, @Nullable String value)
+    {
+        if (value != null) {
+            set.add(value);
+        }
         return value;
     }
 
@@ -395,16 +402,17 @@ public class DataSubstitutions
             return displayString;
         }
 
+        Set<String> eventPatterns = new TreeSet<>();
         for (SolarEvents event : events)
         {
-            if (!DataSubstitutions.containsAtLeastOne(displayString, positionPatterns)) {
+            if (!displayString.contains(PATTERN_MARKER)) {
                 if (BuildConfig.DEBUG) {
                     Log.d("DEBUG", "displayStringForTitlePattern0: done");
                 }
                 break;
             }
 
-            Set<String> eventPatterns = new TreeSet<>();
+            eventPatterns.clear();
             String pattern_em = addToSet(eventPatterns, patterns_em.get(event));
             String pattern_et = addToSet(eventPatterns, patterns_et.get(event));
             String pattern_eT = addToSet(eventPatterns, patterns_eT.get(event));
@@ -418,6 +426,13 @@ public class DataSubstitutions
             String pattern_eR = addToSet(eventPatterns, patterns_eR.get(event));
             String pattern_es = addToSet(eventPatterns, patterns_es.get(event));
             String pattern_eS = addToSet(eventPatterns, patterns_eS.get(event));
+
+            if (!DataSubstitutions.containsAtLeastOne(displayString, eventPatterns)) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: no patterns for " + event.name() + "; continuing...");
+                }
+                continue;
+            }
 
             Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
