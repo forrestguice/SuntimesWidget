@@ -41,6 +41,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class DataSubstitutions
 {
@@ -330,6 +332,11 @@ public class DataSubstitutions
         return false;
     }
 
+    public static String addToSet(Set<String> set, String value) {
+        set.add(value);
+        return value;
+    }
+
     protected static SuntimesUtils utils = new SuntimesUtils();
     public static void initDisplayStrings(Context context) {
         SuntimesUtils.initDisplayStrings(context);
@@ -397,19 +404,20 @@ public class DataSubstitutions
                 break;
             }
 
-            String pattern_em = patterns_em.get(event);
-            String pattern_et = patterns_et.get(event);
-            String pattern_eT = patterns_eT.get(event);
-            String pattern_ea = patterns_ea.get(event);
-            String pattern_eA = patterns_eA.get(event);
-            String pattern_ez = patterns_ez.get(event);
-            String pattern_eZ = patterns_eZ.get(event);
-            String pattern_ed = patterns_ed.get(event);
-            String pattern_eD = patterns_eD.get(event);
-            String pattern_er = patterns_er.get(event);
-            String pattern_eR = patterns_eR.get(event);
-            String pattern_es = patterns_es.get(event);
-            String pattern_eS = patterns_eS.get(event);
+            Set<String> eventPatterns = new TreeSet<>();
+            String pattern_em = addToSet(eventPatterns, patterns_em.get(event));
+            String pattern_et = addToSet(eventPatterns, patterns_et.get(event));
+            String pattern_eT = addToSet(eventPatterns, patterns_eT.get(event));
+            String pattern_ea = addToSet(eventPatterns, patterns_ea.get(event));
+            String pattern_eA = addToSet(eventPatterns, patterns_eA.get(event));
+            String pattern_ez = addToSet(eventPatterns, patterns_ez.get(event));
+            String pattern_eZ = addToSet(eventPatterns, patterns_eZ.get(event));
+            String pattern_ed = addToSet(eventPatterns, patterns_ed.get(event));
+            String pattern_eD = addToSet(eventPatterns, patterns_eD.get(event));
+            String pattern_er = addToSet(eventPatterns, patterns_er.get(event));
+            String pattern_eR = addToSet(eventPatterns, patterns_eR.get(event));
+            String pattern_es = addToSet(eventPatterns, patterns_es.get(event));
+            String pattern_eS = addToSet(eventPatterns, patterns_eS.get(event));
 
             Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
@@ -474,7 +482,7 @@ public class DataSubstitutions
                 if (BuildConfig.DEBUG) {
                     Log.d("DEBUG", "displayStringForTitlePattern0: null eventTime for " + event.name() + "; removing patterns");
                 }
-                for (String pattern : positionPatterns) {
+                for (String pattern : eventPatterns) {
                     displayString = displayString.replaceAll(pattern, "");
                 }
             }
