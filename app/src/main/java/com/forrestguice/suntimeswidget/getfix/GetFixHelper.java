@@ -435,7 +435,7 @@ public class GetFixHelper implements LocationHelper
 
         if (wasGettingFix)
         {
-            Log.w("DEBUG", "GetFixHelper was previously getting fix... restarting");
+            Log.w(GetFixTask.TAG, "GetFixHelper was previously getting fix... restarting");
             getFix();
         }
     }

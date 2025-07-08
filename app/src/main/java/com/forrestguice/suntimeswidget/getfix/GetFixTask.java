@@ -138,10 +138,18 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     if (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge) {
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
                         onProgressUpdate(bestFix.getLocation());
+                        if (BuildConfig.DEBUG) {
+                            Log.d(TAG, "onLocationChanged: found location: " + locationAge + " <= " + maxAge);
+                        }
+                    } else if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "onLocationChanged: ignoring location (too old): " + locationAge + " > " + maxAge);
                     }
                 } else {
                     bestFix.addToFilter(location, locationTime);
                     onProgressUpdate(bestFix.getLocation());
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "onLocationChanged: added location: " + locationAge + " <= " + maxAge);
+                    }
                 }
             }
         }
@@ -202,6 +210,12 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
                     boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
                     boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+                    if (BuildConfig.DEBUG) {
+                        Log.i(TAG, "available providers: "
+                                + "network? " + (netEnabled ? "yes" : "no")
+                                + " | passive? " + (passiveEnabled ? "yes" : "no")
+                                + " | gps? " + (gpsEnabled ? "yes" : "no"));
+                    }
 
                     if (maxAge != MAX_AGE_NONE)
                     {
@@ -210,7 +224,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                         locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
                     }
 
-                    if (passiveMode && passiveEnabled)
+                    if (passiveMode && passiveEnabled)    // 2. request location updates on given provider
                     {
                         // passive provider only
                         if (BuildConfig.DEBUG) {
@@ -260,7 +274,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             }
         });
 
-        while (elapsedTime < maxElapsed && !isCancelled())
+        while (elapsedTime < maxElapsed && !isCancelled())    // 3. wait until minElapsed, then return best location found so far
         {
             try {
                 Thread.sleep(100);
