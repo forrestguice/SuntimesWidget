@@ -21,7 +21,9 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -175,6 +177,9 @@ public class DataSubstitutions
     public static <T extends SuntimesData> Calendar getCalendarForEvent(@NonNull SolarEvents event, @NonNull T data)
     {
         if (data == null || data.calculator() == null) {
+            if (BuildConfig.DEBUG) {
+                Log.w("DEBUG", "getCalendarForEvent: null data or calculator! returning null...");
+            }
             return null;
         }
 
@@ -333,7 +338,12 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data) {
+    public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data)
+    {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "displayStringForTitlePattern0: " + titlePattern);
+        }
+
         String displayString;
         if (data instanceof SuntimesRiseSetData) {
             displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesRiseSetData) data);
@@ -369,6 +379,9 @@ public class DataSubstitutions
 
         if (data == null)
         {
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "displayStringForTitlePattern0: null data; removing patterns");
+            }
             for (String pattern : positionPatterns) {
                 displayString = removePattern(displayString, pattern);
             }
@@ -378,6 +391,9 @@ public class DataSubstitutions
         for (SolarEvents event : events)
         {
             if (!DataSubstitutions.containsAtLeastOne(displayString, positionPatterns)) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: done");
+                }
                 break;
             }
 
@@ -398,6 +414,9 @@ public class DataSubstitutions
             Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
 
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "displayStringForTitlePattern0: eventTime for " + event.name() + " is " + (eventTime != null ? eventTime.getTimeInMillis() : "null"));
+            }
             if (eventTime != null)
             {
                 if (pattern_em != null && displayString.contains(pattern_em)) {
@@ -452,6 +471,9 @@ public class DataSubstitutions
                 }
 
             } else {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: null eventTime for " + event.name() + "; removing patterns");
+                }
                 for (String pattern : positionPatterns) {
                     displayString = displayString.replaceAll(pattern, "");
                 }
