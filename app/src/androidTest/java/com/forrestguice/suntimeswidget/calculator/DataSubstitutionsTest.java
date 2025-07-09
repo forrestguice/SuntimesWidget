@@ -26,12 +26,14 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -79,6 +81,41 @@ public class DataSubstitutionsTest
         String result1 = DataSubstitutions.displayStringForTitlePattern0(context, pattern0 + "%M%o%m", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
+    }
+
+
+    @Test
+    public void test_displayStringForTitlePattern0_em()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2025, 5, 20);
+
+        SuntimesRiseSetData data = new SuntimesRiseSetData(context, 0);
+        data.setLocation(new Location("Phoenix", "33.45579", "-111.94580", "385"));
+        data.setTodayIs(calendar);
+        data.calculate(context);
+
+        HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, SolarEvents.values());
+        for (SolarEvents event : patterns_em.keySet())
+        {
+            String pattern = patterns_em.get(event);
+
+            long bench_start = System.nanoTime();
+            String result = DataSubstitutions.displayStringForTitlePattern0(context, pattern, data);
+            long bench_end = System.nanoTime();
+            Log.d("DEBUG", "displayStringForTitlePattern0: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            assertFalse("result should not contain patterns " + pattern, result.contains(pattern));
+
+            Calendar eventTime = DataSubstitutions.getCalendarForEvent(event, data);
+            if (eventTime != null)
+            {
+                assertFalse("result should not be empty for " + pattern, result.isEmpty());
+                assertEquals("result should contain eventTime for " + pattern, eventTime.getTimeInMillis() + "", result);
+
+            } else {
+                assertTrue("result should empty for " + pattern, result.isEmpty());
+            }
+        }
     }
 
     /**
