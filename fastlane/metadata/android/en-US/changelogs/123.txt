@@ -1,0 +1,3 @@
+- fixes app crash (null pointer exception) (#882).
+- fixes bug where "data patterns display nothing at higher latitudes" (#874).
+- updates translation to Polish and Esperanto (#883).
