@@ -2084,6 +2084,8 @@
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
+    <string name="configLabel_locationproviders">Location Providers</string>        <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language</string>   <!-- group title -->
 
@@ -2952,6 +2954,7 @@
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
     <string name="configLabel_permissionGranted">Permission Granted</string>
+    <string name="configLabel_permissionRequired">Permission Required</string>
 
     <string name="drag_hint">Drag here</string>
     <string name="hint_label">Label</string>        <!-- edittext hint -->

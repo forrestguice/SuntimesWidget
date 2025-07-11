@@ -18,18 +18,27 @@
 
 package com.forrestguice.suntimeswidget.settings.fragments;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -39,11 +48,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.io.File;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Places Prefs
@@ -69,6 +81,103 @@ public class PlacesPrefsFragment extends PreferenceFragment
         Preference exportPlacesPref = findPreference("places_export");
         Preference buildPlacesPref = findPreference("places_build");
         base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
+        updateLocationProviderPrefs();
+    }
+
+    protected void updateLocationProviderPrefs()
+    {
+        final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        PreferenceCategory group = (PreferenceCategory) findPreference("getFix_providers");
+        if (locationManager != null && group != null)
+        {
+            List<String> providers = locationManager.getAllProviders();
+            for (int i=0; i<providers.size(); i++)
+            {
+                final String provider = providers.get(i);
+                if (provider != null)
+                {
+                    final CheckBoxPreference preference = new CheckBoxPreference(getActivity());
+                    preference.setTitle(provider.toUpperCase(Locale.getDefault()));
+                    preference.setChecked(locationManager.isProviderEnabled(provider));
+                    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+                    {
+                        @Override
+                        public boolean onPreferenceChange(Preference p, Object newValue)
+                        {
+                            preference.setChecked(locationManager.isProviderEnabled(provider));
+                            if (!hasLocationPermission(getActivity())) {
+                                requestLocationPermissions();
+                            }
+                            return false;
+                        }
+                    });
+
+                    try {
+                        LocationProvider locationProvider = locationManager.getProvider(provider);
+                        if (locationProvider != null) {
+                            preference.setSummary(getLocationProviderSummary(locationProvider));
+                        }
+                    } catch (SecurityException e) {
+                        preference.setSummary(getContext().getString(R.string.configLabel_permissionRequired));
+                    }
+
+                    group.addPreference(preference);
+                }
+            }
+        }
+    }
+
+    protected CharSequence getLocationProviderSummary(LocationProvider locationProvider)
+    {
+        String summary = "";
+        if (locationProvider != null)
+        {
+            if (locationProvider.requiresCell()) {
+                summary += "[IconCell]";
+            }
+            if (locationProvider.requiresNetwork()) {
+                summary += "[IconNetwork]";
+            }
+            if (locationProvider.requiresSatellite()) {
+                summary += "[IconSatellite]";
+            }
+            if (locationProvider.hasMonetaryCost()) {
+                summary += "[IconMonetary]";
+            }
+            if (locationProvider.supportsAltitude()) {
+                summary += "[IconAltitude]";
+            }
+        }
+        return summary;
+    }
+
+    public static final int LOCATION_PERMISSION_REQUEST = 100;
+    protected void requestLocationPermissions() {
+        ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+    }
+
+    protected boolean hasLocationPermission(Activity activity) {
+        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (getView() != null) {
+                        getView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getActivity().recreate();
+                            }
+                        }, 500);
+                    }
+                }
+                break;
+        }
     }
 
     @Override
