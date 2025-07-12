@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * An AsyncTask that registers a LocationListener, starts listening for
- * gps updates, and then waits a predetermined amount of time for a
+ * location updates, and then waits a predetermined amount of time for a
  * good location fix to be acquired; updates progress.
  */
 @SuppressWarnings("Convert2Diamond")
@@ -163,6 +163,21 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         @Override
         public void onProviderDisabled(String provider) { }
     };
+
+    public static long calculateLocationAge(android.location.Location location)
+    {
+        long now;
+        long locationTime;
+        if (Build.VERSION.SDK_INT >= 17)
+        {
+            now = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos());
+            locationTime = TimeUnit.NANOSECONDS.toMillis(location.getElapsedRealtimeNanos());
+        } else {
+            now = System.currentTimeMillis();
+            locationTime = location.getTime();
+        }
+        return now - locationTime;
+    }
 
     /**
      * Prepares UI objects, signals onStarted listeners, and (re)sets flags in preparation for getting a location.

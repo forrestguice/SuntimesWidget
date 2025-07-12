@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.Uri;
@@ -41,14 +43,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
+import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -86,25 +92,42 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
     protected void updateLocationProviderPrefs()
     {
-        final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         PreferenceCategory group = (PreferenceCategory) findPreference("getFix_providers");
+        if (group != null) {
+            group.removeAll();
+        }
+
+        final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null && group != null)
         {
             List<String> providers = locationManager.getAllProviders();
             for (int i=0; i<providers.size(); i++)
             {
                 final String provider = providers.get(i);
-                if (provider != null)
+                if (provider != null && !provider.equals(LocationManager.PASSIVE_PROVIDER))
                 {
+                    boolean isEnabled = false;
+                    try {
+                        isEnabled = locationManager.isProviderEnabled(provider);
+                    } catch (IllegalArgumentException e) {
+                        Log.w(SuntimesSettingsActivity.LOG_TAG, "updateLocationProviderPrefs: " + e);
+                    }
+
                     final CheckBoxPreference preference = new CheckBoxPreference(getActivity());
                     preference.setTitle(provider.toUpperCase(Locale.getDefault()));
-                    preference.setChecked(locationManager.isProviderEnabled(provider));
+                    preference.setChecked(isEnabled);
+                    preference.setEnabled(false);
                     preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
                     {
                         @Override
                         public boolean onPreferenceChange(Preference p, Object newValue)
                         {
-                            preference.setChecked(locationManager.isProviderEnabled(provider));
+                            try {
+                                preference.setChecked(locationManager.isProviderEnabled(provider));
+                            } catch (IllegalArgumentException e) {
+                                preference.setChecked(false);
+                            }
+
                             if (!hasLocationPermission(getActivity())) {
                                 requestLocationPermissions();
                             }
@@ -115,10 +138,12 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     try {
                         LocationProvider locationProvider = locationManager.getProvider(provider);
                         if (locationProvider != null) {
-                            preference.setSummary(getLocationProviderSummary(locationProvider));
+                            preference.setSummary(getLocationProviderSummary(getActivity(), locationManager, locationProvider));
                         }
                     } catch (SecurityException e) {
                         preference.setSummary(getContext().getString(R.string.configLabel_permissionRequired));
+                    } catch (IllegalArgumentException e) {
+                        preference.setSummary(e.getLocalizedMessage());
                     }
 
                     group.addPreference(preference);
@@ -127,33 +152,69 @@ public class PlacesPrefsFragment extends PreferenceFragment
         }
     }
 
-    protected CharSequence getLocationProviderSummary(LocationProvider locationProvider)
+    protected CharSequence getLocationProviderSummary(Context context, LocationManager locationManager, LocationProvider locationProvider)
     {
         String summary = "";
         if (locationProvider != null)
         {
             if (locationProvider.requiresCell()) {
-                summary += "[IconCell]";
+                summary += " [IconCell] ";
             }
             if (locationProvider.requiresNetwork()) {
-                summary += "[IconNetwork]";
+                summary += " [IconNetwork] ";
             }
             if (locationProvider.requiresSatellite()) {
-                summary += "[IconSatellite]";
+                summary += " [IconSatellite] ";
             }
             if (locationProvider.hasMonetaryCost()) {
-                summary += "[IconMonetary]";
+                summary += " $ ";
             }
             if (locationProvider.supportsAltitude()) {
-                summary += "[IconAltitude]";
+                summary += " [IconAltitude] ";
+            }
+
+            try {
+                android.location.Location location = locationManager.getLastKnownLocation(locationProvider.getName());
+                if (location != null)
+                {
+                    if (utils == null) {
+                        utils = new SuntimesUtils();
+                        SuntimesUtils.initDisplayStrings(getActivity());
+                    }
+
+                    long locationAge = GetFixTask.calculateLocationAge(location);
+                    summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
+                }
+            } catch (SecurityException | IllegalArgumentException e) {
+                Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
+                summary += e.getLocalizedMessage();
             }
         }
-        return summary;
+        summary = summary.trim();
+
+        int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.LocationProviderStatus);
+        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionAltitude, R.drawable.check_altitude_dark), iconSize, iconSize, 0);
+        ImageSpan cellIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_cell, R.drawable.ic_celltower_dark), iconSize, iconSize, 0);
+        ImageSpan networkIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_network, R.drawable.ic_network_dark), iconSize, iconSize, 0);
+        ImageSpan gpsIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_satellite, R.drawable.ic_satellite_dark), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        CharSequence summaryDisplay = summary;
+        SuntimesUtils.ImageSpanTag[] summaryTags = {
+                new SuntimesUtils.ImageSpanTag("[IconAltitude]", altitudeIcon),
+                new SuntimesUtils.ImageSpanTag("[IconCell]", cellIcon),
+                new SuntimesUtils.ImageSpanTag("[IconNetwork]", networkIcon),
+                new SuntimesUtils.ImageSpanTag("[IconSatellite]", gpsIcon),
+        };
+        return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
     }
+    protected SuntimesUtils utils = null;
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;
     protected void requestLocationPermissions() {
-        ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+        requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+        //ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
     }
 
     protected boolean hasLocationPermission(Activity activity) {
@@ -163,18 +224,14 @@ public class PlacesPrefsFragment extends PreferenceFragment
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    if (getView() != null) {
-                        getView().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getActivity().recreate();
-                            }
-                        }, 500);
-                    }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("DEBUG", "onRequestPermissionsResult: fragment: " + requestCode);
+        switch (requestCode)
+        {
+            case PlacesPrefsFragment.LOCATION_PERMISSION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("DEBUG", "onRequestPermissionsResult: fragment: granted");
+                    updateLocationProviderPrefs();
                 }
                 break;
         }
