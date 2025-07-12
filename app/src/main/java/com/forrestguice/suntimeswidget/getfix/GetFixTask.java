@@ -53,6 +53,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MAX_AGE_NONE = 0;
     public static final int MAX_AGE_ANY = -1;
 
+    public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
+
     private final WeakReference<LocationHelper> helperRef;
     public GetFixTask(Context parent, LocationHelper helper)
     {
@@ -221,75 +223,40 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         {
             public void run()
             {
-                try {
-                    boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                    boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
-                    if (BuildConfig.DEBUG) {
-                        Log.i(TAG, "available providers: "
-                                + "network? " + (netEnabled ? "yes" : "no")
-                                + " | passive? " + (passiveEnabled ? "yes" : "no")
-                                + " | gps? " + (gpsEnabled ? "yes" : "no"));
-                    }
+                String[] providers = passiveMode
+                        ? new String[] { LocationManager.PASSIVE_PROVIDER }
+                        : new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
 
-                    if (maxAge != MAX_AGE_NONE)
-                    {
-                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
-                    }
-
-                    if (passiveMode && passiveEnabled)    // 2. request location updates on given provider
-                    {
-                        // passive provider only
-                        if (BuildConfig.DEBUG) {
-                            Log.i(TAG, "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
-                        }
-                        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
-
-                    } else if (!gpsEnabled && netEnabled) {
-                        // network provider only
-                        if (BuildConfig.DEBUG) {
-                            Log.i(TAG, "starting location listener; now requesting updates from NETWORK_PROVIDER...");
-                        }
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-
-                    } else if (gpsEnabled && !netEnabled) {
-                        // gps provider only
-                        if (BuildConfig.DEBUG) {
-                            Log.i(TAG, "starting location listener; now requesting updates from GPS_PROVIDER...");
-                        }
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-                    } else { //noinspection ConstantConditions
-                        if (gpsEnabled && netEnabled) {
-                            // gps + network provider
-                            if (BuildConfig.DEBUG) {
-                                Log.i(TAG, "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
+                if (maxAge != MAX_AGE_NONE)
+                {
+                    for (String provider : providers) {
+                        try {
+                            if (locationManager.isProviderEnabled(provider)) {
+                                locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
                             }
-                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-
-                        } else if (passiveEnabled) {
-                            // fallback to passive provider
-                            if (BuildConfig.DEBUG) {
-                                Log.i(TAG, "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
-                            }
-                            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
-
-                        } else {
-                            // err: no providers at all!
-                            Log.e(TAG, "unable to start locationListener ... No usable LocationProvider found! a provider should be enabled before starting this task.");
+                        } catch (IllegalArgumentException | SecurityException e) {
+                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
                         }
                     }
+                }
 
-                } catch (SecurityException e) {
-                    Log.e(TAG, "unable to start locationListener ... Permissions! we don't have them.. checkPermissions should be called before starting this task. " + e);
+                if (bestFix == null)
+                {
+                    for (String provider : providers)
+                    {
+                        try {
+                            if (locationManager.isProviderEnabled(provider)) {
+                                requestLocationUpdates(locationManager, provider, locationListener);
+                            }
+                        } catch (IllegalArgumentException | SecurityException e) {
+                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
+                        }
+                    }
                 }
             }
         });
 
-        while (elapsedTime < maxElapsed && !isCancelled())    // 3. wait until minElapsed, then return best location found so far
+        while (elapsedTime < maxElapsed && !isCancelled())
         {
             try {
                 Thread.sleep(100);
@@ -305,6 +272,14 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             }
         }
         return ((bestFix != null) ? bestFix.getLocation() : null);
+    }
+
+    protected void requestLocationUpdates(LocationManager locationManager, String provider, LocationListener listener)
+    {
+        if (BuildConfig.DEBUG) {
+            Log.i(TAG, "requesting location updates from: " + provider);
+        }
+        locationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
 
     /**
