@@ -139,13 +139,13 @@ public class GetFixHelper implements LocationHelper
                     getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(myParent));
 
                 } else {
-                    Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
+                    Log.w("GetFixHelper", "getFix called while location disabled; showing a prompt");
                     showGPSEnabledPrompt();
                 }
                 return true;
 
             } else {
-                Log.w("GetFixHelper", "getFix called without GPS permissions! ignored");
+                Log.w("GetFixHelper", "getFix called without location permissions! ignored");
                 return false;
             }
         } else {
@@ -251,7 +251,7 @@ public class GetFixHelper implements LocationHelper
     /**
      * @param activity
      * @param requestID used to identify the permission request
-     * @return true already has gps permissions, false has no permissions (triggers a request)
+     * @return true already has location permissions, false has no permissions (triggers a request)
      */
     public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
     {
@@ -489,7 +489,7 @@ public class GetFixHelper implements LocationHelper
     }
 
     /**
-     * Enable GPS alert dialog fragment; "Enable GPS? yes, no"
+     * Enable location alert dialog fragment; "Enable Location? yes, no"
      */
     public static class EnableGPSDialog extends DialogFragment
     {
