@@ -158,6 +158,8 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CONFIG_TIMEZONE = "suntimes.action.TIMEZONE";
     public static final String ACTION_CONFIG_DATE = "suntimes.action.CONFIG_DATE";
 
+    public static final String EXTRA_APPTHEME = "apptheme";   // DEBUG only
+
     public static final String ACTION_WIDGETS_UPDATE_ALL = "suntimes.action.widgets.UPDATE_ALL";
 
     public static final String SUNTIMES_ACTION_PREFIX = "suntimes.action";
@@ -441,6 +443,14 @@ public class SuntimesActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
+        if (BuildConfig.DEBUG)
+        {
+            Intent intent = getIntent();
+            if (intent != null && intent.hasExtra(EXTRA_APPTHEME)) {
+                appTheme = intent.getStringExtra(EXTRA_APPTHEME);
+                Log.w("DEBUG", "hasExtra, overriding appTheme: " + appTheme);
+            }
+        }
         appThemeResID = AppSettings.setTheme(this, appTheme);
 
         int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.text_disabledColor };
@@ -1093,7 +1103,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        GetFixUI getFixUI = new GetFixUI()
         {
             private MenuItem refreshItem = null;
 
@@ -1160,7 +1170,15 @@ public class SuntimesActivity extends AppCompatActivity
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
                 }
             }
-        });
+        };
+
+        getFixHelper = new GetFixHelper(this, getFixUI)
+        {
+            @Override
+            public int getMinElapsedTime() {
+                return 1000;
+            }
+        };
     }
 
     /**

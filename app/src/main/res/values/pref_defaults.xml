@@ -23,7 +23,7 @@
     <string name="def_app_locale" translatable="false">en</string>
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_maxAge" translatable="false">900000</string>
     <bool name="def_getFix_passiveMode" translatable="false">false</bool>
 
     <bool name="def_app_ui_showwarnings" translatable="false">true</bool>
