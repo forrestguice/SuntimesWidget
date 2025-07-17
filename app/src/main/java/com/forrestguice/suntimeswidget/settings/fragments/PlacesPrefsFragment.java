@@ -141,7 +141,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                             preference.setSummary(getLocationProviderSummary(getActivity(), locationManager, locationProvider));
                         }
                     } catch (SecurityException e) {
-                        preference.setSummary(getContext().getString(R.string.configLabel_permissionRequired));
+                        preference.setSummary(getString(R.string.configLabel_permissionRequired));
                     } catch (IllegalArgumentException e) {
                         preference.setSummary(e.getLocalizedMessage());
                     }
@@ -212,9 +212,12 @@ public class PlacesPrefsFragment extends PreferenceFragment
     protected SuntimesUtils utils = null;
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;
-    protected void requestLocationPermissions() {
-        requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
-        //ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+    protected void requestLocationPermissions()
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+            //ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+        }
     }
 
     protected boolean hasLocationPermission(Activity activity) {
