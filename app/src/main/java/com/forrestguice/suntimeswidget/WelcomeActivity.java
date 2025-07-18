@@ -1686,6 +1686,7 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_moon != null) {
                 AppSettings.saveShowMoonPref(context, check_moon.isChecked());
             }
+            WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.loadLengthUnitsPref(context, 0));
             return true;
         }
     }
