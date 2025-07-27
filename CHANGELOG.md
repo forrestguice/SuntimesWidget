@@ -1,8 +1,14 @@
 ### ~
 
-### v0.16.9 (2025-07-14)
-* fixes app crash (null pointer exception) (#882).
+### v0.16.9 (2025-07-27)
+* improves reliability of location updates (#884); changed to query all providers (adds "fused" api31+).
+* adds location provider diagnostic info to settings; shows available providers and recent location age.
+* changes defaults; "location maxAge" increased from 5 to 15 minutes (#884).
+* adds "solar midnight" checkbox to the welcome activity.
+* fixes "app crash (null pointer exception)" (#882).
+* fixes "app crash when showing graphs with data sources that lacks support".
 * fixes bug where "data patterns display nothing at higher latitudes" (#874).
+* fixes bug where "in metric mode elevation is still in feet" (#885).
 * fixes inaccurate default places coordinates (8 places updated).
 * updates translation to Polish and Esperanto (eo, pl) (#883 by Verdulo).
 
