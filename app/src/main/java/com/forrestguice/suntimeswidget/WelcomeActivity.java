@@ -1537,7 +1537,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected CheckBox check_moon;
-        protected CheckBox check_astro, check_nautical, check_civil, check_noon, check_blue, check_gold;
+        protected CheckBox check_astro, check_nautical, check_civil, check_noon, check_midnight, check_blue, check_gold;
         protected CheckBox check_solstice, check_crossquarter;
 
         @Override
@@ -1548,6 +1548,7 @@ public class WelcomeActivity extends AppCompatActivity
             check_nautical = (CheckBox) view.findViewById(R.id.check_show_nautical);
             check_civil = (CheckBox) view.findViewById(R.id.check_show_civil);
             check_noon = (CheckBox) view.findViewById(R.id.check_show_noon);
+            check_midnight = (CheckBox) view.findViewById(R.id.check_show_midnight);
             check_gold = (CheckBox) view.findViewById(R.id.check_show_gold);
             check_blue = (CheckBox) view.findViewById(R.id.check_show_blue);
             check_crossquarter = (CheckBox) view.findViewById(R.id.check_show_crossquarter);
@@ -1597,6 +1598,9 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_noon != null) {
                 check_noon.setChecked(fields[AppSettings.FIELD_NOON]);
             }
+            if (check_midnight != null) {
+                check_midnight.setChecked(fields[AppSettings.FIELD_MIDNIGHT]);
+            }
             if (check_gold != null) {
                 check_gold.setChecked(fields[AppSettings.FIELD_GOLD]);
             }
@@ -1628,6 +1632,9 @@ public class WelcomeActivity extends AppCompatActivity
             }
             if (check_noon != null) {
                 check_noon.setChecked(fields[AppSettings.FIELD_NOON]);
+            }
+            if (check_midnight != null) {
+                check_midnight.setChecked(fields[AppSettings.FIELD_MIDNIGHT]);
             }
             if (check_gold != null) {
                 check_gold.setChecked(fields[AppSettings.FIELD_GOLD]);
@@ -1661,6 +1668,9 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_noon != null) {
                 AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_NOON, check_noon.isChecked());
             }
+            if (check_midnight != null) {
+                AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_MIDNIGHT, check_midnight.isChecked());
+            }
             if (check_gold != null) {
                 AppSettings.saveShowFieldsPref(context, AppSettings.FIELD_GOLD, check_gold.isChecked());
             }
@@ -1676,6 +1686,7 @@ public class WelcomeActivity extends AppCompatActivity
             if (check_moon != null) {
                 AppSettings.saveShowMoonPref(context, check_moon.isChecked());
             }
+            WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.loadLengthUnitsPref(context, 0));
             return true;
         }
     }

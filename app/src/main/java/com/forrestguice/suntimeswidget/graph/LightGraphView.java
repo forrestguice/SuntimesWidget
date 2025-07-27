@@ -1128,11 +1128,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             events.add(calculator.getWinterSolsticeForYear(data[0].calendar()));
 
             float h = c.getHeight();
-            float x0 = -1 * (c.getWidth() - (float) daysToBitmapCoords(c, events.get(events.size() - 1).get(Calendar.DAY_OF_YEAR), options));
+            Calendar calendar = events.get(events.size() - 1);
+            float x0 = -1 * (c.getWidth() - (float) daysToBitmapCoords(c, ((calendar != null) ? calendar.get(Calendar.DAY_OF_YEAR) : 1), options));
             for (int i=0; i<events.size(); i++)
             {
                 Calendar event = events.get(i);
-                float x = (float) daysToBitmapCoords(c, event.get(Calendar.DAY_OF_YEAR), options);
+                float x = (float) daysToBitmapCoords(c, ((event != null) ? event.get(Calendar.DAY_OF_YEAR) : 1), options);
                 c.drawLine(x, 0, x, h, p);
                 if (showCrossQuarter) {
                     c.drawLine((x + x0)/2, 0, (x + x0)/2, h, p);

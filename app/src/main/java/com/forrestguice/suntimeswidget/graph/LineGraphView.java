@@ -844,20 +844,22 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             while (minute < path_width)
             {
                 position = calculator.getMoonPosition(lmt);
-                if (position.elevation < elevation_min) {
-                    elevation_min = position.elevation;
-                } else if (position.elevation > elevation_max) {
-                    elevation_max = position.elevation;
+                double elevation = (position != null ? position.elevation : 0);
+
+                if (elevation < elevation_min) {
+                    elevation_min = elevation;
+                } else if (elevation > elevation_max) {
+                    elevation_max = elevation;
                 }
 
                 int d = (int)(minute / MINUTES_IN_DAY);
                 double m = (d * MINUTES_IN_DAY) + (lmt.get(Calendar.HOUR_OF_DAY) * 60) + lmt.get(Calendar.MINUTE);
                 x = (float) minutesToBitmapCoords(c, m, options);
-                y = (float) degreesToBitmapCoords(c, position.elevation, options);
+                y = (float) degreesToBitmapCoords(c, elevation, options);
 
                 if (path != null
-                        && ((elevation_prev < 0 && position.elevation >= 0)
-                        || (elevation_prev >= 0 && position.elevation < 0))) {
+                        && ((elevation_prev < 0 && elevation >= 0)
+                        || (elevation_prev >= 0 && elevation < 0))) {
                     path.lineTo(x, y);
                     if (closed) {
                         path.close();
@@ -869,7 +871,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 {
                     path = new Path();
                     paths.add(path);
-                    elevations.put(path, position.elevation);
+                    elevations.put(path, elevation);
 
                     if (closed) {
                         path.moveTo(x, (float)degreesToBitmapCoords(c, 0, options));
@@ -882,7 +884,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     path.lineTo(x, y);
                 }
 
-                elevation_prev = position.elevation;
+                elevation_prev = elevation;
                 lmt.add(Calendar.MINUTE, options.moonPath_interval);
                 minute += options.moonPath_interval;
             }
@@ -950,20 +952,22 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             while (minute < path_width)
             {
                 position = calculator.getSunPosition(lmt);
-                if (position.elevation < elevation_min) {
-                    elevation_min = position.elevation;
-                } else if (position.elevation > elevation_max) {
-                    elevation_max = position.elevation;
+                double elevation = (position != null ? position.elevation : 0);
+
+                if (elevation < elevation_min) {
+                    elevation_min = elevation;
+                } else if (elevation > elevation_max) {
+                    elevation_max = elevation;
                 }
 
                 int d = (int)(minute / MINUTES_IN_DAY);
                 double m = (d * MINUTES_IN_DAY) + (lmt.get(Calendar.HOUR_OF_DAY) * 60) + lmt.get(Calendar.MINUTE);
                 x = (float) minutesToBitmapCoords(c, m, options);
-                y = (float) degreesToBitmapCoords(c, position.elevation, options);
+                y = (float) degreesToBitmapCoords(c, elevation, options);
 
                 if (path != null
-                        && ((elevation_prev < 0 && position.elevation >= 0)
-                        || (elevation_prev >= 0 && position.elevation < 0))) {
+                        && ((elevation_prev < 0 && elevation >= 0)
+                        || (elevation_prev >= 0 && elevation < 0))) {
                     path.lineTo(x, y);
                     if (closed) {
                         path.close();
@@ -975,7 +979,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                 {
                     path = new Path();
                     paths.add(path);
-                    elevations.put(path, position.elevation);
+                    elevations.put(path, elevation);
 
                     if (closed) {
                         path.moveTo(x, (float)degreesToBitmapCoords(c, 0, options));
@@ -988,7 +992,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
                     path.lineTo(x, y);
                 }
 
-                elevation_prev = position.elevation;
+                elevation_prev = elevation;
                 lmt.add(Calendar.MINUTE, options.sunPath_interval);
                 minute += options.sunPath_interval;
             }
@@ -1245,7 +1249,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             Calendar lmt = lmt(calculator.getLocation());
             lmt.setTimeInMillis(time);
             double minute = lmt.get(Calendar.HOUR_OF_DAY) * 60 + lmt.get(Calendar.MINUTE);
-            double degrees = calculator.getSunPosition(lmt).elevation;
+            SuntimesCalculator.SunPosition position = calculator.getSunPosition(lmt);
+            double degrees = (position != null ? position.elevation : 0);
             drawPoint(minute, degrees, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
         }
 
