@@ -40,13 +40,20 @@ android
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
 
-        beta {
-            initWith debug
-            matchingFallbacks = ['debug']
-            applicationIdSuffix ".beta"
-            versionNameSuffix "-beta"
-            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.beta", suntimesPermissionRoot:"suntimes.beta"]
+    flavorDimensions "version"
+    productFlavors {
+        fdroid {
+            dimension "version"
+        }
+        nightly {
+            dimension "version"
+            applicationIdSuffix ".nightly"
+            versionNameSuffix "-nightly"
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
+            def nightlyVersionCode = new Date().format('yyyyMMddhh') as int
+            versionCode nightlyVersionCode
         }
     }
 
