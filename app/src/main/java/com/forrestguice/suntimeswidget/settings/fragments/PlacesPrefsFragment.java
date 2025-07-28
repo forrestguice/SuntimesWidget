@@ -110,7 +110,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     boolean isEnabled = false;
                     try {
                         isEnabled = locationManager.isProviderEnabled(provider);
-                    } catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException | SecurityException e) {
                         Log.w(SuntimesSettingsActivity.LOG_TAG, "updateLocationProviderPrefs: " + e);
                     }
 
