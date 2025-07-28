@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -55,13 +56,12 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MAX_AGE_ANY = -1;
 
     public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
+    public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
 
     private final String[] locationProviders;
     protected String[] initLocationProviders(@NonNull Context context)
     {
-        List<String> providers = locationManager.getAllProviders();
-        providers.remove(LocationManager.PASSIVE_PROVIDER);
-
+        List<String> providers = new ArrayList<String>(Arrays.asList(LOCATION_PROVIDERS));
         List<String> notRequested = new ArrayList<>();
         for (String provider : providers) {
             if (!LocationHelperSettings.isProviderRequested(context, provider)) {
@@ -69,9 +69,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             }
         }
         providers.removeAll(notRequested);
-
         if (providers.isEmpty()) {
-            providers.add(LocationManager.PASSIVE_PROVIDER);  // fallback to passive mode when none requested
+            providers.add(LocationManager.PASSIVE_PROVIDER);  // passive mode when none requested
         }
         return providers.toArray(new String[0]);
     }
