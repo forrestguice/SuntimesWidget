@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -55,11 +56,32 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
     public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
 
+    private final String[] locationProviders;
+    protected String[] initLocationProviders(@NonNull Context context)
+    {
+        List<String> providers = locationManager.getAllProviders();
+        providers.remove(LocationManager.PASSIVE_PROVIDER);
+
+        List<String> notRequested = new ArrayList<>();
+        for (String provider : providers) {
+            if (!LocationHelperSettings.isProviderRequested(context, provider)) {
+                notRequested.add(provider);
+            }
+        }
+        providers.removeAll(notRequested);
+
+        if (providers.isEmpty()) {
+            providers.add(LocationManager.PASSIVE_PROVIDER);  // fallback to passive mode when none requested
+        }
+        return providers.toArray(new String[0]);
+    }
+
     private final WeakReference<LocationHelper> helperRef;
     public GetFixTask(Context parent, LocationHelper helper)
     {
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<LocationHelper>(helper);
+        this.locationProviders = initLocationProviders(parent);
     }
 
     public AsyncTask<Object, Location, Location> executeTask(Object... params)
@@ -225,7 +247,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 String[] providers = passiveMode
                         ? new String[] { LocationManager.PASSIVE_PROVIDER }
-                        : new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
+                        : locationProviders;  //: new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
 
                 if (maxAge != MAX_AGE_NONE)
                 {

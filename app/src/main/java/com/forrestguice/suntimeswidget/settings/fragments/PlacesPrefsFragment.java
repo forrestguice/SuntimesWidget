@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -114,20 +115,16 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     }
 
                     final CheckBoxPreference preference = new CheckBoxPreference(getActivity());
+                    preference.setKey(LocationHelperSettings.PREF_KEY_LOCATION_PROVIDER_ + provider);
                     preference.setTitle(provider.toUpperCase(Locale.getDefault()));
-                    preference.setChecked(isEnabled);
-                    preference.setEnabled(false);
-                    preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+                    preference.setEnabled(isEnabled);
+                    preference.setChecked(LocationHelperSettings.isProviderRequested(getActivity(), provider));
+
+                    preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
                     {
                         @Override
-                        public boolean onPreferenceChange(Preference p, Object newValue)
+                        public boolean onPreferenceClick(Preference preference)
                         {
-                            try {
-                                preference.setChecked(locationManager.isProviderEnabled(provider));
-                            } catch (IllegalArgumentException e) {
-                                preference.setChecked(false);
-                            }
-
                             if (!hasLocationPermission(getActivity())) {
                                 requestLocationPermissions();
                             }
