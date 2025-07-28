@@ -26,6 +26,7 @@ android
         versionCode 122
         versionName "0.16.8"
 
+        manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -38,6 +39,14 @@ android
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        beta {
+            initWith debug
+            matchingFallbacks = ['debug']
+            applicationIdSuffix ".beta"
+            versionNameSuffix "-beta"
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.beta", suntimesPermissionRoot:"suntimes.beta"]
         }
     }
 

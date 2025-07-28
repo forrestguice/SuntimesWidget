@@ -28,9 +28,9 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
     <permission
-        android:name="suntimes.permission.READ_CALCULATOR"
+        android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
-    <uses-permission android:name="suntimes.permission.READ_CALCULATOR" />
+    <uses-permission android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
@@ -107,40 +107,40 @@
         <!-- Calculator Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
-            android:authorities="suntimeswidget.calculator.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.calculator.provider"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Theme Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider"
-            android:authorities="suntimeswidget.theme.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.theme.provider"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Action Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.actions.SuntimesActionsProvider"
-            android:authorities="suntimeswidget.action.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.action.provider"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Alarm Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsProvider"
-            android:authorities="suntimeswidget.alarm.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.alarm.provider"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Event Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider"
-            android:authorities="suntimeswidget.event.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.event.provider"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true"
             android:syncable="false" />
 
@@ -185,7 +185,7 @@
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -194,7 +194,7 @@
             android:name=".getfix.PlacesActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -203,7 +203,7 @@
             android:name=".SuntimesWidgetListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -212,7 +212,7 @@
             android:name=".events.EventListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -221,7 +221,7 @@
             android:name=".actions.ActionListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -230,7 +230,7 @@
             android:name=".themes.WidgetThemeListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
             android:exported="true">
         </activity>
 
@@ -264,7 +264,7 @@
         <!-- FileProvider (export to file; places, themes) -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.forrestguice.suntimeswidget.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
@@ -413,7 +413,7 @@
         <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
             android:directBootAware="true"
             android:exported="true"
-            android:permission="suntimes.permission.READ_CALCULATOR">
+            android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR">
             <intent-filter>
                 <action android:name="suntimeswidget.alarm.start_bedtime" />
                 <action android:name="suntimeswidget.alarm.pause_bedtime" />
