@@ -2,6 +2,9 @@ name: Publish nightly build
 
 on: 
   workflow_dispatch:
+  push:
+    branches:
+      - nightly-build
 
 jobs:
   build:
@@ -11,6 +14,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: recursive
+        ref: nightly-build
 
     - name: set up JDK 8.0.422+5
       uses: actions/setup-java@v4
@@ -32,13 +36,20 @@ jobs:
         restore-keys: |
             ${{ runner.os }}-gradle-
     
-    - name: Build with Gradle
+    - name: Build nightly debug
       run: ./gradlew assembleNightlyDebug
 
-    - name: fdroid nightly
+    #- name: Setup F-Droid Server (apt-get)
+    #  run: |
+    #    sudo add-apt-repository ppa:fdroid/fdroidserver
+    #    sudo apt-get update
+    #    sudo apt-get install apksigner fdroidserver --no-install-recommends
+      
+    - name: Publish nightly debug
       run: |
-        sudo add-apt-repository ppa:fdroid/fdroidserver
-        sudo apt-get update
-        sudo apt-get install apksigner fdroidserver --no-install-recommends
-        export DEBUG_KEYSTORE=$
+        python -m venv fdroidserver-env 
+        . fdroidserver-env/bin/activate
+        pip install git+https://github.com/forrestguice/fdroidserver.git
         fdroid nightly --archive-older 10
+      env:
+        DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
