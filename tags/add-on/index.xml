@@ -27,5 +27,35 @@ Manage Calendars Options Troubleshooting Suntime Calendars can also be installed
 https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
 Suntimes Calendars source code is available under GPLv3.</description>
     </item>
+    <item>
+      <title>Solunar Periods</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/solunarperiods/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/solunarperiods/index.html</guid>
+      <description>A hunting and fishing add-on for Suntimes.
+Solunar Periods can be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
+Solunar Periods source code is available under GPLv3.</description>
+    </item>
+    <item>
+      <title>Suntimes NFC</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimesnfc/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimesnfc/index.html</guid>
+      <description>An NFC add-on for Suntimes Alarms.
+Suntimes NFC can be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
+Suntimes NFC source code is available under GPLv3.</description>
+    </item>
+    <item>
+      <title>Interval Midpoints</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/addons/intervalmidpoints/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/intervalmidpoints/index.html</guid>
+      <description>A midpoint calculator add-on for Suntimes.
+Interval Midpoints can be installed from:
+https://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.
+Interval Midpoints source code is available under GPLv3.</description>
+    </item>
   </channel>
 </rss>

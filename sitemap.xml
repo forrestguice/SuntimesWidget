@@ -116,6 +116,9 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/solstice/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/solunarperiods/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/themes/index.html</loc>
   </url>
   <url>
@@ -138,11 +141,17 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/events/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimesnfc/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/widgets/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/alarms/recommendations/index.html</loc>
     <lastmod>2024-03-16T15:50:03-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/addons/intervalmidpoints/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/tiles/index.html</loc>

@@ -280,6 +280,14 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/dialogs/solstice/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": "A hunting and fishing add-on for Suntimes.\nSolunar Periods can be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.\nSolunar Periods source code is available under GPLv3.\n",
+    "description": "",
+    "tags": "add-on",
+    "title": "Solunar Periods",
+    "uri": "/Suntimes/help/addons/solunarperiods/index.html"
+  },
+  {
     "breadcrumb": "Suntimes \u003e Help \u003e Widgets",
     "content": "Suntimes can customize the appearance of widgets using widget themes.\nDefaults Manage Themes To access the theme list Suntimes -\u003e Settings -\u003e Widgets -\u003e Themes\nAdd, Edit, Copy, Remove To add, edit, copy, or remove themes, navigate to the theme list.\nTo add a theme, tap add.\nTo copy a theme, select it, then tap copy to create a new theme with the same values.\nTo edit a theme, select it, then tap edit.\nTo remove a theme, select it, then tap delete.\nNote The default themes cannot be modified; the edit and remove actions will not be shown. Share, Export, Import From the theme list, select a theme, then tap to share the theme as a file.\nUse : -\u003e Export to export all themes to file.\nUse : -\u003e Import to import previously shared or exported themes.\nEdit Themes TODO\n",
     "description": "",
@@ -336,6 +344,14 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/more/events/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": "An NFC add-on for Suntimes Alarms.\nSuntimes NFC can be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.\nSuntimes NFC source code is available under GPLv3.\n",
+    "description": "",
+    "tags": "add-on",
+    "title": "Suntimes NFC",
+    "uri": "/Suntimes/help/addons/suntimesnfc/index.html"
+  },
+  {
     "breadcrumb": "Suntimes \u003e Help",
     "content": "Suntimes includes a variety of home screen widgets.\nManage Widgets Configure Widgets Widget Themes Time \u0026 Date Sun Moon Solstice, Equinox ",
     "description": "",
@@ -350,6 +366,14 @@ var relearn_search_index = [
     "tags": null,
     "title": "Alarm Recommendations",
     "uri": "/Suntimes/help/alarms/recommendations/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e Add-ons",
+    "content": "A midpoint calculator add-on for Suntimes.\nInterval Midpoints can be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo The issue tracker can be used to report bugs or request features.\nInterval Midpoints source code is available under GPLv3.\n",
+    "description": "",
+    "tags": "add-on",
+    "title": "Interval Midpoints",
+    "uri": "/Suntimes/help/addons/intervalmidpoints/index.html"
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
