@@ -31,6 +31,7 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -332,6 +333,27 @@ public class CalculatorProviderTest
         String[] projection2 = QUERY_SUN_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor2, projection2);
+    }
+
+    @Test
+    public void test_query_sun_customEvent()
+    {
+        String CUSTOMEVENT = "CUSTOM0r";
+
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertTrue("Unable to getContentResolver!", resolver != null);
+
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN);
+        String[] projection = new String[] { CUSTOMEVENT };
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_SUN", cursor, projection);
+        test_allColumnsLong("QUERY_SUN", cursor, projection);
+
+        cursor.moveToFirst();
+        int i = cursor.getColumnIndex(CUSTOMEVENT);
+        assertTrue(i >= 0);
+
+        long eventTime = cursor.getLong(cursor.getColumnIndex(CUSTOMEVENT));
     }
 
     public void test_suntimes(Cursor cursor, SuntimesCalculator calculator, Calendar date)

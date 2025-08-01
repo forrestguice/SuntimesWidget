@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,10 +40,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
+import com.flask.colorpicker.BuildConfig;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -625,7 +628,36 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         default:
-                            row[i] = null;
+                            if (AlarmEventProvider.EventType.resolveEventType(getContext(), columns[i]) == AlarmEventProvider.EventType.EVENTALIAS)
+                            {
+                                String eventID = columns[i];
+                                String suffix = "";
+                                String aliasID = eventID;
+                                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                                    suffix = eventID.substring(eventID.length() - 1);
+                                    aliasID = aliasID.substring(0, eventID.length() - 1);
+                                }
+
+                                EventSettings.EventAlias alias = EventSettings.loadEvent(getContext(), aliasID);
+                                AlarmEventProvider.EventType aliasType = alias.getType();
+                                if (aliasType == AlarmEventProvider.EventType.SUN_ELEVATION || aliasType == AlarmEventProvider.EventType.SHADOWLENGTH)
+                                {
+                                    boolean isRising = (suffix.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
+                                    Object[] aliasValues = AlarmEventProvider.createRow(getContext(), alias, isRising, new String[] { AlarmEventContract.COLUMN_EVENT_TIMEMILLIS },
+                                            AlarmEventContract.EXTRA_ALARM_NOW + "=?", new String[] { Long.toString(day.getTimeInMillis()) });
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d("CalculatorProvider", eventID + " is a " + aliasType + " that occurs at " + aliasValues[0]);
+                                    }
+                                    row[i] = aliasValues[0];
+
+                                } else {
+                                    Log.w("CalculatorProvider", "Unrecognized type! " + columns[i] + " (" + aliasType +")");
+                                    row[i] = null;
+                                }
+                            } else {
+                                Log.w("CalculatorProvider", "Unrecognized column: " + columns[i]);
+                                row[i] = null;
+                            }
                             break;
                     }
                 }
