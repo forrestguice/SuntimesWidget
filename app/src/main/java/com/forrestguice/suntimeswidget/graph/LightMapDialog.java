@@ -1399,6 +1399,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     private SuntimesTheme themeOverride = null;
+    @Deprecated
     public void themeViews(Context context, @Nullable SuntimesTheme theme)
     {
         if (theme != null) {

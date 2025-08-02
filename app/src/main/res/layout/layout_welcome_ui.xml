@@ -65,6 +65,11 @@
                 android:textSize="?attr/text_size_small"
                 android:text="@string/timeMode_noon" />
 
+            <CheckBox android:id="@+id/check_show_midnight"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="?attr/text_size_small"
+                android:text="@string/timeMode_midnight" />
+
             <CheckBox android:id="@+id/check_show_blue"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"

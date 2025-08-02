@@ -122,8 +122,8 @@ public class SuntimesNotes
     }
 
     private SuntimesTheme themeOverride = null;
-    public void themeViews(Context context, SuntimesTheme theme)
-    {
+    @Deprecated
+    public void themeViews(Context context, SuntimesTheme theme) {
         if (theme != null) {
             themeOverride = theme;
         }
