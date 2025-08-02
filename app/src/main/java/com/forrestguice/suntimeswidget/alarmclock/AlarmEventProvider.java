@@ -756,7 +756,7 @@ public class AlarmEventProvider extends ContentProvider
                     }
 
                 } catch (Exception e) {
-                    Log.e("ElevationEvent", "createEvent: bad angle: " + e);
+                    Log.e("ElevationEvent", "createEvent: bad angle: " + eventName + ": " + e);
                     return null;
                 }
                 boolean rising = eventName.endsWith(SUFFIX_RISING);
@@ -774,12 +774,12 @@ public class AlarmEventProvider extends ContentProvider
         Calendar eventTime;
 
         Calendar day = Calendar.getInstance();
+        day.setTimeInMillis(now.getTimeInMillis());
+
         sunData.setTodayIs(day);
         sunData.calculate(context);
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-        if (eventTime != null)
-        {
-            eventTime.set(Calendar.SECOND, 0);
+        if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
 
@@ -799,9 +799,7 @@ public class AlarmEventProvider extends ContentProvider
             sunData.setTodayIs(day);
             sunData.calculate(context);
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-            if (eventTime != null)
-            {
-                eventTime.set(Calendar.SECOND, 0);
+            if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
@@ -956,9 +954,7 @@ public class AlarmEventProvider extends ContentProvider
 
         eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                       : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-        if (eventTime != null)
-        {
-            eventTime.set(Calendar.SECOND, 0);
+        if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
 
@@ -979,9 +975,7 @@ public class AlarmEventProvider extends ContentProvider
             data.calculate(context);
             eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                           : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-            if (eventTime != null)
-            {
-                eventTime.set(Calendar.SECOND, 0);
+            if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
