@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -55,11 +56,7 @@ public class EventListFragment extends Fragment
     public EventListFragment()
     {
         super();
-        Bundle args = new Bundle();
-        args.putString(EXTRA_SELECTED, null);
-        args.putBoolean(EXTRA_NOSELECT, false);
-        args.putBoolean(EXTRA_EXPANDED, false);
-        setArguments(args);
+        initArgs();
     }
 
     @Override
@@ -74,19 +71,38 @@ public class EventListFragment extends Fragment
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(getActivity(), getChildFragmentManager());
+        helper = new EventListHelper(v.getContext(), getChildFragmentManager());
         helper.setLocation(getLocation());
-        helper.setExpanded(getArguments().getBoolean(EXTRA_EXPANDED, false));
-        helper.setDisallowSelect(getArguments().getBoolean(EXTRA_NOSELECT, false));
+        helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
+        helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
         helper.initViews(getActivity(), v, savedState);
 
-        String preselectedEvent = getArguments().getString(EXTRA_SELECTED);
+        String preselectedEvent = getArgs().getString(EXTRA_SELECTED);
         if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
             helper.setSelected(preselectedEvent);
             helper.triggerActionMode();
         }
 
         return v;
+    }
+
+    @NonNull
+    public Bundle getArgs()
+    {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = initArgs();
+        }
+        return args;
+    }
+    protected Bundle initArgs()
+    {
+        Bundle args = new Bundle();
+        args.putString(EXTRA_SELECTED, null);
+        args.putBoolean(EXTRA_NOSELECT, false);
+        args.putBoolean(EXTRA_EXPANDED, false);
+        setArguments(args);
+        return args;
     }
 
     @Override
@@ -101,7 +117,7 @@ public class EventListFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle state) {
+    public void onSaveInstanceState(@NonNull Bundle state) {
         super.onSaveInstanceState(state);
         helper.onSaveInstanceState(state);
     }
@@ -177,7 +193,7 @@ public class EventListFragment extends Fragment
         }
     }
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
@@ -193,40 +209,40 @@ public class EventListFragment extends Fragment
     }
 
     public void setPreselected(String value) {
-        getArguments().putString(EXTRA_SELECTED, value);
+        getArgs().putString(EXTRA_SELECTED, value);
     }
 
     public void setExpanded(boolean value) {
-        getArguments().putBoolean(EXTRA_EXPANDED, value);
+        getArgs().putBoolean(EXTRA_EXPANDED, value);
         if (helper != null) {
             helper.setExpanded(value);
         }
     }
     public boolean isExpanded() {
-        return getArguments().getBoolean(EXTRA_EXPANDED, false);
+        return getArgs().getBoolean(EXTRA_EXPANDED, false);
     }
 
     public void setDisallowSelect(boolean value) {
-        getArguments().putBoolean(EXTRA_NOSELECT, value);
+        getArgs().putBoolean(EXTRA_NOSELECT, value);
         if (helper != null) {
             helper.setDisallowSelect(value);
         }
     }
     public boolean disallowSelect() {
-        return getArguments().getBoolean(EXTRA_NOSELECT, false);
+        return getArgs().getBoolean(EXTRA_NOSELECT, false);
     }
 
     public void setLocation(Location value) {
-        getArguments().putParcelable(EXTRA_LOCATION, value);
+        getArgs().putParcelable(EXTRA_LOCATION, value);
     }
     public Location getLocation() {
-        return getArguments().getParcelable(EXTRA_LOCATION);
+        return getArgs().getParcelable(EXTRA_LOCATION);
     }
 
     /**
      * ImportListener
      */
-    private EventImportTask.TaskListener importListener = new EventImportTask.TaskListener() {
+    private final EventImportTask.TaskListener importListener = new EventImportTask.TaskListener() {
         @Override
         public void onStarted() {
             setRetainInstance(true);
@@ -257,7 +273,7 @@ public class EventListFragment extends Fragment
     /**
      * ExportListener
      */
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override
         public void onStarted() {
