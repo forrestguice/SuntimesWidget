@@ -89,7 +89,7 @@ public class EventListHelper
     public static final String DIALOGTAG_HELP = "help";
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
 
     private int selectedChild = -1;
@@ -602,7 +602,7 @@ public class EventListHelper
         importListener0 = listener;
     }
 
-    private EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
+    private final EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -798,9 +798,9 @@ public class EventListHelper
      */
     public static class ExpandableEventDisplayAdapter extends BaseExpandableListAdapter implements EventDisplayAdapterInterface
     {
-        private WeakReference<Context> contextRef;
-        private int groupResourceID, childResourceID;
-        private List<EventSettings.EventAlias> objects;
+        private final WeakReference<Context> contextRef;
+        private final int groupResourceID, childResourceID;
+        private final List<EventSettings.EventAlias> objects;
         private EventSettings.EventAlias selectedItem;
         private int selectedChild = -1;
         private final SuntimesUtils utils = new SuntimesUtils();
