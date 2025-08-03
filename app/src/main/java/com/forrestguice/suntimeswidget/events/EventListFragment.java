@@ -50,6 +50,7 @@ public class EventListFragment extends Fragment
     public static final String EXTRA_NOSELECT = "noselect";
     public static final String EXTRA_EXPANDED = "expanded";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_TYPEFILTER = "typefilter";
 
     private EventListHelper helper;
 
@@ -75,6 +76,7 @@ public class EventListFragment extends Fragment
         helper.setLocation(getLocation());
         helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
+        helper.setTypeFilter(getArgs().getStringArray(EXTRA_TYPEFILTER));
         helper.initViews(getActivity(), v, savedState);
 
         String preselectedEvent = getArgs().getString(EXTRA_SELECTED);
@@ -101,6 +103,7 @@ public class EventListFragment extends Fragment
         args.putString(EXTRA_SELECTED, null);
         args.putBoolean(EXTRA_NOSELECT, false);
         args.putBoolean(EXTRA_EXPANDED, false);
+        args.putStringArray(EXTRA_TYPEFILTER, null);
         setArguments(args);
         return args;
     }
@@ -237,6 +240,11 @@ public class EventListFragment extends Fragment
     }
     public Location getLocation() {
         return getArgs().getParcelable(EXTRA_LOCATION);
+    }
+
+    private String[] typeFilter = null;
+    public void setTypeFilter(@Nullable String[] filter) {
+        getArgs().putStringArray(EXTRA_TYPEFILTER, filter);
     }
 
     /**

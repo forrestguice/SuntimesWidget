@@ -133,6 +133,11 @@ public class EventListHelper
         disallowSelect = value;
     }
 
+    private String[] typeFilter = null;
+    public void setTypeFilter(@Nullable String[] filter) {
+        typeFilter = filter;
+    }
+
     private boolean expanded = false;
     public void setExpanded( boolean value ) {
         expanded = value;
@@ -305,8 +310,23 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+        List<EventSettings.EventAlias> events = new ArrayList<>();
+        if (typeFilter != null && typeFilter.length > 0)
+        {
+            for (String filter : typeFilter)
+            {
+                try {
+                    AlarmEventProvider.EventType type = AlarmEventProvider.EventType.valueOf(filter);
+                    events.addAll(EventSettings.loadEvents(context, type));
+                } catch (IllegalArgumentException e) {
+                    Log.w("EventListHelper", "initAdapter: invalid type filter: " + e);
+                }
+            }
+
+        } else {
+            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION));
+            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+        }
 
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
