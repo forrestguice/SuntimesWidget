@@ -172,6 +172,8 @@ public class CalculatorProviderTest
     public void setup()
     {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        WidgetSettings.initDefaults(mockContext);
+
         sunCalculator = getCalculator("");
         moonCalculator = getCalculator("moon");
 
@@ -432,12 +434,14 @@ public class CalculatorProviderTest
 
     @Test
     public void test_query_sun_customEvent() {
-        test_query_sun_customEvent_onDay(null, -15.5, true);
+        //test_query_sun_customEvent_onDay(null, -15.5, true);
+        test_query_sun_customEvent_onDay(null, -6.0, true);
     }
 
     @Test
     public void test_query_sun_customEvent_onDay() {
-        test_query_sun_customEvent_onDay(TEST_DATE0, -15.5, true);
+        test_query_sun_customEvent_onDay(TEST_DATE0, -6, true);
+        test_query_sun_customEvent_onDay(TEST_DATE0, -6, false);
     }
 
     public void test_query_sun_customEvent_onDay(@Nullable Calendar day, double angle, boolean rising)
@@ -460,7 +464,7 @@ public class CalculatorProviderTest
             day.set(Calendar.HOUR_OF_DAY, 23);
         }
         Calendar eventTime0 = (rising ? sunCalculator.getSunriseCalendarForDate(day, angle)
-                : sunCalculator.getSunsetCalendarForDate(day, angle));
+                                      : sunCalculator.getSunsetCalendarForDate(day, angle));
         SuntimesCalculator.SunPosition position0 = sunCalculator.getSunPosition(eventTime0);
         verify_sunEvent(eventID, cursor, eventTime0, position0);
     }
