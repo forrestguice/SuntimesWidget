@@ -196,18 +196,18 @@
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">nessuno</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
-    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours" >h</xliff:g>:<xliff:g id="patternMinutes" >mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
-    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours" >h</xliff:g>:<xliff:g id="patternMinutes" >mm</xliff:g>:<xliff:g id="patternSeconds" >ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
-    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours" >HH</xliff:g>:<xliff:g id="patternMinutes" >mm</xliff:g></string>  <!-- 24hr time format -->
-    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours" >HH</xliff:g>:<xliff:g id="patternMinutes" >mm</xliff:g>:<xliff:g id="patternSeconds" >ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
-    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes" >%1$s</xliff:g> <xliff:g id="suffix" >%2$s</xliff:g></string>
-    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
-    <string name="date_format_short"><xliff:g id="patternMonth" >MMMM</xliff:g> <xliff:g id="patternDay" >d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
-    <string name="date_format_long"><xliff:g id="patternMonth" >MMMM</xliff:g> <xliff:g id="patternDay" >d</xliff:g>, <xliff:g id="patternYear" >yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
-    <string name="datetime_format_short"><xliff:g id="month" >%1$s</xliff:g>, <xliff:g id="time" >%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
-    <string name="datetime_format_long"><xliff:g id="monthYear" >%1$s</xliff:g>, <xliff:g id="time" >%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
-    <string name="datetime_format_verylong"><xliff:g id="dateFormat" >%1$s</xliff:g> [<xliff:g id="tzID" example="UTC" >%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
-    <string name="dateyear_format_short"><xliff:g id="patternYear" >yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds" >ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMM</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
+    <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth" >MMMM</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternYear" >yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time" >%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time" >%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC" >%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
     <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
