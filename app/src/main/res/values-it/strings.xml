@@ -190,8 +190,8 @@
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan" >%1$s</xliff:g>  da ora</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan" >%1$s</xliff:g>  tempo fa</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="hence"><xliff:g id="timeSpan" >%1$s</xliff:g> da ora</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan" >%1$s</xliff:g> fa</string>        <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">nessuno</string>  <!-- no time / time does not occur -->
