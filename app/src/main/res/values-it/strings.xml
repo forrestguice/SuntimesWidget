@@ -2254,11 +2254,11 @@
         <![CDATA[
         Suntimes usa libererie di terze parti per effettuare calcoli astronomici.<br/>
         <br/>
-        La configurazione <b>sorgenti dati</b> permette di scegliere tra diverse librerie (o di scegliere diversi algoritmi offerti da queste librerie). L'impostazione predefinita è <b>time4a-time4j</b>.<br/>
+        La configurazione <b>sorgenti dati</b> permette di scegliere tra diverse librerie (o di scegliere diversi algoritmi offerti da queste librerie). L\'impostazione predefinita è <b>time4a-time4j</b>.<br/>
         <br/>
-        Questa configurazione influenza la velocità e l'accuratezza dei calcoli, e potrebbe limitare quali funzionalità sono disponibili. <br/>
+        Questa configurazione influenza la velocità e l\'accuratezza dei calcoli, e potrebbe limitare quali funzionalità sono disponibili. <br/>
         <br/>
-        Per più informazioni riguardo alle scelte disponibili, o per estendere il supporto dell'app ad ulteriori librerie, controlla le pagine di aiuto online.
+        Per più informazioni riguardo alle scelte disponibili, o per estendere il supporto dell\'app ad ulteriori librerie, controlla le pagine di aiuto online.
     ]]>
     </string>
 
