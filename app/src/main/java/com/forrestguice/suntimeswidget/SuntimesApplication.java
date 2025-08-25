@@ -29,6 +29,7 @@ public class SuntimesApplication extends Application
     public void onCreate()
     {
         super.onCreate();
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(getApplicationContext(), Thread.getDefaultUncaughtExceptionHandler()));
         ApplicationStarter.initialize(this, false);
 
         if (BuildConfig.DEBUG)
