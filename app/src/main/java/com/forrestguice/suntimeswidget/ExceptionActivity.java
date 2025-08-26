@@ -72,7 +72,7 @@ public class ExceptionActivity extends AppCompatActivity
 
         TextView text_message1 = (TextView) findViewById(R.id.text_message1);
         if (text_message1 != null) {
-            text_message1.setMovementMethod(LinkMovementMethod.getInstance());
+            //text_message1.setMovementMethod(LinkMovementMethod.getInstance());
             text_message1.setText(SuntimesUtils.fromHtml(getString(R.string.crash_dialog_message1, getString(R.string.help_support_url))));
         }
 

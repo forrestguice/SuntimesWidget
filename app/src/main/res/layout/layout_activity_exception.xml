@@ -57,6 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="8dp"
+        android:textIsSelectable="true"
         android:text="@string/crash_dialog_message1" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2648,7 +2648,7 @@
     <string name="crash_dialog_message">%s has crashed…</string>    <!-- TODO -->
     <string name="crash_dialog_message1"><![CDATA[
         Help improve this app by reporting this crash:<br/><br/>
-        <a href="%1$s">%1$s</a>
+        <b>%1$s</b>
     ]]></string>    <!-- TODO -->
     <string name="crash_dialog_copy">Copy to Clipboard</string>    <!-- TODO -->
 
