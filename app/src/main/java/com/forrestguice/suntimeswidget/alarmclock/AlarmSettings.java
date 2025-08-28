@@ -130,6 +130,7 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_BOOTCOMPLETED_ATELAPSED = "app_alarms_bootcompleted_elapsed";     // elapsed time of boot_completed event (and delay time before running)
     public static final String PREF_KEY_ALARM_BOOTCOMPLETED_DURATION = "app_alarms_bootcompleted_duration";     // boot_completed run time (milliseconds)
     public static final String PREF_KEY_ALARM_BOOTCOMPLETED_RESULT = "app_alarms_bootcompleted_result";         // bool; true boot_completed finished, false it either never ran or failed to complete (cleared on ACTION_SHUTDOWN)
+    public static final String PREF_KEY_ALARM_BOOTCOMPLETED_DELAY = "app_alarms_bootcompleted_delayms";         // delays running the AlarmJobService (milliseconds)
 
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID = "app_alarms_systemtz_id";
     public static final String PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET = "app_alarms_systemtz_offset";
@@ -1020,7 +1021,17 @@ public class AlarmSettings
     public static long timeOfLastBoot() {
         return System.currentTimeMillis() - SystemClock.elapsedRealtime();
     }
-    
+
+    public static final long AFTER_BOOT_COMPLETED_DELAY_MS = 5 * 1000;    // wait this long before running AlarmJobService
+    public static final long AFTER_BOOT_COMPLETED_WINDOW_MS = 25 * 1000;    // job to be run between [delay, delay + window]
+
+    public static long bootCompletedDelay(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        long delay = prefs.getLong(PREF_KEY_ALARM_BOOTCOMPLETED_DELAY, AFTER_BOOT_COMPLETED_DELAY_MS);
+        return Math.max(delay, AFTER_BOOT_COMPLETED_DELAY_MS);
+    }
+
     /**
      * DismissChallenge
      */

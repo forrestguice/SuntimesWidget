@@ -1256,6 +1256,9 @@
     <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
 
+    <string name="configLabel_alarms_bootcompleted_delay">Boot Completed (delay)</string>  <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_delay_summary">%s</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
