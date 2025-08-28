@@ -19,7 +19,9 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.StrictMode;
+import android.util.Log;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -29,12 +31,29 @@ public class SuntimesApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        ApplicationStarter.initialize(this, false);
+        //init(this);    // initialization has been moved to CalculatorProvider.onCreate
+    }
 
-        if (BuildConfig.DEBUG)
+    private static boolean initialized = false;
+    public static boolean isInitialized() {
+        return initialized;
+    }
+
+    public static void init(Context context)
+    {
+        if (!initialized)
         {
-            StrictMode.enableDefaults();
-            StrictMode.allowThreadDiskWrites();
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "SuntimesApplication.init:");
+            }
+            ApplicationStarter.initialize(context, false);
+
+            if (BuildConfig.DEBUG)
+            {
+                StrictMode.enableDefaults();
+                StrictMode.allowThreadDiskWrites();
+            }
+            initialized = true;
         }
     }
 }

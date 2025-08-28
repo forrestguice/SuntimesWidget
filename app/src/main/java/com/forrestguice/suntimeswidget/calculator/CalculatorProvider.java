@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.SuntimesApplication;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -116,6 +117,10 @@ public class CalculatorProvider extends ContentProvider
     @Override
     public boolean onCreate()
     {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "CalculatorProvider.onCreate:");
+        }
+        SuntimesApplication.init(getContext());    // ContentProvider.onCreate always runs before Application.onCreate; initialize here instead to avoid potential race conditions (e.g. a query to the content provider crashes because Application.onCreate is still pending).
         return true;
     }
 
@@ -152,6 +157,10 @@ public class CalculatorProvider extends ContentProvider
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "CalculatorProvider.query: " + uri + ", ready? " + SuntimesApplication.isInitialized());
+        }
+
         HashMap<String, String> selectionMap = processSelection(processSelectionArgs(selection, selectionArgs));
         long now = Calendar.getInstance().getTimeInMillis();
         long date;
