@@ -41,19 +41,16 @@ public class SuntimesApplication extends Application
 
     public static void init(Context context)
     {
-        if (!initialized)
-        {
-            if (BuildConfig.DEBUG) {
-                Log.d("DEBUG", "SuntimesApplication.init:");
-            }
-            ApplicationStarter.initialize(context, false);
-
-            if (BuildConfig.DEBUG)
-            {
-                StrictMode.enableDefaults();
-                StrictMode.allowThreadDiskWrites();
-            }
-            initialized = true;
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "SuntimesApplication.init:");
         }
+        ApplicationStarter.initialize(context, false);
+
+        if (BuildConfig.DEBUG)
+        {
+            StrictMode.enableDefaults();
+            StrictMode.allowThreadDiskWrites();
+        }
+        initialized = true;
     }
 }
