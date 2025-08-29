@@ -48,7 +48,6 @@ import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 
 @Category(UnlistedTest.class)
-@SuppressWarnings("Convert2Diamond")
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesScreenshots extends SuntimesActivityTestBase
@@ -115,7 +114,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
-        long waitTime = 1 * 1000;            // wait a moment
+        long waitTime = 1000;            // wait a moment
         IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);

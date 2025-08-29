@@ -1256,6 +1256,9 @@
     <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
 
+    <string name="configLabel_alarms_bootcompleted_delay">Boot Completed (delay)</string>  <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_delay_summary">%s</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
@@ -1370,6 +1373,10 @@
         <item quantity="other">%s days</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
+    <string name="configAction_addTime_hours">hours</string>       <!-- + hours -->        <!-- TODO -->
+    <string name="configAction_addTime_minutes">minutes</string>   <!-- + minutes -->      <!-- TODO -->
+    <string name="configAction_addTime_seconds">seconds</string>   <!-- + seconds -->      <!-- TODO -->
+    <string name="configAction_addTime_days">days</string>         <!-- + days -->         <!-- TODO -->
 
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
