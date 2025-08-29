@@ -2657,7 +2657,8 @@
         Help improve this app by reporting this crash:<br/><br/>
         <b>%1$s</b>
     ]]></string>    <!-- TODO -->
-    <string name="crash_dialog_copy">Copy to Clipboard</string>    <!-- TODO -->
+    <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
+    <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>

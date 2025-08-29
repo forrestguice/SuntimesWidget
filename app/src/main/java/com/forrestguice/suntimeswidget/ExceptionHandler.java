@@ -75,7 +75,8 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             if (notificationManager.areNotificationsEnabled())
             {
                 CrashReportNotification builder = new CrashReportNotification();
-                Notification notification = builder.createNotification(context,createCrashReport(e));
+                builder.setNotificationMessage(e.toString());
+                Notification notification = builder.createNotification(context, createCrashReport(e));
                 notificationManager.notify("CrashReport", CrashReportNotification.NOTIFICATION_ID, notification);
             }
         }
@@ -131,13 +132,17 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
 
         @Override
         protected String getNotificationTitle(Context context) {
-            return context.getString(R.string.crash_dialog_title);
+            return context.getString(R.string.crash_dialog_message, context.getString(R.string.app_name));
         }
 
         @Override
         protected String getNotificationMessage(Context context) {
-            return context.getString(R.string.crash_dialog_message, context.getString(R.string.app_name));
+            return message;
         }
+        public void setNotificationMessage(String value) {
+            message = value;
+        }
+        private String message = "";
 
         @Override
         protected String getNotificationActionText(Context context) {
