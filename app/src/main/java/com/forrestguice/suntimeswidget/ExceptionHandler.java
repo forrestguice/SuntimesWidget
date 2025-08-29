@@ -140,6 +140,11 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
         }
 
         @Override
+        protected String getNotificationActionText(Context context) {
+            return context.getString(R.string.crash_dialog_view);
+        }
+
+        @Override
         protected int getNotificationIconResID() {
             return R.drawable.ic_action_error_light;
         }

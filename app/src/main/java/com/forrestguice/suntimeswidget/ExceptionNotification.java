@@ -25,6 +25,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
 public abstract class ExceptionNotification
@@ -40,6 +41,7 @@ public abstract class ExceptionNotification
 
     protected abstract String getNotificationTitle(Context context);
     protected abstract String getNotificationMessage(Context context);
+    protected abstract String getNotificationActionText(Context context);
     protected abstract int getNotificationIconResID();
 
     protected int getNotificationVisibility() {
@@ -52,6 +54,7 @@ public abstract class ExceptionNotification
         return NotificationCompat.CATEGORY_ERROR;
     }
 
+    @Nullable
     protected abstract Intent getCrashReportActivityIntent(Context context, String report);
 
     public Notification createNotification(Context context, String report)
@@ -70,7 +73,14 @@ public abstract class ExceptionNotification
             builder.setContentTitle(title);
         }
         builder.setContentText(message);
-        builder.setContentIntent(PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), PendingIntent.FLAG_UPDATE_CURRENT));
+
+        PendingIntent intent = PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), PendingIntent.FLAG_UPDATE_CURRENT);
+        String actionText = getNotificationActionText(context);
+        if (actionText != null) {
+            builder.addAction(getNotificationIconResID(), getNotificationActionText(context), intent);
+        } else {
+            builder.setContentIntent(intent);
+        }
         return builder.build();
     }
 

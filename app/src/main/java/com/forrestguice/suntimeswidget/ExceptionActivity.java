@@ -23,7 +23,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +35,7 @@ public class ExceptionActivity extends AppCompatActivity
     public static final String EXTRA_REPORT = "report";
 
     @Override
-    public void onCreate(Bundle savedState)
+    protected void attachBaseContext(Context newBase)
     {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
         {
@@ -46,7 +45,12 @@ public class ExceptionActivity extends AppCompatActivity
                 System.exit(0);
             }
         });
+        super.attachBaseContext(newBase);
+    }
 
+    @Override
+    public void onCreate(Bundle savedState)
+    {
         super.onCreate(savedState);
         final String trace = getIntent().getStringExtra(EXTRA_REPORT);
         if (trace == null)
