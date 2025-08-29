@@ -17,10 +17,14 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 
 import java.lang.ref.WeakReference;
 
@@ -40,7 +44,16 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
     {
         try {
             Log.e("CRASH", e.getClass().getSimpleName(), e);
-            launchCrashReportActivity(contextRef.get(), e);
+            Context context = contextRef.get();
+            if (context != null)
+            {
+                NotificationManagerCompat notifications = NotificationManagerCompat.from(context);
+                if (notifications != null && notifications.areNotificationsEnabled()) {
+                    showCrashReportNotification(context, e);
+                } else {
+                    launchCrashReportActivity(context, e);
+                }
+            }
 
         } finally {
             defaultHandler.uncaughtException(t, e);
@@ -54,18 +67,81 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
                 + "\n\n" + Log.getStackTraceString(e);
     }
 
-    private void launchCrashReportActivity(Context context, Throwable e)
+    private void showCrashReportNotification(Context context, Throwable e)
     {
         if (context != null)
         {
-            Intent intent = new Intent(context, ExceptionActivity.class);
-            intent.setAction(Intent.ACTION_MAIN);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(ExceptionActivity.EXTRA_REPORT, createCrashReport(e));
-            context.startActivity(intent);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            if (notificationManager.areNotificationsEnabled())
+            {
+                CrashReportNotification builder = new CrashReportNotification();
+                Notification notification = builder.createNotification(context,createCrashReport(e));
+                notificationManager.notify("CrashReport", CrashReportNotification.NOTIFICATION_ID, notification);
+            }
+        }
+    }
 
+    private void launchCrashReportActivity(Context context, Throwable e)
+    {
+        if (context != null) {
+            context.startActivity(new CrashReportNotification().getCrashReportActivityIntent(context, createCrashReport(e)));
         } else {
-            Log.e("CRASH", "launchCrashReportActivity: null context!");
+            Log.e("CrashReport", "launchCrashReportActivity: null context!");
+        }
+    }
+
+    /**
+     * CrashReportNotification
+     */
+    private static class CrashReportNotification extends ExceptionNotification
+    {
+        public static final int NOTIFICATION_ID = -1000000;
+
+        @Override
+        protected String getChannelID() {
+            return AlarmNotifications.CHANNEL_ID_MISC;
+        }
+
+        @Override
+        protected String getChannelTitle(Context context) {
+            return context.getString(R.string.notificationChannel_misc_title);
+        }
+
+        @Override
+        protected String getChannelDesc(Context context) {
+            return context.getString(R.string.notificationChannel_misc_title);
+        }
+
+        @Override
+        protected Intent getCrashReportActivityIntent(Context context, String report)
+        {
+            if (context != null)
+            {
+                Intent intent = new Intent(context, ExceptionActivity.class);
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(ExceptionActivity.EXTRA_REPORT, report);
+                return intent;
+
+            } else {
+                Log.e("CRASH", "launchCrashReportActivity: null context!");
+                return null;
+            }
+        }
+
+        @Override
+        protected String getNotificationTitle(Context context) {
+            return context.getString(R.string.crash_dialog_title);
+        }
+
+        @Override
+        protected String getNotificationMessage(Context context) {
+            return context.getString(R.string.crash_dialog_message, context.getString(R.string.app_name));
+        }
+
+        @Override
+        protected int getNotificationIconResID() {
+            return R.drawable.ic_action_error_light;
         }
     }
 }
