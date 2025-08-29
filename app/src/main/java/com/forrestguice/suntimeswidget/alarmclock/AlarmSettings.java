@@ -1028,7 +1028,7 @@ public class AlarmSettings
     public static long bootCompletedDelay(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        long delay = prefs.getLong(PREF_KEY_ALARM_BOOTCOMPLETED_DELAY, AFTER_BOOT_COMPLETED_DELAY_MS);
+        int delay = prefs.getInt(PREF_KEY_ALARM_BOOTCOMPLETED_DELAY, (int) AFTER_BOOT_COMPLETED_DELAY_MS);
         return Math.max(delay, AFTER_BOOT_COMPLETED_DELAY_MS);
     }
 
