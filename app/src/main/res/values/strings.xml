@@ -1373,6 +1373,10 @@
         <item quantity="other">%s days</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
+    <string name="configAction_addTime_hours">hours</string>       <!-- + hours -->        <!-- TODO -->
+    <string name="configAction_addTime_minutes">minutes</string>   <!-- + minutes -->      <!-- TODO -->
+    <string name="configAction_addTime_seconds">seconds</string>   <!-- + seconds -->      <!-- TODO -->
+    <string name="configAction_addTime_days">days</string>         <!-- + days -->         <!-- TODO -->
 
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
