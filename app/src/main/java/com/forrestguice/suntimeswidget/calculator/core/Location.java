@@ -210,6 +210,15 @@ public class Location implements Serializable
         return useAltitude;
     }
 
+    public String getUri()
+    {
+        String uriString = "geo:" + latitude + "," + longitude;
+        if (altitude != null && !altitude.isEmpty()) {
+            uriString += "," + altitude;
+        }
+        return uriString;
+    }
+
     /**
      * @return a decimal degrees string "latitude, longitude" describing this location
      */

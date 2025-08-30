@@ -55,7 +55,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -551,7 +550,7 @@ public class PlacesListFragment extends Fragment
         if (item != null && item.location != null && context != null)
         {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(LocationUri.getUri(item.location));
+            intent.setData(Uri.parse(item.location.getUri()));
             List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
             List<Intent> geoIntents = new ArrayList<Intent>();
 
@@ -563,7 +562,7 @@ public class PlacesListFragment extends Fragment
                     {
                         Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                         geoIntent.setPackage(resolveInfo.activityInfo.packageName);
-                        geoIntent.setData(LocationUri.getUri(item.location));
+                        geoIntent.setData(Uri.parse(item.location.getUri()));
                         geoIntents.add(geoIntent);
                     }
                 }

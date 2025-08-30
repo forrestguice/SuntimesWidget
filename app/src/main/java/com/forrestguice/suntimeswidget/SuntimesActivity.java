@@ -71,7 +71,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -1666,7 +1665,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(LocationUri.getUri(location));
+        mapIntent.setData(Uri.parse(location.getUri()));
 
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
         List<Intent> geoIntents = new ArrayList<Intent>();
@@ -1680,7 +1679,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                     geoIntent.setPackage(packageName);
-                    geoIntent.setData(LocationUri.getUri(location));
+                    geoIntent.setData(Uri.parse(location.getUri()));
                     geoIntents.add(geoIntent);
                 }
             }

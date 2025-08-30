@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -418,18 +419,18 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Location testloc2 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc2);
         Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + LocationUri.getUri(pref2) + " != " + LocationUri.getUri(testloc2), pref2.equals(testloc2));
+        assertTrue("location does not match! " + Uri.parse(pref2.getUri()) + " != " + Uri.parse(testloc2.getUri()), pref2.equals(testloc2));
 
         Location testloc1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc1);
         Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + LocationUri.getUri(pref1) + " != " + LocationUri.getUri(testloc1), pref1.equals(testloc1));
+        assertTrue("location does not match! " + Uri.parse(pref1.getUri()) + " != " + Uri.parse(testloc1.getUri()), pref1.equals(testloc1));
 
         //Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
         Location testloc0 = WidgetSettings.loadLocationPref(context, 0);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match default! " + LocationUri.getUri(pref0) + " != " + LocationUri.getUri(testloc0), pref0.equals(testloc0));
+        assertTrue("location does not match default! " + Uri.parse(pref0.getUri()) + " != " + Uri.parse(testloc0.getUri()), pref0.equals(testloc0));
     }
 
     @Test

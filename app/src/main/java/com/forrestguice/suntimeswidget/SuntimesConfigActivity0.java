@@ -72,7 +72,6 @@ import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
@@ -2896,7 +2895,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
-                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(LocationUri.getUri(location), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(Uri.parse(location.getUri()), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
             }
         }
     }

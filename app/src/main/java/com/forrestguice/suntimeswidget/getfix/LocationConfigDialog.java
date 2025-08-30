@@ -42,7 +42,6 @@ import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -138,7 +137,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         presetLocation = location;
         if (dialogContent != null) {
-            dialogContent.loadSettings(context, LocationConfigView.bundleData(LocationUri.getUri(presetLocation), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }
 
