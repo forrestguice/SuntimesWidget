@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;

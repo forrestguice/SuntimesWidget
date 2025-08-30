@@ -19,9 +19,10 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.SuntimesUtils;

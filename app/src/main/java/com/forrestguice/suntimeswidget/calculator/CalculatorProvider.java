@@ -30,7 +30,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
 import java.util.ArrayList;

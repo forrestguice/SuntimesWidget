@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;

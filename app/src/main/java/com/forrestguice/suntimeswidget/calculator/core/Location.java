@@ -21,8 +21,9 @@ package com.forrestguice.suntimeswidget.calculator.core;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
 import java.text.DecimalFormat;
