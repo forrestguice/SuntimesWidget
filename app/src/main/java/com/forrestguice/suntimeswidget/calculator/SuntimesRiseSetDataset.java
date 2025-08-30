@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Log;
@@ -63,7 +62,7 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(Context context)
     {
-        init(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        init(context, 0);
     }
 
     public SuntimesRiseSetDataset(Context context, int appWidgetID)
