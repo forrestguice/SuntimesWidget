@@ -201,7 +201,11 @@ public class GeneralPrefsFragment extends PreferenceFragment
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
-            calculator.initDisplayStrings(context);
+            int resID = calculator.getDisplayStringResID();
+            if (resID != -1 ){
+                calculator.setDisplayString(context.getString(resID));
+            }
+
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
 
             String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))

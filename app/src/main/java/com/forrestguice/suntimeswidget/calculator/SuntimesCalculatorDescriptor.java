@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Log;
 
@@ -301,6 +299,10 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     {
         return displayString;
     }
+    public void setDisplayString(String value) {
+        displayString = value;
+    }
+
     /**
      * @return the value of getDisplayString()
      */
@@ -382,14 +384,6 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     {
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
         return this.getName().compareTo(otherDescriptor.getName());
-    }
-
-    public void initDisplayStrings( Context context )
-    {
-        if (resID != -1)
-        {
-            this.displayString = context.getString(resID);
-        }
     }
 
 }
