@@ -170,7 +170,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         this.data_timezone = values.timezone();
         this.data = new SuntimesRiseSetDataset(values);
         this.data.invalidateCalculation();
-        this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
+        this.data.setTimeZone(context, WidgetTimezones.localMeanTime(values.location()));
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
         this.data.calculateData(context);
     }
