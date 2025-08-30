@@ -344,7 +344,7 @@ public class SuntimesRiseSetDataset
     public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
     {
         this.calculatorDescriptor = value;
-        this.calculator = new SuntimesCalculatorFactory(context, value).createCalculator(location(), timezone());
+        this.calculator = new SuntimesCalculatorFactory(value).createCalculator(location(), timezone());
     }
     public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
         this.calculatorDescriptor = calculatorDescriptor;

@@ -100,7 +100,7 @@ public class WidgetTimezonesTest0
 
     public void test_timezone_apparentSolarTime_withCalculator(SuntimesCalculatorDescriptor descriptor, Location location, int hour, int minute, int second)
     {
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, descriptor);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
         SuntimesCalculator calculator = factory.createCalculator(location, TimeZone.getDefault());
         TimeZone timezone = new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), "Apparent Solar Time (Test: " + descriptor.getName() + ")", calculator);
 
@@ -118,7 +118,7 @@ public class WidgetTimezonesTest0
 
     public void test_timezone_apparentSolarTime_offset_withCalculator(SuntimesCalculatorDescriptor descriptor1, Location location, Calendar calendar)
     {
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, descriptor1);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor1);
         SuntimesCalculator calculator = factory.createCalculator(location, TimeZone.getDefault());
 
         WidgetTimezones.ApparentSolarTime tz1 = new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), "Apparent Solar Time (Test: " + descriptor1.getName() + ")", calculator);
@@ -138,7 +138,7 @@ public class WidgetTimezonesTest0
 
     public void test_eot(double eot0, SuntimesCalculatorDescriptor descriptor, Calendar calendar)
     {
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory((Context)null, descriptor);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
         SuntimesCalculator calculator = factory.createCalculator(TEST_LOCATION, TimeZone.getDefault());
         double eot1 = calculator.equationOfTime(calendar);
         assertEquals(eot0, eot1);

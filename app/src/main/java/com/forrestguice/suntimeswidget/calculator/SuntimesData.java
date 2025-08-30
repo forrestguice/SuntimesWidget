@@ -311,7 +311,7 @@ public class SuntimesData
 
     public SuntimesCalculatorFactory initFactory(Context context)
     {
-        return new SuntimesCalculatorFactory(context, calculatorMode);
+        return new SuntimesCalculatorFactory(calculatorMode);
     }
 
     /**

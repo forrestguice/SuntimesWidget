@@ -51,7 +51,7 @@ public class SuntimesMoonData0 extends SuntimesData
     @Override
     public SuntimesCalculatorFactory initFactory(Context context)
     {
-        return new SuntimesCalculatorFactory(context, calculatorMode)
+        return new SuntimesCalculatorFactory(calculatorMode)
         {
             public SuntimesCalculator fallbackCalculator() {
                 return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();

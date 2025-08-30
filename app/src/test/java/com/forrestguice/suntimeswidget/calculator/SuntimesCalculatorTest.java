@@ -57,7 +57,7 @@ public class SuntimesCalculatorTest
     }
     public void test_init(Location location, TimeZone timezone, SuntimesCalculatorDescriptor descriptor)
     {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory((Context)null, descriptor);
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(descriptor);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
         assertNotNull(calculator);
         assertTrue("calculator name (" + calculator.name() + ") should match descriptor (" + descriptor.getName() + ")", calculator.name().equals(descriptor.getName()));
