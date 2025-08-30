@@ -300,7 +300,7 @@ public class SuntimesRiseSetDataset
     public TimeZone timezone() {
         return dataActual.timezone();
     }
-    public void setTimeZone(Context context, TimeZone value) {
+    public void setTimeZone(TimeZone value) {
         for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
             data.setTimezone(value);
@@ -340,12 +340,12 @@ public class SuntimesRiseSetDataset
         return (calculatorDescriptor != null ? calculatorDescriptor: dataActual.calculatorMode());
     }
 
-    public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
+    public void setCalculator(SuntimesCalculatorDescriptor value)
     {
         this.calculatorDescriptor = value;
         this.calculator = new SuntimesCalculatorFactory(value).createCalculator(location(), timezone());
     }
-    public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+    public void setCalculator(SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
         this.calculatorDescriptor = calculatorDescriptor;
         this.calculator = calculator;
     }

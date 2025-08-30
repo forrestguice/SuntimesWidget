@@ -572,7 +572,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     date.add(Calendar.DATE, i);
 
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0, modes);
-                    data.setTimeZone(context, timezone);
+                    data.setTimeZone(timezone);
                     data.setTodayIs(date);
                     data.calculateData(context);
                     yearData[i] = data;
