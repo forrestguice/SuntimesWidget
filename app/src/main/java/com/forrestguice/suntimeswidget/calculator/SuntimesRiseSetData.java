@@ -314,7 +314,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator(context);
+        initCalculator();
         initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);

@@ -287,7 +287,7 @@ public class SuntimesData
         this.calculatorMode = descriptor;
     }
 
-    public void initCalculator(Context context)
+    public void initCalculator()
     {
         if (this.calculator != null)
             return;

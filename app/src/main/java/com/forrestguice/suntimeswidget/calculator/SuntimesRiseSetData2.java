@@ -195,7 +195,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator(context);
+        initCalculator();
         initTimezone(context);
 
         for (int i=0; i<calendar.length; i++)

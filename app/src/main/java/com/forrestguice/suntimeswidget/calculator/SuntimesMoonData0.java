@@ -49,7 +49,7 @@ public class SuntimesMoonData0 extends SuntimesData
     }
 
     @Override
-    public SuntimesCalculatorFactory initFactory(Context context)
+    public SuntimesCalculatorFactory initFactory()
     {
         return new SuntimesCalculatorFactory(calculatorMode)
         {
@@ -93,7 +93,7 @@ public class SuntimesMoonData0 extends SuntimesData
     @Override
     public void calculate(Context context)
     {
-        initCalculator(context);
+        initCalculator();
         initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
