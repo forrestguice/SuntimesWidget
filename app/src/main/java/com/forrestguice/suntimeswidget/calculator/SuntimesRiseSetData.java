@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.net.Uri;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -80,8 +79,8 @@ public class SuntimesRiseSetData extends SuntimesData
             EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.ElevationEvent event;
             switch (alias.getType()) {
-                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
-                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
+                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(getLastPathSegment(alias.getUri())); break;
                 default: event = null; break;
             }
             this.angle = (event == null ? null : event.getAngle());

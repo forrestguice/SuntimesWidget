@@ -397,6 +397,23 @@ public class SuntimesData
         }
     }
 
+    @Nullable
+    public static String getLastPathSegment(@Nullable String uri)
+    {
+        if (uri != null)
+        {
+            String uri0 = uri.trim();
+            if (uri.endsWith("/")) {
+                uri = uri.substring(0, uri.lastIndexOf("/"));
+            }
+
+            String[] parts = uri0.split("/");
+            if (parts.length > 1) {
+                return parts[parts.length - 1];
+            } else return uri;
+        } else return null;
+    }
+
 }
 
 
