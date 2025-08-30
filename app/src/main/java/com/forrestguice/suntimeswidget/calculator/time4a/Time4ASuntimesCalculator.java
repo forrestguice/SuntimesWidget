@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
-import android.util.Log;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.core.Location;

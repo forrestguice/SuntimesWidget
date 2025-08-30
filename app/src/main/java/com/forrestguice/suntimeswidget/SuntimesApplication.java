@@ -21,7 +21,8 @@ package com.forrestguice.suntimeswidget;
 import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
+import com.forrestguice.util.Log;
+import com.forrestguice.util.android.AndroidLog;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -41,9 +42,9 @@ public class SuntimesApplication extends Application
 
     public static void init(Context context)
     {
-        if (BuildConfig.DEBUG) {
-            Log.d("DEBUG", "SuntimesApplication.init:");
-        }
+        Log.init(new AndroidLog());
+        Log.setShowDebug(BuildConfig.DEBUG);
+        Log.d("DEBUG", "SuntimesApplication.init:");
         ApplicationStarter.initialize(context, false);
 
         if (BuildConfig.DEBUG)
