@@ -257,15 +257,15 @@ public class SuntimesData
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
-                        timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
+                        timezone = WidgetTimezones.apparentSolarTime(location, calculator);
                         break;
 
                     case GMST:
-                        timezone = WidgetTimezones.siderealTime(context);
+                        timezone = WidgetTimezones.siderealTime();
                         break;
 
                     case LMST:
-                        timezone = WidgetTimezones.siderealTime(context, location);
+                        timezone = WidgetTimezones.siderealTime(location);
                         break;
 
                     case UTC:
@@ -274,7 +274,7 @@ public class SuntimesData
 
                     case LOCAL_MEAN_TIME:
                     default:
-                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        timezone = WidgetTimezones.localMeanTime(location);
                         break;
                 }
                 break;
@@ -292,7 +292,7 @@ public class SuntimesData
         if (this.calculator != null)
             return;
 
-        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
+        final SuntimesCalculatorFactory calculatorFactory = initFactory();
         calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
         {
             @Override
@@ -309,7 +309,7 @@ public class SuntimesData
         this.calculator = calculatorFactory.createCalculator(location, timezone);
     }
 
-    public SuntimesCalculatorFactory initFactory(Context context)
+    public SuntimesCalculatorFactory initFactory()
     {
         return new SuntimesCalculatorFactory(calculatorMode);
     }

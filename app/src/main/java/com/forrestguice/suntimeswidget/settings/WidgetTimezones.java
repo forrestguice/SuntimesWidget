@@ -171,23 +171,23 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
-    public static TimeZone localMeanTime( Context context, Location location ) {
+    public static TimeZone localMeanTime(Location location) {
         return new LocalMeanTime(location.getLongitudeAsDouble(), LocalMeanTime.TIMEZONEID);
     }
 
-    public static TimeZone siderealTime(Context context) {
+    public static TimeZone siderealTime() {
         return new LocalMeanTime(0, SiderealTime.TZID_GMST);
     }
 
-    public static TimeZone siderealTime(Context context, Location location) {
+    public static TimeZone siderealTime(Location location) {
         return new LocalMeanTime(location.getLongitudeAsDouble(), SiderealTime.TZID_LMST);
     }
 
-    public static TimeZone apparentSolarTime(Context context, Location location) {
+    public static TimeZone apparentSolarTime(Location location) {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID);
     }
 
-    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator) {
+    public static TimeZone apparentSolarTime(Location location, SuntimesCalculator calculator) {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID, calculator);
     }
 
