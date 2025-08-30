@@ -25,7 +25,6 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
-import java.lang.ref.WeakReference;
 import java.util.TimeZone;
 
 /**
@@ -41,7 +40,6 @@ import java.util.TimeZone;
 public class SuntimesCalculatorFactory
 {
     private SuntimesCalculatorDescriptor current;
-    private WeakReference<Context> contextRef;
 
     /**
      * Create a SuntimesCalculatorFactory object with default implementation.
@@ -64,7 +62,6 @@ public class SuntimesCalculatorFactory
 
     private void init(Context context, @Nullable SuntimesCalculatorDescriptor calculatorSetting)
     {
-        this.contextRef = new WeakReference<Context>(context);
         if (!SuntimesCalculatorDescriptor.initialized)
         {
             SuntimesCalculatorDescriptor.initCalculators(context);
@@ -104,7 +101,7 @@ public class SuntimesCalculatorFactory
             signalCreatedFallback(fallbackCalculatorDescriptor());
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
-        calculator.init(location, timezone, contextRef.get());
+        calculator.init(location, timezone);
 
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
