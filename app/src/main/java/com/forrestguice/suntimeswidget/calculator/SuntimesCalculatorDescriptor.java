@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -71,13 +72,29 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
 
     //public static final String LOGTAG = "CalculatorDescriptor";
 
+    public static void initDefaultDescriptors(SuntimesCalculatorDescriptors value) {
+        descriptors = value;
+        initCalculators();
+    }
+    private static SuntimesCalculatorDescriptors descriptors = new SuntimesCalculatorDescriptors() {
+        @Override
+        public SuntimesCalculatorDescriptor[] values() {
+            return new SuntimesCalculatorDescriptor[] {
+                    new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, -1, Time4A4JSuntimesCalculator.FEATURES)
+            };
+        }
+    };
+    
     protected static boolean initialized = false;
     public static void initCalculators()
     {
-        SuntimesCalculatorDescriptors descriptors = new DefaultCalculatorDescriptors();
-        for (SuntimesCalculatorDescriptor descriptor : descriptors.values()) {
-            SuntimesCalculatorDescriptor.addValue(descriptor);
-        }
+        if (descriptors != null) {
+            for (SuntimesCalculatorDescriptor descriptor : descriptors.values()) {
+                SuntimesCalculatorDescriptor.addValue(descriptor);
+            }
+        } else Log.e("initCalculators", "descriptor list is null!");
+
+
         /*SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.SunriseSunsetJava());
         SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.CarmenSunriseSunset());
         SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.Time4A_Simple());
