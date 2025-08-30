@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -209,18 +208,6 @@ public class Location implements Parcelable
     }
     public boolean useAltitude() {
         return useAltitude;
-    }
-
-    /**
-     * @return a "geo" URI describing this Location
-     */
-    public Uri getUri()
-    {
-        String uriString = "geo:" + latitude + "," + longitude;
-        if (altitude != null && !altitude.isEmpty()) {
-            uriString += "," + altitude;
-        }
-        return Uri.parse(uriString);
     }
 
     /**
