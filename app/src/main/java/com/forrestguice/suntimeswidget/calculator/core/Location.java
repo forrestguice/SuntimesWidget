@@ -18,13 +18,11 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -32,8 +30,10 @@ import java.util.Locale;
 /**
  * Location
  */
-public class Location implements Parcelable
+public class Location implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static String pattern_latLon = "#.#####";
 
     private String label;
@@ -258,46 +258,5 @@ public class Location implements Parcelable
             throw new IllegalArgumentException("longitude out of range; [-180, 180]: " + longitude);
         }
     }
-
-    /**
-     * @param in Parcel
-     */
-    public Location( Parcel in )
-    {
-        this.label = in.readString();
-        this.latitude = in.readString();
-        this.longitude = in.readString();
-        this.altitude = in.readString();
-        this.useAltitude = (in.readInt() == 1);
-    }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(label);
-        dest.writeString(latitude);
-        dest.writeString(longitude);
-        dest.writeString(altitude);
-        dest.writeInt(useAltitude ? 1 : 0);
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public Location createFromParcel(Parcel in)
-        {
-            return new Location(in);
-        }
-
-        public Location[] newArray(int size)
-        {
-            return new Location[size];
-        }
-    };
 
 }

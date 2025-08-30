@@ -217,10 +217,10 @@ public class EventListFragment extends Fragment
     }
 
     public void setLocation(Location value) {
-        getArguments().putParcelable(EXTRA_LOCATION, value);
+        getArguments().putSerializable(EXTRA_LOCATION, value);
     }
     public Location getLocation() {
-        return getArguments().getParcelable(EXTRA_LOCATION);
+        return (Location) getArguments().getSerializable(EXTRA_LOCATION);
     }
 
     /**
