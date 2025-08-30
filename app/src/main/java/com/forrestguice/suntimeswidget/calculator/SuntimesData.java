@@ -25,7 +25,6 @@ import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -257,15 +256,15 @@ public class SuntimesData
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
-                        timezone = WidgetTimezones.apparentSolarTime(location, calculator);
+                        timezone = TimeZones.apparentSolarTime(location, calculator);
                         break;
 
                     case GMST:
-                        timezone = WidgetTimezones.siderealTime();
+                        timezone = TimeZones.siderealTime();
                         break;
 
                     case LMST:
-                        timezone = WidgetTimezones.siderealTime(location);
+                        timezone = TimeZones.siderealTime(location);
                         break;
 
                     case UTC:
@@ -274,7 +273,7 @@ public class SuntimesData
 
                     case LOCAL_MEAN_TIME:
                     default:
-                        timezone = WidgetTimezones.localMeanTime(location);
+                        timezone = TimeZones.localMeanTime(location);
                         break;
                 }
                 break;

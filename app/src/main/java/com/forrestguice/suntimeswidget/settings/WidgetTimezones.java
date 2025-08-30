@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -172,28 +173,13 @@ public class WidgetTimezones
     ///////////////////////////////////////
 
     public static TimeZone localMeanTime(Location location) {
-        return new LocalMeanTime(location.getLongitudeAsDouble(), LocalMeanTime.TIMEZONEID);
-    }
-
-    public static TimeZone siderealTime() {
-        return new LocalMeanTime(0, SiderealTime.TZID_GMST);
-    }
-
-    public static TimeZone siderealTime(Location location) {
-        return new LocalMeanTime(location.getLongitudeAsDouble(), SiderealTime.TZID_LMST);
-    }
-
-    public static TimeZone apparentSolarTime(Location location) {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID);
-    }
-
-    public static TimeZone apparentSolarTime(Location location, SuntimesCalculator calculator) {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID, calculator);
+        return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), TimeZones.LocalMeanTime.TIMEZONEID);
     }
 
     /**
      * LocalMeanTime : TimeZone
      */
+    @Deprecated    // use TimeZones.* instead
     public static class LocalMeanTime extends TimeZone
     {
         public static final String TIMEZONEID = "LMT";
@@ -266,6 +252,7 @@ public class WidgetTimezones
     /**
      * ApparentSolarTime : TimeZone
      */
+    @Deprecated    // use TimeZones.* instead
     public static class ApparentSolarTime extends LocalMeanTime
     {
         public static final String TIMEZONEID = "LTST";    // local true solar time
@@ -395,6 +382,7 @@ public class WidgetTimezones
     /**
      * SiderealTime
      */
+    @Deprecated    // use TimeZones.* instead
     public static class SiderealTime
     {
         public static final String TZID_GMST = "GMST";
