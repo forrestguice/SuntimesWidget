@@ -18,14 +18,14 @@
 
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
-import android.util.Log;
-
+import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -64,7 +64,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
         } catch (NumberFormatException e) {
             Log.e("init", "location was invalid, falling back to default; " + e.toString());
-            location = new Location(WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE);
+            location = new Location("0", "0");
         }
         calculator = new SunriseSunsetCalculator(location, this.param_timezone);
     }
