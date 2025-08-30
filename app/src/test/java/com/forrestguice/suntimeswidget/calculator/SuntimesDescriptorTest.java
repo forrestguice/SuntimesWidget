@@ -38,33 +38,33 @@ public class SuntimesDescriptorTest
     @Test
     public void test_initCalculators()
     {
-        SuntimesCalculatorDescriptor.initCalculators((Context)null);
-        SuntimesCalculatorDescriptor[] values0 = SuntimesCalculatorDescriptor.values((Context)null);
+        SuntimesCalculatorDescriptor.initCalculators();
+        SuntimesCalculatorDescriptor[] values0 = SuntimesCalculatorDescriptor.values();
         assertNotNull(values0);
         assertEquals(6, values0.length);
 
         ArrayList<SuntimesCalculatorDescriptor> descriptors0 = new ArrayList<>(Arrays.asList(values0));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor()));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor()));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor()));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor()));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor()));
-        assertTrue(descriptors0.contains(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.SunriseSunsetJava()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.CarmenSunriseSunset()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.Time4A_Simple()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.Time4A_NOAA()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.Time4A_CC()));
+        assertTrue(descriptors0.contains(DefaultCalculatorDescriptors.Time4A_4J()));
     }
 
     @Test
     public void test_reinitCalculators()
     {
-        SuntimesCalculatorDescriptor[] values0 = SuntimesCalculatorDescriptor.values((Context)null);    // values() calls initCalculators if uninitialized
+        SuntimesCalculatorDescriptor[] values0 = SuntimesCalculatorDescriptor.values();    // values() calls initCalculators if uninitialized
         assertNotNull(values0);
         assertEquals(6, values0.length);
 
-        SuntimesCalculatorDescriptor.removeValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor[] values1 = SuntimesCalculatorDescriptor.values((Context)null);
+        SuntimesCalculatorDescriptor.removeValue(DefaultCalculatorDescriptors.SunriseSunsetJava());
+        SuntimesCalculatorDescriptor[] values1 = SuntimesCalculatorDescriptor.values();
         assertEquals(5, values1.length);
 
-        SuntimesCalculatorDescriptor.reinitCalculators((Context)null);
-        SuntimesCalculatorDescriptor[] values3 = SuntimesCalculatorDescriptor.values((Context)null);
+        SuntimesCalculatorDescriptor.reinitCalculators();
+        SuntimesCalculatorDescriptor[] values3 = SuntimesCalculatorDescriptor.values();
         assertNotNull(values3);
         assertEquals(6, values3.length);
     }
@@ -72,15 +72,15 @@ public class SuntimesDescriptorTest
     @Test
     public void test_addRemove()
     {
-        assertEquals(6, SuntimesCalculatorDescriptor.values((Context)null).length);
-        SuntimesCalculatorDescriptor.removeValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        assertEquals(5, SuntimesCalculatorDescriptor.values((Context)null).length);
+        assertEquals(6, SuntimesCalculatorDescriptor.values().length);
+        SuntimesCalculatorDescriptor.removeValue(DefaultCalculatorDescriptors.SunriseSunsetJava());
+        assertEquals(5, SuntimesCalculatorDescriptor.values().length);
 
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        assertEquals(6, SuntimesCalculatorDescriptor.values((Context)null).length);
+        SuntimesCalculatorDescriptor.addValue(DefaultCalculatorDescriptors.SunriseSunsetJava());
+        assertEquals(6, SuntimesCalculatorDescriptor.values().length);
 
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());  // was already added
-        assertEquals(6, SuntimesCalculatorDescriptor.values((Context)null).length);
+        SuntimesCalculatorDescriptor.addValue(DefaultCalculatorDescriptors.SunriseSunsetJava());  // was already added
+        assertEquals(6, SuntimesCalculatorDescriptor.values().length);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class SuntimesDescriptorTest
     {
         boolean caughtException0 = false;
         try {
-            SuntimesCalculatorDescriptor.valueOf((Context)null, "dne");
+            SuntimesCalculatorDescriptor.valueOf("dne");
         } catch (InvalidParameterException e) {
             caughtException0 = true;
         }
@@ -97,7 +97,7 @@ public class SuntimesDescriptorTest
         boolean caughtException1 = false;
         SuntimesCalculatorDescriptor descriptor1 = null;
         try {
-            descriptor1 = SuntimesCalculatorDescriptor.valueOf((Context)null, "any");   // special value 'any'
+            descriptor1 = SuntimesCalculatorDescriptor.valueOf("any");   // special value 'any'
         } catch (InvalidParameterException e) {
             caughtException1 = true;
         }

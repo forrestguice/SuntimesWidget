@@ -18,9 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 
 import net.time4j.calendar.astro.StdSolarCalculator;
 
@@ -49,11 +47,6 @@ public class Time4A4JSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public StdSolarCalculator getCalculator()
     {
         return StdSolarCalculator.TIME4J;
-    }
-
-    public static SuntimesCalculatorDescriptor getDescriptor()
-    {
-        return new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, R.string.calculator_displayString_time4a_4j, Time4A4JSuntimesCalculator.FEATURES);
     }
 
 }

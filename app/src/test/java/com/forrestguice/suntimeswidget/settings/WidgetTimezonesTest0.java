@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.FlakeyTest;
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -77,7 +78,7 @@ public class WidgetTimezonesTest0
     public void test_timezone_apparentSolarTime_SunriseSunsetJava()
     {
         test_timezone_apparentSolarTime_withCalculator(
-                com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor(),
+                DefaultCalculatorDescriptors.SunriseSunsetJava(),
                 TEST_LOCATION, 16, 20, 0);
     }
 
@@ -85,7 +86,7 @@ public class WidgetTimezonesTest0
     public void test_timezone_apparentSolarTime_CarmenSunriseSunset()
     {
         test_timezone_apparentSolarTime_withCalculator(
-                com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor(),
+                DefaultCalculatorDescriptors.CarmenSunriseSunset(),
                 TEST_LOCATION, 16, 20, 0);
     }
 
@@ -94,7 +95,7 @@ public class WidgetTimezonesTest0
     public void test_timezone_apparentSolarTime_Time4J()
     {
         test_timezone_apparentSolarTime_withCalculator(
-                Time4A4JSuntimesCalculator.getDescriptor(),
+                DefaultCalculatorDescriptors.Time4A_4J(),
                 TEST_LOCATION, 16, 20, 0);
     }
 
@@ -113,7 +114,7 @@ public class WidgetTimezonesTest0
     @Test
     @FlakyTest
     public void test_timezone_apparentSolarTime1_Time4J() {
-        test_timezone_apparentSolarTime_offset_withCalculator(Time4A4JSuntimesCalculator.getDescriptor(), TEST_LOCATION, Calendar.getInstance());
+        test_timezone_apparentSolarTime_offset_withCalculator(DefaultCalculatorDescriptors.Time4A_4J(), TEST_LOCATION, Calendar.getInstance());
     }
 
     public void test_timezone_apparentSolarTime_offset_withCalculator(SuntimesCalculatorDescriptor descriptor1, Location location, Calendar calendar)
@@ -133,7 +134,7 @@ public class WidgetTimezonesTest0
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(calendar.getTime());
         double eot0 = SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name());
         assertEquals(SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name()), eot0);
-        test_eot(eot0, Time4A4JSuntimesCalculator.getDescriptor(), calendar);
+        test_eot(eot0, DefaultCalculatorDescriptors.Time4A_4J(), calendar);
     }
 
     public void test_eot(double eot0, SuntimesCalculatorDescriptor descriptor, Calendar calendar)

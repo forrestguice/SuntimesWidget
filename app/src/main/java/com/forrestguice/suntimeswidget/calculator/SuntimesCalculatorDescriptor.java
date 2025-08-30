@@ -63,25 +63,29 @@ import java.util.Locale;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalculatorInfo
 {
-    public static final String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
+    /*public static final String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
     public static final String KEY_NAME = "CalculatorName";
     public static final String KEY_DISPLAYSTRING = "CalculatorDisplayString";
     public static final String KEY_REFERENCE = "CalculatorReference";
-    public static final String KEY_FEATURES = "CalculatorFeatures";
+    public static final String KEY_FEATURES = "CalculatorFeatures";*/
 
     private static ArrayList<Object> calculators = new ArrayList<Object>();
 
-    public static final String LOGTAG = "CalculatorDescriptor";
+    //public static final String LOGTAG = "CalculatorDescriptor";
 
     protected static boolean initialized = false;
     public static void initCalculators()
     {
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
-        SuntimesCalculatorDescriptor.addValue(com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
+        SuntimesCalculatorDescriptors descriptors = new DefaultCalculatorDescriptors();
+        for (SuntimesCalculatorDescriptor descriptor : descriptors.values()) {
+            SuntimesCalculatorDescriptor.addValue(descriptor);
+        }
+        /*SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.SunriseSunsetJava());
+        SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.CarmenSunriseSunset());
+        SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.Time4A_Simple());
+        SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.Time4A_NOAA());
+        SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.Time4A_CC());
+        SuntimesCalculatorDescriptor.addValue(SuntimesCalculatorDescriptors.Time4A_4J());*/
 
         /*boolean scanForPlugins = (context != null && AppSettings.loadScanForPluginsPref(context));
         if (scanForPlugins)

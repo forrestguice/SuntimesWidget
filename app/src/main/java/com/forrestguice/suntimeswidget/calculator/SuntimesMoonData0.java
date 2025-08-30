@@ -57,7 +57,7 @@ public class SuntimesMoonData0 extends SuntimesData
                 return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
             }
             public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
-                return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
+                return DefaultCalculatorDescriptors.Time4A_4J();
             }
         };
     }

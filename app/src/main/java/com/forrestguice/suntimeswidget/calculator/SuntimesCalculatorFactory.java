@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -111,7 +112,7 @@ public class SuntimesCalculatorFactory
     }
     public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
     {
-        return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
+        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF, -1, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
     /**

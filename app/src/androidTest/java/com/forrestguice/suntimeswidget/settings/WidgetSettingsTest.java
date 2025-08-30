@@ -27,6 +27,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
@@ -146,12 +147,12 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_calculatorModePref()
     {
-        SuntimesCalculatorDescriptor testmode2 = Time4ASimpleSuntimesCalculator.getDescriptor();
+        SuntimesCalculatorDescriptor testmode2 = DefaultCalculatorDescriptors.Time4A_Simple();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode2);
         SuntimesCalculatorDescriptor pref2 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         assertTrue("pref should be " + testmode2.getName() +  "but was " + pref2.getName(), pref2.getName().equals(testmode2.getName()));
 
-        SuntimesCalculatorDescriptor testmode1 = SunriseSunsetSuntimesCalculator.getDescriptor();
+        SuntimesCalculatorDescriptor testmode1 = DefaultCalculatorDescriptors.SunriseSunsetJava();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode1);
         SuntimesCalculatorDescriptor pref1 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         assertTrue("pref should be " + testmode1.getName() +  "but was " + pref1.getName(), pref1.getName().equals(testmode1.getName()));
