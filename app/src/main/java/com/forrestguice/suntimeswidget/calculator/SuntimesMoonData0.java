@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 import com.forrestguice.annotation.NonNull;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
