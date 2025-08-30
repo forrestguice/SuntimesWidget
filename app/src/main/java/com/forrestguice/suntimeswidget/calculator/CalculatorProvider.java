@@ -1195,7 +1195,7 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculatorDescriptor descriptor = null;
         String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
         if (calculator != null) {
-            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
+            descriptor = SuntimesCalculatorDescriptor.valueOf(calculator);
         }
 
         if (location == null && timezone == null && descriptor == null) {

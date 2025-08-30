@@ -64,7 +64,7 @@ public class SuntimesCalculatorFactory
     {
         if (!SuntimesCalculatorDescriptor.initialized)
         {
-            SuntimesCalculatorDescriptor.initCalculators(context);
+            SuntimesCalculatorDescriptor.initCalculators();
         }
 
         if (calculatorSetting == null)

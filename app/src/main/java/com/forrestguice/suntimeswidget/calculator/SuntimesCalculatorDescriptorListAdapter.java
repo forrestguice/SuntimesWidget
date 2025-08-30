@@ -132,7 +132,7 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
     @SuppressLint("ResourceType")
     public void initDisplayStrings(Context context)
     {
-        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values(context))
+        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values())
         {
             value.initDisplayStrings(context);
         }
