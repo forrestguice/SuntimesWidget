@@ -52,7 +52,16 @@ public class Pair<F, S> {
             return false;
         }
         android.util.Pair<?, ?> p = (android.util.Pair<?, ?>) o;
-        return Objects.equals(p.first, first) && Objects.equals(p.second, second);
+        return equals(p.first, first) && equals(p.second, second);
+    }
+
+    protected boolean equals(Object o1, Object o2)
+    {
+        if (o1 != null) {
+            return o1.equals(o2);
+        } else if (o2 != null) {
+            return o2.equals(o1);
+        } else return (o1 == null && o2 == null);
     }
 
     /**
