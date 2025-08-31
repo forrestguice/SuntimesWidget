@@ -171,7 +171,7 @@ public class SunLayout_2x1_0 extends SunLayout
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
-        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());   // TODO: refactor to use only a single TextView and SpannableString
+        views.setTextViewText(R.id.text_delta_day_prefix, context.getString(data.dayDeltaPrefix()));   // TODO: refactor to use only a single TextView and SpannableString
         views.setTextViewText(R.id.text_delta_day_value, (isSame ? "" : (boldTime ? SuntimesUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue)));
         views.setTextViewText(R.id.text_delta_day_units, (isSame ? "" : dayDeltaUnits));
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);

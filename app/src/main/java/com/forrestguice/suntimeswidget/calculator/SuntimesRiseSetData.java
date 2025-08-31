@@ -211,8 +211,8 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day delta prefix
      */
-    protected String dayDeltaPrefix;
-    public String dayDeltaPrefix()
+    protected int dayDeltaPrefix;
+    public int dayDeltaPrefix()
     {
         return dayDeltaPrefix;
     }
@@ -328,13 +328,13 @@ public class SuntimesRiseSetData extends SuntimesData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
+                dayDeltaPrefix = R.string.delta_day_yesterday;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
+                dayDeltaPrefix = R.string.delta_day_tomorrow;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }

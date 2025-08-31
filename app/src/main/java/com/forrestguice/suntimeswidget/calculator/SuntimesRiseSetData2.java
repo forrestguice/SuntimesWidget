@@ -217,13 +217,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
+                dayDeltaPrefix = R.string.delta_day_yesterday;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
+                dayDeltaPrefix = R.string.delta_day_tomorrow;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
