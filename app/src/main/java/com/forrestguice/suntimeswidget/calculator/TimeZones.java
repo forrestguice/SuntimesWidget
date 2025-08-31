@@ -145,7 +145,7 @@ public class TimeZones
         {
             this.calculator = calculator;
         }
-        protected SuntimesCalculator getCalculator() {
+        public SuntimesCalculator getCalculator() {
             return calculator;
         }
 
