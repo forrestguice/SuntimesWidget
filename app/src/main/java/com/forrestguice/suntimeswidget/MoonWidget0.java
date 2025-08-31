@@ -134,7 +134,7 @@ public class MoonWidget0 extends SuntimesWidget0
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 

@@ -180,7 +180,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.SolsticeEquinoxMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_SolsticeEquinoxMode(context);
     }
 
     /**

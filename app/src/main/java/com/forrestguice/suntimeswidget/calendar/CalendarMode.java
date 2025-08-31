@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
-import android.content.Context;
-import android.util.Log;
+import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import net.time4j.Moment;
@@ -172,24 +170,5 @@ public enum CalendarMode
             Log.e("CalendarMode", "formatDate: " + e);
             return "";
         }
-    }
-
-    public static void initDisplayStrings( Context context )
-    {
-        CHINESE.setDisplayString(context.getString(R.string.calendarMode_chinese));
-        COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
-        ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
-        GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
-        HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
-        //HIJRI_DIYANET.setDisplayString(context.getString(R.string.calendarMode_hijri_diyanet));
-        HIJRI_UMALQURA.setDisplayString(context.getString(R.string.calendarMode_hijri_umalqura));
-        INDIAN.setDisplayString(context.getString(R.string.calendarMode_indian));
-        JAPANESE.setDisplayString(context.getString(R.string.calendarMode_japanese));
-        JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
-        KOREAN.setDisplayString(context.getString(R.string.calendarMode_korean));
-        MINGUO.setDisplayString(context.getString(R.string.calendarMode_minguo));
-        PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
-        THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
-        VIETNAMESE.setDisplayString(context.getString(R.string.calendarMode_vietnamese));
     }
 }

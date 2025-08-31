@@ -95,10 +95,10 @@ public enum CalendarFormat
         F_DD.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_DD);
 
         for (CalendarFormat value : CalendarFormat.values()) {
-            value.initDisplayString(context, mode, now);
+            value.initDisplayString(mode, now);
         }
     }
-    public void initDisplayString(Context context, @NonNull CalendarMode mode, @NonNull Calendar now)
+    public void initDisplayString(@NonNull CalendarMode mode, @NonNull Calendar now)
     {
         if (isValidPattern(pattern)) {
             if (displayString0 == null) {

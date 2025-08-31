@@ -115,7 +115,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.TimeMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_TimeMode(context);
     }
 
     @Override

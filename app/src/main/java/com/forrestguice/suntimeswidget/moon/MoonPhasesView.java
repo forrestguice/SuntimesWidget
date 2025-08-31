@@ -143,7 +143,7 @@ public class MoonPhasesView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 

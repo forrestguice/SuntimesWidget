@@ -403,7 +403,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.TimeMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_TimeMode(context);
     }
 
     public static boolean widgetIsStale(Context context, int appWidgetId) {

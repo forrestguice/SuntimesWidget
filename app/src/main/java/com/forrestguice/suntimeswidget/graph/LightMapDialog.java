@@ -192,7 +192,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         initColors(contextWrapper);
 
         SuntimesUtils.initDisplayStrings(getActivity());
-        WidgetSettings.SolarTimeMode.initDisplayStrings(getActivity());
+        WidgetSettings.initDisplayStrings_SolarTimeMode(getActivity());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
             //Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");

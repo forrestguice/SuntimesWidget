@@ -30,6 +30,8 @@ import java.util.TimeZone;
 
 public class TimeZones
 {
+    public static final String TZID_UTC = "UTC";
+
     public static TimeZone localMeanTime(Location location) {
         return new LocalMeanTime(location.getLongitudeAsDouble(), LocalMeanTime.TIMEZONEID);
     }

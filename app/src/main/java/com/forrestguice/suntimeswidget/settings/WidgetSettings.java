@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -425,11 +426,6 @@ public class WidgetSettings
         {
             displayString = value;
         }
-        public static void initDisplayStrings(Context context)
-        {
-            METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
-            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
-        }
         public String toString()
         {
             return displayString;
@@ -445,6 +441,12 @@ public class WidgetSettings
         public static double kilometersToMiles(double kilometers) {
             return 0.62137 * kilometers;
         }
+    }
+
+    public static void initDisplayStrings_LengthUnit(Context context)
+    {
+        LengthUnit.METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
+        LengthUnit.IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
     }
 
     /**
@@ -481,16 +483,6 @@ public class WidgetSettings
             this.displayString = displayString;
         }
 
-        public static void initDisplayStrings( Context context )
-        {
-            ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
-            ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
-            ONTAP_UPDATE_ALL.setDisplayString(context.getString(R.string.actionMode_update_all));
-            ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
-            ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
-            ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
-        }
-
         public int ordinal( ActionMode[] array )
         {
             for (int i=0; i<array.length; i++)
@@ -502,6 +494,15 @@ public class WidgetSettings
             }
             return -1;
         }
+    }
+    public static void initDisplayStrings_ActionMode( Context context )
+    {
+        ActionMode.ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
+        ActionMode.ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
+        ActionMode.ONTAP_UPDATE_ALL.setDisplayString(context.getString(R.string.actionMode_update_all));
+        ActionMode.ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
+        ActionMode.ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
+        ActionMode.ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
     }
 
     public interface WidgetModeDisplay
@@ -1036,17 +1037,6 @@ public class WidgetSettings
             this.displayString = displayString;
         }
 
-        public static void initDisplayStrings( Context context )
-        {
-            WidgetGravity[] values = WidgetGravity.values();
-            String[] display = context.getResources().getStringArray(R.array.widgetgravity);
-            for (int i=0; i<values.length; i++) {
-                if (i < display.length) {
-                    values[i].setDisplayString(display[i]);
-                } else break;
-            }
-        }
-
         @Nullable
         public static WidgetGravity findPosition( int position )
         {
@@ -1057,6 +1047,16 @@ public class WidgetSettings
                 }
             }
             return null;
+        }
+    }
+    public static void initDisplayStrings_WidgetGravity( Context context )
+    {
+        WidgetGravity[] values = WidgetGravity.values();
+        String[] display = context.getResources().getStringArray(R.array.widgetgravity);
+        for (int i=0; i<values.length; i++) {
+            if (i < display.length) {
+                values[i].setDisplayString(display[i]);
+            } else break;
         }
     }
 
@@ -1089,12 +1089,11 @@ public class WidgetSettings
         {
             this.displayString = displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
-            CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
-        }
+    }
+    public static void initDisplayStrings_DateMode( Context context )
+    {
+        DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
+        DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
     }
 
     /**
@@ -1196,25 +1195,25 @@ public class WidgetSettings
         {
             this.displayString = displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
-            CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
-            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
-        }
     }
+    public static void initDisplayStrings_TimezoneMode( Context context )
+    {
+        TimezoneMode.SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
+        TimezoneMode.CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
+        TimezoneMode.CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
+    }
+
 
     /**
      * SolarTimeMode
      */
     public static enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
     {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
-        LMST(WidgetTimezones.SiderealTime.TZID_LMST, "Local Sidereal Time"),
-        GMST(WidgetTimezones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
-        UTC(WidgetTimezones.TZID_UTC, "Coordinated Universal Time");
+        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
+        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
+        LMST(TimeZones.SiderealTime.TZID_LMST, "Local Sidereal Time"),
+        GMST(TimeZones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
+        UTC(TimeZones.TZID_UTC, "Coordinated Universal Time");
 
         private String id;
         private String displayString;
@@ -1244,15 +1243,14 @@ public class WidgetSettings
         {
             this.displayString = displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
-            LMST.setDisplayString(context.getString(R.string.time_lmst));
-            GMST.setDisplayString(context.getString(R.string.time_gmst));
-            UTC.setDisplayString(context.getString(R.string.time_utc));
-        }
+    }
+    public static void initDisplayStrings_SolarTimeMode( Context context )
+    {
+        SolarTimeMode.LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+        SolarTimeMode.APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+        SolarTimeMode.LMST.setDisplayString(context.getString(R.string.time_lmst));
+        SolarTimeMode.GMST.setDisplayString(context.getString(R.string.time_gmst));
+        SolarTimeMode.UTC.setDisplayString(context.getString(R.string.time_utc));
     }
 
     /**
@@ -1282,18 +1280,17 @@ public class WidgetSettings
             this.displayString = displayString;
         }
 
-        public static void initDisplayStrings( Context context )
-        {
-            MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
-            MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
-            MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
-            MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
-        }
-
         public String toString()
         {
             return displayString;
         }
+    }
+    public static void initDisplayStrings_TimeFormatMode( Context context )
+    {
+        TimeFormatMode.MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
+        TimeFormatMode.MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
+        TimeFormatMode.MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+        TimeFormatMode.MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
     }
 
     /**
@@ -1325,12 +1322,11 @@ public class WidgetSettings
         {
             this.displayString = displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
-            CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
-        }
+    }
+    public static void initDisplayStrings_LocationMode( Context context )
+    {
+        LocationMode.CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
+        LocationMode.CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
     }
 
     /**
@@ -1362,12 +1358,11 @@ public class WidgetSettings
         {
             return displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
-            TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
-        }
+    }
+    public static void initDisplayStrings_CompareMode( Context context )
+    {
+        CompareMode.YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
+        CompareMode.TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
     }
 
     /**
@@ -1400,13 +1395,12 @@ public class WidgetSettings
         {
             return displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
-            CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
-            SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
-        }
+    }
+    public static void initDisplayStrings_TrackingMode( Context context )
+    {
+        TrackingMode.RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
+        TrackingMode.CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
+        TrackingMode.SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
     }
 
     /**
@@ -1460,29 +1454,6 @@ public class WidgetSettings
             this.longDisplayString = longDisplayString;
         }
 
-        public static void initDisplayStrings( Context context )
-        {
-            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
-                    context.getString(R.string.timeMode_cross_midwinter));
-            EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
-                    context.getString(R.string.timeMode_equinox_vernal));
-
-            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
-                    context.getString(R.string.timeMode_cross_midspring));
-            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
-                    context.getString(R.string.timeMode_solstice_summer));
-
-            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
-                    context.getString(R.string.timeMode_cross_midsummer) );
-            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
-                    context.getString(R.string.timeMode_equinox_autumnal) );
-
-            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
-                    context.getString(R.string.timeMode_cross_midautumnal));
-            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
-                    context.getString(R.string.timeMode_solstice_winter));
-        }
-
         public static SolsticeEquinoxMode[] values(boolean southernHemisphere) {
             return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { CROSS_AUTUMN, EQUINOX_AUTUMNAL, CROSS_WINTER, SOLSTICE_WINTER, CROSS_SPRING, EQUINOX_SPRING, CROSS_SUMMER, SOLSTICE_SUMMER } : values();
         }
@@ -1491,6 +1462,28 @@ public class WidgetSettings
             return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_AUTUMNAL, SOLSTICE_WINTER, EQUINOX_SPRING, SOLSTICE_SUMMER }
                                         : new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER };
         }
+    }
+    public static void initDisplayStrings_SolsticeEquinoxMode( Context context )
+    {
+        SolsticeEquinoxMode.CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
+                context.getString(R.string.timeMode_cross_midwinter));
+        SolsticeEquinoxMode.EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+                context.getString(R.string.timeMode_equinox_vernal));
+
+        SolsticeEquinoxMode.CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
+                context.getString(R.string.timeMode_cross_midspring));
+        SolsticeEquinoxMode.SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
+                context.getString(R.string.timeMode_solstice_summer));
+
+        SolsticeEquinoxMode.CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
+                context.getString(R.string.timeMode_cross_midsummer) );
+        SolsticeEquinoxMode.EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
+                context.getString(R.string.timeMode_equinox_autumnal) );
+
+        SolsticeEquinoxMode.CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
+                context.getString(R.string.timeMode_cross_midautumnal));
+        SolsticeEquinoxMode.SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
+                context.getString(R.string.timeMode_solstice_winter));
     }
 
     /**
@@ -1536,21 +1529,20 @@ public class WidgetSettings
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
         }
+    }
+    public static void initDisplayStrings_MoonPhaseMode( Context context )
+    {
+        MoonPhaseMode.NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
+                context.getString(R.string.timeMode_moon_new));
 
-        public static void initDisplayStrings( Context context )
-        {
-            NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
-                    context.getString(R.string.timeMode_moon_new));
+        MoonPhaseMode.FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+                context.getString(R.string.timeMode_moon_firstquarter));
 
-            FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
-                    context.getString(R.string.timeMode_moon_firstquarter));
+        MoonPhaseMode.FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
+                context.getString(R.string.timeMode_moon_full) );
 
-            FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
-                    context.getString(R.string.timeMode_moon_full) );
-
-            THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
-                    context.getString(R.string.timeMode_moon_thirdquarter));
-        }
+        MoonPhaseMode.THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+                context.getString(R.string.timeMode_moon_thirdquarter));
     }
 
     /**
@@ -1643,37 +1635,6 @@ public class WidgetSettings
             this.longDisplayString = longDisplayString;
         }
 
-        public static void initDisplayStrings( Context context )
-        {
-            OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
-                    context.getString(R.string.timeMode_official) );
-
-            NAUTICAL.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
-                    context.getString(R.string.timeMode_nautical));
-
-            CIVIL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
-                    context.getString(R.string.timeMode_civil) );
-
-            ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
-                    context.getString(R.string.timeMode_astronomical) );
-
-            NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
-                    context.getString(R.string.timeMode_noon) );
-
-            MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
-                    context.getString(R.string.timeMode_midnight) );
-
-            GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
-                    context.getString(R.string.timeMode_golden) );
-
-            BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
-                    context.getString(R.string.timeMode_blue8) );
-
-            BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
-                    context.getString(R.string.timeMode_blue4) );
-        }
-
-
         private Double angle;
         @Nullable
         public Double angle() {
@@ -1685,7 +1646,35 @@ public class WidgetSettings
             return this;
         }
     }
+    public static void initDisplayStrings_TimeMode( Context context )
+    {
+        TimeMode.OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
+                context.getString(R.string.timeMode_official) );
 
+        TimeMode.NAUTICAL.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
+                context.getString(R.string.timeMode_nautical));
+
+        TimeMode.CIVIL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
+                context.getString(R.string.timeMode_civil) );
+
+        TimeMode.ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
+                context.getString(R.string.timeMode_astronomical) );
+
+        TimeMode.NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
+                context.getString(R.string.timeMode_noon) );
+
+        TimeMode.MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
+                context.getString(R.string.timeMode_midnight) );
+
+        TimeMode.GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
+                context.getString(R.string.timeMode_golden) );
+
+        TimeMode.BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
+                context.getString(R.string.timeMode_blue8) );
+
+        TimeMode.BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
+                context.getString(R.string.timeMode_blue4) );
+    }
 
     /**
      * RiseSetOrder
@@ -1711,12 +1700,11 @@ public class WidgetSettings
         {
             this.displayString = displayString;
         }
-
-        public static void initDisplayStrings( Context context )
-        {
-            TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
-            LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
-        }
+    }
+    public static void initDisplayStrings_RiseSetOrder( Context context )
+    {
+        RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
+        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -3438,8 +3426,8 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
-        LengthUnit.initDisplayStrings(context);
-        ActionMode.initDisplayStrings(context);
+        initDisplayStrings_LengthUnit(context);
+        initDisplayStrings_ActionMode(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);
         WidgetModeSun3x1.initDisplayStrings(context);
@@ -3449,18 +3437,18 @@ public class WidgetSettings
         WidgetModeMoon1x1.initDisplayStrings(context);
         WidgetModeMoon2x1.initDisplayStrings(context);
         WidgetModeMoon3x1.initDisplayStrings(context);
-        WidgetGravity.initDisplayStrings(context);
-        TrackingMode.initDisplayStrings(context);
-        CompareMode.initDisplayStrings(context);
-        TimeMode.initDisplayStrings(context);
-        MoonPhaseMode.initDisplayStrings(context);
-        SolsticeEquinoxMode.initDisplayStrings(context);
-        LocationMode.initDisplayStrings(context);
-        TimezoneMode.initDisplayStrings(context);
-        SolarTimeMode.initDisplayStrings(context);
-        DateMode.initDisplayStrings(context);
-        TimeFormatMode.initDisplayStrings(context);
-        RiseSetOrder.initDisplayStrings(context);
+        initDisplayStrings_WidgetGravity(context);
+        initDisplayStrings_TrackingMode(context);
+        initDisplayStrings_CompareMode(context);
+        initDisplayStrings_TimeMode(context);
+        initDisplayStrings_MoonPhaseMode(context);
+        initDisplayStrings_SolsticeEquinoxMode(context);
+        initDisplayStrings_LocationMode(context);
+        initDisplayStrings_TimezoneMode(context);
+        initDisplayStrings_SolarTimeMode(context);
+        initDisplayStrings_DateMode(context);
+        initDisplayStrings_TimeFormatMode(context);
+        initDisplayStrings_RiseSetOrder(context);
         CalendarSettings.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
         AlarmWidgetSettings.initDisplayStrings(context);
