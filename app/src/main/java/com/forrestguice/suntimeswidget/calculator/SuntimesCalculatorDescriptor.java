@@ -74,7 +74,9 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
 
     public static void initDefaultDescriptors(SuntimesCalculatorDescriptors value) {
         descriptors = value;
-        initCalculators();
+        if (initialized) {
+            initCalculators();    // reinitialize
+        }
     }
     private static SuntimesCalculatorDescriptors descriptors = new SuntimesCalculatorDescriptors() {
         @Override

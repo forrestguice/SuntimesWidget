@@ -18,10 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.security.InvalidParameterException;
@@ -35,6 +34,11 @@ import static org.junit.Assert.assertTrue;
 
 public class SuntimesDescriptorTest
 {
+    @Before
+    public void beforeTest() {
+        SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
+    }
+
     @Test
     public void test_initCalculators()
     {
