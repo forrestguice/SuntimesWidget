@@ -16,8 +16,6 @@
 
 package com.forrestguice.util;
 
-import java.util.Objects;
-
 /**
  * Container to ease passing around a tuple of two objects. This object provides a sensible
  * implementation of equals(), returning true if equals() is true on each of the contained
@@ -42,16 +40,16 @@ public class Pair<F, S> {
      * Checks the two objects for equality by delegating to their respective
      * {@link Object#equals(Object)} methods.
      *
-     * @param o the {@link android.util.Pair} to which this one is to be checked for equality
+     * @param o the {@link Pair} to which this one is to be checked for equality
      * @return true if the underlying objects of the Pair are both considered
      *         equal
      */
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof android.util.Pair)) {
+        if (!(o instanceof Pair)) {
             return false;
         }
-        android.util.Pair<?, ?> p = (android.util.Pair<?, ?>) o;
+        Pair<?, ?> p = (Pair<?, ?>) o;
         return equals(p.first, first) && equals(p.second, second);
     }
 
@@ -85,7 +83,7 @@ public class Pair<F, S> {
      * @param b the second object in the pair
      * @return a Pair that is templatized with the types of a and b
      */
-    public static <A, B> android.util.Pair<A, B> create(A a, B b) {
-        return new android.util.Pair<A, B>(a, b);
+    public static <A, B> Pair<A, B> create(A a, B b) {
+        return new Pair<A, B>(a, b);
     }
 }
