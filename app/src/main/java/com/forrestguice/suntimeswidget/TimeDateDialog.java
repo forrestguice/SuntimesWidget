@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -71,7 +72,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         init(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
     }
-    public void init(WidgetSettings.DateInfo info)
+    public void init(DateInfo info)
     {
         init(info.getYear(), info.getMonth(), info.getDay());
     }
@@ -181,7 +182,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             init(getInitialDateTime());
 
         } else {
-            WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
+            DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
             init(dateInfo);
         }
     }
@@ -193,8 +194,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         /* EMPTY */
     }
 
-    public WidgetSettings.DateInfo getDateInfo() {
-        return new WidgetSettings.DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+    public DateInfo getDateInfo() {
+        return new DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
     }
 
     /**

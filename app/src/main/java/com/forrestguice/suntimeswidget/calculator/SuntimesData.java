@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
@@ -220,7 +221,7 @@ public class SuntimesData
         if (dateMode == DateMode.CUSTOM_DATE)
         {
             Calendar customDate = Calendar.getInstance(timezone);
-            WidgetSettings.DateInfo dateInfo = settings.loadDatePref(appWidgetId);
+            DateInfo dateInfo = settings.loadDatePref(appWidgetId);
             if (dateInfo.isSet())
             {
                 customDate.set(dateInfo.getYear(), dateInfo.getMonth(), dateInfo.getDay());

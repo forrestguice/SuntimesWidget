@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -304,23 +305,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_datePref()
     {
-        WidgetSettings.DateInfo date3 = new WidgetSettings.DateInfo(Calendar.getInstance());
+        DateInfo date3 = new DateInfo(Calendar.getInstance());
         assertTrue("date should be set", date3.isSet());
 
         int y = 2017;
         int m = 6;
         int d = 27;
-        WidgetSettings.DateInfo date2 = new WidgetSettings.DateInfo(y, m, d);
-        WidgetSettings.DateInfo date1 = new WidgetSettings.DateInfo(y, m, d);
+        DateInfo date2 = new DateInfo(y, m, d);
+        DateInfo date1 = new DateInfo(y, m, d);
         assertTrue("dates should match", date2.equals(date1));
 
         WidgetSettings.saveDatePref(context, appWidgetId, date1);
-        WidgetSettings.DateInfo info1 = WidgetSettings.loadDatePref(context, appWidgetId);
+        DateInfo info1 = WidgetSettings.loadDatePref(context, appWidgetId);
         assertTrue("dates should match (" + date1.getYear() + "." + date1.getMonth() + "." + date1.getDay() + " != " + info1.getYear() + "." + info1.getMonth() + "." + info1.getDay() + ")", info1.equals(date1));
 
-        WidgetSettings.DateInfo date0 = new WidgetSettings.DateInfo(WidgetSettings.PREF_DEF_DATE_YEAR, WidgetSettings.PREF_DEF_DATE_MONTH, WidgetSettings.PREF_DEF_DATE_DAY);
+        DateInfo date0 = new DateInfo(WidgetSettings.PREF_DEF_DATE_YEAR, WidgetSettings.PREF_DEF_DATE_MONTH, WidgetSettings.PREF_DEF_DATE_DAY);
         WidgetSettings.deleteDatePref(context, appWidgetId);
-        WidgetSettings.DateInfo info0 = WidgetSettings.loadDatePref(context, appWidgetId);
+        DateInfo info0 = WidgetSettings.loadDatePref(context, appWidgetId);
         assertTrue("dates should match (" + WidgetSettings.PREF_DEF_DATE_YEAR + "." + WidgetSettings.PREF_DEF_DATE_MONTH + "." + WidgetSettings.PREF_DEF_DATE_DAY + " != " + info0.getYear() + "." + info0.getMonth() + "." + info0.getDay() + ")", info0.equals(date0) && !info0.isSet());
     }
 

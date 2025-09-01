@@ -68,6 +68,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -1564,7 +1565,7 @@ public class SuntimesActivity extends AppCompatActivity
             DateMode dateMode = (isToday() ? DateMode.CURRENT_DATE : DateMode.CUSTOM_DATE);
             WidgetSettings.saveDateModePref(context, getAppWidgetId(), dateMode);
 
-            WidgetSettings.DateInfo dateInfo = getDateInfo();
+            DateInfo dateInfo = getDateInfo();
             WidgetSettings.saveDatePref(context, getAppWidgetId(), dateInfo);
         }
     }
@@ -1957,8 +1958,8 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (dataset.dataActual.todayIsNotToday())
         {
-            WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
-            WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(dataset.dataActual.calendar());
+            DateInfo nowInfo = new DateInfo(now);
+            DateInfo dataInfo = new DateInfo(dataset.dataActual.calendar());
             if (!nowInfo.equals(dataInfo))
             {
                 Date time = now.getTime();

@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -62,10 +63,8 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.TreeMap;
 
 /**
@@ -1061,75 +1060,6 @@ public class WidgetSettings
     {
         DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
         DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
-    }
-
-    /**
-     * DateInfo
-     */
-    public static class DateInfo
-    {
-        private int year = -1, month = -1, day = -1;
-
-        public DateInfo(Calendar date)
-        {
-            this(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-        }
-        public DateInfo( int year, int month, int day )
-        {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-        public DateInfo(long timestamp)
-        {
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(timestamp);
-            this.year = date.get(Calendar.YEAR);
-            this.month = date.get(Calendar.MONTH);
-            this.day = date.get(Calendar.DAY_OF_MONTH);
-        }
-
-        public int getYear() { return year; }
-        public int getMonth() { return month; }
-        public int getDay() { return day; }
-
-        public Calendar getCalendar(TimeZone timezone, int hour, int minute) {
-            Calendar calendar = Calendar.getInstance(timezone);
-            calendar.set(getYear(), getMonth(), getDay(), hour, minute, 0);
-            return calendar;
-        }
-
-        public boolean isSet()
-        {
-            return (year != -1 && month != -1 && day != -1);
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (!(obj instanceof DateInfo))
-            {
-                return false;
-            } else {
-                DateInfo that = (DateInfo)obj;
-                return (this.getYear() == that.getYear()) && (this.getMonth() == that.getMonth()) && (this.getDay() == that.getDay());
-            }
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = Integer.valueOf(year).hashCode();
-            hash = hash * 37 + (Integer.valueOf(month).hashCode());
-            hash = hash * 37 + (Integer.valueOf(day).hashCode());
-            return hash;
-        }
-
-        public static boolean isToday(WidgetSettings.DateInfo date)
-        {
-            WidgetSettings.DateInfo now = new WidgetSettings.DateInfo(Calendar.getInstance());
-            return now.equals(date);
-        }
     }
 
     /**
@@ -2586,7 +2516,7 @@ public class WidgetSettings
         prefs.putInt(prefs_prefix + PREF_KEY_DATE_DAY, info.getDay());
         prefs.apply();
     }
-    public static WidgetSettings.DateInfo loadDatePref(Context context, int appWidgetId)
+    public static DateInfo loadDatePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;

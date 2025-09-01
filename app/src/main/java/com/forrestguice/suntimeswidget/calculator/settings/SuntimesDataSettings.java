@@ -29,7 +29,7 @@ public interface SuntimesDataSettings
     WidgetSettings.CompareMode loadCompareModePref(int appWidgetId);
 
     DateMode loadDateModePref(int appWidgetId);
-    WidgetSettings.DateInfo loadDatePref(int appWidgetId);
+    DateInfo loadDatePref(int appWidgetId);
 
     boolean loadLocalizeHemispherePref(int appWidgetId);
 

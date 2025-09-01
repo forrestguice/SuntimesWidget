@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -588,7 +589,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      */
     public static class CardAdapterOptions
     {
-        private WidgetSettings.DateInfo dateInfo = null;
+        private DateInfo dateInfo = null;
         public DateMode dateMode = DateMode.CURRENT_DATE;
         public TimeZone timezone = null;
 
