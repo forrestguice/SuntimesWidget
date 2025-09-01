@@ -19,10 +19,9 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Pair;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.util.Pair;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
@@ -49,15 +48,15 @@ public class SuntimesMoonData0 extends SuntimesData
     }
 
     @Override
-    public SuntimesCalculatorFactory initFactory(Context context)
+    public SuntimesCalculatorFactory initFactory()
     {
-        return new SuntimesCalculatorFactory(context, calculatorMode)
+        return new SuntimesCalculatorFactory(calculatorMode)
         {
             public SuntimesCalculator fallbackCalculator() {
                 return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
             }
             public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
-                return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
+                return DefaultCalculatorDescriptors.Time4A_4J();
             }
         };
     }
@@ -93,7 +92,7 @@ public class SuntimesMoonData0 extends SuntimesData
     @Override
     public void calculate(Context context)
     {
-        initCalculator(context);
+        initCalculator();
         initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
@@ -205,24 +204,6 @@ public class SuntimesMoonData0 extends SuntimesData
             }
         }
         return result;
-    }
-
-    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
-    {
-        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
-        {
-            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
-
-            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
-                        : context.getString(R.string.timeMode_moon_superfull);
-
-            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
-                        : context.getString(R.string.timeMode_moon_microfull);
-
-            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
-        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
     }
 
 }

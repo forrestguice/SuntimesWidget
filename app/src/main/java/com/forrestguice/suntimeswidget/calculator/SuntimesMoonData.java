@@ -427,7 +427,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
     }
 
     public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase) {
-        return getMoonPhaseLabel(context, majorPhase, moonPhaseCalendar(majorPhase));
+        return MoonPhaseDisplay.getMoonPhaseLabel(context, calculator, majorPhase, moonPhaseCalendar(majorPhase));
     }
 
 }

@@ -339,7 +339,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values(this);
+        return SuntimesCalculatorDescriptor.values();
     }
 
     protected ArrayAdapter<WidgetSettings.TimezoneMode> createAdapter_timezoneMode()
@@ -2895,7 +2895,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
-                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(Uri.parse(location.getUri()), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
             }
         }
     }

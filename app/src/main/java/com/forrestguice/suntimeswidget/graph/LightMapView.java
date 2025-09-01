@@ -622,7 +622,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                     //if (colors.option_lmt)
                     //{
-                        TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                        TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                         Calendar nowLmt = Calendar.getInstance(lmt);
                         nowLmt.setTimeInMillis(now.getTimeInMillis());
                         now = nowLmt;
@@ -763,7 +763,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
             //if (options.option_lmt)
             //{
-                TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                 if (riseTime != null)
                 {
                     Calendar riseTimeLmt = Calendar.getInstance(lmt);

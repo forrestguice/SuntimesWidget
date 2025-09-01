@@ -33,7 +33,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

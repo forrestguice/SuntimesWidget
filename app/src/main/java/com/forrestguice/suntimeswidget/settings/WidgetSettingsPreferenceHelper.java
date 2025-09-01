@@ -54,7 +54,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
 
         if (key.endsWith(AppSettings.PREF_KEY_PLUGINS_ENABLESCAN))
         {
-            SuntimesCalculatorDescriptor.reinitCalculators(context);
+            SuntimesCalculatorDescriptor.reinitCalculators();
             rebuildActivity();
             return;
         }
@@ -72,7 +72,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(context, calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(context, 0, descriptor);
                 CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
@@ -89,7 +89,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(context, calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(context, 0, "moon", descriptor);
                 CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);

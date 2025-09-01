@@ -175,7 +175,7 @@ public class CalculatorProviderTest
         Location location = WidgetSettings.loadLocationPref(mockContext, 0);
         TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(mockContext, 0));
         SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, 0, calculatorName);
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(mockContext, descriptor);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
         return factory.createCalculator(location, timezone);
     }
 

@@ -942,7 +942,7 @@ public class AlarmEventProvider extends ContentProvider
     public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesClockData data = getData_shadowLengthEvent(context, location);
-        data.initCalculator(context);
+        data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
 
         Calendar alarmTime = Calendar.getInstance();

@@ -18,10 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -63,7 +62,7 @@ public class SuntimesRiseSetDataset
 
     public SuntimesRiseSetDataset(Context context)
     {
-        init(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        init(context, 0);
     }
 
     public SuntimesRiseSetDataset(Context context, int appWidgetID)
@@ -301,7 +300,7 @@ public class SuntimesRiseSetDataset
     public TimeZone timezone() {
         return dataActual.timezone();
     }
-    public void setTimeZone(Context context, TimeZone value) {
+    public void setTimeZone(TimeZone value) {
         for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
             data.setTimezone(value);
@@ -341,12 +340,12 @@ public class SuntimesRiseSetDataset
         return (calculatorDescriptor != null ? calculatorDescriptor: dataActual.calculatorMode());
     }
 
-    public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
+    public void setCalculator(SuntimesCalculatorDescriptor value)
     {
         this.calculatorDescriptor = value;
-        this.calculator = new SuntimesCalculatorFactory(context, value).createCalculator(location(), timezone());
+        this.calculator = new SuntimesCalculatorFactory(value).createCalculator(location(), timezone());
     }
-    public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+    public void setCalculator(SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
         this.calculatorDescriptor = calculatorDescriptor;
         this.calculator = calculator;
     }

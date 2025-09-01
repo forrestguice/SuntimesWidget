@@ -22,13 +22,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -146,12 +149,12 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_calculatorModePref()
     {
-        SuntimesCalculatorDescriptor testmode2 = Time4ASimpleSuntimesCalculator.getDescriptor();
+        SuntimesCalculatorDescriptor testmode2 = DefaultCalculatorDescriptors.Time4A_Simple();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode2);
         SuntimesCalculatorDescriptor pref2 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         assertTrue("pref should be " + testmode2.getName() +  "but was " + pref2.getName(), pref2.getName().equals(testmode2.getName()));
 
-        SuntimesCalculatorDescriptor testmode1 = SunriseSunsetSuntimesCalculator.getDescriptor();
+        SuntimesCalculatorDescriptor testmode1 = DefaultCalculatorDescriptors.SunriseSunsetJava();
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, testmode1);
         SuntimesCalculatorDescriptor pref1 = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         assertTrue("pref should be " + testmode1.getName() +  "but was " + pref1.getName(), pref1.getName().equals(testmode1.getName()));
@@ -416,18 +419,18 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Location testloc2 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc2);
         Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + pref2.getUri() + " != " + testloc2.getUri(), pref2.equals(testloc2));
+        assertTrue("location does not match! " + Uri.parse(pref2.getUri()) + " != " + Uri.parse(testloc2.getUri()), pref2.equals(testloc2));
 
         Location testloc1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc1);
         Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + pref1.getUri() + " != " + testloc1.getUri(), pref1.equals(testloc1));
+        assertTrue("location does not match! " + Uri.parse(pref1.getUri()) + " != " + Uri.parse(testloc1.getUri()), pref1.equals(testloc1));
 
         //Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
         Location testloc0 = WidgetSettings.loadLocationPref(context, 0);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match default! " + pref0.getUri() + " != " + testloc0.getUri(), pref0.equals(testloc0));
+        assertTrue("location does not match default! " + Uri.parse(pref0.getUri()) + " != " + Uri.parse(testloc0.getUri()), pref0.equals(testloc0));
     }
 
     @Test
