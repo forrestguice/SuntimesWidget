@@ -258,7 +258,7 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
             if (map != null)
             {
                 try {
-                    return new EventAlias(ExportTask.toContentValues(map));
+                    return EventAliasValues.createEventAlias(ExportTask.toContentValues(map));
 
                 } catch (Exception e) {
                     Log.e(TAG, "readEventAlias: skipping item because of " + e);
@@ -323,7 +323,7 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
 
         public static String toJson(EventAlias item)
         {
-            HashMap<String,String> map = ExportTask.toMap(item.toContentValues());
+            HashMap<String,String> map = ExportTask.toMap(EventAliasValues.toContentValues(item));
             return new JSONObject(map).toString();
         }
     }

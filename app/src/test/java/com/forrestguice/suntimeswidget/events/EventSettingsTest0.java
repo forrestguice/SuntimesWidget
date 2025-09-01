@@ -41,7 +41,7 @@ public class EventSettingsTest0
         EventAlias alias1 = new EventAlias(alias0);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias1);
 
-        EventAlias alias2 = new EventAlias(alias0.toContentValues());
+        EventAlias alias2 = EventAliasValues.createEventAlias(EventAliasValues.toContentValues(alias0));
         verify_eventAlias(type0, id0, label0, color0, uri0, alias2);
     }
 

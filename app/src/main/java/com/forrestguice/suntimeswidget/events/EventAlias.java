@@ -18,23 +18,16 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.util.Log;
 
 import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
-/**
- * EventAlias
- */
 public final class EventAlias
 {
     public EventAlias(@NonNull EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
@@ -57,29 +50,6 @@ public final class EventAlias
         this.uri = other.uri;
         this.shown = other.shown;
         this.summary = other.summary;
-    }
-
-    public EventAlias(ContentValues values )
-    {
-        this.type = EventType.valueOf(values.getAsString(EventSettings.PREF_KEY_EVENT_TYPE));
-        this.id = values.getAsString(EventSettings.PREF_KEY_EVENT_ID);
-        this.label = values.getAsString(EventSettings.PREF_KEY_EVENT_LABEL);
-        this.color = values.getAsInteger(EventSettings.PREF_KEY_EVENT_COLOR);
-        this.uri = values.getAsString(EventSettings.PREF_KEY_EVENT_URI);
-        this.shown = values.getAsBoolean(EventSettings.PREF_KEY_EVENT_SHOWN);
-        this.summary = null;
-    }
-
-    public ContentValues toContentValues()
-    {
-        ContentValues values = new ContentValues();
-        values.put(EventSettings.PREF_KEY_EVENT_TYPE, this.type.name());
-        values.put(EventSettings.PREF_KEY_EVENT_ID, this.id);
-        values.put(EventSettings.PREF_KEY_EVENT_LABEL, this.label);
-        values.put(EventSettings.PREF_KEY_EVENT_COLOR, this.color);
-        values.put(EventSettings.PREF_KEY_EVENT_URI, this.uri);
-        values.put(EventSettings.PREF_KEY_EVENT_SHOWN, this.shown);
-        return values;
     }
 
     private final EventType type;
@@ -116,35 +86,22 @@ public final class EventAlias
     }
 
     private String summary;
-    public String getSummary(final Context context) {
-        if (summary == null) {
-            summary = ExecutorUtils.getResult("getSummary", new Callable<String>()
-            {
-                public String call() {
-                    return resolveSummary(context);
-                }
-            }, 1000);
-        }
-        return summary;
-    }
-    protected String resolveSummary(Context context)
+    public String getSummary(final Object context)
     {
-        String retValue = null;
-        String uri = getUri();
-        if (uri != null && !uri.trim().isEmpty())
-        {
-            Cursor cursor = context.getContentResolver().query(Uri.parse(uri), new String[] { AlarmEventContract.COLUMN_EVENT_SUMMARY }, null, null, null);
-            if (cursor != null)
-            {
-                cursor.moveToFirst();
-                if (!cursor.isAfterLast()) {
-                    int i = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
-                    retValue = ((i >= 0) ? cursor.getString(i) : null);
-                }
-                cursor.close();
+        if (summary == null) {
+            if (resolver != null) {
+                summary = ExecutorUtils.getResult("getSummary", new Callable<String>()
+                {
+                    public String call() {
+                        return resolver.resolveSummary(context, EventAlias.this);
+                    }
+                }, 1000);
+
+            } else {
+                Log.e("EventAlias.getSummary", "ItemResolver is null! make sure `initItemResolver` is called on application start.");
             }
         }
-        return retValue;
+        return summary;
     }
 
     public String toString() {
@@ -153,5 +110,13 @@ public final class EventAlias
 
     public String getAliasUri() {
         return EventUri.getEventInfoUri(AUTHORITY, getID());
+    }
+
+    private static EventItemResolver resolver = null;
+    public static void initItemResolver(EventItemResolver value) {
+        resolver = value;
+    }
+    public static EventItemResolver getItemResolver() {
+        return resolver;
     }
 }
