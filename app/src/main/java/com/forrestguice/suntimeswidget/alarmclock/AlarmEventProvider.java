@@ -457,7 +457,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
 
                 case COLUMN_EVENT_NAME:
-                    row[i] = event.getEventName(context);
+                    row[i] = event.getEventName();
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getEventTitle(context);
@@ -517,7 +517,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
 
                 case COLUMN_EVENT_NAME:
-                    row[i] = event.getEventName(context);
+                    row[i] = event.getEventName();
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getEventTitle(context);

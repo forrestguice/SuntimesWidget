@@ -34,7 +34,7 @@ public abstract class ElevationEvent
     }
 
     protected String getUri(Context context) {
-        return EventUri.getEventCalcUri(AUTHORITY, getEventName(context));
+        return EventUri.getEventCalcUri(AUTHORITY, getEventName());
     }
 
     private static final SuntimesUtils utils = new SuntimesUtils();
@@ -48,7 +48,7 @@ public abstract class ElevationEvent
         } else return "";
     }
 
-    public abstract String getEventName(Context context);
+    public abstract String getEventName();
     public abstract String getEventTitle(Context context);
     public abstract String getEventPhrase(Context context);
     public abstract String getEventGender(Context context);

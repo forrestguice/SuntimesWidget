@@ -67,7 +67,7 @@ public final class SunElevationEvent extends ElevationEvent
      *              SUN_-10|-300000r  (5m before @ 10 degrees (rising))
      */
     @Override
-    public String getEventName(Context context) {
+    public String getEventName() {
         return getEventName(angle, offset, rising);
     }
     public static String getEventName(double angle, int offset, @Nullable Boolean rising) {

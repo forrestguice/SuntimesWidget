@@ -92,7 +92,7 @@ public final class ShadowLengthEvent extends ElevationEvent
      *              SHADOW_1:10|-300000r  (5m before @ 10 meters (rising))
      */
     @Override
-    public String getEventName(Context context) {
+    public String getEventName() {
         return getEventName(objHeight, length, offset, rising);
     }
     public static String getEventName(double objHeight, double length, int offset, @Nullable Boolean rising) {
