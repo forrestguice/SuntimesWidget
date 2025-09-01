@@ -22,6 +22,7 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
@@ -59,7 +60,7 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
     }
 
     @Override
-    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode() {
+    protected TimezoneMode getDefaultTimezoneMode() {
         return ClockTileBase.DEF_TIMEZONE_MODE;
     }
 

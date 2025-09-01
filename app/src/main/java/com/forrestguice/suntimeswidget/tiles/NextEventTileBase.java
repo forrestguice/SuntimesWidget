@@ -35,6 +35,7 @@ import android.view.ContextThemeWrapper;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -72,7 +73,7 @@ public class NextEventTileBase extends SuntimesTileBase
     }
 
     public static final boolean DEF_LOCATION_FROM_APP = true;
-    public static final WidgetSettings.TimezoneMode DEF_TIMEZONE_MODE = WidgetSettings.TimezoneMode.SOLAR_TIME;
+    public static final TimezoneMode DEF_TIMEZONE_MODE = TimezoneMode.SOLAR_TIME;
     public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
 
     @Override

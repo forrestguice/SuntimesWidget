@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -144,7 +145,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
         {
             int stringResID;
             Long offset = null;
-            if (data.timezoneMode() == WidgetSettings.TimezoneMode.SOLAR_TIME)
+            if (data.timezoneMode() == TimezoneMode.SOLAR_TIME)
             {
                 stringResID = R.string.timezoneExtraApparentSolar_short;
                 if (WidgetSettings.loadSolarTimeModePref(context, appWidgetId) == SolarTimeMode.APPARENT_SOLAR_TIME) {

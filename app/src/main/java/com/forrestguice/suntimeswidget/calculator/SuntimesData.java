@@ -25,11 +25,11 @@ import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -137,11 +137,11 @@ public class SuntimesData
     /**
      * Property: timezone mode
      */
-    protected WidgetSettings.TimezoneMode timezoneMode;
-    public WidgetSettings.TimezoneMode timezoneMode() {
+    protected TimezoneMode timezoneMode;
+    public TimezoneMode timezoneMode() {
         return timezoneMode;
     }
-    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+    public void setTimeZoneMode(TimezoneMode value) {
         timezoneMode = value;
     }
 

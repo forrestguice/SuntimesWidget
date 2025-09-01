@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
@@ -1064,37 +1065,6 @@ public class WidgetSettings
         DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
     }
 
-    /**
-     * TimezoneMode
-     */
-    public static enum TimezoneMode
-    {
-        SOLAR_TIME("Time Standards"),   // TODO: misnomer (no longer accurate); rename this value
-        CURRENT_TIMEZONE("Current"),
-        CUSTOM_TIMEZONE("Custom");
-
-        private String displayString;
-
-        private TimezoneMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-    }
     public static void initDisplayStrings_TimezoneMode( Context context )
     {
         TimezoneMode.SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
@@ -2440,18 +2410,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimezoneModePref(Context context, int appWidgetId, WidgetSettings.TimezoneMode mode)
+    public static void saveTimezoneModePref(Context context, int appWidgetId, TimezoneMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
+    public static TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
         return loadTimezoneModePref(context, appWidgetId, PREF_DEF_TIMEZONE_MODE);
     }
-    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
+    public static TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
@@ -2460,7 +2430,7 @@ public class WidgetSettings
         TimezoneMode timezoneMode;
         try
         {
-            timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
+            timezoneMode = TimezoneMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timezoneMode = defaultMode;

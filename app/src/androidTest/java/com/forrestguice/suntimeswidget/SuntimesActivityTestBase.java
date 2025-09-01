@@ -38,6 +38,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
@@ -360,7 +361,7 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
-        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, 0, TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 

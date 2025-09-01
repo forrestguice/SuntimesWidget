@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -347,17 +348,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timezoneModePref()
     {
-        WidgetSettings.saveTimezoneModePref(context, appWidgetId, WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
-        WidgetSettings.TimezoneMode mode2 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be CURRENT but was " + mode2, mode2 == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, appWidgetId, TimezoneMode.CURRENT_TIMEZONE);
+        TimezoneMode mode2 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        assertTrue("mode should be CURRENT but was " + mode2, mode2 == TimezoneMode.CURRENT_TIMEZONE);
 
-        WidgetSettings.saveTimezoneModePref(context, appWidgetId, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
-        WidgetSettings.TimezoneMode mode1 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be COLOR but was " + mode1, mode1 == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, appWidgetId, TimezoneMode.CUSTOM_TIMEZONE);
+        TimezoneMode mode1 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        assertTrue("mode should be COLOR but was " + mode1, mode1 == TimezoneMode.CUSTOM_TIMEZONE);
 
         WidgetSettings.deleteTimezoneModePref(context, appWidgetId);
-        WidgetSettings.TimezoneMode mode0 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be default (CURRENT) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_TIMEZONE_MODE && mode0 == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
+        TimezoneMode mode0 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        assertTrue("mode should be default (CURRENT) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_TIMEZONE_MODE && mode0 == TimezoneMode.CURRENT_TIMEZONE);
     }
 
     @Test

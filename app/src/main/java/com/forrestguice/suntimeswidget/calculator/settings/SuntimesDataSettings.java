@@ -42,7 +42,7 @@ public interface SuntimesDataSettings
 
     boolean loadTimeZoneFromAppPref(int appWidgetID);
     String loadTimezonePref(int appWidgetID);
-    WidgetSettings.TimezoneMode loadTimezoneModePref(int appWidgetID);
+    TimezoneMode loadTimezoneModePref(int appWidgetID);
 }
 
 

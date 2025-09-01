@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
@@ -302,7 +303,7 @@ public class SuntimesRiseSetDataset
     }
     public void setTimeZone(TimeZone value) {
         for (SuntimesRiseSetData data : dataset.values()) {
-            data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+            data.setTimeZoneMode(TimezoneMode.CUSTOM_TIMEZONE);
             data.setTimezone(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
         }
@@ -323,10 +324,10 @@ public class SuntimesRiseSetDataset
         return dataActual.getOtherCalendar();
     }
 
-    public WidgetSettings.TimezoneMode timezoneMode() {
+    public TimezoneMode timezoneMode() {
         return dataActual.timezoneMode();
     }
-    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+    public void setTimeZoneMode(TimezoneMode value) {
         for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone

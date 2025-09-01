@@ -61,6 +61,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -114,7 +115,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private TextView label_tzExtras0;
     private SuntimesUtils utils;
 
-    private ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneMode_adapter;
+    private ArrayAdapter<TimezoneMode> spinner_timezoneMode_adapter;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
@@ -160,10 +161,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
-    public WidgetSettings.TimezoneMode getTimeZoneMode() {
-        return (spinner_timezoneMode != null) ? (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem() : WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+    public TimezoneMode getTimeZoneMode() {
+        return (spinner_timezoneMode != null) ? (TimezoneMode) spinner_timezoneMode.getSelectedItem() : TimezoneMode.CURRENT_TIMEZONE;
     }
-    public void setTimeZoneMode(WidgetSettings.TimezoneMode value)
+    public void setTimeZoneMode(TimezoneMode value)
     {
         if (spinner_timezoneMode != null) {
             spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(value), true);
@@ -172,7 +173,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public void setCustomTimeZone(final String tzID)
     {
         if (spinner_timezoneMode != null) {
-            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE), true);
+            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(TimezoneMode.CUSTOM_TIMEZONE), true);
         }
         spinner_timezone.post(new Runnable() {
             @Override
@@ -190,7 +191,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     {
         String tzID;
         WidgetTimezones.TimeZoneItem item;
-        WidgetSettings.TimezoneMode mode = getTimeZoneMode();
+        TimezoneMode mode = getTimeZoneMode();
         switch (mode)
         {
             case SOLAR_TIME:
@@ -299,7 +300,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
 
-        spinner_timezoneMode_adapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+        spinner_timezoneMode_adapter = new ArrayAdapter<TimezoneMode>(context, R.layout.layout_listitem_oneline, TimezoneMode.values());
         spinner_timezoneMode_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_mode);
@@ -549,17 +550,17 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             spinner_timezone.setOnItemSelectedListener(null);
             spinner_solartime.setOnItemSelectedListener(null);
 
-            WidgetSettings.TimezoneMode timezoneMode = (WidgetSettings.TimezoneMode) parent.getSelectedItem();
-            boolean useSolarTime = (timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
+            TimezoneMode timezoneMode = (TimezoneMode) parent.getSelectedItem();
+            boolean useSolarTime = (timezoneMode == TimezoneMode.SOLAR_TIME);
             if (useSolarTime)
                 spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
             else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
-            if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+            if (timezoneMode == TimezoneMode.CUSTOM_TIMEZONE) {
                 customTimezoneID = WidgetSettings.loadTimezonePref(getContext(), appWidgetId, SLOT_CUSTOM0);
             }
-            setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
-            setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+            setUseCustomTimezone((timezoneMode == TimezoneMode.CUSTOM_TIMEZONE));
+            setUseSolarTime((timezoneMode == TimezoneMode.SOLAR_TIME));
 
             Object item = (useSolarTime ? spinner_solartime.getSelectedItem() : spinner_timezone.getSelectedItem());
             updateExtras(getContext(), useSolarTime, item);
@@ -783,11 +784,11 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
      */
     protected void loadSettings(Context context)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
+        TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
-        String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
+        String tzID = (getTimeZoneMode() == TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
 
         SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
@@ -803,7 +804,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         String modeString = bundle.getString(KEY_TIMEZONE_MODE);
         if (modeString != null)
         {
-            WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
+            TimezoneMode timezoneMode = TimezoneMode.valueOf(modeString);
             spinner_timezoneMode.setSelection(timezoneMode.ordinal());
         }
 
@@ -831,8 +832,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
      */
     protected void saveSettings(Context context)
     {
-        final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-        WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
+        final TimezoneMode[] timezoneModes = TimezoneMode.values();
+        TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
         String tzString;
@@ -845,7 +846,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
 
         WidgetSettings.saveTimezonePref(context, appWidgetId, tzString);
-        if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+        if (timezoneMode == TimezoneMode.CUSTOM_TIMEZONE) {
             WidgetSettings.saveTimezonePref(context, appWidgetId, tzString, SLOT_CUSTOM0);
         }
 
@@ -862,8 +863,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     protected void saveSettings(Bundle bundle)
     {
         // save: timezone mode
-        WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-        WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
+        TimezoneMode[] timezoneModes = TimezoneMode.values();
+        TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         bundle.putString(KEY_TIMEZONE_MODE, timezoneMode.name());
 
         // save: custom timezone
@@ -938,7 +939,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             super.onFinished(result);
             spinner_timezone_adapter = result;
             spinner_timezone.setAdapter(spinner_timezone_adapter);
-            String tzID = (getTimeZoneMode() == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
+            String tzID = (getTimeZoneMode() == TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);
             WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);

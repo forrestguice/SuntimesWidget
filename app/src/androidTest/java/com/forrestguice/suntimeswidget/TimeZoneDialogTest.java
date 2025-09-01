@@ -27,6 +27,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 
@@ -97,15 +98,15 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         robot.showDialog(context).assertDialogShown(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone0");
 
-        robot.inputTimezoneDialogMode(context, WidgetSettings.TimezoneMode.CURRENT_TIMEZONE)
+        robot.inputTimezoneDialogMode(context, TimezoneMode.CURRENT_TIMEZONE)
                 .verifyTimezoneDialog_system()
                 .captureScreenshot(context, "suntimes-dialog-timezone-system0");
 
-        robot.inputTimezoneDialogMode(context, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE)
+        robot.inputTimezoneDialogMode(context, TimezoneMode.CUSTOM_TIMEZONE)
                 .verifyTimezoneDialog_custom(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone-custom0");
 
-        robot.inputTimezoneDialogMode(context, WidgetSettings.TimezoneMode.SOLAR_TIME)
+        robot.inputTimezoneDialogMode(context, TimezoneMode.SOLAR_TIME)
                 .verifyTimezoneDialog_solar(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone-solar0");
 
@@ -140,10 +141,10 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public TimeZoneDialogRobot inputTimezoneDialogMode(Context context, WidgetSettings.TimezoneMode mode)
+        public TimeZoneDialogRobot inputTimezoneDialogMode(Context context, TimezoneMode mode)
         {
             onView(withId(R.id.appwidget_timezone_mode)).perform(click());
-            onData(allOf(is(instanceOf(WidgetSettings.TimezoneMode.class)), is(mode))).inRoot(isPlatformPopup()).perform(click());
+            onData(allOf(is(instanceOf(TimezoneMode.class)), is(mode))).inRoot(isPlatformPopup()).perform(click());
             verifyTimezoneDialog(context, mode);
             return this;
         }
@@ -161,7 +162,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public TimeZoneDialogRobot verifyTimezoneDialog(Context context, WidgetSettings.TimezoneMode mode )
+        public TimeZoneDialogRobot verifyTimezoneDialog(Context context, TimezoneMode mode )
         {
             if (mode == null)
                 return this;
@@ -182,7 +183,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
         public TimeZoneDialogRobot verifyTimezoneDialog_solar(Context context)
         {
-            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.SOLAR_TIME.toString())));
+            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(TimezoneMode.SOLAR_TIME.toString())));
 
             onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertHidden);
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
@@ -195,7 +196,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
         public TimeZoneDialogRobot verifyTimezoneDialog_system()
         {
-            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CURRENT_TIMEZONE.toString())));
+            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(TimezoneMode.CURRENT_TIMEZONE.toString())));
             onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertHidden);
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
 
@@ -207,30 +208,30 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
         public TimeZoneDialogRobot verifyTimezoneDialog_custom(Context context)
         {
-            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE.toString())));
+            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(TimezoneMode.CUSTOM_TIMEZONE.toString())));
             onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertHidden);
 
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertEnabled);
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertClickable);
 
-            WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
-            String timezoneId = WidgetSettings.loadTimezonePref(context, 0, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? TimeZoneDialog.SLOT_CUSTOM0 : ""));
+            TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
+            String timezoneId = WidgetSettings.loadTimezonePref(context, 0, (timezoneMode == TimezoneMode.CUSTOM_TIMEZONE ? TimeZoneDialog.SLOT_CUSTOM0 : ""));
             onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
             onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertEnabled);
             onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertClickable);
             return this;
         }
 
-        public static WidgetSettings.TimezoneMode getTimezoneDialogMode()
+        public static TimezoneMode getTimezoneDialogMode()
         {
-            if (spinnerDisplaysText(R.id.appwidget_timezone_mode, WidgetSettings.TimezoneMode.SOLAR_TIME.toString()))
-                return WidgetSettings.TimezoneMode.SOLAR_TIME;
+            if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.SOLAR_TIME.toString()))
+                return TimezoneMode.SOLAR_TIME;
 
-            else if (spinnerDisplaysText(R.id.appwidget_timezone_mode, WidgetSettings.TimezoneMode.CURRENT_TIMEZONE.toString()))
-                return WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+            else if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.CURRENT_TIMEZONE.toString()))
+                return TimezoneMode.CURRENT_TIMEZONE;
 
-            else if (spinnerDisplaysText(R.id.appwidget_timezone_mode, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE.toString()))
-                return WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE;
+            else if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.CUSTOM_TIMEZONE.toString()))
+                return TimezoneMode.CUSTOM_TIMEZONE;
 
             else
                 return null;   // unrecognized mode; fail with a null

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
@@ -113,9 +114,9 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
+    protected TimezoneMode getDefaultTimezoneMode()
     {
-        return WidgetSettings.TimezoneMode.SOLAR_TIME;
+        return TimezoneMode.SOLAR_TIME;
     }
 
     @Override
