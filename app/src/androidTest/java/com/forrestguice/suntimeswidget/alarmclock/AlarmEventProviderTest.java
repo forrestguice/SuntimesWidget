@@ -22,6 +22,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
 
 import org.junit.Before;
@@ -48,7 +49,7 @@ public class AlarmEventProviderTest
                 EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], EventType.resolveEventType(context, events[i]));
+            assertEquals(expected[i], EventType.resolveEventType(AndroidSuntimesDataSettings.wrap(context), events[i]));
         }
     }
 

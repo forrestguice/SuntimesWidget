@@ -18,10 +18,10 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.Set;
@@ -61,7 +61,7 @@ public enum EventType
     //}
 
     @Nullable
-    public static EventType resolveEventType(Context context, String eventID)
+    public static EventType resolveEventType(SuntimesDataSettings settings, String eventID)
     {
         if (isNumeric(eventID)) {
             return EventType.DATE;
@@ -77,7 +77,7 @@ public enum EventType
                 return EventType.SOLAREVENT;
             }
         }
-        Set<String> eventList = EventSettings.loadEventList(context);
+        Set<String> eventList = settings.loadEventList();
         for (String aliasID : eventList)
         {
             if (eventID.startsWith(aliasID)) {

@@ -20,6 +20,9 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.events.EventSettings;
+
+import java.util.Set;
 
 public interface SuntimesDataSettings
 {
@@ -42,6 +45,8 @@ public interface SuntimesDataSettings
     boolean loadTimeZoneFromAppPref(int appWidgetID);
     String loadTimezonePref(int appWidgetID);
     TimezoneMode loadTimezoneModePref(int appWidgetID);
+
+    Set<String> loadEventList();    // EventSettings.loadEventList
 }
 
 
