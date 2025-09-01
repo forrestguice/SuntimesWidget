@@ -75,6 +75,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -367,9 +368,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.CompareMode> createAdapter_compareMode()
+    protected ArrayAdapter<CompareMode> createAdapter_compareMode()
     {
-        ArrayAdapter<WidgetSettings.CompareMode> adapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
+        ArrayAdapter<CompareMode> adapter = new ArrayAdapter<CompareMode>(this, R.layout.layout_listitem_oneline, CompareMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -1724,8 +1725,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveTrackingModePref(context, appWidgetId, trackingMode);
 
         // save: compare mode
-        final WidgetSettings.CompareMode[] compareModes = WidgetSettings.CompareMode.values();
-        WidgetSettings.CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
+        final CompareMode[] compareModes = CompareMode.values();
+        CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
         // save: riseSetOrder
@@ -1804,7 +1805,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_trackingMode.setSelection(trackingMode.ordinal());
 
         // load: compare mode
-        WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
 
         // load: showCompare

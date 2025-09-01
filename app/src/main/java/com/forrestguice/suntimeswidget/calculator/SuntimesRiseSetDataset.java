@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
@@ -98,7 +99,7 @@ public class SuntimesRiseSetDataset
     private void init(Object context, int appWidgetID)
     {
         dataActual = new SuntimesRiseSetData(context, appWidgetID);
-        dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
+        dataActual.setCompareMode(CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), dataActual);
 

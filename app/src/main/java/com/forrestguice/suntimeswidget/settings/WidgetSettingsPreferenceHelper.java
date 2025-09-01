@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 
 import java.security.InvalidParameterException;
 
@@ -170,7 +171,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.CompareMode mode = WidgetSettings.CompareMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE.name()));
+            CompareMode mode = CompareMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE.name()));
             WidgetSettings.saveCompareModePref(context, 0, mode);
             return;
         }

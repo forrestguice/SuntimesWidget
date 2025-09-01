@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -59,7 +59,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
     protected int indexOfOther()
     {
-        return (compareMode == WidgetSettings.CompareMode.TOMORROW ? 2 : 0);
+        return (compareMode == CompareMode.TOMORROW ? 2 : 0);
     }
 
     /**

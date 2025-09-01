@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
@@ -118,12 +119,12 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: compare mode
      */
-    protected WidgetSettings.CompareMode compareMode;
-    public WidgetSettings.CompareMode compareMode()
+    protected CompareMode compareMode;
+    public CompareMode compareMode()
     {
         return compareMode;
     }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
+    public void setCompareMode( CompareMode mode )
     {
         compareMode = mode;
     }

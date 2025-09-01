@@ -60,6 +60,7 @@ import android.widget.GridView;
 
 import android.widget.ImageView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -165,7 +166,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
-        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
+        data.setCompareMode(CompareMode.TOMORROW);
         data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
         data.calculate(context);
 

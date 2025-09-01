@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -599,7 +600,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
         public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
         public boolean showComparison = WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE;
-        public WidgetSettings.CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
+        public CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
 
         public boolean[] showFields = null;
         public boolean showActual = true;

@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -900,17 +901,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_compareModePref()
     {
-        WidgetSettings.saveCompareModePref(context, appWidgetId, WidgetSettings.CompareMode.TOMORROW);
-        WidgetSettings.CompareMode mode2 = WidgetSettings.loadCompareModePref(context, appWidgetId);
-        assertTrue("mode should be TOMORROW but was " + mode2, mode2 == WidgetSettings.CompareMode.TOMORROW);
+        WidgetSettings.saveCompareModePref(context, appWidgetId, CompareMode.TOMORROW);
+        CompareMode mode2 = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        assertTrue("mode should be TOMORROW but was " + mode2, mode2 == CompareMode.TOMORROW);
 
-        WidgetSettings.saveCompareModePref(context, appWidgetId, WidgetSettings.CompareMode.YESTERDAY);
-        WidgetSettings.CompareMode mode1 = WidgetSettings.loadCompareModePref(context, appWidgetId);
-        assertTrue("mode should be YESTERDAY but was " + mode1, mode1 == WidgetSettings.CompareMode.YESTERDAY);
+        WidgetSettings.saveCompareModePref(context, appWidgetId, CompareMode.YESTERDAY);
+        CompareMode mode1 = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        assertTrue("mode should be YESTERDAY but was " + mode1, mode1 == CompareMode.YESTERDAY);
 
         WidgetSettings.deleteCompareModePref(context, appWidgetId);
-        WidgetSettings.CompareMode mode0 = WidgetSettings.loadCompareModePref(context, appWidgetId);
-        assertTrue("mode should be default (TOMORROW) but was " + mode0, mode0 == WidgetSettings.CompareMode.TOMORROW && mode0 == WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE);
+        CompareMode mode0 = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        assertTrue("mode should be default (TOMORROW) but was " + mode0, mode0 == CompareMode.TOMORROW && mode0 == WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE);
     }
 
     @Test

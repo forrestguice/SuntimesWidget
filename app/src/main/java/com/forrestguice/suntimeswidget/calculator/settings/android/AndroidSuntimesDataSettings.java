@@ -1,6 +1,7 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -45,7 +46,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
-    public WidgetSettings.CompareMode loadCompareModePref(int appWidgetId) {
+    public CompareMode loadCompareModePref(int appWidgetId) {
         return WidgetSettings.loadCompareModePref(context, appWidgetId);
     }
 

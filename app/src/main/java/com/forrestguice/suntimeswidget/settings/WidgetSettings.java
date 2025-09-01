@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -1226,36 +1227,6 @@ public class WidgetSettings
         LocationMode.CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
     }
 
-    /**
-     * CompareMode
-     */
-    public static enum CompareMode
-    {
-        YESTERDAY("Yesterday"),
-        TOMORROW("Tomorrow");
-
-        private String displayString;
-
-        private CompareMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-    }
     public static void initDisplayStrings_CompareMode( Context context )
     {
         CompareMode.YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
@@ -2842,14 +2813,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveCompareModePref(Context context, int appWidgetId, WidgetSettings.CompareMode mode)
+    public static void saveCompareModePref(Context context, int appWidgetId, CompareMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
+    public static CompareMode loadCompareModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2858,7 +2829,7 @@ public class WidgetSettings
         CompareMode compareMode;
         try
         {
-            compareMode = WidgetSettings.CompareMode.valueOf(modeString);
+            compareMode = CompareMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             compareMode = PREF_DEF_GENERAL_COMPAREMODE;

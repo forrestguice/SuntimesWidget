@@ -26,7 +26,7 @@ public interface SuntimesDataSettings
 {
     SuntimesCalculatorDescriptor loadCalculatorModePref(int appWidgetId, String calculatorName);
 
-    WidgetSettings.CompareMode loadCompareModePref(int appWidgetId);
+    CompareMode loadCompareModePref(int appWidgetId);
 
     DateMode loadDateModePref(int appWidgetId);
     DateInfo loadDatePref(int appWidgetId);
