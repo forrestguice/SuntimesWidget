@@ -22,6 +22,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.events.EventType;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +44,11 @@ public class AlarmEventProviderTest
     public void test_EventType_resolveEventType()
     {
         String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
-        AlarmEventProvider.EventType[] expected = new AlarmEventProvider.EventType[] {
-                AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH, AlarmEventProvider.EventType.DATE, AlarmEventProvider.EventType.SOLAREVENT };
+        EventType[] expected = new EventType[] {
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.EventType.resolveEventType(context, events[i]));
+            assertEquals(expected[i], EventType.resolveEventType(context, events[i]));
         }
     }
 

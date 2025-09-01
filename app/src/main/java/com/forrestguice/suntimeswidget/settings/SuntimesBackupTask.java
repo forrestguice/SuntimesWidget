@@ -45,7 +45,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -53,6 +52,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -209,8 +209,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
-            List<EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+            List<EventAlias> events = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
+            events.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
             EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }

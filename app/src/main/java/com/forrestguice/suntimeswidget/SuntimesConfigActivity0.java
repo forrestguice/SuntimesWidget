@@ -88,6 +88,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
@@ -1368,8 +1369,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             if (EventSettings.hasEvent(context, eventID))
             {
                 EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
-                if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION
-                        || event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH)
+                if (event.getType() == EventType.SUN_ELEVATION
+                        || event.getType() == EventType.SHADOWLENGTH)
                 {
                     EventAliasTimeMode item = new EventAliasTimeMode(event);
                     adapter.insert(item, 0);

@@ -305,8 +305,8 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+        List<EventAlias> events = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
+        events.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
 
         Collections.sort(events, new Comparator<EventAlias>() {
             @Override
@@ -405,9 +405,9 @@ public class EventListHelper
     });
 
     public void addEvent() {
-        addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+        addEvent(EventType.SUN_ELEVATION);
     }
-    public void addEvent(AlarmEventProvider.EventType type)
+    public void addEvent(EventType type)
     {
         final Context context = contextRef.get();
         final EditEventDialog saveDialog = new EditEventDialog();

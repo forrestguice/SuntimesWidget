@@ -111,8 +111,8 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* EventType */
-    protected AlarmEventProvider.EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
-    public AlarmEventProvider.EventType getEventType() {
+    protected EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
+    public EventType getEventType() {
         return type;
     }
 
@@ -211,7 +211,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventIsShown(event.isShown());
         updateViews(getActivity(), type);
     }
-    public void setType(AlarmEventProvider.EventType value) {
+    public void setType(EventType value) {
         type = value;
     }
 
@@ -474,7 +474,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         updateViews(context, getEventType());
     }
 
-    protected void updateViews(Context context, AlarmEventProvider.EventType type)
+    protected void updateViews(Context context, EventType type)
     {
         setEventLabel(getEventLabel());
 

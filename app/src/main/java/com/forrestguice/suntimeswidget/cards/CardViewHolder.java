@@ -48,6 +48,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
@@ -915,7 +916,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
             typedArray.recycle();
 
-            if (event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH || event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
+            if (event.getType() == EventType.SHADOWLENGTH || event.getType() == EventType.SUN_ELEVATION)
             {
                 double angle = 0;
                 switch (event.getType())

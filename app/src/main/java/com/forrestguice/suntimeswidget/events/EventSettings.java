@@ -28,7 +28,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class EventSettings
     public static String PREF_DEF_EVENT_URI = null;
 
     public static final String PREF_KEY_EVENT_TYPE = "type";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
-    public static final AlarmEventProvider.EventType PREF_DEF_EVENT_TYPE = AlarmEventProvider.EventType.SUN_ELEVATION;
+    public static final EventType PREF_DEF_EVENT_TYPE = EventType.SUN_ELEVATION;
 
     public static final String PREF_KEY_EVENT_LABEL = "label"; // SuntimesEventContract.COLUMN_EVENT_LABEL;  // TODO: contract class
     public static final String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
@@ -81,7 +80,7 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(@NonNull Context context, AlarmEventProvider.EventType eventType)
+    public static String suggestEventLabel(@NonNull Context context, EventType eventType)
     {
         switch (eventType) {
             case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
@@ -90,7 +89,7 @@ public class EventSettings
         }
     }
 
-    public static EventAlias saveEvent(@NonNull Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
+    public static EventAlias saveEvent(@NonNull Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
             id = suggestEventID(context);
@@ -102,7 +101,7 @@ public class EventSettings
     public static void saveEvent(Context context, EventAlias event)
     {
         String id = event.getID();
-        AlarmEventProvider.EventType type = event.getType();
+        EventType type = event.getType();
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -127,17 +126,17 @@ public class EventSettings
     }
 
     public static Set<String> loadVisibleEvents(Context context) {
-        return loadVisibleEvents(context, AlarmEventProvider.EventType.visibleTypes());
+        return loadVisibleEvents(context, EventType.visibleTypes());
     }
-    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType... types)
+    public static Set<String> loadVisibleEvents(Context context, EventType... types)
     {
         Set<String> result = new TreeSet<>();
-        for (AlarmEventProvider.EventType type : types) {
+        for (EventType type : types) {
             result.addAll(loadVisibleEvents(context, type));
         }
         return result;
     }
-    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType type)
+    public static Set<String> loadVisibleEvents(Context context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN;
@@ -148,12 +147,12 @@ public class EventSettings
     public static Set<String> loadEventList(Context context)
     {
         Set<String> result = new TreeSet<>();
-        for (AlarmEventProvider.EventType type : AlarmEventProvider.EventType.values()) {
+        for (EventType type : EventType.values()) {
             result.addAll(loadEventList(context, type));
         }
         return result;
     }
-    public static Set<String> loadEventList(Context context, AlarmEventProvider.EventType type)
+    public static Set<String> loadEventList(Context context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST;
@@ -222,7 +221,7 @@ public class EventSettings
                 loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN));
     }
 
-    public static List<EventAlias> loadEvents(Context context, AlarmEventProvider.EventType type)
+    public static List<EventAlias> loadEvents(Context context, EventType type)
     {
         Set<String> events = loadEventList(context, type);
         ArrayList<EventAlias> list = new ArrayList<>();
@@ -234,7 +233,7 @@ public class EventSettings
 
     public static void deleteEvent(Context context, @NonNull String id)
     {
-        AlarmEventProvider.EventType type = getType(context, id);
+        EventType type = getType(context, id);
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -270,7 +269,7 @@ public class EventSettings
     {
         saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
 
-        AlarmEventProvider.EventType eventType = getType(context, id);
+        EventType eventType = getType(context, id);
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         Set<String> eventList1 = loadVisibleEvents(context, eventType);
         if (value) {
@@ -293,13 +292,13 @@ public class EventSettings
         return prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR);
     }
 
-    public static AlarmEventProvider.EventType getType(Context context, @NonNull String id)
+    public static EventType getType(Context context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         String typeString = prefs.getString(prefs_prefix + PREF_KEY_EVENT_TYPE, PREF_DEF_EVENT_TYPE.name());
         try {
-            return AlarmEventProvider.EventType.valueOf(typeString);
+            return EventType.valueOf(typeString);
         } catch (IllegalArgumentException e) {
             Log.e("EventSettings", "getType: " + id + ": " + e);
             return PREF_DEF_EVENT_TYPE;

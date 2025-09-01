@@ -26,7 +26,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,7 +49,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     {
         Context context = activityRule.getActivity();
 
-        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
+        EventType type0 = EventType.SUN_ELEVATION;
         String id0 = "TEST0";
         String label0 = "label0";
         String uri0 = "uri0";
@@ -62,7 +61,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         Set<String> list0 = EventSettings.loadEventList(context, type0);
         assertFalse(list0.contains(id0));
 
-        EventAlias alias0 = new EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
+        EventAlias alias0 = new EventAlias(EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.saveEvent(context, alias0);
@@ -81,7 +80,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         assertFalse(list2.contains(id0));
     }
 
-    protected void verify_eventAlias(AlarmEventProvider.EventType type, String id, String label, Integer color, String uri, EventAlias alias)
+    protected void verify_eventAlias(EventType type, String id, String label, Integer color, String uri, EventAlias alias)
     {
         assertEquals(type, alias.getType());
         assertEquals(id, alias.getID());
@@ -92,8 +91,8 @@ public class EventSettingsTest extends SuntimesActivityTestBase
 
     public static Set<String> populateEventListWithTestItems(Context context)
     {
-        EventSettings.saveEvent(context, new EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
-        EventSettings.saveEvent(context, new EventAlias(AlarmEventProvider.EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        EventSettings.saveEvent(context, new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
+        EventSettings.saveEvent(context, new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
         return EventSettings.loadEventList(getContext());
     }
 

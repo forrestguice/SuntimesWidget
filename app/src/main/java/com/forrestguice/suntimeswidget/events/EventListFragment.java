@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -149,11 +148,11 @@ public class EventListFragment extends Fragment
             //    return true;
 
             case R.id.addEvent_sunEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
+                helper.addEvent(EventType.SUN_ELEVATION);
                 return true;
 
             case R.id.addEvent_shadowEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
+                helper.addEvent(EventType.SHADOWLENGTH);
                 return true;
 
             case R.id.clearEvents:

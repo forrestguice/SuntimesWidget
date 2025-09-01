@@ -27,7 +27,6 @@ import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.concurrent.Callable;
@@ -39,7 +38,7 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTH
  */
 public final class EventAlias
 {
-    public EventAlias(@NonNull AlarmEventProvider.EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
+    public EventAlias(@NonNull EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
     {
         this.type = type;
         this.id = id;
@@ -63,7 +62,7 @@ public final class EventAlias
 
     public EventAlias(ContentValues values )
     {
-        this.type = AlarmEventProvider.EventType.valueOf(values.getAsString(EventSettings.PREF_KEY_EVENT_TYPE));
+        this.type = EventType.valueOf(values.getAsString(EventSettings.PREF_KEY_EVENT_TYPE));
         this.id = values.getAsString(EventSettings.PREF_KEY_EVENT_ID);
         this.label = values.getAsString(EventSettings.PREF_KEY_EVENT_LABEL);
         this.color = values.getAsInteger(EventSettings.PREF_KEY_EVENT_COLOR);
@@ -84,8 +83,8 @@ public final class EventAlias
         return values;
     }
 
-    private final AlarmEventProvider.EventType type;
-    public AlarmEventProvider.EventType getType() {
+    private final EventType type;
+    public EventType getType() {
         return type;
     }
 
