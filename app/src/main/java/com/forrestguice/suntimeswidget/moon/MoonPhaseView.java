@@ -252,7 +252,7 @@ public class MoonPhaseView extends LinearLayout
             themeIcons(context, themeOverride);
             hideIcons();
 
-            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(context, dateTime, data)
+            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(data.getDataSettings(context), dateTime, data)
                                                         : (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
 
             if (phase != null)

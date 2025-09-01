@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -65,7 +66,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     private static final String DIALOGTAG_OFFSET = "eventoffset";
 
     public static SuntimesUtils utils = new SuntimesUtils();
-    protected WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+    protected LengthUnit units = LengthUnit.METRIC;
 
     public EditEventDialog()
     {
@@ -266,7 +267,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             try {
                 double height = Double.parseDouble(edit_objHeight.getText().toString());
-                return (units == WidgetSettings.LengthUnit.METRIC ? height : WidgetSettings.LengthUnit.feetToMeters(height));
+                return (units == LengthUnit.METRIC ? height : LengthUnit.feetToMeters(height));
 
             } catch (NumberFormatException e) {
                 return null;
@@ -295,7 +296,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             try {
                 double length = Double.parseDouble(edit_shadowLength.getText().toString());
-                return (units == WidgetSettings.LengthUnit.METRIC ? length : WidgetSettings.LengthUnit.feetToMeters(length));
+                return (units == LengthUnit.METRIC ? length : LengthUnit.feetToMeters(length));
 
             } catch (NumberFormatException e) {
                 return null;
@@ -507,10 +508,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                     shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
                 }
                 if (text_units_shadowLength != null) {
-                    text_units_shadowLength.setText(context.getString((units == WidgetSettings.LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
+                    text_units_shadowLength.setText(context.getString((units == LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
                 }
                 if (text_units_objHeight != null) {
-                    text_units_objHeight.setText(context.getString((units == WidgetSettings.LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
+                    text_units_objHeight.setText(context.getString((units == LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
                 }
                 if (edit_shadowLength != null && shadowEvent != null) {
                     setShadowLengthMeters(shadowLength = shadowEvent.getLength());
@@ -761,7 +762,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double lengthInput = Double.parseDouble(s.toString());
-                double lengthMeters = (units == WidgetSettings.LengthUnit.METRIC ? lengthInput : WidgetSettings.LengthUnit.feetToMeters(lengthInput));
+                double lengthMeters = (units == LengthUnit.METRIC ? lengthInput : LengthUnit.feetToMeters(lengthInput));
                 Double objHeightMeters = getObjHeightMeters();
                 if (objHeightMeters != null)
                 {
@@ -784,7 +785,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double objHeightInput = Double.parseDouble(s.toString());
-                double objHeightMeters = (units == WidgetSettings.LengthUnit.METRIC ? objHeightInput : WidgetSettings.LengthUnit.feetToMeters(objHeightInput));
+                double objHeightMeters = (units == LengthUnit.METRIC ? objHeightInput : LengthUnit.feetToMeters(objHeightInput));
                 Double lengthMeters = getShadowLengthMeters();
                 if (lengthMeters != null)
                 {

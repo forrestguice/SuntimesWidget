@@ -45,6 +45,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
@@ -63,7 +65,6 @@ import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -336,7 +337,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             dateFormat.setTimeZone(sun.timezone());
 
             int i = (position - CardAdapter.TODAY_POSITION);
-            boolean showDateWarning = (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
+            boolean showDateWarning = (options.dateMode != DateMode.CURRENT_DATE && (i > 1 || i < -1));
             ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
 
             Pair<String,String> label = getCardLabel(context, i, options);
@@ -666,9 +667,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     @Nullable
     public TimeFieldRow getRow(String name)
     {
-        WidgetSettings.TimeMode mode;
+        TimeMode mode;
         try {
-            mode = WidgetSettings.TimeMode.valueOf(name);
+            mode = TimeMode.valueOf(name);
         } catch (IllegalArgumentException e) {
             Log.w(getClass().getSimpleName(), "getRow: unrecognized:" + e);
             return null;
@@ -677,7 +678,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     }
 
     @Nullable
-    public TimeFieldRow getRow(WidgetSettings.TimeMode mode)
+    public TimeFieldRow getRow(TimeMode mode)
     {
         switch (mode)
         {

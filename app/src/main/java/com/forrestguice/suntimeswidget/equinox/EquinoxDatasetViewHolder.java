@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -56,7 +57,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 
     public View clickArea;
     public View[] clickAreas = new View[4];
-    public WidgetSettings.SolsticeEquinoxMode selected = null;
+    public SolsticeEquinoxMode selected = null;
 
     public View container;
     public TextView title;
@@ -109,11 +110,11 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         }
     }
 
-    public void setSelected(WidgetSettings.SolsticeEquinoxMode mode) {
+    public void setSelected(SolsticeEquinoxMode mode) {
         this.selected = mode;
         updateItemFocus();
     }
-    public WidgetSettings.SolsticeEquinoxMode getSelected() {
+    public SolsticeEquinoxMode getSelected() {
         return selected;
     }
 

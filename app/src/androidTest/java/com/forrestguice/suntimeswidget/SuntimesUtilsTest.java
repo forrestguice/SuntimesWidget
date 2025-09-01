@@ -27,6 +27,7 @@ import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -67,7 +68,7 @@ public class SuntimesUtilsTest
     @Test
     public void test_calendarTimeShortDisplayString()
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(mockContext, 0);
+        TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(mockContext, 0);
         test_calendarTimeShortDisplayString_12hr();
         test_calendarTimeShortDisplayString_24hr();
         WidgetSettings.saveTimeFormatModePref(mockContext, 0, mode);
@@ -77,7 +78,7 @@ public class SuntimesUtilsTest
     public void test_calendarTimeShortDisplayString_12hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_12HR);
         SuntimesUtils.initDisplayStrings(mockContext);
         String[] amPm = new SimpleDateFormat("a", Locale.getDefault()).getDateFormatSymbols().getAmPmStrings();  // am/pm strings
 
@@ -92,7 +93,7 @@ public class SuntimesUtilsTest
     public void test_calendarTimeShortDisplayString_24hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_24HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         long utcMillis = 1493315892762L;                          // april 27
@@ -131,7 +132,7 @@ public class SuntimesUtilsTest
     public void test_calendarDateTimeDisplayString_12hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_12HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
@@ -153,7 +154,7 @@ public class SuntimesUtilsTest
     public void test_calendarDateTimeDisplayString_24hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_24HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));

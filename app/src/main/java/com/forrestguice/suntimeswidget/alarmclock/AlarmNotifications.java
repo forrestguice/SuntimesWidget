@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -67,6 +66,8 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -3142,10 +3143,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static SuntimesRiseSetData getData_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location)
     {
-        WidgetSettings.TimeMode timeMode = event.toTimeMode();
+        TimeMode timeMode = event.toTimeMode();
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
-        sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+        sunData.setTimeMode(timeMode != null ? timeMode : TimeMode.OFFICIAL);
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
@@ -3158,7 +3159,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     private static SuntimesEquinoxSolsticeData getData_seasons(Context context, @NonNull SolarEvents event, @NonNull Location location)
     {
-        WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
+        SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
         data.setTimeMode(season);
         data.setLocation(location);

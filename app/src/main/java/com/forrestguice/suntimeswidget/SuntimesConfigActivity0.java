@@ -75,6 +75,15 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -342,10 +351,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return SuntimesCalculatorDescriptor.values();
     }
 
-    protected ArrayAdapter<WidgetSettings.TimezoneMode> createAdapter_timezoneMode()
+    protected ArrayAdapter<TimezoneMode> createAdapter_timezoneMode()
     {
-        WidgetSettings.TimezoneMode[] modes = WidgetSettings.TimezoneMode.values();
-        ArrayAdapter<WidgetSettings.TimezoneMode> adapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(this, R.layout.layout_listitem_oneline, modes);
+        TimezoneMode[] modes = TimezoneMode.values();
+        ArrayAdapter<TimezoneMode> adapter = new ArrayAdapter<TimezoneMode>(this, R.layout.layout_listitem_oneline, modes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -354,22 +363,22 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         int c = 0;
         ArrayList<WidgetTimezones.TimeZoneItem> items = new ArrayList<>();
-        for (WidgetSettings.SolarTimeMode value : WidgetSettings.SolarTimeMode.values()) {
+        for (SolarTimeMode value : SolarTimeMode.values()) {
             items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
         }
         return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
     }
 
-    protected ArrayAdapter<WidgetSettings.TrackingMode> createAdapter_trackingMode()
+    protected ArrayAdapter<TrackingMode> createAdapter_trackingMode()
     {
-        ArrayAdapter<WidgetSettings.TrackingMode> adapter = new ArrayAdapter<WidgetSettings.TrackingMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TrackingMode.values());
+        ArrayAdapter<TrackingMode> adapter = new ArrayAdapter<TrackingMode>(this, R.layout.layout_listitem_oneline, TrackingMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.CompareMode> createAdapter_compareMode()
+    protected ArrayAdapter<CompareMode> createAdapter_compareMode()
     {
-        ArrayAdapter<WidgetSettings.CompareMode> adapter = new ArrayAdapter<WidgetSettings.CompareMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CompareMode.values());
+        ArrayAdapter<CompareMode> adapter = new ArrayAdapter<CompareMode>(this, R.layout.layout_listitem_oneline, CompareMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -406,9 +415,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.RiseSetOrder> createAdapter_riseSetOrder()
+    protected ArrayAdapter<RiseSetOrder> createAdapter_riseSetOrder()
     {
-        ArrayAdapter<WidgetSettings.RiseSetOrder> adapter = new ArrayAdapter<WidgetSettings.RiseSetOrder>(this, R.layout.layout_listitem_oneline, WidgetSettings.RiseSetOrder.values());
+        ArrayAdapter<RiseSetOrder> adapter = new ArrayAdapter<RiseSetOrder>(this, R.layout.layout_listitem_oneline, RiseSetOrder.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -1172,8 +1181,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            final ArrayAdapter<WidgetSettings.TimeFormatMode> spinner_timeFormatModeAdapter;
-            spinner_timeFormatModeAdapter = new ArrayAdapter<WidgetSettings.TimeFormatMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeFormatMode.values());
+            final ArrayAdapter<TimeFormatMode> spinner_timeFormatModeAdapter;
+            spinner_timeFormatModeAdapter = new ArrayAdapter<TimeFormatMode>(this, R.layout.layout_listitem_oneline, TimeFormatMode.values());
             spinner_timeFormatModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_timeFormatMode.setAdapter(spinner_timeFormatModeAdapter);
         }
@@ -1186,7 +1195,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
             spinner_timeFormatMode.setSelection(mode.ordinal());
         }
     }
@@ -1198,8 +1207,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            final WidgetSettings.TimeFormatMode[] modes = WidgetSettings.TimeFormatMode.values();
-            WidgetSettings.TimeFormatMode mode = modes[spinner_timeFormatMode.getSelectedItemPosition()];
+            final TimeFormatMode[] modes = TimeFormatMode.values();
+            TimeFormatMode mode = modes[spinner_timeFormatMode.getSelectedItemPosition()];
             WidgetSettings.saveTimeFormatModePref(context, appWidgetId, mode);
         }
     }
@@ -1232,7 +1241,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            ArrayList<WidgetSettings.RiseSetDataMode> items = new ArrayList<WidgetSettings.RiseSetDataMode>(Arrays.asList(WidgetSettings.TimeMode.values()));
+            ArrayList<RiseSetDataMode> items = new ArrayList<RiseSetDataMode>(Arrays.asList(TimeMode.values()));
             final TimeModeAdapter adapter = new TimeModeAdapter(this, R.layout.layout_listitem_events, items);
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
@@ -1243,7 +1252,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    showOptionShowNoon(adapter.getItem(i) != WidgetSettings.TimeMode.NOON);
+                    showOptionShowNoon(adapter.getItem(i) != TimeMode.NOON);
                 }
 
                 @Override
@@ -1330,7 +1339,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Intent eventEditorIntent(Context context)
     {
         Intent intent = new Intent(context, EventListActivity.class);
-        WidgetSettings.RiseSetDataMode item = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+        RiseSetDataMode item = (RiseSetDataMode) spinner_timeMode.getSelectedItem();
         intent.putExtra(EventListActivity.EXTRA_SELECTED, item.name());
         return intent;
     }
@@ -1349,7 +1358,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             for (int i=0; i<adapter.getCount(); i++)
             {
-                WidgetSettings.RiseSetDataMode item = adapter.getItem(i);
+                RiseSetDataMode item = adapter.getItem(i);
                 if (item != null && item.name().equals(eventID)) {
                     return i;
                 }
@@ -1361,7 +1370,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION
                         || event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH)
                 {
-                    WidgetSettings.EventAliasTimeMode item = new WidgetSettings.EventAliasTimeMode(event);
+                    EventAliasTimeMode item = new EventAliasTimeMode(event);
                     adapter.insert(item, 0);
                     return 0;
                 } else {
@@ -1380,7 +1389,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timeMode != null) {
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.RiseSetDataMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+                RiseSetDataMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
                 int position = adapter.getPosition(timeMode);
                 if (position < 0) {
                     position = insertEventAliasIntoTimeModeAdapter(context, timeMode.name());
@@ -1398,7 +1407,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timeMode != null) {
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.RiseSetDataMode item = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
+                RiseSetDataMode item = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
                 WidgetSettings.saveTimeModePref(context, appWidgetId, ((item!= null) ? item : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
             }
         }
@@ -1527,10 +1536,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-            WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
-            setCustomTimezoneEnabled((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
-            setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+            final TimezoneMode[] timezoneModes = TimezoneMode.values();
+            TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
+            setCustomTimezoneEnabled((timezoneMode == TimezoneMode.CUSTOM_TIMEZONE));
+            setUseSolarTime((timezoneMode == TimezoneMode.SOLAR_TIME));
         }
 
         public void onNothingSelected(AdapterView<?> parent)
@@ -1719,18 +1728,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
         // save: tracking mode
-        final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
-        WidgetSettings.TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
+        final TrackingMode[] trackingModes = TrackingMode.values();
+        TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
         WidgetSettings.saveTrackingModePref(context, appWidgetId, trackingMode);
 
         // save: compare mode
-        final WidgetSettings.CompareMode[] compareModes = WidgetSettings.CompareMode.values();
-        WidgetSettings.CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
+        final CompareMode[] compareModes = CompareMode.values();
+        CompareMode compareMode = compareModes[spinner_compareMode.getSelectedItemPosition()];
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
         // save: riseSetOrder
-        final WidgetSettings.RiseSetOrder[] riseSetOrders = WidgetSettings.RiseSetOrder.values();
-        WidgetSettings.RiseSetOrder riseSetOrder = (WidgetSettings.RiseSetOrder)spinner_riseSetOrder.getSelectedItem();
+        final RiseSetOrder[] riseSetOrders = RiseSetOrder.values();
+        RiseSetOrder riseSetOrder = (RiseSetOrder)spinner_riseSetOrder.getSelectedItem();
         WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, riseSetOrder);
 
         // save: showNoon
@@ -1800,11 +1809,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
 
         // load: tracking mode
-        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
         spinner_trackingMode.setSelection(trackingMode.ordinal());
 
         // load: compare mode
-        WidgetSettings.CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        CompareMode compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
         spinner_compareMode.setSelection(compareMode.ordinal());
 
         // load: showCompare
@@ -1813,7 +1822,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showCompareUI(showCompare);
 
         // load: riseSetOrder
-        WidgetSettings.RiseSetOrder riseSetOrder = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        RiseSetOrder riseSetOrder = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
         spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
@@ -1882,8 +1891,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void saveTimezoneSettings(Context context)
     {
         // save: timezone mode
-        final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
-        WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
+        final TimezoneMode[] timezoneModes = TimezoneMode.values();
+        TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
         // save: custom timezone
@@ -1897,8 +1906,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         // save: solar timemode
-        WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
-        WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
+        SolarTimeMode[] solarTimeModes = SolarTimeMode.values();
+        SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
         WidgetSettings.saveSolarTimeModePref(context, appWidgetId, solarTimeMode);
     }
 
@@ -1914,20 +1923,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     protected void loadTimezoneSettings(Context context, int widgetId)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
+        TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
+        SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
-        setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
-        setUseSolarTime(timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
+        setCustomTimezoneEnabled(timezoneMode == TimezoneMode.CUSTOM_TIMEZONE);
+        setUseSolarTime(timezoneMode == TimezoneMode.SOLAR_TIME);
 
         customTimezoneID = WidgetSettings.loadTimezonePref(context, widgetId);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
-    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
+    protected TimezoneMode getDefaultTimezoneMode()
     {
         return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
     }
@@ -3000,7 +3009,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null)
             {
-                WidgetSettings.RiseSetDataMode selected = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+                RiseSetDataMode selected = (RiseSetDataMode) spinner_timeMode.getSelectedItem();
                 adapter.setThemeValues(themeValues);
                 spinner_timeMode.setAdapter(adapter);
                 spinner_timeMode.setSelection(adapter.getPosition(selected));
@@ -3236,7 +3245,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * TimeModeAdapter
      */
-    public static class TimeModeAdapter extends ModeAdapterBase<WidgetSettings.RiseSetDataMode>
+    public static class TimeModeAdapter extends ModeAdapterBase<RiseSetDataMode>
     {
         private final SuntimesUtils utils = new SuntimesUtils();
         private WeakReference<Context> contextRef;
@@ -3245,25 +3254,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             super(context, resource);
             contextRef = new WeakReference<>(context);
         }
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.RiseSetDataMode[] objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull RiseSetDataMode[] objects) {
             super(context, resource, objects);
             contextRef = new WeakReference<>(context);
         }
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.RiseSetDataMode> objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<RiseSetDataMode> objects) {
             super(context, resource, objects);
             contextRef = new WeakReference<>(context);
         }
 
         @Override
-        protected String getNameForMode(WidgetSettings.RiseSetDataMode mode) {
+        protected String getNameForMode(RiseSetDataMode mode) {
             return mode.name();
         }
 
         @Override
-        protected String getSummaryForMode(WidgetSettings.RiseSetDataMode item)
+        protected String getSummaryForMode(RiseSetDataMode item)
         {
             Context context = contextRef.get();
-            WidgetSettings.TimeMode timeMode = item.getTimeMode();
+            TimeMode timeMode = item.getTimeMode();
             if (timeMode != null)
             {
                 Double angle = timeMode.angle();
@@ -3278,7 +3287,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         @Override
-        protected int getColorForMode(WidgetSettings.RiseSetDataMode item)
+        protected int getColorForMode(RiseSetDataMode item)
         {
             if (themeValues == null || item == null) {
                 return Color.TRANSPARENT;

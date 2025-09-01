@@ -18,7 +18,11 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -30,10 +34,10 @@ import java.util.Calendar;
 
 public class SuntimesRiseSetData extends SuntimesData
 {
-    public SuntimesRiseSetData(Context context, int appWidgetId) {
+    public SuntimesRiseSetData(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesRiseSetData(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData(SuntimesRiseSetData other) {
@@ -59,24 +63,24 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: time mode
      */
-    protected WidgetSettings.TimeMode timeMode;
-    public WidgetSettings.TimeMode timeMode()
+    protected TimeMode timeMode;
+    public TimeMode timeMode()
     {
         return timeMode;
     }
-    public void setTimeMode( WidgetSettings.TimeMode mode )
+    public void setTimeMode( TimeMode mode )
     {
         timeMode = mode;
         angle = null;
     }
 
-    protected WidgetSettings.RiseSetDataMode dataMode;
-    public void setDataMode(WidgetSettings.RiseSetDataMode value)
+    protected RiseSetDataMode dataMode;
+    public void setDataMode(RiseSetDataMode value)
     {
         dataMode = value;
-        if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
+        if (dataMode instanceof EventAliasTimeMode)
         {
-            EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
+            EventSettings.EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.ElevationEvent event;
             switch (alias.getType()) {
                 case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
@@ -86,10 +90,10 @@ public class SuntimesRiseSetData extends SuntimesData
             this.angle = (event == null ? null : event.getAngle());
             this.offset = (event == null ? 0 : event.getOffset());
         }
-        WidgetSettings.TimeMode mode = dataMode.getTimeMode();
+        TimeMode mode = dataMode.getTimeMode();
         this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
     }
-    public WidgetSettings.RiseSetDataMode dataMode() {
+    public RiseSetDataMode dataMode() {
         return dataMode;
     }
 
@@ -118,12 +122,12 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: compare mode
      */
-    protected WidgetSettings.CompareMode compareMode;
-    public WidgetSettings.CompareMode compareMode()
+    protected CompareMode compareMode;
+    public CompareMode compareMode()
     {
         return compareMode;
     }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
+    public void setCompareMode( CompareMode mode )
     {
         compareMode = mode;
     }
@@ -276,11 +280,12 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    protected void initFromSettings(Object context, int appWidgetId, String calculatorName)
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
-        setDataMode(WidgetSettings.loadTimeModePref(context, appWidgetId));
-        this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        SuntimesDataSettings settings = getDataSettings(context);
+        setDataMode(settings.loadTimeModePref(appWidgetId));
+        this.compareMode = settings.loadCompareModePref(appWidgetId);
     }
 
     public boolean isDay()
@@ -303,7 +308,7 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -314,7 +319,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         initCalculator();
-        initTimezone(context);
+        initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

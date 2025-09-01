@@ -33,6 +33,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -568,7 +570,7 @@ public class MoonApsisView extends LinearLayout
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             if (data != null && data.isCalculated())
             {
@@ -606,7 +608,7 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, WidgetSettings.LengthUnit units)
+        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
         {
             if (apsis != null)
             {

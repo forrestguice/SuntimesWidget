@@ -26,6 +26,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -117,7 +121,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("navMode_values", R.array.navMode_values, "navMode_display", R.array.navMode_display);
 
             verify_stringArrayLength("compareMode_values", R.array.compareMode_values, "compareMode_display", R.array.compareMode_display);
-            verify_stringArrayValuesOfEnum("compareMode_values", R.array.compareMode_values, WidgetSettings.CompareMode.class);
+            verify_stringArrayValuesOfEnum("compareMode_values", R.array.compareMode_values, CompareMode.class);
 
             verify_stringArrayLength("tapActions_titles", R.array.tapActions_titles, "tapActions_display", R.array.tapActions_display);
             verify_stringArrayLength("tapActions_display", R.array.tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
@@ -128,10 +132,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
             verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
 
-            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, WidgetSettings.TimeFormatMode.class);
+            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, TimeFormatMode.class);
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
 
-            verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.lengthUnits_values, WidgetSettings.LengthUnit.class);
+            verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.lengthUnits_values, LengthUnit.class);
             verify_stringArrayLength("lengthUnits_values", R.array.lengthUnits_values, "lengthUnits_display", R.array.lengthUnits_display);
 
             verify_stringArrayLength("alarm_hardwarebutton_actions_values", R.array.alarm_hardwarebutton_actions_values, "alarm_hardwarebutton_actions_display", R.array.alarm_hardwarebutton_actions_display);
@@ -139,7 +143,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("getFix_maxElapse_values", R.array.getFix_maxElapse_values, "getFix_maxElapse_display", R.array.getFix_maxElapse_display);
             verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
 
-            verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, WidgetSettings.TrackingMode.class);
+            verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, TrackingMode.class);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
 
             verify_stringArrayLength("launcherMode_values", R.array.launcherMode_values, "launcherMode_display", R.array.launcherMode_display);

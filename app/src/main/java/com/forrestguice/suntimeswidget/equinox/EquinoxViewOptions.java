@@ -24,7 +24,8 @@ import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class EquinoxViewOptions
@@ -35,7 +36,7 @@ public class EquinoxViewOptions
     public int columnWidthPx = -1;
     public int highlightPosition = -1;
 
-    public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+    public TrackingMode trackingMode = TrackingMode.SOONEST;
     public boolean showSeconds = false;
     public boolean showDate = true;
 
@@ -91,7 +92,7 @@ public class EquinoxViewOptions
         }
     }
 
-    public int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
+    public int getColorForMode(SolsticeEquinoxMode mode)
     {
         switch (mode) {
             case CROSS_WINTER: case SOLSTICE_WINTER: return colors.getColor(EquinoxColorValues.COLOR_WINTER_TEXT);

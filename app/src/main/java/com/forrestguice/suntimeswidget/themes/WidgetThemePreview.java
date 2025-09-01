@@ -29,6 +29,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -104,7 +108,7 @@ public class WidgetThemePreview
     private boolean showHours = false;
     private boolean showTimeDate = false;
     private boolean showSeconds = false;
-    private WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+    private LengthUnit units = LengthUnit.METRIC;
 
     private SuntimesRiseSetDataset data0;
     private SuntimesRiseSetData data1;
@@ -123,7 +127,7 @@ public class WidgetThemePreview
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 
@@ -566,7 +570,7 @@ public class WidgetThemePreview
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 
             Calendar now = Calendar.getInstance();
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
             SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
             String nowString = nowText.getValue();
             CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);

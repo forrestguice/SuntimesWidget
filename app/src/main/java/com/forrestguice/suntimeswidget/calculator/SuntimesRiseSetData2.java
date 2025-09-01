@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -38,12 +36,12 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     private Calendar[] sunset = {null, null, null};
     private Calendar[] daylength = {null, null, null};
 
-    public SuntimesRiseSetData2(Context context, int appWidgetId)
+    public SuntimesRiseSetData2(Object context, int appWidgetId)
     {
         super(context, appWidgetId);
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData2(Context context, int appWidgetId, String calculatorName)
+    public SuntimesRiseSetData2(Object context, int appWidgetId, String calculatorName)
     {
         super(context, appWidgetId, calculatorName);
         initFromSettings(context, appWidgetId, calculatorName);
@@ -61,7 +59,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
     protected int indexOfOther()
     {
-        return (compareMode == WidgetSettings.CompareMode.TOMORROW ? 2 : 0);
+        return (compareMode == CompareMode.TOMORROW ? 2 : 0);
     }
 
     /**
@@ -185,7 +183,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -196,7 +194,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         initCalculator();
-        initTimezone(context);
+        initTimezone(getDataSettings(context));
 
         for (int i=0; i<calendar.length; i++)
         {

@@ -46,11 +46,11 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
-import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
@@ -67,7 +67,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
@@ -543,8 +542,8 @@ public class UIPrefsFragment extends PreferenceFragment
         SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == LengthUnit.METRIC);
         pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
         {
             @Override
@@ -554,7 +553,7 @@ public class UIPrefsFragment extends PreferenceFragment
                     double doubleValue = Double.parseDouble((String)newValue);
                     if (doubleValue > 0)
                     {
-                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                         preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
                         return true;
 
@@ -567,12 +566,12 @@ public class UIPrefsFragment extends PreferenceFragment
     }
     public static void loadPref_observerHeight(Context context, final LengthPreference pref)
     {
-        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
+        pref.setText((pref.isMetric() ? observerHeight : LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
-    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
+    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, LengthUnit units, boolean convert)
     {
         String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
         return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);

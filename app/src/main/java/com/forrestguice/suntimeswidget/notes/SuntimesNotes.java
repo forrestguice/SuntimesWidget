@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -651,7 +652,7 @@ public class SuntimesNotes
                 case SUNRISE: case MORNING_GOLDEN: case NOON: case MIDNIGHT: case EVENING_GOLDEN:
                 case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
-                    WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);
+                    TimeMode mode = SolarEvents.toTimeMode(event);
                     if (mode != null)
                     {
                         SuntimesRiseSetData d = dataset.getData(mode.name());

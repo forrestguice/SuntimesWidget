@@ -60,6 +60,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
@@ -286,7 +287,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void initLocale(Context context)
     {
         WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
-        WidgetSettings.SolarTimeMode.initDisplayStrings(dialogContent.getContext());
+        WidgetSettings.initDisplayStrings_SolarTimeMode(dialogContent.getContext());
 
         int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -623,8 +624,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private WidgetSettings.DateInfo getMapDate() {
-        return new WidgetSettings.DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+    private DateInfo getMapDate() {
+        return new DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
     }
     private long getMapTime(long now)
     {

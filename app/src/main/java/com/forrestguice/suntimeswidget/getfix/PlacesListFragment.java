@@ -55,6 +55,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -1605,7 +1606,7 @@ public class PlacesListFragment extends Fragment
         String locationString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         if (showAltitude)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);

@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -560,10 +561,10 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
             return assertShowsDate(context, date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
-        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
-            boolean is24 = (withMode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || withMode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
-                    : (withMode == WidgetSettings.TimeFormatMode.MODE_24HR);
+            boolean is24 = (withMode == TimeFormatMode.MODE_SYSTEM || withMode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+                    : (withMode == TimeFormatMode.MODE_24HR);
             SimpleDateFormat[] formats = !is24
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                     : (withSeconds ? timeDateFormats24s : timeDateFormats24);

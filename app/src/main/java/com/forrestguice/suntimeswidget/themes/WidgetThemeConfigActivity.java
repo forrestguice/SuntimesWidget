@@ -62,6 +62,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -282,7 +284,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 
@@ -911,7 +913,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 
             Calendar now = Calendar.getInstance();
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
             SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
             String nowString = nowText.getValue();
             CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);

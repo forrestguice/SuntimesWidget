@@ -18,23 +18,22 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import java.util.Calendar;
 
 public class SuntimesClockData extends SuntimesData
 {
-    public SuntimesClockData(Context context, int appWidgetId) {
+    public SuntimesClockData(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesClockData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesClockData(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesClockData(SuntimesClockData other) {
         initFromOther(other);
     }
 
-    public void calculate(Context context)
+    @Override
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
         //Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
@@ -43,7 +42,7 @@ public class SuntimesClockData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
         initCalculator();
-        initTimezone(context);   // reinit
+        initTimezone(getDataSettings(context));   // reinit
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

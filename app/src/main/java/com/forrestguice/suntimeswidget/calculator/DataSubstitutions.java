@@ -22,6 +22,13 @@ import android.content.Context;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -489,7 +496,7 @@ public class DataSubstitutions
                     displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
                 }
                 if (pattern_eS != null && displayString.contains(pattern_eS)) {
-                    WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
                     Double value = getShadowLengthForEvent(context, event, d);
                     displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                 }
@@ -544,8 +551,8 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_lel))
         {
-            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == WidgetSettings.LengthUnit.IMPERIAL)
-                    ? (int)WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
+            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == LengthUnit.IMPERIAL)
+                    ? (int) LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
                     : location.getAltitudeAsInteger() + "";
             displayString = displayString.replaceAll(PATTERN_lel, altitudeDisplay);
         }
@@ -574,7 +581,7 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_h) || displayString.contains(PATTERN_H))
         {
-            WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+            LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
             float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
             displayString = displayString.replaceAll(PATTERN_h, height + "");
             displayString = displayString.replaceAll(PATTERN_H, SuntimesUtils.formatAsHeight(context, height, lengthUnit, 2, true).toString());    // %H
@@ -597,12 +604,12 @@ public class DataSubstitutions
         }
 
         SuntimesRiseSetData d = (SuntimesRiseSetData) data;
-        WidgetSettings.TimeMode timeMode = d.timeMode();
+        TimeMode timeMode = d.timeMode();
         String modeDisplayShort = timeMode.getShortDisplayString();
         String modeDisplayLong = timeMode.getLongDisplayString();
 
-        WidgetSettings.RiseSetDataMode timeModeItem = d.dataMode();
-        if (timeModeItem instanceof WidgetSettings.EventAliasTimeMode) {
+        RiseSetDataMode timeModeItem = d.dataMode();
+        if (timeModeItem instanceof EventAliasTimeMode) {
             String label = EventSettings.loadEventValue(context, timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
             if (label != null) {
                 modeDisplayLong = modeDisplayShort = label;
@@ -612,7 +619,7 @@ public class DataSubstitutions
         displayString = displayString.replaceAll(PATTERN_m, modeDisplayShort);
         displayString = displayString.replaceAll(PATTERN_M, modeDisplayLong);
 
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+        RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
         displayString = displayString.replaceAll(PATTERN_o, order.toString());
 
         return displayString;
@@ -629,8 +636,8 @@ public class DataSubstitutions
             return displayString.replaceAll(PATTERN_m, "").replaceAll(PATTERN_M, "").replaceAll(PATTERN_o, "");
         }
 
-        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
-        WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+        TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
+        SolsticeEquinoxMode timeMode = data.timeMode();
 
         displayString = displayString.replaceAll(PATTERN_m, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(PATTERN_M, timeMode.getLongDisplayString());
@@ -664,7 +671,7 @@ public class DataSubstitutions
 
         if (data != null && data.isCalculated())
         {
-            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+            RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(PATTERN_m, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(PATTERN_M, data.getMoonPhaseToday().getLongDisplayString());

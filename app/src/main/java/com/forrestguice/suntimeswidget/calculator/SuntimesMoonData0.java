@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Pair;
 
@@ -29,10 +28,10 @@ import java.util.HashMap;
 
 public class SuntimesMoonData0 extends SuntimesData
 {
-    public SuntimesMoonData0(Context context, int appWidgetId) {
+    public SuntimesMoonData0(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesMoonData0(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesMoonData0(SuntimesMoonData0 other) {
@@ -90,10 +89,10 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         initCalculator();
-        initTimezone(context);
+        initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
