@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -635,7 +636,7 @@ public class DataSubstitutions
             return displayString.replaceAll(PATTERN_m, "").replaceAll(PATTERN_M, "").replaceAll(PATTERN_o, "");
         }
 
-        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
+        TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
         SolsticeEquinoxMode timeMode = data.timeMode();
 
         displayString = displayString.replaceAll(PATTERN_m, timeMode.getShortDisplayString());

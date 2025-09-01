@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
@@ -127,7 +128,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         return getSolsticeEquinoxData(context, appWidgetId);
     }
 
-    public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, WidgetSettings.TrackingMode trackingMode) {
+    public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, TrackingMode trackingMode) {
         switch (trackingMode) {
             case RECENT: return dataset.findRecent(dataset.now());
             case CLOSEST: return dataset.findClosest(dataset.now());

@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -323,14 +323,14 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         };
     }
 
-    public static EquinoxDatasetViewHolder.EquinoxNote findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<EquinoxDatasetViewHolder.EquinoxNote> notes)
+    public static EquinoxDatasetViewHolder.EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxDatasetViewHolder.EquinoxNote> notes)
     {
         if (notes == null || now == null) {
             return null;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         EquinoxDatasetViewHolder.EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -353,14 +353,14 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return closest;
     }
 
-    public static int findClosestPage(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestPage(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;

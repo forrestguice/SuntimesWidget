@@ -24,6 +24,7 @@ import android.content.Context;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.BehaviorTest;
@@ -123,7 +124,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         WidgetSettings.saveTrackingModePref(context, 0, savedState_trackingMode);
     }
     protected boolean savedState_crossQuarterDays = false;
-    protected WidgetSettings.TrackingMode savedState_trackingMode = null;
+    protected TrackingMode savedState_trackingMode = null;
 
     ////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
@@ -257,7 +258,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
     public void test_EquinoxDialog_tracking()
     {
         Activity context = activityRule.getActivity();
-        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);   // test begins with tracking set to "soonest"
+        WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.SOONEST);   // test begins with tracking set to "soonest"
 
         EquinoxDialogRobot robot = new EquinoxDialogRobot();
         robot.showDialog(context)
@@ -268,7 +269,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 
                 .clickOverflowMenu_Track_Closest(context).sleep(1000)   // click "closest"
                 .assertDialogNotShown(context);    // closes dialog
-        assertEquals(WidgetSettings.TrackingMode.CLOSEST, WidgetSettings.loadTrackingModePref(context, 0));
+        assertEquals(TrackingMode.CLOSEST, WidgetSettings.loadTrackingModePref(context, 0));
 
         robot.showDialog(context)
                 .assertDialogShown(context)
@@ -278,7 +279,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 
                 .clickOverflowMenu_Track_Recent(context).sleep(1000)    // "click "recent"
                 .assertDialogNotShown(context);    // closes dialog
-        assertEquals(WidgetSettings.TrackingMode.RECENT, WidgetSettings.loadTrackingModePref(context, 0));
+        assertEquals(TrackingMode.RECENT, WidgetSettings.loadTrackingModePref(context, 0));
 
         robot.showDialog(context)
                 .assertDialogShown(context)
@@ -288,7 +289,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 
                 .clickOverflowMenu_Track_Soonest(context).sleep(1000)    // "click "soonest"
                 .assertDialogNotShown(context);    // closes dialog
-        assertEquals(WidgetSettings.TrackingMode.SOONEST, WidgetSettings.loadTrackingModePref(context, 0));
+        assertEquals(TrackingMode.SOONEST, WidgetSettings.loadTrackingModePref(context, 0));
 
         robot.showDialog(context)
                 .assertDialogShown(context)

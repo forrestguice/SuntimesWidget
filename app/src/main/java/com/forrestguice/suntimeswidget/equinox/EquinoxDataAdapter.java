@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -240,14 +240,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return options.highlightPosition;
     }
 
-    public static int findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestNote(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;

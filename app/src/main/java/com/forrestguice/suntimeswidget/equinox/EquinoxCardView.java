@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -347,10 +348,10 @@ public class EquinoxCardView extends LinearLayout
      * setTrackingMode
      * @param mode
      */
-    public void setTrackingMode(WidgetSettings.TrackingMode mode) {
+    public void setTrackingMode(TrackingMode mode) {
         options.trackingMode = mode;
     }
-    public WidgetSettings.TrackingMode getTrackingMode() {
+    public TrackingMode getTrackingMode() {
         return options.trackingMode;
     }
 

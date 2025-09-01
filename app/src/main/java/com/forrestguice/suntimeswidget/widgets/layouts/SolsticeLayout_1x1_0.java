@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -180,7 +181,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)
+    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, TrackingMode trackingMode)
     {
         switch (trackingMode) {
             case RECENT: return data.eventCalendarRecent(now);

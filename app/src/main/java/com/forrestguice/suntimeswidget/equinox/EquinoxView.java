@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -209,10 +210,10 @@ public class EquinoxView extends LinearLayout
         options.isRtl = AppSettings.isLocaleRtl(context);
     }
 
-    public void setTrackingMode(WidgetSettings.TrackingMode mode) {
+    public void setTrackingMode(TrackingMode mode) {
         options.trackingMode = mode;
     }
-    public WidgetSettings.TrackingMode getTrackingMode() {
+    public TrackingMode getTrackingMode() {
         return options.trackingMode;
     }
 
@@ -480,14 +481,14 @@ public class EquinoxView extends LinearLayout
         card_adapter.notifyDataSetChanged();
     }
 
-    public static EquinoxNote findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<EquinoxNote> notes)
+    public static EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxNote> notes)
     {
         if (notes == null || now == null) {
             return null;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -509,14 +510,14 @@ public class EquinoxView extends LinearLayout
         }
         return closest;
     }
-    public static int findClosestPage(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestPage(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -1229,7 +1230,7 @@ public class EquinoxView extends LinearLayout
         public int columnWidthPx = -1;
         public int highlightPosition = -1;
 
-        public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+        public TrackingMode trackingMode = TrackingMode.SOONEST;
 
         public int titleColor, noteColor, disabledColor, pressedColor;
         public Integer[] seasonColors = new Integer[4];

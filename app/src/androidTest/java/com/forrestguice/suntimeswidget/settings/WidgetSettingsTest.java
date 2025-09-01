@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -877,17 +878,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_trackingModePref()
     {
-        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.SOONEST);
-        WidgetSettings.TrackingMode mode1 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-        assertTrue("mode should be SOONEST but was " + mode1, mode1 == WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, TrackingMode.SOONEST);
+        TrackingMode mode1 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be SOONEST but was " + mode1, mode1 == TrackingMode.SOONEST);
 
-        WidgetSettings.saveTrackingModePref(context, appWidgetId, WidgetSettings.TrackingMode.CLOSEST);
-        WidgetSettings.TrackingMode mode2 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-        assertTrue("mode should be CLOSEST but was " + mode2, mode2 == WidgetSettings.TrackingMode.CLOSEST);
+        WidgetSettings.saveTrackingModePref(context, appWidgetId, TrackingMode.CLOSEST);
+        TrackingMode mode2 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be CLOSEST but was " + mode2, mode2 == TrackingMode.CLOSEST);
 
         WidgetSettings.deleteTrackingModePref(context, appWidgetId);
-        WidgetSettings.TrackingMode mode0 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-        assertTrue("mode should be default (SOONEST) but was " + mode0, mode0 == WidgetSettings.TrackingMode.SOONEST && mode0 == WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE);
+        TrackingMode mode0 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        assertTrue("mode should be default (SOONEST) but was " + mode0, mode0 == TrackingMode.SOONEST && mode0 == WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE);
     }
 
     @Test

@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
@@ -1070,37 +1071,6 @@ public class WidgetSettings
         CompareMode.TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
     }
 
-    /**
-     * TrackingMode
-     */
-    public static enum TrackingMode
-    {
-        RECENT("Recent Event"),
-        CLOSEST("Closest Event"),
-        SOONEST("Upcoming Event");
-
-        private String displayString;
-
-        private TrackingMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-    }
     public static void initDisplayStrings_TrackingMode( Context context )
     {
         TrackingMode.RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
@@ -2422,14 +2392,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTrackingModePref(Context context, int appWidgetId, WidgetSettings.TrackingMode mode)
+    public static void saveTrackingModePref(Context context, int appWidgetId, TrackingMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TrackingMode loadTrackingModePref(Context context, int appWidgetId)
+    public static TrackingMode loadTrackingModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2438,7 +2408,7 @@ public class WidgetSettings
         TrackingMode trackingMode;
         try
         {
-            trackingMode = WidgetSettings.TrackingMode.valueOf(modeString);
+            trackingMode = TrackingMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             trackingMode = PREF_DEF_GENERAL_TRACKINGMODE;

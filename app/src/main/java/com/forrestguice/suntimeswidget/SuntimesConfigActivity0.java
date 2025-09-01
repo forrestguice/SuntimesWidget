@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -368,9 +369,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
     }
 
-    protected ArrayAdapter<WidgetSettings.TrackingMode> createAdapter_trackingMode()
+    protected ArrayAdapter<TrackingMode> createAdapter_trackingMode()
     {
-        ArrayAdapter<WidgetSettings.TrackingMode> adapter = new ArrayAdapter<WidgetSettings.TrackingMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TrackingMode.values());
+        ArrayAdapter<TrackingMode> adapter = new ArrayAdapter<TrackingMode>(this, R.layout.layout_listitem_oneline, TrackingMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -1727,8 +1728,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
         // save: tracking mode
-        final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
-        WidgetSettings.TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
+        final TrackingMode[] trackingModes = TrackingMode.values();
+        TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
         WidgetSettings.saveTrackingModePref(context, appWidgetId, trackingMode);
 
         // save: compare mode
@@ -1808,7 +1809,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
 
         // load: tracking mode
-        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
         spinner_trackingMode.setSelection(trackingMode.ordinal());
 
         // load: compare mode

@@ -59,6 +59,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -480,7 +481,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    private void updateTrackingMenu(SubMenu trackingMenu, WidgetSettings.TrackingMode trackingMode)
+    private void updateTrackingMenu(SubMenu trackingMenu, TrackingMode trackingMode)
     {
         if (trackingMenu != null)
         {
@@ -498,11 +499,11 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     private void onTrackingModeChanged(Context context, int id)
     {
-        WidgetSettings.TrackingMode mode = null;
+        TrackingMode mode = null;
         switch (id) {
-            case R.id.trackRecent: mode = WidgetSettings.TrackingMode.RECENT; break;
-            case R.id.trackClosest: mode = WidgetSettings.TrackingMode.CLOSEST; break;
-            case R.id.trackUpcoming: mode = WidgetSettings.TrackingMode.SOONEST; break;
+            case R.id.trackRecent: mode = TrackingMode.RECENT; break;
+            case R.id.trackClosest: mode = TrackingMode.CLOSEST; break;
+            case R.id.trackUpcoming: mode = TrackingMode.SOONEST; break;
         }
         if (mode != null) {
             WidgetSettings.saveTrackingModePref(context, 0, mode);
