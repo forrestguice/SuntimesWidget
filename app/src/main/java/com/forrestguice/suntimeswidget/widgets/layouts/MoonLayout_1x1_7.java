@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -111,7 +112,7 @@ public class MoonLayout_1x1_7 extends MoonLayout
 
         SuntimesCalculator calculator = data.calculator();
         SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         views.setTextViewText(R.id.info_moon_distance_current, styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
@@ -152,7 +153,7 @@ public class MoonLayout_1x1_7 extends MoonLayout
         return true;
     }
 
-    public static SpannableString styleDistanceText(Context context, SuntimesCalculator.MoonPosition moonPosition, WidgetSettings.LengthUnit units, int highlightColor, int suffixColor, boolean boldTime)
+    public static SpannableString styleDistanceText(Context context, SuntimesCalculator.MoonPosition moonPosition, LengthUnit units, int highlightColor, int suffixColor, boolean boldTime)
     {
         SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();

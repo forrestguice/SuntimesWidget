@@ -23,6 +23,7 @@ import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
@@ -493,7 +494,7 @@ public class DataSubstitutions
                     displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
                 }
                 if (pattern_eS != null && displayString.contains(pattern_eS)) {
-                    WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
                     Double value = getShadowLengthForEvent(context, event, d);
                     displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
                 }
@@ -548,8 +549,8 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_lel))
         {
-            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == WidgetSettings.LengthUnit.IMPERIAL)
-                    ? (int)WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
+            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == LengthUnit.IMPERIAL)
+                    ? (int) LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
                     : location.getAltitudeAsInteger() + "";
             displayString = displayString.replaceAll(PATTERN_lel, altitudeDisplay);
         }
@@ -578,7 +579,7 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_h) || displayString.contains(PATTERN_H))
         {
-            WidgetSettings.LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+            LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
             float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
             displayString = displayString.replaceAll(PATTERN_h, height + "");
             displayString = displayString.replaceAll(PATTERN_H, SuntimesUtils.formatAsHeight(context, height, lengthUnit, 2, true).toString());    // %H

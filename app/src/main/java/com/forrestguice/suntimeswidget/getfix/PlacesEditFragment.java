@@ -46,6 +46,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -437,11 +438,11 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (context != null && text_locationAlt != null)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
             switch (units)
             {
                 case IMPERIAL:
-                    text_locationAlt.setText(formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())));
+                    text_locationAlt.setText(formatter.format(LengthUnit.metersToFeet(location.getAltitudeAsDouble())));
                     break;
 
                 case METRIC:
@@ -455,7 +456,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         if (context != null && text_locationAltUnits != null)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             switch (units)
             {
                 case IMPERIAL:
@@ -476,13 +477,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
-                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == LengthUnit.METRIC);
             item.comment = item0.comment;
 
         } else {
             item.rowID = -1;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
-                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == LengthUnit.METRIC);
         }
         return item;
     }
@@ -589,12 +590,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         return isValid;
     }
 
-    public static CharSequence altitudeDisplayString(android.location.Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
+    public static CharSequence altitudeDisplayString(android.location.Location location, DecimalFormat formatter, LengthUnit units)
     {
         switch (units)
         {
             case IMPERIAL:
-                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
+                return formatter.format(LengthUnit.metersToFeet(location.getAltitude()));
 
             case METRIC:
             default:

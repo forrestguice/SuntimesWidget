@@ -51,6 +51,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -125,7 +126,7 @@ public class LocationConfigView extends LinearLayout
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
 
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
         String altitude = text_locationAlt.getText().toString();
         if (altitude.trim().isEmpty()) {
             altitude = "0";
@@ -151,7 +152,7 @@ public class LocationConfigView extends LinearLayout
             units = WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH;
         }
 
-        return new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, units == WidgetSettings.LengthUnit.METRIC);
+        return new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, units == LengthUnit.METRIC);
     }
 
     public LocationMode getLocationMode() {
@@ -458,12 +459,12 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
-    protected CharSequence getAltitudeString(Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
+    protected CharSequence getAltitudeString(Location location, DecimalFormat formatter, LengthUnit units)
     {
         switch (units)
         {
             case IMPERIAL:
-                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
+                return formatter.format(LengthUnit.metersToFeet(location.getAltitude()));
 
             case METRIC:
             default:
@@ -688,11 +689,11 @@ public class LocationConfigView extends LinearLayout
         Context context = getContext();
         if (context != null)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
             switch (units)
             {
                 case IMPERIAL:
-                    text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
+                    text_locationAlt.setText( Double.toString(LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
                     text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
                     break;
 
@@ -828,7 +829,7 @@ public class LocationConfigView extends LinearLayout
             String longitude = text_locationLon.getText().toString();
             String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
-            com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId) == WidgetSettings.LengthUnit.METRIC);
+            com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId) == LengthUnit.METRIC);
 
             if (appWidgetId == 0) {
                 AppSettings.saveLocationPref(context, location);    // this is WidgetSettings.saveLocationPref pluss ide effects like triggering widget and alarm updates

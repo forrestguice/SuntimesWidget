@@ -69,6 +69,7 @@ import android.widget.ImageView;
 
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -1115,14 +1116,14 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
-    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
+    public static String formatAsHeight(Context context, double value, LengthUnit units, boolean convert, int places)
     {
         int stringID;
         switch (units)
         {
             case IMPERIAL:
                 if (convert) {
-                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                    value = LengthUnit.metersToFeet(value);
                 }
                 stringID = R.plurals.units_feet_long;
                 break;
@@ -1148,7 +1149,7 @@ public class SuntimesUtils
         }
     }
 
-    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    public static TimeDisplayText formatAsHeight(Context context, double meters, LengthUnit units, int places, boolean shortForm)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
@@ -1160,7 +1161,7 @@ public class SuntimesUtils
         switch (units)
         {
             case IMPERIAL:
-                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                value = LengthUnit.metersToFeet(meters);
                 formatted = formatter.format(value);
                 unitsString = (shortForm ? context.getString(R.string.units_feet_short)
                                          : context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
@@ -1177,14 +1178,14 @@ public class SuntimesUtils
         return new TimeDisplayText(formatted, unitsString, "");
     }
 
-    public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    public static TimeDisplayText formatAsDistance(Context context, double kilometers, LengthUnit units, int places, boolean shortForm)
     {
         double value;
         String unitsString;
         switch (units)
         {
             case IMPERIAL:
-                value = WidgetSettings.LengthUnit.kilometersToMiles(kilometers);
+                value = LengthUnit.kilometersToMiles(kilometers);
                 unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
                 break;
 

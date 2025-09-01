@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
@@ -91,30 +92,30 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Context context = activityRule.getActivity();
         int appWidgetId = 0;
 
-        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
-        WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be metric, was " + units3, units3 == WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, LengthUnit.METRIC);
+        LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be metric, was " + units3, units3 == LengthUnit.METRIC);
 
-        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.IMPERIAL);
-        WidgetSettings.LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be imperial, was " + units2, units2 == WidgetSettings.LengthUnit.IMPERIAL);
+        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, LengthUnit.IMPERIAL);
+        LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        assertTrue("units should be imperial, was " + units2, units2 == LengthUnit.IMPERIAL);
 
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
-        WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         assertTrue("units should be default (" + WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH + ") but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
 
         double meters0 = Math.PI;
-        double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
-        double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
+        double feet0 = LengthUnit.metersToFeet(meters0);
+        double meters1 = LengthUnit.feetToMeters(feet0);
         assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
 
-        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.METRIC);
-        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, WidgetSettings.LengthUnit.IMPERIAL);
-        assertEquals(WidgetSettings.LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+        WidgetSettings.saveLengthUnitsPref(context, 0, LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, LengthUnit.IMPERIAL);
+        assertEquals(LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
 
         WidgetSettings.deleteLengthUnitsPref(context, Integer.MAX_VALUE);
         assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
-        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.IMPERIAL);
+        WidgetSettings.saveLengthUnitsPref(context, 0, LengthUnit.IMPERIAL);
         assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
     }
 

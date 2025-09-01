@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -867,7 +868,7 @@ public class AlarmEventProvider extends ContentProvider
         @Override
         protected String getEventSummary(Context context)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             String height = SuntimesUtils.formatAsHeight(context, getObjHeight(), units, 1, true).getValue();
 
             SuntimesUtils.TimeDisplayText t = SuntimesUtils.formatAsHeight(context, getLength(), units, 1, true);

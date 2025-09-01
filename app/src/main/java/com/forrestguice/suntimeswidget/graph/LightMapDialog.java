@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -73,6 +72,7 @@ import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -1575,7 +1575,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return (span != null ? span : elevationString);
     }
 
-    private CharSequence styleLengthText(@NonNull Context context, double meters, WidgetSettings.LengthUnit units)
+    private CharSequence styleLengthText(@NonNull Context context, double meters, LengthUnit units)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
@@ -1818,7 +1818,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
                 if (objectHeight > 0)
                 {
-                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                    LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
                     if (sunShadowObj != null) {
                         sunShadowObj.setText(styleLengthText(context, objectHeight, units));
@@ -1876,7 +1876,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
 
-        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
         String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, true, 2);
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);

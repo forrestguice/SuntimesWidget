@@ -37,6 +37,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
@@ -288,14 +289,14 @@ public abstract class SuntimesActivityTestBase
         public Location location;
         public String timezoneID;
         public TimeFormatMode timeformat;
-        public WidgetSettings.LengthUnit lengthUnits;
+        public LengthUnit lengthUnits;
 
         public SuntimesTestConfig(Location location, String timezoneID, boolean format24, String units)
         {
             this.location = location;
             this.timezoneID = timezoneID;
             this.timeformat = (format24 ? TimeFormatMode.MODE_24HR : TimeFormatMode.MODE_12HR);
-            this.lengthUnits = WidgetSettings.LengthUnit.valueOf(units);
+            this.lengthUnits = LengthUnit.valueOf(units);
         }
     }
 

@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
@@ -406,45 +407,6 @@ public class WidgetSettings
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * LengthUnit
-     */
-    public static enum LengthUnit
-    {
-        METRIC("Metric"),
-        IMPERIAL("Imperial");
-
-        private LengthUnit(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        private String displayString;
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-        public void setDisplayString(String value)
-        {
-            displayString = value;
-        }
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public static double metersToFeet(double meters) {
-            return 3.28084d * meters;
-        }
-        public static double feetToMeters(double feet) {
-            return (feet * (1d / 3.28084d) );
-        }
-
-        public static double kilometersToMiles(double kilometers) {
-            return 0.62137 * kilometers;
-        }
-    }
 
     public static void initDisplayStrings_LengthUnit(Context context)
     {

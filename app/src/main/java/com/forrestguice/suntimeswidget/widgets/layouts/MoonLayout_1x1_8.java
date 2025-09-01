@@ -24,6 +24,8 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -158,7 +160,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
 
         if (apogee != null)
         {
@@ -190,7 +192,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
         views.setViewVisibility(R.id.moonapsis_perigee_label, visibility);
     }
 
-    public static SpannableString distanceSpan(Context context, double distance, WidgetSettings.LengthUnit units, int color, int suffixColor, boolean boldTime)
+    public static SpannableString distanceSpan(Context context, double distance, LengthUnit units, int color, int suffixColor, boolean boldTime)
     {
         SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();

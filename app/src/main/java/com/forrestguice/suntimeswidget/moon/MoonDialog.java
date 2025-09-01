@@ -43,6 +43,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -573,7 +575,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         Context context = getContext();
         if (context != null && data != null && data.isCalculated())
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(dateTime);

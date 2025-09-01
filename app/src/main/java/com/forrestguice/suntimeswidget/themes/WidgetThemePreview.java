@@ -30,6 +30,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Pair;
@@ -107,7 +108,7 @@ public class WidgetThemePreview
     private boolean showHours = false;
     private boolean showTimeDate = false;
     private boolean showSeconds = false;
-    private WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+    private LengthUnit units = LengthUnit.METRIC;
 
     private SuntimesRiseSetDataset data0;
     private SuntimesRiseSetData data1;
