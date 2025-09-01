@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.content.Context;
+
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -45,17 +47,17 @@ public class SuntimesCalculatorTest
         TimeZone timezone = TimeZone.getDefault();
         for (Location location : TEST_LOCATIONS)
         {
-            test_init(location, timezone, DefaultCalculatorDescriptors.SunriseSunsetJava());
-            test_init(location, timezone, DefaultCalculatorDescriptors.CarmenSunriseSunset());
-            test_init(location, timezone, DefaultCalculatorDescriptors.Time4A_Simple());
-            test_init(location, timezone, DefaultCalculatorDescriptors.Time4A_NOAA());
-            test_init(location, timezone, DefaultCalculatorDescriptors.Time4A_CC());
-            test_init(location, timezone, DefaultCalculatorDescriptors.Time4A_4J());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.getDescriptor());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator.getDescriptor());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator.getDescriptor());
+            test_init(location, timezone, com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor());
         }
     }
     public void test_init(Location location, TimeZone timezone, SuntimesCalculatorDescriptor descriptor)
     {
-        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory(descriptor);
+        SuntimesCalculatorFactory calculatorFactory = new SuntimesCalculatorFactory((Context)null, descriptor);
         SuntimesCalculator calculator = calculatorFactory.createCalculator(location, timezone);
         assertNotNull(calculator);
         assertTrue("calculator name (" + calculator.name() + ") should match descriptor (" + descriptor.getName() + ")", calculator.name().equals(descriptor.getName()));

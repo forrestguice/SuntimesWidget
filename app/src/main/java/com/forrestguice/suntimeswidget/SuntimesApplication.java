@@ -21,11 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
-
-import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.util.Log;
-import com.forrestguice.util.android.AndroidLog;
+import android.util.Log;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -45,11 +41,9 @@ public class SuntimesApplication extends Application
 
     public static void init(Context context)
     {
-        Log.init(new AndroidLog());
-        Log.setShowDebug(BuildConfig.DEBUG);
-        Log.d("DEBUG", "SuntimesApplication.init:");
-
-        SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "SuntimesApplication.init:");
+        }
         ApplicationStarter.initialize(context, false);
 
         if (BuildConfig.DEBUG)

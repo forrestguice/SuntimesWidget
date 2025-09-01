@@ -590,7 +590,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected static Location locationFromIntentExtras(Context context, Intent intent)
     {
         Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
-        Location location = ((locationBundle != null) ? (Location) locationBundle.getSerializable(AlarmClockActivity.EXTRA_LOCATION) : null);
+        Location location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
         if (location != null) {
             return location;
         }
@@ -1305,7 +1305,7 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
 
         Bundle locationBundle = new Bundle();
-        locationBundle.putSerializable(AlarmClockActivity.EXTRA_LOCATION, location);
+        locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
         try {

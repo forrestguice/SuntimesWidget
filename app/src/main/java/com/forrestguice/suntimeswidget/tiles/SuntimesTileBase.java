@@ -327,7 +327,7 @@ public abstract class SuntimesTileBase
     protected TimeZone timezone(Context context)
     {
         initData(context);
-        return (data != null ? data.timezone() : WidgetTimezones.localMeanTime(location(context)));
+        return (data != null ? data.timezone() : WidgetTimezones.localMeanTime(context, location(context)));
     }
 
     public static boolean isLocalTime(String tzID) {

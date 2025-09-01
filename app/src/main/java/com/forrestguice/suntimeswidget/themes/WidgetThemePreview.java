@@ -29,7 +29,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
-import com.forrestguice.util.Pair;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;

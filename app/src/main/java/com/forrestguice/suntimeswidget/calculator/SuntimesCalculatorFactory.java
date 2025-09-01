@@ -18,13 +18,14 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
-import com.forrestguice.util.Log;
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
+import java.lang.ref.WeakReference;
 import java.util.TimeZone;
 
 /**
@@ -40,29 +41,33 @@ import java.util.TimeZone;
 public class SuntimesCalculatorFactory
 {
     private SuntimesCalculatorDescriptor current;
+    private WeakReference<Context> contextRef;
 
     /**
      * Create a SuntimesCalculatorFactory object with default implementation.
+     * @param context the Android context used by this factory.
      */
-    public SuntimesCalculatorFactory()
+    public SuntimesCalculatorFactory(Context context)
     {
-        init(null);
+        init(context, null);
     }
 
     /**
      * Create a SuntimesCalculatorFactory object.
+     * @param context the Android context used by this factory
      * @param calculatorSetting a SuntimesCalculatorDescriptor that specifies the implementation this factory creates
      */
-    public SuntimesCalculatorFactory(@Nullable SuntimesCalculatorDescriptor calculatorSetting)
+    public SuntimesCalculatorFactory(Context context, @Nullable SuntimesCalculatorDescriptor calculatorSetting)
     {
-        init(calculatorSetting);
+        init(context, calculatorSetting);
     }
 
-    private void init(@Nullable SuntimesCalculatorDescriptor calculatorSetting)
+    private void init(Context context, @Nullable SuntimesCalculatorDescriptor calculatorSetting)
     {
+        this.contextRef = new WeakReference<Context>(context);
         if (!SuntimesCalculatorDescriptor.initialized)
         {
-            SuntimesCalculatorDescriptor.initCalculators();
+            SuntimesCalculatorDescriptor.initCalculators(context);
         }
 
         if (calculatorSetting == null)
@@ -99,7 +104,7 @@ public class SuntimesCalculatorFactory
             signalCreatedFallback(fallbackCalculatorDescriptor());
             Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
         }
-        calculator.init(location, timezone);
+        calculator.init(location, timezone, contextRef.get());
 
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "created " + calculator.name() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
@@ -112,7 +117,7 @@ public class SuntimesCalculatorFactory
     }
     public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
     {
-        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF, -1, SunriseSunsetSuntimesCalculator.FEATURES);
+        return com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator.getDescriptor();
     }
 
     /**

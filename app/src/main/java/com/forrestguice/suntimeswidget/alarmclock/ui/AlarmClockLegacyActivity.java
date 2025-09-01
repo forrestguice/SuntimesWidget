@@ -480,7 +480,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         if (t_selectedLocation != null) {
-            outState.putSerializable(KEY_SELECTED_LOCATION, t_selectedLocation);
+            outState.putParcelable(KEY_SELECTED_LOCATION, t_selectedLocation);
         }
     }
 
@@ -505,7 +505,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             }
         }
 
-        t_selectedLocation = (Location) savedState.getSerializable(KEY_SELECTED_LOCATION);
+        t_selectedLocation = savedState.getParcelable(KEY_SELECTED_LOCATION);
     }
 
     /**

@@ -19,7 +19,8 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import com.forrestguice.util.Log;
+import android.net.Uri;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
@@ -79,8 +80,8 @@ public class SuntimesRiseSetData extends SuntimesData
             EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.ElevationEvent event;
             switch (alias.getType()) {
-                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
-                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(getLastPathSegment(alias.getUri())); break;
+                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
                 default: event = null; break;
             }
             this.angle = (event == null ? null : event.getAngle());
@@ -211,8 +212,8 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day delta prefix
      */
-    protected int dayDeltaPrefix;
-    public int dayDeltaPrefix()
+    protected String dayDeltaPrefix;
+    public String dayDeltaPrefix()
     {
         return dayDeltaPrefix;
     }
@@ -313,7 +314,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator();
+        initCalculator(context);
         initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
@@ -328,13 +329,13 @@ public class SuntimesRiseSetData extends SuntimesData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = R.string.delta_day_yesterday;
+                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = R.string.delta_day_tomorrow;
+                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }

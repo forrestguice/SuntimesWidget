@@ -48,7 +48,7 @@ public class PlaceItem implements Parcelable
     public PlaceItem( Parcel in )
     {
         this.rowID = in.readLong();
-        this.location = (Location) in.readSerializable();
+        this.location = in.readParcelable(getClass().getClassLoader());
         //this.isDefault = (in.readInt() == 1);
         this.comment = in.readString();
     }
@@ -68,7 +68,7 @@ public class PlaceItem implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(rowID);
-        dest.writeSerializable(location);
+        dest.writeParcelable(location, 0);
         //dest.writeInt(isDefault ? 1 : 0);
         dest.writeString(comment);
     }

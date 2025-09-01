@@ -150,7 +150,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         Bundle args = getArguments();
         if (getLocation() == null) {
-            args.putSerializable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+            args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         }
 
         Context context = getActivity();
@@ -222,7 +222,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 }
                 getArguments().putString(EXTRA_EVENT, dialog.getChoice());
                 Log.d("DEBUG", "AlarmCreateDialog: onChanged: " + dialog.getChoice());
-                getArguments().putSerializable(EXTRA_LOCATION, dialog.getLocation());
+                getArguments().putParcelable(EXTRA_LOCATION, dialog.getLocation());
                 updateViews(getActivity());
             }
 
@@ -1015,7 +1015,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
     public Location getLocation()
     {
-        Location location = (Location) getArguments().getSerializable(EXTRA_LOCATION);
+        Location location = getArguments().getParcelable(EXTRA_LOCATION);
         return (location != null ? location
                                  : isAdded() ? WidgetSettings.loadLocationPref(getActivity(), 0)
                                              : WidgetSettings.loadLocationDefault());
@@ -1024,7 +1024,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         Bundle args = getArguments();
         args.putString(EXTRA_EVENT, event);
-        args.putSerializable(EXTRA_LOCATION, location);
+        args.putParcelable(EXTRA_LOCATION, location);
 
         if (isAdded())
         {

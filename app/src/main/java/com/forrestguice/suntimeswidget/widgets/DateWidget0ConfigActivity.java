@@ -106,7 +106,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators() {
-        return SuntimesCalculatorDescriptor.values(requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
     }
     private static int[] requiredFeatures = new int[] {};
 

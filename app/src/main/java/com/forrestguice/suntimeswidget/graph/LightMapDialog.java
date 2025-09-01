@@ -72,7 +72,6 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -171,7 +170,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         this.data_timezone = values.timezone();
         this.data = new SuntimesRiseSetDataset(values);
         this.data.invalidateCalculation();
-        this.data.setTimeZone(TimeZones.localMeanTime(values.location()));
+        this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
         this.data.calculateData(context);
     }

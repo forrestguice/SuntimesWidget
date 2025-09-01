@@ -24,7 +24,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.util.Log;
-import com.forrestguice.util.Pair;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;

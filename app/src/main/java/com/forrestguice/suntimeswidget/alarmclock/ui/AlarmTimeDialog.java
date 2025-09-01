@@ -104,7 +104,7 @@ public class AlarmTimeDialog extends DialogFragment
     {
         Bundle args = getArguments();
         if (getLocation() == null) {
-            args.putSerializable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+            args.putParcelable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         }
         super.onCreate(savedState);
     }
@@ -125,7 +125,7 @@ public class AlarmTimeDialog extends DialogFragment
         updateDate();
     }
     public void setLocation(Location location) {
-        getArguments().putSerializable(PREF_KEY_ALARM_LOCATION, location);
+        getArguments().putParcelable(PREF_KEY_ALARM_LOCATION, location);
         updateDate();
     }
     public void setShowDateButton(boolean value) {
@@ -337,7 +337,7 @@ public class AlarmTimeDialog extends DialogFragment
     }
 
     public Location getLocation() {
-        return (Location)getArguments().getSerializable(PREF_KEY_ALARM_LOCATION);
+        return (Location)getArguments().getParcelable(PREF_KEY_ALARM_LOCATION);
     }
 
     public boolean getShowDateButton() {

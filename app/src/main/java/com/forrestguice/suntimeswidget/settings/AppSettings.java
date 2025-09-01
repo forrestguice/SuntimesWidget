@@ -1237,7 +1237,7 @@ public class AppSettings
             if (data == null)
             {
                 data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-                data.initCalculator();
+                data.initCalculator(context);
             }
             isDay = data.isDay();
             switch (size) {

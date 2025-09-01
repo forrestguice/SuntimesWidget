@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -37,7 +38,7 @@ public class SuntimesEquinoxSolsticeDataset
 
     public SuntimesEquinoxSolsticeDataset(Context context)
     {
-        dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, 0);
+        dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
         initSolsticeEquinoxData();
     }

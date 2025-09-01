@@ -1194,7 +1194,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         private Calendar lmt(Location location)
         {
             if (lmt == null) {
-                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(location));
+                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, location));
             }
             return lmt;
         }

@@ -623,7 +623,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             dateInfo = WidgetSettings.loadDatePref(context, 0);
 
             SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, 0);
-            data0.initCalculator();
+            data0.initCalculator(context);
             data0.initTimezone(context);
             timezone = data0.timezone();
 

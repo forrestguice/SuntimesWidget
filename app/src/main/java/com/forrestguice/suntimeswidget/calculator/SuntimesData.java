@@ -19,12 +19,13 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import com.forrestguice.annotation.Nullable;
-import com.forrestguice.util.Log;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -256,15 +257,15 @@ public class SuntimesData
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
-                        timezone = TimeZones.apparentSolarTime(location, calculator);
+                        timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
                         break;
 
                     case GMST:
-                        timezone = TimeZones.siderealTime();
+                        timezone = WidgetTimezones.siderealTime(context);
                         break;
 
                     case LMST:
-                        timezone = TimeZones.siderealTime(location);
+                        timezone = WidgetTimezones.siderealTime(context, location);
                         break;
 
                     case UTC:
@@ -273,7 +274,7 @@ public class SuntimesData
 
                     case LOCAL_MEAN_TIME:
                     default:
-                        timezone = TimeZones.localMeanTime(location);
+                        timezone = WidgetTimezones.localMeanTime(context, location);
                         break;
                 }
                 break;
@@ -286,12 +287,12 @@ public class SuntimesData
         this.calculatorMode = descriptor;
     }
 
-    public void initCalculator()
+    public void initCalculator(Context context)
     {
         if (this.calculator != null)
             return;
 
-        final SuntimesCalculatorFactory calculatorFactory = initFactory();
+        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
         calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
         {
             @Override
@@ -308,9 +309,9 @@ public class SuntimesData
         this.calculator = calculatorFactory.createCalculator(location, timezone);
     }
 
-    public SuntimesCalculatorFactory initFactory()
+    public SuntimesCalculatorFactory initFactory(Context context)
     {
-        return new SuntimesCalculatorFactory(calculatorMode);
+        return new SuntimesCalculatorFactory(context, calculatorMode);
     }
 
     /**
@@ -394,23 +395,6 @@ public class SuntimesData
             Log.e("DEBUG", "midpoint: null calendar!");
             return null;
         }
-    }
-
-    @Nullable
-    public static String getLastPathSegment(@Nullable String uri)
-    {
-        if (uri != null)
-        {
-            String uri0 = uri.trim();
-            if (uri.endsWith("/")) {
-                uri = uri.substring(0, uri.lastIndexOf("/"));
-            }
-
-            String[] parts = uri0.split("/");
-            if (parts.length > 1) {
-                return parts[parts.length - 1];
-            } else return uri;
-        } else return null;
     }
 
 }

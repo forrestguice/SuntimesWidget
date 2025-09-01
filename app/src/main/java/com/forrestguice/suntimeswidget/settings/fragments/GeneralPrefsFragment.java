@@ -192,8 +192,8 @@ public class GeneralPrefsFragment extends PreferenceFragment
         @SuppressLint("ResourceType") int colorPlugin = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
         typedArray.recycle();
 
-        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values()
-                : SuntimesCalculatorDescriptor.values(requestedFeatures));
+        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
+                : SuntimesCalculatorDescriptor.values(context, requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
         CharSequence[] calculatorSummaries = new CharSequence[calculators.length];
@@ -201,11 +201,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
-            int resID = calculator.getDisplayStringResID();
-            if (resID != -1 ){
-                calculator.setDisplayString(context.getString(resID));
-            }
-
+            calculator.initDisplayStrings(context);
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
 
             String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))

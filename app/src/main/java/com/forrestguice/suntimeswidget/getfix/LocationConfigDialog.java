@@ -137,7 +137,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         presetLocation = location;
         if (dialogContent != null) {
-            dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }
 

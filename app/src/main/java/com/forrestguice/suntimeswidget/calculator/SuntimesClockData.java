@@ -42,7 +42,7 @@ public class SuntimesClockData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
-        initCalculator();
+        initCalculator(context);
         initTimezone(context);   // reinit
 
         todaysCalendar = Calendar.getInstance(timezone);

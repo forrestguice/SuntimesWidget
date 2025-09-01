@@ -550,7 +550,7 @@ public class PlacesListFragment extends Fragment
         if (item != null && item.location != null && context != null)
         {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(item.location.getUri()));
+            intent.setData(item.location.getUri());
             List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
             List<Intent> geoIntents = new ArrayList<Intent>();
 
@@ -562,7 +562,7 @@ public class PlacesListFragment extends Fragment
                     {
                         Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                         geoIntent.setPackage(resolveInfo.activityInfo.packageName);
-                        geoIntent.setData(Uri.parse(item.location.getUri()));
+                        geoIntent.setData(item.location.getUri());
                         geoIntents.add(geoIntent);
                     }
                 }

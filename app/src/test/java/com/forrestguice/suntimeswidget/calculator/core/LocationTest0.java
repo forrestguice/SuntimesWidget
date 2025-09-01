@@ -19,17 +19,11 @@
 package com.forrestguice.suntimeswidget.calculator.core;
 
 import org.junit.Test;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
+@SuppressWarnings("ConstantConditions")
 public class LocationTest0
 {
     @Test public void test_location()
@@ -126,50 +120,6 @@ public class LocationTest0
     public static final float FLOAT_TOLERANCE = 0.01f;
     protected boolean equals(float float1, float float2) {
         return (Math.abs(float1 - float2) < FLOAT_TOLERANCE);
-    }
-
-    public static final Location[] locations = new Location[] {
-            new Location("Test Loc0", "35", "-112", "0"),
-            new Location("Test Loc1", "36", "-111", "1"),
-            new Location("Test's Loc2", "37", "-110", "2"),    // name contains '
-            new Location("Test\"s Loc3", "38", "-109", "3"),   // name contains "
-            new Location("Test`s Loc4", "38", "-109", "3"),    // name contains `
-            new Location("Test, Loc5", "-10", "10", "5")       // name contains ,
-    };
-
-    @Test
-    public void test_location_serializable()
-    {
-        for (Location location : locations)
-        {
-            if (location != null) {
-                test_location_serializable(location);
-            }
-        }
-    }
-
-    public void test_location_serializable(Location item0)
-    {
-        String path = "test_location_serializable.txt";
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
-            out.writeObject(item0);
-            out.flush();
-            out.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
-            Location item = (Location) in.readObject();
-            in.close();
-            test_equals(item0, item);
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
 }

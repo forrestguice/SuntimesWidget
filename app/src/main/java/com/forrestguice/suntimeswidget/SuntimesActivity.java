@@ -1665,7 +1665,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(Uri.parse(location.getUri()));
+        mapIntent.setData(location.getUri());
 
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
         List<Intent> geoIntents = new ArrayList<Intent>();
@@ -1679,7 +1679,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                     geoIntent.setPackage(packageName);
-                    geoIntent.setData(Uri.parse(location.getUri()));
+                    geoIntent.setData(location.getUri());
                     geoIntents.add(geoIntent);
                 }
             }
