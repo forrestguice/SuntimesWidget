@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
@@ -336,7 +337,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             dateFormat.setTimeZone(sun.timezone());
 
             int i = (position - CardAdapter.TODAY_POSITION);
-            boolean showDateWarning = (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
+            boolean showDateWarning = (options.dateMode != DateMode.CURRENT_DATE && (i > 1 || i < -1));
             ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
 
             Pair<String,String> label = getCardLabel(context, i, options);

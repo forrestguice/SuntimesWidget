@@ -68,6 +68,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -1560,7 +1561,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         protected void saveSettings(Context context)
         {
-            WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
+            DateMode dateMode = (isToday() ? DateMode.CURRENT_DATE : DateMode.CUSTOM_DATE);
             WidgetSettings.saveDateModePref(context, getAppWidgetId(), dateMode);
 
             WidgetSettings.DateInfo dateInfo = getDateInfo();

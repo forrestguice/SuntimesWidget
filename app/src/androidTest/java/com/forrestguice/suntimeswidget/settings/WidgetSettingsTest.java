@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -287,17 +288,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_dateModePref()
     {
-        WidgetSettings.saveDateModePref(context, appWidgetId, WidgetSettings.DateMode.CURRENT_DATE);
-        WidgetSettings.DateMode mode2 = WidgetSettings.loadDateModePref(context, appWidgetId);
-        assertTrue("mode should be CURRENT_DATE but was " + mode2, mode2 == WidgetSettings.DateMode.CURRENT_DATE);
+        WidgetSettings.saveDateModePref(context, appWidgetId, DateMode.CURRENT_DATE);
+        DateMode mode2 = WidgetSettings.loadDateModePref(context, appWidgetId);
+        assertTrue("mode should be CURRENT_DATE but was " + mode2, mode2 == DateMode.CURRENT_DATE);
 
-        WidgetSettings.saveDateModePref(context, appWidgetId, WidgetSettings.DateMode.CUSTOM_DATE);
-        WidgetSettings.DateMode mode1 = WidgetSettings.loadDateModePref(context, appWidgetId);
-        assertTrue("mode should be CUSTOM_DATE but was " + mode1, mode1 == WidgetSettings.DateMode.CUSTOM_DATE);
+        WidgetSettings.saveDateModePref(context, appWidgetId, DateMode.CUSTOM_DATE);
+        DateMode mode1 = WidgetSettings.loadDateModePref(context, appWidgetId);
+        assertTrue("mode should be CUSTOM_DATE but was " + mode1, mode1 == DateMode.CUSTOM_DATE);
 
         WidgetSettings.deleteDateModePref(context, appWidgetId);
-        WidgetSettings.DateMode mode0 = WidgetSettings.loadDateModePref(context, appWidgetId);
-        assertTrue("mode should be default (CURRENT_DATE) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_DATE_MODE && mode0 == WidgetSettings.DateMode.CURRENT_DATE);
+        DateMode mode0 = WidgetSettings.loadDateModePref(context, appWidgetId);
+        assertTrue("mode should be default (CURRENT_DATE) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_DATE_MODE && mode0 == DateMode.CURRENT_DATE);
     }
 
     @Test

@@ -36,6 +36,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
@@ -324,7 +325,7 @@ public abstract class SuntimesActivityTestBase
 
     protected void configureAppForTesting(Activity context)
     {
-        WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
+        WidgetSettings.saveDateModePref(context, 0, DateMode.CURRENT_DATE);
         WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.RECENT);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
         WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);

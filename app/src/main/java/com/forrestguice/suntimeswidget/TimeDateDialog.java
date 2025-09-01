@@ -28,7 +28,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -175,8 +175,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected void loadSettings(Context context)
     {
         int appWidgetId = getAppWidgetId();
-        WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
+        DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
+        if (mode == DateMode.CURRENT_DATE)
         {
             init(getInitialDateTime());
 

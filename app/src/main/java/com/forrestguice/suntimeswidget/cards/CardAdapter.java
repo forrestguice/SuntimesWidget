@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -125,7 +126,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> createData(Context context, int position)
     {
         Calendar date = Calendar.getInstance(options.timezone);
-        if (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE) {
+        if (options.dateMode != DateMode.CURRENT_DATE) {
             date.set(options.dateInfo.getYear(), options.dateInfo.getMonth(), options.dateInfo.getDay());
         }
         date.add(Calendar.DATE, position - TODAY_POSITION);
@@ -588,7 +589,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public static class CardAdapterOptions
     {
         private WidgetSettings.DateInfo dateInfo = null;
-        public WidgetSettings.DateMode dateMode = WidgetSettings.DateMode.CURRENT_DATE;
+        public DateMode dateMode = DateMode.CURRENT_DATE;
         public TimeZone timezone = null;
 
         public boolean supportsGoldBlue = false;

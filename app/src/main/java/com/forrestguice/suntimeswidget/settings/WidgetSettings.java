@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -1056,36 +1057,6 @@ public class WidgetSettings
         }
     }
 
-    /**
-     * DateMode
-     */
-    public static enum DateMode
-    {
-        CURRENT_DATE("Today"),
-        CUSTOM_DATE("User Defined");
-
-        private String displayString;
-
-        private DateMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-    }
     public static void initDisplayStrings_DateMode( Context context )
     {
         DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
@@ -2575,14 +2546,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveDateModePref(Context context, int appWidgetId, WidgetSettings.DateMode mode)
+    public static void saveDateModePref(Context context, int appWidgetId, DateMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
         prefs.putString(prefs_prefix + PREF_KEY_DATE_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.DateMode loadDateModePref(Context context, int appWidgetId)
+    public static DateMode loadDateModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
@@ -2591,7 +2562,7 @@ public class WidgetSettings
         DateMode dateMode;
         try
         {
-            dateMode = WidgetSettings.DateMode.valueOf(modeString);
+            dateMode = DateMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             dateMode = PREF_DEF_DATE_MODE;
