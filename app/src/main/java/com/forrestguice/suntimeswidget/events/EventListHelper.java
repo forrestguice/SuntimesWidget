@@ -93,7 +93,7 @@ public class EventListHelper
     private android.support.v4.app.FragmentManager fragmentManager;
 
     private int selectedChild = -1;
-    private EventSettings.EventAlias selectedItem;
+    private EventAlias selectedItem;
     private ListView list;
     private EventDisplayAdapterInterface adapter;
     protected ActionMode actionMode = null;
@@ -191,7 +191,7 @@ public class EventListHelper
     public String getEventID()
     {
         if (list != null) {
-            EventSettings.EventAlias selected = adapter.getSelected();
+            EventAlias selected = adapter.getSelected();
             return selected != null ? selected.getID() : null;
         } else return null;
     }
@@ -205,7 +205,7 @@ public class EventListHelper
                 suffix = ((selectedChild == 0) ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
             }
 
-            EventSettings.EventAlias selected = adapter.getSelected();
+            EventAlias selected = adapter.getSelected();
             return selected != null ? selected.getAliasUri() + suffix : null;
         } else return null;
     }
@@ -213,7 +213,7 @@ public class EventListHelper
     public String getLabel()
     {
         if (list != null) {
-            EventSettings.EventAlias selected = (EventSettings.EventAlias) list.getSelectedItem();
+            EventAlias selected = (EventAlias) list.getSelectedItem();
             return selected != null ? selected.getLabel() : null;
         } else return null;
     }
@@ -260,7 +260,7 @@ public class EventListHelper
                             expandedList.collapseGroup(i);
                         }
                     }
-                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) expandedList.getAdapter().getItem(groupPosition));
+                    adapter.setSelected(selectedItem = (EventAlias) expandedList.getAdapter().getItem(groupPosition));
                     adapter.setSelected(selectedChild = 0);
                     updateViews(contextRef.get());
                     triggerActionMode(expandedList.getSelectedView(), selectedItem, selectedChild);
@@ -271,7 +271,7 @@ public class EventListHelper
                 @Override
                 public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id)
                 {
-                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) expandedList.getAdapter().getItem(groupPosition));
+                    adapter.setSelected(selectedItem = (EventAlias) expandedList.getAdapter().getItem(groupPosition));
                     adapter.setSelected(selectedChild = childPosition);
                     updateViews(contextRef.get());
                     triggerActionMode(view, selectedItem, childPosition);
@@ -285,7 +285,7 @@ public class EventListHelper
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
                     list.setSelection(position);
-                    adapter.setSelected(selectedItem = (EventSettings.EventAlias) list.getItemAtPosition(position));
+                    adapter.setSelected(selectedItem = (EventAlias) list.getItemAtPosition(position));
                     updateViews(contextRef.get());
                     triggerActionMode(view, selectedItem);
                 }
@@ -305,12 +305,12 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
+        List<EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
         events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
 
-        Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
+        Collections.sort(events, new Comparator<EventAlias>() {
             @Override
-            public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {
+            public int compare(EventAlias o1, EventAlias o2) {
                 return o1.getLabel().compareTo(o2.getLabel());
             }
         });
@@ -328,7 +328,7 @@ public class EventListHelper
             adapter = adapter0;
 
         } else {
-            EventDisplayAdapter adapter0 = new EventDisplayAdapter(context, R.layout.layout_listitem_events, events.toArray(new EventSettings.EventAlias[0]));
+            EventDisplayAdapter adapter0 = new EventDisplayAdapter(context, R.layout.layout_listitem_events, events.toArray(new EventAlias[0]));
             list.setAdapter(adapter0);
             adapter = adapter0;
         }
@@ -428,7 +428,7 @@ public class EventListHelper
         final Context context = contextRef.get();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
-            final EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID);
+            final EventAlias event = EventSettings.loadEvent(context, eventID);
 
             final EditEventDialog saveDialog = new EditEventDialog();
             saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
@@ -482,7 +482,7 @@ public class EventListHelper
         Context context = contextRef.get();
         if (context != null && adapter != null)
         {
-            EventSettings.EventAlias[] items = getItemsForExport();
+            EventAlias[] items = getItemsForExport();
             if (items.length > 0)
             {
                 if (Build.VERSION.SDK_INT >= 19)
@@ -513,7 +513,7 @@ public class EventListHelper
             Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
 
         } else {
-            EventSettings.EventAlias[] items = getItemsForExport();
+            EventAlias[] items = getItemsForExport();
             if (items.length > 0)
             {
                 exportTask = new EventExportTask(context, uri);    // export directly to uri
@@ -524,11 +524,11 @@ public class EventListHelper
         }
     }
 
-    protected EventSettings.EventAlias[] getItemsForExport()
+    protected EventAlias[] getItemsForExport()
     {
-        List<EventSettings.EventAlias> itemList = adapter.getItems();
+        List<EventAlias> itemList = adapter.getItems();
         Collections.reverse(itemList);                                                // should be reversed for export (so import encounters/adds older items first)
-        return itemList.toArray(new EventSettings.EventAlias[0]);
+        return itemList.toArray(new EventAlias[0]);
     }
 
     private ExportTask.TaskListener exportListener0 = null;
@@ -627,7 +627,7 @@ public class EventListHelper
             if (result.getResult())
             {
                 Context context = contextRef.get();
-                EventSettings.EventAlias[] items = result.getItems();
+                EventAlias[] items = result.getItems();
 
                 if (context != null)
                 {
@@ -642,12 +642,12 @@ public class EventListHelper
                 initAdapter(context);
                 updateViews(context);
                 adapterModified = true;
-                offerUndoImport(context, new ArrayList<EventSettings.EventAlias>(Arrays.asList(items)));
+                offerUndoImport(context, new ArrayList<EventAlias>(Arrays.asList(items)));
             }
         }
     };
 
-    public void offerUndoImport(Context context, final List<EventSettings.EventAlias> items)
+    public void offerUndoImport(Context context, final List<EventAlias> items)
     {
         View view = list;
         if (context != null && view != null)
@@ -661,7 +661,7 @@ public class EventListHelper
                     Context context = contextRef.get();
                     if (context != null)
                     {
-                        for (EventSettings.EventAlias item : items) {
+                        for (EventAlias item : items) {
                             if (item != null) {
                                 EventSettings.deleteEvent(context, item.getID());
                             }
@@ -785,12 +785,12 @@ public class EventListHelper
      */
     public interface EventDisplayAdapterInterface
     {
-        EventSettings.EventAlias getSelected();
+        EventAlias getSelected();
         int getSelectedChild();
-        void setSelected( EventSettings.EventAlias item );
+        void setSelected( EventAlias item );
         void setSelected(int i);
-        EventSettings.EventAlias findItemByID(String eventID);
-        List<EventSettings.EventAlias> getItems();
+        EventAlias findItemByID(String eventID);
+        List<EventAlias> getItems();
     }
 
     /**
@@ -800,12 +800,12 @@ public class EventListHelper
     {
         private WeakReference<Context> contextRef;
         private int groupResourceID, childResourceID;
-        private List<EventSettings.EventAlias> objects;
-        private EventSettings.EventAlias selectedItem;
+        private List<EventAlias> objects;
+        private EventAlias selectedItem;
         private int selectedChild = -1;
         private final SuntimesUtils utils = new SuntimesUtils();
 
-        public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventSettings.EventAlias> objects)
+        public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventAlias> objects)
         {
             this.contextRef = new WeakReference<>(context);
             this.groupResourceID = groupResourceID;
@@ -868,7 +868,7 @@ public class EventListHelper
 
             view.setPadding((int)context.getResources().getDimension(R.dimen.eventIcon_width), 0, 0, 0);
 
-            EventSettings.EventAlias item = (EventSettings.EventAlias) getGroup(groupPosition);
+            EventAlias item = (EventAlias) getGroup(groupPosition);
             if (item == null) {
                 Log.w("getGroupView", "group at position " + groupPosition + " is null.");
                 return view;
@@ -912,7 +912,7 @@ public class EventListHelper
             view.setPadding((int)context.getResources().getDimension(R.dimen.eventIcon_width), 0, 0, 0);
 
             boolean rising = (childPosition == 0);
-            EventSettings.EventAlias item = (EventSettings.EventAlias) getGroup(groupPosition);
+            EventAlias item = (EventAlias) getGroup(groupPosition);
             String displayString = item.toString() + " " + context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting);  // TODO
 
             if (selectedItem != null && item.getID().equals(selectedItem.getID()) && (selectedChild == childPosition)) {
@@ -960,7 +960,7 @@ public class EventListHelper
             return location;
         }
 
-        public void setSelected( EventSettings.EventAlias item ) {
+        public void setSelected( EventAlias item ) {
             selectedItem = item;
             notifyDataSetChanged();
         }
@@ -970,7 +970,7 @@ public class EventListHelper
             selectedChild = i;
         }
 
-        public EventSettings.EventAlias getSelected() {
+        public EventAlias getSelected() {
             return selectedItem;
         }
 
@@ -978,10 +978,10 @@ public class EventListHelper
             return selectedChild;
         }
 
-        public EventSettings.EventAlias findItemByID(String eventID)
+        public EventAlias findItemByID(String eventID)
         {
             for (int i=0; i<objects.size(); i++) {
-                EventSettings.EventAlias item = objects.get(i);
+                EventAlias item = objects.get(i);
                 if (item != null && item.getID().equals(eventID)) {
                     //Log.d("DEBUG", "findItemByID: " + eventID + " .. " + item.toString());
                     return item;
@@ -992,7 +992,7 @@ public class EventListHelper
         }
 
         @Override
-        public List<EventSettings.EventAlias> getItems() {
+        public List<EventAlias> getItems() {
             return objects;
         }
     }
@@ -1000,22 +1000,22 @@ public class EventListHelper
     /**
      * EventDisplayAdapter
      */
-    public static class EventDisplayAdapter extends ArrayAdapter<EventSettings.EventAlias> implements EventDisplayAdapterInterface
+    public static class EventDisplayAdapter extends ArrayAdapter<EventAlias> implements EventDisplayAdapterInterface
     {
         private int resourceID, dropDownResourceID;
-        private EventSettings.EventAlias selectedItem;
+        private EventAlias selectedItem;
 
         public EventDisplayAdapter(@NonNull Context context, int resource) {
             super(context, resource);
             init(context, resource);
         }
 
-        public EventDisplayAdapter(@NonNull Context context, int resource, @NonNull EventSettings.EventAlias[] objects) {
+        public EventDisplayAdapter(@NonNull Context context, int resource, @NonNull EventAlias[] objects) {
             super(context, resource, objects);
             init(context, resource);
         }
 
-        public EventDisplayAdapter(@NonNull Context context, int resource, @NonNull List<EventSettings.EventAlias> objects) {
+        public EventDisplayAdapter(@NonNull Context context, int resource, @NonNull List<EventAlias> objects) {
             super(context, resource, objects);
             init(context, resource);
         }
@@ -1024,7 +1024,7 @@ public class EventListHelper
             resourceID = dropDownResourceID = resource;
         }
 
-        public void setSelected( EventSettings.EventAlias item ) {
+        public void setSelected( EventAlias item ) {
             selectedItem = item;
             notifyDataSetChanged();
         }
@@ -1034,7 +1034,7 @@ public class EventListHelper
             /* EMPTY */
         }
 
-        public EventSettings.EventAlias getSelected() {
+        public EventAlias getSelected() {
             return selectedItem;
         }
 
@@ -1042,10 +1042,10 @@ public class EventListHelper
             return -1;
         }
 
-        public EventSettings.EventAlias findItemByID(String eventID)
+        public EventAlias findItemByID(String eventID)
         {
             for (int i=0; i<getCount(); i++) {
-                EventSettings.EventAlias item = getItem(i);
+                EventAlias item = getItem(i);
                 if (item != null && item.getID().equals(eventID)) {
                     return item;
                 }
@@ -1054,12 +1054,12 @@ public class EventListHelper
         }
 
         @Override
-        public List<EventSettings.EventAlias> getItems()
+        public List<EventAlias> getItems()
         {
-            ArrayList<EventSettings.EventAlias> items = new ArrayList<>();
+            ArrayList<EventAlias> items = new ArrayList<>();
             for (int i=0; i<getCount(); i++)
             {
-                EventSettings.EventAlias item = getItem(i);
+                EventAlias item = getItem(i);
                 if (item != null) {
                     items.add(item);
                 }
@@ -1089,7 +1089,7 @@ public class EventListHelper
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = layoutInflater.inflate(resID, parent, false);
 
-            EventSettings.EventAlias item = getItem(position);
+            EventAlias item = getItem(position);
             if (item == null) {
                 Log.w("getItemView", "item at position " + position + " is null.");
                 return view;
@@ -1131,10 +1131,10 @@ public class EventListHelper
     public boolean triggerActionMode() {
         return triggerActionMode(list, selectedItem, selectedChild);
     }
-    protected boolean triggerActionMode(View view, EventSettings.EventAlias item) {
+    protected boolean triggerActionMode(View view, EventAlias item) {
         return triggerActionMode(view, item, -1);
     }
-    protected boolean triggerActionMode(View view, EventSettings.EventAlias item, int i)
+    protected boolean triggerActionMode(View view, EventAlias item, int i)
     {
         Context context = contextRef.get();
         if (context == null) {
@@ -1181,8 +1181,8 @@ public class EventListHelper
         public EventAliasActionModeBase() {
         }
 
-        protected EventSettings.EventAlias event = null;
-        public void setItem(EventSettings.EventAlias item) {
+        protected EventAlias event = null;
+        public void setItem(EventAlias item) {
             event = item;
         }
 

@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -1792,7 +1793,7 @@ public class SuntimesActivity extends AppCompatActivity
             String alarmID = eventID;
             if (EventSettings.hasEvent(this, eventID))
             {
-                EventSettings.EventAlias event = EventSettings.loadEvent(this, eventID);
+                EventAlias event = EventSettings.loadEvent(this, eventID);
                 alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
             }
 

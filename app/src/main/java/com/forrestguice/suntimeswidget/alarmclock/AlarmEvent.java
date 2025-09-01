@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -387,7 +387,7 @@ public class AlarmEvent
         Set<String> customEvents = EventSettings.loadVisibleEvents(context);
         for (String eventID : customEvents)
         {
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(context, eventID);
             items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
             items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }

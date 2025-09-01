@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
@@ -464,7 +465,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             for (ContentValues values : contentValues)
             {
                 if (values != null) {
-                    EventSettings.saveEvent(context, new EventSettings.EventAlias(values));
+                    EventSettings.saveEvent(context, new EventAlias(values));
                     c++;
                 }
             }

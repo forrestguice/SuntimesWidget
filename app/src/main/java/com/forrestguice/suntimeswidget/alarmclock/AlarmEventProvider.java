@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -174,9 +175,9 @@ public class AlarmEventProvider extends ContentProvider
                 }
 
                 // list all custom events
-                List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
+                List<EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
                 events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
-                for (EventSettings.EventAlias event : events1)
+                for (EventAlias event : events1)
                 {
                     Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
                     if (row1 != null) {
@@ -237,7 +238,7 @@ public class AlarmEventProvider extends ContentProvider
                     aliasID = aliasID.substring(0, eventID.length() - 1);
                 }
                 boolean rising = suffix.equals(ElevationEvent.SUFFIX_RISING);
-                EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
+                EventAlias alias = EventSettings.loadEvent(context, aliasID);
                 Object[] row = createRow(context, alias, rising, columns, selection, selectionArgs);
                 if (row != null) {
                     retValue.addRow(row);
@@ -333,7 +334,7 @@ public class AlarmEventProvider extends ContentProvider
      * createRow( EventAlias )
      */
     @Nullable
-    private Object[] createRow(@NonNull Context context, EventSettings.EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
+    private Object[] createRow(@NonNull Context context, EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         Uri uri = Uri.parse(event.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING));
         Cursor cursor = context.getContentResolver().query(uri, columns, selection, selectionArgs, null);

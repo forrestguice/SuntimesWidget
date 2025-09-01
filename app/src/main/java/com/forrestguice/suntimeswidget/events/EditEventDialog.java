@@ -197,10 +197,10 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event */
-    public EventSettings.EventAlias getEvent() {
-        return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri(), getEventIsShown());
+    public EventAlias getEvent() {
+        return new EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri(), getEventIsShown());
     }
-    public void setEvent(EventSettings.EventAlias event)
+    public void setEvent(EventAlias event)
     {
         type = event.getType();
         setEventID(event.getID());

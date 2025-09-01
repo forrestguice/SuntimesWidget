@@ -20,12 +20,12 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 
 public class EventAliasTimeMode implements RiseSetDataMode
 {
-    private EventSettings.EventAlias event;
-    public EventAliasTimeMode(EventSettings.EventAlias event) {
+    private EventAlias event;
+    public EventAliasTimeMode(EventAlias event) {
         this.event = event;
     }
 
@@ -35,7 +35,7 @@ public class EventAliasTimeMode implements RiseSetDataMode
         return null;
     }
 
-    public EventSettings.EventAlias getEvent() {
+    public EventAlias getEvent() {
         return event;
     }
 

@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
@@ -171,7 +172,7 @@ public class UIPrefsFragment extends PreferenceFragment
         Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
         for (final String eventID : eventIDs)
         {
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(context, eventID);
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);

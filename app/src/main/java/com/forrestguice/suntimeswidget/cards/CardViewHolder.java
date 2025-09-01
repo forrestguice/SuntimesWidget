@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
@@ -905,7 +906,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
         @SuppressLint("ResourceType")
-        public TimeFieldRow addRow(Context context, EventSettings.EventAlias event)
+        public TimeFieldRow addRow(Context context, EventAlias event)
         {
             int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.table_risingColor, R.attr.table_settingColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);

@@ -23,11 +23,11 @@ import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -80,7 +80,7 @@ public class SuntimesRiseSetData extends SuntimesData
         dataMode = value;
         if (dataMode instanceof EventAliasTimeMode)
         {
-            EventSettings.EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
+            EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.ElevationEvent event;
             switch (alias.getType()) {
                 case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;

@@ -85,6 +85,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
@@ -1366,7 +1367,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             if (EventSettings.hasEvent(context, eventID))
             {
-                EventSettings.EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
+                EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
                 if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION
                         || event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH)
                 {
