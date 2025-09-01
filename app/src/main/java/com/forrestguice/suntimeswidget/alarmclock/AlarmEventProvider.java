@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -461,13 +462,13 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = event.getEventName();
                     break;
                 case COLUMN_EVENT_TITLE:
-                    row[i] = event.getEventTitle(context);
+                    row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE:
-                    row[i] = event.getEventPhrase(context);
+                    row[i] = event.getEventPhrase(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
-                    row[i] = event.getEventGender(context);
+                    row[i] = event.getEventGender(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE_QUANTITY:
                     row[i] = 1;
@@ -483,7 +484,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
-                    row[i] = event.getEventSummary(context);
+                    row[i] = event.getEventSummary(AndroidSuntimesDataSettings.wrap(context));
                     break;
             }
         }
@@ -521,13 +522,13 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = event.getEventName();
                     break;
                 case COLUMN_EVENT_TITLE:
-                    row[i] = event.getEventTitle(context);
+                    row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE:
-                    row[i] = event.getEventPhrase(context);
+                    row[i] = event.getEventPhrase(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
-                    row[i] = event.getEventGender(context);
+                    row[i] = event.getEventGender(AndroidSuntimesDataSettings.wrap(context));
                     break;
                 case COLUMN_EVENT_PHRASE_QUANTITY:
                     row[i] = 1;
@@ -543,7 +544,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
-                    row[i] = event.getEventSummary(context);
+                    row[i] = event.getEventSummary(AndroidSuntimesDataSettings.wrap(context));
                     break;
             }
         }

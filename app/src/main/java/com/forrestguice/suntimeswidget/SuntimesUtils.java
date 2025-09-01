@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
@@ -1151,6 +1152,11 @@ public class SuntimesUtils
 
     public static TimeDisplayText formatAsHeight(Context context, double meters, LengthUnit units, int places, boolean shortForm)
     {
+        return formatAsHeight(AndroidResources.wrap(context), meters, units, places, shortForm);
+    }
+
+    public static TimeDisplayText formatAsHeight(com.forrestguice.util.Resources resources, double meters, LengthUnit units, int places, boolean shortForm)
+    {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(places);
@@ -1163,16 +1169,16 @@ public class SuntimesUtils
             case IMPERIAL:
                 value = LengthUnit.metersToFeet(meters);
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(R.string.units_feet_short)
-                                         : context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
+                unitsString = (shortForm ? resources.getString(R.string.units_feet_short)
+                                         : resources.getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
                 break;
 
             case METRIC:
             default:
                 value = meters;
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(R.string.units_meters_short)
-                                         : context.getResources().getQuantityString(R.plurals.units_meters_long, (int)value, formatted));
+                unitsString = (shortForm ? resources.getString(R.string.units_meters_short)
+                                         : resources.getQuantityString(R.plurals.units_meters_long, (int)value, formatted));
                 break;
         }
         return new TimeDisplayText(formatted, unitsString, "");

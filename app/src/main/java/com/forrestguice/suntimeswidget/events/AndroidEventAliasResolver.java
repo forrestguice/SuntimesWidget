@@ -26,9 +26,10 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 
 public class AndroidEventAliasResolver implements EventItemResolver
 {
-    public String resolveSummary(Object contextObj, String uri)
+    public String resolveSummary(Object contextObj, EventAlias alias)
     {
         Context context = (Context) contextObj;
+        String uri = (alias != null ? alias.getUri() : null);
         String retValue = null;
         if (uri != null && !uri.trim().isEmpty())
         {

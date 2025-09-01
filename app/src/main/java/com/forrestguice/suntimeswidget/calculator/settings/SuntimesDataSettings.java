@@ -20,18 +20,22 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.util.Resources;
 
 import java.util.Set;
 
 public interface SuntimesDataSettings
 {
+    Resources getResources();
+
     SuntimesCalculatorDescriptor loadCalculatorModePref(int appWidgetId, String calculatorName);
 
     CompareMode loadCompareModePref(int appWidgetId);
 
     DateMode loadDateModePref(int appWidgetId);
     DateInfo loadDatePref(int appWidgetId);
+
+    LengthUnit loadLengthUnitsPref(int appWidgetId);
 
     boolean loadLocalizeHemispherePref(int appWidgetId);
 

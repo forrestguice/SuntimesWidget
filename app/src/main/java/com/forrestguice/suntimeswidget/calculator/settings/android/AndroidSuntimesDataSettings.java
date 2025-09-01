@@ -4,6 +4,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
@@ -13,6 +14,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Set;
 
@@ -25,6 +28,11 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
 
     public static AndroidSuntimesDataSettings wrap(android.content.Context context) {
         return new AndroidSuntimesDataSettings(context);
+    }
+
+    @Override
+    public Resources getResources() {
+        return AndroidResources.wrap(context);
     }
 
     @Override
@@ -50,6 +58,11 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public DateInfo loadDatePref(int appWidgetId) {
         return WidgetSettings.loadDatePref(context, appWidgetId);
+    }
+
+    @Override
+    public LengthUnit loadLengthUnitsPref(int appWidgetId) {
+        return WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
     }
 
     @Override
