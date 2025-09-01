@@ -34,6 +34,7 @@ import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
@@ -386,7 +387,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             calendar.set(Calendar.MINUTE, minutes);
             calendar.set(Calendar.SECOND, 0);
 
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
             SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
             onView( allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()) )
                     .check(assertContainsText(text.toString()));

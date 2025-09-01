@@ -30,6 +30,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
@@ -376,9 +378,9 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_OPTION_TIME_IS24:
-                            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || mode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
-                                    : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
+                            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+                            boolean is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+                                    : (mode == TimeFormatMode.MODE_24HR);
                             row[i] = (is24 ? 1 : 0);
                             break;
 

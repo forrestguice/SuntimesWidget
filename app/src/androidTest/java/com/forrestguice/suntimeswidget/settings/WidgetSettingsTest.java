@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -123,22 +124,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Context context = activityRule.getActivity();
         int appWidgetId = Integer.MAX_VALUE;
 
-        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, WidgetSettings.TimeFormatMode.MODE_SYSTEM);
-        WidgetSettings.TimeFormatMode mode3 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        assertTrue("mode should be system but was " + mode3, mode3 == WidgetSettings.TimeFormatMode.MODE_SYSTEM);
+        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, TimeFormatMode.MODE_SYSTEM);
+        TimeFormatMode mode3 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        assertTrue("mode should be system but was " + mode3, mode3 == TimeFormatMode.MODE_SYSTEM);
 
-        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, WidgetSettings.TimeFormatMode.MODE_24HR);
-        WidgetSettings.TimeFormatMode mode2 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        assertTrue("mode should be 24 hr but was " + mode2, mode2 == WidgetSettings.TimeFormatMode.MODE_24HR);
+        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, TimeFormatMode.MODE_24HR);
+        TimeFormatMode mode2 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        assertTrue("mode should be 24 hr but was " + mode2, mode2 == TimeFormatMode.MODE_24HR);
 
-        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, WidgetSettings.TimeFormatMode.MODE_12HR);
-        WidgetSettings.TimeFormatMode mode1 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        assertTrue("mode should be 12 hr but was " + mode1, mode1 == WidgetSettings.TimeFormatMode.MODE_12HR);
+        WidgetSettings.saveTimeFormatModePref(context, appWidgetId, TimeFormatMode.MODE_12HR);
+        TimeFormatMode mode1 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        assertTrue("mode should be 12 hr but was " + mode1, mode1 == TimeFormatMode.MODE_12HR);
 
         WidgetSettings.deleteTimeFormatModePref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode mode0 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode mode0 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         assertTrue("mode should be default (system) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_APPEARANCE_TIMEFORMATMODE &&
-                mode0 == WidgetSettings.TimeFormatMode.MODE_SYSTEM);
+                mode0 == TimeFormatMode.MODE_SYSTEM);
     }
 
     private Context context;

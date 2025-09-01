@@ -79,6 +79,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -1178,8 +1179,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            final ArrayAdapter<WidgetSettings.TimeFormatMode> spinner_timeFormatModeAdapter;
-            spinner_timeFormatModeAdapter = new ArrayAdapter<WidgetSettings.TimeFormatMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeFormatMode.values());
+            final ArrayAdapter<TimeFormatMode> spinner_timeFormatModeAdapter;
+            spinner_timeFormatModeAdapter = new ArrayAdapter<TimeFormatMode>(this, R.layout.layout_listitem_oneline, TimeFormatMode.values());
             spinner_timeFormatModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_timeFormatMode.setAdapter(spinner_timeFormatModeAdapter);
         }
@@ -1192,7 +1193,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
             spinner_timeFormatMode.setSelection(mode.ordinal());
         }
     }
@@ -1204,8 +1205,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeFormatMode != null)
         {
-            final WidgetSettings.TimeFormatMode[] modes = WidgetSettings.TimeFormatMode.values();
-            WidgetSettings.TimeFormatMode mode = modes[spinner_timeFormatMode.getSelectedItemPosition()];
+            final TimeFormatMode[] modes = TimeFormatMode.values();
+            TimeFormatMode mode = modes[spinner_timeFormatMode.getSelectedItemPosition()];
             WidgetSettings.saveTimeFormatModePref(context, appWidgetId, mode);
         }
     }

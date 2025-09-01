@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -91,7 +92,7 @@ public abstract class SunLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, WidgetSettings.TimeFormatMode timeFormat)
+    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, TimeFormatMode timeFormat)
     {
         if (order == WidgetSettings.RiseSetOrder.TODAY)
         {
@@ -120,7 +121,7 @@ public abstract class SunLayout extends SuntimesLayout
 
     }
 
-    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
+    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
         SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String sunriseString = sunriseText.getValue();
@@ -129,7 +130,7 @@ public abstract class SunLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
 
-    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
+    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
         SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String sunsetString = sunsetText.getValue();
@@ -138,7 +139,7 @@ public abstract class SunLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
 
-    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
+    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
         SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String noonString = noonText.getValue();

@@ -23,6 +23,7 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.BehaviorTest;
@@ -848,15 +849,15 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
         public EquinoxDialogRobot assertCard_showsDateFor(Context context, SolsticeEquinoxMode mode, int forYear, boolean withSeconds)
         {
-            WidgetSettings.TimeFormatMode withMode = WidgetSettings.loadTimeFormatModePref(context, 0);
+            TimeFormatMode withMode = WidgetSettings.loadTimeFormatModePref(context, 0);
             Calendar event = CalculatorProviderTest.lookupEventTime(context, mode, forYear);
             assertCard_showsDate(event, mode.getLongDisplayString(), withMode, withSeconds);
             return this;
         }
-        public EquinoxDialogRobot assertCard_showsDate(@Nullable Calendar date, String withLabel, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        public EquinoxDialogRobot assertCard_showsDate(@Nullable Calendar date, String withLabel, TimeFormatMode withMode, boolean withSeconds)
         {
             if (date != null) {
-                SimpleDateFormat[] formats = (withMode == WidgetSettings.TimeFormatMode.MODE_12HR)
+                SimpleDateFormat[] formats = (withMode == TimeFormatMode.MODE_12HR)
                         ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                         : (withSeconds ? timeDateFormats24s : timeDateFormats24);
                 long tolerance = (withSeconds ? 1000 : 60 * 1000);

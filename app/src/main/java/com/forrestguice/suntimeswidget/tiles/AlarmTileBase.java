@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -130,7 +131,7 @@ public class AlarmTileBase extends SuntimesTileBase
         AlarmClockItem item = initAlarmItem(context);
         if (item != null)
         {
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
             String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
@@ -151,7 +152,7 @@ public class AlarmTileBase extends SuntimesTileBase
         if (item != null)
         {
             // formatted alarm time
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
             String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();

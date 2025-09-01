@@ -27,6 +27,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -129,7 +130,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
             verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
 
-            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, WidgetSettings.TimeFormatMode.class);
+            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, TimeFormatMode.class);
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
 
             verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.lengthUnits_values, WidgetSettings.LengthUnit.class);

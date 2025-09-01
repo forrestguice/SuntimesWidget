@@ -61,6 +61,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -122,7 +123,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public TimeZoneDialog()
     {
         Bundle args = new Bundle();
-        args.putString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name());
+        args.putString(KEY_TIMEFORMAT_MODE, TimeFormatMode.MODE_SYSTEM.name());
         setArguments(args);
     }
 
@@ -146,18 +147,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         return getArguments().getString(KEY_LONGITUDE_LABEL);
     }
 
-    public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
+    public void setTimeFormatMode(TimeFormatMode mode) {
         getArguments().putString(KEY_TIMEFORMAT_MODE, mode.name());
         updatePreview(getActivity());
     }
-    public WidgetSettings.TimeFormatMode getTimeFormatMode()
+    public TimeFormatMode getTimeFormatMode()
     {
         try {
             String mode = getArguments().getString(KEY_TIMEFORMAT_MODE);
-            return ((mode != null) ? WidgetSettings.TimeFormatMode.valueOf(mode) : WidgetSettings.TimeFormatMode.MODE_SYSTEM);
+            return ((mode != null) ? TimeFormatMode.valueOf(mode) : TimeFormatMode.MODE_SYSTEM);
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getTimeFormatMode: " + e);
-            return WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+            return TimeFormatMode.MODE_SYSTEM;
         }
     }
 

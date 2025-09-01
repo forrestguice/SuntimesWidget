@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.WelcomeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
@@ -258,7 +259,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             @Override
             public boolean onPreferenceChange(Preference preference, Object o)
             {
-                timeformatPref.setSummary(timeFormatPrefSummary(WidgetSettings.TimeFormatMode.valueOf((String)o), context));
+                timeformatPref.setSummary(timeFormatPrefSummary(TimeFormatMode.valueOf((String)o), context));
                 return true;
             }
         });
@@ -266,27 +267,27 @@ public class GeneralPrefsFragment extends PreferenceFragment
 
     public static void loadPref_timeFormat(final Activity context, final ListPreference timeformatPref)
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         int index = timeformatPref.findIndexOfValue(mode.name());
         if (index < 0)
         {
             index = 0;
-            WidgetSettings.TimeFormatMode mode0 = mode;
-            mode = WidgetSettings.TimeFormatMode.values()[index];
+            TimeFormatMode mode0 = mode;
+            mode = TimeFormatMode.values()[index];
             Log.w("loadPref", "timeFormat not found (" + mode0 + ") :: loading " + mode.name() + " instead..");
         }
         timeformatPref.setValueIndex(index);
         timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
     }
 
-    public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
+    public static String timeFormatPrefSummary(TimeFormatMode mode, Context context)
     {
         String summary = "%s";
-        if (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM)
+        if (mode == TimeFormatMode.MODE_SYSTEM)
         {
             String sysPref = android.text.format.DateFormat.is24HourFormat(context)
-                    ? WidgetSettings.TimeFormatMode.MODE_24HR.getDisplayString()
-                    : WidgetSettings.TimeFormatMode.MODE_12HR.getDisplayString();
+                    ? TimeFormatMode.MODE_24HR.getDisplayString()
+                    : TimeFormatMode.MODE_12HR.getDisplayString();
             summary = context.getString(R.string.configLabel_timeFormatMode_systemsummary, "%s", sysPref);
         }
         return summary;

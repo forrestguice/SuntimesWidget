@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
@@ -107,7 +108,7 @@ public abstract class AlarmLayout extends SuntimesLayout
         long millisUntilAlarm = now.getTimeInMillis() - alarmTime.getTimeInMillis();
         alarmTime.setTimeInMillis(item.alarmtime);
 
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         String displayString = (millisUntilAlarm > 1000 * 60 * 60 * 24)
                 ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false, timeFormat).toString()
                 : utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();

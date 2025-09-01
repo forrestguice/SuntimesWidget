@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -1085,38 +1086,6 @@ public class WidgetSettings
         SolarTimeMode.UTC.setDisplayString(context.getString(R.string.time_utc));
     }
 
-    /**
-     * TimeFormatMode
-     */
-    public static enum TimeFormatMode
-    {
-        MODE_SYSTEM("System"),
-        MODE_12HR("12 hr"),
-        MODE_24HR("24 hr"),
-        MODE_SUNTIMES("Suntimes");
-
-        private String displayString;
-
-        private TimeFormatMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-    }
     public static void initDisplayStrings_TimeFormatMode( Context context )
     {
         TimeFormatMode.MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
@@ -2144,14 +2113,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeFormatModePref(Context context, int appWidgetId, WidgetSettings.TimeFormatMode mode)
+    public static void saveTimeFormatModePref(Context context, int appWidgetId, TimeFormatMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
+    public static TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
@@ -2160,7 +2129,7 @@ public class WidgetSettings
         TimeFormatMode formatMode;
         try
         {
-            formatMode = WidgetSettings.TimeFormatMode.valueOf(modeString);
+            formatMode = TimeFormatMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             formatMode = PREF_DEF_APPEARANCE_TIMEFORMATMODE;

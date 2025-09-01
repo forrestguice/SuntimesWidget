@@ -32,6 +32,7 @@ import android.view.ContextThemeWrapper;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -86,7 +87,7 @@ public class ClockTileBase extends SuntimesTileBase
     public SpannableStringBuilder formatDialogTitle(Context context)
     {
         Calendar now = now(context);
-        WidgetSettings.TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+        TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
         String timeString = utils.calendarTimeShortDisplayString(context, now, false, formatMode).toString();
         SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
         timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
