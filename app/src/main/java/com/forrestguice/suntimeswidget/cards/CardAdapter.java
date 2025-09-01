@@ -624,7 +624,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
             SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, 0);
             data0.initCalculator();
-            data0.initTimezone(context);
+            data0.initTimezone(data0.getDataSettings(context));
             timezone = data0.timezone();
 
             supportsGoldBlue = data0.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);

@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Log;
 
@@ -60,12 +59,12 @@ public class SuntimesRiseSetDataset
         return dataset.size();
     }
 
-    public SuntimesRiseSetDataset(Context context)
+    public SuntimesRiseSetDataset(Object context)
     {
         init(context, 0);
     }
 
-    public SuntimesRiseSetDataset(Context context, int appWidgetID)
+    public SuntimesRiseSetDataset(Object context, int appWidgetID)
     {
         init(context, appWidgetID);
     }
@@ -96,7 +95,7 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    private void init(Context context, int appWidgetID)
+    private void init(Object context, int appWidgetID)
     {
         dataActual = new SuntimesRiseSetData(context, appWidgetID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
@@ -136,7 +135,7 @@ public class SuntimesRiseSetDataset
         dataset.put(WidgetSettings.TimeMode.BLUE4.name(), dataBlue4);
     }
 
-    public void calculateData(Context context)
+    public void calculateData(Object context)
     {
         SuntimesCalculator calculator = this.calculator;
         SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;

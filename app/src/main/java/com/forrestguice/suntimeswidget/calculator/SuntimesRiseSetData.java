@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -30,10 +30,10 @@ import java.util.Calendar;
 
 public class SuntimesRiseSetData extends SuntimesData
 {
-    public SuntimesRiseSetData(Context context, int appWidgetId) {
+    public SuntimesRiseSetData(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesRiseSetData(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData(SuntimesRiseSetData other) {
@@ -276,11 +276,12 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    protected void initFromSettings(Object context, int appWidgetId, String calculatorName)
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
-        setDataMode(WidgetSettings.loadTimeModePref(context, appWidgetId));
-        this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        SuntimesDataSettings settings = getDataSettings(context);
+        setDataMode(settings.loadTimeModePref(appWidgetId));
+        this.compareMode = settings.loadCompareModePref(appWidgetId);
     }
 
     public boolean isDay()
@@ -303,7 +304,7 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -314,7 +315,7 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         initCalculator();
-        initTimezone(context);
+        initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

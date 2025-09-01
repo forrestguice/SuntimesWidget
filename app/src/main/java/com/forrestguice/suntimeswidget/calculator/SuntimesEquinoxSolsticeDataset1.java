@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -37,13 +35,13 @@ public class SuntimesEquinoxSolsticeDataset1 extends SuntimesEquinoxSolsticeData
     public SuntimesEquinoxSolsticeData dataCrossWinter;
     public SuntimesEquinoxSolsticeData[] dataCrossQuarterDays;
 
-    public SuntimesEquinoxSolsticeDataset1(Context context)
+    public SuntimesEquinoxSolsticeDataset1(Object context)
     {
         super(context);
         initCrossQuarterData();
     }
 
-    public SuntimesEquinoxSolsticeDataset1(Context context, int appWidgetId)
+    public SuntimesEquinoxSolsticeDataset1(Object context, int appWidgetId)
     {
         super(context, appWidgetId);
         initCrossQuarterData();
@@ -67,7 +65,7 @@ public class SuntimesEquinoxSolsticeDataset1 extends SuntimesEquinoxSolsticeData
     }
 
     @Override
-    public void calculateData(Context context)
+    public void calculateData(Object context)
     {
         super.calculateData(context);
         SuntimesCalculator calculator = dataEquinoxSpring.calculator();

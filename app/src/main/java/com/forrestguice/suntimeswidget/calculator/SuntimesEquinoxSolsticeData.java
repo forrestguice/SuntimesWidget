@@ -18,20 +18,19 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
 public class SuntimesEquinoxSolsticeData extends SuntimesData
 {
-    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId) {
+    public SuntimesEquinoxSolsticeData(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesEquinoxSolsticeData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesEquinoxSolsticeData(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesEquinoxSolsticeData(SuntimesEquinoxSolsticeData other) {
@@ -79,11 +78,12 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    public void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    public void initFromSettings(Object context, int appWidgetId, String calculatorName)
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
-        timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
-        localizeHemisphere = WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId);
+        SuntimesDataSettings settings = getDataSettings(context);
+        timeMode = settings.loadTimeMode2Pref(appWidgetId);
+        localizeHemisphere = settings.loadLocalizeHemispherePref(appWidgetId);
     }
 
     /**
@@ -158,7 +158,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     }
 
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -175,7 +175,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         initCalculator();
         location = location0;
 
-        initTimezone(context);
+        initTimezone(getDataSettings(context));
 
         Calendar lastYearCalendar = Calendar.getInstance(timezone);
         Calendar thisYearCalendar = todaysCalendar = Calendar.getInstance(timezone);
