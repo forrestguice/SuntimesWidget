@@ -1641,8 +1641,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected String getSelectedTZID(Context context) {
         return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
     }
-    protected TimeZone getSelectedTZ(Context context, @NonNull SuntimesRiseSetDataset data)
+    protected TimeZone getSelectedTZ(Context context, @Nullable SuntimesRiseSetDataset data)
     {
+        if (data == null) {
+            Log.w("DEBUG", "getSelectedTZ: data is null!! ");
+            return null;
+        }
         String tzId = getSelectedTZID(context);
         return WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
                 : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
