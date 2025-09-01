@@ -38,7 +38,7 @@ public interface SuntimesDataSettings
 
     WidgetSettings.SolarTimeMode loadSolarTimeModePref(int appWidgetID);
     WidgetSettings.RiseSetDataMode loadTimeModePref(int appWidgetId);
-    WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
+    SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
 
     boolean loadTimeZoneFromAppPref(int appWidgetID);
     String loadTimezonePref(int appWidgetID);

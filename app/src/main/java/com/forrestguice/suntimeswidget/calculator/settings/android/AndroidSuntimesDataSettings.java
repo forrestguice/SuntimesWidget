@@ -1,6 +1,7 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -52,7 +53,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
-    public WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId) {
+    public SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId) {
         return WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
     }
 

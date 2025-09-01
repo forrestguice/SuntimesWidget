@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 import java.util.Calendar;
 
@@ -50,16 +50,16 @@ public class SuntimesEquinoxSolsticeDataset1 extends SuntimesEquinoxSolsticeData
     protected void initCrossQuarterData()
     {
         dataCrossSpring = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataCrossSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.CROSS_SPRING);
+        dataCrossSpring.setTimeMode(SolsticeEquinoxMode.CROSS_SPRING);
 
         dataCrossSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataCrossSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.CROSS_SUMMER);
+        dataCrossSummer.setTimeMode(SolsticeEquinoxMode.CROSS_SUMMER);
 
         dataCrossAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataCrossAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.CROSS_AUTUMN);
+        dataCrossAutumnal.setTimeMode(SolsticeEquinoxMode.CROSS_AUTUMN);
 
         dataCrossWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataCrossWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.CROSS_WINTER);
+        dataCrossWinter.setTimeMode(SolsticeEquinoxMode.CROSS_WINTER);
 
         dataCrossQuarterDays = new SuntimesEquinoxSolsticeData[] { dataCrossSpring, dataCrossSummer, dataCrossAutumnal, dataCrossWinter };
     }

@@ -30,7 +30,6 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +41,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -154,8 +153,8 @@ public class EquinoxCardView extends LinearLayout
     public void initAdapter(Context context)
     {
         boolean southernHemisphere = (WidgetSettings.loadLocalizeHemispherePref(context, 0)) && (WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble() < 0);
-        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values(southernHemisphere)
-                                                                                                   : WidgetSettings.SolsticeEquinoxMode.partialValues(southernHemisphere);
+        SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? SolsticeEquinoxMode.values(southernHemisphere)
+                                                                                                   : SolsticeEquinoxMode.partialValues(southernHemisphere);
         options.highlightPosition = -1;
 
         card_adapter = new EquinoxDataAdapter(context, modes, options);
@@ -255,7 +254,7 @@ public class EquinoxCardView extends LinearLayout
         @Override public void onTitleClick( int position ) {}
         @Override public void onNextClick( int position ) {}
         @Override public void onPrevClick( int position ) {}
-        @Override public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {}
+        @Override public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {}
     };
 
     private final View.OnClickListener onResetClicked = new View.OnClickListener() {

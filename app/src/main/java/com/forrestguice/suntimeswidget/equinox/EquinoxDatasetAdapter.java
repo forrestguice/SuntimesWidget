@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -122,14 +123,14 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public boolean hasSelection() {
         return (selected_mode != null);
     }
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
-    protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+    protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {
         selected_position = position;
@@ -216,7 +217,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         for (int i=0; i <holder.notes.size(); i++) {
             EquinoxDatasetViewHolder.EquinoxNote note = holder.notes.get(i);
             if (note.contextMenu != null && note.time != null) {
-                note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
+                note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
             }
         }
 
@@ -292,7 +293,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
             }
         };
     }
-    private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+    private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +309,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
             @Override
             public void onClick(View v)
             {
-                WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
+                SolsticeEquinoxMode mode = SolsticeEquinoxMode.values()[i];
                 if (holder.getSelected() == mode) {
                     holder.notes.get(i).contextMenu.performClick();
 

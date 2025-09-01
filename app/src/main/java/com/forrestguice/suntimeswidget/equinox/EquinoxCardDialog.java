@@ -58,6 +58,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -604,7 +605,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
+    protected boolean showContextMenu(final Context context, View view, final SolsticeEquinoxMode mode, final long datetime)
     {
         PopupMenu menu = new PopupMenu(context, view, Gravity.START);
         MenuInflater inflater = menu.getMenuInflater();
@@ -619,7 +620,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, final WidgetSettings.SolsticeEquinoxMode mode, final long datetime)
+    private void updateContextMenu(Context context, PopupMenu menu, final SolsticeEquinoxMode mode, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
@@ -677,7 +678,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+            SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
 
             switch (item.getItemId())
             {
@@ -732,7 +733,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
 
     protected void shareItem(Context context, Intent itemData)
     {
-        WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+        SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMode != null && itemMillis != -1L)
         {
@@ -783,15 +784,15 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         initAdapter(context);
     }
 
-    protected int card_itemsPerPage = WidgetSettings.SolsticeEquinoxMode.values().length;
+    protected int card_itemsPerPage = SolsticeEquinoxMode.values().length;
     protected int card_orientation = LinearLayoutManager.HORIZONTAL;
     protected EquinoxDataAdapter card_adapter;
 
     protected void initAdapter(Context context)
     {
         boolean southernHemisphere = (WidgetSettings.loadLocalizeHemispherePref(context, 0)) && (WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble() < 0);
-        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values(southernHemisphere)
-                                                                                                   : WidgetSettings.SolsticeEquinoxMode.partialValues(southernHemisphere);
+        SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? SolsticeEquinoxMode.values(southernHemisphere)
+                                                                                                   : SolsticeEquinoxMode.partialValues(southernHemisphere);
         card_orientation = LinearLayoutManager.HORIZONTAL;
         card_itemsPerPage = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? modes.length : Math.max(4, modes.length / 2));
         options.highlightPosition = -1;
@@ -909,7 +910,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             onPrevClicked(position);
         }
         @Override
-        public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+        public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {
             showContextMenu(getContext(), view, mode, datetime);
         }
     };
@@ -926,13 +927,13 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
         }
     }
 
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();
     }
     public boolean hasSelection() {
         return card_adapter.hasSelection();
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode) {
         card_adapter.setSelection(mode);
     }
     public void setSelection(@Nullable Integer position) {
@@ -960,7 +961,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
      */
     public static class EquinoxDialogListener
     {
-        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
+        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}

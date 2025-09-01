@@ -22,6 +22,7 @@ import android.content.Context;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -630,7 +631,7 @@ public class DataSubstitutions
         }
 
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
-        WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+        SolsticeEquinoxMode timeMode = data.timeMode();
 
         displayString = displayString.replaceAll(PATTERN_m, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(PATTERN_M, timeMode.getLongDisplayString());

@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -388,7 +389,7 @@ public class EquinoxView extends LinearLayout
             }
         }
         @Override
-        public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+        public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {
             if (viewListener != null) {
                 viewListener.onMenuClick(view, position, mode, datetime);
             }
@@ -693,13 +694,13 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();
     }
     public boolean hasSelection() {
         return card_adapter.hasSelection();
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
         card_adapter.setSelection(mode);
     }
 
@@ -789,14 +790,14 @@ public class EquinoxView extends LinearLayout
         public boolean hasSelection() {
             return (selected_mode != null);
         }
-        public WidgetSettings.SolsticeEquinoxMode getSelection() {
+        public SolsticeEquinoxMode getSelection() {
             return this.selected_mode;
         }
-        public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+        public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
             this.selected_mode = mode;
             notifyDataSetChanged();
         }
-        protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+        protected SolsticeEquinoxMode selected_mode = null;
 
         /**
          * Clear existing data and initialize the center position.
@@ -876,7 +877,7 @@ public class EquinoxView extends LinearLayout
             for (int i=0; i <holder.notes.size(); i++) {
                 EquinoxNote note = holder.notes.get(i);
                 if (note.contextMenu != null && note.time != null) {
-                    note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
+                    note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
                 }
             }
 
@@ -952,7 +953,7 @@ public class EquinoxView extends LinearLayout
                 }
             };
         }
-        private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+        private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -968,7 +969,7 @@ public class EquinoxView extends LinearLayout
                 @Override
                 public void onClick(View v)
                 {
-                    WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
+                    SolsticeEquinoxMode mode = SolsticeEquinoxMode.values()[i];
                     if (holder.getSelected() == mode) {
                         holder.notes.get(i).contextMenu.performClick();
 
@@ -992,7 +993,7 @@ public class EquinoxView extends LinearLayout
 
         public View clickArea;
         public View[] clickAreas = new View[4];
-        public WidgetSettings.SolsticeEquinoxMode selected = null;
+        public SolsticeEquinoxMode selected = null;
 
         public View container;
         public TextView title;
@@ -1041,11 +1042,11 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        public void setSelected(WidgetSettings.SolsticeEquinoxMode mode) {
+        public void setSelected(SolsticeEquinoxMode mode) {
             this.selected = mode;
             updateItemFocus();
         }
-        public WidgetSettings.SolsticeEquinoxMode getSelected() {
+        public SolsticeEquinoxMode getSelected() {
             return selected;
         }
 
@@ -1291,9 +1292,9 @@ public class EquinoxView extends LinearLayout
         public void onTitleClick( int position ) {}
         public void onNextClick( int position ) {}
         public void onPrevClick( int position ) {}
-        public void onSelected( int position, WidgetSettings.SolsticeEquinoxMode mode ) {}
+        public void onSelected( int position, SolsticeEquinoxMode mode ) {}
         public void onMenuClick( View v, int position ) {}
-        public void onMenuClick( View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime ) {}
+        public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime ) {}
     }
 
 }

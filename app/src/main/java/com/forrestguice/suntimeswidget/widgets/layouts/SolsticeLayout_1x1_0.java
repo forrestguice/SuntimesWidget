@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -41,7 +42,7 @@ import java.util.Calendar;
  */
 public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
-    protected WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+    protected SolsticeEquinoxMode timeMode = SolsticeEquinoxMode.EQUINOX_SPRING;
     protected int timeColor = Color.WHITE;
 
     public SolsticeLayout_1x1_0()

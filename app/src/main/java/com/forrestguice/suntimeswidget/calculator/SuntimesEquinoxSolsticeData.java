@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 
@@ -40,12 +40,12 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * Property: timeMode
      */
-    private WidgetSettings.SolsticeEquinoxMode timeMode;
-    public WidgetSettings.SolsticeEquinoxMode timeMode()
+    private SolsticeEquinoxMode timeMode;
+    public SolsticeEquinoxMode timeMode()
     {
         return timeMode;
     }
-    public void setTimeMode( WidgetSettings.SolsticeEquinoxMode mode )
+    public void setTimeMode( SolsticeEquinoxMode mode )
     {
         timeMode = mode;
     }

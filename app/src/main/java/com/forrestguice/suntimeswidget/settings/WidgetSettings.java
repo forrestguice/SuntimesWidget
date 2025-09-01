@@ -18,21 +18,18 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
@@ -67,7 +64,6 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
@@ -1403,66 +1399,6 @@ public class WidgetSettings
         TrackingMode.SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
     }
 
-    /**
-     * SolsticeEquinoxMode
-     */
-    public static enum SolsticeEquinoxMode
-    {
-        CROSS_SPRING("Midpoint", "Spring cross-quarter"),
-        EQUINOX_SPRING("Equinox", "Spring Equinox"),
-
-        CROSS_SUMMER("Midpoint", "Summer cross-quarter"),
-        SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
-
-        CROSS_AUTUMN("Midpoint", "Autumn cross-quarter"),
-        EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
-
-        CROSS_WINTER("Midpoint", "Winter cross-quarter"),
-        SOLSTICE_WINTER("Solstice", "Winter Solstice");
-
-        public static boolean shortDisplayStrings = false;
-
-        private String shortDisplayString;
-        private String longDisplayString;
-
-        private SolsticeEquinoxMode(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-                return shortDisplayString;
-            else return longDisplayString;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static SolsticeEquinoxMode[] values(boolean southernHemisphere) {
-            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { CROSS_AUTUMN, EQUINOX_AUTUMNAL, CROSS_WINTER, SOLSTICE_WINTER, CROSS_SPRING, EQUINOX_SPRING, CROSS_SUMMER, SOLSTICE_SUMMER } : values();
-        }
-
-        public static SolsticeEquinoxMode[] partialValues(boolean southernHemisphere) {
-            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_AUTUMNAL, SOLSTICE_WINTER, EQUINOX_SPRING, SOLSTICE_SUMMER }
-                                        : new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER };
-        }
-    }
     public static void initDisplayStrings_SolsticeEquinoxMode( Context context )
     {
         SolsticeEquinoxMode.CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
@@ -2438,7 +2374,7 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
+    public static SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2447,7 +2383,7 @@ public class WidgetSettings
         SolsticeEquinoxMode timeMode;
         try
         {
-            timeMode = WidgetSettings.SolsticeEquinoxMode.valueOf(modeString);
+            timeMode = SolsticeEquinoxMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timeMode = PREF_DEF_GENERAL_TIMEMODE2;

@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -36,27 +36,27 @@ public class SuntimesEquinoxSolsticeDataset
     public SuntimesEquinoxSolsticeDataset(Object context)
     {
         dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, 0);
-        dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
+        dataEquinoxSpring.setTimeMode(SolsticeEquinoxMode.EQUINOX_SPRING);
         initSolsticeEquinoxData();
     }
 
     public SuntimesEquinoxSolsticeDataset(Object context, int appWidgetId)
     {
         dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-        dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
+        dataEquinoxSpring.setTimeMode(SolsticeEquinoxMode.EQUINOX_SPRING);
         initSolsticeEquinoxData();
     }
 
     protected void initSolsticeEquinoxData()
     {
         dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
+        dataSolsticeSummer.setTimeMode(SolsticeEquinoxMode.SOLSTICE_SUMMER);
 
         dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataEquinoxAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
+        dataEquinoxAutumnal.setTimeMode(SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
 
         dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
+        dataSolsticeWinter.setTimeMode(SolsticeEquinoxMode.SOLSTICE_WINTER);
         dataSolsticesEquinoxes = new SuntimesEquinoxSolsticeData[] { dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
     }
 
