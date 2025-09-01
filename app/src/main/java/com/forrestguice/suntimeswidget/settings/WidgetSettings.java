@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -1129,50 +1130,6 @@ public class WidgetSettings
                 context.getString(R.string.timeMode_solstice_winter));
     }
 
-    /**
-     * MoonPhaseMode
-     */
-    public static enum MoonPhaseMode
-    {
-        NEW_MOON("New", "New Moon"),
-        FIRST_QUARTER("First Quarter", "First Quarter Moon"),
-        FULL_MOON("Full", "Full Moon"),
-        THIRD_QUARTER("Third Quarter", "Third Quarter Moon");
-
-        private String shortDisplayString;
-        private String longDisplayString;
-
-        public static boolean shortDisplayStrings = false;
-
-        private MoonPhaseMode( String shortDisplayString, String longDisplayString )
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-                return shortDisplayString;
-            else return longDisplayString;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-    }
     public static void initDisplayStrings_MoonPhaseMode( Context context )
     {
         MoonPhaseMode.NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
@@ -2014,7 +1971,7 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
+    public static MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2023,7 +1980,7 @@ public class WidgetSettings
         MoonPhaseMode timeMode;
         try
         {
-            timeMode = WidgetSettings.MoonPhaseMode.valueOf(modeString);
+            timeMode = MoonPhaseMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timeMode = PREF_DEF_GENERAL_TIMEMODE3;

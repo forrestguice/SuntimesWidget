@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -208,25 +209,25 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeMode3Pref()
     {
-        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.FULL_MOON);
-        WidgetSettings.MoonPhaseMode pref4 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
-        assertTrue("pref should be FULL_MOON but was " + pref4, pref4.equals(WidgetSettings.MoonPhaseMode.FULL_MOON));
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, MoonPhaseMode.FULL_MOON);
+        MoonPhaseMode pref4 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be FULL_MOON but was " + pref4, pref4.equals(MoonPhaseMode.FULL_MOON));
 
-        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.NEW_MOON);
-        WidgetSettings.MoonPhaseMode pref3 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
-        assertTrue("pref should be NEW_MOON but was " + pref3, pref3.equals(WidgetSettings.MoonPhaseMode.NEW_MOON));
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, MoonPhaseMode.NEW_MOON);
+        MoonPhaseMode pref3 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be NEW_MOON but was " + pref3, pref3.equals(MoonPhaseMode.NEW_MOON));
 
-        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.FIRST_QUARTER);
-        WidgetSettings.MoonPhaseMode pref2 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
-        assertTrue("pref should be FIRST_QUARTER but was " + pref2, pref2.equals(WidgetSettings.MoonPhaseMode.FIRST_QUARTER));
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, MoonPhaseMode.FIRST_QUARTER);
+        MoonPhaseMode pref2 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be FIRST_QUARTER but was " + pref2, pref2.equals(MoonPhaseMode.FIRST_QUARTER));
 
-        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.THIRD_QUARTER);
-        WidgetSettings.MoonPhaseMode pref1 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
-        assertTrue("pref should be THIRD_QUARTER but was " + pref1, pref1.equals(WidgetSettings.MoonPhaseMode.THIRD_QUARTER));
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, MoonPhaseMode.THIRD_QUARTER);
+        MoonPhaseMode pref1 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be THIRD_QUARTER but was " + pref1, pref1.equals(MoonPhaseMode.THIRD_QUARTER));
 
         WidgetSettings.deleteTimeMode3Pref(context, appWidgetId);
-        WidgetSettings.MoonPhaseMode pref0 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
-        assertTrue("pref should be default (FULL_MOON) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE3) && pref0.equals(WidgetSettings.MoonPhaseMode.FULL_MOON));
+        MoonPhaseMode pref0 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be default (FULL_MOON) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE3) && pref0.equals(MoonPhaseMode.FULL_MOON));
     }
 
     @Test
