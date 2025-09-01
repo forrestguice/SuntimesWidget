@@ -32,6 +32,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -65,7 +66,7 @@ public class SunLayout_1x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_1x1_0;
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    private RiseSetOrder order = RiseSetOrder.TODAY;
 
     @Override
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)

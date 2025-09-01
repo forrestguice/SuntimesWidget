@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -1175,31 +1176,6 @@ public class WidgetSettings
                 context.getString(R.string.timeMode_blue4) );
     }
 
-    /**
-     * RiseSetOrder
-     */
-    public static enum RiseSetOrder
-    {
-        TODAY("Today"),
-        LASTNEXT("Last / Next");
-
-        private String displayString;
-
-        private RiseSetOrder(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString(String displayString)
-        {
-            this.displayString = displayString;
-        }
-    }
     public static void initDisplayStrings_RiseSetOrder( Context context )
     {
         RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );

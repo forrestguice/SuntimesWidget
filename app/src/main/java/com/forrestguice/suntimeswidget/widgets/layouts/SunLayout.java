@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -92,9 +93,9 @@ public abstract class SunLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, TimeFormatMode timeFormat)
+    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, RiseSetOrder order, TimeFormatMode timeFormat)
     {
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        if (order == RiseSetOrder.TODAY)
         {
             updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds, timeFormat);
             updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds, timeFormat);
@@ -148,7 +149,7 @@ public abstract class SunLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_noon_suffix, noonText.getSuffix());
     }
 
-    protected int chooseSunLayout(int layout1, int layout2, SuntimesRiseSetData data, WidgetSettings.RiseSetOrder order)
+    protected int chooseSunLayout(int layout1, int layout2, SuntimesRiseSetData data, RiseSetOrder order)
     {
         switch (order)
         {

@@ -25,6 +25,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Log;
@@ -617,7 +618,7 @@ public class DataSubstitutions
         displayString = displayString.replaceAll(PATTERN_m, modeDisplayShort);
         displayString = displayString.replaceAll(PATTERN_M, modeDisplayLong);
 
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+        RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
         displayString = displayString.replaceAll(PATTERN_o, order.toString());
 
         return displayString;
@@ -669,7 +670,7 @@ public class DataSubstitutions
 
         if (data != null && data.isCalculated())
         {
-            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+            RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(PATTERN_m, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(PATTERN_M, data.getMoonPhaseToday().getLongDisplayString());

@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
@@ -86,8 +87,8 @@ public class MoonWidget0 extends SuntimesWidget0
 
         if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
         {
-            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-            if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+            if (order == RiseSetOrder.TODAY) {
                 WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
                 Log.d(TAG, "saveNextSuggestedUpdate: -1");
 

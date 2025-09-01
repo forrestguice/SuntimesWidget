@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -79,10 +80,10 @@ public abstract class MoonLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, TimeFormatMode timeFormat)
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, RiseSetOrder order, TimeFormatMode timeFormat)
     {
         Calendar moonrise, moonset;
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        if (order == RiseSetOrder.TODAY)
         {
             moonrise = data.moonriseCalendarToday();
             moonset = data.moonsetCalendarToday();
@@ -281,9 +282,9 @@ public abstract class MoonLayout extends SuntimesLayout
         views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
     }
 
-    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data, WidgetSettings.RiseSetOrder order)
+    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data, RiseSetOrder order)
     {
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        if (order == RiseSetOrder.TODAY)
         {
             Calendar riseTime = data.moonriseCalendarToday();
             Calendar setTime = data.moonsetCalendarToday();

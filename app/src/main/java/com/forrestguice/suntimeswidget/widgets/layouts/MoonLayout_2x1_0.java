@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -88,7 +89,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         }
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    private RiseSetOrder order = RiseSetOrder.TODAY;
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)

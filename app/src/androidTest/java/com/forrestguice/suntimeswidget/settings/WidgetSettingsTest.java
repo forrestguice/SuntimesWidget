@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -1076,17 +1077,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_riseSetOrderPref()
     {
-        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.TODAY);
-        WidgetSettings.RiseSetOrder mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        assertTrue("riseSetOrder should be TODAY but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY);
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, RiseSetOrder.TODAY);
+        RiseSetOrder mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        assertTrue("riseSetOrder should be TODAY but was " + mode, mode == RiseSetOrder.TODAY);
 
-        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, WidgetSettings.RiseSetOrder.LASTNEXT);
+        WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, RiseSetOrder.LASTNEXT);
         mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        assertTrue("riseSetOrder should be LASTNEXT but was " + mode, mode == WidgetSettings.RiseSetOrder.LASTNEXT);
+        assertTrue("riseSetOrder should be LASTNEXT but was " + mode, mode == RiseSetOrder.LASTNEXT);
 
         WidgetSettings.deleteRiseSetOrderPref(context, appWidgetId);
         mode = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        assertTrue("riseSetOrder should be default (TODAY) but was " + mode, mode == WidgetSettings.RiseSetOrder.TODAY && mode == WidgetSettings.PREF_DEF_GENERAL_RISESETORDER);
+        assertTrue("riseSetOrder should be default (TODAY) but was " + mode, mode == RiseSetOrder.TODAY && mode == WidgetSettings.PREF_DEF_GENERAL_RISESETORDER);
     }
 
 }

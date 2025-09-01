@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorLi
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
@@ -413,9 +414,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.RiseSetOrder> createAdapter_riseSetOrder()
+    protected ArrayAdapter<RiseSetOrder> createAdapter_riseSetOrder()
     {
-        ArrayAdapter<WidgetSettings.RiseSetOrder> adapter = new ArrayAdapter<WidgetSettings.RiseSetOrder>(this, R.layout.layout_listitem_oneline, WidgetSettings.RiseSetOrder.values());
+        ArrayAdapter<RiseSetOrder> adapter = new ArrayAdapter<RiseSetOrder>(this, R.layout.layout_listitem_oneline, RiseSetOrder.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
@@ -1736,8 +1737,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveCompareModePref(context, appWidgetId, compareMode);
 
         // save: riseSetOrder
-        final WidgetSettings.RiseSetOrder[] riseSetOrders = WidgetSettings.RiseSetOrder.values();
-        WidgetSettings.RiseSetOrder riseSetOrder = (WidgetSettings.RiseSetOrder)spinner_riseSetOrder.getSelectedItem();
+        final RiseSetOrder[] riseSetOrders = RiseSetOrder.values();
+        RiseSetOrder riseSetOrder = (RiseSetOrder)spinner_riseSetOrder.getSelectedItem();
         WidgetSettings.saveRiseSetOrderPref(context, appWidgetId, riseSetOrder);
 
         // save: showNoon
@@ -1820,7 +1821,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showCompareUI(showCompare);
 
         // load: riseSetOrder
-        WidgetSettings.RiseSetOrder riseSetOrder = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        RiseSetOrder riseSetOrder = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
         spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
