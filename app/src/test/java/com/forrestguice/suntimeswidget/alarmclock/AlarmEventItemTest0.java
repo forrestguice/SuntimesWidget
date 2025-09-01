@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentResolver;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Test;
@@ -58,7 +59,7 @@ public class AlarmEventItemTest0
         assertNull(item1.getEvent());
         assertNotNull(item1.getUri());
         assertTrue(item1.getUri().endsWith("test"));
-        assertEquals(AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, "test"), item1.getUri());
+        assertEquals(EventUri.getEventInfoUri(AlarmEventContract.AUTHORITY, "test"), item1.getUri());
 
         assertFalse(item1.isResolved());           // due to null ContentResolver
         assertTrue(item1.getTitle().isEmpty());
@@ -87,7 +88,7 @@ public class AlarmEventItemTest0
         assertNull(item1.getEvent());
         assertNotNull(item1.getUri());
         assertTrue(item1.getUri().endsWith(eventID));
-        assertEquals(AlarmAddon.getEventInfoUri(authority, eventID), item1.getUri());
+        assertEquals(EventUri.getEventInfoUri(authority, eventID), item1.getUri());
 
         assertFalse(item1.isResolved());           // due to null ContentResolver
         assertTrue(item1.getTitle().isEmpty());

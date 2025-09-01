@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -2993,7 +2994,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
         Uri uri_id = Uri.parse(eventID);
-        Uri uri_calc = Uri.parse(AlarmAddon.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        Uri uri_calc = Uri.parse(EventUri.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
 
         StringBuilder repeatingDaysString = new StringBuilder("[");
         if (repeating) {

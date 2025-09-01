@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -579,7 +580,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getEventInfoUri(reference, name)))
+            if (AlarmAddon.checkUriPermission(context, EventUri.getEventInfoUri(reference, name)))
             {
                 AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
                 if (item.isResolved())

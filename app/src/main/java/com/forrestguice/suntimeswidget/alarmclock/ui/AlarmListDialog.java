@@ -69,6 +69,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -78,7 +79,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
@@ -495,7 +495,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.minute = minute;
         alarm.timezone = timezone;
         //Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
-        alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
+        alarm.setEvent(date != -1L ? EventUri.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
         alarm.repeatingDays = new ArrayList<>(repetitionDays);

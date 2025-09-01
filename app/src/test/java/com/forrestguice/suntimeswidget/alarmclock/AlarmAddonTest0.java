@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class AlarmAddonTest0
 
     public void test_AlarmAddon_getEventInfoUri(String authority, String query, String eventID)
     {
-        String infoUri1 = AlarmAddon.getEventInfoUri(authority, eventID);
+        String infoUri1 = EventUri.getEventInfoUri(authority, eventID);
         assertTrue(infoUri1.startsWith("content://"));
         assertTrue(infoUri1.endsWith(eventID));
 
@@ -59,7 +60,7 @@ public class AlarmAddonTest0
 
     public void test_AlarmAddon_getEventCalcUri(String authority, String query, String eventID)
     {
-        String calcUri1 = AlarmAddon.getEventCalcUri(authority, eventID);
+        String calcUri1 = EventUri.getEventCalcUri(authority, eventID);
         assertTrue(calcUri1.startsWith("content://"));
         assertTrue(calcUri1.endsWith(eventID));
 

@@ -71,14 +71,6 @@ public class AlarmAddon
     public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
     public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
 
-    public static String getEventInfoUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + eventID;
-    }
-
-    public static String getEventCalcUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
-    }
-
     /**
      * queryAlarmDismissChallenges
      */

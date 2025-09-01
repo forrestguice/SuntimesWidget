@@ -25,7 +25,6 @@ import android.net.Uri;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
@@ -153,6 +152,6 @@ public final class EventAlias
     }
 
     public String getAliasUri() {
-        return AlarmAddon.getEventInfoUri(AUTHORITY, getID());
+        return EventUri.getEventInfoUri(AUTHORITY, getID());
     }
 }

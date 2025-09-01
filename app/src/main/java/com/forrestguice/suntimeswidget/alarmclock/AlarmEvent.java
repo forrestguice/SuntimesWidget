@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
@@ -143,7 +144,7 @@ public class AlarmEvent
         public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable final ContentResolver resolver)
         {
             event = null;
-            uri = AlarmAddon.getEventInfoUri(authority, name);
+            uri = EventUri.getEventInfoUri(authority, name);
             resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
         }
 

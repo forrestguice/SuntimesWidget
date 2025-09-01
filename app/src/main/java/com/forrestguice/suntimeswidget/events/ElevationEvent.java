@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -35,7 +34,7 @@ public abstract class ElevationEvent
     }
 
     protected String getUri(Context context) {
-        return AlarmAddon.getEventCalcUri(AUTHORITY, getEventName(context));
+        return EventUri.getEventCalcUri(AUTHORITY, getEventName(context));
     }
 
     private static final SuntimesUtils utils = new SuntimesUtils();

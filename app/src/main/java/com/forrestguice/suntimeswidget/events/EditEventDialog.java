@@ -45,7 +45,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
@@ -588,7 +587,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
                 }
 
-                String eventUri = AlarmAddon.getEventCalcUri(AUTHORITY, eventID);
+                String eventUri = EventUri.getEventCalcUri(AUTHORITY, eventID);
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
@@ -727,7 +726,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             if (validateInput_id()) {
-                setEventUri1(AlarmAddon.getEventInfoUri(AUTHORITY, s.toString()));
+                setEventUri1(EventUri.getEventInfoUri(AUTHORITY, s.toString()));
             }
             setIsModified(true);
         }
@@ -744,7 +743,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             try {
                 double angle = Double.parseDouble(s.toString());
                 String eventID = SunElevationEvent.getEventName(angle, getOffset(), null);
-                setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
 
             } catch (NumberFormatException e) {
@@ -766,7 +765,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (objHeightMeters != null)
                 {
                     String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }
 
@@ -789,7 +788,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (lengthMeters != null)
                 {
                     String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }
 
