@@ -28,6 +28,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_2;
@@ -95,7 +96,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         if (showNoon)
         {
             SuntimesRiseSetData data1 = new SuntimesRiseSetData(data0);
-            data1.setTimeMode(WidgetSettings.TimeMode.NOON);
+            data1.setTimeMode(TimeMode.NOON);
             data1.calculate(context);
             dataset0.add(new SuntimesRiseSetData(data1, R.layout.layout_widget_1x1_4i));
             viewCount0++;

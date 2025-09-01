@@ -62,6 +62,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -282,7 +283,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 

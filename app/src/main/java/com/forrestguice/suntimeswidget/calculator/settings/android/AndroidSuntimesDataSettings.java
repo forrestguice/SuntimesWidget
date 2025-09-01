@@ -5,6 +5,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
@@ -54,7 +55,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
-    public WidgetSettings.RiseSetDataMode loadTimeModePref(int appWidgetId) {
+    public RiseSetDataMode loadTimeModePref(int appWidgetId) {
         return WidgetSettings.loadTimeModePref(context, appWidgetId);
     }
 

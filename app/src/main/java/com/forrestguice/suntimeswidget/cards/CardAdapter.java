@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -138,7 +139,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         for (String eventID : eventIDs)
         {
             SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
-            d.setDataMode(new WidgetSettings.EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
+            d.setDataMode(new EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);

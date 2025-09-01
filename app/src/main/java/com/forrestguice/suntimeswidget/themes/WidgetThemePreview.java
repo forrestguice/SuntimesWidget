@@ -29,6 +29,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
+
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -123,7 +125,7 @@ public class WidgetThemePreview
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 

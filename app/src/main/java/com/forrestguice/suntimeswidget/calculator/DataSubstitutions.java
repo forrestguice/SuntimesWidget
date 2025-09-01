@@ -22,7 +22,10 @@ import android.content.Context;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -598,12 +601,12 @@ public class DataSubstitutions
         }
 
         SuntimesRiseSetData d = (SuntimesRiseSetData) data;
-        WidgetSettings.TimeMode timeMode = d.timeMode();
+        TimeMode timeMode = d.timeMode();
         String modeDisplayShort = timeMode.getShortDisplayString();
         String modeDisplayLong = timeMode.getLongDisplayString();
 
-        WidgetSettings.RiseSetDataMode timeModeItem = d.dataMode();
-        if (timeModeItem instanceof WidgetSettings.EventAliasTimeMode) {
+        RiseSetDataMode timeModeItem = d.dataMode();
+        if (timeModeItem instanceof EventAliasTimeMode) {
             String label = EventSettings.loadEventValue(context, timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
             if (label != null) {
                 modeDisplayLong = modeDisplayShort = label;

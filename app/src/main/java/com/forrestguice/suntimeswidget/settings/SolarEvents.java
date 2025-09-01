@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -368,7 +369,7 @@ public enum SolarEvents
         }
     }
 
-    public WidgetSettings.TimeMode toTimeMode()
+    public TimeMode toTimeMode()
     {
         return toTimeMode(this);
     }
@@ -388,32 +389,32 @@ public enum SolarEvents
      * @param event SolarEvents enum
      * @return a TimeMode (or null if not applicable)
      */
-    public static WidgetSettings.TimeMode toTimeMode( SolarEvents event ) {
+    public static TimeMode toTimeMode(SolarEvents event ) {
         return toTimeMode(event.name());
     }
-    public static WidgetSettings.TimeMode toTimeMode( String eventID )
+    public static TimeMode toTimeMode(String eventID )
     {
         if (MORNING_ASTRONOMICAL.name().equals(eventID) || EVENING_ASTRONOMICAL.name().equals(eventID))
-            return WidgetSettings.TimeMode.ASTRONOMICAL;
+            return TimeMode.ASTRONOMICAL;
         else if (MORNING_NAUTICAL.name().equals(eventID) || EVENING_NAUTICAL.name().equals(eventID))
-            return WidgetSettings.TimeMode.NAUTICAL;
+            return TimeMode.NAUTICAL;
         else if (MORNING_BLUE8.name().equals(eventID) || EVENING_BLUE8.name().equals(eventID))
-            return WidgetSettings.TimeMode.BLUE8;
+            return TimeMode.BLUE8;
         else if (MORNING_BLUE4.name().equals(eventID) || EVENING_BLUE4.name().equals(eventID))
-            return WidgetSettings.TimeMode.BLUE4;
+            return TimeMode.BLUE4;
         else if (MORNING_CIVIL.name().equals(eventID) || EVENING_CIVIL.name().equals(eventID))
-            return WidgetSettings.TimeMode.CIVIL;
+            return TimeMode.CIVIL;
         else if (MORNING_GOLDEN.name().equals(eventID) || EVENING_GOLDEN.name().equals(eventID))
-            return WidgetSettings.TimeMode.GOLD;
+            return TimeMode.GOLD;
         else if (NOON.name().equals(eventID))
-            return WidgetSettings.TimeMode.NOON;
+            return TimeMode.NOON;
         else if (MIDNIGHT.name().equals(eventID))
-            return WidgetSettings.TimeMode.MIDNIGHT;
+            return TimeMode.MIDNIGHT;
         else if (SUNSET.name().equals(eventID) || SUNRISE.name().equals(eventID))
-            return WidgetSettings.TimeMode.OFFICIAL;
+            return TimeMode.OFFICIAL;
         else return null;
     }
-    public static SolarEvents valueOf(@Nullable WidgetSettings.TimeMode mode, boolean rising)
+    public static SolarEvents valueOf(@Nullable TimeMode mode, boolean rising)
     {
         if (mode == null) {
             return null;

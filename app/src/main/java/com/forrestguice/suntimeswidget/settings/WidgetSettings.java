@@ -31,9 +31,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -1254,107 +1257,6 @@ public class WidgetSettings
                 context.getString(R.string.timeMode_moon_thirdquarter));
     }
 
-    /**
-     * TimeMode
-     */
-
-    public interface RiseSetDataMode
-    {
-        @Nullable
-        TimeMode getTimeMode();
-        String name();
-        String toString();
-    }
-
-    public static class EventAliasTimeMode implements RiseSetDataMode
-    {
-        private EventSettings.EventAlias event;
-        public EventAliasTimeMode(EventSettings.EventAlias event) {
-            this.event = event;
-        }
-
-        @Nullable
-        @Override
-        public TimeMode getTimeMode() {
-            return null;
-        }
-
-        public EventSettings.EventAlias getEvent() {
-            return event;
-        }
-
-        @Override
-        public String name() {
-            return event.getID();
-        }
-
-        @Override
-        public String toString() {
-            return event.getLabel();
-        }
-    }
-
-    public static enum TimeMode implements RiseSetDataMode
-    {
-        OFFICIAL("Actual", "Actual Time", null),
-        CIVIL("Civil", "Civil Twilight", -6d),
-        NAUTICAL("Nautical", "Nautical Twilight", -12d),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight", -18d),
-        NOON("Noon", "Solar Noon", null),
-        GOLD("Golden", "Golden Hour", 6d),
-        BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour", -4d),      // 4 deg; morning end, evening start
-        MIDNIGHT("Midnight", "Solar Midnight", null);
-
-        public static boolean shortDisplayStrings = false;
-        private String longDisplayString;
-        private String shortDisplayString;
-
-        private TimeMode(String shortDisplayString, String longDisplayString, Double angle)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-            this.angle = angle;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-            {
-                return shortDisplayString;
-
-            } else {
-                return longDisplayString;
-            }
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        private Double angle;
-        @Nullable
-        public Double angle() {
-            return angle;
-        }
-
-        @Nullable @Override
-        public TimeMode getTimeMode() {
-            return this;
-        }
-    }
     public static void initDisplayStrings_TimeMode( Context context )
     {
         TimeMode.OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
@@ -2093,7 +1995,7 @@ public class WidgetSettings
 
         RiseSetDataMode mode;
         try {
-            mode = WidgetSettings.TimeMode.valueOf(modeString);
+            mode = TimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             if (EventSettings.hasEvent(context, modeString)) {

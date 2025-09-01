@@ -36,8 +36,10 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -172,17 +174,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timeModePref()
     {
-        WidgetSettings.saveTimeModePref(context, appWidgetId, WidgetSettings.TimeMode.CIVIL);
-        WidgetSettings.RiseSetDataMode pref2 = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        assertTrue("pref should be CIVIL but was " + pref2, pref2.equals(WidgetSettings.TimeMode.CIVIL));
+        WidgetSettings.saveTimeModePref(context, appWidgetId, TimeMode.CIVIL);
+        RiseSetDataMode pref2 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        assertTrue("pref should be CIVIL but was " + pref2, pref2.equals(TimeMode.CIVIL));
 
-        WidgetSettings.saveTimeModePref(context, appWidgetId, WidgetSettings.TimeMode.NAUTICAL);
-        WidgetSettings.RiseSetDataMode pref1 = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        assertTrue("pref should be NAUTICAL but was " + pref1, pref1.equals(WidgetSettings.TimeMode.NAUTICAL));
+        WidgetSettings.saveTimeModePref(context, appWidgetId, TimeMode.NAUTICAL);
+        RiseSetDataMode pref1 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        assertTrue("pref should be NAUTICAL but was " + pref1, pref1.equals(TimeMode.NAUTICAL));
 
         WidgetSettings.deleteTimeModePref(context, appWidgetId);
-        WidgetSettings.RiseSetDataMode pref0 = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        assertTrue("pref should be default (OFFICIAL) but was " + pref1, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE) &&  pref0.equals(WidgetSettings.TimeMode.OFFICIAL));
+        RiseSetDataMode pref0 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        assertTrue("pref should be default (OFFICIAL) but was " + pref1, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE) &&  pref0.equals(TimeMode.OFFICIAL));
     }
 
     @Test

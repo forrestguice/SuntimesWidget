@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public interface SuntimesDataSettings
 {
@@ -37,7 +36,7 @@ public interface SuntimesDataSettings
     LocationMode loadLocationModePref(int appWidgetId);
 
     SolarTimeMode loadSolarTimeModePref(int appWidgetID);
-    WidgetSettings.RiseSetDataMode loadTimeModePref(int appWidgetId);
+    RiseSetDataMode loadTimeModePref(int appWidgetId);
     SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
 
     boolean loadTimeZoneFromAppPref(int appWidgetID);

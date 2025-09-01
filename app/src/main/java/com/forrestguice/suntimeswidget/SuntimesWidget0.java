@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
@@ -613,7 +614,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (showSolarNoon)
         {
             SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
-            noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+            noonData.setTimeMode(TimeMode.NOON);
             noonData.calculate(context);
             data.linkData(noonData);
         }

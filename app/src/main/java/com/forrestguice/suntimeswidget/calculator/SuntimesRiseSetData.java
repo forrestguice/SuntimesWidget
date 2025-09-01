@@ -19,7 +19,10 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -60,24 +63,24 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: time mode
      */
-    protected WidgetSettings.TimeMode timeMode;
-    public WidgetSettings.TimeMode timeMode()
+    protected TimeMode timeMode;
+    public TimeMode timeMode()
     {
         return timeMode;
     }
-    public void setTimeMode( WidgetSettings.TimeMode mode )
+    public void setTimeMode( TimeMode mode )
     {
         timeMode = mode;
         angle = null;
     }
 
-    protected WidgetSettings.RiseSetDataMode dataMode;
-    public void setDataMode(WidgetSettings.RiseSetDataMode value)
+    protected RiseSetDataMode dataMode;
+    public void setDataMode(RiseSetDataMode value)
     {
         dataMode = value;
-        if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
+        if (dataMode instanceof EventAliasTimeMode)
         {
-            EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
+            EventSettings.EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
             AlarmEventProvider.ElevationEvent event;
             switch (alias.getType()) {
                 case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
@@ -87,10 +90,10 @@ public class SuntimesRiseSetData extends SuntimesData
             this.angle = (event == null ? null : event.getAngle());
             this.offset = (event == null ? 0 : event.getOffset());
         }
-        WidgetSettings.TimeMode mode = dataMode.getTimeMode();
+        TimeMode mode = dataMode.getTimeMode();
         this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
     }
-    public WidgetSettings.RiseSetDataMode dataMode() {
+    public RiseSetDataMode dataMode() {
         return dataMode;
     }
 
