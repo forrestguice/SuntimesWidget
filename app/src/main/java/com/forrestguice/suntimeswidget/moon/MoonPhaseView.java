@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -228,7 +229,7 @@ public class MoonPhaseView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     public void updateViews(Context context, SuntimesMoonData data) {

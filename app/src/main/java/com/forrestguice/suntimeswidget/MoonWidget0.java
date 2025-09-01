@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -136,7 +137,7 @@ public class MoonWidget0 extends SuntimesWidget0
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
 }

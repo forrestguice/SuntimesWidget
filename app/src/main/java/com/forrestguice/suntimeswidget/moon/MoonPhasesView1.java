@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
@@ -192,7 +193,7 @@ public class MoonPhasesView1 extends LinearLayout
         SuntimesUtils.initDisplayStrings(context);
         ViewUtils.initUtils(context);
         WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     public int numColumns() {

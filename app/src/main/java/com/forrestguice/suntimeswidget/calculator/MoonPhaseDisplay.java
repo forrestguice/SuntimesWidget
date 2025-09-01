@@ -18,9 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.util.Resources;
 
 import java.util.Calendar;
 
@@ -93,7 +93,7 @@ public enum MoonPhaseDisplay
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings(Context context)
+    public static void initDisplayStrings(Resources context)
     {
          NEW.setDisplayString(context.getString(R.string.timeMode_moon_new_short), context.getString(R.string.timeMode_moon_new));
          WAXING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waxingcrescent_short), context.getString(R.string.timeMode_moon_waxingcrescent));
@@ -105,7 +105,7 @@ public enum MoonPhaseDisplay
          WANING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waningcrescent_short),context.getString(R.string.timeMode_moon_waningcrescent));
     }
 
-    public static CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
+    public static CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
     {
         if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
         {
