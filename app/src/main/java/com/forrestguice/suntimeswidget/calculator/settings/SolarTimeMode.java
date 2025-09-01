@@ -18,21 +18,33 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
-public enum DateMode
-{
-    CURRENT_DATE("Today"),
-    CUSTOM_DATE("User Defined");
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 
+public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
+{
+    APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
+    LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
+    LMST(TimeZones.SiderealTime.TZID_LMST, "Local Sidereal Time"),
+    GMST(TimeZones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
+    UTC(TimeZones.TZID_UTC, "Coordinated Universal Time");
+
+    private String id;
     private String displayString;
 
-    private DateMode(String displayString)
+    private SolarTimeMode(String id, String displayString)
     {
+        this.id = id;
         this.displayString = displayString;
     }
 
     public String toString()
     {
         return displayString;
+    }
+
+    public String getID()
+    {
+        return id;
     }
 
     public String getDisplayString()

@@ -26,12 +26,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -1102,46 +1102,6 @@ public class WidgetSettings
     }
 
 
-    /**
-     * SolarTimeMode
-     */
-    public static enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
-    {
-        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
-        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
-        LMST(TimeZones.SiderealTime.TZID_LMST, "Local Sidereal Time"),
-        GMST(TimeZones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
-        UTC(TimeZones.TZID_UTC, "Coordinated Universal Time");
-
-        private String id;
-        private String displayString;
-
-        private SolarTimeMode(String id, String displayString)
-        {
-            this.id = id;
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getID()
-        {
-            return id;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-    }
     public static void initDisplayStrings_SolarTimeMode( Context context )
     {
         SolarTimeMode.LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
@@ -2307,14 +2267,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
+    public static void saveSolarTimeModePref(Context context, int appWidgetId, SolarTimeMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.SolarTimeMode loadSolarTimeModePref(Context context, int appWidgetId)
+    public static SolarTimeMode loadSolarTimeModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2323,7 +2283,7 @@ public class WidgetSettings
         SolarTimeMode timeMode;
         try
         {
-            timeMode = WidgetSettings.SolarTimeMode.valueOf(modeString);
+            timeMode = SolarTimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timeMode = PREF_DEF_TIMEZONE_SOLARMODE;

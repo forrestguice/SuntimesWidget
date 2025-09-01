@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -355,7 +356,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         int c = 0;
         ArrayList<WidgetTimezones.TimeZoneItem> items = new ArrayList<>();
-        for (WidgetSettings.SolarTimeMode value : WidgetSettings.SolarTimeMode.values()) {
+        for (SolarTimeMode value : SolarTimeMode.values()) {
             items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
         }
         return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
@@ -1898,8 +1899,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         // save: solar timemode
-        WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
-        WidgetSettings.SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
+        SolarTimeMode[] solarTimeModes = SolarTimeMode.values();
+        SolarTimeMode solarTimeMode = solarTimeModes[spinner_solartime.getSelectedItemPosition()];
         WidgetSettings.saveSolarTimeModePref(context, appWidgetId, solarTimeMode);
     }
 
@@ -1918,7 +1919,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
+        SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
         setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);

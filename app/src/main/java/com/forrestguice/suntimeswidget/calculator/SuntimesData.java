@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
 import com.forrestguice.util.Log;
@@ -256,7 +257,7 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = settings.loadSolarTimeModePref(widgetID);
+                SolarTimeMode solarMode = settings.loadSolarTimeModePref(widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:

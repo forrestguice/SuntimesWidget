@@ -26,6 +26,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.content.Intent;
 
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 
@@ -186,7 +187,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
             onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertHidden);
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
 
-            WidgetSettings.SolarTimeMode solarTimeMode = WidgetSettings.loadSolarTimeModePref(context, 0);
+            SolarTimeMode solarTimeMode = WidgetSettings.loadSolarTimeModePref(context, 0);
             onView(withId(R.id.appwidget_solartime)).check(matches(withSpinnerText( containsString(solarTimeMode.toString()) )));
             onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertEnabled);
             return this;

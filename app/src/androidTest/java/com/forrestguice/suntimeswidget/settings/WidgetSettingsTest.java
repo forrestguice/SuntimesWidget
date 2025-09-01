@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -385,17 +386,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_solarTimeModePref()
     {
-        WidgetSettings.saveSolarTimeModePref(context, appWidgetId, WidgetSettings.SolarTimeMode.LOCAL_MEAN_TIME);
-        WidgetSettings.SolarTimeMode mode2 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-        assertTrue("mode should be LOCAL_MEAN_TIME but was " + mode2, mode2 == WidgetSettings.SolarTimeMode.LOCAL_MEAN_TIME);
+        WidgetSettings.saveSolarTimeModePref(context, appWidgetId, SolarTimeMode.LOCAL_MEAN_TIME);
+        SolarTimeMode mode2 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        assertTrue("mode should be LOCAL_MEAN_TIME but was " + mode2, mode2 == SolarTimeMode.LOCAL_MEAN_TIME);
 
-        WidgetSettings.saveSolarTimeModePref(context, appWidgetId, WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME);
-        WidgetSettings.SolarTimeMode mode1 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-        assertTrue("mode should be APPARENT_SOLAR_TIME but was " + mode1, mode1 == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME);
+        WidgetSettings.saveSolarTimeModePref(context, appWidgetId, SolarTimeMode.APPARENT_SOLAR_TIME);
+        SolarTimeMode mode1 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        assertTrue("mode should be APPARENT_SOLAR_TIME but was " + mode1, mode1 == SolarTimeMode.APPARENT_SOLAR_TIME);
 
         WidgetSettings.deleteSolarTimeModePref(context, appWidgetId);
-        WidgetSettings.SolarTimeMode mode0 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-        assertTrue("mode should be default (LOCAL_MEAN_TIME) but was " + mode0, mode0 == WidgetSettings.SolarTimeMode.LOCAL_MEAN_TIME && mode0 == WidgetSettings.PREF_DEF_TIMEZONE_SOLARMODE);
+        SolarTimeMode mode0 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        assertTrue("mode should be default (LOCAL_MEAN_TIME) but was " + mode0, mode0 == SolarTimeMode.LOCAL_MEAN_TIME && mode0 == WidgetSettings.PREF_DEF_TIMEZONE_SOLARMODE);
     }
 
     ///////////////////////////////////////////////////////////////////////////

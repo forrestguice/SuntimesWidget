@@ -4,6 +4,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -78,7 +79,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
         return WidgetSettings.loadTimezoneModePref(context, appWidgetID);
     }
     @Override
-    public WidgetSettings.SolarTimeMode loadSolarTimeModePref(int appWidgetID) {
+    public SolarTimeMode loadSolarTimeModePref(int appWidgetID) {
         return WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
     }
 }

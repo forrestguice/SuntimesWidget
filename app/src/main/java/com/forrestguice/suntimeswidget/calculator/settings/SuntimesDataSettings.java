@@ -36,7 +36,7 @@ public interface SuntimesDataSettings
     Location loadLocationPref(int appWidgetId);
     WidgetSettings.LocationMode loadLocationModePref(int appWidgetId);
 
-    WidgetSettings.SolarTimeMode loadSolarTimeModePref(int appWidgetID);
+    SolarTimeMode loadSolarTimeModePref(int appWidgetID);
     WidgetSettings.RiseSetDataMode loadTimeModePref(int appWidgetId);
     SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
 
