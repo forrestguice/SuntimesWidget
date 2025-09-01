@@ -1,5 +1,13 @@
 ### ~
 
+### v0.16.10 (2025-09-01)
+* adds "Boot Completed (Delay)" to alarm settings; adds intentional delay when rescheduling alarms after reboot.
+* fixes "app crash after phone restart" (#894).
+* fixes "app crash in the Sun Dialog when rotating the device".
+* fixes bug where custom event alarm times are truncated to the minute.
+* fixes bug where content provider fails to schedule custom events on past days.
+* updates translation to Italian (it) (#893 by McCio).
+
 ### v0.16.9 (2025-07-28)
 * improves reliability of location updates (#884); adds "fused" location provider (api31+).
 * fixes bug where "data patterns display nothing at higher latitudes" (#874).
