@@ -28,6 +28,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
@@ -169,8 +170,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.action_location_add)).check(assertShown);
 
-        WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
-        if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
+        if (mode == LocationMode.CURRENT_LOCATION)
         {
             onView(withId(R.id.action_location_refresh)).check(assertShown);
 
@@ -265,7 +266,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_mainActivity_navigation_mapButton()
     {
         Activity context = activityRule.getActivity();
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         config(context).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true).apply();
         MainActivityRobot robot = new MainActivityRobot();
 
@@ -305,7 +306,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         {
             robot.showDialog(activityRule.getActivity())
                     .assertDialogShown(activityRule.getActivity())
-                    .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                    .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                     .clickLocationEditButton()
                     .inputLocationEditValues(name[i], lat[i], lon[i])
                     .assertLocationEditCoordinates(lat[i], lon[i])
@@ -324,7 +325,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
                 .assertDialogShown(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+                .selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent()
                 .applyDialog(activityRule.getActivity());
         // TODO: verify action
@@ -612,7 +613,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .clickLocationEditButton()
                 .inputLocationEditValues(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON)
                 .applyDialog(activityRule.getActivity());

@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -404,17 +405,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_locationModePref()
     {
-        WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CUSTOM_LOCATION);
-        WidgetSettings.LocationMode mode2 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be COLOR but was " + mode2, mode2 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, appWidgetId, LocationMode.CUSTOM_LOCATION);
+        LocationMode mode2 = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        assertTrue("mode should be COLOR but was " + mode2, mode2 == LocationMode.CUSTOM_LOCATION);
 
-        WidgetSettings.saveLocationModePref(context, appWidgetId, WidgetSettings.LocationMode.CURRENT_LOCATION);
-        WidgetSettings.LocationMode mode1 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be CURRENT but was " + mode1, mode1 == WidgetSettings.LocationMode.CURRENT_LOCATION);
+        WidgetSettings.saveLocationModePref(context, appWidgetId, LocationMode.CURRENT_LOCATION);
+        LocationMode mode1 = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        assertTrue("mode should be CURRENT but was " + mode1, mode1 == LocationMode.CURRENT_LOCATION);
 
         WidgetSettings.deleteLocationModePref(context, appWidgetId);
-        WidgetSettings.LocationMode mode0 = WidgetSettings.loadLocationModePref(context, appWidgetId);
-        assertTrue("mode should be default (COLOR) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        LocationMode mode0 = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        assertTrue("mode should be default (COLOR) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_LOCATION_MODE && mode0 == LocationMode.CUSTOM_LOCATION);
     }
 
     @Test public void test_locationPref()

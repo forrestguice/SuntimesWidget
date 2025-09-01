@@ -51,6 +51,7 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -1159,7 +1160,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             FragmentManager fragments = getSupportFragmentManager();
             if (editor != null)

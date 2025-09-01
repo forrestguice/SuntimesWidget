@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
@@ -583,7 +584,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     protected static boolean isCurrentLocationMode(Context context, int appWidgetId) {
-        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == WidgetSettings.LocationMode.CURRENT_LOCATION);
+        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == LocationMode.CURRENT_LOCATION);
     }
     protected static void updateLocationToLastKnown(Context context, int appWidgetId)
     {

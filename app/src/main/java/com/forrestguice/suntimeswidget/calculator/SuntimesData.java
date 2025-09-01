@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
@@ -127,8 +128,8 @@ public class SuntimesData
     /**
      * Property: location mode
      */
-    protected WidgetSettings.LocationMode locationMode;
-    public WidgetSettings.LocationMode locationMode()
+    protected LocationMode locationMode;
+    public LocationMode locationMode()
     {
         return locationMode;
     }

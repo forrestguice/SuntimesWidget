@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -1151,36 +1152,6 @@ public class WidgetSettings
         TimeFormatMode.MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
     }
 
-    /**
-     * LocationMode
-     */
-    public static enum LocationMode
-    {
-        CURRENT_LOCATION("Current Location"),
-        CUSTOM_LOCATION("Custom Location");
-
-        private String displayString;
-
-        private LocationMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-    }
     public static void initDisplayStrings_LocationMode( Context context )
     {
         LocationMode.CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
@@ -2373,14 +2344,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
+    public static void saveLocationModePref(Context context, int appWidgetId, LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.LocationMode loadLocationModePref(Context context, int appWidgetId)
+    public static LocationMode loadLocationModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -2389,7 +2360,7 @@ public class WidgetSettings
         LocationMode locationMode;
         try
         {
-            locationMode = WidgetSettings.LocationMode.valueOf(modeString);
+            locationMode = LocationMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             locationMode = PREF_DEF_LOCATION_MODE;

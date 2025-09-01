@@ -70,6 +70,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -546,7 +547,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
-        if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        if ((WidgetSettings.loadLocationModePref(this, 0) == LocationMode.CURRENT_LOCATION)
                 && LocationHelperSettings.lastAutoLocationIsStale(SuntimesActivity.this))
         {
             card_view.post(new Runnable()
@@ -873,8 +874,8 @@ public class SuntimesActivity extends AppCompatActivity
             locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
-        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
+        if (locationMode == LocationMode.CURRENT_LOCATION)
         {
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -1203,8 +1204,8 @@ public class SuntimesActivity extends AppCompatActivity
             MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
             if (refreshItem != null)
             {
-                WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
-                if (mode != WidgetSettings.LocationMode.CURRENT_LOCATION)
+                LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
+                if (mode != LocationMode.CURRENT_LOCATION)
                 {
                     refreshItem.setVisible(false);
 
@@ -1613,8 +1614,8 @@ public class SuntimesActivity extends AppCompatActivity
                 updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
 
-                WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
-                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+                LocationMode locationMode = dialog.getDialogContent().getLocationMode();
+                if (locationMode == LocationMode.CURRENT_LOCATION) {
                     getFixHelper.getFix();
                 }
             }
@@ -1909,11 +1910,11 @@ public class SuntimesActivity extends AppCompatActivity
         warnings.setShowWarnings(showWarnings);
         warnings.resetWarnings();
 
-        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
+        LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
+        String locationTitle = (locationMode == LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
 
-        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+        if (locationMode == LocationMode.CURRENT_LOCATION) {
             warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, !getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
         }
 

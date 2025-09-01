@@ -33,8 +33,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.junit.After;
 import org.junit.Before;
@@ -107,16 +107,16 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         robot.showDialog(activity)
                 .assertDialogShown(activity);
 
-        robot.selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+        robot.selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent()
                 .doubleRotateDevice(activityRule.getActivity())
                 .assertDialogMode_isCurrent();
 
-        robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+        robot.selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .doubleRotateDevice(activityRule.getActivity())
                 .assertDialogMode_isCustom()
-                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CURRENT_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .assertDialogMode_isCustom();
 
         robot.cancelDialog(activityRule.getActivity());
@@ -131,7 +131,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         robot.showDialog(activity)
                 .assertDialogShown(activity);
 
-        robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+        robot.selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .assertDialogMode_isCustom()
                 .assertDialogState_select()
                 .doubleRotateDevice(activity).sleep(1000)
@@ -158,11 +158,11 @@ public class LocationDialogTest extends SuntimesActivityTestBase
                 .assertDialogState_select()
                 .assertLocationEditCoordinates(TESTLOC_0_LAT, TESTLOC_0_LON);
 
-        robot.selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+        robot.selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .doubleRotateDevice(activity).sleep(1000)
                 .assertDialogMode_isCurrent()
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
-                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent();
 
         robot.cancelDialog(activity);
@@ -177,7 +177,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         robot.showDialog(activity)
                 .assertDialogShown(activity);
 
-        robot.selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+        robot.selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .assertDialogMode_isCustom()
                 .assertDialogState_select();
 
@@ -237,10 +237,10 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public LocationDialogRobot selectLocationMode( WidgetSettings.LocationMode mode )
+        public LocationDialogRobot selectLocationMode( LocationMode mode )
         {
             onView(withId(R.id.appwidget_location_mode)).perform(click());
-            onData(allOf(is(instanceOf(WidgetSettings.LocationMode.class)), is(mode)))
+            onData(allOf(is(instanceOf(LocationMode.class)), is(mode)))
                     .inRoot(isPlatformPopup()).perform(click());
             return this;
         }
@@ -284,7 +284,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         @Override
         public LocationDialogRobot assertDialogShown(Context context)
         {
-            if (detectLocationMode() == WidgetSettings.LocationMode.CURRENT_LOCATION)
+            if (detectLocationMode() == LocationMode.CURRENT_LOCATION)
                 assertDialogMode_isCurrent();
             else assertDialogMode_isCustom();
             return this;
@@ -351,12 +351,12 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public static WidgetSettings.LocationMode detectLocationMode()
+        public static LocationMode detectLocationMode()
         {
-            if (spinnerDisplaysText(R.id.appwidget_location_mode, WidgetSettings.LocationMode.CURRENT_LOCATION.toString()))
-                return WidgetSettings.LocationMode.CURRENT_LOCATION;
-            else if (spinnerDisplaysText(R.id.appwidget_location_mode, WidgetSettings.LocationMode.CUSTOM_LOCATION.toString()))
-                return WidgetSettings.LocationMode.CUSTOM_LOCATION;
+            if (spinnerDisplaysText(R.id.appwidget_location_mode, LocationMode.CURRENT_LOCATION.toString()))
+                return LocationMode.CURRENT_LOCATION;
+            else if (spinnerDisplaysText(R.id.appwidget_location_mode, LocationMode.CUSTOM_LOCATION.toString()))
+                return LocationMode.CUSTOM_LOCATION;
             else
                 return null;   // unrecognized mode; fail with a null
         }

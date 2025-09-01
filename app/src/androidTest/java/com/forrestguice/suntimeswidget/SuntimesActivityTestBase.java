@@ -37,6 +37,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
@@ -356,7 +357,7 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
         WidgetSettings.saveLengthUnitsPref(context, 0, configuration.lengthUnits);
 
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
         WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
@@ -442,7 +443,7 @@ public abstract class SuntimesActivityTestBase
     protected boolean savedState_showDataSource;
     protected boolean savedState_showMapButton;
     protected boolean savedState_firstLaunch;
-    protected WidgetSettings.LocationMode savedState_locationMode;
+    protected LocationMode savedState_locationMode;
     //protected AppSettings.LocaleMode savedState_localeMode;
 
     public static abstract class Robot<T>

@@ -34,7 +34,7 @@ public interface SuntimesDataSettings
     boolean loadLocalizeHemispherePref(int appWidgetId);
 
     Location loadLocationPref(int appWidgetId);
-    WidgetSettings.LocationMode loadLocationModePref(int appWidgetId);
+    LocationMode loadLocationModePref(int appWidgetId);
 
     SolarTimeMode loadSolarTimeModePref(int appWidgetID);
     WidgetSettings.RiseSetDataMode loadTimeModePref(int appWidgetId);
