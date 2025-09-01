@@ -29,7 +29,6 @@ import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -37,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -191,8 +191,8 @@ public class SuntimesNotes
         }
 
         for (String eventID : EventSettings.loadVisibleEvents(context)) {
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING));
+            notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_RISING));
+            notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_SETTING));
         }
 
         updateNotes(dataset.now());
@@ -546,10 +546,10 @@ public class SuntimesNotes
             }
 
         } else {
-            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
+            boolean isRising = eventID.endsWith(ElevationEvent.SUFFIX_RISING);
             String eventID0 = new String(eventID);
-            if (eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
-                eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            if (eventID0.endsWith("_" + ElevationEvent.SUFFIX_RISING) ||
+                eventID0.endsWith("_" + ElevationEvent.SUFFIX_SETTING)) {
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
             }
 
@@ -667,9 +667,9 @@ public class SuntimesNotes
 
         } else {
             String eventID = note.noteMode;
-            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
-            if (eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
-                    eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            boolean isRising = eventID.endsWith(ElevationEvent.SUFFIX_RISING);
+            if (eventID.endsWith("_" + ElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + ElevationEvent.SUFFIX_SETTING)) {
                 eventID = eventID.substring(0, eventID.lastIndexOf("_"));
             }
 

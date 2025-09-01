@@ -47,14 +47,16 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
 import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -186,8 +188,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         {
             TimeFieldRow row = timeFields0.get(eventID);
             if (row != null) {
-                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, row.getField(0));
-                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, row.getField(1));
+                timeFields.put(eventID + "_" + ElevationEvent.SUFFIX_RISING, row.getField(0));
+                timeFields.put(eventID + "_" + ElevationEvent.SUFFIX_SETTING, row.getField(1));
             }
         }
 
@@ -922,12 +924,12 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 switch (event.getType())
                 {
                     case SHADOWLENGTH:
-                        AlarmEventProvider.ShadowLengthEvent event1 = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        ShadowLengthEvent event1 = ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
                         angle = (event1 != null ? event1.getAngle() : 0);
                         break;
 
                     case SUN_ELEVATION:
-                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        SunElevationEvent event0 = SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
                         angle = (event0 != null ? event0.getAngle() : 0);
                         break;
                 }

@@ -68,7 +68,6 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
@@ -202,7 +201,7 @@ public class EventListHelper
         {
             String suffix = "";
             if (selectedChild >= 0) {
-                suffix = ((selectedChild == 0) ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
+                suffix = ((selectedChild == 0) ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING);
             }
 
             EventAlias selected = adapter.getSelected();
@@ -936,7 +935,7 @@ public class EventListHelper
             if (timeText != null)
             {
                 Calendar now = Calendar.getInstance();
-                String uri = item.getUri() + (rising ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
+                String uri = item.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING);
                 Calendar eventTime = AlarmNotifications.updateAlarmTime_addonEvent(context, context.getContentResolver(), uri, getLocation(context), 0, false, AlarmClockItem.everyday(), now);
                 boolean isSoon = (eventTime != null && (Math.abs(now.getTimeInMillis() - eventTime.getTimeInMillis()) < 1000 * 60 * 260 * 48));
                 timeText.setText(eventTime != null

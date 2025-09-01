@@ -77,6 +77,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -94,7 +95,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -1784,9 +1784,9 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (dataset.isCalculated())
         {
-            boolean isRising = eventID != null && eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
-            if (eventID != null && (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
-                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING))) {
+            boolean isRising = eventID != null && eventID.endsWith(SunElevationEvent.SUFFIX_RISING);
+            if (eventID != null && (eventID.endsWith("_" + SunElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + SunElevationEvent.SUFFIX_SETTING))) {
                 eventID = eventID.substring(0, eventID.lastIndexOf("_"));
             }
 
@@ -1794,7 +1794,7 @@ public class SuntimesActivity extends AppCompatActivity
             if (EventSettings.hasEvent(this, eventID))
             {
                 EventAlias event = EventSettings.loadEvent(this, eventID);
-                alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
+                alarmID = event.getAliasUri() + (isRising ? SunElevationEvent.SUFFIX_RISING : SunElevationEvent.SUFFIX_SETTING);
             }
 
             AlarmCreateDialog dialog = new AlarmCreateDialog();

@@ -45,7 +45,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -54,6 +53,8 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
@@ -184,12 +185,12 @@ public class UIPrefsFragment extends PreferenceFragment
             switch (alias.getType())
             {
                 case SUN_ELEVATION:
-                    AlarmEventProvider.SunElevationEvent elevationEvent = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    SunElevationEvent elevationEvent = SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));
                     break;
 
                 case SHADOWLENGTH:
-                    AlarmEventProvider.ShadowLengthEvent shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
                     break;
             }

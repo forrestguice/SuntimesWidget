@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class AlarmEventProviderTest0
 
         for (int i=0; i<angle.length; i++)
         {
-            AlarmEventProvider.SunElevationEvent event = new AlarmEventProvider.SunElevationEvent(angle[i], offset[i], rising[i]);
+            SunElevationEvent event = new SunElevationEvent(angle[i], offset[i], rising[i]);
             assertEquals(angle[i], event.getAngle());
             assertEquals(offset[i], event.getOffset());
             assertEquals(rising[i], event.isRising());
@@ -52,7 +54,7 @@ public class AlarmEventProviderTest0
         String[] events = new String[] { "SUN_-6.0|5r", "SUN_-6.0|5s", "SUN_12.0r", "SUN_12.0s", "OTHER_10s", "SHADOW_1:1|5r", null, "" };
         boolean[] expected = new boolean[] {true, true, true, true, false, false, false, false};
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.SunElevationEvent.isElevationEvent(events[i]));
+            assertEquals(expected[i], SunElevationEvent.isElevationEvent(events[i]));
         }
     }
 
@@ -65,7 +67,7 @@ public class AlarmEventProviderTest0
         String[] expected = new String[] { "SUN_-6.0|5r", "SUN_-6.0|5s", "SUN_12.0r", "SUN_12.0s" };
 
         for (int i=0; i<angle.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.SunElevationEvent.getEventName(angle[i], offset[i], rising[i]));
+            assertEquals(expected[i], SunElevationEvent.getEventName(angle[i], offset[i], rising[i]));
         }
     }
 
@@ -79,19 +81,19 @@ public class AlarmEventProviderTest0
 
         for (int i=0; i<angle.length; i++)
         {
-            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(events[i]);
+            SunElevationEvent event = SunElevationEvent.valueOf(events[i]);
             assertNotNull(event);
             assertEquals(angle[i], event.getAngle());
             assertEquals(offset[i], event.getOffset());
             assertEquals(rising[i], event.isRising());
         }
-        assertEquals(-6.0, AlarmEventProvider.SunElevationEvent.valueOf("SUN_-6").getAngle());      // no suffix, no offset
+        assertEquals(-6.0, SunElevationEvent.valueOf("SUN_-6").getAngle());      // no suffix, no offset
 
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("") );             // empty
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf(null) );           // null
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("OTHER_") );       // non SunElevationEvents
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SUN_X|5r") );     // bad angle (not a number)
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SUN_-6|Xr") );    // bad offset (not a number)
+        assertNull( SunElevationEvent.valueOf("") );             // empty
+        assertNull( SunElevationEvent.valueOf(null) );           // null
+        assertNull( SunElevationEvent.valueOf("OTHER_") );       // non SunElevationEvents
+        assertNull( SunElevationEvent.valueOf("SUN_X|5r") );     // bad angle (not a number)
+        assertNull( SunElevationEvent.valueOf("SUN_-6|Xr") );    // bad offset (not a number)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +109,7 @@ public class AlarmEventProviderTest0
 
         for (int i=0; i<rising.length; i++)
         {
-            AlarmEventProvider.ShadowLengthEvent event = new AlarmEventProvider.ShadowLengthEvent(height[i], length[i], offset[i], rising[i]);
+            ShadowLengthEvent event = new ShadowLengthEvent(height[i], length[i], offset[i], rising[i]);
             assertEquals(height[i], event.getObjHeight());
             assertEquals(length[i], event.getLength());
             assertEquals(offset[i], event.getOffset());
@@ -121,7 +123,7 @@ public class AlarmEventProviderTest0
         String[] events = new String[] { "SHADOW_1:1|5r", "SHADOW_1|5s", "SHADOW_1:1s", "SHADOW_1:1r", "OTHER_10s", "SUN_-6.0|5r", null, "" };
         boolean[] expected = new boolean[] {true, true, true, true, false, false, false, false};
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.ShadowLengthEvent.isShadowLengthEvent(events[i]));
+            assertEquals(expected[i], ShadowLengthEvent.isShadowLengthEvent(events[i]));
         }
     }
 
@@ -135,7 +137,7 @@ public class AlarmEventProviderTest0
         String[] expected = new String[] { "SHADOW_1.0:6.0|5r", "SHADOW_6.0:6.0|5s", "SHADOW_1.0:12.0r", "SHADOW_6.0:12.0s" };
 
         for (int i=0; i<rising.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.ShadowLengthEvent.getEventName(height[i], length[i], offset[i], rising[i]));
+            assertEquals(expected[i], ShadowLengthEvent.getEventName(height[i], length[i], offset[i], rising[i]));
         }
     }
 
@@ -150,22 +152,22 @@ public class AlarmEventProviderTest0
 
         for (int i=0; i<rising.length; i++)
         {
-            AlarmEventProvider.ShadowLengthEvent event = AlarmEventProvider.ShadowLengthEvent.valueOf(events[i]);
+            ShadowLengthEvent event = ShadowLengthEvent.valueOf(events[i]);
             assertNotNull(event);
             assertEquals(length[i], event.getLength());
             assertEquals(height[i], event.getObjHeight());
             assertEquals(offset[i], event.getOffset());
             assertEquals(rising[i], event.isRising());
         }
-        assertEquals(6.0, AlarmEventProvider.ShadowLengthEvent.valueOf("SHADOW_6").getLength());      // no suffix, no offset
+        assertEquals(6.0, ShadowLengthEvent.valueOf("SHADOW_6").getLength());      // no suffix, no offset
 
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("") );             // empty
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf(null) );           // null
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("OTHER_") );       // non SunElevationEvents
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SHADOW_X|5r") );     // bad length (not a number)
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SHADOW_1.0:X|5r") );     // bad length (not a number)
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SHADOW_X:1.0|5r") );     // bad height (not a number)
-        assertNull( AlarmEventProvider.SunElevationEvent.valueOf("SHADOW_-6|Xr") );    // bad offset (not a number)
+        assertNull( SunElevationEvent.valueOf("") );             // empty
+        assertNull( SunElevationEvent.valueOf(null) );           // null
+        assertNull( SunElevationEvent.valueOf("OTHER_") );       // non SunElevationEvents
+        assertNull( SunElevationEvent.valueOf("SHADOW_X|5r") );     // bad length (not a number)
+        assertNull( SunElevationEvent.valueOf("SHADOW_1.0:X|5r") );     // bad length (not a number)
+        assertNull( SunElevationEvent.valueOf("SHADOW_X:1.0|5r") );     // bad height (not a number)
+        assertNull( SunElevationEvent.valueOf("SHADOW_-6|Xr") );    // bad offset (not a number)
     }
 
     @Test

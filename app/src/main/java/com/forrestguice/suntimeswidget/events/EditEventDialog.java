@@ -46,7 +46,6 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
@@ -482,9 +481,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             case SUN_ELEVATION:
                 double angle = 0;
-                AlarmEventProvider.SunElevationEvent event0 = null;
+                SunElevationEvent event0 = null;
                 if (uri != null) {
-                    event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                    event0 = SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
                 }
                 if (edit_angle != null && event0 != null) {
                     setAngle(angle = event0.getAngle());
@@ -503,9 +502,9 @@ public class EditEventDialog extends EditBottomSheetDialog
 
             case SHADOWLENGTH:
                 double length = 0;
-                AlarmEventProvider.ShadowLengthEvent shadowEvent = null;
+                ShadowLengthEvent shadowEvent = null;
                 if (uri != null) {
-                    shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                    shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
                 }
                 if (text_units_shadowLength != null) {
                     text_units_shadowLength.setText(context.getString((units == LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
@@ -579,12 +578,12 @@ public class EditEventDialog extends EditBottomSheetDialog
                 switch (type)
                 {
                     case SHADOWLENGTH:
-                        eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
+                        eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
                         break;
 
                     case SUN_ELEVATION:
                     default:
-                        eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
+                        eventID = SunElevationEvent.getEventName(angle, offset, null);
                         break;
 
                 }
@@ -744,7 +743,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double angle = Double.parseDouble(s.toString());
-                String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, getOffset(), null);
+                String eventID = SunElevationEvent.getEventName(angle, getOffset(), null);
                 setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
 
@@ -766,7 +765,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 Double objHeightMeters = getObjHeightMeters();
                 if (objHeightMeters != null)
                 {
-                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
+                    String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
                     setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }
@@ -789,7 +788,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 Double lengthMeters = getShadowLengthMeters();
                 if (lengthMeters != null)
                 {
-                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
+                    String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
                     setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }

@@ -23,9 +23,9 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -531,8 +531,8 @@ public class SuntimesRiseSetDataset
         }
 
         //Log.d("DEBUG", "getRiseSetEvents: EventAlias: " + eventID);
-        boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
-        if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) || eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+        boolean isRising = eventID.endsWith(SunElevationEvent.SUFFIX_RISING);
+        if (eventID.endsWith("_" + SunElevationEvent.SUFFIX_RISING) || eventID.endsWith("_" + SunElevationEvent.SUFFIX_SETTING)) {
             eventID = eventID.substring(0, eventID.lastIndexOf("_"));
         }
         d = getData(eventID);

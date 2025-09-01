@@ -23,11 +23,13 @@ import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -81,10 +83,10 @@ public class SuntimesRiseSetData extends SuntimesData
         if (dataMode instanceof EventAliasTimeMode)
         {
             EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
-            AlarmEventProvider.ElevationEvent event;
+            ElevationEvent event;
             switch (alias.getType()) {
-                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
-                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(getLastPathSegment(alias.getUri())); break;
+                case SUN_ELEVATION: event = SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
+                case SHADOWLENGTH: event = ShadowLengthEvent.valueOf(getLastPathSegment(alias.getUri())); break;
                 default: event = null; break;
             }
             this.angle = (event == null ? null : event.getAngle());

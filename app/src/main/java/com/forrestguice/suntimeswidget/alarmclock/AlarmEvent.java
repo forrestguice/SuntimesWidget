@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -388,8 +389,8 @@ public class AlarmEvent
         for (String eventID : customEvents)
         {
             EventAlias alias = EventSettings.loadEvent(context, eventID);
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }
 
         SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);

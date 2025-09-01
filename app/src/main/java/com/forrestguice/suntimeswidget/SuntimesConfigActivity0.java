@@ -67,7 +67,6 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -89,6 +88,7 @@ import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
@@ -3282,7 +3282,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
             } else if (context != null && EventSettings.hasEvent(context, item.name())) {
                 String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
-                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
+                SunElevationEvent event = SunElevationEvent.valueOf(eventID);
                 return ((event != null) ? utils.formatAsDegrees(event.getAngle(), 1) : null);
 
             } else return null;
