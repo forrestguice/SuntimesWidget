@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -110,7 +111,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_quantity", R.array.solarevents_quantity);
 
             verify_stringArrayLength("directions_short", R.array.directions_short, "directions_long", R.array.directions_long);
-            verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", SuntimesUtils.CardinalDirection.values());
+            verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", CardinalDirection.values());
 
             verify_stringArrayValuesOfEnum("timezoneSort_values", R.array.timezoneSort_values, WidgetTimezones.TimeZoneSort.class);
             verify_stringArrayLength("timezoneSort_values", R.array.timezoneSort_values, "timezoneSort_display", R.array.timezoneSort_display);
