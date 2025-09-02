@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -1260,7 +1261,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 data.calculate(context);
             }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
-            notificationMsg = DataSubstitutions.displayStringForTitlePattern0(context, notificationMsg, data);
+            notificationMsg = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), notificationMsg, data);
         }
         int notificationIcon = alarm.getIcon();
 

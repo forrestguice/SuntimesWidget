@@ -41,7 +41,6 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.util.Calendar;
 
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN;
 import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_FORMATPATTERN;
 import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_MODE;
 

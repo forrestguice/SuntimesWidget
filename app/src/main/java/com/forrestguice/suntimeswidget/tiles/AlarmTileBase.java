@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -185,7 +186,7 @@ public class AlarmTileBase extends SuntimesTileBase
                 }
                 if (item.note != null) {
                     msg.append("\n");
-                    msg.append(DataSubstitutions.displayStringForTitlePattern0(context, item.note, data));
+                    msg.append(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, data));
                 }
             }
 

@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -617,7 +618,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -699,7 +700,7 @@ public class WidgetActions
                 } else {
                     if (value.contains("%"))
                     {
-                        String v = DataSubstitutions.displayStringForTitlePattern0(context, value, data);
+                        String v = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), value, data);
                         if (!v.contains("%")) {
                             applyExtra(context, intent, key + "=" + v, data);    // recursive call
 

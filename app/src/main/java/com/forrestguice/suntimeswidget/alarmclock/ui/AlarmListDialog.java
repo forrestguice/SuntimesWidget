@@ -69,6 +69,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -2075,7 +2076,7 @@ public class AlarmListDialog extends DialogFragment
 
             // note tray
             if (text_usernote != null) {
-                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(context, item.note, AlarmNotifications.getData(context, item)) : "");
+                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, AlarmNotifications.getData(context, item)) : "");
             }
             if (view.noteTray != null) {
                 view.noteTray.setVisibility(isSelected && item.note != null && !item.note.isEmpty() ? View.VISIBLE : View.GONE);

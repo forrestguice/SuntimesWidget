@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -88,7 +89,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
