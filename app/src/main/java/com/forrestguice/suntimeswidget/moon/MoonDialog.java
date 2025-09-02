@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.List;
@@ -534,7 +535,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (text_dialogTimeOffset != null) {
             if (!suffix.isEmpty())
             {
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
+                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
                 offsetText.setSuffix("");
                 String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
                 text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
@@ -584,7 +585,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ColorValues colors = moonapsis.getColors();
                 int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
                 int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
-                SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
+                TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
                 moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))

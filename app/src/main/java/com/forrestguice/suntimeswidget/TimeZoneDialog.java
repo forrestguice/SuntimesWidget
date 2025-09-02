@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -399,7 +400,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         if (context != null && isAdded())
         {
             TimeZone tz = getTimeZone();
-            SuntimesUtils.TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
+            TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
             if (preview_time != null) {
                 preview_time.setText(timeDisplay.getValue());
             }
@@ -453,7 +454,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
         int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
-        SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+        TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
         ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, iconSize, iconSize);
         String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
         String extrasString = getString(stringResID, dstString);

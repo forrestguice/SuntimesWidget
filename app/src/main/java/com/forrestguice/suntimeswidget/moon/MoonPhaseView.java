@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.text.NumberFormat;
@@ -402,20 +403,20 @@ public class MoonPhaseView extends LinearLayout
 
         if (azimuthText != null)
         {
-            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 2, false);
+            TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 2, false);
             String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
             SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
             azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
             this.azimuthText.setText(azimuthSpan);
 
-            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 2, true);
+            TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 2, true);
             this.azimuthText.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
         }
 
         if (elevationText != null)
         {
             //int elevationColor = Color.WHITE;
-            SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 2);
+            TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 2);
             String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
             SpannableString elevationSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
             //elevationSpan = SuntimesUtils.createColorSpan(elevationSpan, elevationString, elevationString, elevationColor);

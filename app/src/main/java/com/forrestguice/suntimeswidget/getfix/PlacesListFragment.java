@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1607,7 +1608,7 @@ public class PlacesListFragment extends Fragment
         if (showAltitude)
         {
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);
             String displayString = context.getString(R.string.location_format_latlonalt, locationString, altitudeTag);

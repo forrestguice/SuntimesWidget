@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -164,7 +165,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         if (apogee != null)
         {
-            SuntimesUtils.TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
             views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours, timeColor, boldTime));
             if (apogee.second != null) {
@@ -176,7 +177,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         if (perigee != null)
         {
-            SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());
             views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours, timeColor, boldTime));
             if (perigee.second != null) {
@@ -194,7 +195,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
     public static SpannableString distanceSpan(Context context, double distance, LengthUnit units, int color, int suffixColor, boolean boldTime)
     {
-        SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, distance, units, PositionLayout.DECIMAL_PLACES, true);
+        TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();
         String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
         SpannableString distanceSpan = SuntimesUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);

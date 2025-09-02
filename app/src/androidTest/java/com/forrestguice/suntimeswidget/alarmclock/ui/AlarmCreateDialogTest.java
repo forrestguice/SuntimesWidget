@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.After;
 import org.junit.Before;
@@ -388,7 +389,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             calendar.set(Calendar.SECOND, 0);
 
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
             onView( allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()) )
                     .check(assertContainsText(text.toString()));
             return this;

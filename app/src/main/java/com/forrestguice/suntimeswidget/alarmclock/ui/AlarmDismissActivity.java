@@ -82,6 +82,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1003,7 +1004,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
     {
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
         if (SuntimesUtils.is24()) {
             return timeText.getValue();
         } else {
@@ -1034,7 +1035,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         long snoozeMillis = (alarm != null)
                 ? alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this))    // NPE this line after rotation
                 : AlarmSettings.PREF_DEF_ALARM_SNOOZE;
-        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
+        TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
         String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
         return SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
     }

@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.text.DateFormatSymbols;
@@ -349,124 +350,6 @@ public class SuntimesUtils
             {
                 values[i].setDisplayStrings(modes_short[i], modes_long[i]);
             }
-        }
-    }
-
-    /**
-     * TimeDisplayText : class
-     */
-    public static class TimeDisplayText
-    {
-        private long rawValue = 0;
-        private String value;
-        private String units;
-        private String suffix;
-
-        public TimeDisplayText()
-        {
-            this.value = "";
-            this.units = "";
-            this.suffix = "";
-        }
-
-        public TimeDisplayText(String value)
-        {
-            this.value = value;
-            this.units = "";
-            this.suffix = "";
-        }
-
-        public TimeDisplayText(String value, String units, String suffix)
-        {
-            this.value = value;
-            this.units = units;
-            this.suffix = suffix;
-        }
-
-        public void setRawValue(long value)
-        {
-            rawValue = value;
-        }
-
-        public long getRawValue()
-        {
-            return rawValue;
-        }
-
-        public String getValue()
-        {
-            return value;
-        }
-
-        public String getUnits()
-        {
-            return units;
-        }
-
-        public String getSuffix()
-        {
-            return suffix;
-        }
-
-        public void setSuffix(String suffix)
-        {
-            this.suffix = suffix;
-        }
-
-        public String toString()
-        {
-            StringBuilder s = new StringBuilder();
-            s.append(value);
-
-            boolean valueNotEmpty = !value.isEmpty();
-            boolean unitsNotEmpty = !units.isEmpty();
-
-            if (unitsNotEmpty)
-            {
-                if (valueNotEmpty)
-                    s.append(" ");
-                s.append(units);
-            }
-
-            if (!suffix.isEmpty())
-            {
-                if (valueNotEmpty || unitsNotEmpty)
-                    s.append(" ");
-                s.append(suffix);
-            }
-
-            return s.toString();
-        }
-
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (obj == null || !TimeDisplayText.class.isAssignableFrom(obj.getClass()))
-                return false;
-
-            final TimeDisplayText other = (TimeDisplayText) obj;
-
-            if (!value.equals(other.getValue()))
-                return false;
-
-            if (!units.equals(other.getUnits()))
-                return false;
-
-            //noinspection RedundantIfStatement
-            if (!suffix.equals(other.getSuffix()))
-                return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = this.value.hashCode();
-            hash = hash * 37 + units.hashCode();
-            hash = hash * 37 + suffix.hashCode();
-            return hash;
         }
     }
 

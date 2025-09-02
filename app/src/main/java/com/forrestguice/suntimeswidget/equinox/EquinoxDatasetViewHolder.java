@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -204,7 +205,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 
         if (data.isImplemented() && data.isCalculated())
         {
-            SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
+            TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
             title.setText(titleText.toString());
 
             boolean showSeconds = !options.minimized || WidgetSettings.loadShowSecondsPref(context, 0);
@@ -355,7 +356,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             this.time = time;
             if (timeView != null)
             {
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
+                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
             }
         }

@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -239,26 +240,26 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         if (sun != null && sun.isCalculated())
         {
             if (options.showActual) {
-                SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunriseCalendarToday(), options.showSeconds);
-                SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunsetCalendarToday(), options.showSeconds);
                 row_actual.updateFields(sunriseString_actualTime.toString(), sunsetString_actualTime.toString());
             }
 
             if (options.showCivil) {
-                SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunriseCalendarToday(), options.showSeconds);
-                SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunsetCalendarToday(), options.showSeconds);
                 row_civil.updateFields(sunriseString_civilTime.toString(), sunsetString_civilTime.toString());
             }
 
             if (options.showNautical) {
-                SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunriseCalendarToday(), options.showSeconds);
-                SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunsetCalendarToday(), options.showSeconds);
                 row_nautical.updateFields(sunriseString_nauticalTime.toString(), sunsetString_nauticalTime.toString());
             }
 
             if (options.showAstro) {
-                SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunriseCalendarToday(), options.showSeconds);
-                SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunsetCalendarToday(), options.showSeconds);
                 row_astro.updateFields(sunriseString_astroTime.toString(), sunsetString_astroTime.toString());
             }
 
@@ -271,7 +272,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 SpannableString positionSpan = new SpannableString("");
                 SuntimesCalculator.SunPosition positionNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
                 if (positionNoon != null) {
-                    SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(positionNoon.elevation, 1);
+                    TimeDisplayText elevationText = utils.formatAsElevation(positionNoon.elevation, 1);
                     String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
                     positionSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
                 }
@@ -412,7 +413,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)
     {
-        SuntimesUtils.TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
+        TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
         String compareString = (data.dayLengthToday() == data.dayLengthOther())
                 ? context.getString(data.dayDeltaPrefix()) + " " + deltaText.getSuffix()
@@ -611,7 +612,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public static void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
     {
-        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
+        TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
@@ -622,17 +623,17 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
-        SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
+        TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
         view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)
     {
-        SuntimesUtils.TimeDisplayText dayLengthDisplay;
+        TimeDisplayText dayLengthDisplay;
         if (dayLength <= 0)
-            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 0, (showSeconds ? SuntimesUtils.strSeconds : SuntimesUtils.strMinutes)), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+            dayLengthDisplay = new TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 0, (showSeconds ? SuntimesUtils.strSeconds : SuntimesUtils.strMinutes)), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
         else if (dayLength >= SuntimesData.DAY_MILLIS)
-            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 24, SuntimesUtils.strHours), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+            dayLengthDisplay = new TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 24, SuntimesUtils.strHours), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
         else dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
 
         dayLengthDisplay.setSuffix("");

@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -570,7 +571,7 @@ public class SuntimesNotes
             }
         }
 
-        SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
+        TimeDisplayText timeString = new TimeDisplayText();
         return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
     }
 

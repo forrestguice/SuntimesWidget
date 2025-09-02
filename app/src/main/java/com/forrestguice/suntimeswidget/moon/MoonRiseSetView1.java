@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
@@ -757,7 +758,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
-            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
             timeView.setText(text.toString());
         }
 
@@ -769,13 +770,13 @@ public class MoonRiseSetView1 extends LinearLayout
                 positionView.setContentDescription("");
 
             } else {
-                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+                TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
                 String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
                 SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
                 azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
-                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+                TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
                 positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
             }
         }

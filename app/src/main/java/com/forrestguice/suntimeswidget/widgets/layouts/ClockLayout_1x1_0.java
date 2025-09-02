@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -86,7 +87,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         Calendar now = data.calendar();
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+        TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
         String nowString = nowText.getValue();
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
@@ -165,7 +166,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             if (offset != null)
             {
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
                 String offsetString = (offsetText.getRawValue() < 0 ? "-" : "+") + offsetText.getValue();
                 String extrasString = context.getString(stringResID, offsetString);
                 SpannableString boldedExtrasSpan = SuntimesUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);

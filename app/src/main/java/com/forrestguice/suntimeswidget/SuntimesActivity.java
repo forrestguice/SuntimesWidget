@@ -120,6 +120,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.reflect.Method;
 
@@ -1928,7 +1929,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
             String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
@@ -2092,7 +2093,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);

@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.hamcrest.Matcher;
 
@@ -183,7 +184,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyClock(SuntimesActivity activity)
     {
         SuntimesRiseSetDataset dataset = activity.dataset;
-        SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
+        TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
         String timezoneID = dataset.timezone().getID();
 
         onView(withId(R.id.text_time)).check(assertShown);

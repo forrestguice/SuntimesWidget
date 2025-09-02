@@ -18,14 +18,14 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Date;
 
 public class NoteData
 {
     public String noteMode;
-    public SuntimesUtils.TimeDisplayText timeText;
+    public TimeDisplayText timeText;
     public String prefixText;
     public String noteText;
     public int noteIconResource;
@@ -35,7 +35,7 @@ public class NoteData
     public boolean tomorrow = false;
     public boolean squareIcon = false;
 
-    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
+    public NoteData(String noteMode, TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;

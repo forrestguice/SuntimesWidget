@@ -86,6 +86,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
@@ -914,7 +915,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             Calendar now = Calendar.getInstance();
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
-            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
             String nowString = nowText.getValue();
             CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
@@ -936,9 +937,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
         SuntimesRiseSetData noonData = data1.getLinked();
-        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
+        TimeDisplayText noonText = ((noonData != null)
                 ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
-                : new SuntimesUtils.TimeDisplayText("12:00"));
+                : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
@@ -958,7 +959,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -978,7 +979,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -1082,7 +1083,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
@@ -1102,7 +1103,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();

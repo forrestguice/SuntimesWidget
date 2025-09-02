@@ -25,12 +25,12 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 /**
  * Moon Primary Phase (1x1)
@@ -79,7 +79,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
             MoonPhaseDisplay nextPhase = SuntimesMoonData.toPhase(majorPhase);
             views.setViewVisibility(nextPhase.getView(), View.VISIBLE);
 
-            SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
             views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(context, majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));

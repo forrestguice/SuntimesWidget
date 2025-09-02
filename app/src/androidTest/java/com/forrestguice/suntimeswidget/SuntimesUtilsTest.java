@@ -30,6 +30,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -103,25 +104,25 @@ public class SuntimesUtilsTest
         test_calendarTimeShortDisplayString24hr(tzAz, utcMillis, "10:58");
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString12hr(TimeZone tz, long utcMillis, String expected, String expectedSuffix)
+    protected TimeDisplayText test_calendarTimeShortDisplayString12hr(TimeZone tz, long utcMillis, String expected, String expectedSuffix)
     {
-        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
         assertTrue("suffix should be " + expectedSuffix + ", but was " + text.getSuffix(), text.getSuffix().equals(expectedSuffix));
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString24hr(TimeZone tz, long utcMillis, String expected)
+    protected TimeDisplayText test_calendarTimeShortDisplayString24hr(TimeZone tz, long utcMillis, String expected)
     {
-        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
         assertTrue("suffix should be empty but was " + text.getSuffix(), text.getSuffix().isEmpty());
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString(TimeZone tz, long utcMillis, String expected)
+    protected TimeDisplayText test_calendarTimeShortDisplayString(TimeZone tz, long utcMillis, String expected)
     {
         Calendar time = new GregorianCalendar(tz);
         time.setTimeInMillis(utcMillis);
-        SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(mockContext, time);
+        TimeDisplayText text = utils.calendarTimeShortDisplayString(mockContext, time);
         assertTrue("raw value should be " + utcMillis + ", but was " + text.getRawValue(), text.getRawValue() == utcMillis);
         assertTrue("value should be " + expected + ", but was " + text.getValue(), text.getValue().equals(expected));
         assertTrue("units should be empty but was " + text.getUnits(), text.getUnits().isEmpty());
@@ -172,18 +173,18 @@ public class SuntimesUtilsTest
         test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12", false, true, true);
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
+    protected TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
+        TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == date.getTimeInMillis());
         assertTrue(text.getSuffix().isEmpty());
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
+    protected TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds, false);
+        TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds, false);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == date.getTimeInMillis());
         assertTrue(text.getSuffix().isEmpty());
@@ -249,7 +250,7 @@ public class SuntimesUtilsTest
         Calendar now = Calendar.getInstance(tz);
         now.setTimeInMillis(utcMillis);
 
-        SuntimesUtils.TimeDisplayText text;
+        TimeDisplayText text;
         double bench_millis = 0, threshold_millis = 2;
         double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
         long bench_start = 0, bench_end = 0;

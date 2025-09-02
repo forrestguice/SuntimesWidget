@@ -35,7 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+import com.forrestguice.util.text.TimeDisplayText;
 
 public class SunLayout_2x1_0 extends SunLayout
 {

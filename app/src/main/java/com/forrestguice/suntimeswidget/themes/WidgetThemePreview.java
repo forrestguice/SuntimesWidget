@@ -64,6 +64,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -571,7 +572,7 @@ public class WidgetThemePreview
 
             Calendar now = Calendar.getInstance();
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
             String nowString = nowText.getValue();
             CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
@@ -595,9 +596,9 @@ public class WidgetThemePreview
         TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
         SuntimesRiseSetData noonData = data1.getLinked();
-        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
+        TimeDisplayText noonText = ((noonData != null)
                 ? utils.calendarTimeShortDisplayString(previewLayout.getContext(), noonData.sunriseCalendarToday())
-                : new SuntimesUtils.TimeDisplayText("12:00"));
+                : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
@@ -617,7 +618,7 @@ public class WidgetThemePreview
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -637,7 +638,7 @@ public class WidgetThemePreview
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -742,7 +743,7 @@ public class WidgetThemePreview
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(context, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(context, data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
@@ -762,7 +763,7 @@ public class WidgetThemePreview
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(context, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(context, data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
@@ -949,7 +950,7 @@ public class WidgetThemePreview
 
             if (previewMoonAzimuth != null)
             {
-                SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+                TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
                 previewMoonAzimuth.setTextColor(textColor);
                 previewMoonAzimuth.setText(PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
                 updateSize(previewMoonAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -1040,7 +1041,7 @@ public class WidgetThemePreview
             }
             if (apogee != null)
             {
-                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
                 previewMoonApogeeDate.setText(perigeeString.getValue());
                 previewMoonApogeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), apogee.first, showWeeks, showHours, timeColor, boldTime));
 
@@ -1073,7 +1074,7 @@ public class WidgetThemePreview
             }
             if (perigee != null)
             {
-                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
                 previewMoonPerigeeDate.setText(perigeeString.getValue());
                 previewMoonPerigeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), perigee.first, showWeeks, showHours, timeColor, boldTime));
 

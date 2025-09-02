@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -156,13 +157,13 @@ public abstract class MoonLayout extends SuntimesLayout
             }
         }
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds, timeFormat);
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds, timeFormat);
         String riseString = riseText.getValue();
         CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds, timeFormat);
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds, timeFormat);
         String setString = setText.getValue();
         CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
