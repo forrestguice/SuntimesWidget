@@ -31,11 +31,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.forrestguice.suntimeswidget.settings.SolarEvents.*;
+import static com.forrestguice.suntimeswidget.calculator.settings.SolarEvents.*;
 
 /**
  * ArrayAdapter that displays SolarEvents items (with icon) as list or dropdown.

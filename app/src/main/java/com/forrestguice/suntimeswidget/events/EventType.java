@@ -22,7 +22,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import java.util.Set;
 

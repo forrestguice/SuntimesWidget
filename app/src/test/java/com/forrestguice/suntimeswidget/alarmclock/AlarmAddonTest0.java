@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import com.forrestguice.suntimeswidget.events.EventUri;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import org.junit.Test;
 

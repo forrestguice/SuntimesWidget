@@ -16,15 +16,14 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
-import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.util.Resources;
 
 public enum SolarEvents
