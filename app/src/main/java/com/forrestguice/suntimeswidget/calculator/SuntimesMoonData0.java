@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.util.Pair;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -134,7 +135,7 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param input major phase
      * @return corresponding MoonPhaseDisplay enum (direct map)
      */
-    public static MoonPhaseDisplay toPhase( SuntimesCalculator.MoonPhase input )
+    public static MoonPhaseDisplay toPhase(SuntimesCalculator.MoonPhase input )
     {
         switch (input) {
             case NEW: return MoonPhaseDisplay.NEW;
