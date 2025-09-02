@@ -52,7 +52,7 @@ public class CalendarFormatDialog extends DialogFragment
         super();
         Bundle defaultArgs = new Bundle();
         defaultArgs.putString(PREF_KEY_CALENDAR_MODE, CalendarMode.GREGORIAN.name());
-        defaultArgs.putString(PREF_KEY_CALENDAR_FORMATPATTERN, PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN);
+        defaultArgs.putString(PREF_KEY_CALENDAR_FORMATPATTERN, CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN);
         setArguments(defaultArgs);
     }
 

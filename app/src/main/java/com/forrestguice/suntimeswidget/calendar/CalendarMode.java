@@ -18,9 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.util.Log;
-
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -50,21 +49,21 @@ import java.util.Calendar;
  */
 public enum CalendarMode
 {
-    CHINESE("Chinese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_CHINESE),
-    COPTIC("Coptic", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
-    ETHIOPIAN("Ethiopian",CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
-    GREGORIAN("Gregorian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
-    HEBREW("Hebrew", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
-    //HIJRI_DIYANET("Hijri (Turkish)", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_DIYANET),
-    HIJRI_UMALQURA("Hijri (Umm al-Qura)", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_UMALQURA),
-    INDIAN("Indian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_INDIAN),
-    JAPANESE("Japanese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JAPANESE),
-    JULIAN("Julian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
-    KOREAN("Korean", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_KOREAN),
-    MINGUO("Minguo", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_MINGUO),
-    PERSIAN("Solar Hijri", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
-    THAISOLAR("Thai Solar", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR),
-    VIETNAMESE("Vietnamese", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE);
+    CHINESE("Chinese", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_CHINESE),
+    COPTIC("Coptic", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
+    ETHIOPIAN("Ethiopian", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
+    GREGORIAN("Gregorian", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
+    HEBREW("Hebrew", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+    //HIJRI_DIYANET("Hijri (Turkish)", CalendarPatternDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_DIYANET),
+    HIJRI_UMALQURA("Hijri (Umm al-Qura)", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_HIJRI_UMALQURA),
+    INDIAN("Indian", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_INDIAN),
+    JAPANESE("Japanese", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_JAPANESE),
+    JULIAN("Julian", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
+    KOREAN("Korean", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_KOREAN),
+    MINGUO("Minguo", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_MINGUO),
+    PERSIAN("Solar Hijri", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
+    THAISOLAR("Thai Solar", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR),
+    VIETNAMESE("Vietnamese", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE);
 
     private String displayString;
     private String defaultPattern;
@@ -102,19 +101,19 @@ public enum CalendarMode
             switch (calendar)
             {
                 case THAISOLAR:
-                    ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR).build();
+                    ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR).build();
                     return thaiCalendar.format(today.transform(ThaiSolarCalendar.class));
 
                 case PERSIAN:
-                    ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return persianCalendar.format(today.transform(PersianCalendar.class));
 
                 case ETHIOPIAN:
-                    ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return ethiopianCalendar.format(today.transform(EthiopianCalendar.class));    // conversion at noon
 
                 case HEBREW:
-                    ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
+                    ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, TimeDateDisplay.getLocale(), HebrewCalendar.axis());
                     return hebrewCalendar.format(today.transform(HebrewCalendar.class));
 
                 /*case HIJRI_DIYANET:
@@ -123,47 +122,47 @@ public enum CalendarMode
                     return hijriCalendar0.format(today.transform(HijriCalendar.class, HijriCalendar.VARIANT_DIYANET));*/
 
                 case HIJRI_UMALQURA:
-                    ChronoFormatter<HijriCalendar> hijriCalendar1 = ChronoFormatter.setUp(HijriCalendar.class, SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build()
+                    ChronoFormatter<HijriCalendar> hijriCalendar1 = ChronoFormatter.setUp(HijriCalendar.class, TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build()
                             .withCalendarVariant(HijriCalendar.VARIANT_UMALQURA);
                     return hijriCalendar1.format(today.transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA));
 
                 case JULIAN:
-                    ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
+                    ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, TimeDateDisplay.getLocale(), JulianCalendar.axis());
                     return julianCalendar.format(today.transform(JulianCalendar.class));
 
                 case COPTIC:
-                    ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
 
                 case JAPANESE:
-                    ChronoFormatter<JapaneseCalendar> japaneseCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), JapaneseCalendar.axis());
+                    ChronoFormatter<JapaneseCalendar> japaneseCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, TimeDateDisplay.getLocale(), JapaneseCalendar.axis());
                     return japaneseCalendar.format(today.transform(JapaneseCalendar.class));
 
                 case MINGUO:
-                    ChronoFormatter<MinguoCalendar> minguoCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), MinguoCalendar.axis());
+                    ChronoFormatter<MinguoCalendar> minguoCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, TimeDateDisplay.getLocale(), MinguoCalendar.axis());
                     return minguoCalendar.format(today.transform(MinguoCalendar.class));
 
                 case INDIAN:
-                    ChronoFormatter<IndianCalendar> indianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), IndianCalendar.axis());
+                    ChronoFormatter<IndianCalendar> indianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, TimeDateDisplay.getLocale(), IndianCalendar.axis());
                     return indianCalendar.format(today.transform(IndianCalendar.class));
 
                 case VIETNAMESE:
-                    ChronoFormatter<VietnameseCalendar> vietnameseCalendar = ChronoFormatter.setUp(VietnameseCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    ChronoFormatter<VietnameseCalendar> vietnameseCalendar = ChronoFormatter.setUp(VietnameseCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return vietnameseCalendar.format(today.transform(VietnameseCalendar.class));
 
                 case KOREAN:
-                    ChronoFormatter<KoreanCalendar> koreanCalendar = ChronoFormatter.setUp(KoreanCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    ChronoFormatter<KoreanCalendar> koreanCalendar = ChronoFormatter.setUp(KoreanCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
                     return koreanCalendar.format(today.transform(KoreanCalendar.class));
 
                 case CHINESE:
-                    ChronoFormatter<ChineseCalendar> chineseCalendar = ChronoFormatter.setUp(ChineseCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE)
+                    ChronoFormatter<ChineseCalendar> chineseCalendar = ChronoFormatter.setUp(ChineseCalendar.axis(), TimeDateDisplay.getLocale()).addPattern(pattern, PatternType.CLDR_DATE)
                             //.addText(ChineseCalendar.SOLAR_TERM)  // TODO: no @FormattableElement for SOLAR_TERM?
                             .build();
                     return chineseCalendar.format(today.transform(ChineseCalendar.class));
 
                 case GREGORIAN:
                 default:
-                    SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
+                    SimpleDateFormat gregorian = new SimpleDateFormat(pattern, TimeDateDisplay.getLocale());
                     return gregorian.format(now.getTime());
             }
         } catch (ArithmeticException | IllegalStateException | IllegalArgumentException e) {    // bad pattern or out-of-range

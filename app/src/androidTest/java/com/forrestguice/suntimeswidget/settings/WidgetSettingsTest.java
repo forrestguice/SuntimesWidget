@@ -31,7 +31,6 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calculator.core.LocationUri;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
@@ -47,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarDefaults;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
@@ -292,7 +292,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         CalendarSettings.deleteCalendarFormatPatternPref(context, appWidgetId, tag);
         String format0 = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
-        assertTrue("mode should be default but was " + format0, CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN.equals(format0));
+        assertTrue("mode should be default but was " + format0, CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN.equals(format0));
     }
 
     ///////////////////////////////////////////////////////////////////////////
