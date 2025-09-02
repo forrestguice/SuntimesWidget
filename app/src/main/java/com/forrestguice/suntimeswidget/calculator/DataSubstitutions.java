@@ -32,13 +32,13 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
-import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import java.text.NumberFormat;
@@ -614,7 +614,7 @@ public class DataSubstitutions
 
         RiseSetDataMode timeModeItem = d.dataMode();
         if (timeModeItem instanceof EventAliasTimeMode) {
-            String label = context.loadEventValue(timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
+            String label = context.getEventSettings().loadEventValue(timeModeItem.name(), EventSettingsInterface.PREF_KEY_EVENT_LABEL);
             if (label != null) {
                 modeDisplayLong = modeDisplayShort = label;
             }

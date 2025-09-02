@@ -1,8 +1,5 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
@@ -20,12 +17,10 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
-import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.android.AndroidResources;
-
-import java.util.Set;
 
 public class AndroidSuntimesDataSettings implements SuntimesDataSettings
 {
@@ -54,6 +49,11 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public String getString(int id, Object... formatArgs) {
         return getResources().getString(id, formatArgs);
+    }
+
+    @Override
+    public EventSettingsInterface getEventSettings() {
+        return AndroidEventSettings.wrap(context);
     }
 
     @Override
@@ -142,16 +142,6 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public CalendarMode loadCalendarModePref(int appWidgetId) {
         return CalendarSettings.loadCalendarModePref(context, appWidgetId);
-    }
-
-    @Override
-    public Set<String> loadEventList() {
-        return EventSettings.loadEventList(context);
-    }
-
-    @Override
-    public String loadEventValue(String id, String key) {
-        return EventSettings.loadEventValue(context, id, key);
     }
 
     @Override

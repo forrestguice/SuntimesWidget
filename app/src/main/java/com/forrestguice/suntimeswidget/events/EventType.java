@@ -77,7 +77,7 @@ public enum EventType
                 return EventType.SOLAREVENT;
             }
         }
-        Set<String> eventList = settings.loadEventList();
+        Set<String> eventList = settings.getEventSettings().loadEventList();
         for (String aliasID : eventList)
         {
             if (eventID.startsWith(aliasID)) {
