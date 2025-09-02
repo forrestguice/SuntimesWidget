@@ -85,6 +85,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -336,7 +337,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 

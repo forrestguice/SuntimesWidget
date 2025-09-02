@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
@@ -27,6 +25,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.util.Resources;
 
 public enum SolarEvents
 {
@@ -139,10 +138,10 @@ public enum SolarEvents
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings(Context context)
+    public static void initDisplayStrings(Resources context)
     {
-        String[] modes_short = context.getResources().getStringArray(R.array.solarevents_short);
-        String[] modes_long = context.getResources().getStringArray(R.array.solarevents_long);
+        String[] modes_short = context.getStringArray(R.array.solarevents_short);
+        String[] modes_long = context.getStringArray(R.array.solarevents_long);
         if (modes_long.length != modes_short.length)
         {
             Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());

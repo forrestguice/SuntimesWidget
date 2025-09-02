@@ -75,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,7 +159,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             SuntimesUtils.initDisplayStrings(context);
-            SolarEvents.initDisplayStrings(context);
+            SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
             AlarmClockItem.AlarmType.initDisplayStrings(context);
             AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
         }

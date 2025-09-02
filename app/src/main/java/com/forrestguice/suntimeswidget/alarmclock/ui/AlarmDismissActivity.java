@@ -82,6 +82,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
@@ -381,7 +382,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         //int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);

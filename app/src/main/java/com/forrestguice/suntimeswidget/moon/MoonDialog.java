@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -173,7 +174,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void initLocale(Context context)
     {
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     @Override
