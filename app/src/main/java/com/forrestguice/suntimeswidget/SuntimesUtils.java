@@ -205,7 +205,7 @@ public class SuntimesUtils
 
         //CardinalDirection.initDisplayStrings(context);
         AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
-        LengthUnitDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
 
         initialized = true;
         ///initCount++;

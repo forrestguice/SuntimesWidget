@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.Resources;
@@ -29,7 +27,7 @@ import java.text.NumberFormat;
 
 public class LengthUnitDisplay
 {
-    public static void initDisplayStrings_LengthUnit(Context context)
+    public static void initDisplayStrings_LengthUnit(Resources context)
     {
         LengthUnit.METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
         LengthUnit.IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
