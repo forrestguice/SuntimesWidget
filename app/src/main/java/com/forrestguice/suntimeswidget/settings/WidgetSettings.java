@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
@@ -411,11 +412,6 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void initDisplayStrings_LengthUnit(Context context)
-    {
-        LengthUnit.METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
-        LengthUnit.IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
-    }
 
     /**
      * WidgetOnTap
@@ -2871,7 +2867,7 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
-        initDisplayStrings_LengthUnit(context);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(context);
         initDisplayStrings_ActionMode(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);

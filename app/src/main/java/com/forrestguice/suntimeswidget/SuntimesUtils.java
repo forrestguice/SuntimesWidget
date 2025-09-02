@@ -71,11 +71,12 @@ import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
@@ -202,6 +203,7 @@ public class SuntimesUtils
         strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         CardinalDirection.initDisplayStrings(context);
+        LengthUnitDisplay.initDisplayStrings(AndroidResources.wrap(context));
 
         initialized = true;
         ///initCount++;
