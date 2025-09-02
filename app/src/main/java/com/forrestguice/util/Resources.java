@@ -19,8 +19,18 @@ package com.forrestguice.util;
 
 public interface Resources
 {
+    boolean getBoolean(int id);
+
+    int getColor(int id);
+
+    float getDimension(int id);
+
+    int getInteger(int id);
+    int[] getIntArray(int id);
+
     String getString(int id);
     String getString(int id, Object... formatArgs);
+    String[] getStringArray(int id);
 
     String getQuantityString(int id, int quantity);
     String getQuantityString(int id, int quantity, Object... formatArgs);

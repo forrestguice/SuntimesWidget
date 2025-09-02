@@ -19,10 +19,9 @@
 package com.forrestguice.util.android;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
-import com.forrestguice.util.Resources;
-
-public class AndroidResources implements Resources
+public class AndroidResources implements com.forrestguice.util.Resources
 {
     private final Context context;
     public AndroidResources(Context context) {
@@ -34,12 +33,40 @@ public class AndroidResources implements Resources
     }
 
     @Override
+    public boolean getBoolean(int id) {
+        return context.getResources().getBoolean(id);
+    }
+
+    @Override
+    public int getColor(int id) {
+        return ContextCompat.getColor(context, id);
+    }
+
+    @Override
+    public float getDimension(int id) {
+        return context.getResources().getDimension(id);
+    }
+
+    @Override
+    public int getInteger(int id) {
+        return context.getResources().getInteger(id);
+    }
+    @Override
+    public int[] getIntArray(int id) {
+        return context.getResources().getIntArray(id);
+    }
+
+    @Override
     public String getString(int id) {
         return context.getString(id);
     }
     @Override
     public String getString(int id, Object... formatArgs) {
         return context.getString(id, formatArgs);
+    }
+    @Override
+    public String[] getStringArray(int id) {
+        return context.getResources().getStringArray(id);
     }
 
     @Override
