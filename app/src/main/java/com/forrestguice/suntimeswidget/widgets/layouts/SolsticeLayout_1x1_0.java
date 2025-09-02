@@ -28,6 +28,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -97,7 +98,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
-        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
+        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);

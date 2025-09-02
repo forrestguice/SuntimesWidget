@@ -41,8 +41,8 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.util.Calendar;
 
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_FORMATPATTERN;
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_MODE;
+import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_FORMATPATTERN;
+import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_MODE;
 
 public class CalendarFormatDialog extends DialogFragment
 {
@@ -249,7 +249,7 @@ public class CalendarFormatDialog extends DialogFragment
             return CalendarMode.valueOf(getArguments().getString(PREF_KEY_CALENDAR_MODE));
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getCalendarMode: " + e);
-            return CalendarSettings.PREF_DEF_CALENDAR_MODE;
+            return CalendarSettingsInterface.PREF_DEF_CALENDAR_MODE;
         }
     }
 

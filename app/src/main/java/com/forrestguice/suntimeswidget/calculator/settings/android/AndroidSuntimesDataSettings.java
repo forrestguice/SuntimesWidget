@@ -15,8 +15,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
-import com.forrestguice.suntimeswidget.calendar.CalendarMode;
-import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
@@ -54,6 +53,11 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public EventSettingsInterface getEventSettings() {
         return AndroidEventSettings.wrap(context);
+    }
+
+    @Override
+    public CalendarSettingsInterface getCalendarSettings() {
+        return AndroidCalendarSettings.wrap(context);
     }
 
     @Override
@@ -137,11 +141,6 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public TimezoneMode loadTimezoneModePref(int appWidgetID) {
         return WidgetSettings.loadTimezoneModePref(context, appWidgetID);
-    }
-
-    @Override
-    public CalendarMode loadCalendarModePref(int appWidgetId) {
-        return CalendarSettings.loadCalendarModePref(context, appWidgetId);
     }
 
     @Override

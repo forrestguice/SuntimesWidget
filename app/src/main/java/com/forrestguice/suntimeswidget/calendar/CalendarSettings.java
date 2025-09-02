@@ -28,6 +28,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.*;
+
 /**
  * @see WidgetSettings
  */
@@ -35,16 +37,6 @@ public class CalendarSettings
 {
     public static final String PREFS_WIDGET = WidgetSettings.PREFS_WIDGET;
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
-
-    public static final String PREF_PREFIX_KEY_CALENDAR = "_calendar_";
-
-    public static final String PREF_KEY_CALENDAR_SHOWDATE = "showDate";        // always true for the DateWidget; used by other widget to optionally show a date
-    public static final boolean PREF_DEF_CALENDAR_SHOWDATE = false;
-
-     public static final String PREF_KEY_CALENDAR_MODE = "calendarMode";
-    public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
-
-    public static final String PREF_KEY_CALENDAR_FORMATPATTERN = "calendarFormat";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////

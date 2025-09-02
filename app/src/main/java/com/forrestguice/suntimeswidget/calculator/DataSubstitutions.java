@@ -660,7 +660,7 @@ public class DataSubstitutions
             return displayString.replaceAll(PATTERN_m, "").replaceAll(PATTERN_M, "");
         }
 
-        CalendarMode mode = context.loadCalendarModePref(data.appWidgetID());
+        CalendarMode mode = context.getCalendarSettings().loadCalendarModePref(data.appWidgetID());
         displayString = displayString.replaceAll(PATTERN_m, mode.getDisplayString());
         displayString = displayString.replaceAll(PATTERN_M, mode.getDisplayString());
         return displayString;

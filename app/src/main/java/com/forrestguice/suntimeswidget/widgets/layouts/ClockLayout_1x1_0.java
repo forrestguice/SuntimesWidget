@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -83,7 +84,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_time_extras, showLabels ? View.VISIBLE : View.GONE);
 
-        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
         views.setViewVisibility(R.id.text_date, showDate ? View.VISIBLE : View.GONE);
 
         Calendar now = data.calendar();

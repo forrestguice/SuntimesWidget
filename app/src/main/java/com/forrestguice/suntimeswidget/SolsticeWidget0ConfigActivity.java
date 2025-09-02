@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
@@ -84,7 +85,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected void loadCalendarSettings(Context context) {
-        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, SolsticeLayout.PREF_DEF_CALENDAR_SHOWDATE));
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, SolsticeLayout.PREF_DEF_CALENDAR_SHOWDATE));
     }
 
     @Override
