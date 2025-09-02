@@ -38,6 +38,7 @@ public class TimeDeltaDisplay
     public static String strMinutes = "m";
     public static String strSeconds = "s";
     public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
+    public static boolean initialized = false;
 
     public static void initDisplayStrings(Resources res)
     {
@@ -51,6 +52,7 @@ public class TimeDeltaDisplay
         strMinutes = res.getString(R.string.delta_minutes);
         strSeconds = res.getString(R.string.delta_seconds);
         strTimeDeltaFormat = res.getString(R.string.delta_format);
+        initialized = true;
     }
 
     /**
@@ -138,6 +140,13 @@ public class TimeDeltaDisplay
 
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
+        return text;
+    }
+
+    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
+    {
+        TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
+        text.setSuffix("");
         return text;
     }
 }
