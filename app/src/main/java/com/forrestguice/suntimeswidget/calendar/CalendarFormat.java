@@ -19,9 +19,8 @@
 package com.forrestguice.suntimeswidget.calendar;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -102,9 +101,9 @@ public enum CalendarFormat
     {
         if (isValidPattern(pattern)) {
             if (displayString0 == null) {
-                displayString = CalendarMode.formatDate(mode, pattern, now);
+                displayString = CalendarDisplay.formatDate(mode, pattern, now);
             } else if (displayString0.contains("%s")) {
-                displayString = String.format(displayString0, CalendarMode.formatDate(mode, pattern, now));
+                displayString = String.format(displayString0, CalendarDisplay.formatDate(mode, pattern, now));
             } else displayString = displayString0;
         } else displayString = displayString0;
     }
