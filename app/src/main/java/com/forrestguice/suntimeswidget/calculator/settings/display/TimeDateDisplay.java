@@ -27,6 +27,7 @@ import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.util.Resources;
+import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +59,7 @@ public class TimeDateDisplay
     public static void initDisplayStrings(SuntimesDataSettings context)
     {
         TimeFormatMode mode = context.loadTimeFormatModePref(0);
-        is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? SystemTimeFormat.is24HourFormat()
                 : (mode == TimeFormatMode.MODE_24HR);
 
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
@@ -135,7 +136,7 @@ public class TimeDateDisplay
                             : calendarTime12HrDisplayString(context, cal, showSeconds));
 
                 case MODE_SYSTEM:
-                    boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
+                    boolean sysIs24 = SystemTimeFormat.is24HourFormat();
                     return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
                             : calendarTime12HrDisplayString(context, cal, showSeconds));
 

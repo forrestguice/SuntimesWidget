@@ -29,7 +29,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.events.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.util.Log;
+import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.android.AndroidLog;
+import com.forrestguice.util.android.AndroidTimeFormat;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -53,6 +55,7 @@ public class SuntimesApplication extends Application
         Log.setShowDebug(BuildConfig.DEBUG);
         Log.d("DEBUG", "SuntimesApplication.init:");
 
+        SystemTimeFormat.init(new AndroidTimeFormat(context.getApplicationContext()));
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
