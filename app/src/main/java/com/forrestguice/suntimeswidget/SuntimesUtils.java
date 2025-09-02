@@ -485,6 +485,7 @@ public class SuntimesUtils
      * @param abbreviate true abbreviate name, false full name
      * @return day name e.g. Monday (or Mon abbreviated)
      */
+    @Deprecated
     public TimeDisplayText calendarDayDisplayString(Context context, Calendar calendar, boolean abbreviate)
     {
         if (calendar == null || context == null)
