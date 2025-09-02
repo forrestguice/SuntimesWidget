@@ -1,5 +1,8 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
@@ -7,11 +10,15 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
@@ -64,6 +71,21 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
+    public float loadObserverHeightPref(int appWidgetId) {
+        return WidgetSettings.loadObserverHeightPref(context, appWidgetId);
+    }
+
+    @Override
+    public RiseSetOrder loadRiseSetOrderPref(int appWidgetId) {
+        return WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+    }
+
+    @Override
+    public TrackingMode loadTrackingModePref(int appWidgetId) {
+        return WidgetSettings.loadTrackingModePref(context, appWidgetId);
+    }
+
+    @Override
     public DateMode loadDateModePref(int appWidgetId) {
         return WidgetSettings.loadDateModePref(context, appWidgetId);
     }
@@ -112,8 +134,18 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
+    public CalendarMode loadCalendarModePref(int appWidgetId) {
+        return CalendarSettings.loadCalendarModePref(context, appWidgetId);
+    }
+
+    @Override
     public Set<String> loadEventList() {
         return EventSettings.loadEventList(context);
+    }
+
+    @Override
+    public String loadEventValue(String id, String key) {
+        return EventSettings.loadEventValue(context, id, key);
     }
 
     @Override

@@ -18,8 +18,11 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.util.Resources;
 
 import java.util.Set;
@@ -48,11 +51,23 @@ public interface SuntimesDataSettings
     RiseSetDataMode loadTimeModePref(int appWidgetId);
     SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
 
+    TimeFormatMode loadTimeFormatModePref(int appWidgetId);
+
     boolean loadTimeZoneFromAppPref(int appWidgetID);
     String loadTimezonePref(int appWidgetID);
     TimezoneMode loadTimezoneModePref(int appWidgetID);
 
+    // events
     Set<String> loadEventList();    // EventSettings.loadEventList
+    String loadEventValue(@NonNull String id, @Nullable String key);
+
+    // others
+    CalendarMode loadCalendarModePref(int appWidgetId);
+
+    float loadObserverHeightPref(int appWidgetId);
+    RiseSetOrder loadRiseSetOrderPref(int appWidgetId);
+    TrackingMode loadTrackingModePref(int appWidgetId);
+
 }
 
 
