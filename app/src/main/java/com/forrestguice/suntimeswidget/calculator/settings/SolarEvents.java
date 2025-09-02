@@ -19,12 +19,13 @@
 package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
+
+import java.util.Locale;
 
 public enum SolarEvents
 {
@@ -143,14 +144,14 @@ public enum SolarEvents
         String[] modes_long = context.getStringArray(R.array.solarevents_long);
         if (modes_long.length != modes_short.length)
         {
-            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
+            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + Locale.getDefault().toString());
             return;
         }
 
         SolarEvents[] values = values();
         if (modes_long.length != values.length)
         {
-            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + AppSettings.getLocale().toString());
+            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + Locale.getDefault().toString());
             return;
         }
 
