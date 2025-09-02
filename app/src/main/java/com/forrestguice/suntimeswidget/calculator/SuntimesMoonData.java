@@ -18,11 +18,10 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.util.Resources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -427,7 +426,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsNow ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase) {
+    public CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator.MoonPhase majorPhase) {
         return MoonPhaseDisplay.getMoonPhaseLabel(context, calculator, majorPhase, moonPhaseCalendar(majorPhase));
     }
 

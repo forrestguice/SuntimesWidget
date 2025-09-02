@@ -261,7 +261,7 @@ public class MoonPhaseView extends LinearLayout
             {
                 if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
                     SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
-                    phaseText.setText(data.getMoonPhaseLabel(context, majorPhase));
+                    phaseText.setText(data.getMoonPhaseLabel(AndroidResources.wrap(context), majorPhase));
                 } else phaseText.setText(phase.getLongDisplayString());
 
                 View phaseIcon = findViewById(phase.getView());

@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 /**
@@ -81,7 +82,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
 
             TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
-            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(context, majorPhase));
+            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(AndroidResources.wrap(context), majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));
         }
     }

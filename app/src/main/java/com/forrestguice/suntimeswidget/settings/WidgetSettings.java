@@ -74,6 +74,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Locale;
 import java.util.Map;
@@ -2867,7 +2868,7 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
-        LengthUnitDisplay.initDisplayStrings_LengthUnit(context);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
         initDisplayStrings_ActionMode(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);
