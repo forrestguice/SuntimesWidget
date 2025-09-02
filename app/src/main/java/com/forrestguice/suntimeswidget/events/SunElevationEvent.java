@@ -20,10 +20,10 @@ package com.forrestguice.suntimeswidget.events;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 public final class SunElevationEvent extends ElevationEvent
 {
@@ -49,7 +49,7 @@ public final class SunElevationEvent extends ElevationEvent
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
-        SuntimesUtils utils = new SuntimesUtils();
+        AngleDisplay utils = new AngleDisplay();
         String angle = utils.formatAsElevation(getAngle(), 1).toString();
         if (offset == 0) {
             return offsetDisplay(context.getResources()) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());

@@ -70,6 +70,7 @@ import android.widget.ImageView;
 import java.text.DateFormat;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -202,7 +203,8 @@ public class SuntimesUtils
         strDateTimeShortFormatSec = dateTimeFormatShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
-        CardinalDirection.initDisplayStrings(context);
+        //CardinalDirection.initDisplayStrings(context);
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
         LengthUnitDisplay.initDisplayStrings(AndroidResources.wrap(context));
 
         initialized = true;
@@ -829,10 +831,12 @@ public class SuntimesUtils
      * @param value
      * @return
      */
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDegrees(double value)
     {
         return String.format(strDegreesFormat, NumberFormat.getNumberInstance().format(value));
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDegrees(double value, int places)
     {
         NumberFormat formatter = NumberFormat.getInstance();
@@ -840,16 +844,19 @@ public class SuntimesUtils
         formatter.setMaximumFractionDigits(places);
         return String.format(strDegreesFormat, formatter.format(value));
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDirection(double degreeValue, int places)
     {
         String degreeString = formatAsDegrees(degreeValue, places);
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
         return formatAsDirection(degreeString, direction.getShortDisplayString());
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDirection(String degreeString, String directionString)
     {
         return String.format(strDirectionFormat, degreeString, directionString);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsDirection2(double degreeValue, int places, boolean longSuffix)
     {
         String degreeString = formatAsDegrees(degreeValue, places);
@@ -857,28 +864,34 @@ public class SuntimesUtils
         return new TimeDisplayText(degreeString, "", (longSuffix ? direction.getLongDisplayString() : direction.getShortDisplayString()));
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsElevation(String degreeString, String altitudeSymbol)
     {
         return String.format(strElevationFormat, degreeString, altitudeSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsElevation(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsRightAscension(String degreeString, String raSymbol)
     {
         return String.format(strRaFormat, degreeString, raSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strRaSymbol);
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDeclination(String degreeString, String decSymbol)
     {
         return String.format(strDeclinationFormat, degreeString, decSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsDeclination(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
