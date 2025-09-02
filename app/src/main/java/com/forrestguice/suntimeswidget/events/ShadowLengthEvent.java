@@ -19,11 +19,11 @@
 package com.forrestguice.suntimeswidget.events;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -71,9 +71,9 @@ public final class ShadowLengthEvent extends ElevationEvent
     public String getEventSummary(SuntimesDataSettings context)
     {
         LengthUnit units = context.loadLengthUnitsPref(0);
-        String height = SuntimesUtils.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
+        String height = LengthUnitDisplay.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
 
-        TimeDisplayText t = SuntimesUtils.formatAsHeight(context.getResources(), getLength(), units, 1, true);
+        TimeDisplayText t = LengthUnitDisplay.formatAsHeight(context.getResources(), getLength(), units, 1, true);
         String length = context.getString(R.string.units_format_short, t.getValue(), t.getUnits());
 
         if (offset == 0) {
