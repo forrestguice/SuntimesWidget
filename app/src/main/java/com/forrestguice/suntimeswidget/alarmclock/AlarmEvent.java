@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.SolarEventsAdapter;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
@@ -329,7 +330,7 @@ public class AlarmEvent
 
             SolarEvents event = item.getEvent();                                      // apply icon
             if (event != null) {
-                SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
+                SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
 
             } else {
                 Resources resources = context.getResources();
@@ -394,7 +395,7 @@ public class AlarmEvent
             items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }
 
-        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
+        SolarEventsAdapter solarEventsAdapter = SolarEventsAdapter.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
         }
