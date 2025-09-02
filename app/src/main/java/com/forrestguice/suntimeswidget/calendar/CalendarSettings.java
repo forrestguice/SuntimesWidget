@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -196,26 +197,9 @@ public class CalendarSettings
 
     public static void initDisplayStrings( Context context )
     {
-        initDisplayStrings_CalendarMode(context);
-        CalendarFormat.initDisplayStrings(context);
+        CalendarModeDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        CalendarFormatDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
-    public static void initDisplayStrings_CalendarMode( Context context )
-    {
-        CalendarMode.CHINESE.setDisplayString(context.getString(R.string.calendarMode_chinese));
-        CalendarMode.COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
-        CalendarMode.ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
-        CalendarMode.GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
-        CalendarMode.HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
-        //CalendarMode.HIJRI_DIYANET.setDisplayString(context.getString(R.string.calendarMode_hijri_diyanet));
-        CalendarMode.HIJRI_UMALQURA.setDisplayString(context.getString(R.string.calendarMode_hijri_umalqura));
-        CalendarMode.INDIAN.setDisplayString(context.getString(R.string.calendarMode_indian));
-        CalendarMode.JAPANESE.setDisplayString(context.getString(R.string.calendarMode_japanese));
-        CalendarMode.JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
-        CalendarMode.KOREAN.setDisplayString(context.getString(R.string.calendarMode_korean));
-        CalendarMode.MINGUO.setDisplayString(context.getString(R.string.calendarMode_minguo));
-        CalendarMode.PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
-        CalendarMode.THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
-        CalendarMode.VIETNAMESE.setDisplayString(context.getString(R.string.calendarMode_vietnamese));
-    }
+
 }

@@ -18,11 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
-import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-
-import com.forrestguice.suntimeswidget.R;
 
 import java.util.Calendar;
 
@@ -54,8 +51,8 @@ public enum CalendarFormat
     F_yyyy_G("%s", "yyyy G"),                          // year + era
     ;
 
-    private String displayString, displayString0;
-    private String pattern;
+    protected String displayString, displayString0;
+    protected String pattern;
 
     private CalendarFormat(String displayString, String pattern) {
         this.displayString0 = this.displayString = displayString;
@@ -81,22 +78,6 @@ public enum CalendarFormat
         this.displayString = displayString;
     }
 
-    public static void initDisplayStrings( Context context ) {
-        initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());
-    }
-    public static void initDisplayStrings(Context context, @NonNull CalendarMode mode, @NonNull Calendar now )
-    {
-        CUSTOM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_custom);
-        F_yyyy.displayString0 = F_yy.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_yyyy);
-        F_EEEE.displayString0 = F_EE.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_EEEE);
-        F_MMMM.displayString0 = F_MMM.displayString0 = F_MM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_MMMM);
-        F_dd.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_dd);
-        F_DD.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_DD);
-
-        for (CalendarFormat value : CalendarFormat.values()) {
-            value.initDisplayString(mode, now);
-        }
-    }
     public void initDisplayString(@NonNull CalendarMode mode, @NonNull Calendar now)
     {
         if (isValidPattern(pattern)) {
