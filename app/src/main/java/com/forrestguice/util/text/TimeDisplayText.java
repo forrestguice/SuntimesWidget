@@ -21,8 +21,8 @@ package com.forrestguice.util.text;
 public class TimeDisplayText
 {
     private long rawValue = 0;
-    private String value;
-    private String units;
+    private final String value;
+    private final String units;
     private String suffix;
 
     public TimeDisplayText()
