@@ -685,15 +685,18 @@ public class SuntimesUtils
      * @param timeSpan2 second event
      * @return a display string that describes difference between the two spans
      */
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, false);
     }
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, showSeconds);
     }
 
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
     {
         TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
@@ -702,6 +705,7 @@ public class SuntimesUtils
     }
 
     @SuppressWarnings("ConstantConditions")
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
     }
