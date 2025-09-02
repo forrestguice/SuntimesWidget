@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
@@ -27,20 +25,21 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
-import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -172,13 +171,13 @@ public class DataSubstitutions
     }
 
     @Nullable
-    public static <T extends SuntimesData> Double getShadowLengthForEvent(Context context, @NonNull SolarEvents event, @Nullable T data)
+    public static <T extends SuntimesData> Double getShadowLengthForEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @Nullable T data)
     {
         if (data != null)
         {
             SuntimesCalculator calculator = data.calculator();
             Calendar datetime = getCalendarForEvent(event, data);
-            double objHeight = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());
+            double objHeight = context.loadObserverHeightPref(data.appWidgetID());
             return (datetime != null && calculator != null ? calculator.getShadowLength(objHeight, datetime) : null);
 
         } else {
@@ -352,15 +351,20 @@ public class DataSubstitutions
         return value;
     }
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
-    public static void initDisplayStrings(Context context) {
-        SuntimesUtils.initDisplayStrings(context);
+    protected static TimeDateDisplay utils = new TimeDateDisplay();
+    protected static AngleDisplay utils1 = new AngleDisplay();
+    protected static TimeDeltaDisplay utils2 = new TimeDeltaDisplay();
+
+    public static void initDisplayStrings(SuntimesDataSettings context) {
+        TimeDateDisplay.initDisplayStrings(context);
+        TimeDeltaDisplay.initDisplayStrings(context.getResources());
+        AngleDisplay.initDisplayStrings(context.getResources());
     }
 
     /**
      * displayStringForTitlePattern
      */
-    public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data)
+    public static <T extends SuntimesData> String displayStringForTitlePattern0(SuntimesDataSettings context, String titlePattern, @Nullable T data)
     {
         if (BuildConfig.DEBUG) {
             Log.d("DEBUG", "displayStringForTitlePattern0: " + titlePattern);
@@ -454,10 +458,10 @@ public class DataSubstitutions
                     displayString = displayString.replaceAll(pattern_em, eventTime.getTimeInMillis() + "");
                 }
                 if (pattern_et != null && displayString.contains(pattern_et)) {
-                    displayString = displayString.replaceAll(pattern_et, utils.calendarTimeShortDisplayString(context, eventTime, false).toString());
+                    displayString = displayString.replaceAll(pattern_et, utils.calendarTimeShortDisplayString(context.getResources(), eventTime, false).toString());
                 }
                 if (pattern_eT != null && displayString.contains(pattern_eT)) {
-                    displayString = displayString.replaceAll(pattern_eT, utils.calendarTimeShortDisplayString(context, eventTime, true).toString());
+                    displayString = displayString.replaceAll(pattern_eT, utils.calendarTimeShortDisplayString(context.getResources(), eventTime, true).toString());
                 }
                 if (pattern_ez != null && displayString.contains(pattern_ez)) {
                     Double value = getAzimuthForEvent(event, d);
@@ -465,7 +469,7 @@ public class DataSubstitutions
                 }
                 if (pattern_eZ != null && displayString.contains(pattern_eZ)) {
                     Double value = getAzimuthForEvent(event, d);
-                    displayString = displayString.replaceAll(pattern_eZ, (value != null ? utils.formatAsDirection(value, 1) : ""));
+                    displayString = displayString.replaceAll(pattern_eZ, (value != null ? utils1.formatAsDirection(value, 1) : ""));
                 }
                 if (pattern_ed != null && displayString.contains(pattern_ed)) {
                     Double value = getDeclinationForEvent(event, d);
@@ -473,7 +477,7 @@ public class DataSubstitutions
                 }
                 if (pattern_eD != null && displayString.contains(pattern_eD)) {
                     Double value = getDeclinationForEvent(event, d);
-                    displayString = displayString.replaceAll(pattern_eD, (value != null ? utils.formatAsDeclination(value, 1).toString() : ""));
+                    displayString = displayString.replaceAll(pattern_eD, (value != null ? utils1.formatAsDeclination(value, 1).toString() : ""));
                 }
                 if (pattern_er != null && displayString.contains(pattern_er)) {
                     Double value = getRightAscensionForEvent(event, d);
@@ -481,7 +485,7 @@ public class DataSubstitutions
                 }
                 if (pattern_eR != null && displayString.contains(pattern_eR)) {
                     Double value = getRightAscensionForEvent(event, d);
-                    displayString = displayString.replaceAll(pattern_eR, (value != null ? utils.formatAsRightAscension(value, 1).toString() : ""));
+                    displayString = displayString.replaceAll(pattern_eR, (value != null ? utils1.formatAsRightAscension(value, 1).toString() : ""));
                 }
                 if (pattern_ea != null && displayString.contains(pattern_ea)) {
                     Double angle = getAltitudeForEvent(event, d);
@@ -489,16 +493,16 @@ public class DataSubstitutions
                 }
                 if (pattern_eA != null && displayString.contains(pattern_eA)) {
                     Double angle = getAltitudeForEvent(event, d);
-                    displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils.formatAsDegrees(angle, 1) : ""));
+                    displayString = displayString.replaceAll(pattern_eA, (angle != null ? utils1.formatAsDegrees(angle, 1) : ""));
                 }
                 if (pattern_es != null && displayString.contains(pattern_es)) {
                     Double value = getShadowLengthForEvent(context, event, d);
                     displayString = displayString.replaceAll(pattern_es, (value != null ? value + "" : ""));
                 }
                 if (pattern_eS != null && displayString.contains(pattern_eS)) {
-                    LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
+                    LengthUnit lengthUnit = context.loadLengthUnitsPref(data.appWidgetID());
                     Double value = getShadowLengthForEvent(context, event, d);
-                    displayString = displayString.replaceAll(pattern_eS, (value != null ? SuntimesUtils.formatAsHeight(context, value, lengthUnit, 1, false).toString() : ""));
+                    displayString = displayString.replaceAll(pattern_eS, (value != null ? LengthUnitDisplay.formatAsHeight(context.getResources(), value, lengthUnit, 1, false).toString() : ""));
                 }
 
             } else {
@@ -517,7 +521,7 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesData data)
+    public static String displayStringForTitlePattern(SuntimesDataSettings context, String titlePattern, @Nullable SuntimesData data)
     {
         String displayString = titlePattern;
 
@@ -551,7 +555,7 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_lel))
         {
-            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == LengthUnit.IMPERIAL)
+            String altitudeDisplay = (context.loadLengthUnitsPref(0) == LengthUnit.IMPERIAL)
                     ? (int) LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
                     : location.getAltitudeAsInteger() + "";
             displayString = displayString.replaceAll(PATTERN_lel, altitudeDisplay);
@@ -559,9 +563,9 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_eot) || displayString.contains(PATTERN_eot_m))
         {
-            long eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(data.calendar().getTimeInMillis(), data.calculator());
+            long eot = TimeZones.ApparentSolarTime.equationOfTimeOffset(data.calendar().getTimeInMillis(), data.calculator());
             displayString = displayString.replaceAll(PATTERN_eot_m, eot+"");
-            displayString = displayString.replaceAll(PATTERN_eot, ((eot < 0) ? "-" : "+") + utils.timeDeltaLongDisplayString(eot, true).getValue());
+            displayString = displayString.replaceAll(PATTERN_eot, ((eot < 0) ? "-" : "+") + utils2.timeDeltaLongDisplayString(eot, true).getValue());
         }
 
         displayString = displayString.replaceAll(PATTERN_t, timezoneID);
@@ -570,21 +574,21 @@ public class DataSubstitutions
 
         if (displayString.contains(PATTERN_d))
         {
-            displayString = displayString.replaceAll(PATTERN_dt, utils.calendarTimeShortDisplayString(context, data.now(), false).toString());
-            displayString = displayString.replaceAll(PATTERN_dT, utils.calendarTimeShortDisplayString(context, data.now(), true).toString());
-            displayString = displayString.replaceAll(PATTERN_dd, utils.calendarDayDisplayString(context, data.calendar(), true).toString());
-            displayString = displayString.replaceAll(PATTERN_dD, utils.calendarDayDisplayString(context, data.calendar(), false).toString());
-            displayString = displayString.replaceAll(PATTERN_dY, utils.calendarDateYearDisplayString(context, data.calendar()).toString());
+            displayString = displayString.replaceAll(PATTERN_dt, utils.calendarTimeShortDisplayString(context.getResources(), data.now(), false).toString());
+            displayString = displayString.replaceAll(PATTERN_dT, utils.calendarTimeShortDisplayString(context.getResources(), data.now(), true).toString());
+            displayString = displayString.replaceAll(PATTERN_dd, utils.calendarDayDisplayString(context.getResources(), data.calendar(), true).toString());
+            displayString = displayString.replaceAll(PATTERN_dD, utils.calendarDayDisplayString(context.getResources(), data.calendar(), false).toString());
+            displayString = displayString.replaceAll(PATTERN_dY, utils.calendarDateYearDisplayString(context.getResources(), data.calendar()).toString());
             displayString = displayString.replaceAll(PATTERN_dm, Long.toString(data.calendar().getTimeInMillis()));
-            displayString = displayString.replaceAll(PATTERN_d, utils.calendarDateDisplayString(context, data.calendar(), false).toString());
+            displayString = displayString.replaceAll(PATTERN_d, utils.calendarDateDisplayString(context.getResources(), data.calendar(), false).toString());
         }
 
         if (displayString.contains(PATTERN_h) || displayString.contains(PATTERN_H))
         {
-            LengthUnit lengthUnit = WidgetSettings.loadLengthUnitsPref(context, data.appWidgetID());
-            float height = WidgetSettings.loadObserverHeightPref(context, data.appWidgetID());    // %h
+            LengthUnit lengthUnit = context.loadLengthUnitsPref(data.appWidgetID());
+            float height = context.loadObserverHeightPref(data.appWidgetID());    // %h
             displayString = displayString.replaceAll(PATTERN_h, height + "");
-            displayString = displayString.replaceAll(PATTERN_H, SuntimesUtils.formatAsHeight(context, height, lengthUnit, 2, true).toString());    // %H
+            displayString = displayString.replaceAll(PATTERN_H, LengthUnitDisplay.formatAsHeight(context.getResources(), height, lengthUnit, 2, true).toString());    // %H
         }
 
         displayString = displayString.replaceAll(PATTERN_PERCENT, "%");
@@ -594,7 +598,7 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetData data)
+    public static String displayStringForTitlePattern(SuntimesDataSettings context, String titlePattern, @Nullable SuntimesRiseSetData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
 
@@ -610,7 +614,7 @@ public class DataSubstitutions
 
         RiseSetDataMode timeModeItem = d.dataMode();
         if (timeModeItem instanceof EventAliasTimeMode) {
-            String label = EventSettings.loadEventValue(context, timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
+            String label = context.loadEventValue(timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
             if (label != null) {
                 modeDisplayLong = modeDisplayShort = label;
             }
@@ -619,7 +623,7 @@ public class DataSubstitutions
         displayString = displayString.replaceAll(PATTERN_m, modeDisplayShort);
         displayString = displayString.replaceAll(PATTERN_M, modeDisplayLong);
 
-        RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+        RiseSetOrder order = context.loadRiseSetOrderPref(data.appWidgetID());
         displayString = displayString.replaceAll(PATTERN_o, order.toString());
 
         return displayString;
@@ -628,7 +632,7 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesEquinoxSolsticeData data)
+    public static String displayStringForTitlePattern(SuntimesDataSettings context, String titlePattern, @Nullable SuntimesEquinoxSolsticeData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
 
@@ -636,7 +640,7 @@ public class DataSubstitutions
             return displayString.replaceAll(PATTERN_m, "").replaceAll(PATTERN_M, "").replaceAll(PATTERN_o, "");
         }
 
-        TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
+        TrackingMode trackingMode = context.loadTrackingModePref(data.appWidgetID());
         SolsticeEquinoxMode timeMode = data.timeMode();
 
         displayString = displayString.replaceAll(PATTERN_m, timeMode.getShortDisplayString());
@@ -648,7 +652,7 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesClockData data)
+    public static String displayStringForTitlePattern(SuntimesDataSettings context, String titlePattern, @Nullable SuntimesClockData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
 
@@ -656,7 +660,7 @@ public class DataSubstitutions
             return displayString.replaceAll(PATTERN_m, "").replaceAll(PATTERN_M, "");
         }
 
-        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, data.appWidgetID());
+        CalendarMode mode = context.loadCalendarModePref(data.appWidgetID());
         displayString = displayString.replaceAll(PATTERN_m, mode.getDisplayString());
         displayString = displayString.replaceAll(PATTERN_M, mode.getDisplayString());
         return displayString;
@@ -665,13 +669,13 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesMoonData data)
+    public static String displayStringForTitlePattern(SuntimesDataSettings context, String titlePattern, @Nullable SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData) data);
 
         if (data != null && data.isCalculated())
         {
-            RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+            RiseSetOrder order = context.loadRiseSetOrderPref(data.appWidgetID());
 
             displayString = displayString.replaceAll(PATTERN_m, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(PATTERN_M, data.getMoonPhaseToday().getLongDisplayString());
