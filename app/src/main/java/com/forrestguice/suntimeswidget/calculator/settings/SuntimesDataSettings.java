@@ -27,6 +27,8 @@ import java.util.Set;
 public interface SuntimesDataSettings
 {
     Resources getResources();
+    String getString(int id);
+    String getString(int id, Object... formatArgs);
 
     SuntimesCalculatorDescriptor loadCalculatorModePref(int appWidgetId, String calculatorName);
 

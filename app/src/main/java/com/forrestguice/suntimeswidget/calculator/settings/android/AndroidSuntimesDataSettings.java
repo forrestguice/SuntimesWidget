@@ -32,7 +32,20 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
 
     @Override
     public Resources getResources() {
-        return AndroidResources.wrap(context);
+        if (resources == null) {
+            resources = AndroidResources.wrap(context);
+        }
+        return resources;
+    }
+    private Resources resources;
+
+    @Override
+    public String getString(int id) {
+        return getResources().getString(id);
+    }
+    @Override
+    public String getString(int id, Object... formatArgs) {
+        return getResources().getString(id, formatArgs);
     }
 
     @Override
