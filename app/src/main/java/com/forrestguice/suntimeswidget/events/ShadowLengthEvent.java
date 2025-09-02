@@ -52,33 +52,33 @@ public final class ShadowLengthEvent extends ElevationEvent
     }
 
     @Override
-    public String getEventTitle(SuntimesDataSettings settings) {
-        return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+    public String getEventTitle(SuntimesDataSettings context) {
+        return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
 
     @Override
-    public String getEventPhrase(SuntimesDataSettings settings) {
-        return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+    public String getEventPhrase(SuntimesDataSettings context) {
+        return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
 
     @Override
-    public String getEventGender(SuntimesDataSettings settings) {
-        return settings.getResources().getString(R.string.shadowevent_phrase_gender);
+    public String getEventGender(SuntimesDataSettings context) {
+        return context.getString(R.string.shadowevent_phrase_gender);
     }
 
     @Override
-    public String getEventSummary(SuntimesDataSettings settings)
+    public String getEventSummary(SuntimesDataSettings context)
     {
-        LengthUnit units = settings.loadLengthUnitsPref(0);
-        String height = SuntimesUtils.formatAsHeight(settings.getResources(), getObjHeight(), units, 1, true).getValue();
+        LengthUnit units = context.loadLengthUnitsPref(0);
+        String height = SuntimesUtils.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
 
-        SuntimesUtils.TimeDisplayText t = SuntimesUtils.formatAsHeight(settings.getResources(), getLength(), units, 1, true);
-        String length = settings.getResources().getString(R.string.units_format_short, t.getValue(), t.getUnits());
+        SuntimesUtils.TimeDisplayText t = SuntimesUtils.formatAsHeight(context.getResources(), getLength(), units, 1, true);
+        String length = context.getString(R.string.units_format_short, t.getValue(), t.getUnits());
 
         if (offset == 0) {
-            return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.shadowevent_summary_format, settings.getResources().getString(R.string.shadowevent_title), height, length);
+            return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
         } else {
-            return settings.getResources().getString(R.string.shadowevent_summary_format1, offsetDisplay(settings.getResources()), settings.getResources().getString(R.string.shadowevent_title), height, length);
+            return context.getString(R.string.shadowevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.shadowevent_title), height, length);
         }
     }
 

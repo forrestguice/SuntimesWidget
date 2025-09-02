@@ -34,27 +34,27 @@ public final class SunElevationEvent extends ElevationEvent
     }
 
     @Override
-    public String getEventTitle(SuntimesDataSettings settings) {
-        return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+    public String getEventTitle(SuntimesDataSettings context) {
+        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
     @Override
-    public String getEventPhrase(SuntimesDataSettings settings) {
-        return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+    public String getEventPhrase(SuntimesDataSettings context) {
+        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
     @Override
-    public String getEventGender(SuntimesDataSettings settings) {
-        return settings.getResources().getString(R.string.sunevent_phrase_gender);
+    public String getEventGender(SuntimesDataSettings context) {
+        return context.getString(R.string.sunevent_phrase_gender);
     }
 
     @Override
-    public String getEventSummary(SuntimesDataSettings settings)
+    public String getEventSummary(SuntimesDataSettings context)
     {
         SuntimesUtils utils = new SuntimesUtils();
         String angle = utils.formatAsElevation(getAngle(), 1).toString();
         if (offset == 0) {
-            return offsetDisplay(settings.getResources()) + settings.getResources().getString(R.string.sunevent_summary_format, settings.getResources().getString(R.string.sunevent_title), angle.toString());
+            return offsetDisplay(context.getResources()) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
         } else {
-            return settings.getResources().getString(R.string.sunevent_summary_format1, offsetDisplay(settings.getResources()), settings.getResources().getString(R.string.sunevent_title), angle.toString());
+            return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.sunevent_title), angle.toString());
         }
     }
 
