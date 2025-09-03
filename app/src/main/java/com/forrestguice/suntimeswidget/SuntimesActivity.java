@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
@@ -1125,7 +1126,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (locations[0] != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
                     actionBar.setSubtitle(location.toString());
                 }
             }
@@ -1161,7 +1162,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), result);
                         LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 

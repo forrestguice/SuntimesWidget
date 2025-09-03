@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
@@ -592,7 +593,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         android.location.Location currentLocation = GetFixHelper.lastKnownLocation(context);
         if (currentLocation != null) {
-            WidgetSettings.saveLocationPref(context, appWidgetId, new Location(context.getString(R.string.gps_lastfix_title_found), currentLocation));
+            WidgetSettings.saveLocationPref(context, appWidgetId, AndroidLocation.createLocation(context.getString(R.string.gps_lastfix_title_found), currentLocation));
         }
     }
 

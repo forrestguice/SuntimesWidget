@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
@@ -91,24 +90,6 @@ public class Location implements Serializable
         } else {
             this.altitude = altitude;
         }
-    }
-
-    /**
-     * @param label display name
-     * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
-     */
-    public Location(String label, @NonNull android.location.Location location)
-    {
-        double rawLatitude = location.getLatitude();
-        double rawLongitude = location.getLongitude();
-        double rawAltitude = location.getAltitude();
-
-        DecimalFormat formatter = decimalDegreesFormatter();
-
-        this.label = label;
-        this.latitude = formatter.format(rawLatitude);
-        this.longitude = formatter.format(rawLongitude);
-        this.altitude = rawAltitude + "";
     }
 
     /**
