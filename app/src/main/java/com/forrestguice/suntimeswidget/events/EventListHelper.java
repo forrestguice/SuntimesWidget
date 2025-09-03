@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.ContextInterface;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class EventListHelper
     public static final String DIALOGTAG_HELP = "help";
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
 
     private int selectedChild = -1;
@@ -131,6 +132,11 @@ public class EventListHelper
     private boolean disallowSelect = false;
     public void setDisallowSelect( boolean value ) {
         disallowSelect = value;
+    }
+
+    private String[] typeFilter = null;
+    public void setTypeFilter(@Nullable String[] filter) {
+        typeFilter = filter;
     }
 
     private boolean expanded = false;
@@ -305,8 +311,24 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
-        events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
+        ContextInterface contextInterface = AndroidEventSettings.wrap(context);
+        List<EventAlias> events = new ArrayList<>();
+        if (typeFilter != null && typeFilter.length > 0)
+        {
+            for (String filter : typeFilter)
+            {
+                try {
+                    EventType type = EventType.valueOf(filter);
+                    events.addAll(EventSettings.loadEvents(contextInterface, type));
+                } catch (IllegalArgumentException e) {
+                    Log.w("EventListHelper", "initAdapter: invalid type filter: " + e);
+                }
+            }
+
+        } else {
+            events.addAll(EventSettings.loadEvents(contextInterface, EventType.SUN_ELEVATION));
+            events.addAll(EventSettings.loadEvents(contextInterface, EventType.SHADOWLENGTH));
+        }
 
         Collections.sort(events, new Comparator<EventAlias>() {
             @Override
@@ -602,7 +624,7 @@ public class EventListHelper
         importListener0 = listener;
     }
 
-    private EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
+    private final EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -800,9 +822,9 @@ public class EventListHelper
      */
     public static class ExpandableEventDisplayAdapter extends BaseExpandableListAdapter implements EventDisplayAdapterInterface
     {
-        private WeakReference<Context> contextRef;
-        private int groupResourceID, childResourceID;
-        private List<EventAlias> objects;
+        private final WeakReference<Context> contextRef;
+        private final int groupResourceID, childResourceID;
+        private final List<EventAlias> objects;
         private EventAlias selectedItem;
         private int selectedChild = -1;
         private final SuntimesUtils utils = new SuntimesUtils();
