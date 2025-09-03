@@ -19,6 +19,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
+import com.forrestguice.util.SharedPreferences;
 import com.forrestguice.util.android.AndroidResources;
 
 public class AndroidSuntimesDataSettings implements SuntimesDataSettings
@@ -48,6 +49,11 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     @Override
     public String getString(int id, Object... formatArgs) {
         return getResources().getString(id, formatArgs);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int flags) {
+        return AndroidSharedPreferences.wrap(context.getSharedPreferences(name, flags));
     }
 
     @Override

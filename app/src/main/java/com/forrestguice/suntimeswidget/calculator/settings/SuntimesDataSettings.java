@@ -22,14 +22,10 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
-import com.forrestguice.util.Resources;
+import com.forrestguice.util.ContextInterface;
 
-public interface SuntimesDataSettings
+public interface SuntimesDataSettings extends ContextInterface
 {
-    Resources getResources();
-    String getString(int id);
-    String getString(int id, Object... formatArgs);
-
     EventSettingsInterface getEventSettings();
     CalendarSettingsInterface getCalendarSettings();
 
