@@ -384,6 +384,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     }
 
     private SuntimesTheme themeOverride = null;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         if (theme != null) {

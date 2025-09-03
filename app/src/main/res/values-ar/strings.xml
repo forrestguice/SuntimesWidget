@@ -272,10 +272,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">متري</string>
     <string name="lengthUnits_imperial">إنگليزي</string>
-    <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
-        <item>@string/lengthUnits_metric</item>
-        <item>@string/lengthUnits_imperial</item>
-    </string-array>
 
     <string name="units_feet">قدم</string>
     <string name="units_feet_short">قدم</string>
@@ -2003,6 +1999,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>الشفق الفلكي الصباحي (البداية)</item>
@@ -2036,6 +2033,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>بداية الشفق الفلكي الصباحي</item>
@@ -2069,75 +2067,10 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
-    <string-array name="solarevents_gender">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
-        <item>other</item>    <!-- start of astronomical twilight -->
-        <item>other</item>    <!-- start of nautical twilight -->
-        <item>other</item>    <!-- start of morning blue hour -->
-        <item>other</item>    <!-- start of civil twilight -->
-        <item>other</item>    <!-- end of morning blue hour -->
-        <item>other</item>    <!-- sunrise -->
-        <item>other</item>    <!-- start of golden hour -->
-        <item>other</item>    <!-- solar noon -->
-        <item>other</item>    <!-- end of golden hour -->
-        <item>other</item>    <!-- sunset -->
-        <item>other</item>    <!-- start of evening blue hour -->
-        <item>other</item>    <!-- end of civil twilight -->
-        <item>other</item>    <!-- end of evening blue hour -->
-        <item>other</item>    <!-- end of nautical twilight -->
-        <item>other</item>    <!-- end of astronomical twilight -->
-        <item>female</item>   <!-- moonrise -->
-        <item>female</item>   <!-- moonset -->
-        <item>female</item>   <!-- new moon -->
-        <item>other</item>    <!-- first quarter -->
-        <item>female</item>   <!-- full moon -->
-        <item>other</item>    <!-- third quarter -->
-        <item>other</item>    <!-- spring solstice -->
-        <item>other</item>    <!-- summer solstice -->
-        <item>other</item>    <!-- autumn equinox -->
-        <item>other</item>    <!-- winter solstice -->
-        <item>other</item>    <!-- lunar noon -->
-        <item>female</item>   <!-- lunar midnight -->
-        <item>other</item>    <!-- cross spring -->
-        <item>other</item>    <!-- cross summer -->
-        <item>other</item>    <!-- cross autumn -->
-        <item>other</item>    <!-- cross winter -->
-    </string-array>
-    <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
-        <item>1</item>    <!-- start of astronomical twilight -->
-        <item>1</item>    <!-- start of nautical twilight -->
-        <item>1</item>    <!-- start of morning blue hour -->
-        <item>1</item>    <!-- start of civil twilight -->
-        <item>1</item>    <!-- end of morning blue hour -->
-        <item>1</item>    <!-- sunrise -->
-        <item>1</item>    <!-- start of golden hour -->
-        <item>1</item>    <!-- solar noon -->
-        <item>1</item>    <!-- end of golden hour -->
-        <item>1</item>    <!-- sunset -->
-        <item>1</item>    <!-- start of evening blue hour -->
-        <item>1</item>    <!-- end of civil twilight -->
-        <item>1</item>    <!-- end of evening blue hour -->
-        <item>1</item>    <!-- end of nautical twilight -->
-        <item>1</item>    <!-- end of astronomical twilight -->
-        <item>1</item>    <!-- moonrise -->
-        <item>1</item>    <!-- moonset -->
-        <item>1</item>    <!-- new moon -->
-        <item>1</item>    <!-- first quarter -->
-        <item>1</item>    <!-- full moon -->
-        <item>1</item>    <!-- third quarter -->
-        <item>1</item>    <!-- spring solstice -->
-        <item>1</item>    <!-- summer solstice -->
-        <item>1</item>    <!-- autumn equinox -->
-        <item>1</item>    <!-- winter solstice -->
-        <item>1</item>    <!-- lunar noon -->
-        <item>1</item>    <!-- lunar midnight -->
-        <item>1</item>    <!-- cross spring -->
-        <item>1</item>    <!-- cross summer -->
-        <item>1</item>    <!-- cross autumn -->
-        <item>1</item>    <!-- cross winter -->
-    </integer-array>
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 

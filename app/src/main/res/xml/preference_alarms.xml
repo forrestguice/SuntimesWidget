@@ -104,13 +104,16 @@
             android:title="@string/configLabel_alarms_brightMode_colors"
             android:summary="@string/configLabel_alarms_brightMode_colors_summary" />
 
-        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+        <com.forrestguice.suntimeswidget.settings.TimeOffsetPickerPreference
             android:key="app_alarms_bright_fadeinMillis"
             android:title="@string/configLabel_alarms_brightMode_fadein"
             android:summary="@string/configLabel_alarms_brightMode_fadein_summary"
-            app:mode="seconds" app:minValue="@integer/minAlarmFullscreenFadeinSeconds"
-            app:maxValue="@integer/maxAlarmFullscreenFadeinSeconds"
-            android:defaultValue="@string/def_app_alarms_bright_fadein" />
+            app:minValue="@integer/minAlarmFullscreenFadeinMillis"
+            app:maxValue="@integer/maxAlarmFullscreenFadeinMillis"
+            android:defaultValue="@string/def_app_alarms_bright_fadein"
+            app:resetDefaultsValue="@string/def_app_alarms_autodismiss"
+            app:resetDefaultsText="@string/configAction_restoreDefaults"
+            />
 
         <!--<com.forrestguice.suntimeswidget.settings.colors.ColorListPreference
             android:key="app_alarms_bright_color_end"
@@ -127,13 +130,15 @@
         android:title="@string/configLabel_alarmQuick_notification"
         android:key="app_alarms_category2">
 
-        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+        <com.forrestguice.suntimeswidget.settings.TimeOffsetPickerPreference
             android:key="app_alarms_notifyDismissMillis"
             android:title="@string/configLabel_alarms_autoDismissAfter"
             android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
             android:defaultValue="@string/def_app_alarms_autodismiss"
-            app:mode="seconds" app:minValue="@integer/minAlarmAutoDismissSeconds"
-            app:maxValue="@integer/maxAlarmAutoDismissSeconds" />
+            app:resetDefaultsValue="@string/def_app_alarms_autodismiss"
+            app:resetDefaultsText="@string/configAction_restoreDefaults"
+            app:minValue="@integer/minAlarmAutoDismissMillis"
+            app:maxValue="@integer/maxAlarmAutoDismissMillis" />
 
     </PreferenceCategory>
 
@@ -168,6 +173,12 @@
             android:title="@string/configLabel_alarms_bootcompleted"
             android:summary="@string/configLabel_alarms_bootcompleted_summary"
             android:defaultValue="false" />
+
+        <Preference
+            android:key="app_alarms_clearall"
+            android:title="@string/configLabel_alarms_clearall"
+            android:summary="@string/configLabel_alarms_clearall_summary"
+            android:persistent="false" />
 
     </PreferenceCategory>
 

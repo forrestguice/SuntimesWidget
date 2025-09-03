@@ -207,6 +207,7 @@ public class MoonApsisView extends LinearLayout
         themeDrawables();
     }
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         colorPressed = theme.getActionColor();
@@ -413,7 +414,7 @@ public class MoonApsisView extends LinearLayout
                     //Log.d("DEBUG", "minuteOffset: " + minuteOffset2 / 60d + " (" + minuteOffset0 / 60d + ", " + ((minuteOffset0 - minuteOffset2) / 60d) + ")");
                 }
             }
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 

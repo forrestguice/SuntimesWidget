@@ -23,7 +23,7 @@
     <string name="def_app_locale" translatable="false">en</string>
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_maxAge" translatable="false">900000</string>
     <bool name="def_getFix_passiveMode" translatable="false">false</bool>
 
     <bool name="def_app_ui_showwarnings" translatable="false">true</bool>
@@ -34,6 +34,7 @@
     <bool name="def_app_ui_showequinox_date" translatable="false">true</bool>
     <bool name="def_app_ui_showcrossquarter" translatable="false">true</bool>
     <bool name="def_app_ui_showlightmap" translatable="false">true</bool>
+    <bool name="def_app_ui_showmidnight" translatable="false">false</bool>
     <bool name="def_app_ui_showgoldhour" translatable="false">true</bool>
     <bool name="def_app_ui_showbluehour" translatable="false">false</bool>
     <bool name="def_app_ui_showheader_icon" translatable="false">true</bool>
@@ -69,5 +70,7 @@
 
     <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
     <bool name="def_app_bedtime_dnd_rulebased">true</bool>
+
+    <string name="def_app_alarms_bootcompleted_delay" translatable="false">5000</string>    <!-- delay "after boot completed" by 5s -->
 
 </resources>

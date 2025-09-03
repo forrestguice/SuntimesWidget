@@ -1,0 +1,3 @@
+- improves reliability of location updates (#884).
+- fixes bug where "data patterns display nothing at higher latitudes" (#874).
+- updates translation to Polish and Esperanto (#883).

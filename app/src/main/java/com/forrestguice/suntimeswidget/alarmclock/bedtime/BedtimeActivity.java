@@ -58,8 +58,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetThemes;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 import java.util.List;
@@ -169,18 +167,11 @@ public class BedtimeActivity extends AppCompatActivity
 
     private String appTheme;
     private int appThemeResID;
-    private SuntimesTheme appThemeOverride = null;
 
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
-
-        String themeName = AppSettings.getThemeOverride(this, appTheme);
-        if (themeName != null && WidgetThemes.hasValue(themeName)) {
-            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
-        }
     }
 
     private final BroadcastReceiver itemUpdateBroadcastReceiver = new BroadcastReceiver()
@@ -322,12 +313,6 @@ public class BedtimeActivity extends AppCompatActivity
         TypedArray a = context.obtainStyledAttributes(attrs);
         colorAlarmEnabled = colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
         a.recycle();*/
-
-        if (appThemeOverride != null) {
-            // TODO
-            /*colorAlarmEnabled = colorOn = appThemeOverride.getAccentColor();
-            colorPressed = appThemeOverride.getActionColor();*/
-        }
     }
 
     @Override

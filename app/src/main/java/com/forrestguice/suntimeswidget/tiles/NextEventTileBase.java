@@ -91,7 +91,7 @@ public class NextEventTileBase extends SuntimesTileBase
     {
         if (dataset == null) {
             dataset = new SuntimesRiseSetDataset(context, appWidgetId());
-            dataset.calculateData();
+            dataset.calculateData(context);
         }
         return dataset;
     }

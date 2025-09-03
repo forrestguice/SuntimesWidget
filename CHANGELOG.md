@@ -1,5 +1,48 @@
 ### ~
 
+### v0.16.9 (2025-07-28)
+* improves reliability of location updates (#884); adds "fused" location provider (api31+).
+* fixes bug where "data patterns display nothing at higher latitudes" (#874).
+* fixes bug where "in metric mode elevation is still in feet" (#885).
+* fixes "app crash when showing graphs with data sources that lacks support".
+* fixes "app crash (null pointer exception)" (#882).
+* fixes inaccurate default places coordinates (8 places updated).
+* adds "solar midnight" checkbox to the welcome activity.
+* adds location update information to settings; available providers and recent location age.
+* changes defaults; "location maxAge" increased from 5 to 15 minutes (#884).
+* updates translation to Polish and Esperanto (eo, pl) (#883 by Verdulo).
+
+### v0.16.8 (2025-06-16)
+* adds labels for "Polar Night", "Midnight Sun", "Midnight Twilight", and "White Night" (#875) to sun dialog.
+* adds label for "daylight of the same length" to the main card.
+* adds world places; ~79 places; European cities.
+* fixes app crash when using custom events with offsets (#879).
+* fixes app crash in sun dialog when using rise/set buttons on days those events don't occur.
+* fixes bug where "lightmap sun icon is cropped at solar midnight" (#877).
+* fixes bug in sunlight graph where "days that experience polar night are drawn incorrectly" (#878).
+* fixes bug where "`%eT@sn` displays the wrong time (sunset instead of noon)" (#874).
+* increments `CalculatorProviderContract` version 7 -> 8; adds column for solar midnight.
+
+### v0.16.7 (2025-05-12)
+* fixes app crash when twilight alarms have an attached note (#872).
+* improves searching places when names contain special characters.
+* adds world places; ~120 places; South American capitals and other major cities.
+* adds "check all" button to the world places dialog; fixes bug where dialog allows all items unchecked.
+* adds an indicator to the moon dialog when the displayed time is adjusted by DST (#870).
+* adds an additional "clear alarms" preference to alarm settings.
+
+### v0.16.6 (2025-04-16)
+* adds option for "solar midnight" (#835).
+* adds world places: ~110 places; North American capitals, major cities, and others.
+* adds an indicator to sun dialog when the displayed time is adjusted by DST.
+* fixes bug where "sun position grid does not re-align when DST changes" (#867).
+* fixes bug where "sun position graph labels are always displayed using 12h time".
+* improves UI when configuring time offsets for custom events, alarm, and bedtime settings.
+* increases maximum "auto-dismiss after" notification value from 5 minutes to 12 hours (#726).
+* enhances `%e` data patterns to work with all widget types (no longer limited to sun widgets).
+* adds data patterns: `%es`, `%eS`, `%h`, and `%H`; shadow length, and observer height.
+* adds data patterns: `%ea`, `%ez`, `%ed`, and `%er`; altitude, azimuth, declination, right-ascension.
+
 ### v0.16.5 (2025-02-14)
 * adds an option to the moon dialog, solstice dialog, and solstice widget to only show the number of days remaining (#846, #847).
 * adds "gradually increase volume (curve)" to alarm options; defaults to cubic. The volume increases gradually in the beginning, rapidly increasing toward the end.

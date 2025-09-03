@@ -49,7 +49,6 @@ import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -167,6 +166,7 @@ public class MoonPhasesView1 extends LinearLayout
         themeDrawables();
     }
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         card_adapter.applyTheme(context, theme);
@@ -460,7 +460,7 @@ public class MoonPhasesView1 extends LinearLayout
                 moon.setTodayIs(date);
             }
 
-            moon.calculate();
+            moon.calculate(context);
             return moon;
         }
 

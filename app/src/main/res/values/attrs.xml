@@ -75,6 +75,9 @@
     <attr name="sunsetIconLarge" format="reference" />
     <attr name="sunsetColor" format="reference" />
     <attr name="sunnoonIcon" format="reference" />
+    <attr name="sunnightIcon" format="reference" />
+    <attr name="sunnightColor0" format="reference" />
+    <attr name="sunnightColor1" format="reference" />
 
     <attr name="moonriseIcon" format="reference" />
     <attr name="moonriseColor" format="reference" />
@@ -182,9 +185,20 @@
     <attr name="icActionVisibilityOn" format="reference" />
     <attr name="icActionVisibilityOff" format="reference" />
 
-    <attr name="icActionGPS" format="reference" />
+    <attr name="icActionGPS" format="reference" />    <!-- TODO: rename these icActionLocation_ -->
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+    <attr name="icActionGPS_satellite" format="reference" />
+    <attr name="icActionGPS_cell" format="reference" />
+    <attr name="icActionGPS_network" format="reference" />
+
+    <attr name="icPlaceUser" format="reference" />
+    <attr name="icPlaceCity" format="reference" />
+    <attr name="icPlaceCapital" format="reference" />
+    <attr name="icPlaceMisc" format="reference" />
+    <attr name="icPlaceGPS" format="reference" />
+    <attr name="icPlaceInfo" format="reference" />
+    <attr name="icPlaceHome" format="reference" />
 
     <attr name="checkFavorite" format="reference" />
     <attr name="checkAltitude" format="reference" />
@@ -265,6 +279,28 @@
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="TimeOffsetPicker">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" format="boolean" />
+        <attr name="allowPickMinutes" format="boolean" />
+        <attr name="allowPickHours" format="boolean" />
+        <attr name="allowPickDays" format="boolean" />
+        <attr name="allowPickBeforeAfter" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="TimeOffsetPickerPreference">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" />
+        <attr name="allowPickMinutes" />
+        <attr name="allowPickHours" />
+        <attr name="allowPickDays" />
+        <attr name="allowPickBeforeAfter" />
+        <attr name="zeroValueText" />
+        <attr name="resetDefaultsText" format="string" />
+        <attr name="resetDefaultsValue" format="integer" />
+    </declare-styleable>
+
     <declare-styleable name="IntegerPickerPreference">
         <attr name="minValue" />
         <attr name="maxValue" />
@@ -313,6 +349,13 @@
         <attr name="hideFooter" />
         <attr name="hideTitle" />
         <attr name="hideMode" />
+    </declare-styleable>
+
+    <declare-styleable name="LocationProviderStatus">
+        <attr name="icActionAltitude" />
+        <attr name="icActionGPS_cell" />
+        <attr name="icActionGPS_network" />
+        <attr name="icActionGPS_satellite" />
     </declare-styleable>
 
     <item type="id" name="text0"/>

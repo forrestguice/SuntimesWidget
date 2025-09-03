@@ -1007,9 +1007,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             equinoxData.setLocation(forLocation);
         }
 
-        sunData.calculateData();
-        moonData.calculate();
-        equinoxData.calculateData();
+        sunData.calculateData(this);
+        moonData.calculate(this);
+        equinoxData.calculateData(this);
         dialog.setData(this, sunData, moonData, equinoxData);
     }
 

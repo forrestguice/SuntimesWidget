@@ -35,10 +35,13 @@
     <string name="configAction_closeNavDrawer">Zamknij panel nawigacyjny</string>
     <string name="configAction_clock">Zegar</string>
     <string name="configAction_lightGraphDialog">Światło słoneczne</string>
+    <string name="configAction_lightGraph">Wykres światła słonecznego</string>
     <string name="configAction_lineGraph">Wykres wysokości</string>
     <string name="configAction_seekAltitude">Namierz wysokość</string>        <!-- checkbox label -->
     <string name="configAction_search">Wyszukaj</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Wyczyść wybór</string>
+    <string name="configAction_checkNone">Nic</string>
+    <string name="configAction_checkAll">Wszystko</string>
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_onlineHelp">Pomoc online</string>
@@ -110,8 +113,9 @@
     -->
     <string name="delta_day_tomorrow">Jutrzejszy dzień będzie</string>
     <string name="delta_day_yesterday">Wczorajszy dzień był</string>
-    <string name="delta_day_shorter">krótszy</string>
-    <string name="delta_day_longer">dłuższy</string>
+    <string name="delta_day_shorter">krótszy.</string>
+    <string name="delta_day_longer">dłuższy.</string>
+    <string name="delta_day_same">tej samej długości.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -159,6 +163,7 @@
     <string name="until_nauticalTwilight">świtu żeglarskiego</string>
     <string name="until_sunrise">wschodu Słońca</string>
     <string name="until_noon">kulminacji Słońca</string>
+    <string name="until_midnight">północy prawdziwej</string>
     <string name="until_sunset">zachodu Słońca</string>
     <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
     <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
@@ -350,6 +355,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Kulminacja</string>                    <!-- setting -->
     <string name="timeMode_noon">Kulminacja Słońca</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Północ</string>                    <!-- setting -->
+    <string name="timeMode_midnight">Północ słoneczna</string>                    <!-- setting -->
     <string name="timeMode_official_short">Rzeczywisty</string>              <!-- setting -->
     <string name="timeMode_official">Rzeczywisty wschód/zachód</string>               <!-- setting -->
     <string name="timeMode_civil_short">Cywilny</string>                  <!-- setting -->
@@ -367,6 +374,11 @@
     <string name="timeMode_blue4_short">Błękitna (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Błękitna godzina (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">Brak</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Noc polarna</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnightsun">Dzień polarny</string>                 <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight">Biała noc astronomiczna</string>       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight_whitenight">Biała noc</string>  <!-- a label (not an actual timeMode setting) -->
 
     <string name="timeMode_equinox_vernal">Równonoc wiosenna</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Równonoc</string>       <!-- setting -->
@@ -480,7 +492,7 @@
 
     <string name="configLabel_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x2mode">2×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
@@ -490,7 +502,7 @@
     <string name="actionMode_update">Aktualizuj widżet</string>           <!-- setting -->
     <string name="actionMode_update_all">Aktualizuj wszystkie widżety</string>           <!-- setting -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Wykonaj akcję</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
@@ -771,6 +783,10 @@
     <string name="configLabel_themeColorGraphSunPathDayStroke">Droga Słońca (obwódka dzień)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightFill">Droga Słońca (wypełnienie noc)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Droga Słońca (obwódka noc)</string>         <!-- color label -->
+
+    <string name="configLabel_themeColorGraphMidnightText">Północ słoneczna (tekst)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightFill">Północ słoneczna (wypełnienie)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Północ słoneczna (obwódka)</string>         <!-- color label -->
 
     <string name="configLabel_themeColorGraphMoonFill">Księżyc (wypełnienie)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Księżyc (obwódka)</string>         <!-- color label -->
@@ -1764,10 +1780,11 @@
         <item>przesilenie zimowe</item>
         <item>górowanie Księżyca</item>
         <item>dołowanie Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>świt astronomiczny</item>
@@ -1797,10 +1814,11 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ słoneczna</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>świt astronomiczny</item>
@@ -1830,10 +1848,11 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ słoneczna</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1915,7 +1934,7 @@
     <string name="themesexport_dialog_message">Eksportowanie skórek do pliku.</string>        
         
     <!-- Dialog: Export -->
-    <string name="msg_export_success">Tymczasowo skopiowano do <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Zapisano do <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Eksport do <xliff:g id="filepath">%s</xliff:g> nieudany!</string>
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
 
@@ -2042,6 +2061,7 @@
                 * <b>%dY</b> dla roku (np. 2018) <br/>
                 * <b>%dt</b> dla czasu ostatniej aktualizacji <br/>
                 * <b>%dT</b> dla czasu ostatniej aktualizacji (uwzględniając sekundy) <br/>
+                * <b>%dm</b> dla czasu ostatniej aktualizacji (w milisekundach) <br/>
                 <br/>
                 * <b>%loc</b> dla etykiety (np. Warszawa) <br />
                 * <b>%lat</b> dla szerokości geograficznej <br />
@@ -2052,6 +2072,8 @@
                 * <b>%t</b> dla strefy czasowej (id) (np. Europe/Warsaw) <br/>
                 * <b>%id</b> dla ID widżetu <br/>
          <br/>
+         <b>Widżety dat:</b> <br/>
+                * <b>%M</b> dla kalendarza (np. gregoriański) <br/>
          <b>Widżety Słońca:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
@@ -2126,11 +2148,18 @@
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          Dla <b>świtów</b> podane czasy wyznaczają początek danego świtu, a dla <b>zmierzchów</b> podane czasy wyznaczją ich koniec.<br/><br/>
+          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się mniej niż 6&nbsp;stopni pod horyzontem. Widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się od 6 do 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się od 12 do 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          <b>Noc astronomiczna:</b> Słońce znajduje się więcej niż 18&nbsp;stopni pod horyzontem. Najmniej jasne gwiazdy są widoczne.<br/><br/>
     ]]></string>
-
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>Biała noc:</b> Słońce nie schodzi niżej niż 6 stopni pod linię horyzontu. Jest wystarczająco jasno dla większości czynności na dworze przez całą noc.<br/><br/>
+          <b>Biała noc astronomiczna:</b> Słońce nie schodzi niżej niż 18 stopni pod linię horyzontu. Przez całą noc jest jasno jak o świcie/zmierzchu, a niebo nie jest w pełni czarne.<br/><br/>
+          <b>Dzień polarny:</b> Słońce nie schodzi pod linię horyzontu (24 godziny światła dziennego).<br/><br/>
+          <b>Noc polarna:</b> Słońce nie wchodzi nad linię horyzontu (24 godziny ciemności).<br/><br/>
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Dzisiejszy:</b> czasy wschodu i zachodu dla dzisiejszej daty.<br/><br/>
           <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
@@ -2146,7 +2175,7 @@
     ]]></string>
 
 <string name="help_general_solartime"><![CDATA[
-          <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
+          <b>Prawdziwy czas słoneczny:</b> czas zegara słonecznego. Czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
           Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24&nbsp;godziny (maksymalnie do 30&nbsp;s).
           Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
           <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>

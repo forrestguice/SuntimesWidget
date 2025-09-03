@@ -27,11 +27,6 @@ import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -214,28 +209,6 @@ public class SuntimesUtilsTest
         ImageSpan span4 = SuntimesUtils.createImageSpan(span3);
         assertTrue("createImageSpan(ImageSpan) should create a new object!", span4 != span3);
         assertTrue("createImageSpan(ImageSpan) should have the same drawable!", span4.getDrawable().equals(span3.getDrawable()));
-    }
-
-    @Test
-    public void test_displayStringForTitlePattern()
-    {
-        String[] patterns = new String[] { "%loc", "%lat", "%lon", "%lel", "%t", "%s", "%id", "%d", "%dY", "%dD", "%dd", "%dT", "%dt", "%dm", "%%" };
-
-        StringBuilder pattern0 = new StringBuilder();
-        for (int i=0; i<patterns.length; i++) {
-            pattern0.append(patterns[i]);
-        }
-
-        String[] result0 = new String[] {
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString(), (SuntimesData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m%i", (SuntimesMoonData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesRiseSetData) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesRiseSetDataset) null),
-                utils.displayStringForTitlePattern(mockContext, pattern0.toString() + "%M%o%m", (SuntimesEquinoxSolsticeData) null)
-        };
-        for (String r0 : result0) {
-            assertTrue("result should be empty", r0.isEmpty());   // null data; all patterns should have been replaced with ""
-        }
     }
 
     @Test

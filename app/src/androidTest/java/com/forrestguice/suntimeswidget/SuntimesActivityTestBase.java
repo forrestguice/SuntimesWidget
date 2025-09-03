@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
+import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
@@ -384,10 +385,15 @@ public abstract class SuntimesActivityTestBase
 
     public static void setAnimationsEnabled(boolean enabled) throws IOException
     {
-        UiAutomation automation = android.support.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
-        automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
-        automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
-        automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            UiAutomation automation = android.support.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
+            automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
+            automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
+            automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
+        } else {
+            // TODO
+        }
     }
 
     public static Context getContext() {

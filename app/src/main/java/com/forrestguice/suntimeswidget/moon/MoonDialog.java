@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,6 +41,7 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
@@ -114,7 +116,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void setData( SuntimesMoonData data )
     {
         if (data != null && !data.isCalculated() && data.isImplemented()) {
-            data.calculate();
+            data.calculate(getActivity());
         }
         this.data = data;
     }
@@ -435,6 +437,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     private SuntimesTheme themeOverride = null;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         if (theme != null) {
@@ -510,14 +513,20 @@ public class MoonDialog extends BottomSheetDialogFragment
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, dialogTime);
+        String timeText = utils.calendarDateTimeDisplayString(context, dialogTime).toString();
         if (text_dialogTime != null)
         {
-            //String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, moonTime.getTimeZone());
-            if (suffix.isEmpty()) {
-                text_dialogTime.setText(timeText.toString());
-                // dialogTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            } else text_dialogTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText.toString(), suffix), suffix, warningColor));
+            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
+            if (inDST(dialogTime.getTimeZone(), dialogTime))
+            {
+                int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+                SuntimesUtils.ImageSpanTag[] spanTags = {
+                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                };
+                CharSequence dstIcon = SuntimesUtils.createSpan(context, " " + SuntimesUtils.SPANTAG_DST, spanTags);
+                timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
+            }
+            text_dialogTime.setText(timeDisplay);
         }
 
         if (text_dialogTimeOffset != null) {
@@ -529,6 +538,13 @@ public class MoonDialog extends BottomSheetDialogFragment
                 text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
             } else text_dialogTimeOffset.setText(" ");
         }
+    }
+
+    protected static boolean useDST(TimeZone timezone) {
+        return (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+    }
+    public static boolean inDST(TimeZone timezone, Calendar calendar) {
+        return useDST(timezone) && timezone.inDaylightTime(calendar.getTime());
     }
 
     protected long getNow() {
@@ -1143,7 +1159,8 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void showHelp(Context context)
     {
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
-        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon, R.attr.icActionShare };
+        int[] iconAttrs = { R.attr.moonriseColor, R.attr.moonsetColor, R.attr.moonnoonIcon, R.attr.moonnightIcon, R.attr.icActionShare,
+                R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
         int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
@@ -1152,6 +1169,8 @@ public class MoonDialog extends BottomSheetDialogFragment
         ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
         ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
         ImageSpan shareIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
+        int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
         SuntimesUtils.ImageSpanTag[] helpTags = {
@@ -1160,12 +1179,14 @@ public class MoonDialog extends BottomSheetDialogFragment
                 new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
                 new SuntimesUtils.ImageSpanTag("[Icon Share]", shareIcon),
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        String helpString = getString(R.string.help_general_moondialog);
-        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(context, helpString, helpTags);
+        SpannableStringBuilder helpSpan0 = SuntimesUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
+        SpannableStringBuilder helpSpan1 = SuntimesUtils.createSpan(context, SuntimesUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
+        CharSequence helpDisplay = TextUtils.concat(helpSpan0, "\n\n", helpSpan1);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpSpan);
+        helpDialog.setContent(helpDisplay);
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);

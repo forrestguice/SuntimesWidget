@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
@@ -147,7 +148,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
         } else return true;
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     protected void setBootCompletedPrefEnabled(boolean value)
     {
@@ -317,6 +320,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
 
         initPref_alarms_bootCompleted(fragment);
+        initPref_alarms_clearAll(fragment);
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
@@ -464,6 +468,27 @@ public class AlarmPrefsFragment extends PreferenceFragment
             CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)
                     : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
             bootCompletedPref.setSummary(context.getString(R.string.configLabel_alarms_bootcompleted_summary, infoSpan));
+        }
+    }
+
+    private static void initPref_alarms_clearAll(final AlarmPrefsFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        if (context == null) {
+            return;
+        }
+
+        final Preference clearAllPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
+        if (clearAllPref != null) {
+            clearAllPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    AlarmListDialog.confirmClearAlarms(context);
+                    return true;
+                }
+            });
         }
     }
 

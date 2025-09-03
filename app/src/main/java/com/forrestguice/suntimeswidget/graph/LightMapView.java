@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -39,6 +40,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
@@ -137,6 +139,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * themeViews
      */
+    @Deprecated
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (colors == null) {
@@ -193,12 +196,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (useMainThread)
         {
             //Log.d("DEBUG", "updating lightmap on main thread.. " + getWidth() + "x" + getHeight() + " @ " + getNow() + " :: view-" + Integer.toHexString(getColors().hashCode()));
-            LightMapTask draw = new LightMapTask();
+            LightMapTask draw = new LightMapTask(getContext());
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
             drawTaskListener.onFinished(b);
 
         } else {
-            drawTask = new LightMapTask();
+            drawTask = new LightMapTask(getContext());
             drawTask.setListener(drawTaskListener);
             drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
         }
@@ -290,21 +293,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public void resetAnimation( boolean updateTime )
+    public void resetAnimation( final boolean updateTime )
     {
         //Log.d(LightMapView.class.getSimpleName(), "resetAnimation");
         stopAnimation();
         colors.offsetMinutes = 0;
-        if (updateTime)
+
+        post(new Runnable()
         {
-            colors.now = -1;
-            if (data != null) {
-                Calendar calendar = Calendar.getInstance(data.timezone());
-                data.setTodayIs(calendar);
-                data.calculateData();
+            @Override
+            public void run()
+            {
+                if (updateTime)
+                {
+                    colors.now = -1;
+                    if (data != null) {
+                        Calendar calendar = Calendar.getInstance(data.timezone());
+                        data.setTodayIs(calendar);
+                        data.calculateData(getContext());
+                    }
+                }
+
+                updateViews(true);
             }
-        }
-        updateViews(true);
+        });
     }
 
     @Override
@@ -401,9 +413,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
+        private WeakReference<Context> contextRef;
         private LightMapColors colors;
 
         private SuntimesRiseSetDataset t_data = null;
+
+        public LightMapTask(Context context) {
+            contextRef = new WeakReference<>(context);
+        }
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -464,7 +481,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
                         data = new SuntimesRiseSetDataset(data);
                         data.setTodayIs(calendar);
-                        data.calculateData();
+                        data.calculateData(contextRef.get());
                         t_data = data;
                     }
                 }
@@ -814,21 +831,30 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
                 int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
                 int y = h / 2;
+                drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
 
-                p.setStyle(Paint.Style.FILL);
-                p.setColor(fillColor);
-                c.drawCircle(x, y, radius, p);
-
-                p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(strokeWidth);
-                p.setColor(strokeColor);
-
-                if (strokeEffect != null) {
-                    p.setPathEffect(strokeEffect);
+                if (x + radius > w) {    // point cropped at image bounds, so translate and draw it again
+                    drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                } else if (x - radius < 0) {
+                    drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 }
-
-                c.drawCircle(x, y, radius, p);
             }
+        }
+        protected void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+        {
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(fillColor);
+            c.drawCircle(x, y, radius, p);
+
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(strokeWidth);
+            p.setColor(strokeColor);
+
+            if (strokeEffect != null) {
+                p.setPathEffect(strokeEffect);
+            }
+
+            c.drawCircle(x, y, radius, p);
         }
 
         private LightMapTaskListener listener = null;
@@ -917,4 +943,25 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    public static CharSequence getLabel(Context context, SuntimesRiseSetDataset data)
+    {
+        if (data.dayLength() <= 0) {
+            return context.getString(R.string.timeMode_polarnight);
+
+        } else if (data.nightLength() == 0) {
+            if (data.civilTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnightsun);
+
+            } else if (data.nauticalTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnighttwilight_whitenight);
+
+            } else if (data.astroTwilightLength()[1] <= 0) {
+                return context.getString(R.string.timeMode_midnighttwilight);
+
+            } else {
+                return context.getString(R.string.timeMode_midnighttwilight);
+            }
+        }
+        return null;
+    }
 }

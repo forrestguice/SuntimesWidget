@@ -143,6 +143,7 @@ public class MoonPhaseView extends LinearLayout
     }
 
     protected SuntimesTheme themeOverride = null;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         this.themeOverride = theme;
@@ -251,7 +252,7 @@ public class MoonPhaseView extends LinearLayout
             themeIcons(context, themeOverride);
             hideIcons();
 
-            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(dateTime, data)
+            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(context, dateTime, data)
                                                         : (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
 
             if (phase != null)
