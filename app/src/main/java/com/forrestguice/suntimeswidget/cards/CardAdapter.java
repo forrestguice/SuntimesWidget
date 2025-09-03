@@ -46,7 +46,6 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.lang.ref.WeakReference;
@@ -326,14 +325,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         invalidated = true;
         data.clear();
         notifyDataSetChanged();
-    }
-
-    /**
-     * setThemeOverride
-     * @param theme SuntimesTheme
-     */
-    public void setThemeOverride(@NonNull SuntimesTheme theme) {
-        options.themeOverride = theme;
     }
 
     /**
@@ -621,7 +612,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public int showHeaderText = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
         public boolean showHeaderIcon = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
 
-        public SuntimesTheme themeOverride = null;
         public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;
 
         public int highlightPosition = -1;

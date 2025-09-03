@@ -46,6 +46,11 @@
         android:theme="@style/AppTheme"
         android:name=".SuntimesApplication">
 
+        <activity android:name=".ExceptionActivity"
+            android:process=":crashreport"
+            android:theme="@style/AppTheme.Dark"
+            android:exported="false" />
+
         <!-- Main Activity -->
         <activity
             android:name=".SuntimesLaunchActivity"

@@ -35,6 +35,8 @@ public class LocationHelperSettings
     public static final String PREF_KEY_LOCATION_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_LOCATION_PASSIVE = false;
 
+    public static final String PREF_KEY_LOCATION_PROVIDER_ = "getFix_provider_";
+
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
         int retValue;
@@ -82,6 +84,16 @@ public class LocationHelperSettings
             retValue = defaultValue;
         }
         return retValue;
+    }
+
+    /**
+     * @param context context
+     * @param provider location provider (e.g. GPS)
+     * @return true location provider is requested by user, false provider should be ignored
+     */
+    public static boolean isProviderRequested( Context context, String provider ) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_LOCATION_PROVIDER_ + provider, true);
     }
 
     /**
