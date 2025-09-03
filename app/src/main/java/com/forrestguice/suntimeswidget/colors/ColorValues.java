@@ -45,34 +45,9 @@ public abstract class ColorValues implements Serializable
     public ColorValues(ContentValues values) {
         loadColorValues(values);
     }
-    //protected ColorValues(Parcel in) {
-    //    loadColorValues(in);
-    //}
     public ColorValues(String jsonString) {
         loadColorValues(jsonString);
     }
-
-    /*public void loadColorValues(@NonNull Parcel in)
-    {
-        setID(in.readString());
-        setLabel(in.readString());
-        for (String key : getColorKeys())
-        {
-            setColor(key, in.readInt());
-            setLabel(key, in.readString());
-        }
-    }
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(getID());
-        dest.writeString(getLabel());
-        for (String key : getColorKeys())
-        {
-            dest.writeInt(values.getAsInteger(key));
-            dest.writeString(values.getAsString(key + SUFFIX_LABEL));
-        }
-    }*/
 
     public void loadColorValues(@NonNull ColorValues other)
     {
@@ -120,7 +95,7 @@ public abstract class ColorValues implements Serializable
             return false;
         }
     }
-    
+
     protected ContentValues values = new ContentValues();
     public ContentValues getContentValues() {
         return new ContentValues(values);
@@ -222,11 +197,6 @@ public abstract class ColorValues implements Serializable
         }
         return -1;
     }
-
-    //@Override
-    //public int describeContents() {
-    //    return 0;
-    //}
 
     /**
      * @return json
