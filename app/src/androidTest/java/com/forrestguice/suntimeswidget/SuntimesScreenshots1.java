@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -47,7 +46,6 @@ import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @Category(UnlistedTest.class)
-@SuppressWarnings("Convert2Diamond")
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class SuntimesScreenshots1 extends SuntimesActivityTestBase

@@ -139,7 +139,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * themeViews
      */
-    public void themeViews( Context context, @NonNull SuntimesTheme theme ) {
+    @Deprecated
+    public void themeViews( Context context, @NonNull SuntimesTheme theme )
+    {
         if (colors == null) {
             colors = new LightMapColors();
         }

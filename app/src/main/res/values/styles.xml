@@ -126,6 +126,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found_ref</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_ref</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_ref</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_ref</item>
+        <item name="icActionGPS_network">@drawable/ic_network_ref</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_ref</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_ref</item>
         <item name="icActionMap">@drawable/ic_action_map1_ref</item>
@@ -372,6 +375,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_light</item>
+        <item name="icActionGPS_network">@drawable/ic_network_light</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_light</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map1_light</item>
@@ -622,6 +628,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_dark</item>
+        <item name="icActionGPS_network">@drawable/ic_network_dark</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_dark</item>
 
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map1</item>
