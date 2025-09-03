@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.graph.colors;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;

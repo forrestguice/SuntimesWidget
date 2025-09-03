@@ -20,10 +20,10 @@
 package com.forrestguice.suntimeswidget.equinox;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
+import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 

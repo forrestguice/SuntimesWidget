@@ -23,8 +23,15 @@ import com.forrestguice.util.Log;
 
 public class Color
 {
-    public static final int BLACK = 0;
+    public static final int BLACK = -16777216;
+    public static final int BLUE = -16776961;
+    public static final int CYAN = -16711681;
+    public static final int DKGRAY = -12303292;
+    public static final int LTGRAY = -3355444;
+    public static final int MAGENTA = -65281;
+    public static final int TRANSPARENT = 0;
     public static final int WHITE = -1;
+    public static final int YELLOW = -256;
 
     private static ColorInterface utils;
     public static void init(ColorInterface i) {
