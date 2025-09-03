@@ -221,6 +221,23 @@
             android:summary="@string/configLabel_alarms_bootcompleted_summary"
             android:defaultValue="false" />
 
+        <com.forrestguice.suntimeswidget.settings.TimeOffsetPickerPreference
+            android:key="app_alarms_bootcompleted_delayms"
+            android:title="@string/configLabel_alarms_bootcompleted_delay"
+            android:summary="@string/configLabel_alarms_bootcompleted_delay_summary"
+            app:minValue="@integer/minAlarmFullscreenFadeinMillis"
+            app:maxValue="@integer/maxAlarmFullscreenFadeinMillis"
+            android:defaultValue="@string/def_app_alarms_bootcompleted_delay"
+            app:resetDefaultsValue="@string/def_app_alarms_bootcompleted_delay"
+            app:resetDefaultsText="@string/configAction_restoreDefaults"
+            />
+
+        <Preference
+            android:key="app_alarms_clearall"
+            android:title="@string/configLabel_alarms_clearall"
+            android:summary="@string/configLabel_alarms_clearall_summary"
+            android:persistent="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

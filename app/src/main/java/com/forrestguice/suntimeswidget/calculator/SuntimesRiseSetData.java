@@ -416,10 +416,18 @@ public class SuntimesRiseSetData extends SuntimesData
         }
 
         if (offset != 0) {
-            sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
-            sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
-            sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
-            sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            if (sunriseCalendarToday != null) {
+                sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarToday != null) {
+                sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunriseCalendarOther != null) {
+                sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarOther != null) {
+                sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
         }
 
         dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);

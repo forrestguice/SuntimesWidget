@@ -11,7 +11,6 @@
         <item>[AW]|Aruba, Caribbean Sea*, South America, Netherlands</item>
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
-        <item>[BE]|Belgium, North Sea*, Europe</item>
         <item>[BD]|Bangladesh, Indian Ocean*, Asia</item>
         <item>[BG]|Bulgaria, Black Sea*, Europe</item>
         <item>[BH]|Bahrain, Asia</item>
@@ -31,20 +30,17 @@
         <item>[CW]|Curaçao, Caribbean Sea*, South America, Netherlands</item>
         <item>[CY]|Cyprus, Mediterranean Sea*, Asia</item>
         <item>[CZ]|Czech Republic, Europe</item>
-        <item>[DE]|Germany, North Sea*, Baltic Sea*, Europe</item>
         <item>[DK]|Denmark, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[DO]|Dominican Republic, Caribbean Sea, North America</item>
         <item>[DZ]|Algeria, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[EE]|Estonia, Baltic Sea*, Europe</item>
         <item>[EG]|Egypt, Mediterranean Sea*, Red Sea*, Sahara Desert*, Africa</item>
-        <item>[FI]|Finland, Nordic*, Baltic Sea*, Europe</item>
         <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
         <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
         <item>[FO]|Faroe Islands, Nordic*, Atlantic Ocean, Europe, Denmark</item>
         <item>[GE]|Georgia, Black Sea*, Europe</item>
         <item>[GN]|Guinea, Atlantic Ocean*, Africa</item>
         <item>[GL]|Greenland, Atlantic Ocean*, North America, Arctic*, Nordic*, Denmark</item>
-        <item>[GR]|Greece, Mediterranean Sea*, Europe</item>
         <item>[GT]|Guatemala, Pacific Ocean*, Central America</item>
         <item>[HT]|Haiti, Caribbean Sea, Atlantic Ocean*, North America</item>
         <item>[HN]|Honduras, Pacific Ocean*, Central America</item>
@@ -57,7 +53,6 @@
         <item>[IQ]|Iraq, Persian Gulf*, Asia</item>
         <item>[IR]|Iran, Persia*, Persian Gulf*, Caspian Sea*, Asia</item>
         <item>[IS]|Iceland, Atlantic Ocean, Nordic*, Arctic*, Europe</item>
-        <item>[IT]|Italy, Mediterranean Sea*, Europe</item>
         <item>[JM]|Jamaica, Caribbean Sea, North America</item>
         <item>[JP]|Japan, Pacific Ocean*, Asia</item>
         <item>[KE]|Kenya, Indian Ocean*, Africa</item>
@@ -87,16 +82,12 @@
         <item>[NE]|Niger, Sahara Desert*, Africa</item>
         <item>[NG]|Nigeria, Atlantic Ocean*, Africa</item>
         <item>[NI]|Nicaragua, Caribbean Sea*, Pacific Ocean*, Central America</item>
-        <item>[NL]|Kingdom of the Netherlands, North Sea*, Europe</item>
-        <item>[NO]|Norway, North Sea*, Norwegian Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[NP]|Nepal, Asia</item>
         <item>[OM]|Oman, Indian Ocean*, Asia</item>
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[PH]|Philippines, Pacific Ocean*, Asia</item>
         <item>[PK]|Pakistan, Indian Ocean*, Asia</item>
-        <item>[PL]|Poland, Baltic Sea*, Europe</item>
         <item>[PS]|Palestine, Mediterranean Sea*, Asia</item>
-        <item>[PT]|Portugal, Atlantic Ocean*, Europe</item>
         <item>[PY]|Paraguay, South America</item>
         <item>[QA]|Qatar, Asia</item>
         <item>[RO]|Romania, Black Sea*, Europe</item>
@@ -167,6 +158,13 @@
         <item>[AU-WA]|Western Australia, Indian Ocean*</item>
         <item>[AU-SA]|South Australia, Indian Ocean*</item>
         <item>[AU-TAS]|Tasmania, Indian Ocean*, Pacific Ocean*</item>
+    </string-array>
+
+    <string-array name="place_tags_BE">
+        <item>[BE]|Belgium, North Sea*, Europe</item>
+        <item>[BE-BRU]|Brussels</item>
+        <item>[BE-VLG]|Flanders</item>
+        <item>[BE-WAL]|Wallonia</item>
     </string-array>
 
     <string-array name="place_tags_BO">
@@ -274,6 +272,19 @@
         <item>[CL-MA]|Magallanes</item>
     </string-array>
 
+    <string-array name="place_tags_DE">
+        <item>[DE]|Germany, North Sea*, Baltic Sea*, Europe</item>
+        <item>[DE-BE]|Berlin</item>
+        <item>[DE-BW]|Baden-Württemberg</item>
+        <item>[DE-BY]|Bavaria</item>
+        <item>[DE-HB]|Bremen</item>
+        <item>[DE-HE]|Hesse</item>
+        <item>[DE-HH]|Hamburg</item>
+        <item>[DE-NI]|Lower Saxony</item>
+        <item>[DE-NW]|North Rhine-Westphalia</item>
+        <item>[DE-SN]|Saxony</item>
+    </string-array>
+
     <string-array name="place_tags_EC">
         <item>[EC]|Ecuador, Pacific Ocean*, South America</item>
         <item>[EC-A]|Azuay</item>
@@ -283,11 +294,25 @@
 
     <string-array name="place_tags_ES">
         <item>[ES]|Spain, Europe</item>
+        <item>[ES-AN]|Andalusia</item>
         <item>[ES-AR]|Aragon</item>
         <item>[ES-AS]|Asturias, Atlantic Ocean*</item>
+        <item>[ES-CN]|Canary Islands</item>
         <item>[ES-CT]|Catalonia, Mediterranean Sea*</item>
         <item>[ES-GA]|Galicia, Atlantic Ocean*</item>
+        <item>[ES-IB]|Balearic Islands</item>
         <item>[ES-MD]|Madrid</item>
+        <item>[ES-MC]|Region of Murcia</item>
+        <item>[ES-PV]|Basque Country</item>
+        <item>[ES-VC]|Valencian Community</item>
+    </string-array>
+
+    <string-array name="place_tags_FI">
+        <item>[FI]|Finland, Nordic*, Baltic Sea*, Europe</item>
+        <item>[FI-11]|Pirkanmaa</item>
+        <item>[FI-14]|North Ostrobothnia</item>
+        <item>[FI-18]|Uusimaa</item>
+        <item>[FI-19]|Southwest Finland</item>
     </string-array>
 
     <string-array name="place_tags_FR">
@@ -312,6 +337,15 @@
         <item>[VG]|British Virgin Islands, Caribbean Sea, Atlantic Ocean*, Great Britain, United Kingdom</item>
     </string-array>
 
+    <string-array name="place_tags_GR">
+        <item>[GR]|Greece, Mediterranean Sea*, Europe</item>
+        <item>[GR-B]|Central Macedonia</item>
+        <item>[GR-G]|Western Greece</item>
+        <item>[GR-H]|Central Greece</item>
+        <item>[GR-I]|Attica</item>
+        <item>[GR-M]|Crete</item>
+    </string-array>
+
     <string-array name="place_tags_IN">
         <item>[IN]|India, Asia</item>
         <item>[IN-AS]|Assam</item>
@@ -322,6 +356,29 @@
         <item>[IN-MH]|Mahārāshtra, Indian Ocean*</item>
         <item>[IN-TN]|Tamil Nādu, Indian Ocean*</item>
         <item>[IN-WB]|West Bengal, Indian Ocean*</item>
+    </string-array>
+
+    <string-array name="place_tags_IT">
+        <item>[IT]|Italy, Mediterranean Sea*, Europe</item>
+        <item>[IT-21]|Piedmont</item>
+        <item>[IT-25]|Lombardy</item>
+        <item>[IT-34]|Veneto</item>
+        <item>[IT-36]|Friuli-Venezia Giulia</item>
+        <item>[IT-42]|Liguria</item>
+        <item>[IT-45]|Emilia-Romagna</item>
+        <item>[IT-52]|Tuscany</item>
+        <item>[IT-62]|Lazio</item>
+        <item>[IT-72]|Campania</item>
+        <item>[IT-75]|Apulia</item>
+        <item>[IT-82]|Sicily</item>
+        <item>[IT-88]|Sardinia</item>
+    </string-array>
+
+    <string-array name="place_tags_NL">
+        <item>[NL]|Kingdom of the Netherlands, North Sea*, Europe</item>
+        <item>[NL-NH]|North Holland</item>
+        <item>[NL-ZH]|South Holland</item>
+        <item>[NL-UT]|Utrecht</item>
     </string-array>
 
     <string-array name="place_tags_MX">
@@ -360,6 +417,15 @@
         <item>[MX-ZAC]|Zacatecas</item>
     </string-array>
 
+    <string-array name="place_tags_NO">
+        <item>[NO]|Norway, North Sea*, Norwegian Sea*, Nordic*, Scandinavia*, Europe</item>
+        <item>[NO-03]|Oslo</item>
+        <item>[NO-11]|Rogaland</item>
+        <item>[NO-21]|Svalbard</item>
+        <item>[NO-46]|Vestland</item>
+        <item>[NO-50]|Trøndelag</item>
+    </string-array>
+
     <string-array name="place_tags_PE">
         <item>[PE]|Peru, South America</item>
         <item>[PE-LIM]|Lima, Pacific Ocean*</item>
@@ -375,6 +441,25 @@
         <item>[PE-PUN]|Puno</item>
         <item>[PE-TAC]|Tacna, Pacific Ocean*</item>
         <item>[PE-UCA]|Ucayali</item>
+    </string-array>
+
+    <string-array name="places_tags_PL">
+        <item>[PL]|Poland, Baltic Sea*, Europe</item>
+        <item>[PL-02]|Lower Silesian</item>
+        <item>[PL-06]|Lublin</item>
+        <item>[PL-10]|Łódź</item>
+        <item>[PL-12]|Lesser Poland</item>
+        <item>[PL-14]|Masovian</item>
+        <item>[PL-20]|Podlaskie</item>
+        <item>[PL-30]|Greater Poland</item>
+    </string-array>
+
+    <string-array name="place_tags_PT">
+        <item>[PT]|Portugal, Atlantic Ocean*, Europe</item>
+        <item>[PT-06]|Coimbra</item>
+        <item>[PT-08]|Faro</item>
+        <item>[PT-11]|Lisbon</item>
+        <item>[PT-13]|Porto</item>
     </string-array>
 
     <string-array name="place_tags_RU">

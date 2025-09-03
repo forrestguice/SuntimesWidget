@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -183,7 +184,7 @@ public class AlarmTileBase extends SuntimesTileBase
                 }
                 if (item.note != null) {
                     msg.append("\n");
-                    msg.append(utils.displayStringForTitlePattern(context, item.note, data));
+                    msg.append(DataSubstitutions.displayStringForTitlePattern0(context, item.note, data));
                 }
             }
 

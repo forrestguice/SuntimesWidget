@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/configLabel_places">
+    <Preference
+        android:key="places_manage"
+        android:persistent="false"
+        android:title="@string/configLabel_places_manage"
+        android:icon="?attr/icActionPlace" />
 
-        <Preference
-            android:key="places_manage"
-            android:persistent="false"
-            android:title="@string/configLabel_places_manage"
-            android:icon="?attr/icActionPlace" />
+    <PreferenceCategory
+        android:title="@string/configLabel_location">
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxElapsed"
@@ -33,5 +33,9 @@
             android:defaultValue="@bool/def_getFix_passiveMode" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="getFix_providers"
+        android:title="@string/configLabel_locationproviders" />   <!-- populated at runtime -->
 
 </PreferenceScreen>

@@ -188,6 +188,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
     /**
      * themeViews
      */
+    @Deprecated
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (options == null) {
@@ -899,13 +900,20 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             float x = 0, y = 0;
             double lmtOffsetHours = lmtOffsetHours();
 
+            long dayLength;
+            int nullHour;
+            int nullHour0 = (rising ? 0 : 24);    // outward to edges to reveal day color
+            int nullHour1 = 12;                   // inward to middle to overdraw night color
+
             Path path = null;
             int day = 0;
             while (day < data.length)
             {
                 SuntimesRiseSetData d = data[day].getData(mode.name());
                 event = (rising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
-                hour = (event != null) ? wrapHour(tzHour(event) - lmtOffsetHours) : (rising ? 0 : 24);    // lmt_hour + dst
+                dayLength = d.dayLengthToday();
+                nullHour = (dayLength == SuntimesRiseSetDataset.NONE_NIGHT) ? nullHour1 : nullHour0;
+                hour = (event != null) ? wrapHour(tzHour(event) - lmtOffsetHours) : nullHour;    // lmt_hour + dst
 
                 if (Math.abs(hour - hour_prev) > 12) {   // ignore sudden shifts (polar regions near graph edge)
                     hour = hour_prev;
@@ -1120,11 +1128,12 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             events.add(calculator.getWinterSolsticeForYear(data[0].calendar()));
 
             float h = c.getHeight();
-            float x0 = -1 * (c.getWidth() - (float) daysToBitmapCoords(c, events.get(events.size() - 1).get(Calendar.DAY_OF_YEAR), options));
+            Calendar calendar = events.get(events.size() - 1);
+            float x0 = -1 * (c.getWidth() - (float) daysToBitmapCoords(c, ((calendar != null) ? calendar.get(Calendar.DAY_OF_YEAR) : 1), options));
             for (int i=0; i<events.size(); i++)
             {
                 Calendar event = events.get(i);
-                float x = (float) daysToBitmapCoords(c, event.get(Calendar.DAY_OF_YEAR), options);
+                float x = (float) daysToBitmapCoords(c, ((event != null) ? event.get(Calendar.DAY_OF_YEAR) : 1), options);
                 c.drawLine(x, 0, x, h, p);
                 if (showCrossQuarter) {
                     c.drawLine((x + x0)/2, 0, (x + x0)/2, h, p);
