@@ -339,6 +339,16 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         }, report, contentValues);
     }
 
+    protected static HashMap<String, Object> toHashMap(ContentValues values)
+    {
+        HashMap<String, Object> map = new HashMap<>();
+        Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+        for (Map.Entry<String, Object> entry : valueSet) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+        return map;
+    }
+
     protected static int importColors(Context context, String key, int method, ColorValuesImporter importer, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         int c = 0;
@@ -353,7 +363,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                     if (colorsID != null)
                     {
                         ColorValues v = importer.createColorValues(context);
-                        v.loadColorValues(values);
+                        v.loadColorValues(toHashMap(values));
                         collection.setColors(context, colorsID, v);
                         c++;
                     }

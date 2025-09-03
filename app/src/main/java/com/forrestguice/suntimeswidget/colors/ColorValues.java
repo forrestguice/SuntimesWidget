@@ -19,8 +19,6 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.ContentValues;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
@@ -30,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class ColorValues implements Serializable
 {
@@ -42,7 +41,7 @@ public abstract class ColorValues implements Serializable
     public ColorValues(ColorValues other) {
         loadColorValues(other);
     }
-    public ColorValues(ContentValues values) {
+    public ColorValues(HashMap<String, Object> values) {
         loadColorValues(values);
     }
     public ColorValues(String jsonString) {
@@ -62,15 +61,15 @@ public abstract class ColorValues implements Serializable
         }
     }
 
-    public void loadColorValues(@NonNull ContentValues values)
+    public void loadColorValues(@NonNull HashMap<String, Object> values)
     {
-        setID(values.getAsString(KEY_ID));
-        setLabel(values.getAsString(KEY_LABEL));
+        setID((String) values.get(KEY_ID));
+        setLabel((String) values.get(KEY_LABEL));
         for (String key : getColorKeys())
         {
-            setColor(key, values.getAsInteger(key));
+            setColor(key, (Integer) values.get(key));
             if (values.containsKey(key + SUFFIX_LABEL)) {
-                setLabel(key, values.getAsString(key + SUFFIX_LABEL));
+                setLabel(key, (String) values.get(key + SUFFIX_LABEL));
             }
         }
     }
@@ -96,9 +95,9 @@ public abstract class ColorValues implements Serializable
         }
     }
 
-    protected ContentValues values = new ContentValues();
-    public ContentValues getContentValues() {
-        return new ContentValues(values);
+    protected HashMap<String, Object> values = new HashMap<>();
+    public HashMap<String, Object> getValues() {
+        return new HashMap<String, Object>(values);
     }
 
     public static final String KEY_ID = "colorValuesID";
@@ -106,7 +105,7 @@ public abstract class ColorValues implements Serializable
         values.put(KEY_ID, colorsID);
     }
     public String getID() {
-        return values.getAsString(KEY_ID);
+        return values_getAsString(KEY_ID);
     }
 
     public static final String KEY_LABEL = "colorValuesLabel";
@@ -115,7 +114,7 @@ public abstract class ColorValues implements Serializable
     }
     public String getLabel()
     {
-        String label = values.getAsString(KEY_LABEL);
+        String label = values_getAsString(KEY_LABEL);
         return (label != null) ? label : getID();
     }
 
@@ -124,11 +123,18 @@ public abstract class ColorValues implements Serializable
         values.put(key + SUFFIX_LABEL, label);
     }
     public String getLabel(String key) {
-        String label = values.getAsString(key + SUFFIX_LABEL);
+        String label = values_getAsString(key + SUFFIX_LABEL);
         return (label != null ? label : key);
     }
     public boolean hasLabel(String key) {
         return values.containsKey(key + SUFFIX_LABEL);
+    }
+
+    protected Integer values_getAsInteger(String key) {
+        return (Integer) values.get(key);
+    }
+    protected String values_getAsString(String key) {
+        return (String) values.get(key);
     }
 
     public static final int ROLE_UNKNOWN = 0;
@@ -148,7 +154,7 @@ public abstract class ColorValues implements Serializable
         values.put(key + SUFFIX_ROLE, role);
     }
     public int getRole(String key) {
-        Integer role = values.getAsInteger(key + SUFFIX_ROLE);
+        Integer role = values_getAsInteger(key + SUFFIX_ROLE);
         return (role != null ? role : ROLE_UNKNOWN);
     }
     public boolean hasRole(String key) {
@@ -172,7 +178,7 @@ public abstract class ColorValues implements Serializable
     public int getColor(String key)
     {
         if (values.containsKey(key)) {
-            return values.getAsInteger(key);
+            return values_getAsInteger(key);
         } else return getFallbackColor();
     }
 

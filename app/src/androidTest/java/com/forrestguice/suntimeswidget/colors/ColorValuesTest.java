@@ -27,13 +27,21 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -93,16 +101,16 @@ public class ColorValuesTest
         assertEquals("colors0", colors0.getID());
         TestColorValues.verify_testColorValues(colors0);
 
-        ContentValues contentValues0 = colors0.getContentValues();
+        HashMap<String, Object> contentValues0 = colors0.getValues();
         assertNotNull(contentValues0);
         assertTrue(contentValues0.containsKey("0"));
         assertTrue(contentValues0.containsKey("1"));
         assertTrue(contentValues0.containsKey("2"));
         assertTrue(contentValues0.containsKey("3"));
-        assertEquals(new Integer(Color.MAGENTA), (Integer) contentValues0.getAsInteger("0"));
-        assertEquals(new Integer(Color.RED), (Integer) contentValues0.getAsInteger("1"));
-        assertEquals(new Integer(Color.YELLOW), (Integer) contentValues0.getAsInteger("2"));
-        assertEquals(new Integer(Color.GREEN), (Integer) contentValues0.getAsInteger("3"));
+        assertEquals(new Integer(Color.MAGENTA), (Integer) contentValues0.get("0"));
+        assertEquals(new Integer(Color.RED), (Integer) contentValues0.get("1"));
+        assertEquals(new Integer(Color.YELLOW), (Integer) contentValues0.get("2"));
+        assertEquals(new Integer(Color.GREEN), (Integer) contentValues0.get("3"));
 
         ColorValues colors2 = new TestColorValues();
         colors2.setID("colors2");    // overwritten by loadColorValues
@@ -116,19 +124,35 @@ public class ColorValuesTest
     }
 
     @Test
-    public void test_ColorsValues_Parcelable()
+    public void test_ColorsValues_Serializable()
     {
         ColorValues colors0 = TestColorValues.createTestColorValues();
         colors0.setID("colors0");
         assertEquals("colors0", colors0.getID());
         TestColorValues.verify_testColorValues(colors0);
 
-        Parcel parcel = Parcel.obtain();
-        colors0.writeToParcel(parcel, 0);
-        parcel.setDataPosition(0);
-        ColorValues colors1 = TestColorValues.CREATOR.createFromParcel(parcel);
-        TestColorValues.verify_testColorValues(colors1);
-        assertEquals(colors0.getID(), colors1.getID());
+        String path = "test_colorValues_serializable.txt";
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
+            out.writeObject(colors0);
+            out.flush();
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
+            ColorValues colors1 = (ColorValues) in.readObject();
+            in.close();
+
+            TestColorValues.verify_testColorValues(colors1);
+            assertEquals(colors0.getID(), colors1.getID());
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -150,8 +174,10 @@ public class ColorValuesTest
     /**
      * TestColorValues
      */
-    public static class TestColorValues extends ColorValues
+    public static class TestColorValues extends ColorValues implements Serializable
     {
+        public static final int serialversionUID = 1;
+
         public TestColorValues() {
             super();
         }
@@ -160,16 +186,12 @@ public class ColorValuesTest
             super(other);
         }
 
-        public TestColorValues(ContentValues values) {
+        public TestColorValues(HashMap<String, Object> values) {
             super(values);
         }
 
         public TestColorValues(String json) {
             super(json);
-        }
-
-        protected TestColorValues(Parcel in) {
-            super(in);
         }
 
         @Override
@@ -202,9 +224,9 @@ public class ColorValuesTest
             assertEquals(3, values.colorKeyIndex("3"));
             assertEquals(-1, values.colorKeyIndex("4"));    // no "4"
 
-            ContentValues v = values.getContentValues();
+            HashMap<String, Object> v = values.getValues();
             for (String key : v.keySet()) {
-                Log.d("DEBUG", key + "=" + v.getAsString(key));
+                Log.d("DEBUG", key + "=" + ((String) v.get(key)));
             }
 
             assertEquals(Color.MAGENTA, values.getColor("0"));
@@ -228,7 +250,7 @@ public class ColorValuesTest
             assertTrue(c0.contains(Color.GREEN));
         }
 
-        public static final Creator<TestColorValues> CREATOR = new Creator<TestColorValues>()
+        /*public static final Creator<TestColorValues> CREATOR = new Creator<TestColorValues>()
         {
             public TestColorValues createFromParcel(Parcel in) {
                 return new TestColorValues(in);
@@ -236,7 +258,7 @@ public class ColorValuesTest
             public TestColorValues[] newArray(int size) {
                 return new TestColorValues[size];
             }
-        };
+        };*/
     };
 
 }
