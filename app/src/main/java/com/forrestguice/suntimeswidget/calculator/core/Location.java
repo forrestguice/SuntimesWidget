@@ -260,6 +260,17 @@ public class Location implements Parcelable
         return (feet * (1d / 3.28084d) );
     }
 
+    public static void verifyLatitude(double latitude) throws IllegalArgumentException {
+        if (latitude < -90 || latitude > 90) {
+            throw new IllegalArgumentException("latitude out of range; [-90, 90]: " + latitude);
+        }
+    }
+    public static void verifyLongitude(double longitude) throws IllegalArgumentException {
+        if (longitude < -180 || longitude > 180) {
+            throw new IllegalArgumentException("longitude out of range; [-180, 180]: " + longitude);
+        }
+    }
+
     /**
      * @param in Parcel
      */

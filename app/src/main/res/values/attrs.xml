@@ -186,9 +186,12 @@
     <attr name="icActionVisibilityOn" format="reference" />
     <attr name="icActionVisibilityOff" format="reference" />
 
-    <attr name="icActionGPS" format="reference" />
+    <attr name="icActionGPS" format="reference" />    <!-- TODO: rename these icActionLocation_ -->
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+    <attr name="icActionGPS_satellite" format="reference" />
+    <attr name="icActionGPS_cell" format="reference" />
+    <attr name="icActionGPS_network" format="reference" />
 
     <attr name="icPlaceUser" format="reference" />
     <attr name="icPlaceCity" format="reference" />
@@ -347,6 +350,13 @@
         <attr name="hideFooter" />
         <attr name="hideTitle" />
         <attr name="hideMode" />
+    </declare-styleable>
+
+    <declare-styleable name="LocationProviderStatus">
+        <attr name="icActionAltitude" />
+        <attr name="icActionGPS_cell" />
+        <attr name="icActionGPS_network" />
+        <attr name="icActionGPS_satellite" />
     </declare-styleable>
 
     <item type="id" name="text0"/>
