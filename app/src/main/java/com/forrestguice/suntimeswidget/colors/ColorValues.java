@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.ContentValues;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -37,10 +36,8 @@ public abstract class ColorValues implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    public static final int WHITE = -1;
-
     public abstract String[] getColorKeys();
-    public int getFallbackColor() { return WHITE; }
+    public int getFallbackColor() { return Color.WHITE; }
 
     public ColorValues() {}
     public ColorValues(ColorValues other) {

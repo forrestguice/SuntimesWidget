@@ -23,6 +23,8 @@ import android.content.Context;
 import android.os.StrictMode;
 
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
+import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.android.AndroidLog;
 
@@ -48,8 +50,9 @@ public class SuntimesApplication extends Application
         Log.setShowDebug(BuildConfig.DEBUG);
         Log.d("DEBUG", "SuntimesApplication.init:");
 
-        AndroidSuntimesCalculator.init(context);
         ApplicationStarter.initialize(context, false);
+        AndroidSuntimesCalculator.init(context);
+        Color.init(new AndroidColor());
 
         if (BuildConfig.DEBUG)
         {
