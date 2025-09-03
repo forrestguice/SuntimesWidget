@@ -83,6 +83,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -1162,10 +1163,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
     protected void saveCalendarSettings(Context context) {
-        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, checkbox_showDate.isChecked());
+        CalendarSettings.saveCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, checkbox_showDate.isChecked());
     }
     protected void loadCalendarSettings(Context context) {
-        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE));
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE));
     }
 
     protected void dismissHelpDialog()

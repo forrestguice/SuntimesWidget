@@ -70,7 +70,7 @@ public class AndroidCalendarSettings implements CalendarSettingsInterface
 
     @Override
     public void initDisplayStrings() {
-        CalendarSettings.initDisplayStrings(this);
+        CalendarSettings.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     @Override

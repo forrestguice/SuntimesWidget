@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -2842,7 +2843,7 @@ public class WidgetSettings
         deleteSolarTimeModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
 
-        CalendarSettings.deletePrefs(context, appWidgetId);
+        CalendarSettings.deletePrefs(AndroidCalendarSettings.wrap(context), appWidgetId);
 
         deleteDateModePref(context, appWidgetId);
         deleteDatePref(context, appWidgetId);
@@ -2893,7 +2894,7 @@ public class WidgetSettings
         initDisplayStrings_DateMode(context);
         initDisplayStrings_TimeFormatMode(context);
         initDisplayStrings_RiseSetOrder(context);
-        CalendarSettings.initDisplayStrings(context);
+        CalendarSettings.initDisplayStrings(AndroidResources.wrap(context));
         WidgetActions.initDisplayStrings(context);
         AlarmWidgetSettings.initDisplayStrings(context);
     }

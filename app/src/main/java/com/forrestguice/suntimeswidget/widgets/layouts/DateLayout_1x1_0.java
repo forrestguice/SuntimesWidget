@@ -28,6 +28,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -72,8 +73,8 @@ public class DateLayout_1x1_0 extends DateLayout
         super.updateViews(context, appWidgetId, views, data);
 
         Calendar now = Calendar.getInstance(data.timezone());
-        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
-        String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
+        CalendarMode mode = CalendarSettings.loadCalendarModePref(AndroidCalendarSettings.wrap(context), appWidgetId);
+        String pattern = CalendarSettings.loadCalendarFormatPatternPref(AndroidCalendarSettings.wrap(context), appWidgetId, mode.name());
         if (!CalendarFormat.isValidPattern(pattern)) {
             Log.w(getClass().getSimpleName(), "updateViews: invalid pattern! " + pattern + ", falling back to default..");
             pattern = mode.getDefaultPattern();
