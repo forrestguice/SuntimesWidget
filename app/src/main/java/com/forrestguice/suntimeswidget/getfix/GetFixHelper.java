@@ -89,6 +89,11 @@ public class GetFixHelper implements LocationHelper
     }
     private WeakReference<Fragment> fragmentRef = null;
 
+    public int getMinElapsedTime() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
+        return LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
+    }
+
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
      * Spins up a GetFixTask; allows only one such task to execute at a time.
@@ -104,9 +109,7 @@ public class GetFixHelper implements LocationHelper
                 {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
-
-                    int minElapsed = LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
-                    getFixTask.setMinElapsed(minElapsed);
+                    getFixTask.setMinElapsed(getMinElapsedTime());
 
                     int maxElapsed = LocationHelperSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
                     getFixTask.setMaxElapsed(maxElapsed);
@@ -136,13 +139,13 @@ public class GetFixHelper implements LocationHelper
                     getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(myParent));
 
                 } else {
-                    Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
+                    Log.w("GetFixHelper", "getFix called while location disabled; showing a prompt");
                     showGPSEnabledPrompt();
                 }
                 return true;
 
             } else {
-                Log.w("GetFixHelper", "getFix called without GPS permissions! ignored");
+                Log.w("GetFixHelper", "getFix called without location permissions! ignored");
                 return false;
             }
         } else {
@@ -207,11 +210,12 @@ public class GetFixHelper implements LocationHelper
         if (locationManager != null)
         {
             try {
-                android.location.Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                t_locationProvider = LocationManager.PASSIVE_PROVIDER;
+                android.location.Location location = locationManager.getLastKnownLocation(t_locationProvider);
                 if (location == null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.NETWORK_PROVIDER);
                     if (location == null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.GPS_PROVIDER);
                     }
                 }
                 return location;
@@ -225,6 +229,7 @@ public class GetFixHelper implements LocationHelper
             return null;
         }
     }
+    protected static String t_locationProvider;
 
     /**
      * Cancel acquiring a location fix (cancels running task(s)).
@@ -238,16 +243,15 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
-    public boolean hasLocationPermission(Activity activity)
-    {
-        int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
-        return (permission == PackageManager.PERMISSION_GRANTED);
+    public boolean hasLocationPermission(Activity activity) {
+        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
     /**
      * @param activity
      * @param requestID used to identify the permission request
-     * @return true already has gps permissions, false has no permissions (triggers a request)
+     * @return true already has location permissions, false has no permissions (triggers a request)
      */
     public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
     {
@@ -256,7 +260,8 @@ public class GetFixHelper implements LocationHelper
 
         if (!hasPermission)
         {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION))
             {
                 String permissionMessage = activity.getString(R.string.privacy_permission_location);
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -277,7 +282,7 @@ public class GetFixHelper implements LocationHelper
                 builder.show();
 
             } else {
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+                ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
             }
         }
         return hasPermission;
@@ -289,10 +294,10 @@ public class GetFixHelper implements LocationHelper
         } else requestPermissions(myParent, requestID);
     }
     protected void requestPermissions(Activity activity, final int requestID) {
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+        ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
     }
     protected void requestPermissions(Fragment fragment, final int requestID) {
-        fragment.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestID);
+        fragment.requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
     }
 
     public boolean isGettingFix()
@@ -379,7 +384,7 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         switch (requestCode)
         {
@@ -430,7 +435,7 @@ public class GetFixHelper implements LocationHelper
 
         if (wasGettingFix)
         {
-            Log.w("DEBUG", "GetFixHelper was previously getting fix... restarting");
+            Log.w(GetFixTask.TAG, "GetFixHelper was previously getting fix... restarting");
             getFix();
         }
     }
@@ -484,7 +489,7 @@ public class GetFixHelper implements LocationHelper
     }
 
     /**
-     * Enable GPS alert dialog fragment; "Enable GPS? yes, no"
+     * Enable location alert dialog fragment; "Enable Location? yes, no"
      */
     public static class EnableGPSDialog extends DialogFragment
     {

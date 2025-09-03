@@ -27,11 +27,6 @@ import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 

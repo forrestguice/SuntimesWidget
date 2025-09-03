@@ -260,10 +260,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Метрическая система мер (СИ)</string>
     <string name="lengthUnits_imperial">Английская система мер</string>
-    <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
-        <item>@string/lengthUnits_metric</item>
-        <item>@string/lengthUnits_imperial</item>
-    </string-array>
 
     <string name="units_feet">футы</string>
     <string name="units_feet_short">ф.</string>

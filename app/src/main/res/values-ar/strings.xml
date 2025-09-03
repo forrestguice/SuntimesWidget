@@ -272,10 +272,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">متري</string>
     <string name="lengthUnits_imperial">إنگليزي</string>
-    <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
-        <item>@string/lengthUnits_metric</item>
-        <item>@string/lengthUnits_imperial</item>
-    </string-array>
 
     <string name="units_feet">قدم</string>
     <string name="units_feet_short">قدم</string>

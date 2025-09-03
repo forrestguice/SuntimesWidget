@@ -1,0 +1,6 @@
+- adds labels for "Polar Night", "Midnight Sun", "Midnight Twilight", and "White Night".
+- adds world places; ~79 places; European cities.
+- fixes app crash when using custom events with offsets (#879).
+- fixes bug where "lightmap sun icon is cropped at solar midnight" (#877).
+- fixes bug in sunlight graph where "days that experience polar night are drawn incorrectly" (#878).
+- fixes bug where "%eT@sn displays the wrong time" (#874).
