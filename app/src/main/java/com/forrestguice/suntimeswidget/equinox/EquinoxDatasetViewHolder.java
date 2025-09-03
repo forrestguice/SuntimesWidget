@@ -253,6 +253,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    @Deprecated
     public void applyTheme(SuntimesTheme theme, EquinoxViewOptions options)
     {
         if (theme != null)

@@ -29,7 +29,7 @@
         <item>places_AS_JP, place_label_AS_JP</item>          <!-- Asia; Japan -->
         <item>places_AS_PK, place_label_AS_PK</item>          <!-- Asia; Pakistan -->
         <item>places_AS_SA, place_label_AS_SA</item>          <!-- Asia; Saudi Arabia -->
-        <item>places_AS_RU, place_label_AS_EU</item>          <!-- Asia; Russia -->
+        <item>places_AS_RU, place_label_AS_RU</item>          <!-- Asia; Russia -->
         <item>places_AS_VN, place_label_AS_VN</item>          <!-- Asia; Vietnam -->
     </string-array>
     <string-array name="place_group_EU">
@@ -123,7 +123,7 @@
         <item>"Nairobi", -1.3047, 36.7073, 1860, [capital][KE]</item>       <!-- Kenya -->
         <item>"Niamey", 13.5127, 2.0489, 192, [capital][NE]</item>          <!-- Niger -->
         <item>"Nouakchott", 18.07932, -15.96449, 7, [capital][MR]</item>    <!-- Mauritania -->
-        <item>"Tripoli, Libya", 32.89500, 13.18431, 81, [capital][LY]</item>  <!-- Libya -->
+        <item>\"Tripoli, Libya\", 32.89500, 13.18431, 81, [capital][LY]</item>  <!-- Libya -->
         <item>"Tunis", 36.82443, 10.17103, 0, [capital][TN]</item>          <!-- Tunisia -->
         <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
     </string-array>
@@ -285,7 +285,7 @@
         <item>"Frankfurt", 50.10909, 8.69103, 110, [DE-HE]</item>           <!-- Hesse -->
         <item>"Hamburg", 53.54684, 9.97856, 10, [capital][DE-HH]</item>     <!-- Hamburg -->
         <item>"Hanover", 53.54926, 9.97125, 10, [capital][DE-NI]</item>     <!-- Lower Saxony -->
-        <item>"Leipzig", 51.3423926, 12.3821, [DE-SN]</item>                <!-- Saxony -->
+        <item>"Leipzig", 51.3423926, 12.3821, 123, [DE-SN]</item>           <!-- Saxony -->
         <item>"Munich", 48.14183, 11.56438, 520, [capital][DE-BY]</item>    <!-- Bavaria -->
         <item>"Nuremberg", 49.45092, 11.08949, 300, [DE-BY]</item>          <!-- Bavaria -->
         <item>"Stuttgart", 48.77856, 9.17955, 245, [capital][DE-BW]</item>  <!-- Baden-Württemberg -->
@@ -398,7 +398,7 @@
         <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT-11]</item>
         <item>"Porto", 41.1579, -8.62913, 100, [PT-13]</item>
         <item>"Coimbra", 40.2057, -8.42131, 10, [PT-06]</item>
-        <item>\"Faro, Portugal\", 37.02148, -7.93097, [PT-08]</item>
+        <item>\"Faro, Portugal\", 37.02148, -7.93097, 10, [PT-08]</item>
     </string-array>
     <string-array name="places_EU_RU">    <!-- Russia -->
         <item>"Grozny", 43.3125, 45.698611, 130, [capital][RU]</item>
@@ -635,7 +635,7 @@
         <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0, [capital][AW]</item>
         <item>"Panama City", 9.0831, -79.5924, 98, [capital][PA]</item>
         <item>"Paramaribo", 5.84737, -55.16054, 0, [capital][SR]</item>
-        <item>"San José, Costa Rica", 9.9356, -84.1483, 1017, [capital][CR]</item>
+        <item>\"San José, Costa Rica\", 9.9356, -84.1483, 1017, [capital][CR]</item>
         <item>"San Salvador", 13.7013,-89.22475, 1019, [capital][SV-SS]</item>
         <item>"Tegucigalpa", 14.09372, -87.2016, 990, [capital][HN-FM]</item>
         <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0, [capital][CW]</item>
@@ -648,7 +648,7 @@
     <string-array name="places_SA_CO">    <!-- Colombia -->
         <item>"Medellín", 6.23913, -75.58993, 1495, [capital][CO-ANT]</item>                  <!-- Antioquia -->
         <item>"Barranquilla", 11.01386, -74.81382, 20, [capital][CO-ATL]</item>               <!-- Atlántico -->
-        <item>\"Cartagena, Colombia\", 3.43845, -76.52295, 0, [capital][CO-BOL]</item>        <!-- Bolívar -->
+        <item>\"Cartagena, Colombia\", 10.38671, -75.52931, 0, [capital][CO-BOL]</item>       <!-- Bolívar -->
         <item>"Bogotá", 4.71111, -74.07222, 2640, [capital][CO-DC]</item>                     <!-- Capital District -->
         <item>"Montería", 8.7439, -75.87742, 20, [capital][CO-COR]</item>                     <!-- Córdoba -->
         <item>"Santa Marta", 11.24255, -74.21555, 15, [capital][CO-MAG]</item>                <!-- Magdalena -->
@@ -657,7 +657,7 @@
         <item>"Cúcuta", 7.88779, -72.50756, 320, [capital][CO-NSA]</item>                     <!-- Norte de Santander -->
         <item>"Bucaramanga", 7.1251, -73.11909, 960, [capital][CO-SAN]</item>                 <!-- Santander -->
         <item>"Ibagué", 4.43284, -75.22758, 1285, [capital][CO-TOL]</item>                    <!-- Tolima -->
-        <item>"Santiago de Cali", 3.43845, -76.52295, 1020, [capital][CO-VAC]</item>          <!-- Valle del Cauca -->
+        <item>"Santiago de Cali", 3.43153,-76.54245, 1020, [capital][CO-VAC]</item>          <!-- Valle del Cauca -->
     </string-array>
     <string-array name="places_SA_BO">    <!-- Bolivia -->
         <item>\"Trinidad, Beni\", -14.8349, -64.90411, 130, [capital][BO-B]</item>           <!-- Beni -->
@@ -711,7 +711,7 @@
         <item>\"Formosa, Argentina\", -26.18554, -58.20302, 55, [capital][AR-P]</item>        <!-- Formosa -->
         <item>\"San Salvador de Jujuy\", -24.18285, -65.3147, 1260, [capital][AR-Y]</item>    <!-- Jujuy -->
         <item>\"Santa Rosa, La Pampa\", -36.62039, -64.29061, 175, [capital][AR-L]</item>     <!-- La Pampa -->
-        <item>\"La Rioja, Argentina\", -29.41563, -66.85977, [capital][AR-F]</item>           <!-- La Rioja -->
+        <item>\"La Rioja, Argentina\", -29.41563, -66.85977, 515, [capital][AR-F]</item>      <!-- La Rioja -->
         <item>\"Mendoza, Argentina\", -32.88984, -68.84462, 745, [capital][AR-M]</item>       <!-- Mendoza -->
         <item>\"Posadas, Misiones\", -27.36893, -55.89768, 120, [capital][AR-N]</item>        <!-- Misiones -->
         <item>\"Neuquén\", -38.95244, -68.05423, 270, [capital][AR-Q]</item>                  <!-- Neuquén -->
@@ -750,7 +750,7 @@
         <item>"Cusco", -13.53171, -71.96829, 3400, [capital][PE-CUS]</item>             <!-- Cusco -->
         <item>"Huancayo", -12.06811, -75.21007, 3260, [capital][PE-JUN]</item>          <!-- Huancayo -->
         <item>\"Ica, Peru\", -14.06406, -75.72915, 405, [capital][PE-ICA]</item>        <!-- Ica -->
-        <item>"Trujillo, Peru", -8.11184, -79.02877, 35, [capital][PE-LAL]</item>       <!-- La Libertad -->
+        <item>\"Trujillo, Peru\", -8.11184, -79.02877, 35, [capital][PE-LAL]</item>     <!-- La Libertad -->
         <item>"Chiclayo", -6.77155, -79.84794, 25, [capital][PE-LAM]</item>             <!-- Lambayeque -->
         <item>"Iquitos", -3.74931, -73.24456, 100, [capital][PE-LOR]</item>             <!-- Loreto -->
         <item>"Piura", -5.17472, -80.66198, 55, [capital][PE-PIU]</item>                <!-- Piura -->

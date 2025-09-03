@@ -168,6 +168,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    @Deprecated
     protected void themeViews(Context context, @NonNull SuntimesTheme theme, EquinoxViewOptions options)
     {
         options.labelColor = options.textColor = theme.getTextColor();

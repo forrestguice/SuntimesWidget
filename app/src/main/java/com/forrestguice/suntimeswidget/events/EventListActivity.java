@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,14 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED = EventListFragment.EXTRA_SELECTED;
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
-    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;
+
+    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;    // supply a Location (parcelable) or ...
+    public static final String EXTRA_LOCATION_LABEL = "location_label";                  // provide latitude, longitude, and altitude separately
+    public static final String EXTRA_LOCATION_LATITUDE = "location_latitude";
+    public static final String EXTRA_LOCATION_LONGITUDE = "location_longitude";
+    public static final String EXTRA_LOCATION_ALTITUDE = "location_altitude";
+
+    public static final String EXTRA_TYPEFILTER = EventListFragment.EXTRA_TYPEFILTER;
 
     protected EventListFragment list;
 
@@ -63,6 +71,7 @@ public class EventListActivity extends AppCompatActivity
         super.attachBaseContext(context);
     }
 
+    @SuppressWarnings("RedundantCast")
     @Override
     public void onCreate(Bundle savedState)
     {
@@ -78,10 +87,29 @@ public class EventListActivity extends AppCompatActivity
         list = new EventListFragment();
         list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
         list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
+        list.setTypeFilter(intent.getStringArrayExtra(EXTRA_TYPEFILTER));
         list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
 
-        Location location = intent.getParcelableExtra(EXTRA_LOCATION);
-        list.setLocation(location);
+        if (intent.hasExtra(EXTRA_LOCATION))
+        {
+            Location location = intent.getParcelableExtra(EXTRA_LOCATION);
+            list.setLocation(location);
+
+        } else if (intent.hasExtra(EXTRA_LOCATION_LATITUDE) && intent.hasExtra(EXTRA_LOCATION_LONGITUDE)) {
+            try {
+                String label = intent.getStringExtra(EXTRA_LOCATION_LABEL);
+                double latitude = intent.getDoubleExtra(EXTRA_LOCATION_LATITUDE, 0);
+                double longitude = intent.getDoubleExtra(EXTRA_LOCATION_LONGITUDE, 0);
+                double altitude = intent.getDoubleExtra(EXTRA_LOCATION_ALTITUDE, 0);
+
+                Location.verifyLatitude(latitude);
+                Location.verifyLongitude(longitude);
+                list.setLocation(new Location(label, "" + latitude, "" + longitude, "" + altitude));
+
+            } catch (Exception e) {
+                Log.w("EventListActivity", "Ignoring invalid EXTRA_LOCATION_ values: " + e);
+            }
+        }
 
         FragmentManager fragments = getSupportFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
@@ -105,7 +133,7 @@ public class EventListActivity extends AppCompatActivity
         list.setFragmentListener(listFragmentListener);
     }
 
-    private EventListFragment.FragmentListener listFragmentListener = new EventListFragment.FragmentListener()
+    private final EventListFragment.FragmentListener listFragmentListener = new EventListFragment.FragmentListener()
     {
         @Override
         public void onItemPicked(String eventID, String eventUri) {
@@ -141,15 +169,11 @@ public class EventListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")

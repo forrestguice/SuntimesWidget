@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="horizontal">
 
@@ -39,12 +39,13 @@
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 style="@style/ActionButton"
-                android:src="?attr/icActionNew" />
+                android:src="?attr/icActionNew"
+                android:contentDescription="@string/configAction_addTime_days" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="days" />
+                android:text="@string/configAction_addTime_days" />
 
         </LinearLayout>
 
@@ -79,12 +80,13 @@
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 style="@style/ActionButton"
-                android:src="?attr/icActionNew" />
+                android:src="?attr/icActionNew"
+                android:contentDescription="@string/configAction_addTime_hours" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="hours" />
+                android:text="@string/configAction_addTime_hours" />
 
         </LinearLayout>
 
@@ -119,12 +121,13 @@
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 style="@style/ActionButton"
-                android:src="?attr/icActionNew" />
+                android:src="?attr/icActionNew"
+                android:contentDescription="@string/configAction_addTime_minutes" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="minutes" />
+                android:text="@string/configAction_addTime_minutes" />
 
         </LinearLayout>
 
@@ -160,12 +163,13 @@
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 style="@style/ActionButton"
-                android:src="?attr/icActionNew" />
+                android:src="?attr/icActionNew"
+                android:contentDescription="@string/configAction_addTime_seconds" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="seconds" />
+                android:text="@string/configAction_addTime_seconds" />
 
         </LinearLayout>
 

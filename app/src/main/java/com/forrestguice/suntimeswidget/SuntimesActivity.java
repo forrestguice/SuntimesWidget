@@ -114,9 +114,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
@@ -159,6 +157,8 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CONFIG_LOCATION = "suntimes.action.CONFIG_LOCATION";
     public static final String ACTION_CONFIG_TIMEZONE = "suntimes.action.TIMEZONE";
     public static final String ACTION_CONFIG_DATE = "suntimes.action.CONFIG_DATE";
+
+    public static final String EXTRA_APPTHEME = "apptheme";   // DEBUG only
 
     public static final String ACTION_WIDGETS_UPDATE_ALL = "suntimes.action.widgets.UPDATE_ALL";
 
@@ -203,7 +203,6 @@ public class SuntimesActivity extends AppCompatActivity
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
-    private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
     private SuntimesNavigation navigation;
 
@@ -286,7 +285,6 @@ public class SuntimesActivity extends AppCompatActivity
         initLocale(this);  // must follow super.onCreate or locale is reverted
         setContentView(R.layout.layout_main);
         initViews(context);
-        themeViews(context);
 
         initWarnings(context, savedState);
 
@@ -445,14 +443,15 @@ public class SuntimesActivity extends AppCompatActivity
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        appThemeResID = AppSettings.setTheme(this, appTheme);
-
-        String themeName = AppSettings.getThemeOverride(this, appTheme);
-        if (themeName != null && WidgetThemes.hasValue(themeName))
+        if (BuildConfig.DEBUG)
         {
-            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+            Intent intent = getIntent();
+            if (intent != null && intent.hasExtra(EXTRA_APPTHEME)) {
+                appTheme = intent.getStringExtra(EXTRA_APPTHEME);
+                Log.w("DEBUG", "hasExtra, overriding appTheme: " + appTheme);
+            }
         }
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.text_disabledColor };
         TypedArray a = obtainStyledAttributes(attrs);
@@ -574,7 +573,6 @@ public class SuntimesActivity extends AppCompatActivity
         LightGraphDialog lightGraphDialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
         if (lightGraphDialog != null)
         {
-            lightGraphDialog.themeViews(this, appThemeOverride);
             lightGraphDialog.setData(context, dataset);
             lightGraphDialog.setDialogListener(lightGraphDialogListener);
             lightGraphDialog.updateViews(context);
@@ -584,7 +582,6 @@ public class SuntimesActivity extends AppCompatActivity
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
-            lightMapDialog.themeViews(this, appThemeOverride);
             lightMapDialog.setData(context, dataset);
             lightMapDialog.setDialogListener(lightMapListener);
             lightMapDialog.updateViews();
@@ -594,7 +591,6 @@ public class SuntimesActivity extends AppCompatActivity
         WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
-            worldMapDialog.themeViews(this, appThemeOverride);
             worldMapDialog.setData(dataset);
             worldMapDialog.setDialogListener(worldMapListener);
             worldMapDialog.updateViews();
@@ -604,7 +600,6 @@ public class SuntimesActivity extends AppCompatActivity
         EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
-            equinoxDialog.themeViews(this, appThemeOverride);
             equinoxDialog.setDialogListener(equinoxDialogListener);
             equinoxDialog.updateViews(this);
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
@@ -613,7 +608,6 @@ public class SuntimesActivity extends AppCompatActivity
         MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
-            moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
             moonDialog.setDialogListener(moonDialogListener);
             moonDialog.updateViews();
@@ -931,6 +925,7 @@ public class SuntimesActivity extends AppCompatActivity
      * Override the appearance of views if appThemeOverride is defined.
      * @param context Context
      */
+    /*@Deprecated
     protected void themeViews(Context context)
     {
         if (appThemeOverride != null)
@@ -983,7 +978,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_adapter.setThemeOverride(appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
         }
-    }
+    }*/
 
     /**
      * initialize ui/views
@@ -1108,7 +1103,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        GetFixUI getFixUI = new GetFixUI()
         {
             private MenuItem refreshItem = null;
 
@@ -1175,7 +1170,15 @@ public class SuntimesActivity extends AppCompatActivity
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
                 }
             }
-        });
+        };
+
+        getFixHelper = new GetFixHelper(this, getFixUI)
+        {
+            @Override
+            public int getMinElapsedTime() {
+                return 1000;
+            }
+        };
     }
 
     /**
@@ -1370,7 +1373,6 @@ public class SuntimesActivity extends AppCompatActivity
             notes.setColors(this, colors);
         }
 
-        notes.themeViews(this, appThemeOverride);
         notes.init(this, dataset, dataset_moon);
         notes.setOnChangedListener(new NoteChangedListener()
         {
@@ -2332,7 +2334,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected LightGraphDialog showLightGraphDialog()
     {
         final LightGraphDialog dialog = new LightGraphDialog();
-        dialog.themeViews(this, appThemeOverride);
         dialog.setDialogListener(lightGraphDialogListener);
 
         if (dataset != null) {
@@ -2391,7 +2392,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected LightMapDialog showLightMapDialog()
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
-        lightMapDialog.themeViews(this, appThemeOverride);
         if (dataset != null) {
             lightMapDialog.setData(SuntimesActivity.this, dataset);
         } else {
@@ -2447,7 +2447,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected WorldMapDialog showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
-        worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.setDialogListener(worldMapListener);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
@@ -2503,7 +2502,6 @@ public class SuntimesActivity extends AppCompatActivity
         if (!getResources().getBoolean(R.bool.is_watch)) {
             updateEquinoxDialogColumnWidth(equinoxDialog);
         }
-        equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
@@ -2581,7 +2579,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected MoonDialog showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
-        moonDialog.themeViews(this, appThemeOverride);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
         SuntimesMoonData d = (data != null ? data.second : null);
         moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
