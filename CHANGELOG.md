@@ -1,7 +1,8 @@
 ### ~
 
-### v0.16.10 (2025-09-01)
-* adds "Boot Completed (Delay)" to alarm settings; adds intentional delay when rescheduling alarms after reboot.
+### v0.16.10 (2025-09-03)
+* adds a crash report notification that displays the stacktrace when the application crashes.
+* adds "Boot Completed (Delay)" to alarm settings; an intentional delay when rescheduling alarms after reboot.
 * fixes "app crash after phone restart" (#894).
 * fixes "app crash in the Sun Dialog when rotating the device".
 * fixes bug where custom event alarm times are truncated to the minute.

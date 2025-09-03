@@ -1,1 +1,2 @@
+- adds crash report notification.
 - updates translation to Italian.
