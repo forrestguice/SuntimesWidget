@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.colors.android;
 
 import android.graphics.Color;
 
-import com.forrestguice.suntimeswidget.colors.ColorInterface;
+import com.forrestguice.colors.ColorInterface;
 
 public class AndroidColor implements ColorInterface
 {
