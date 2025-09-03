@@ -22,19 +22,21 @@ package com.forrestguice.suntimeswidget.graph.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * ColorValues
  */
-public class LineGraphColorValues extends ResourceColorValues implements Parcelable
+public class LineGraphColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_GRAPH_BG = AppColorKeys.COLOR_GRAPH_BG;
 
     public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
@@ -166,9 +168,9 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     public LineGraphColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    private LineGraphColorValues(Parcel in) {
+    /*private LineGraphColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public LineGraphColorValues() {
         super();
     }
@@ -182,7 +184,7 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
         super(jsonString);
     }
 
-    public static final Creator<LineGraphColorValues> CREATOR = new Creator<LineGraphColorValues>()
+    /*public static final Creator<LineGraphColorValues> CREATOR = new Creator<LineGraphColorValues>()
     {
         public LineGraphColorValues createFromParcel(Parcel in) {
             return new LineGraphColorValues(in);
@@ -190,7 +192,7 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
         public LineGraphColorValues[] newArray(int size) {
             return new LineGraphColorValues[size];
         }
-    };
+    };*/
 
     public static LineGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new LineGraphColorValues(new LineGraphColorValues().getDefaultValues(context, darkTheme));

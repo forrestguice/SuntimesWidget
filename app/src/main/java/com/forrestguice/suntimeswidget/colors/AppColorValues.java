@@ -19,11 +19,9 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
@@ -34,6 +32,7 @@ import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -43,8 +42,10 @@ import java.util.function.ToIntFunction;
 /**
  * ColorValues
  */
-public class AppColorValues extends ResourceColorValues
+public class AppColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_APPCOLORS = "appcolors";
 
     private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[] {
@@ -200,9 +201,9 @@ public class AppColorValues extends ResourceColorValues
     public AppColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    protected AppColorValues(Parcel in) {
+    /*protected AppColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public AppColorValues() {
         super();
     }
@@ -213,7 +214,7 @@ public class AppColorValues extends ResourceColorValues
         super(jsonString);
     }
 
-    public static final Creator<AppColorValues> CREATOR = new Creator<AppColorValues>()
+    /*public static final Creator<AppColorValues> CREATOR = new Creator<AppColorValues>()
     {
         public AppColorValues createFromParcel(Parcel in) {
             return new AppColorValues(in);
@@ -221,7 +222,7 @@ public class AppColorValues extends ResourceColorValues
         public AppColorValues[] newArray(int size) {
             return new AppColorValues[size];
         }
-    };
+    };*/
 
     public static AppColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new AppColorValues(new AppColorValues().getDefaultValues(context, darkTheme));

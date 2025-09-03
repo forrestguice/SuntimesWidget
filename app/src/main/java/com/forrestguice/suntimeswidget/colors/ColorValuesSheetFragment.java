@@ -28,14 +28,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.util.Locale;
@@ -171,13 +169,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
-        colorCollection = savedState.getParcelable("colorCollection");
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable("colorCollection");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("mode", mode);
-        outState.putParcelable("colorCollection", colorCollection);
+        outState.putSerializable("colorCollection", colorCollection);
         super.onSaveInstanceState(outState);
     }
 

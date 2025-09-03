@@ -20,23 +20,25 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * ColorValuesCollection
  */
-public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
+public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<ColorValues> implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String PREFS_BRIGHTALARM_COLORS = "prefs_brightalarm";
 
     private static final String PREFS_PREFIX = "app_";
@@ -48,9 +50,9 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
     public BrightAlarmColorValuesCollection(Context context) {
         super(context);
     }
-    protected BrightAlarmColorValuesCollection(Parcel in) {
+    /*protected BrightAlarmColorValuesCollection(Parcel in) {
         super(in);
-    }
+    }*/
 
     @Override
     @NonNull
@@ -80,7 +82,7 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
         return new BrightAlarmColorValues(context,  true);
     }
 
-    public static final Creator<BrightAlarmColorValuesCollection> CREATOR = new Creator<BrightAlarmColorValuesCollection>()
+    /*public static final Creator<BrightAlarmColorValuesCollection> CREATOR = new Creator<BrightAlarmColorValuesCollection>()
     {
         public BrightAlarmColorValuesCollection createFromParcel(Parcel in) {
             return new BrightAlarmColorValuesCollection<ColorValues>(in);
@@ -88,7 +90,7 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
         public BrightAlarmColorValuesCollection<ColorValues>[] newArray(int size) {
             return new BrightAlarmColorValuesCollection[size];
         }
-    };
+    };*/
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -22,19 +22,21 @@ package com.forrestguice.suntimeswidget.moon.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * ColorValues
  */
-public class MoonRiseSetColorValues extends ResourceColorValues implements Parcelable
+public class MoonRiseSetColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_RISING_MOON = AppColorKeys.COLOR_RISING_MOON;
     public static final String COLOR_RISING_MOON_TEXT = AppColorKeys.COLOR_RISING_MOON_TEXT;
 
@@ -90,9 +92,9 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
     public MoonRiseSetColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    private MoonRiseSetColorValues(Parcel in) {
+    /*private MoonRiseSetColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public MoonRiseSetColorValues() {
         super();
     }
@@ -106,7 +108,7 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
         super(jsonString);
     }
 
-    public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
+    /*public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
     {
         public MoonRiseSetColorValues createFromParcel(Parcel in) {
             return new MoonRiseSetColorValues(in);
@@ -114,7 +116,7 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
         public MoonRiseSetColorValues[] newArray(int size) {
             return new MoonRiseSetColorValues[size];
         }
-    };
+    };*/
 
     public static MoonRiseSetColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new MoonRiseSetColorValues(new MoonRiseSetColorValues().getDefaultValues(context, darkTheme));

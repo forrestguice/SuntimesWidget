@@ -22,19 +22,21 @@ package com.forrestguice.suntimeswidget.graph.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * ColorValues
  */
-public class LightMapColorValues extends ResourceColorValues implements Parcelable
+public class LightMapColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_DAY = AppColorKeys.COLOR_DAY;
     public static final String COLOR_NIGHT = AppColorKeys.COLOR_NIGHT;
     public static final String COLOR_CIVIL = AppColorKeys.COLOR_CIVIL;
@@ -109,9 +111,9 @@ public class LightMapColorValues extends ResourceColorValues implements Parcelab
     public LightMapColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    private LightMapColorValues(Parcel in) {
+    /*private LightMapColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public LightMapColorValues() {
         super();
     }
@@ -125,7 +127,7 @@ public class LightMapColorValues extends ResourceColorValues implements Parcelab
         super(jsonString);
     }
 
-    public static final Creator<LightMapColorValues> CREATOR = new Creator<LightMapColorValues>()
+    /*public static final Creator<LightMapColorValues> CREATOR = new Creator<LightMapColorValues>()
     {
         public LightMapColorValues createFromParcel(Parcel in) {
             return new LightMapColorValues(in);
@@ -133,7 +135,7 @@ public class LightMapColorValues extends ResourceColorValues implements Parcelab
         public LightMapColorValues[] newArray(int size) {
             return new LightMapColorValues[size];
         }
-    };
+    };*/
 
     public static LightMapColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new LightMapColorValues(new LightMapColorValues().getDefaultValues(context, darkTheme));

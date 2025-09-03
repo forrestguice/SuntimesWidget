@@ -21,17 +21,20 @@ package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * AlarmColorValues
  */
-public class AlarmColorValues extends ResourceColorValues
+public class AlarmColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_ALARMCOLORS = "alarmcolors";
 
     public static final String COLOR_SOUNDING_PULSE_START = "color_sounding_pulse_start";
@@ -140,9 +143,9 @@ public class AlarmColorValues extends ResourceColorValues
     public AlarmColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    protected AlarmColorValues(Parcel in) {
+    /*protected AlarmColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public AlarmColorValues() {
         super();
     }
@@ -155,7 +158,7 @@ public class AlarmColorValues extends ResourceColorValues
         super(jsonString);
     }
 
-    public static final Creator<AlarmColorValues> CREATOR = new Creator<AlarmColorValues>()
+    /*public static final Creator<AlarmColorValues> CREATOR = new Creator<AlarmColorValues>()
     {
         public AlarmColorValues createFromParcel(Parcel in) {
             return new AlarmColorValues(in);
@@ -163,7 +166,7 @@ public class AlarmColorValues extends ResourceColorValues
         public AlarmColorValues[] newArray(int size) {
             return new AlarmColorValues[size];
         }
-    };
+    };*/
 
     public static AlarmColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new AlarmColorValues(new AlarmColorValues().getDefaultValues(context, darkTheme));

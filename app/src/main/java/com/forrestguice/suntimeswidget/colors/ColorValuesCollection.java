@@ -21,22 +21,22 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
+import android.preference.PreferenceManager;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class ColorValuesCollection<T extends ColorValues> implements Parcelable
+public abstract class ColorValuesCollection<T extends ColorValues> implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String KEY_COLLECTION = "colorValuesCollection";
     public static final String KEY_SELECTED = "selectedColors";
 
@@ -44,7 +44,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public ColorValuesCollection(Context context) {
         loadCollection(getCollectionSharedPreferences(context));
     }
-    protected ColorValuesCollection(Parcel in)
+    /*protected ColorValuesCollection(Parcel in)
     {
         collection = new TreeSet<>();
         List<String> items = new ArrayList<>();
@@ -62,7 +62,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     @Override
     public int describeContents(){
         return 0;
-    }
+    }*/
 
     protected Set<String> collection = new TreeSet<String>();
     public String[] getCollection() {

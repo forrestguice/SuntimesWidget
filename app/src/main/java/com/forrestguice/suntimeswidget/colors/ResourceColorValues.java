@@ -22,7 +22,6 @@ package com.forrestguice.suntimeswidget.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.os.Parcel;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -33,6 +32,8 @@ import com.forrestguice.suntimeswidget.R;
  */
 public abstract class ResourceColorValues extends ColorValues
 {
+    private static final long serialVersionUID = 1L;
+
     public abstract String[] getColorKeys();
     public abstract int[] getColorAttrs();
     public abstract int[] getColorLabelsRes();
@@ -47,9 +48,9 @@ public abstract class ResourceColorValues extends ColorValues
     public ResourceColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    protected ResourceColorValues(Parcel in) {
+    /*protected ResourceColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public ResourceColorValues()
     {
         super();

@@ -22,19 +22,20 @@ package com.forrestguice.suntimeswidget.graph.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * ColorValues
  */
-public class LightGraphColorValues extends ResourceColorValues implements Parcelable
+public class LightGraphColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     public static final String COLOR_DAY = AppColorKeys.COLOR_DAY;
     public static final String COLOR_NIGHT = AppColorKeys.COLOR_NIGHT;
@@ -160,9 +161,9 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
     public LightGraphColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    private LightGraphColorValues(Parcel in) {
+    /*private LightGraphColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public LightGraphColorValues() {
         super();
     }
@@ -176,7 +177,7 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
         super(jsonString);
     }
 
-    public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
+    /*public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
     {
         public LightGraphColorValues createFromParcel(Parcel in) {
             return new LightGraphColorValues(in);
@@ -184,7 +185,7 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
         public LightGraphColorValues[] newArray(int size) {
             return new LightGraphColorValues[size];
         }
-    };
+    };*/
 
     public static LightGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new LightGraphColorValues(new LightGraphColorValues().getDefaultValues(context, darkTheme));

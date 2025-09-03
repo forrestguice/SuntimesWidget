@@ -22,21 +22,25 @@ package com.forrestguice.suntimeswidget.colors;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class ColorValues implements Parcelable
+public abstract class ColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
+    public static final int WHITE = -1;
+
     public abstract String[] getColorKeys();
-    public int getFallbackColor() { return Color.WHITE; }
+    public int getFallbackColor() { return WHITE; }
 
     public ColorValues() {}
     public ColorValues(ColorValues other) {
@@ -45,9 +49,9 @@ public abstract class ColorValues implements Parcelable
     public ColorValues(ContentValues values) {
         loadColorValues(values);
     }
-    protected ColorValues(Parcel in) {
-        loadColorValues(in);
-    }
+    //protected ColorValues(Parcel in) {
+    //    loadColorValues(in);
+    //}
     public ColorValues(SharedPreferences prefs, String prefix) {
         loadColorValues(prefs, prefix);
     }
@@ -55,7 +59,7 @@ public abstract class ColorValues implements Parcelable
         loadColorValues(jsonString);
     }
 
-    public void loadColorValues(@NonNull Parcel in)
+    /*public void loadColorValues(@NonNull Parcel in)
     {
         setID(in.readString());
         setLabel(in.readString());
@@ -75,7 +79,7 @@ public abstract class ColorValues implements Parcelable
             dest.writeInt(values.getAsInteger(key));
             dest.writeString(values.getAsString(key + SUFFIX_LABEL));
         }
-    }
+    }*/
 
     public void loadColorValues(@NonNull ColorValues other)
     {
@@ -279,10 +283,10 @@ public abstract class ColorValues implements Parcelable
         return -1;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+    //@Override
+    //public int describeContents() {
+    //    return 0;
+    //}
 
     /**
      * @return json

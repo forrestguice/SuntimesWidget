@@ -22,17 +22,20 @@ package com.forrestguice.suntimeswidget.map.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * ColorValues
  */
-public class WorldMapColorValues extends ResourceColorValues
+public class WorldMapColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_WORLDMAP = "worldmap";
 
     public static final String COLOR_BACKGROUND = "color_background";
@@ -124,9 +127,9 @@ public class WorldMapColorValues extends ResourceColorValues
     public WorldMapColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    protected WorldMapColorValues(Parcel in) {
+    /*protected WorldMapColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public WorldMapColorValues() {
         super();
     }
@@ -139,7 +142,7 @@ public class WorldMapColorValues extends ResourceColorValues
         super(jsonString);
     }
 
-    public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
+    /*public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
     {
         public WorldMapColorValues createFromParcel(Parcel in) {
             return new WorldMapColorValues(in);
@@ -147,7 +150,7 @@ public class WorldMapColorValues extends ResourceColorValues
         public WorldMapColorValues[] newArray(int size) {
             return new WorldMapColorValues[size];
         }
-    };
+    };*/
 
     public static WorldMapColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));

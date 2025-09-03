@@ -22,18 +22,21 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 
+import java.io.Serializable;
+
 /**
  * EquinoxColorValues
  */
-public class EquinoxColorValues extends ResourceColorValues
+public class EquinoxColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_SPRING_TEXT = AppColorKeys.COLOR_SPRING_TEXT;
     public static final String COLOR_SUMMER_TEXT = AppColorKeys.COLOR_SUMMER_TEXT;
     public static final String COLOR_AUTUMN_TEXT = AppColorKeys.COLOR_AUTUMN_TEXT;
@@ -102,9 +105,9 @@ public class EquinoxColorValues extends ResourceColorValues
     public EquinoxColorValues(SharedPreferences prefs, String prefix) {
         super(prefs, prefix);
     }
-    protected EquinoxColorValues(Parcel in) {
+    /*protected EquinoxColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public EquinoxColorValues() {
         super();
     }
@@ -117,7 +120,7 @@ public class EquinoxColorValues extends ResourceColorValues
         super(jsonString);
     }
 
-    public static final Creator<EquinoxColorValues> CREATOR = new Creator<EquinoxColorValues>()
+    /*public static final Creator<EquinoxColorValues> CREATOR = new Creator<EquinoxColorValues>()
     {
         public EquinoxColorValues createFromParcel(Parcel in) {
             return new EquinoxColorValues(in);
@@ -125,7 +128,7 @@ public class EquinoxColorValues extends ResourceColorValues
         public EquinoxColorValues[] newArray(int size) {
             return new EquinoxColorValues[size];
         }
-    };
+    };*/
 
     public static EquinoxColorValues getColorDefaults(Context context, boolean darkTheme) {
         return new EquinoxColorValues(new EquinoxColorValues().getDefaultValues(context, darkTheme));
