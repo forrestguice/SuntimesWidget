@@ -23,6 +23,7 @@ import android.os.Build;
 
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
@@ -218,6 +219,11 @@ public class AppColorValues extends ResourceColorValues implements Serializable
             return new AppColorValues[size];
         }
     };*/
+
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
 
     public static AppColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AppColorValues(new AppColorValues().getDefaultValues(context, darkTheme));

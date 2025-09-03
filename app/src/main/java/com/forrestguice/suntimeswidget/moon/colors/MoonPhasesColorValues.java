@@ -109,6 +109,11 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static MoonPhasesColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonPhasesColorValues(new MoonPhasesColorValues().getDefaultValues(context, darkTheme));
     }

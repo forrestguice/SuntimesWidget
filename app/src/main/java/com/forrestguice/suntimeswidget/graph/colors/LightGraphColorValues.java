@@ -170,6 +170,11 @@ public class LightGraphColorValues extends ResourceColorValues implements Serial
         super(context, darkTheme);
     }
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     /*public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
     {
         public LightGraphColorValues createFromParcel(Parcel in) {

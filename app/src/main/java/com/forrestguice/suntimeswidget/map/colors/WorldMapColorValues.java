@@ -143,6 +143,11 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static WorldMapColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));
     }

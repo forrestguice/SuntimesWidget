@@ -110,6 +110,11 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Seria
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static MoonRiseSetColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonRiseSetColorValues(new MoonRiseSetColorValues().getDefaultValues(context, darkTheme));
     }

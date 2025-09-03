@@ -186,6 +186,11 @@ public class LineGraphColorValues extends ResourceColorValues implements Seriali
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static LineGraphColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LineGraphColorValues(new LineGraphColorValues().getDefaultValues(context, darkTheme));
     }

@@ -100,6 +100,11 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static MoonApsisColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonApsisColorValues(new MoonApsisColorValues().getDefaultValues(context, darkTheme));
     }

@@ -159,6 +159,11 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static AlarmColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AlarmColorValues(new AlarmColorValues().getDefaultValues(context, darkTheme));
     }

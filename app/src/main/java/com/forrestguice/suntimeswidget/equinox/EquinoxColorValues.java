@@ -121,6 +121,11 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static EquinoxColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new EquinoxColorValues(new EquinoxColorValues().getDefaultValues(context, darkTheme));
     }

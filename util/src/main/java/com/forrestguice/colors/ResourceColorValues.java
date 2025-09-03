@@ -85,7 +85,7 @@ public abstract class ResourceColorValues extends ColorValues
         a.recycle();
     }
 
-    protected abstract int getLocalizedDefaultResID(boolean darkTheme);    // R.string.widgetThemes_dark, R.string.widgetThemes_light
+    protected abstract int getLocalizedDefaultResID(Resources context, boolean darkTheme);    // R.string.widgetThemes_dark, R.string.widgetThemes_light
     public ColorValues getDefaultValues(Resources context, boolean darkTheme)
     {
         ColorValues values = new ColorValues()
@@ -110,7 +110,7 @@ public abstract class ResourceColorValues extends ColorValues
             values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
             values.setRole(colorKeys[i], colorRoles[i]);
         }
-        values.setID(context.getString(getLocalizedDefaultResID(darkTheme)));
+        values.setID(context.getString(getLocalizedDefaultResID(context, darkTheme)));
         return values;
     }
 

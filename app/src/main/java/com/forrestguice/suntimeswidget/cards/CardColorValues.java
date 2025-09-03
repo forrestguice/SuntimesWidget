@@ -151,6 +151,11 @@ public class CardColorValues extends ResourceColorValues implements Serializable
         }
     };*/
 
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
     public static CardColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new CardColorValues(new CardColorValues().getDefaultValues(context, darkTheme));
     }
