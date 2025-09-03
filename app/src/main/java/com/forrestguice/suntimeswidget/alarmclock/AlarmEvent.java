@@ -41,7 +41,7 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.SolarEventsAdapter;
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Set;

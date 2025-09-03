@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.events;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 
 import java.util.concurrent.Callable;

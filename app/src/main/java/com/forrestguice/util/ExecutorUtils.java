@@ -16,11 +16,10 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.views;
+package com.forrestguice.util;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
