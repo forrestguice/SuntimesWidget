@@ -29,4 +29,24 @@ public class AndroidColor implements ColorInterface
     public int parseColor(String color) {
         return Color.parseColor(color);
     }
+
+    @Override
+    public int red(int color) {
+        return Color.red(color);
+    }
+
+    @Override
+    public int green(int color) {
+        return Color.green(color);
+    }
+
+    @Override
+    public int blue(int color) {
+        return Color.blue(color);
+    }
+
+    @Override
+    public int alpha(int color) {
+        return Color.alpha(color);
+    }
 }

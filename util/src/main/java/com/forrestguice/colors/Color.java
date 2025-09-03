@@ -43,8 +43,44 @@ public class Color
         if (utils != null) {
             return utils.parseColor(color);
         } else {
-            Log.e("parseColor", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
             return 0;
+        }
+    }
+
+    public static int red(int color) {
+        if (utils != null) {
+            return utils.red(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int green(int color) {
+        if (utils != null) {
+            return utils.green(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int blue(int color) {
+        if (utils != null) {
+            return utils.blue(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int alpha(int color) {
+        if (utils != null) {
+            return utils.alpha(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 255;
         }
     }
 }

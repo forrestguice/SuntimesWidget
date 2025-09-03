@@ -21,5 +21,29 @@ package com.forrestguice.colors;
 
 public interface ColorInterface
 {
+    /**
+     * @param color hex color string
+     * @return int argb color int
+     */
     int parseColor(String color);
+
+    /**
+     * @return red [0, 255]
+     */
+    int red(int color);
+
+    /**
+     * @return green [0, 255]
+     */
+    int green(int color);
+
+    /**
+     * @return blue [0, 255]
+     */
+    int blue(int color);
+
+    /**
+     * @return alpha [0, 255]
+     */
+    int alpha(int color);
 }
