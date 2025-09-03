@@ -1,0 +1,62 @@
+/*
+ * Copyright (C) 2006 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.forrestguice.util;
+
+import com.forrestguice.annotation.Nullable;
+
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * A copy of the `android.content.SharedPreferences` interfaces; refer to those docs for details.
+ */
+public interface SharedPreferences
+{
+    boolean contains(String key);
+    Map<String, ?> getAll();
+    int getInt(String key, int defValue);
+    long getLong(String key, long defValue);
+    float getFloat(String key, float defValue);
+    boolean getBoolean(String key, boolean defValue);
+
+    @Nullable
+    String getString(String key, @Nullable String defValue);
+    @Nullable
+    Set<String> getStringSet(String key, @Nullable Set<String> defValues);
+
+    Editor edit();
+    interface Editor
+    {
+        Editor putString(String key, @Nullable String value);
+        Editor putStringSet(String key, @Nullable Set<String> values);
+        Editor putInt(String key, int value);
+        Editor putLong(String key, long value);
+        Editor putFloat(String key, float value);
+        Editor putBoolean(String key, boolean value);
+
+        Editor remove(String key);
+        Editor clear();
+
+        boolean commit();
+        void apply();
+    }
+
+    interface OnSharedPreferenceChangeListener {
+        void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key);
+    }
+    void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener);
+    void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener);
+}
