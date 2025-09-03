@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.calendar;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ContextInterface;
-import com.forrestguice.util.SharedPreferences;
+import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.Map;
 import java.util.TreeMap;

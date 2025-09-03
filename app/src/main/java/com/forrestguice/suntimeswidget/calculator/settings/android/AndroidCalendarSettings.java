@@ -4,7 +4,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.util.Resources;
-import com.forrestguice.util.SharedPreferences;
+import com.forrestguice.util.prefs.SharedPreferences;
 import com.forrestguice.util.android.AndroidResources;
 
 public class AndroidCalendarSettings implements CalendarSettingsInterface

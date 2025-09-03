@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
-import com.forrestguice.util.SharedPreferences;
+import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.HashMap;
 import java.util.Map;

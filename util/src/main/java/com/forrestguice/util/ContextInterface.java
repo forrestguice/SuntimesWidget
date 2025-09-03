@@ -18,6 +18,8 @@
 
 package com.forrestguice.util;
 
+import com.forrestguice.util.prefs.SharedPreferences;
+
 public interface ContextInterface
 {
     Resources getResources();
