@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,11 +40,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
+import com.flask.colorpicker.BuildConfig;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.SuntimesApplication;
+
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -634,7 +639,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         default:
-                            row[i] = null;
+                            row[i] = getCustomEventValueForSunKey(getContext(), calculator, columns[i], day, positions);
                             break;
                     }
                 }
@@ -646,6 +651,100 @@ public class CalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    @Nullable
+    protected static Object getCustomEventValueForSunKey(Context context, SuntimesCalculator calculator, String column, Calendar day, Map<String,SuntimesCalculator.SunPosition> positions)
+    {
+        String eventID = column;     // e.g CUSTOM0r, CUSTOM0s, CUSTOM0r_azimuth, etc
+        String positionSuffix = null;    // e.g. _azimuth, _altitude, _ra, _dec
+
+        if (column.endsWith(_POSITION_AZ)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_AZ));
+            positionSuffix = _POSITION_AZ;
+
+        } else if (column.endsWith(_POSITION_ALT)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_ALT));
+            positionSuffix = _POSITION_ALT;
+
+        } else if (column.endsWith(_POSITION_RA)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_RA));
+            positionSuffix = _POSITION_RA;
+
+        } else if (column.endsWith(_POSITION_DEC)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_DEC));
+            positionSuffix = _POSITION_DEC;
+        }
+
+        if (AlarmEventProvider.EventType.resolveEventType(context, column) == AlarmEventProvider.EventType.EVENTALIAS)
+        {
+            String aliasID = eventID;   // e.g. CUSTOM0
+            String aliasSuffix = "";    // e.g. r, s
+            if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                aliasID = aliasID.substring(0, eventID.length() - 1);
+                aliasSuffix = eventID.substring(eventID.length() - 1);
+            }
+
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
+            AlarmEventProvider.EventType aliasType = alias.getType();
+            if (aliasType == AlarmEventProvider.EventType.SUN_ELEVATION || aliasType == AlarmEventProvider.EventType.SHADOWLENGTH)
+            {
+                Calendar now = Calendar.getInstance();
+                now.setTimeInMillis(day.getTimeInMillis());
+                now.set(Calendar.HOUR_OF_DAY, 0);
+                now.set(Calendar.MINUTE, 0);
+                now.set(Calendar.SECOND, 0);
+                now.set(Calendar.MILLISECOND, 0);
+
+                boolean isRising = (aliasSuffix.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
+                Object[] aliasValues = AlarmEventProvider.createRow(context, alias, isRising, new String[] { AlarmEventContract.COLUMN_EVENT_TIMEMILLIS },
+                        AlarmEventContract.EXTRA_ALARM_NOW + "=?", new String[] { Long.toString(now.getTimeInMillis()) });
+
+                if (aliasValues != null && aliasValues.length > 0 && aliasValues[0] != null)
+                {
+                    Long eventTime = (Long) aliasValues[0];
+                    if (positionSuffix == null)
+                    {
+                        if (BuildConfig.DEBUG) {
+                            Log.d("DEBUG", eventID + " is a " + aliasType + " that occurs at " + eventTime + " (" + new SuntimesUtils().calendarDateTimeDisplayString(context, eventTime) + ")");
+                        }
+                        return eventTime;
+                    }
+
+                    switch (positionSuffix)
+                    {
+                        case _POSITION_AZ: case _POSITION_ALT:
+                        case _POSITION_RA: case _POSITION_DEC:
+                            Object positionValue  = getPositionValueForSunKey(calculator, eventTime, eventID, column, positions);
+                            if (BuildConfig.DEBUG) {
+                                Log.d("DEBUG", eventID + " is a " + aliasType + " with " + positionSuffix + " of " + positionValue);
+                            }
+                            return positionValue;
+
+                        default:
+                            Log.w("CalculatorProvider", "Unrecognized column (position suffix not supported): " + column + " (" + positionSuffix + ")");
+                            return null;
+                    }
+                } else {
+                    Log.w("CalculatorProvider", "Failed to retrieve values for custom event: " + column);
+                    return null;
+                }
+            } else {
+                Log.w("CalculatorProvider", "Unrecognized column (type not supported): " + column + " (" + aliasType +")");
+                return null;
+            }
+        } else {
+            Log.w("CalculatorProvider", "Unrecognized column (not a custom event): " + column);
+            return null;
+        }
+    }
+
+    protected static Double getPositionValueForSunKey(@NonNull SuntimesCalculator calculator, @Nullable Long eventTime, String rootKey, String fullKey, Map<String, SuntimesCalculator.SunPosition> positions)
+    {
+        if (eventTime != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(eventTime);
+            return getPositionValueForSunKey(calculator, calendar, rootKey, fullKey, positions);
+        } else return null;
+    }
     protected static Double getPositionValueForSunKey(@NonNull SuntimesCalculator calculator, @Nullable Calendar calendar, String rootKey, String fullKey, Map<String, SuntimesCalculator.SunPosition> positions)
     {
         if (!positions.containsKey(rootKey)) {

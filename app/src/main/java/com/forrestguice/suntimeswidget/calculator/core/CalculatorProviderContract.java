@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 8 (0.6.1)
+ * @version 9 (0.7.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -231,13 +231,14 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   7 adds COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE, COLUMN_MOON_SET_ILLUM, COLUMN_MOON_SET_DISTANCE.
  *     adds _POSITION_KEYS; may be combined with COLUMN_MOON and COLUMN_SUN keys to specify position at time of event.
  *   8 adds COLUMN_SUN_MIDNIGHT
+ *   9 adds "custom event" support to SUN_ queries; custom eventIDs may be supplied as columns in the projection.
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.6.1";
-    int VERSION_CODE = 8;
+    String VERSION_NAME = "v0.7.0";
+    int VERSION_CODE = 9;
 
     /**
      * CONFIG

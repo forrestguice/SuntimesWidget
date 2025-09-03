@@ -56,6 +56,8 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_LOCATION_LONGITUDE = "location_longitude";
     public static final String EXTRA_LOCATION_ALTITUDE = "location_altitude";
 
+    public static final String EXTRA_TYPEFILTER = EventListFragment.EXTRA_TYPEFILTER;
+
     protected EventListFragment list;
 
     public EventListActivity() {
@@ -85,6 +87,7 @@ public class EventListActivity extends AppCompatActivity
         list = new EventListFragment();
         list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
         list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
+        list.setTypeFilter(intent.getStringArrayExtra(EXTRA_TYPEFILTER));
         list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
 
         if (intent.hasExtra(EXTRA_LOCATION))
