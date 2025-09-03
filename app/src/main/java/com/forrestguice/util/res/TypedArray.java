@@ -15,27 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.util;
 
-import com.forrestguice.util.res.TypedArray;
+package com.forrestguice.util.res;
 
-public interface Resources
+public interface TypedArray
 {
-    boolean getBoolean(int id);
-
-    int getColor(int id);
-
-    float getDimension(int id);
-
-    int getInteger(int id);
-    int[] getIntArray(int id);
-
-    String getString(int id);
-    String getString(int id, Object... formatArgs);
-    String[] getStringArray(int id);
-
-    String getQuantityString(int id, int quantity);
-    String getQuantityString(int id, int quantity, Object... formatArgs);
-
-    TypedArray obtainStyledAttributes(int[] attrs);
+    int getResourceId(int index, int defaultValue);
+    void recycle();
 }

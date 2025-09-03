@@ -19,12 +19,10 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.res.TypedArray;
-import android.support.v4.content.ContextCompat;
-
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.util.Resources;
+import com.forrestguice.util.res.TypedArray;
 
 /**
  * ColorValues

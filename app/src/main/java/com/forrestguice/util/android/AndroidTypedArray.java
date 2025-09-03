@@ -15,27 +15,28 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.util;
+
+package com.forrestguice.util.android;
 
 import com.forrestguice.util.res.TypedArray;
 
-public interface Resources
+public class AndroidTypedArray implements TypedArray
 {
-    boolean getBoolean(int id);
+    private android.content.res.TypedArray typedArray;
+    public AndroidTypedArray(android.content.res.TypedArray array) {
+        typedArray = array;
+    }
 
-    int getColor(int id);
+    @Override
+    public int getResourceId(int index, int defaultValue) {
+        if (typedArray != null) {
+            return typedArray.getResourceId(index, defaultValue);
+        } else return defaultValue;
+    }
 
-    float getDimension(int id);
-
-    int getInteger(int id);
-    int[] getIntArray(int id);
-
-    String getString(int id);
-    String getString(int id, Object... formatArgs);
-    String[] getStringArray(int id);
-
-    String getQuantityString(int id, int quantity);
-    String getQuantityString(int id, int quantity, Object... formatArgs);
-
-    TypedArray obtainStyledAttributes(int[] attrs);
+    @Override
+    public void recycle() {
+        typedArray.recycle();
+        typedArray = null;
+    }
 }
