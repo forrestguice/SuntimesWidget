@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
-import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.prefs.SharedPreferences;

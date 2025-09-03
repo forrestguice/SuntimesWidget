@@ -24,6 +24,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import org.junit.Test;
 

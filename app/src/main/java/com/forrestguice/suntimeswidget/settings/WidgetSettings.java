@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.Locale;
 import java.util.Map;
