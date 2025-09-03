@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import java.util.Map;
-
 public abstract class PrefTypeInfo
 {
     public abstract String[] allKeys();

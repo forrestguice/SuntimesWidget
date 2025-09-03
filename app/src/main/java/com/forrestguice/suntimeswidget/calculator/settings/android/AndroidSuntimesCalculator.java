@@ -25,7 +25,7 @@ import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
-import com.forrestguice.suntimeswidget.events.AndroidEventAliasResolver;
+import com.forrestguice.suntimeswidget.events.android.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.android.AndroidTimeFormat;

@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.calendar;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.android.AndroidResources;

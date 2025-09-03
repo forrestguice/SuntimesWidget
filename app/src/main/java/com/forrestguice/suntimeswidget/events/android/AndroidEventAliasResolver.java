@@ -16,13 +16,15 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.events;
+package com.forrestguice.suntimeswidget.events.android;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventItemResolver;
 
 public class AndroidEventAliasResolver implements EventItemResolver
 {
