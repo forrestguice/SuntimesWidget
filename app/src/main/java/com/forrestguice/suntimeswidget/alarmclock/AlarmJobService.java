@@ -71,15 +71,13 @@ public class AlarmJobService extends JobService
         return false;
     }
 
-    private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 5 * 1000;    // wait this long before running
-    private static final long AFTER_BOOT_COMPLETED_WINDOW_MS = 25 * 1000;    // job to be run between [delay, delay + window]
-
     public static void scheduleJobAfterBootCompleted(Context context)
     {
+        long delay = AlarmSettings.bootCompletedDelay(context);
         JobInfo.Builder job = new JobInfo.Builder(AlarmJobService.JOB_AFTER_BOOT_COMPLETED, new ComponentName(context, AlarmJobService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-                .setMinimumLatency(AFTER_BOOT_COMPLETED_DELAY_MS)
-                .setOverrideDeadline(AFTER_BOOT_COMPLETED_DELAY_MS + AFTER_BOOT_COMPLETED_WINDOW_MS);
+                .setMinimumLatency(delay)
+                .setOverrideDeadline(delay + AlarmSettings.AFTER_BOOT_COMPLETED_WINDOW_MS);
 
         JobScheduler jobs = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobs.schedule(job.build());

@@ -166,6 +166,7 @@ public class MoonPhasesView1 extends LinearLayout
         themeDrawables();
     }
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         card_adapter.applyTheme(context, theme);
