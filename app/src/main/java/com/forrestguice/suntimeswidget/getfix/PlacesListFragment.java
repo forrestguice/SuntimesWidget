@@ -55,6 +55,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -65,6 +66,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -550,7 +552,7 @@ public class PlacesListFragment extends Fragment
         if (item != null && item.location != null && context != null)
         {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(item.location.getUri());
+            intent.setData(Uri.parse(item.location.getUri()));
             List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
             List<Intent> geoIntents = new ArrayList<Intent>();
 
@@ -562,7 +564,7 @@ public class PlacesListFragment extends Fragment
                     {
                         Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                         geoIntent.setPackage(resolveInfo.activityInfo.packageName);
-                        geoIntent.setData(item.location.getUri());
+                        geoIntent.setData(Uri.parse(item.location.getUri()));
                         geoIntents.add(geoIntent);
                     }
                 }
@@ -1605,8 +1607,8 @@ public class PlacesListFragment extends Fragment
         String locationString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         if (showAltitude)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);
             String displayString = context.getString(R.string.location_format_latlonalt, locationString, altitudeTag);

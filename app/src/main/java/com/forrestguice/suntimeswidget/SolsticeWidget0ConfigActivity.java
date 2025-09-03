@@ -25,12 +25,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
@@ -84,7 +86,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected void loadCalendarSettings(Context context) {
-        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, SolsticeLayout.PREF_DEF_CALENDAR_SHOWDATE));
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, SolsticeLayout.PREF_DEF_CALENDAR_SHOWDATE));
     }
 
     @Override
@@ -110,7 +112,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_timeMode != null)
         {
-            EquinoxModeAdapter adapter = new EquinoxModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.SolsticeEquinoxMode.values());
+            EquinoxModeAdapter adapter = new EquinoxModeAdapter(this, R.layout.layout_listitem_oneline, SolsticeEquinoxMode.values());
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
@@ -163,7 +165,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
             EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null)
             {
-                WidgetSettings.SolsticeEquinoxMode selected = (WidgetSettings.SolsticeEquinoxMode) spinner_timeMode.getSelectedItem();
+                SolsticeEquinoxMode selected = (SolsticeEquinoxMode) spinner_timeMode.getSelectedItem();
                 adapter.setThemeValues(themeValues);
                 spinner_timeMode.setAdapter(adapter);
                 spinner_timeMode.setSelection(adapter.getPosition(selected));
@@ -174,7 +176,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
     private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
 
@@ -184,7 +186,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         if (spinner_timeMode != null) {
             EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
+                SolsticeEquinoxMode timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
                 spinner_timeMode.setSelection(adapter.getPosition(timeMode));
             }
         }
@@ -196,7 +198,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         if (spinner_timeMode != null) {
             EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
             if (adapter != null) {
-                WidgetSettings.SolsticeEquinoxMode timeMode = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
+                SolsticeEquinoxMode timeMode = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
                 WidgetSettings.saveTimeMode2Pref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2));
             }
         }
@@ -223,25 +225,25 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     /**
      * EquinoxModeAdapter
      */
-    public static class EquinoxModeAdapter extends ModeAdapterBase<WidgetSettings.SolsticeEquinoxMode>
+    public static class EquinoxModeAdapter extends ModeAdapterBase<SolsticeEquinoxMode>
     {
         public EquinoxModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
         }
-        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.SolsticeEquinoxMode[] objects) {
+        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull SolsticeEquinoxMode[] objects) {
             super(context, resource, objects);
         }
-        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.SolsticeEquinoxMode> objects) {
+        public EquinoxModeAdapter(@NonNull Context context, int resource, @NonNull List<SolsticeEquinoxMode> objects) {
             super(context, resource, objects);
         }
 
         @Override
-        protected String getNameForMode(WidgetSettings.SolsticeEquinoxMode mode) {
+        protected String getNameForMode(SolsticeEquinoxMode mode) {
             return mode.name();
         }
 
         @Override
-        protected int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
+        protected int getColorForMode(SolsticeEquinoxMode mode)
         {
             if (themeValues == null) {
                 return Color.TRANSPARENT;

@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -1237,7 +1238,7 @@ public class AppSettings
             if (data == null)
             {
                 data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-                data.initCalculator(context);
+                data.initCalculator();
             }
             isDay = data.isDay();
             switch (size) {

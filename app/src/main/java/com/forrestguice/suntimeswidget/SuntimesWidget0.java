@@ -40,6 +40,10 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
@@ -403,7 +407,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.TimeMode.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_TimeMode(context);
     }
 
     public static boolean widgetIsStale(Context context, int appWidgetId) {
@@ -583,13 +587,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     protected static boolean isCurrentLocationMode(Context context, int appWidgetId) {
-        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == WidgetSettings.LocationMode.CURRENT_LOCATION);
+        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == LocationMode.CURRENT_LOCATION);
     }
     protected static void updateLocationToLastKnown(Context context, int appWidgetId)
     {
         android.location.Location currentLocation = GetFixHelper.lastKnownLocation(context);
         if (currentLocation != null) {
-            WidgetSettings.saveLocationPref(context, appWidgetId, new Location(context.getString(R.string.gps_lastfix_title_found), currentLocation));
+            WidgetSettings.saveLocationPref(context, appWidgetId, AndroidLocation.createLocation(context.getString(R.string.gps_lastfix_title_found), currentLocation));
         }
     }
 
@@ -612,7 +616,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (showSolarNoon)
         {
             SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
-            noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+            noonData.setTimeMode(TimeMode.NOON);
             noonData.calculate(context);
             data.linkData(noonData);
         }
@@ -631,8 +635,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
         {
-            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-            if (order == WidgetSettings.RiseSetOrder.TODAY) {
+            RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+            if (order == RiseSetOrder.TODAY) {
                 WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
                 Log.d(TAG, "saveNextSuggestedUpdate: -1");
 
@@ -652,8 +656,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static SuntimesRiseSetData getRiseSetData(Context context, int appWidgetId)
     {
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        return (order == WidgetSettings.RiseSetOrder.TODAY)
+        RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        return (order == RiseSetOrder.TODAY)
                 ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId);
     }
 

@@ -36,6 +36,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
@@ -283,15 +289,15 @@ public abstract class SuntimesActivityTestBase
     {
         public Location location;
         public String timezoneID;
-        public WidgetSettings.TimeFormatMode timeformat;
-        public WidgetSettings.LengthUnit lengthUnits;
+        public TimeFormatMode timeformat;
+        public LengthUnit lengthUnits;
 
         public SuntimesTestConfig(Location location, String timezoneID, boolean format24, String units)
         {
             this.location = location;
             this.timezoneID = timezoneID;
-            this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
-            this.lengthUnits = WidgetSettings.LengthUnit.valueOf(units);
+            this.timeformat = (format24 ? TimeFormatMode.MODE_24HR : TimeFormatMode.MODE_12HR);
+            this.lengthUnits = LengthUnit.valueOf(units);
         }
     }
 
@@ -324,8 +330,8 @@ public abstract class SuntimesActivityTestBase
 
     protected void configureAppForTesting(Activity context)
     {
-        WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
-        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.RECENT);
+        WidgetSettings.saveDateModePref(context, 0, DateMode.CURRENT_DATE);
+        WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.RECENT);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
         WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
         WidgetSettings.saveLocalizeHemispherePref(context, 0, true);
@@ -355,10 +361,10 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
         WidgetSettings.saveLengthUnitsPref(context, 0, configuration.lengthUnits);
 
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
-        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, 0, TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 
@@ -441,7 +447,7 @@ public abstract class SuntimesActivityTestBase
     protected boolean savedState_showDataSource;
     protected boolean savedState_showMapButton;
     protected boolean savedState_firstLaunch;
-    protected WidgetSettings.LocationMode savedState_locationMode;
+    protected LocationMode savedState_locationMode;
     //protected AppSettings.LocaleMode savedState_localeMode;
 
     public static abstract class Robot<T>

@@ -29,10 +29,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -64,16 +62,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -91,7 +97,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -111,12 +116,13 @@ import com.forrestguice.suntimeswidget.notes.NoteChangedListener;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.reflect.Method;
 
@@ -546,7 +552,7 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
         }
 
-        if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        if ((WidgetSettings.loadLocationModePref(this, 0) == LocationMode.CURRENT_LOCATION)
                 && LocationHelperSettings.lastAutoLocationIsStale(SuntimesActivity.this))
         {
             card_view.post(new Runnable()
@@ -873,8 +879,8 @@ public class SuntimesActivity extends AppCompatActivity
             locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
-        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
+        if (locationMode == LocationMode.CURRENT_LOCATION)
         {
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -1121,7 +1127,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (locations[0] != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
                     actionBar.setSubtitle(location.toString());
                 }
             }
@@ -1157,7 +1163,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), result);
                         LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
@@ -1203,8 +1209,8 @@ public class SuntimesActivity extends AppCompatActivity
             MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
             if (refreshItem != null)
             {
-                WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
-                if (mode != WidgetSettings.LocationMode.CURRENT_LOCATION)
+                LocationMode mode = WidgetSettings.loadLocationModePref(context, 0);
+                if (mode != LocationMode.CURRENT_LOCATION)
                 {
                     refreshItem.setVisible(false);
 
@@ -1562,10 +1568,10 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         protected void saveSettings(Context context)
         {
-            WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
+            DateMode dateMode = (isToday() ? DateMode.CURRENT_DATE : DateMode.CUSTOM_DATE);
             WidgetSettings.saveDateModePref(context, getAppWidgetId(), dateMode);
 
-            WidgetSettings.DateInfo dateInfo = getDateInfo();
+            DateInfo dateInfo = getDateInfo();
             WidgetSettings.saveDatePref(context, getAppWidgetId(), dateInfo);
         }
     }
@@ -1613,8 +1619,8 @@ public class SuntimesActivity extends AppCompatActivity
                 updateActionBar(SuntimesActivity.this);
                 updateViews(SuntimesActivity.this);
 
-                WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
-                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+                LocationMode locationMode = dialog.getDialogContent().getLocationMode();
+                if (locationMode == LocationMode.CURRENT_LOCATION) {
                     getFixHelper.getFix();
                 }
             }
@@ -1665,7 +1671,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(location.getUri());
+        mapIntent.setData(Uri.parse(location.getUri()));
 
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
         List<Intent> geoIntents = new ArrayList<Intent>();
@@ -1679,7 +1685,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                     geoIntent.setPackage(packageName);
-                    geoIntent.setData(location.getUri());
+                    geoIntent.setData(Uri.parse(location.getUri()));
                     geoIntents.add(geoIntent);
                 }
             }
@@ -1781,17 +1787,17 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (dataset.isCalculated())
         {
-            boolean isRising = eventID != null && eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
-            if (eventID != null && (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
-                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING))) {
+            boolean isRising = eventID != null && eventID.endsWith(SunElevationEvent.SUFFIX_RISING);
+            if (eventID != null && (eventID.endsWith("_" + SunElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + SunElevationEvent.SUFFIX_SETTING))) {
                 eventID = eventID.substring(0, eventID.lastIndexOf("_"));
             }
 
             String alarmID = eventID;
-            if (EventSettings.hasEvent(this, eventID))
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(this), eventID))
             {
-                EventSettings.EventAlias event = EventSettings.loadEvent(this, eventID);
-                alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
+                EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(this), eventID);
+                alarmID = event.getAliasUri() + (isRising ? SunElevationEvent.SUFFIX_RISING : SunElevationEvent.SUFFIX_SETTING);
             }
 
             AlarmCreateDialog dialog = new AlarmCreateDialog();
@@ -1909,11 +1915,11 @@ public class SuntimesActivity extends AppCompatActivity
         warnings.setShowWarnings(showWarnings);
         warnings.resetWarnings();
 
-        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
+        LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
+        String locationTitle = (locationMode == LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
 
-        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+        if (locationMode == LocationMode.CURRENT_LOCATION) {
             warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, !getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
         }
 
@@ -1924,8 +1930,8 @@ public class SuntimesActivity extends AppCompatActivity
         String altitudeString = "";
         if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
             String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
@@ -1958,8 +1964,8 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (dataset.dataActual.todayIsNotToday())
         {
-            WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
-            WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(dataset.dataActual.calendar());
+            DateInfo nowInfo = new DateInfo(now);
+            DateInfo dataInfo = new DateInfo(dataset.dataActual.calendar());
             if (!nowInfo.equals(dataInfo))
             {
                 Date time = now.getTime();
@@ -2089,7 +2095,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
@@ -2536,7 +2542,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
+        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {
             scheduleAlarm(SolarEvents.valueOf(suggestedEvent).name());
         }
         @Override

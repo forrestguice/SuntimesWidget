@@ -45,8 +45,8 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -65,7 +65,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     private static final String DIALOGTAG_OFFSET = "eventoffset";
 
     public static SuntimesUtils utils = new SuntimesUtils();
-    protected WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+    protected LengthUnit units = LengthUnit.METRIC;
 
     public EditEventDialog()
     {
@@ -110,8 +110,8 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* EventType */
-    protected AlarmEventProvider.EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
-    public AlarmEventProvider.EventType getEventType() {
+    protected EventType type = EventSettingsInterface.PREF_DEF_EVENT_TYPE;
+    public EventType getEventType() {
         return type;
     }
 
@@ -140,7 +140,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event Color */
-    protected Integer color = EventSettings.PREF_DEF_EVENT_COLOR;
+    protected Integer color = EventSettingsInterface.PREF_DEF_EVENT_COLOR;
     public Integer getEventColor() {
         return (choose_color != null ? choose_color.getColor() : color);
     }
@@ -196,10 +196,10 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event */
-    public EventSettings.EventAlias getEvent() {
-        return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri(), getEventIsShown());
+    public EventAlias getEvent() {
+        return new EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri(), getEventIsShown());
     }
-    public void setEvent(EventSettings.EventAlias event)
+    public void setEvent(EventAlias event)
     {
         type = event.getType();
         setEventID(event.getID());
@@ -210,7 +210,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventIsShown(event.isShown());
         updateViews(getActivity(), type);
     }
-    public void setType(AlarmEventProvider.EventType value) {
+    public void setType(EventType value) {
         type = value;
     }
 
@@ -266,7 +266,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             try {
                 double height = Double.parseDouble(edit_objHeight.getText().toString());
-                return (units == WidgetSettings.LengthUnit.METRIC ? height : WidgetSettings.LengthUnit.feetToMeters(height));
+                return (units == LengthUnit.METRIC ? height : LengthUnit.feetToMeters(height));
 
             } catch (NumberFormatException e) {
                 return null;
@@ -295,7 +295,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             try {
                 double length = Double.parseDouble(edit_shadowLength.getText().toString());
-                return (units == WidgetSettings.LengthUnit.METRIC ? length : WidgetSettings.LengthUnit.feetToMeters(length));
+                return (units == LengthUnit.METRIC ? length : LengthUnit.feetToMeters(length));
 
             } catch (NumberFormatException e) {
                 return null;
@@ -436,11 +436,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
 
         if (eventID == null) {
-            eventID = EventSettings.suggestEventID(context);
+            eventID = EventSettings.suggestEventID(AndroidEventSettings.wrap(context));
         }
 
         if (label == null || label.trim().isEmpty()) {
-            label = EventSettings.suggestEventLabel(context, type);
+            label = EventSettings.suggestEventLabel(AndroidEventSettings.wrap(context), type);
         }
 
         super.initViews(context, dialogContent, savedState);
@@ -473,7 +473,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         updateViews(context, getEventType());
     }
 
-    protected void updateViews(Context context, AlarmEventProvider.EventType type)
+    protected void updateViews(Context context, EventType type)
     {
         setEventLabel(getEventLabel());
 
@@ -481,9 +481,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             case SUN_ELEVATION:
                 double angle = 0;
-                AlarmEventProvider.SunElevationEvent event0 = null;
+                SunElevationEvent event0 = null;
                 if (uri != null) {
-                    event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                    event0 = SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
                 }
                 if (edit_angle != null && event0 != null) {
                     setAngle(angle = event0.getAngle());
@@ -502,15 +502,15 @@ public class EditEventDialog extends EditBottomSheetDialog
 
             case SHADOWLENGTH:
                 double length = 0;
-                AlarmEventProvider.ShadowLengthEvent shadowEvent = null;
+                ShadowLengthEvent shadowEvent = null;
                 if (uri != null) {
-                    shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                    shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(uri).getLastPathSegment());
                 }
                 if (text_units_shadowLength != null) {
-                    text_units_shadowLength.setText(context.getString((units == WidgetSettings.LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
+                    text_units_shadowLength.setText(context.getString((units == LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
                 }
                 if (text_units_objHeight != null) {
-                    text_units_objHeight.setText(context.getString((units == WidgetSettings.LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
+                    text_units_objHeight.setText(context.getString((units == LengthUnit.METRIC) ? R.string.units_meters_short : R.string.units_feet_short));
                 }
                 if (edit_shadowLength != null && shadowEvent != null) {
                     setShadowLengthMeters(shadowLength = shadowEvent.getLength());
@@ -578,17 +578,17 @@ public class EditEventDialog extends EditBottomSheetDialog
                 switch (type)
                 {
                     case SHADOWLENGTH:
-                        eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
+                        eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
                         break;
 
                     case SUN_ELEVATION:
                     default:
-                        eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, offset, null);
+                        eventID = SunElevationEvent.getEventName(angle, offset, null);
                         break;
 
                 }
 
-                String eventUri = AlarmAddon.getEventCalcUri(AUTHORITY, eventID);
+                String eventUri = EventUri.getEventCalcUri(AUTHORITY, eventID);
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
@@ -727,7 +727,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             if (validateInput_id()) {
-                setEventUri1(AlarmAddon.getEventInfoUri(AUTHORITY, s.toString()));
+                setEventUri1(EventUri.getEventInfoUri(AUTHORITY, s.toString()));
             }
             setIsModified(true);
         }
@@ -743,8 +743,8 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double angle = Double.parseDouble(s.toString());
-                String eventID = AlarmEventProvider.SunElevationEvent.getEventName(angle, getOffset(), null);
-                setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                String eventID = SunElevationEvent.getEventName(angle, getOffset(), null);
+                setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
 
             } catch (NumberFormatException e) {
@@ -761,12 +761,12 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double lengthInput = Double.parseDouble(s.toString());
-                double lengthMeters = (units == WidgetSettings.LengthUnit.METRIC ? lengthInput : WidgetSettings.LengthUnit.feetToMeters(lengthInput));
+                double lengthMeters = (units == LengthUnit.METRIC ? lengthInput : LengthUnit.feetToMeters(lengthInput));
                 Double objHeightMeters = getObjHeightMeters();
                 if (objHeightMeters != null)
                 {
-                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }
 
@@ -784,12 +784,12 @@ public class EditEventDialog extends EditBottomSheetDialog
         public void afterTextChanged(Editable s) {
             try {
                 double objHeightInput = Double.parseDouble(s.toString());
-                double objHeightMeters = (units == WidgetSettings.LengthUnit.METRIC ? objHeightInput : WidgetSettings.LengthUnit.feetToMeters(objHeightInput));
+                double objHeightMeters = (units == LengthUnit.METRIC ? objHeightInput : LengthUnit.feetToMeters(objHeightInput));
                 Double lengthMeters = getShadowLengthMeters();
                 if (lengthMeters != null)
                 {
-                    String eventID = AlarmEventProvider.ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, eventID));
+                    String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }
 

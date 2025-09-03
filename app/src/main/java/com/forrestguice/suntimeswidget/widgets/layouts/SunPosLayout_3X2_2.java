@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
@@ -146,7 +147,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         super.themeViews(context, views, theme);
         options = new LightGraphView.LightGraphOptions(context);
 
-        options.colors = LightGraphColorValues.getColorDefaults(context, (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
+        options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
         options.colors.setColor(COLOR_DAY, theme.getDayColor());
         options.colors.setColor(COLOR_CIVIL, theme.getCivilColor());
         options.colors.setColor(COLOR_NAUTICAL, theme.getNauticalColor());

@@ -18,11 +18,10 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Pair;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
+import com.forrestguice.util.Pair;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
@@ -30,10 +29,10 @@ import java.util.HashMap;
 
 public class SuntimesMoonData0 extends SuntimesData
 {
-    public SuntimesMoonData0(Context context, int appWidgetId) {
+    public SuntimesMoonData0(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesMoonData0(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesMoonData0(SuntimesMoonData0 other) {
@@ -49,15 +48,15 @@ public class SuntimesMoonData0 extends SuntimesData
     }
 
     @Override
-    public SuntimesCalculatorFactory initFactory(Context context)
+    public SuntimesCalculatorFactory initFactory()
     {
-        return new SuntimesCalculatorFactory(context, calculatorMode)
+        return new SuntimesCalculatorFactory(calculatorMode)
         {
             public SuntimesCalculator fallbackCalculator() {
                 return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
             }
             public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
-                return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
+                return DefaultCalculatorDescriptors.Time4A_4J();
             }
         };
     }
@@ -91,10 +90,10 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
-        initCalculator(context);
-        initTimezone(context);
+        initCalculator();
+        initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
@@ -136,7 +135,7 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param input major phase
      * @return corresponding MoonPhaseDisplay enum (direct map)
      */
-    public static MoonPhaseDisplay toPhase( SuntimesCalculator.MoonPhase input )
+    public static MoonPhaseDisplay toPhase(SuntimesCalculator.MoonPhase input )
     {
         switch (input) {
             case NEW: return MoonPhaseDisplay.NEW;
@@ -205,24 +204,6 @@ public class SuntimesMoonData0 extends SuntimesData
             }
         }
         return result;
-    }
-
-    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
-    {
-        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
-        {
-            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
-
-            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
-                        : context.getString(R.string.timeMode_moon_superfull);
-
-            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
-                        : context.getString(R.string.timeMode_moon_microfull);
-
-            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
-        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
     }
 
 }

@@ -45,16 +45,17 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
@@ -191,8 +192,8 @@ public class MoonPhasesView1 extends LinearLayout
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
         ViewUtils.initUtils(context);
-        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     public int numColumns() {
@@ -477,7 +478,7 @@ public class MoonPhasesView1 extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            colors = new MoonPhasesColorValues(context);
+            colors = new MoonPhasesColorValues(AndroidResources.wrap(context));
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;

@@ -42,8 +42,8 @@ import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -102,7 +102,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return dialogContent.saveSettings(context);
         }
@@ -122,7 +122,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             /* EMPTY */
         }
 
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return true;
         }
@@ -137,7 +137,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         presetLocation = location;
         if (dialogContent != null) {
-            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }
 
