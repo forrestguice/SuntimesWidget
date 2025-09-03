@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
@@ -897,8 +898,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         public Collection<TimeFieldRow> initRows(Context context, Set<String> events)
         {
             clearAll();
+            EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
             for (String eventID : events) {
-                TimeFieldRow row = addRow(context, EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID));
+                TimeFieldRow row = addRow(context, EventSettings.loadEvent(contextInterface, eventID));
                 rows.put(eventID, row);
             }
             adjustBottomMargin();

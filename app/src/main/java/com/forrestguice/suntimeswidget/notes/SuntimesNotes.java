@@ -40,6 +40,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -556,9 +557,10 @@ public class SuntimesNotes
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
             }
 
-            if (EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID0))
+            EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
+            if (EventSettings.hasEvent(contextInterface, eventID0))
             {
-                EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID0);
+                EventAlias event = EventSettings.loadEvent(contextInterface, eventID0);
                 if (event != null)
                 {
                     int[] iconAttr = { R.attr.sunriseIconLarge, R.attr.sunsetIconLarge };

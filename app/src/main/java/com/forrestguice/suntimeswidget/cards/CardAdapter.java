@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -135,12 +136,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
         date.add(Calendar.DATE, position - TODAY_POSITION);
 
+        EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(contextInterface);
         for (String eventID : eventIDs)
         {
             SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
-            d.setDataMode(new EventAliasTimeMode(EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID)));
+            d.setDataMode(new EventAliasTimeMode(EventSettings.loadEvent(contextInterface, eventID)));
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);

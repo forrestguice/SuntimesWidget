@@ -631,10 +631,11 @@ public class EventListHelper
 
                 if (context != null)
                 {
+                    EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
                     for (int i=0; i<items.length; i++)
                     {
                         if (items[i] != null) {
-                            EventSettings.saveEvent(AndroidEventSettings.wrap(context), items[i]);
+                            EventSettings.saveEvent(contextInterface, items[i]);
                         }
                     }
                 }
@@ -661,9 +662,10 @@ public class EventListHelper
                     Context context = contextRef.get();
                     if (context != null)
                     {
+                        EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
                         for (EventAlias item : items) {
                             if (item != null) {
-                                EventSettings.deleteEvent(AndroidEventSettings.wrap(context), item.getID());
+                                EventSettings.deleteEvent(contextInterface, item.getID());
                             }
                         }
                         initAdapter(context);
