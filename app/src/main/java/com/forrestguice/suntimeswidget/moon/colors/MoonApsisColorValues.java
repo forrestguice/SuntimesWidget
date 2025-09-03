@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.colors.Color;
 import com.forrestguice.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.ResourceColorValues;
 import com.forrestguice.util.Resources;
 
 import java.io.Serializable;

@@ -24,6 +24,7 @@ import android.os.StrictMode;
 
 import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesCalculator;
+import com.forrestguice.colors.ResourceColorValues;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.android.AndroidLog;
@@ -52,7 +53,9 @@ public class SuntimesApplication extends Application
 
         ApplicationStarter.initialize(context, false);
         AndroidSuntimesCalculator.init(context);
+
         Color.init(new AndroidColor());
+        ResourceColorValues.DEBUG = BuildConfig.DEBUG;
 
         if (BuildConfig.DEBUG)
         {

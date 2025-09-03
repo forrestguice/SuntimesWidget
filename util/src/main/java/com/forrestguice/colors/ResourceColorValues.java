@@ -17,11 +17,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.colors;
+package com.forrestguice.colors;
 
-import com.forrestguice.colors.ColorValues;
-import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.res.TypedArray;
 
@@ -31,6 +28,8 @@ import com.forrestguice.util.res.TypedArray;
 public abstract class ResourceColorValues extends ColorValues
 {
     private static final long serialVersionUID = 1L;
+
+    public static boolean DEBUG = false;
 
     public abstract String[] getColorKeys();
     public abstract int[] getColorAttrs();
@@ -43,16 +42,14 @@ public abstract class ResourceColorValues extends ColorValues
     public ResourceColorValues(ColorValues other) {
         super(other);
     }
-    /*protected ResourceColorValues(Parcel in) {
-        super(in);
-    }*/
+
     public ResourceColorValues()
     {
         super();
-        if (BuildConfig.DEBUG && (getColorKeys().length != getColorsFallback().length)) {
+        if (DEBUG && (getColorKeys().length != getColorsFallback().length)) {
             throw new AssertionError("COLORS and COLORS_FALLBACK have different lengths! These arrays should be one-to-one.");
         }
-        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+        if (DEBUG && (getColorRoles().length != getColorKeys().length)) {
             throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
         }
         String[] colorKeys = getColorKeys();
@@ -69,10 +66,10 @@ public abstract class ResourceColorValues extends ColorValues
     public ResourceColorValues(Resources context, boolean darkTheme)
     {
         super();
-        if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
+        if (DEBUG && (getColorKeys().length != getColorAttrs().length)) {
             throw new AssertionError("COLORS and COLORS_ATTR have different lengths! These arrays should be one-to-one." + getColorKeys().length + " != " + getColorAttrs().length);
         }
-        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+        if (DEBUG && (getColorRoles().length != getColorKeys().length)) {
             throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
         }
         String[] colorKeys = getColorKeys();
@@ -88,6 +85,7 @@ public abstract class ResourceColorValues extends ColorValues
         a.recycle();
     }
 
+    protected abstract int getLocalizedDefaultResID(boolean darkTheme);    // R.string.widgetThemes_dark, R.string.widgetThemes_light
     public ColorValues getDefaultValues(Resources context, boolean darkTheme)
     {
         ColorValues values = new ColorValues()
@@ -98,7 +96,7 @@ public abstract class ResourceColorValues extends ColorValues
             }
         };
 
-        if (BuildConfig.DEBUG && (getColorRoles().length != getColorKeys().length)) {
+        if (DEBUG && (getColorRoles().length != getColorKeys().length)) {
             throw new AssertionError("COLOR_ROLES and COLOR_KEYS have different lengths! These arrays should be one-to-one.");
         }
 
@@ -112,7 +110,7 @@ public abstract class ResourceColorValues extends ColorValues
             values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
             values.setRole(colorKeys[i], colorRoles[i]);
         }
-        values.setID(darkTheme ? context.getString(R.string.widgetThemes_dark) : context.getString(R.string.widgetThemes_light));
+        values.setID(context.getString(getLocalizedDefaultResID(darkTheme)));
         return values;
     }
 
