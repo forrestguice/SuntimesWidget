@@ -455,7 +455,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         if (context != null && text_locationAltUnits != null)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             switch (units)
             {
                 case IMPERIAL:
