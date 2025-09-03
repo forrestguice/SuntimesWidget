@@ -28,10 +28,45 @@ public class AndroidTypedArray implements TypedArray
     }
 
     @Override
+    public boolean getBoolean(int index, boolean defaultValue) {
+        return typedArray.getBoolean(index, defaultValue);
+    }
+
+    @Override
+    public int getColor(int index, int defaultValue) {
+        return typedArray.getColor(index, defaultValue);
+    }
+
+    @Override
+    public float getFloat(int index, float defaultValue) {
+        return typedArray.getFloat(index, defaultValue);
+    }
+
+    @Override
+    public int getInt(int index, int defaultValue) {
+        return typedArray.getInt(index, defaultValue);
+    }
+
+    @Override
     public int getResourceId(int index, int defaultValue) {
         if (typedArray != null) {
             return typedArray.getResourceId(index, defaultValue);
         } else return defaultValue;
+    }
+
+    @Override
+    public String getString(int index) {
+        return typedArray.getString(index);
+    }
+
+    @Override
+    public boolean hasValue(int index) {
+        return typedArray.hasValue(index);
+    }
+
+    @Override
+    public int length() {
+        return typedArray.length();
     }
 
     @Override

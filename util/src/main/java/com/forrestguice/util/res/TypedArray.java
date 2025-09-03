@@ -20,6 +20,14 @@ package com.forrestguice.util.res;
 
 public interface TypedArray
 {
+    boolean getBoolean(int index, boolean defaultValue);
+    int getColor(int index, int defaultValue);
+    float getFloat(int index, float defaultValue);
+    int getInt(int index, int defaultValue);
     int getResourceId(int index, int defaultValue);
+    String getString(int index);
+
+    boolean hasValue(int index);
+    int length();
     void recycle();
 }
