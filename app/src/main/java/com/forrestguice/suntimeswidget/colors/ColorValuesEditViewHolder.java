@@ -30,6 +30,7 @@ import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;

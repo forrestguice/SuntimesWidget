@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.os.Build;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;

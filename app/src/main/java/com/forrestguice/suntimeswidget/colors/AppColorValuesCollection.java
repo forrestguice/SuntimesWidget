@@ -23,6 +23,7 @@ import android.content.Context;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.util.android.AndroidResources;

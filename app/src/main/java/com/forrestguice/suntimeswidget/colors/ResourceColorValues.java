@@ -19,6 +19,7 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.util.Resources;

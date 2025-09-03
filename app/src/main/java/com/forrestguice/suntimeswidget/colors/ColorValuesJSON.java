@@ -20,6 +20,7 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.util.Log;
 
 import org.json.JSONException;

@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 
 import org.junit.Before;

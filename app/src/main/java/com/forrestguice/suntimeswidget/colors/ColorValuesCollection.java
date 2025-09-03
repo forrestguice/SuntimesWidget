@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -38,8 +38,7 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
-import com.forrestguice.suntimeswidget.colors.AppColorValues;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;

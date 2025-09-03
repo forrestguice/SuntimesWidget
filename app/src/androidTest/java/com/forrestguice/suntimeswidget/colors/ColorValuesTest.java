@@ -18,16 +18,14 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Parcel;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Before;
 import org.junit.Rule;

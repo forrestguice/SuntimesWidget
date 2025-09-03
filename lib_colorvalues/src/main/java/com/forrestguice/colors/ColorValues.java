@@ -17,11 +17,10 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.colors;
+package com.forrestguice.colors;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.colors.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -22,7 +22,7 @@ package com.forrestguice.suntimeswidget.graph.colors;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.colors.Color;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
 import com.forrestguice.util.Resources;
 

@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.SharedPreferences;
 
+import com.forrestguice.colors.ColorValues;
+
 import java.util.HashMap;
 
 public abstract class ColorValuesStorage
@@ -59,7 +61,7 @@ public abstract class ColorValuesStorage
         editor.putString(prefix + ColorValues.KEY_ID, colors.getID());
         editor.putString(prefix + ColorValues.KEY_LABEL, colors.getLabel());
         for (String key : colors.getColorKeys()) {
-            editor.putInt(prefix + key, (Integer) colors.values.get(key));
+            editor.putInt(prefix + key, (Integer) colors.getValues().get(key));
         }
         editor.apply();
     }
