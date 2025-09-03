@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.graph.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -113,10 +112,10 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
     public LightMapColorValues() {
         super();
     }
-    public LightMapColorValues(Context context) {
+    public LightMapColorValues(Resources context) {
         this(context, true);
     }
-    public LightMapColorValues(Context context, boolean darkTheme) {
+    public LightMapColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public LightMapColorValues(String jsonString) {
@@ -133,7 +132,7 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
         }
     };*/
 
-    public static LightMapColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static LightMapColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LightMapColorValues(new LightMapColorValues().getDefaultValues(context, darkTheme));
     }
 }

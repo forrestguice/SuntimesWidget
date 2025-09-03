@@ -19,7 +19,6 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.Context;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
@@ -30,6 +29,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -203,7 +203,7 @@ public class AppColorValues extends ResourceColorValues implements Serializable
     public AppColorValues() {
         super();
     }
-    public AppColorValues(Context context, boolean darkTheme) {
+    public AppColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public AppColorValues(String jsonString) {
@@ -220,7 +220,7 @@ public class AppColorValues extends ResourceColorValues implements Serializable
         }
     };*/
 
-    public static AppColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static AppColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AppColorValues(new AppColorValues().getDefaultValues(context, darkTheme));
     }
 

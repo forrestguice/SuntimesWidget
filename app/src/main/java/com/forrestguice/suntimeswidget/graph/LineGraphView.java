@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -1412,7 +1413,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public void init(Context context)
         {
-            colors = new LineGraphColorValues(context);
+            colors = new LineGraphColorValues(AndroidResources.wrap(context));
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1425,13 +1426,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public void initDefaultDark(Context context)
         {
             init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
+            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), true));  // TODO: Resources
         }
 
         public void initDefaultLight(Context context)
         {
             init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
+            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), false));  // TODO: Resources
         }
 
         public void acquireDrawLock()

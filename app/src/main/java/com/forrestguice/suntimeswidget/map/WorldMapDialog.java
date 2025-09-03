@@ -82,6 +82,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
@@ -1582,7 +1583,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new WorldMapColorValues(getActivity(), true);
+            return new WorldMapColorValues(AndroidResources.wrap(getActivity()), true);
         }
     };
 

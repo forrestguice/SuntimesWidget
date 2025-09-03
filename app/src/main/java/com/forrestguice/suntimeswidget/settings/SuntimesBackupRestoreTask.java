@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -302,7 +303,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new AppColorValues(context, true);
+                return new AppColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
@@ -316,7 +317,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new WorldMapColorValues(context, true);
+                return new WorldMapColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
@@ -330,7 +331,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new AlarmColorValues(context, true);
+                return new AlarmColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {

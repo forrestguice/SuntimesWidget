@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.equinox;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -108,7 +107,7 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
         super();
     }
 
-    public EquinoxColorValues(Context context, boolean darkTheme) {
+    public EquinoxColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
 
@@ -126,7 +125,7 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
         }
     };*/
 
-    public static EquinoxColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static EquinoxColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new EquinoxColorValues(new EquinoxColorValues().getDefaultValues(context, darkTheme));
     }
 

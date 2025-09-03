@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1541,7 +1542,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void init(Context context)
         {
-            colors = new LightGraphColorValues(context);
+            colors = new LightGraphColorValues(AndroidResources.wrap(context));
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);

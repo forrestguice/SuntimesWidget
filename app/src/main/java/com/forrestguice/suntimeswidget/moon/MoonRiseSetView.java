@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
@@ -151,7 +152,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initColors(Context context)
     {
-        colors = new MoonRiseSetColorValues(context);
+        colors = new MoonRiseSetColorValues(AndroidResources.wrap(context));
         /*int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;

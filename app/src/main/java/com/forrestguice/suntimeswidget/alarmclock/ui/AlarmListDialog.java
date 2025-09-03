@@ -95,6 +95,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1574,7 +1575,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         public void init(Context context) {
-            colors = new AppColorValues(context, true);
+            colors = new AppColorValues(AndroidResources.wrap(context), true);
         }
     }
 

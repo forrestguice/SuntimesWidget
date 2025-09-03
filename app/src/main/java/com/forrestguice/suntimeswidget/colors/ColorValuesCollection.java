@@ -44,25 +44,6 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
     public ColorValuesCollection(Context context) {
         loadCollection(getCollectionSharedPreferences(context));
     }
-    /*protected ColorValuesCollection(Parcel in)
-    {
-        collection = new TreeSet<>();
-        List<String> items = new ArrayList<>();
-        in.readStringList(items);
-        collection.addAll(items);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        List<String> items = new ArrayList<>(collection);
-        dest.writeStringList(items);
-    }
-
-    @Override
-    public int describeContents(){
-        return 0;
-    }*/
 
     protected Set<String> collection = new TreeSet<String>();
     public String[] getCollection() {

@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.moon.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -84,10 +83,10 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
     public MoonApsisColorValues() {
         super();
     }
-    public MoonApsisColorValues(Context context) {
+    public MoonApsisColorValues(Resources context) {
         this(context, true);
     }
-    public MoonApsisColorValues(Context context, boolean darkTheme) {
+    public MoonApsisColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public MoonApsisColorValues(String jsonString) {
@@ -104,7 +103,7 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
         }
     };*/
 
-    public static MoonApsisColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static MoonApsisColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonApsisColorValues(new MoonApsisColorValues().getDefaultValues(context, darkTheme));
     }
 }

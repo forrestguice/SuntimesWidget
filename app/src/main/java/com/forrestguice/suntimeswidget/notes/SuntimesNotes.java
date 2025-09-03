@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class SuntimesNotes
 
     public SuntimesNotes(Context context)
     {
-        colors = new CardColorValues(context);
+        colors = new CardColorValues(AndroidResources.wrap(context));
         changedListener = new NoteChangedListener()
         {
             @Override

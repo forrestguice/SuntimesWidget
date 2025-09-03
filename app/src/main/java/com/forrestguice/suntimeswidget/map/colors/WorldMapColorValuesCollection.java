@@ -26,6 +26,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new WorldMapColorValues(context,  true);
+        return new WorldMapColorValues(AndroidResources.wrap(context),  true);
     }
 
     /*public static final Creator<WorldMapColorValuesCollection> CREATOR = new Creator<WorldMapColorValuesCollection>()

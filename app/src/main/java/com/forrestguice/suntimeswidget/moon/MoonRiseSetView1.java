@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
@@ -458,7 +459,7 @@ public class MoonRiseSetView1 extends LinearLayout
         @SuppressLint("ResourceType")
         private void initTheme(Context context)
         {
-            colors = new MoonRiseSetColorValues(context);
+            colors = new MoonRiseSetColorValues(AndroidResources.wrap(context));
 
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);

@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -79,7 +80,7 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new BrightAlarmColorValues(context,  true);
+        return new BrightAlarmColorValues(AndroidResources.wrap(context),  true);
     }
 
     /*public static final Creator<BrightAlarmColorValuesCollection> CREATOR = new Creator<BrightAlarmColorValuesCollection>()
@@ -158,15 +159,15 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
         switch (colorsID)
         {
             case DEFAULT_ID_SUNRISE:
-                v = new BrightAlarmColorValues_Sunrise(context, true);
+                v = new BrightAlarmColorValues_Sunrise(AndroidResources.wrap(context), true);
                 break;
 
             case DEFAULT_ID_FOLIAGE:
-                v = new BrightAlarmColorValues_Foliage(context, true);
+                v = new BrightAlarmColorValues_Foliage(AndroidResources.wrap(context), true);
                 break;
 
             case DEFAULT_ID_BLUESKY:
-                v = new BrightAlarmColorValues_BlueSky(context, true);
+                v = new BrightAlarmColorValues_BlueSky(AndroidResources.wrap(context), true);
                 break;
 
             default:

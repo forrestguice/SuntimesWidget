@@ -18,17 +18,17 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.util.Resources;
 
 /**
  * BrightAlarmColorValues
  */
 public class BrightAlarmColorValues_Foliage extends BrightAlarmColorValues
 {
-    public BrightAlarmColorValues_Foliage(Context context, boolean fallbackDarkTheme) {
+    public BrightAlarmColorValues_Foliage(Resources context, boolean fallbackDarkTheme) {
         super(context, fallbackDarkTheme);
     }
 

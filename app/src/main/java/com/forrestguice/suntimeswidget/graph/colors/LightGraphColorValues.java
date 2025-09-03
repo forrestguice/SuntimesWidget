@@ -19,13 +19,13 @@
 
 package com.forrestguice.suntimeswidget.graph.colors;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -163,10 +163,10 @@ public class LightGraphColorValues extends ResourceColorValues implements Serial
     public LightGraphColorValues() {
         super();
     }
-    public LightGraphColorValues(Context context) {
+    public LightGraphColorValues(Resources context) {
         this(context, true);
     }
-    public LightGraphColorValues(Context context, boolean darkTheme) {
+    public LightGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public LightGraphColorValues(String jsonString) {
@@ -183,7 +183,7 @@ public class LightGraphColorValues extends ResourceColorValues implements Serial
         }
     };*/
 
-    public static LightGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static LightGraphColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LightGraphColorValues(new LightGraphColorValues().getDefaultValues(context, darkTheme));
     }
 }

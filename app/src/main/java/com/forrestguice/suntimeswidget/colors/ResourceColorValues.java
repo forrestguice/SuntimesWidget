@@ -19,12 +19,12 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.util.Resources;
 
 /**
  * ColorValues
@@ -67,7 +67,7 @@ public abstract class ResourceColorValues extends ColorValues
         }
     }
 
-    public ResourceColorValues(Context context, boolean darkTheme)
+    public ResourceColorValues(Resources context, boolean darkTheme)
     {
         super();
         if (BuildConfig.DEBUG && (getColorKeys().length != getColorAttrs().length)) {
@@ -82,7 +82,7 @@ public abstract class ResourceColorValues extends ColorValues
         int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
         TypedArray a = context.obtainStyledAttributes(getColorAttrs());
         for (int i=0; i<colorKeys.length; i++) {
-            setColor(colorKeys[i], ContextCompat.getColor(context, a.getResourceId(i, defaultResID[i])));
+            setColor(colorKeys[i], context.getColor(a.getResourceId(i, defaultResID[i])));
             setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
             setRole(colorKeys[i], colorRoles[i]);
         }
@@ -93,7 +93,7 @@ public abstract class ResourceColorValues extends ColorValues
         super(jsonString);
     }
 
-    public ColorValues getDefaultValues(Context context, boolean darkTheme)
+    public ColorValues getDefaultValues(Resources context, boolean darkTheme)
     {
         ColorValues values = new ColorValues()
         {
@@ -113,7 +113,7 @@ public abstract class ResourceColorValues extends ColorValues
         int[] defaultResID = darkTheme ? getColorsResDark() : getColorsResLight();
         for (int i=0; i<colorKeys.length; i++)
         {
-            values.setColor(colorKeys[i], ContextCompat.getColor(context, defaultResID[i]));
+            values.setColor(colorKeys[i], context.getColor(defaultResID[i]));
             values.setLabel(colorKeys[i], (labelsResID[i] != 0) ? context.getString(labelsResID[i]) : colorKeys[i]);
             values.setRole(colorKeys[i], colorRoles[i]);
         }

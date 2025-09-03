@@ -64,6 +64,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
@@ -476,7 +477,7 @@ public class WidgetThemePreview
             final LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions(context);
 
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-            options.colors = LightGraphColorValues.getColorDefaults(context, isNightMode);
+            options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
 
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
             options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()

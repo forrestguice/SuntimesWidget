@@ -19,12 +19,11 @@
 
 package com.forrestguice.suntimeswidget.map.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -130,7 +129,7 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
         super();
     }
 
-    public WorldMapColorValues(Context context, boolean darkTheme) {
+    public WorldMapColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
 
@@ -148,7 +147,7 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
         }
     };*/
 
-    public static WorldMapColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static WorldMapColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));
     }
 

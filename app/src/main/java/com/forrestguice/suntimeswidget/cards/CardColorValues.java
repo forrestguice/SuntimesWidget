@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -135,10 +134,10 @@ public class CardColorValues extends ResourceColorValues implements Serializable
     public CardColorValues() {
         super();
     }
-    public CardColorValues(Context context) {
+    public CardColorValues(Resources context) {
         this(context, true);
     }
-    public CardColorValues(Context context, boolean darkTheme) {
+    public CardColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public CardColorValues(String jsonString) {
@@ -155,7 +154,7 @@ public class CardColorValues extends ResourceColorValues implements Serializable
         }
     };*/
 
-    public static CardColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static CardColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new CardColorValues(new CardColorValues().getDefaultValues(context, darkTheme));
     }
 }

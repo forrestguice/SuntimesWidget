@@ -17,6 +17,8 @@
 */
 package com.forrestguice.util;
 
+import android.content.res.TypedArray;
+
 public interface Resources
 {
     boolean getBoolean(int id);
@@ -34,4 +36,6 @@ public interface Resources
 
     String getQuantityString(int id, int quantity);
     String getQuantityString(int id, int quantity, Object... formatArgs);
+
+    TypedArray obtainStyledAttributes(int[] colorAttrs);
 }

@@ -18,12 +18,11 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -146,7 +145,7 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
         super();
     }
 
-    public AlarmColorValues(Context context, boolean fallbackDarkTheme) {
+    public AlarmColorValues(Resources context, boolean fallbackDarkTheme) {
         super(context, fallbackDarkTheme);
     }
 
@@ -164,7 +163,7 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
         }
     };*/
 
-    public static AlarmColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static AlarmColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AlarmColorValues(new AlarmColorValues().getDefaultValues(context, darkTheme));
     }
 }

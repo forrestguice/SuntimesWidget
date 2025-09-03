@@ -190,11 +190,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             colors = (!getIntent().hasExtra(EXTRA_TEST_BRIGHTMODE)) ? collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS)
                                                                     : collection.getColors(context, param_colorsID);
             if (colors == null) {
-                colors = new BrightAlarmColorValues(context, false);
+                colors = new BrightAlarmColorValues(AndroidResources.wrap(context), false);
             }
 
         } else {
-            colors = new AlarmColorValues(context, true);
+            colors = new AlarmColorValues(AndroidResources.wrap(context), true);
         }
 
     }

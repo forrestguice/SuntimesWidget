@@ -25,6 +25,7 @@ import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new AppColorValues(context,  true);
+        return new AppColorValues(AndroidResources.wrap(context),  true);
     }
 
     /*public static final Creator<AppColorValuesCollection> CREATOR = new Creator<AppColorValuesCollection>()

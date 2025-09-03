@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.moon.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -93,10 +92,10 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
     public MoonPhasesColorValues() {
         super();
     }
-    public MoonPhasesColorValues(Context context) {
+    public MoonPhasesColorValues(Resources context) {
         this(context, true);
     }
-    public MoonPhasesColorValues(Context context, boolean darkTheme) {
+    public MoonPhasesColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public MoonPhasesColorValues(String jsonString) {
@@ -113,7 +112,7 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
         }
     };*/
 
-    public static MoonPhasesColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static MoonPhasesColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonPhasesColorValues(new MoonPhasesColorValues().getDefaultValues(context, darkTheme));
     }
 }

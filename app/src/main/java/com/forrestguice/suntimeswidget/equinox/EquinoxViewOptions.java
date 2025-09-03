@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 public class EquinoxViewOptions
 {
@@ -55,7 +56,7 @@ public class EquinoxViewOptions
     @SuppressLint("ResourceType")
     public void init(Context context)
     {
-        colors = new EquinoxColorValues(context, true);
+        colors = new EquinoxColorValues(AndroidResources.wrap(context), true);
 
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor,
                              R.attr.table_springColor, R.attr.table_summerColor, R.attr.table_fallColor, R.attr.table_winterColor };

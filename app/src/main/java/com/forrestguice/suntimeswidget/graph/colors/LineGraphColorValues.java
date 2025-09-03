@@ -19,13 +19,12 @@
 
 package com.forrestguice.suntimeswidget.graph.colors;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.suntimeswidget.colors.Color;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
 
 import java.io.Serializable;
 
@@ -170,10 +169,10 @@ public class LineGraphColorValues extends ResourceColorValues implements Seriali
     public LineGraphColorValues() {
         super();
     }
-    public LineGraphColorValues(Context context) {
+    public LineGraphColorValues(Resources context) {
         this(context, true);
     }
-    public LineGraphColorValues(Context context, boolean darkTheme) {
+    public LineGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
     public LineGraphColorValues(String jsonString) {
@@ -190,7 +189,7 @@ public class LineGraphColorValues extends ResourceColorValues implements Seriali
         }
     };*/
 
-    public static LineGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static LineGraphColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LineGraphColorValues(new LineGraphColorValues().getDefaultValues(context, darkTheme));
     }
 }

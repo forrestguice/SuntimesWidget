@@ -123,7 +123,7 @@ public class MoonPhaseView extends LinearLayout
 
     private void themeViews(Context context)
     {
-        colors = new MoonPhasesColorValues(context);
+        colors = new MoonPhasesColorValues(AndroidResources.wrap(context));
         int[] colorAttrs = { android.R.attr.textColorPrimary };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
