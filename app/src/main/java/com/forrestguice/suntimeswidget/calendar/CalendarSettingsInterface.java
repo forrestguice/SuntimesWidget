@@ -18,7 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
-public interface CalendarSettingsInterface
+import com.forrestguice.util.ContextInterface;
+
+public interface CalendarSettingsInterface extends ContextInterface
 {
     String PREF_PREFIX_KEY_CALENDAR = "_calendar_";
 
