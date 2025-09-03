@@ -148,7 +148,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
         } else return true;
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     protected void setBootCompletedPrefEnabled(boolean value)
     {

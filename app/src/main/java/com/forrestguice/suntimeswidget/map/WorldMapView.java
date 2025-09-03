@@ -264,6 +264,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     private int foregroundColor;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, theme.getMapForegroundColor());

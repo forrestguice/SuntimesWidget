@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021-2023 Forrest Guice
+    Copyright (C) 2021-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -58,6 +58,8 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLU
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TIMEMILLIS;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TITLE;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TYPE_LABEL;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.EXTRA_ALARM_NOW;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.EXTRA_ALARM_OFFSET;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.EXTRA_ALARM_REPEAT;
@@ -66,6 +68,8 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUER
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_CALC_PROJECTION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO_PROJECTION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_TYPES;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_TYPES_PROJECTION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
 
@@ -78,6 +82,7 @@ public class AlarmEventProvider extends ContentProvider
     private static final int URIMATCH_EVENTS = 0;
     private static final int URIMATCH_EVENT = 10;
     private static final int URIMATCH_EVENT_CALC = 20;
+    private static final int URIMATCH_EVENT_TYPES = 30;
 
     private SuntimesUtils utils = null;
 
@@ -86,6 +91,7 @@ public class AlarmEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, QUERY_EVENT_INFO, URIMATCH_EVENTS);                            // content://AUTHORITY/eventInfo
         uriMatcher.addURI(AUTHORITY, QUERY_EVENT_INFO + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventInfo/[eventID]
         uriMatcher.addURI(AUTHORITY, QUERY_EVENT_CALC + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventCalc/[eventID]
+        uriMatcher.addURI(AUTHORITY, QUERY_EVENT_TYPES, URIMATCH_EVENT_TYPES);                      // content://AUTHORITY/eventTypes
     }
 
     @Override
@@ -126,6 +132,7 @@ public class AlarmEventProvider extends ContentProvider
             utils = new SuntimesUtils();
             SuntimesUtils.initDisplayStrings(getContext());
         }
+        EventType.initDisplayStrings(getContext());
 
         Cursor retValue = null;
         int uriMatch = uriMatcher.match(uri);
@@ -144,6 +151,11 @@ public class AlarmEventProvider extends ContentProvider
             case URIMATCH_EVENT_CALC:
                 //Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_CALC: " + uri.getLastPathSegment());
                 retValue = calculateEvent(uri.getLastPathSegment(), uri, projection, selection, selectionArgs);
+                break;
+
+            case URIMATCH_EVENT_TYPES:
+                //Log.d(getClass().getSimpleName(), "URIMATCH_EVENT_TYPES: " + uri.getLastPathSegment());
+                retValue = queryEventTypes(uri, projection, selection, selectionArgs, sortOrder);
                 break;
 
             default:
@@ -166,15 +178,35 @@ public class AlarmEventProvider extends ContentProvider
         {
             if (eventID == null)
             {
-                // list all SolarEvents
-                SolarEvents[] events = SolarEvents.values();
-                for (SolarEvents event : events) {
-                    retValue.addRow(createRow(context, event, columns, selectionMap));
+                String ofType = selectionMap.get(COLUMN_EVENT_TYPE);
+                if (ofType == null || EventType.SOLAREVENT.name().equals(ofType)) {
+                    for (SolarEvents event : SolarEvents.values()) {
+                        retValue.addRow(createRow(context, event, columns, selectionMap));
+                    }
                 }
 
-                // list all custom events
-                List<EventSettings.EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
-                events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
+                if (ofType != null && ofType.startsWith(EventType.SOLAREVENT.name()))
+                {
+                    Integer subtype = null;
+                    try {
+                        String[] parts = ofType.split("_");
+                        subtype = (parts.length > 1) ? Integer.parseInt(parts[1]) : null;
+                    } catch (NumberFormatException e) {
+                        Log.w("AlarmEventProvider", "invalid SolarEvents subtype; ignoring..." );
+                    }
+                    for (SolarEvents event : SolarEvents.values(subtype)) {
+                        retValue.addRow(createRow(context, event, columns, selectionMap));
+                    }
+                }
+
+                List<EventSettings.EventAlias> events1 = new ArrayList<>();    // list custom events
+                if (ofType == null || EventType.SUN_ELEVATION.name().equals(ofType)) {
+                    events1.addAll(EventSettings.loadEvents(context, EventType.SUN_ELEVATION));
+                }
+                if (ofType == null || EventType.SHADOWLENGTH.name().equals(ofType)) {
+                    events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
+                }
+
                 for (EventSettings.EventAlias event : events1)
                 {
                     Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
@@ -189,6 +221,31 @@ public class AlarmEventProvider extends ContentProvider
 
             } else {
                 addRowsToCursor(context, retValue, eventID, columns, selection, selectionArgs);
+            }
+        }
+        return retValue;
+    }
+
+    /**
+     * queryEventTypes
+     */
+    private Cursor queryEventTypes(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    {
+        HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
+        String[] columns = (projection != null ? projection : QUERY_EVENT_TYPES_PROJECTION);
+        MatrixCursor retValue = new MatrixCursor(columns);
+        Context context = getContext();
+        if (context != null)
+        {
+            for (EventType type : EventType.values())
+            {
+                if (type == EventType.SOLAREVENT) {
+                    for (int subtype : SolarEvents.types()) {
+                        retValue.addRow(createRow(context, type, subtype, columns, selectionMap));
+                    }
+                } else {
+                    retValue.addRow(createRow(context, type, 0, columns, selectionMap));
+                }
             }
         }
         return retValue;
@@ -271,6 +328,40 @@ public class AlarmEventProvider extends ContentProvider
     }
 
     /**
+     * createRow( EventType )
+     */
+    private Object[] createRow(@NonNull Context context, @NonNull EventType type, Integer subtype, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TYPE:
+                    if (type == EventType.SOLAREVENT) {
+                        row[i] = EventType.SOLAREVENT.getSubtypeID(subtype + "");
+                    } else {
+                        row[i] = type.name();
+                    }
+                    break;
+
+                case COLUMN_EVENT_TYPE_LABEL:
+                    if (type == EventType.SOLAREVENT) {
+                        row[i] = SolarEvents.getTypeLabel(context, subtype);
+                    } else {
+                        row[i] = type.getDisplayString();
+                    }
+                    break;
+
+                default:
+                    row[i] = null;
+                    break;
+            }
+        }
+        return row;
+    }
+
+    /**
      * createRow( SolarEvent )
      */
     private Object[] createRow(@NonNull Context context, @NonNull SolarEvents event, String[] columns, @Nullable HashMap<String,String> selectionMap)
@@ -297,6 +388,12 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_NAME:
                     row[i] = event.name();
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.SOLAREVENT.getSubtypeID(event.getType() + "");
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.SOLAREVENT.getDisplayString();
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getLongDisplayString();
@@ -332,7 +429,7 @@ public class AlarmEventProvider extends ContentProvider
      * createRow( EventAlias )
      */
     @Nullable
-    private Object[] createRow(@NonNull Context context, EventSettings.EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
+    public static Object[] createRow(@NonNull Context context, EventSettings.EventAlias event, boolean rising, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         Uri uri = Uri.parse(event.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING));
         Cursor cursor = context.getContentResolver().query(uri, columns, selection, selectionArgs, null);
@@ -361,6 +458,14 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_NAME:
                     row[i] = event.getID();
+                    break;
+
+                case COLUMN_EVENT_TYPE:
+                    row[i] = event.getType().name();
+                    break;
+
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = event.getType().getDisplayString();
                     break;
 
                 case COLUMN_EVENT_TITLE:
@@ -454,6 +559,12 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_NAME:
                     row[i] = event.getEventName(context);
                     break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.SUN_ELEVATION.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.SUN_ELEVATION.getDisplayString();
+                    break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getEventTitle(context);
                     break;
@@ -513,6 +624,12 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_NAME:
                     row[i] = event.getEventName(context);
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.SHADOWLENGTH.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.SHADOWLENGTH.getDisplayString();
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getEventTitle(context);
@@ -574,6 +691,12 @@ public class AlarmEventProvider extends ContentProvider
 
                 case COLUMN_EVENT_NAME:
                     row[i] = Long.toString(timedatemillis);
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.DATE.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.DATE.getDisplayString();
                     break;
                 case COLUMN_EVENT_TITLE:
                 case COLUMN_EVENT_PHRASE:
@@ -756,7 +879,7 @@ public class AlarmEventProvider extends ContentProvider
                     }
 
                 } catch (Exception e) {
-                    Log.e("ElevationEvent", "createEvent: bad angle: " + e);
+                    Log.e("ElevationEvent", "createEvent: bad angle: " + eventName + ": " + e);
                     return null;
                 }
                 boolean rising = eventName.endsWith(SUFFIX_RISING);
@@ -774,12 +897,12 @@ public class AlarmEventProvider extends ContentProvider
         Calendar eventTime;
 
         Calendar day = Calendar.getInstance();
+        day.setTimeInMillis(now.getTimeInMillis());
+
         sunData.setTodayIs(day);
         sunData.calculate(context);
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-        if (eventTime != null)
-        {
-            eventTime.set(Calendar.SECOND, 0);
+        if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
 
@@ -799,9 +922,7 @@ public class AlarmEventProvider extends ContentProvider
             sunData.setTodayIs(day);
             sunData.calculate(context);
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-            if (eventTime != null)
-            {
-                eventTime.set(Calendar.SECOND, 0);
+            if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
@@ -956,9 +1077,7 @@ public class AlarmEventProvider extends ContentProvider
 
         eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                       : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-        if (eventTime != null)
-        {
-            eventTime.set(Calendar.SECOND, 0);
+        if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
 
@@ -979,9 +1098,7 @@ public class AlarmEventProvider extends ContentProvider
             data.calculate(context);
             eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
                                           : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-            if (eventTime != null)
-            {
-                eventTime.set(Calendar.SECOND, 0);
+            if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
@@ -1020,22 +1137,25 @@ public class AlarmEventProvider extends ContentProvider
             return new AlarmEventProvider.EventType[] { AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH };
         }
 
-        //private String displayString;
-        //public String getDisplayString()
-        //{
-        //    return displayString;
-        //}
-        //public void setDisplayString(String value)
-        //{
-        //    displayString = value;
-        //}
-        //public static void initDisplayStrings(Context context) {
-        //    SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
-        //}
-        //public String toString()
-        //{
-        //    return displayString;
-        //}
+        private String displayString = null;
+        public String getDisplayString() {
+            return displayString != null ? displayString : name();
+        }
+        public void setDisplayString(String value) {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context) {
+            EVENTALIAS.setDisplayString(context.getString(R.string.eventType_alias));
+            DATE.setDisplayString(context.getString(R.string.eventType_date));
+            SOLAREVENT.setDisplayString(context.getString(R.string.eventType_default));
+            SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
+            SHADOWLENGTH.setDisplayString(context.getString(R.string.eventType_sun_shadowlength));
+        }
+
+        public String getSubtypeID(@Nullable String subtype) {
+            return (subtype != null) ? name() + "_" + subtype
+                                     : name();
+        }
 
         @Nullable
         public static EventType resolveEventType(Context context, String eventID)

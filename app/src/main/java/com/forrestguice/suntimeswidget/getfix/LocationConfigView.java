@@ -746,7 +746,7 @@ public class LocationConfigView extends LinearLayout
         Context context = getContext();
         if (context != null)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
             switch (units)
             {
                 case IMPERIAL:
