@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
 import com.forrestguice.util.Log;
 
 import org.json.JSONException;
