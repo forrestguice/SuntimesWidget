@@ -82,7 +82,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
