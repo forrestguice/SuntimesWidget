@@ -89,9 +89,6 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Seria
     public MoonRiseSetColorValues(ColorValues other) {
         super(other);
     }
-    public MoonRiseSetColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private MoonRiseSetColorValues(Parcel in) {
         super(in);
     }*/

@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -49,9 +48,6 @@ public abstract class ColorValues implements Serializable
     //protected ColorValues(Parcel in) {
     //    loadColorValues(in);
     //}
-    public ColorValues(SharedPreferences prefs, String prefix) {
-        loadColorValues(prefs, prefix);
-    }
     public ColorValues(String jsonString) {
         loadColorValues(jsonString);
     }
@@ -104,34 +100,6 @@ public abstract class ColorValues implements Serializable
         }
     }
 
-    public void loadColorValues(SharedPreferences prefs, String prefix)
-    {
-        setID(loadColorValuesID(prefs, prefix));
-        setLabel(loadColorValuesLabel(prefs, prefix));
-        for (String key : getColorKeys()) {
-            setColor(key, prefs.getInt(prefix + key, getFallbackColor()));
-        }
-    }
-    public static String loadColorValuesID(SharedPreferences prefs, String prefix) {
-        return prefs.getString(prefix + KEY_ID, null);
-    }
-    public static String loadColorValuesLabel(SharedPreferences prefs, String prefix) {
-        return prefs.getString(prefix + KEY_LABEL, null);
-    }
-    public static int loadColorValuesColor(SharedPreferences prefs, String prefix, String key, int defaultColor) {
-        return prefs.getInt(prefix + key, defaultColor);
-    }
-    public static int[] loadColorValuesColors(SharedPreferences prefs, String prefix, int defaultColor, String... keys)
-    {
-        int[] retValue = new int[keys != null ? keys.length : 0];
-        if (keys != null) {
-            for (int i=0; i<retValue.length; i++) {
-                retValue[i] = prefs.getInt(prefix + keys[i], defaultColor);
-            }
-        }
-        return retValue;
-    }
-
     public boolean loadColorValues(String jsonString)
     {
         try {
@@ -152,32 +120,7 @@ public abstract class ColorValues implements Serializable
             return false;
         }
     }
-
-    public void putColorsInto(SharedPreferences prefs, String prefix)
-    {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(prefix + KEY_ID, getID());
-        editor.putString(prefix + KEY_LABEL, getLabel());
-        for (String key : getColorKeys()) {
-            editor.putInt(prefix + key, values.getAsInteger(key));
-        }
-        editor.apply();
-    }
-    public void putColorsInto(ContentValues other) {
-        other.putAll(values);
-    }
-
-    public void removeColorsFrom(SharedPreferences prefs, String prefix)
-    {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(prefix + KEY_ID);
-        editor.remove(prefix + KEY_LABEL);
-        for (String key : getColorKeys()) {
-            editor.remove(prefix + key);
-        }
-        editor.apply();
-    }
-
+    
     protected ContentValues values = new ContentValues();
     public ContentValues getContentValues() {
         return new ContentValues(values);

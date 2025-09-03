@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
@@ -197,9 +196,6 @@ public class AppColorValues extends ResourceColorValues implements Serializable
 
     public AppColorValues(ColorValues other) {
         super(other);
-    }
-    public AppColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
     }
     /*protected AppColorValues(Parcel in) {
         super(in);

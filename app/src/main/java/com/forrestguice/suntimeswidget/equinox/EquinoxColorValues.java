@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.equinox;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
@@ -101,9 +100,6 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
 
     public EquinoxColorValues(ColorValues other) {
         super(other);
-    }
-    public EquinoxColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
     }
     /*protected EquinoxColorValues(Parcel in) {
         super(in);

@@ -87,21 +87,21 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getDefaultColors(context, colorsID);
         if (!isDefaultColorID(colorsID)) {
-            values.loadColorValues(prefs, prefix);
+            ColorValuesStorage.loadColorValues(values, prefs, prefix);
         }
         return values;
     }
     protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-        values.putColorsInto(prefs, prefix);
+        ColorValuesStorage.putColorsInto(values, prefs, prefix);
     }
     protected void removeColors(Context context, SharedPreferences prefs, String colorsID)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getColors(context, prefix);
         if (values != null) {
-            values.removeColorsFrom(prefs, prefix);
+            ColorValuesStorage.removeColorsFrom(values, prefs, prefix);
         }
     }
 
@@ -261,7 +261,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
             } else {
                 SharedPreferences prefs = getCollectionSharedPreferences(context);
                 String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-                return ColorValues.loadColorValuesLabel(prefs, prefix);
+                return ColorValuesStorage.loadColorValuesLabel(prefs, prefix);
             }
         } else return null;
     }
@@ -288,7 +288,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
             } else {
                 SharedPreferences prefs = getCollectionSharedPreferences(context);
                 String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-                return ColorValues.loadColorValuesColors(prefs, prefix, defaultValue, keys);
+                return ColorValuesStorage.loadColorValuesColors(prefs, prefix, defaultValue, keys);
             }
 
         } else return new int[] { defaultValue };

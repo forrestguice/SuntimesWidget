@@ -108,9 +108,6 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
     public LightMapColorValues(ColorValues other) {
         super(other);
     }
-    public LightMapColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private LightMapColorValues(Parcel in) {
         super(in);
     }*/

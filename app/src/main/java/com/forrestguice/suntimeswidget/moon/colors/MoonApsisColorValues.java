@@ -79,9 +79,6 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
     public MoonApsisColorValues(ColorValues other) {
         super(other);
     }
-    public MoonApsisColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private MoonApsisColorValues(Parcel in) {
         super(in);
     }*/

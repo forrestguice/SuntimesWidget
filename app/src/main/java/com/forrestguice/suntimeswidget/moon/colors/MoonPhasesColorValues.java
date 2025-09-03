@@ -88,9 +88,6 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
     public MoonPhasesColorValues(ColorValues other) {
         super(other);
     }
-    public MoonPhasesColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private MoonPhasesColorValues(Parcel in) {
         super(in);
     }*/

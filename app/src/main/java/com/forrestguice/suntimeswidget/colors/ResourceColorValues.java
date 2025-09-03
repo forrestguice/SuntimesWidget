@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 
@@ -44,9 +43,6 @@ public abstract class ResourceColorValues extends ColorValues
 
     public ResourceColorValues(ColorValues other) {
         super(other);
-    }
-    public ResourceColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
     }
     /*protected ResourceColorValues(Parcel in) {
         super(in);

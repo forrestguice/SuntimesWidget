@@ -165,9 +165,6 @@ public class LineGraphColorValues extends ResourceColorValues implements Seriali
     public LineGraphColorValues(ColorValues other) {
         super(other);
     }
-    public LineGraphColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private LineGraphColorValues(Parcel in) {
         super(in);
     }*/

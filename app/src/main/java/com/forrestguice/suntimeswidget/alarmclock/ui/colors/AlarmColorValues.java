@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
@@ -139,9 +138,6 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
 
     public AlarmColorValues(ColorValues other) {
         super(other);
-    }
-    public AlarmColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
     }
     /*protected AlarmColorValues(Parcel in) {
         super(in);

@@ -158,9 +158,6 @@ public class LightGraphColorValues extends ResourceColorValues implements Serial
     public LightGraphColorValues(ColorValues other) {
         super(other);
     }
-    public LightGraphColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private LightGraphColorValues(Parcel in) {
         super(in);
     }*/

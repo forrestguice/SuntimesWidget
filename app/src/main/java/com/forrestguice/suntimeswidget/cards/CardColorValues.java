@@ -130,9 +130,6 @@ public class CardColorValues extends ResourceColorValues implements Serializable
     public CardColorValues(ColorValues other) {
         super(other);
     }
-    public CardColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
     /*private CardColorValues(Parcel in) {
         super(in);
     }*/

@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.map.colors;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.R;
@@ -123,9 +122,6 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
 
     public WorldMapColorValues(ColorValues other) {
         super(other);
-    }
-    public WorldMapColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
     }
     /*protected WorldMapColorValues(Parcel in) {
         super(in);
