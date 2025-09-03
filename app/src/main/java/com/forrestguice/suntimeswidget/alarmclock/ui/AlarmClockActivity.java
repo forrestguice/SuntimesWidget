@@ -77,8 +77,6 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetThemes;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
@@ -246,18 +244,11 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private String appTheme;
     private int appThemeResID;
-    private SuntimesTheme appThemeOverride = null;
 
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
-
-        String themeName = AppSettings.getThemeOverride(this, appTheme);
-        if (themeName != null && WidgetThemes.hasValue(themeName)) {
-            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
-        }
     }
 
     private final BroadcastReceiver updateBroadcastReceiver = new BroadcastReceiver()
@@ -640,11 +631,6 @@ public class AlarmClockActivity extends AppCompatActivity
         resAddIcon = a.getResourceId(5, R.drawable.ic_action_new);
         resCloseIcon = a.getResourceId(6, R.drawable.ic_action_close);
         a.recycle();
-
-        if (appThemeOverride != null) {
-            colorAlarmEnabled = colorOn = appThemeOverride.getAccentColor();
-            colorPressed = appThemeOverride.getActionColor();
-        }
     }
 
     @Override

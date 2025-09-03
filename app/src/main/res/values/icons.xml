@@ -36,6 +36,9 @@
     <drawable name="ic_action_location_found_ref">@drawable/ic_action_location_found_light</drawable>
     <drawable name="ic_action_location_off_ref">@drawable/ic_action_location_off_light</drawable>
     <drawable name="ic_action_location_searching_ref">@drawable/ic_action_location_searching_light</drawable>
+    <drawable name="ic_satellite_ref">@drawable/ic_satellite_light</drawable>
+    <drawable name="ic_network_ref">@drawable/ic_network_light</drawable>
+    <drawable name="ic_celltower_ref">@drawable/ic_celltower_light</drawable>
 
     <drawable name="ic_action_place_ref">@drawable/ic_action_place_light</drawable>
     <drawable name="ic_action_map1_ref">@drawable/ic_action_map1_light</drawable>

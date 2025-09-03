@@ -81,9 +81,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,7 +169,6 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     private String appTheme;
     private int appThemeResID;
-    private SuntimesTheme appThemeOverride = null;
     private boolean isBrightMode = false;
     private ColorValues colors;
 
@@ -181,12 +178,6 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         appTheme = //(isBrightMode ? AppSettings.AppThemeInfo.getExtendedThemeName("light", AppSettings.loadTextSizePref(context)) :
                 AppSettings.loadThemePref(this);
         appThemeResID = AppSettings.setTheme(this, appTheme);
-
-        String themeName = AppSettings.getThemeOverride(this, appTheme);
-        if (themeName != null && WidgetThemes.hasValue(themeName)) {
-            Log.i(TAG, "initTheme: Overriding \"" + appTheme + "\" using: " + themeName);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
-        }
 
         if (isBrightMode)
         {
@@ -401,7 +392,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         snoozingDimmingDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_dimming_duration);
         snoozingScreenOnDuration = getResources().getInteger(R.integer.anim_alarmscreen_snoozing_screenon_duration);
 
-        if (appThemeOverride != null)
+        /*if (appThemeOverride != null)
         {
             colors.setColor(AlarmColorValues.COLOR_CONTROL_ENABLED, appThemeOverride.getActionColor());
             colors.setColor(AlarmColorValues.COLOR_CONTROL_PRESSED, appThemeOverride.getActionColor());
@@ -410,7 +401,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             colors.setColor(AlarmColorValues.COLOR_TEXT_PRIMARY, appThemeOverride.getTitleColor());
             colors.setColor(AlarmColorValues.COLOR_TEXT_SECONDARY, appThemeOverride.getTextColor());
             colors.setColor(AlarmColorValues.COLOR_TEXT_TIME, appThemeOverride.getTimeColor());
-        }
+        }*/
     }
 
     @Override
