@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventIcons;
@@ -387,10 +388,10 @@ public class AlarmEvent
     {
         ArrayList<AlarmEventItem> items = new ArrayList<>();
 
-        Set<String> customEvents = EventSettings.loadVisibleEvents(context);
+        Set<String> customEvents = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
         for (String eventID : customEvents)
         {
-            EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
             items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
             items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }

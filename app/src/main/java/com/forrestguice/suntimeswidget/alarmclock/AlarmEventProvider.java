@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -179,8 +180,8 @@ public class AlarmEventProvider extends ContentProvider
                 }
 
                 // list all custom events
-                List<EventAlias> events1 = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
-                events1.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
+                List<EventAlias> events1 = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
+                events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
                 for (EventAlias event : events1)
                 {
                     Object[] row1 = createRow(context, event, true, columns, selection, selectionArgs);
@@ -242,7 +243,7 @@ public class AlarmEventProvider extends ContentProvider
                     aliasID = aliasID.substring(0, eventID.length() - 1);
                 }
                 boolean rising = suffix.equals(ElevationEvent.SUFFIX_RISING);
-                EventAlias alias = EventSettings.loadEvent(context, aliasID);
+                EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), aliasID);
                 Object[] row = createRow(context, alias, rising, columns, selection, selectionArgs);
                 if (row != null) {
                     retValue.addRow(row);

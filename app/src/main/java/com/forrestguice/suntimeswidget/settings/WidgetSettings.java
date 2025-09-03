@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -1832,8 +1833,8 @@ public class WidgetSettings
             mode = TimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            if (EventSettings.hasEvent(context, modeString)) {
-                mode = new EventAliasTimeMode(EventSettings.loadEvent(context, modeString));
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(context), modeString)) {
+                mode = new EventAliasTimeMode(EventSettings.loadEvent(AndroidEventSettings.wrap(context), modeString));
             } else {
                 mode = PREF_DEF_GENERAL_TIMEMODE;
             }

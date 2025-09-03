@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.colors.ColorValues;
@@ -476,7 +477,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
             for (ContentValues values : contentValues)
             {
                 if (values != null) {
-                    EventSettings.saveEvent(context, EventAliasValues.createEventAlias(values));
+                    EventSettings.saveEvent(AndroidEventSettings.wrap(context), EventAliasValues.createEventAlias(values));
                     c++;
                 }
             }

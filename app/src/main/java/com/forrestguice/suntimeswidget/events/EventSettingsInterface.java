@@ -20,13 +20,15 @@ package com.forrestguice.suntimeswidget.events;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.ContextInterface;
 
 import java.util.List;
 import java.util.Set;
 
-public interface EventSettingsInterface
+public interface EventSettingsInterface extends ContextInterface
 {
     String PREFS_EVENTS = "suntimes.events";
+    String PREF_PREFIX_KEY = "appwidget_";
     String PREF_PREFIX_KEY_EVENT = "_event_";
 
     String PREF_KEY_EVENT_ID = "id";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class

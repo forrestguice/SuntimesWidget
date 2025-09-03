@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventType;
@@ -160,7 +161,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
         rows.add(row_midnight = new TimeFieldRow(view, R.id.text_time_label_midnight, R.id.text_time_midnight));
 
-        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext());
+        Set<String> customEvents = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(view.getContext()));
         customRows = new CustomRows(view, options);
         rows.addAll(customRows.initRows(view.getContext(), customEvents));
 
@@ -897,7 +898,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         {
             clearAll();
             for (String eventID : events) {
-                TimeFieldRow row = addRow(context, EventSettings.loadEvent(context, eventID));
+                TimeFieldRow row = addRow(context, EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID));
                 rows.put(eventID, row);
             }
             adjustBottomMargin();

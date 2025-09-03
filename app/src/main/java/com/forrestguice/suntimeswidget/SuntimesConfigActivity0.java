@@ -84,6 +84,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -1368,9 +1369,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 }
             }
 
-            if (EventSettings.hasEvent(context, eventID))
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID))
             {
-                EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
+                EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(SuntimesConfigActivity0.this), eventID);
                 if (event.getType() == EventType.SUN_ELEVATION
                         || event.getType() == EventType.SHADOWLENGTH)
                 {
@@ -3282,8 +3283,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 Double angle = timeMode.angle();
                 return angle != null ? utils.formatAsDegrees(angle, 1) : null;
 
-            } else if (context != null && EventSettings.hasEvent(context, item.name())) {
-                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
+            } else if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(AndroidEventSettings.wrap(context), item.name());
                 SunElevationEvent event = SunElevationEvent.valueOf(eventID);
                 return ((event != null) ? utils.formatAsDegrees(event.getAngle(), 1) : null);
 
@@ -3297,7 +3298,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 return Color.TRANSPARENT;
             }
             if (item.getTimeMode() == null) {
-                return EventSettings.getColor(contextRef.get(), item.name());
+                return EventSettings.getColor(AndroidEventSettings.wrap(contextRef.get()), item.name());
             }
             switch (item.getTimeMode())
             {

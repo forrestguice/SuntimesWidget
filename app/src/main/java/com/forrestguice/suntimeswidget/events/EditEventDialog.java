@@ -46,6 +46,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -435,11 +436,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
 
         if (eventID == null) {
-            eventID = EventSettings.suggestEventID(context);
+            eventID = EventSettings.suggestEventID(AndroidEventSettings.wrap(context));
         }
 
         if (label == null || label.trim().isEmpty()) {
-            label = EventSettings.suggestEventLabel(context, type);
+            label = EventSettings.suggestEventLabel(AndroidEventSettings.wrap(context), type);
         }
 
         super.initViews(context, dialogContent, savedState);

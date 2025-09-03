@@ -31,6 +31,7 @@ import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.UriUtils;
 
 import java.util.Calendar;
 
@@ -85,8 +86,8 @@ public class SuntimesRiseSetData extends SuntimesData
             EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
             ElevationEvent event;
             switch (alias.getType()) {
-                case SUN_ELEVATION: event = SunElevationEvent.valueOf(getLastPathSegment(alias.getUri())); break;
-                case SHADOWLENGTH: event = ShadowLengthEvent.valueOf(getLastPathSegment(alias.getUri())); break;
+                case SUN_ELEVATION: event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
+                case SHADOWLENGTH: event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
                 default: event = null; break;
             }
             this.angle = (event == null ? null : event.getAngle());

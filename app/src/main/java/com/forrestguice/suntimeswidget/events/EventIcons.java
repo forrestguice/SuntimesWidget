@@ -33,6 +33,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -95,7 +96,7 @@ public class EventIcons
                     //Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     return (suffix == null ? R.drawable.svg_season
                             : (ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
                 } else {
@@ -152,7 +153,7 @@ public class EventIcons
                 if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                return ((context != null && EventSettings.hasEvent(context, eventID)) ? EventSettings.getColor(context, eventID) : null);
+                return ((context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) ? EventSettings.getColor(AndroidEventSettings.wrap(context), eventID) : null);
             }
         }
         return null;
@@ -272,7 +273,7 @@ public class EventIcons
                     suffix = eventID.substring(eventID.length()-1);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     tag = EventIcons.TAG_ALIAS + eventID + suffix;
                 } else tag = null;
             } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;

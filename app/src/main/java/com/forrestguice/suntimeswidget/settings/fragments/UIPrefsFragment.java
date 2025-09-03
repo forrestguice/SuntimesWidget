@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -170,10 +171,10 @@ public class UIPrefsFragment extends PreferenceFragment
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
 
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
         for (final String eventID : eventIDs)
         {
-            EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
@@ -232,7 +233,7 @@ public class UIPrefsFragment extends PreferenceFragment
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    EventSettings.setShown(context, eventID, false);
+                                    EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, false);
                                     category.removePreference(pref);
                                     context.setNeedsRecreateFlag();
                                 }

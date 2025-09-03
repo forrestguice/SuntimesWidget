@@ -18,11 +18,16 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import android.os.Build;
+
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.prefs.SharedPreferences;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class AndroidSharedPreferences implements SharedPreferences
 {
@@ -70,8 +75,13 @@ public class AndroidSharedPreferences implements SharedPreferences
             }
 
             @Override
-            public Editor putStringSet(String key, Set<String> values) {
-                edit.putStringSet(key, values);
+            public Editor putStringSet(String key, Set<String> values)
+            {
+                if (Build.VERSION.SDK_INT >= 11) {
+                    edit.putStringSet(key, values);
+                } else {
+                    edit.putString(key, stringSetToString(values));
+                }
                 return this;
             }
 
@@ -159,7 +169,26 @@ public class AndroidSharedPreferences implements SharedPreferences
     }
 
     @Override
-    public Set<String> getStringSet(String key, Set<String> defValues) {
-        return prefs.getStringSet(key, defValues);
+    public Set<String> getStringSet(String key, Set<String> defValues)
+    {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getStringSet(key, defValues);
+        } else {
+            String s = prefs.getString(key, null);
+            return (s != null) ? new TreeSet<>(Arrays.asList(s.split("\\|"))) : null;
+        }
+    }
+
+    public static String stringSetToString(@Nullable Set<String> values)
+    {
+        if (values != null) {
+            StringBuilder s = new StringBuilder();
+            for (String v : values) {
+                s.append(v).append("|");
+            }
+            return s.toString();
+        } else {
+            return null;
+        }
     }
 }

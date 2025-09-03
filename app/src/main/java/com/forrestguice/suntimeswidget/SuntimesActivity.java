@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -1793,9 +1794,9 @@ public class SuntimesActivity extends AppCompatActivity
             }
 
             String alarmID = eventID;
-            if (EventSettings.hasEvent(this, eventID))
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(this), eventID))
             {
-                EventAlias event = EventSettings.loadEvent(this, eventID);
+                EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(this), eventID);
                 alarmID = event.getAliasUri() + (isRising ? SunElevationEvent.SUFFIX_RISING : SunElevationEvent.SUFFIX_SETTING);
             }
 

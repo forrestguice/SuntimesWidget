@@ -18,23 +18,22 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Build;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.UriUtils;
+import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREFS_EVENTS;
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_COLOR;
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_ID;
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_SHOWN;
@@ -48,17 +47,12 @@ import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_SHOWN;
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_TYPE;
 import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_URI;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_PREFIX_KEY;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_PREFIX_KEY_EVENT;
 
 public class EventSettings
 {
-    public static final String PREFS_EVENTS = "suntimes.events";
-    public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
-    public static final String PREF_PREFIX_KEY_EVENT = "_event_";
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static String suggestEventID(@NonNull Context context)
+    public static String suggestEventID(@NonNull ContextInterface context)
     {
         String id;
         int i = 0;
@@ -69,7 +63,7 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(@NonNull Context context, EventType eventType)
+    public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType)
     {
         switch (eventType) {
             case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
@@ -78,7 +72,7 @@ public class EventSettings
         }
     }
 
-    public static EventAlias saveEvent(@NonNull Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
+    public static EventAlias saveEvent(@NonNull ContextInterface context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
             id = suggestEventID(context);
@@ -87,7 +81,7 @@ public class EventSettings
         saveEvent(context, alias);
         return alias;
     }
-    public static void saveEvent(Context context, EventAlias event)
+    public static void saveEvent(ContextInterface context, EventAlias event)
     {
         String id = event.getID();
         EventType type = event.getType();
@@ -114,10 +108,10 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static Set<String> loadVisibleEvents(Context context) {
+    public static Set<String> loadVisibleEvents(ContextInterface context) {
         return loadVisibleEvents(context, EventType.visibleTypes());
     }
-    public static Set<String> loadVisibleEvents(Context context, EventType... types)
+    public static Set<String> loadVisibleEvents(ContextInterface context, EventType... types)
     {
         Set<String> result = new TreeSet<>();
         for (EventType type : types) {
@@ -125,7 +119,7 @@ public class EventSettings
         }
         return result;
     }
-    public static Set<String> loadVisibleEvents(Context context, EventType type)
+    public static Set<String> loadVisibleEvents(ContextInterface context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN;
@@ -133,7 +127,7 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
-    public static Set<String> loadEventList(Context context)
+    public static Set<String> loadEventList(ContextInterface context)
     {
         Set<String> result = new TreeSet<>();
         for (EventType type : EventType.values()) {
@@ -141,7 +135,7 @@ public class EventSettings
         }
         return result;
     }
-    public static Set<String> loadEventList(Context context, EventType type)
+    public static Set<String> loadEventList(ContextInterface context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST;
@@ -149,7 +143,7 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
-    public static String loadEventValue(Context context, @NonNull String id, @Nullable String key)
+    public static String loadEventValue(ContextInterface context, @NonNull String id, @Nullable String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -179,7 +173,7 @@ public class EventSettings
         }
     }
 
-    public static boolean loadEventFlag(Context context, @NonNull String id, @NonNull String key)
+    public static boolean loadEventFlag(ContextInterface context, @NonNull String id, @NonNull String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -191,7 +185,7 @@ public class EventSettings
         }
         return false;
     }
-    public static void saveEventFlag(Context context, @NonNull String id, @NonNull String key, boolean value)
+    public static void saveEventFlag(ContextInterface context, @NonNull String id, @NonNull String key, boolean value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -199,7 +193,7 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static EventAlias loadEvent(Context context, @NonNull String id)
+    public static EventAlias loadEvent(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -210,7 +204,7 @@ public class EventSettings
                 loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN));
     }
 
-    public static List<EventAlias> loadEvents(Context context, EventType type)
+    public static List<EventAlias> loadEvents(ContextInterface context, EventType type)
     {
         Set<String> events = loadEventList(context, type);
         ArrayList<EventAlias> list = new ArrayList<>();
@@ -220,7 +214,7 @@ public class EventSettings
         return list;
     }
 
-    public static void deleteEvent(Context context, @NonNull String id)
+    public static void deleteEvent(ContextInterface context, @NonNull String id)
     {
         EventType type = getType(context, id);
 
@@ -244,17 +238,17 @@ public class EventSettings
         prefs.commit();
     }
 
-    public static boolean hasEvent(@NonNull Context context, @NonNull String id)
+    public static boolean hasEvent(@NonNull ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         return prefs.contains(prefs_prefix + PREF_KEY_EVENT_TYPE);
     }
 
-    public static boolean isShown(Context context, @NonNull String id) {
+    public static boolean isShown(ContextInterface context, @NonNull String id) {
         return loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN);
     }
-    public static void setShown(Context context, @NonNull String id, boolean value)
+    public static void setShown(ContextInterface context, @NonNull String id, boolean value)
     {
         saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
 
@@ -268,20 +262,20 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static String getEventUriLastPathSegment(Context context, @NonNull String id)
+    public static String getEventUriLastPathSegment(ContextInterface context, @NonNull String id)
     {
         String eventUri = EventSettings.loadEventValue(context, id, PREF_KEY_EVENT_URI);
-        return Uri.parse(eventUri).getLastPathSegment();
+        return UriUtils.getLastPathSegment(eventUri);
     }
 
-    public static int getColor(Context context, @NonNull String id)
+    public static int getColor(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         return prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR);
     }
 
-    public static EventType getType(Context context, @NonNull String id)
+    public static EventType getType(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -297,52 +291,29 @@ public class EventSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues)    // TODO: needs test
-    {
-        if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getStringSet(key, defValues);
-        } else {
-            String s = prefs.getString(key, null);
-            return (s != null) ? new TreeSet<>(Arrays.asList(s.split("\\|"))) : null;
-        }
+    public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues) {
+        return prefs.getStringSet(key, defValues);
     }
 
-    public static void putStringSet(SharedPreferences.Editor prefs, String key, @Nullable Set<String> values)  // TODO: needs test
-    {
-        if (Build.VERSION.SDK_INT >= 11) {
-            prefs.putStringSet(key, values);
-        } else {
-            prefs.putString(key, stringSetToString(values));
-        }
+    public static void putStringSet(SharedPreferences.Editor prefs, String key, @Nullable Set<String> values) {
+        prefs.putStringSet(key, values);
         prefs.apply();
     }
-    public static String stringSetToString(@Nullable Set<String> values)
-    {
-        if (values != null) {
-            StringBuilder s = new StringBuilder();
-            for (String v : values) {
-                s.append(v).append("|");
-            }
-            return s.toString();
-        } else {
-            return null;
-        }
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void deletePrefs(Context context)
+    public static void deletePrefs(ContextInterface context)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         prefs.clear();
         prefs.apply();
     }
 
-    public static void initDefaults(Context context) {
+    public static void initDefaults(ContextInterface context) {
     }
 
-    public static void initDisplayStrings( Context context ) {
+    public static void initDisplayStrings(Resources context) {
         //EventType.initDisplayStrings(context);
     }
 

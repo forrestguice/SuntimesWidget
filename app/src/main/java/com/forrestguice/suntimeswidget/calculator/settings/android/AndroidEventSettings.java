@@ -5,6 +5,9 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.List;
 import java.util.Set;
@@ -27,121 +30,141 @@ public class AndroidEventSettings implements EventSettingsInterface
 
     @Override
     public String suggestEventID() {
-        return EventSettings.suggestEventID(context);
+        return EventSettings.suggestEventID(this);
     }
 
     @Override
     public String suggestEventLabel(EventType eventType) {
-        return EventSettings.suggestEventLabel(context, eventType);
+        return EventSettings.suggestEventLabel(this, eventType);
     }
 
     @Override
     public EventAlias saveEvent(EventType type, String id, String label, Integer color, String uri) {
-        return EventSettings.saveEvent(context, type, id, label, color, uri);
+        return EventSettings.saveEvent(this, type, id, label, color, uri);
     }
 
     @Override
     public void saveEvent(EventAlias event) {
-        EventSettings.saveEvent(context, event);
+        EventSettings.saveEvent(this, event);
     }
 
     @Override
     public Set<String> loadVisibleEvents() {
-        return EventSettings.loadVisibleEvents(context);
+        return EventSettings.loadVisibleEvents(this);
     }
 
     @Override
     public Set<String> loadVisibleEvents(EventType... types) {
-        return EventSettings.loadVisibleEvents(context, types);
+        return EventSettings.loadVisibleEvents(this, types);
     }
 
     @Override
     public Set<String> loadVisibleEvents(EventType type) {
-        return EventSettings.loadVisibleEvents(context, type);
+        return EventSettings.loadVisibleEvents(this, type);
     }
 
     @Override
     public Set<String> loadEventList() {
-        return EventSettings.loadEventList(context);
+        return EventSettings.loadEventList(this);
     }
 
     @Override
     public Set<String> loadEventList(EventType type) {
-        return EventSettings.loadEventList(context, type);
+        return EventSettings.loadEventList(this, type);
     }
 
     @Override
     public String loadEventValue(String id, String key) {
-        return EventSettings.loadEventValue(context, id, key);
+        return EventSettings.loadEventValue(this, id, key);
     }
 
     @Override
     public boolean loadEventFlag(String id, String key) {
-        return EventSettings.loadEventFlag(context, id, key);
+        return EventSettings.loadEventFlag(this, id, key);
     }
 
     @Override
     public void saveEventFlag(String id, String key, boolean value) {
-        EventSettings.saveEventFlag(context, id, key, value);
+        EventSettings.saveEventFlag(this, id, key, value);
     }
 
     @Override
     public EventAlias loadEvent(String id) {
-        return EventSettings.loadEvent(context, id);
+        return EventSettings.loadEvent(this, id);
     }
 
     @Override
     public List<EventAlias> loadEvents(EventType type) {
-        return EventSettings.loadEvents(context, type);
+        return EventSettings.loadEvents(this, type);
     }
 
     @Override
     public void deleteEvent(String id) {
-        EventSettings.deleteEvent(context, id);
+        EventSettings.deleteEvent(this, id);
     }
 
     @Override
     public boolean hasEvent(String id) {
-        return EventSettings.hasEvent(context, id);
+        return EventSettings.hasEvent(this, id);
     }
 
     @Override
     public boolean isShown(String id) {
-        return EventSettings.isShown(context, id);
+        return EventSettings.isShown(this, id);
     }
 
     @Override
     public void setShown(String id, boolean value) {
-        EventSettings.setShown(context, id, value);
+        EventSettings.setShown(this, id, value);
     }
 
     @Override
     public String getEventUriLastPathSegment(String id) {
-        return EventSettings.getEventUriLastPathSegment(context, id);
+        return EventSettings.getEventUriLastPathSegment(this, id);
     }
 
     @Override
     public int getColor(String id) {
-        return EventSettings.getColor(context, id);
+        return EventSettings.getColor(this, id);
     }
 
     @Override
     public EventType getType(String id) {
-        return EventSettings.getType(context, id);
+        return EventSettings.getType(this, id);
     }
 
     @Override
     public void deletePrefs() {
-        EventSettings.deletePrefs(context);
+        EventSettings.deletePrefs(this);
     }
 
     @Override
     public void initDefaults() {
-        EventSettings.initDefaults(context);
+        EventSettings.initDefaults(this);
     }
 
     @Override
     public void initDisplayStrings() {
-        EventSettings.initDisplayStrings(context);
+        EventSettings.initDisplayStrings(getResources());
+    }
+
+    @Override
+    public Resources getResources() {
+        return AndroidResources.wrap(context);
+    }
+
+    @Override
+    public String getString(int id) {
+        return context.getString(id);
+    }
+
+    @Override
+    public String getString(int id, Object... formatArgs) {
+        return context.getString(id, formatArgs);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int flags) {
+        return AndroidSharedPreferences.wrap(context.getSharedPreferences(name, flags));
     }
 }

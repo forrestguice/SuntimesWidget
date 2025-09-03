@@ -39,6 +39,7 @@ import android.util.TypedValue;
 
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -301,7 +302,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         {
             String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
             if (eventID != null) {
-                EventSettings.setShown(context, eventID, true);
+                EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, true);
                 adapterModified = true;
             }
         }

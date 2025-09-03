@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
@@ -192,7 +193,7 @@ public class SuntimesNotes
             notesList.add(note);
         }
 
-        for (String eventID : EventSettings.loadVisibleEvents(context)) {
+        for (String eventID : EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context))) {
             notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_RISING));
             notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_SETTING));
         }
@@ -555,9 +556,9 @@ public class SuntimesNotes
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
             }
 
-            if (EventSettings.hasEvent(context, eventID0))
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID0))
             {
-                EventAlias event = EventSettings.loadEvent(context, eventID0);
+                EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID0);
                 if (event != null)
                 {
                     int[] iconAttr = { R.attr.sunriseIconLarge, R.attr.sunsetIconLarge };

@@ -60,6 +60,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -304,8 +305,8 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventAlias> events = EventSettings.loadEvents(context, EventType.SUN_ELEVATION);
-        events.addAll(EventSettings.loadEvents(context, EventType.SHADOWLENGTH));
+        List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
+        events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
 
         Collections.sort(events, new Comparator<EventAlias>() {
             @Override
@@ -427,7 +428,7 @@ public class EventListHelper
         final Context context = contextRef.get();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
-            final EventAlias event = EventSettings.loadEvent(context, eventID);
+            final EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
 
             final EditEventDialog saveDialog = new EditEventDialog();
             saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_EDIT);
@@ -452,7 +453,7 @@ public class EventListHelper
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String eventID = saveDialog.getEventID();
-                EventSettings.saveEvent(context, saveDialog.getEvent());
+                EventSettings.saveEvent(AndroidEventSettings.wrap(context), saveDialog.getEvent());
                 //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
                 //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
                 initAdapter(context);
@@ -633,7 +634,7 @@ public class EventListHelper
                     for (int i=0; i<items.length; i++)
                     {
                         if (items[i] != null) {
-                            EventSettings.saveEvent(context, items[i]);
+                            EventSettings.saveEvent(AndroidEventSettings.wrap(context), items[i]);
                         }
                     }
                 }
@@ -662,7 +663,7 @@ public class EventListHelper
                     {
                         for (EventAlias item : items) {
                             if (item != null) {
-                                EventSettings.deleteEvent(context, item.getID());
+                                EventSettings.deleteEvent(AndroidEventSettings.wrap(context), item.getID());
                             }
                         }
                         initAdapter(context);
@@ -696,8 +697,8 @@ public class EventListHelper
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    EventSettings.deletePrefs(context);
-                                    EventSettings.initDefaults(context);
+                                    EventSettings.deletePrefs(AndroidEventSettings.wrap(context));
+                                    EventSettings.initDefaults(AndroidEventSettings.wrap(context));
                                     Toast.makeText(context, context.getString(R.string.clearevents_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
                                     updateViews(context);
@@ -714,7 +715,7 @@ public class EventListHelper
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            String label = EventSettings.loadEventValue(context, eventID, EventSettingsInterface.PREF_KEY_EVENT_LABEL);
+            String label = EventSettings.loadEventValue(AndroidEventSettings.wrap(context), eventID, EventSettingsInterface.PREF_KEY_EVENT_LABEL);
 
             dialog.setMessage(context.getString(R.string.delevent_dialog_msg, label, eventID))
                     .setNegativeButton(context.getString(R.string.delevent_dialog_cancel), null)
@@ -724,7 +725,7 @@ public class EventListHelper
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    EventSettings.deleteEvent(context, eventID);
+                                    EventSettings.deleteEvent(AndroidEventSettings.wrap(context), eventID);
                                     adapterModified = true;
 
                                     list.post(new Runnable()
@@ -1116,7 +1117,7 @@ public class EventListHelper
 
             CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
             if (checkbox != null) {
-                checkbox.setChecked(EventSettings.isShown(getContext(), item.getID()));
+                checkbox.setChecked(EventSettings.isShown(AndroidEventSettings.wrap(getContext()), item.getID()));
                 checkbox.setVisibility(checkbox.isChecked() ? View.VISIBLE : View.INVISIBLE);
             }
 
