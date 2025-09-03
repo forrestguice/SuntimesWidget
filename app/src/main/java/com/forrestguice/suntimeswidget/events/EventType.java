@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.events;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import java.util.Set;
@@ -43,25 +42,24 @@ public enum EventType
         return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH };
     }
 
-    //private String displayString;
-    //public String getDisplayString()
-    //{
-    //    return displayString;
-    //}
-    //public void setDisplayString(String value)
-    //{
-    //    displayString = value;
-    //}
-    //public static void initDisplayStrings(Context context) {
-    //    SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
-    //}
-    //public String toString()
-    //{
-    //    return displayString;
-    //}
+    private String displayString;
+    public String getDisplayString() {
+        return displayString;
+    }
+    public void setDisplayString(String value) {
+        displayString = value;
+    }
+    public String toString() {
+        return displayString;
+    }
+
+    public String getSubtypeID(@android.support.annotation.Nullable String subtype) {
+        return (subtype != null) ? name() + "_" + subtype
+                : name();
+    }
 
     @Nullable
-    public static EventType resolveEventType(SuntimesDataSettings settings, String eventID)
+    public static EventType resolveEventType(EventSettingsInterface settings, String eventID)
     {
         if (isNumeric(eventID)) {
             return EventType.DATE;
@@ -77,7 +75,7 @@ public enum EventType
                 return EventType.SOLAREVENT;
             }
         }
-        Set<String> eventList = settings.getEventSettings().loadEventList();
+        Set<String> eventList = settings.loadEventList();
         for (String aliasID : eventList)
         {
             if (eventID.startsWith(aliasID)) {

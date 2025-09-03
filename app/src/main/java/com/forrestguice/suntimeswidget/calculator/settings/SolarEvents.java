@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public enum SolarEvents
@@ -83,7 +84,7 @@ public enum SolarEvents
     public static final int[] types() {
         return new int[] { TYPE_SUN, TYPE_MOON, TYPE_MOONPHASE, TYPE_SEASON };
     }
-    public static CharSequence getTypeLabel(Context context, @Nullable Integer type)
+    public static CharSequence getTypeLabel(Resources context, @Nullable Integer type)
     {
         if (type == null) {
             return "";

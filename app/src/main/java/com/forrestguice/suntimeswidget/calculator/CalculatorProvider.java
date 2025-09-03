@@ -32,6 +32,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
@@ -676,18 +680,18 @@ public class CalculatorProvider extends ContentProvider
             positionSuffix = _POSITION_DEC;
         }
 
-        if (AlarmEventProvider.EventType.resolveEventType(context, column) == AlarmEventProvider.EventType.EVENTALIAS)
+        if (EventType.resolveEventType(AndroidEventSettings.wrap(context), column) == EventType.EVENTALIAS)
         {
             String aliasID = eventID;   // e.g. CUSTOM0
             String aliasSuffix = "";    // e.g. r, s
-            if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                 aliasID = aliasID.substring(0, eventID.length() - 1);
                 aliasSuffix = eventID.substring(eventID.length() - 1);
             }
 
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
-            AlarmEventProvider.EventType aliasType = alias.getType();
-            if (aliasType == AlarmEventProvider.EventType.SUN_ELEVATION || aliasType == AlarmEventProvider.EventType.SHADOWLENGTH)
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), aliasID);
+            EventType aliasType = alias.getType();
+            if (aliasType == EventType.SUN_ELEVATION || aliasType == EventType.SHADOWLENGTH)
             {
                 Calendar now = Calendar.getInstance();
                 now.setTimeInMillis(day.getTimeInMillis());
@@ -696,7 +700,7 @@ public class CalculatorProvider extends ContentProvider
                 now.set(Calendar.SECOND, 0);
                 now.set(Calendar.MILLISECOND, 0);
 
-                boolean isRising = (aliasSuffix.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
+                boolean isRising = (aliasSuffix.endsWith(ElevationEvent.SUFFIX_RISING));
                 Object[] aliasValues = AlarmEventProvider.createRow(context, alias, isRising, new String[] { AlarmEventContract.COLUMN_EVENT_TIMEMILLIS },
                         AlarmEventContract.EXTRA_ALARM_NOW + "=?", new String[] { Long.toString(now.getTimeInMillis()) });
 
