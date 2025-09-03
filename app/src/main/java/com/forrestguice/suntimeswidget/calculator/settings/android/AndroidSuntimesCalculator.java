@@ -20,9 +20,11 @@ package com.forrestguice.suntimeswidget.calculator.settings.android;
 
 import android.content.Context;
 
+import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.util.SystemTimeFormat;
@@ -36,5 +38,6 @@ public class AndroidSuntimesCalculator
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
+        Color.init(new AndroidColor());
     }
 }
