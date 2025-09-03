@@ -182,6 +182,7 @@ public class MoonRiseSetView extends LinearLayout
             }
         }
     }
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         if (theme != null) {

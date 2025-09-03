@@ -1,5 +1,28 @@
 ### ~
 
+### v0.16.9 (2025-07-28)
+* improves reliability of location updates (#884); adds "fused" location provider (api31+).
+* fixes bug where "data patterns display nothing at higher latitudes" (#874).
+* fixes bug where "in metric mode elevation is still in feet" (#885).
+* fixes "app crash when showing graphs with data sources that lacks support".
+* fixes "app crash (null pointer exception)" (#882).
+* fixes inaccurate default places coordinates (8 places updated).
+* adds "solar midnight" checkbox to the welcome activity.
+* adds location update information to settings; available providers and recent location age.
+* changes defaults; "location maxAge" increased from 5 to 15 minutes (#884).
+* updates translation to Polish and Esperanto (eo, pl) (#883 by Verdulo).
+
+### v0.16.8 (2025-06-16)
+* adds labels for "Polar Night", "Midnight Sun", "Midnight Twilight", and "White Night" (#875) to sun dialog.
+* adds label for "daylight of the same length" to the main card.
+* adds world places; ~79 places; European cities.
+* fixes app crash when using custom events with offsets (#879).
+* fixes app crash in sun dialog when using rise/set buttons on days those events don't occur.
+* fixes bug where "lightmap sun icon is cropped at solar midnight" (#877).
+* fixes bug in sunlight graph where "days that experience polar night are drawn incorrectly" (#878).
+* fixes bug where "`%eT@sn` displays the wrong time (sunset instead of noon)" (#874).
+* increments `CalculatorProviderContract` version 7 -> 8; adds column for solar midnight.
+
 ### v0.16.7 (2025-05-12)
 * fixes app crash when twilight alarms have an attached note (#872).
 * improves searching places when names contain special characters.

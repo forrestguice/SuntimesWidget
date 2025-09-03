@@ -207,6 +207,7 @@ public class MoonApsisView extends LinearLayout
         themeDrawables();
     }
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         colorPressed = theme.getActionColor();
