@@ -44,6 +44,7 @@ public class SuntimesApplication extends Application
         if (BuildConfig.DEBUG) {
             Log.d("DEBUG", "SuntimesApplication.init:");
         }
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(context, Thread.getDefaultUncaughtExceptionHandler()));
         ApplicationStarter.initialize(context, false);
 
         if (BuildConfig.DEBUG)

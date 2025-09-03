@@ -2650,6 +2650,16 @@
     <string name="colorsdelete_dialog_ok">Remove</string>    <!-- toast -->
     <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->
 
+    <!-- Dialog: Crash Report -->
+    <string name="crash_dialog_title">Crash Report</string>    <!-- TODO -->
+    <string name="crash_dialog_message">%s has crashed…</string>    <!-- TODO -->
+    <string name="crash_dialog_message1"><![CDATA[
+        Help improve this app by reporting this crash:<br/><br/>
+        <b>%1$s</b>
+    ]]></string>    <!-- TODO -->
+    <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
+    <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
+
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
     <string name="app_name">Suntimes</string>
