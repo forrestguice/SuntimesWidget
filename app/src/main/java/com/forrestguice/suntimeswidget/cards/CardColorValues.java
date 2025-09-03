@@ -140,9 +140,6 @@ public class CardColorValues extends ResourceColorValues implements Serializable
     public CardColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public CardColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<CardColorValues> CREATOR = new Creator<CardColorValues>()
     {

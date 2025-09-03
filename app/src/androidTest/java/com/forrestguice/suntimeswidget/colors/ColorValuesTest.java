@@ -166,7 +166,8 @@ public class ColorValuesTest
         String json0 = colors0.toJSON(true);
         assertNotNull(json0);
 
-        ColorValues colors = new TestColorValues(json0);
+        ColorValues colors = new TestColorValues();
+        new ColorValuesJSON().loadColorValues(colors, json0);
         TestColorValues.verify_testColorValues(colors);
         assertEquals("colors0", colors.getID());
     }
@@ -188,10 +189,6 @@ public class ColorValuesTest
 
         public TestColorValues(HashMap<String, Object> values) {
             super(values);
-        }
-
-        public TestColorValues(String json) {
-            super(json);
         }
 
         @Override

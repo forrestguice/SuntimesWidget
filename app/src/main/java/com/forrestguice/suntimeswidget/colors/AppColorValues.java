@@ -206,9 +206,6 @@ public class AppColorValues extends ResourceColorValues implements Serializable
     public AppColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public AppColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<AppColorValues> CREATOR = new Creator<AppColorValues>()
     {

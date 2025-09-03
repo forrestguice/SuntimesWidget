@@ -98,9 +98,6 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
     public MoonPhasesColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonPhasesColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<MoonPhasesColorValues> CREATOR = new Creator<MoonPhasesColorValues>()
     {

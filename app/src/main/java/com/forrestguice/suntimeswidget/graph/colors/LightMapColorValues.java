@@ -118,9 +118,6 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
     public LightMapColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public LightMapColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<LightMapColorValues> CREATOR = new Creator<LightMapColorValues>()
     {

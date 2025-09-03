@@ -64,7 +64,7 @@ public abstract class ColorValuesStorage
         editor.apply();
     }
     public static void putColorsInto(ColorValues colors, HashMap<String, Object> other) {
-        other.putAll(colors.values);
+        other.putAll(colors.getValues());
     }
 
     public static void removeColorsFrom(ColorValues colors, SharedPreferences prefs, String prefix)

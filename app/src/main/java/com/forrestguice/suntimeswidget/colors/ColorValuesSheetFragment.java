@@ -354,7 +354,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         ColorValues values = listener.getDefaultValues();
         if (values != null)
         {
-            if (values.loadColorValues(jsonString))
+            if (new ColorValuesJSON().loadColorValues(values, jsonString))
             {
                 String id = values.getID();
                 if (id != null)

@@ -169,9 +169,6 @@ public class LightGraphColorValues extends ResourceColorValues implements Serial
     public LightGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public LightGraphColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
     {

@@ -447,16 +447,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void importColors(final Context context, String jsonInput)
     {
-        ColorValues values = new ColorValues(jsonInput) {
-            @Override
-            public String[] getColorKeys() {
-                return new String[0];
-            }
-        };
-        if (values != null)
-        {
-
-        }
         // TODO
     }
 

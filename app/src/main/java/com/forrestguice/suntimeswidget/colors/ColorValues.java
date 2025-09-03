@@ -22,10 +22,6 @@ package com.forrestguice.suntimeswidget.colors;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.Color;
-import com.forrestguice.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,9 +40,6 @@ public abstract class ColorValues implements Serializable
     }
     public ColorValues(HashMap<String, Object> values) {
         loadColorValues(values);
-    }
-    public ColorValues(String jsonString) {
-        loadColorValues(jsonString);
     }
 
     public void loadColorValues(@NonNull ColorValues other)
@@ -72,27 +65,6 @@ public abstract class ColorValues implements Serializable
             if (values.containsKey(key + SUFFIX_LABEL)) {
                 setLabel(key, (String) values.get(key + SUFFIX_LABEL));
             }
-        }
-    }
-
-    public boolean loadColorValues(String jsonString)
-    {
-        try {
-            JSONObject json = new JSONObject(jsonString);
-            setID(json.getString(KEY_ID));
-            setLabel(json.getString(KEY_LABEL));
-            for (String key : getColorKeys())
-            {
-                setColor(key, json.has(key) ? Color.parseColor(json.getString(key).trim()) : getFallbackColor());
-                if (json.has(key + SUFFIX_LABEL)) {
-                    setLabel(key, json.getString(key + SUFFIX_LABEL).trim());
-                }
-            }
-            return json.has(KEY_ID);
-
-        } catch (JSONException e) {
-            Log.e("ColorValues", "fromJSON: " + e);
-            return false;
         }
     }
 
@@ -219,21 +191,24 @@ public abstract class ColorValues implements Serializable
 
     public String toJSON(boolean withLabels)
     {
-        JSONObject result = new JSONObject();
-        try {
-            result.put(KEY_ID, getID());
-            result.put(KEY_LABEL, getLabel());
-            for (String key : getColorKeys())
-            {
-                result.put(key, "#" + Integer.toHexString(getColor(key)));
-                if (withLabels && hasLabel(key)) {
-                    result.put(key + SUFFIX_LABEL, getLabel(key));
-                }
+        StringBuilder result = new StringBuilder("{\n");
+        result.append(jsonPair(KEY_ID, getID())).append(",\n");
+        result.append(jsonPair(KEY_LABEL, getLabel())).append(",\n");
+
+        for (String key : getColorKeys())
+        {
+            result.append(jsonPair(key, "#" + Integer.toHexString(getColor(key)))).append(",\n");
+            if (withLabels && hasLabel(key)) {
+                result.append(jsonPair(key + SUFFIX_LABEL, getLabel(key))).append(",\n");
             }
-        } catch (JSONException e) {
-            Log.e("ColorValues", "toJSON: " + e);
         }
+
+        result.append("\n}");
         return result.toString();
+    }
+
+    private String jsonPair(String key, String value) {
+        return "\"" + key + "\": \"" + value + "\"";
     }
 
 }

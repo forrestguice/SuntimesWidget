@@ -175,9 +175,6 @@ public class LineGraphColorValues extends ResourceColorValues implements Seriali
     public LineGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public LineGraphColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<LineGraphColorValues> CREATOR = new Creator<LineGraphColorValues>()
     {

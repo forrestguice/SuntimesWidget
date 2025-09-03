@@ -111,10 +111,6 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
         super(context, darkTheme);
     }
 
-    public EquinoxColorValues(String jsonString) {
-        super(jsonString);
-    }
-
     /*public static final Creator<EquinoxColorValues> CREATOR = new Creator<EquinoxColorValues>()
     {
         public EquinoxColorValues createFromParcel(Parcel in) {

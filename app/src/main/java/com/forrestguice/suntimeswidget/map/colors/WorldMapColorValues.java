@@ -133,10 +133,6 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
         super(context, darkTheme);
     }
 
-    public WorldMapColorValues(String jsonString) {
-        super(jsonString);
-    }
-
     /*public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
     {
         public WorldMapColorValues createFromParcel(Parcel in) {

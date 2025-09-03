@@ -149,10 +149,6 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
         super(context, fallbackDarkTheme);
     }
 
-    public AlarmColorValues(String jsonString) {
-        super(jsonString);
-    }
-
     /*public static final Creator<AlarmColorValues> CREATOR = new Creator<AlarmColorValues>()
     {
         public AlarmColorValues createFromParcel(Parcel in) {

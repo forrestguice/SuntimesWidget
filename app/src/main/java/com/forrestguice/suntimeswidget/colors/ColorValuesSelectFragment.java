@@ -301,7 +301,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, colors.toJSON(false));
+                intent.putExtra(Intent.EXTRA_TEXT, new ColorValuesJSON().toJSON(colors, false));
                 startActivity(Intent.createChooser(intent, null));
             }
         }

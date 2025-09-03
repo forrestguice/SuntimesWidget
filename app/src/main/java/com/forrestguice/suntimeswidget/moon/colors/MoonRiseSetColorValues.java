@@ -99,9 +99,6 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Seria
     public MoonRiseSetColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonRiseSetColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
     {

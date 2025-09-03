@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValu
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesJSON;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -282,6 +283,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
      */
     public static void writeColorsJSONArray(Context context, ColorValuesCollection<ColorValues> collection, BufferedOutputStream out) throws IOException
     {
+        ColorValuesJSON json = new ColorValuesJSON();
         out.write("[".getBytes());
 
         int c = 0;
@@ -293,7 +295,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             ColorValues colors = collection.getColors(context, colorsID);
             if (colors != null) {
-                out.write(colors.toJSON().getBytes());
+                out.write(json.toJSON(colors).getBytes());
                 c++;
             }
         }

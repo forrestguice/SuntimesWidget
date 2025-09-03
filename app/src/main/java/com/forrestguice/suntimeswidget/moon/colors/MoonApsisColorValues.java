@@ -89,9 +89,6 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
     public MoonApsisColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonApsisColorValues(String jsonString) {
-        super(jsonString);
-    }
 
     /*public static final Creator<MoonApsisColorValues> CREATOR = new Creator<MoonApsisColorValues>()
     {

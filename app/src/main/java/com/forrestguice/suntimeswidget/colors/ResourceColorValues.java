@@ -87,10 +87,6 @@ public abstract class ResourceColorValues extends ColorValues
         a.recycle();
     }
 
-    public ResourceColorValues(String jsonString) {
-        super(jsonString);
-    }
-
     public ColorValues getDefaultValues(Resources context, boolean darkTheme)
     {
         ColorValues values = new ColorValues()
