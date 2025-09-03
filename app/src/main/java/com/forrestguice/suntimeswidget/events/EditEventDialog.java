@@ -109,7 +109,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* EventType */
-    protected EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
+    protected EventType type = EventSettingsInterface.PREF_DEF_EVENT_TYPE;
     public EventType getEventType() {
         return type;
     }
@@ -139,7 +139,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event Color */
-    protected Integer color = EventSettings.PREF_DEF_EVENT_COLOR;
+    protected Integer color = EventSettingsInterface.PREF_DEF_EVENT_COLOR;
     public Integer getEventColor() {
         return (choose_color != null ? choose_color.getColor() : color);
     }

@@ -35,7 +35,7 @@ public final class EventAlias
         this.type = type;
         this.id = id;
         this.label = (label != null ? label : id);
-        this.color = (color != null ? color : EventSettings.PREF_DEF_EVENT_COLOR);
+        this.color = (color != null ? color : EventSettingsInterface.PREF_DEF_EVENT_COLOR);
         this.uri = uri;
         this.shown = shown;
         this.summary = null;

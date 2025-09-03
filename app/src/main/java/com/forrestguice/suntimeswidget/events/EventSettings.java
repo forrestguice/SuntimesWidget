@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.events;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import com.forrestguice.annotation.NonNull;
@@ -36,35 +35,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_COLOR;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_ID;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_SHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_URI;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_COLOR;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_ID;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LABEL;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LIST;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LISTSHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_SHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_URI;
+
 public class EventSettings
 {
     public static final String PREFS_EVENTS = "suntimes.events";
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
     public static final String PREF_PREFIX_KEY_EVENT = "_event_";
-
-    public static final String PREF_KEY_EVENT_ID = "id";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
-
-    public static final String PREF_KEY_EVENT_URI = "uri"; // SuntimesEventContract.COLUMN_EVENT_URI;  // TODO: contract class
-    public static String PREF_DEF_EVENT_URI = null;
-
-    public static final String PREF_KEY_EVENT_TYPE = "type";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
-    public static final EventType PREF_DEF_EVENT_TYPE = EventType.SUN_ELEVATION;
-
-    public static final String PREF_KEY_EVENT_LABEL = "label"; // SuntimesEventContract.COLUMN_EVENT_LABEL;  // TODO: contract class
-    public static final String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
-    public static int PREF_DEF_EVENT_COLOR = Color.GRAY;
-
-    public static final String PREF_KEY_EVENT_SHOWN = "shown"; // SuntimesEventContract.COLUMN_EVENT_SHOWN;  // TODO: contract class
-    public static final boolean PREF_DEF_EVENT_SHOWN = false;
-
-    public static final String PREF_KEY_EVENT_LIST = "list";
-    public static final String PREF_KEY_EVENT_LISTSHOWN = "list_shown";
-
-    public static final String PREF_DEF_EVENT_ID = "CUSTOM";
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +270,7 @@ public class EventSettings
 
     public static String getEventUriLastPathSegment(Context context, @NonNull String id)
     {
-        String eventUri = EventSettings.loadEventValue(context, id, EventSettings.PREF_KEY_EVENT_URI);
+        String eventUri = EventSettings.loadEventValue(context, id, PREF_KEY_EVENT_URI);
         return Uri.parse(eventUri).getLastPathSegment();
     }
 

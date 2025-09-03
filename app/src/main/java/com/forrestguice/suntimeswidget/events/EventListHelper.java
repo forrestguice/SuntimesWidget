@@ -714,7 +714,7 @@ public class EventListHelper
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            String label = EventSettings.loadEventValue(context, eventID, EventSettings.PREF_KEY_EVENT_LABEL);
+            String label = EventSettings.loadEventValue(context, eventID, EventSettingsInterface.PREF_KEY_EVENT_LABEL);
 
             dialog.setMessage(context.getString(R.string.delevent_dialog_msg, label, eventID))
                     .setNegativeButton(context.getString(R.string.delevent_dialog_cancel), null)

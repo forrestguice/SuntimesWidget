@@ -25,24 +25,24 @@ public final class EventAliasValues
     public static EventAlias createEventAlias(ContentValues values)
     {
         return new EventAlias(EventType.valueOf(
-                values.getAsString(EventSettings.PREF_KEY_EVENT_TYPE)),
-                values.getAsString(EventSettings.PREF_KEY_EVENT_ID),
-                values.getAsString(EventSettings.PREF_KEY_EVENT_LABEL),
-                values.getAsInteger(EventSettings.PREF_KEY_EVENT_COLOR),
-                values.getAsString(EventSettings.PREF_KEY_EVENT_URI),
-                values.getAsBoolean(EventSettings.PREF_KEY_EVENT_SHOWN)
+                values.getAsString(EventSettingsInterface.PREF_KEY_EVENT_TYPE)),
+                values.getAsString(EventSettingsInterface.PREF_KEY_EVENT_ID),
+                values.getAsString(EventSettingsInterface.PREF_KEY_EVENT_LABEL),
+                values.getAsInteger(EventSettingsInterface.PREF_KEY_EVENT_COLOR),
+                values.getAsString(EventSettingsInterface.PREF_KEY_EVENT_URI),
+                values.getAsBoolean(EventSettingsInterface.PREF_KEY_EVENT_SHOWN)
         );
     }
 
     public static ContentValues toContentValues(EventAlias alias)
     {
         ContentValues values = new ContentValues();
-        values.put(EventSettings.PREF_KEY_EVENT_TYPE, alias.getType().name());
-        values.put(EventSettings.PREF_KEY_EVENT_ID, alias.getID());
-        values.put(EventSettings.PREF_KEY_EVENT_LABEL, alias.getLabel());
-        values.put(EventSettings.PREF_KEY_EVENT_COLOR, alias.getColor());
-        values.put(EventSettings.PREF_KEY_EVENT_URI, alias.getUri());
-        values.put(EventSettings.PREF_KEY_EVENT_SHOWN, alias.isShown());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_TYPE, alias.getType().name());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_ID, alias.getID());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_LABEL, alias.getLabel());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_COLOR, alias.getColor());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_URI, alias.getUri());
+        values.put(EventSettingsInterface.PREF_KEY_EVENT_SHOWN, alias.isShown());
         return values;
     }
 }
