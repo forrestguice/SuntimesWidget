@@ -7,6 +7,8 @@
 * fixes "app crash in the Sun Dialog when rotating the device".
 * fixes bug where custom event alarm times are truncated to the minute.
 * fixes bug where content provider fails to schedule custom events on past days.
+* increments `CalculatorProviderContract` version 8 -> 9; adds support for custom events to the `sun` query (projections may include custom event ids).
+* increments `AlarmEventContract` version 1 -> 2; eventInfo can now be queried by type with selectionArgs.
 * updates translation to Italian (it) (#893 by McCio).
 
 ### v0.16.9 (2025-07-28)
