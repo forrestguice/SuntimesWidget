@@ -75,6 +75,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_lastUpdate()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveTimeLastUpdate(context, appWidgetId, 10);
+        long value1 = WidgetSettings.getTimeLastUpdate(context, appWidgetId);
+        assertTrue("value should be 10", value1 == 10);
+
+        WidgetSettings.deleteTimeLastUpdate(context, appWidgetId);
+        long value0 = WidgetSettings.getTimeLastUpdate(context, appWidgetId);
+        assertTrue("value should be -1", value0 == -1);
+    }
+
+    @Test
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
