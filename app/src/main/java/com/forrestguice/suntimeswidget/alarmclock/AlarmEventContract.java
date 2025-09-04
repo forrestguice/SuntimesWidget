@@ -19,10 +19,12 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 /**
  * AlarmEventContract
- * @version 1 (0.1.0)
+ * @version 2 (0.1.1)
  *
  * CHANGES
  *   1 initial version
+ *   2 adds `COLUMN_EVENT_TYPE` to `QUERY_EVENT_INFO_PROJECTION`;
+ *     adds QUERY_EVENT_TYPES
  */
 public interface AlarmEventContract
 {
@@ -34,6 +36,8 @@ public interface AlarmEventContract
     String COLUMN_EVENT_NAME = "event_name";                     // String (alarm/event ID)
     String COLUMN_EVENT_TITLE = "event_title";                   // String (short label)
     String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended label)
+    String COLUMN_EVENT_TYPE = "event_type";                     // String (typeID)
+    String COLUMN_EVENT_TYPE_LABEL = "event_type_label";         // String (type label) (optional; not included in default eventInfo projection)
 
     String COLUMN_EVENT_PHRASE = "event_phrase";                         // String (noun / natural language phrase)
     String COLUMN_EVENT_PHRASE_GENDER = "event_phrase_gender";           // String (noun gender; SelectFormat param)
@@ -52,6 +56,12 @@ public interface AlarmEventContract
             COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY,
             COLUMN_EVENT_PHRASE, COLUMN_EVENT_PHRASE_GENDER, COLUMN_EVENT_PHRASE_QUANTITY,
             COLUMN_EVENT_SUPPORTS_REPEATING, COLUMN_EVENT_SUPPORTS_OFFSETDAYS, COLUMN_EVENT_REQUIRES_LOCATION,
+            COLUMN_EVENT_TYPE, // COLUMN_EVENT_TYPE_LABEL (optional)
+    };
+
+    String QUERY_EVENT_TYPES = "eventTypes";
+    String[] QUERY_EVENT_TYPES_PROJECTION = new String[] {
+            COLUMN_EVENT_TYPE, COLUMN_EVENT_TYPE_LABEL
     };
 
     String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)

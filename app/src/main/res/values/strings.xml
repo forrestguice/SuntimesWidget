@@ -967,7 +967,16 @@
     <!--
          CUSTOM EVENTS
     -->
-    <string name="eventType_sun_elevation">Sun (elevation)</string>
+    <string name="eventType_sun_elevation">Sun (elevation)</string>           <!-- TODO -->
+    <string name="eventType_sun_shadowlength">Sun (shadow length)</string>    <!-- TODO -->
+    <string name="eventType_date">Date</string>                               <!-- TODO -->
+    <string name="eventType_alias">Alias</string>                             <!-- TODO -->
+    <string name="eventType_default">Default</string>                         <!-- TODO -->
+    <string name="eventType_default_sun">Sun</string>                         <!-- TODO -->
+    <string name="eventType_default_moon">Moon</string>                       <!-- TODO -->
+    <string name="eventType_default_moonphases">Moon Phases</string>          <!-- TODO -->
+    <string name="eventType_default_seasons">Seasons</string>                 <!-- TODO -->
+
     <string name="eventlist_dialog_title">Custom Events</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
