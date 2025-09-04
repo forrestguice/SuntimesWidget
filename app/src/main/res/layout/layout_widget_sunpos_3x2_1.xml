@@ -23,15 +23,7 @@
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
         android:orientation="vertical" android:layout_width="match_parent">
 
-        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="start" tools:text="title" />
-
-        <ImageView android:id="@+id/info_time_worldmap"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center" android:layout_marginLeft="2dp" android:layout_marginRight="1dp"
-            android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
-            android:contentDescription="@string/configAction_worldMap" />
+        <include layout="@layout/layout_widget_sunpos_3x2_1_content" />
 
     </LinearLayout>
 

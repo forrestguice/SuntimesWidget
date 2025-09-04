@@ -3,15 +3,13 @@
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center"
-    android:background="?attr/selectableItemBackground" >
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/actionButton0"
         style="@style/Widget.AppCompat.ActionButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
-        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:layout_width="64dp" android:layout_height="match_parent"
+        android:paddingLeft="?android:attr/scrollbarSize" android:paddingRight="?android:attr/scrollbarSize"
         android:src="?attr/icActionExtension" android:contentDescription="@string/configAction_editAction" />
 
 </LinearLayout>

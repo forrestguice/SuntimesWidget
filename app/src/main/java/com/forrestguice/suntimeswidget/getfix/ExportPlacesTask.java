@@ -69,7 +69,9 @@ public class ExportPlacesTask extends ExportTask
         db.open();
         numEntries = db.getPlaceCount();
         cursor = db.getAllPlaces(-1, true);
-        return exportDatabase(db, cursor, out);
+        boolean result = exportDatabase(db, cursor, out);
+        cursor.close();
+        return result;
     }
 
     @Override

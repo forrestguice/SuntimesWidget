@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,43 +18,60 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.LightMapView;
-import com.forrestguice.suntimeswidget.MoonPhaseView;
-import com.forrestguice.suntimeswidget.MoonRiseSetView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
+import com.forrestguice.suntimeswidget.moon.MoonPhaseView;
+import com.forrestguice.suntimeswidget.moon.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class CardViewHolder extends RecyclerView.ViewHolder
@@ -75,10 +92,12 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public TextView txt_date;
 
     public ArrayList<TimeFieldRow> rows;
-    public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon;
+    public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon, row_midnight;
     public TimeFieldRow row_gold, row_blue8, row_blue4;
-    public HashMap<SolarEvents, TextView> timeFields;
+    public HashMap<String, TextView> timeFields;
     public View noonClickArea;
+
+    public CustomRows customRows;
 
     public LinearLayout layout_daylength;
     public TextView txt_daylength;
@@ -91,6 +110,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public LightMapView lightmap;
     public View lightmapLayout;
+
+    public TextView txt_comparison;
 
     public int position = RecyclerView.NO_POSITION;
 
@@ -120,6 +141,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonrise = (MoonRiseSetView) view.findViewById(R.id.moonriseset_view);
         moonrise.setShowExtraField(false);
 
+        txt_comparison = (TextView) view.findViewById(R.id.text_comparison);
+
         rows = new ArrayList<>();
         rows.add(row_actual = new TimeFieldRow(view, R.id.text_time_label_official, R.id.text_time_sunrise_actual, R.id.text_time_sunset_actual));
         rows.add(row_civil = new TimeFieldRow(view, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
@@ -129,27 +152,49 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_gold = new TimeFieldRow(view, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
+        rows.add(row_midnight = new TimeFieldRow(view, R.id.text_time_label_midnight, R.id.text_time_midnight));
+
+        Set<String> customEvents = EventSettings.loadVisibleEvents(view.getContext());
+        customRows = new CustomRows(view, options);
+        rows.addAll(customRows.initRows(view.getContext(), customEvents));
 
         timeFields = new HashMap<>();
-        timeFields.put(SolarEvents.SUNRISE, row_actual.getField(0));
-        timeFields.put(SolarEvents.SUNSET, row_actual.getField(1));
-        timeFields.put(SolarEvents.MORNING_CIVIL, row_civil.getField(0));
-        timeFields.put(SolarEvents.EVENING_CIVIL, row_civil.getField(1));
-        timeFields.put(SolarEvents.MORNING_NAUTICAL, row_nautical.getField(0));
-        timeFields.put(SolarEvents.EVENING_NAUTICAL, row_nautical.getField(1));
-        timeFields.put(SolarEvents.MORNING_ASTRONOMICAL, row_astro.getField(0));
-        timeFields.put(SolarEvents.EVENING_ASTRONOMICAL, row_astro.getField(1));
-        timeFields.put(SolarEvents.NOON, row_solarnoon.getField(1));
-        timeFields.put(SolarEvents.MORNING_GOLDEN, row_gold.getField(0));
-        timeFields.put(SolarEvents.EVENING_GOLDEN, row_gold.getField(1));
-        timeFields.put(SolarEvents.MORNING_BLUE8, row_blue8.getField(0));
-        timeFields.put(SolarEvents.EVENING_BLUE8, row_blue8.getField(1));
-        timeFields.put(SolarEvents.MORNING_BLUE4, row_blue4.getField(0));
-        timeFields.put(SolarEvents.EVENING_BLUE4, row_blue4.getField(1));
-        timeFields.put(SolarEvents.MOONRISE, moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
-        timeFields.put(SolarEvents.MOONSET, moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
+        timeFields.put(SolarEvents.SUNRISE.name(), row_actual.getField(0));
+        timeFields.put(SolarEvents.SUNSET.name(), row_actual.getField(1));
+        timeFields.put(SolarEvents.MORNING_CIVIL.name(), row_civil.getField(0));
+        timeFields.put(SolarEvents.EVENING_CIVIL.name(), row_civil.getField(1));
+        timeFields.put(SolarEvents.MORNING_NAUTICAL.name(), row_nautical.getField(0));
+        timeFields.put(SolarEvents.EVENING_NAUTICAL.name(), row_nautical.getField(1));
+        timeFields.put(SolarEvents.MORNING_ASTRONOMICAL.name(), row_astro.getField(0));
+        timeFields.put(SolarEvents.EVENING_ASTRONOMICAL.name(), row_astro.getField(1));
+        timeFields.put(SolarEvents.NOON.name(), row_solarnoon.getField(1));
+        timeFields.put(SolarEvents.MIDNIGHT.name(), row_midnight.getField(0));
+        timeFields.put(SolarEvents.MORNING_GOLDEN.name(), row_gold.getField(0));
+        timeFields.put(SolarEvents.EVENING_GOLDEN.name(), row_gold.getField(1));
+        timeFields.put(SolarEvents.MORNING_BLUE8.name(), row_blue8.getField(0));
+        timeFields.put(SolarEvents.EVENING_BLUE8.name(), row_blue8.getField(1));
+        timeFields.put(SolarEvents.MORNING_BLUE4.name(), row_blue4.getField(0));
+        timeFields.put(SolarEvents.EVENING_BLUE4.name(), row_blue4.getField(1));
+        timeFields.put(SolarEvents.MOONRISE.name(), moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
+        timeFields.put(SolarEvents.MOONSET.name(), moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
+
+        HashMap<String,TimeFieldRow> timeFields0 = customRows.getTimeFieldRows();
+        for (String eventID : timeFields0.keySet())
+        {
+            TimeFieldRow row = timeFields0.get(eventID);
+            if (row != null) {
+                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, row.getField(0));
+                timeFields.put(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, row.getField(1));
+            }
+        }
+
+        TimeFieldRow primaryRow = getRow(AppSettings.loadEmphasizeFieldPref(view.getContext()));
+        if (primaryRow != null) {
+            primaryRow.setEmphasized(view.getContext(), true);
+        }
 
         lightmap = (LightMapView) view.findViewById(R.id.info_time_lightmap);
+        lightmap.setUseMainThread(true);
 
         lightmapLayout = view.findViewById(R.id.info_time_lightmap_layout);
         lightmapLayout.setClickable(true);
@@ -160,11 +205,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         themeCardViews(view.getContext(), options);
     }
 
-    public void bindDataToPosition(@NonNull Context context, int position, Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
+    public void bindDataToPosition(@NonNull Context context, int position, @Nullable Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
     {
         this.position = position;
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
 
         updateHeaderViews(context, data, options);
         row_actual.setVisible(options.showActual);
@@ -172,16 +219,18 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         row_nautical.setVisible(options.showNautical);
         row_astro.setVisible(options.showAstro);
         row_solarnoon.setVisible(options.showNoon);
+        row_midnight.setVisible(options.showMidnight);
         row_blue8.setVisible(options.showBlue);
         row_blue4.setVisible(options.showBlue);
         row_gold.setVisible(options.showGold);
 
         resetHighlight();
-        if (options.highlightEvent != null && options.highlightPosition == position) {
-            highlightField(options.highlightEvent);
+        if (options.highlightEventID != null && options.highlightPosition == position) {
+            highlightField(options.highlightEventID);
         }
 
         // sun fields
+        String notCalculated = context.getString(R.string.time_loading);
         if (sun != null && sun.isCalculated())
         {
             if (options.showActual) {
@@ -208,7 +257,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 row_astro.updateFields(sunriseString_astroTime.toString(), sunsetString_astroTime.toString());
             }
 
-            if (options.showNoon) {
+            if (options.showNoon)
+            {
                 Calendar noonTime = sun.dataNoon.sunriseCalendarToday();
                 String noonString = utils.calendarTimeShortDisplayString(context, noonTime, options.showSeconds).toString();
 
@@ -223,7 +273,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
                 row_solarnoon.updateFields(positionSpan, noonString);
             }
-            noonClickArea.setVisibility(options.showNoon ? View.VISIBLE : View.GONE);
+            if (options.showMidnight)
+            {
+                Calendar midnightTime = sun.dataMidnight.sunriseCalendarToday();
+                String midnightString = utils.calendarTimeShortDisplayString(context, midnightTime, options.showSeconds).toString();
+                row_midnight.updateFields(midnightString);
+            }
+            noonClickArea.setVisibility((options.showNoon || options.showMidnight) ? View.VISIBLE : View.GONE);
 
             if (options.showBlue) {
                 String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();
@@ -241,8 +297,38 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 row_gold.updateFields(sunriseString_gold, sunsetString_gold);
             }
 
+            HashMap<String, TimeFieldRow> rows = customRows.getTimeFieldRows();
+            for (String eventID : rows.keySet())
+            {
+                TimeFieldRow row = rows.get(eventID);
+                if (row != null)
+                {
+                    SuntimesRiseSetData rowData = sun.getData(eventID);
+                    if (rowData != null)
+                    {
+                        String sunriseString = utils.calendarTimeShortDisplayString(context, rowData.sunriseCalendarToday(), options.showSeconds).toString();
+                        String sunsetString = utils.calendarTimeShortDisplayString(context, rowData.sunsetCalendarToday(), options.showSeconds).toString();
+                        row.updateFields(sunriseString, sunsetString);
+                    } else {
+                        row.updateFields(notCalculated, notCalculated);
+                    }
+                }
+            }
+
             updateDayLengthViews(context, txt_daylength, sun.dataActual.dayLengthToday(), R.string.length_day, options.showSeconds, options.color_textTimeDelta);
-            updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
+
+            if (sun.dataActual.dayLengthToday() == SuntimesData.DAY_MILLIS
+                    || sun.dataCivil.dayLengthToday() == SuntimesData.DAY_MILLIS
+                    || sun.dataCivil.dayLengthToday() <= 0) {
+                txt_lightlength.setText(LightMapView.getLabel(context, sun));
+            } else {
+                updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
+            }
+
+            if (txt_comparison != null) {
+                txt_comparison.setVisibility(options.showComparison ? View.VISIBLE : View.GONE);
+                txt_comparison.setText(options.showComparison ? comparisonDisplayString(context, sun.dataActual, options) : "");
+            }
 
             // date field
             Date data_date = sun.dataActual.date();
@@ -260,7 +346,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         } else {
-            String notCalculated = context.getString(R.string.time_loading);
+            for (TimeFieldRow row : customRows.getTimeFieldRows().values()) {
+                row.updateFields(notCalculated, notCalculated);
+            }
             row_solarnoon.updateFields(notCalculated, notCalculated);
             row_actual.updateFields(notCalculated, notCalculated);
             row_civil.updateFields(notCalculated, notCalculated);
@@ -287,16 +375,44 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
             int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
             moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
-            moonphase.updateViews(context, moon);
+            moonrise.setColors(context, colors);
             moonrise.updateViews(context, moon);
+
+            moonphase.setColors(context, colors);
+            moonphase.updateViews(context, moon);
         }
 
         // lightmap
+        updateLightmapColors(context, colors);
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
-        lightmap.getColors().option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
+        LightMapView.LightMapColors lightmapOptions = lightmap.getColors();
+        lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
+        lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);
+        //Log.d("DEBUG", "bindDataToPosition: " + sun.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
+
+        themeCardViews(context, colors);
 
         toggleNextPrevButtons(position);
+    }
+
+    protected void updateLightmapColors(Context context, ColorValues values)
+    {
+        if (values != null) {
+            lightmap.getColors().values = new LightMapColorValues(values);
+        } else if (lightmap.getColors().values == null) {
+            lightmap.getColors().init(context);
+        }
+    }
+
+    protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)
+    {
+        SuntimesUtils.TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
+        String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
+        String compareString = (data.dayLengthToday() == data.dayLengthOther())
+                ? data.dayDeltaPrefix() + " " + deltaText.getSuffix()
+                : data.dayDeltaPrefix() + " " + deltaString + deltaText.getSuffix();
+        return SuntimesUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
     }
 
     public void toggleNextPrevButtons(int position)
@@ -313,13 +429,46 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options)
     {
-        if (options.themeOverride != null) {
-            themeCardViews(context, options.themeOverride, options);
-        }
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
     }
 
+    protected void themeCardViews(Context context, @Nullable ColorValues colors)
+    {
+        if (colors == null) {
+            return;
+        }
+
+        int color_sunrise = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
+        int color_sunset =  colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
+
+        for (CardViewHolder.TimeFieldRow row : rows) {
+            if (row != null) {
+                row.setTextColor(0, color_sunrise);
+                row.setTextColor(1, color_sunset);
+            }
+        }
+
+        row_blue4.setTextColor(0, color_sunset);
+        row_blue4.setTextColor(1, color_sunrise);
+        row_gold.setTextColor(0, color_sunset);
+        row_gold.setTextColor(1, color_sunrise);
+        row_solarnoon.setTextColor(0, color_sunset);
+
+        int sunriseIconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
+        int sunriseIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(color_sunrise);
+
+        int sunsetIconColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
+        int sunsetIconStrokeWidth = 0;
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(color_sunset);
+    }
+
+    /*@Deprecated
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
     {
         options.color_textTimeDelta = theme.getTimeColor();
@@ -342,24 +491,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         txt_lightlength.setTextColor(color_text);
         txt_lightlength.setTextSize(textSizeSp);
 
-        row_actual.getField(0).setTextColor(color_sunrise);
-        row_civil.getField(0).setTextColor(color_sunrise);
-        row_nautical.getField(0).setTextColor(color_sunrise);
-        row_astro.getField(0).setTextColor(color_sunrise);
-        row_gold.getField(1).setTextColor(color_sunrise);
-        row_blue8.getField(0).setTextColor(color_sunrise);
-        row_blue4.getField(0).setTextColor(color_sunset);
-
-        row_actual.getField(1).setTextColor(color_sunset);
-        row_civil.getField(1).setTextColor(color_sunset);
-        row_nautical.getField(1).setTextColor(color_sunset);
-        row_astro.getField(1).setTextColor(color_sunset);
-        row_solarnoon.getField(0).setTextColor(color_sunset);
-        row_solarnoon.getField(1).setTextColor(color_sunset);
-        row_gold.getField(0).setTextColor(color_sunset);
-        row_blue8.getField(1).setTextColor(color_sunset);
-        row_blue4.getField(1).setTextColor(color_sunrise);
-
         int labelColor = theme.getTitleColor();
         for (CardViewHolder.TimeFieldRow row : rows)
         {
@@ -367,13 +498,22 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             row.label.setTextSize(titleSizeSp);
             row.label.setTypeface(row.label.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
+            row.setTextColor(0, color_sunrise);
+            row.setTextColor(1, color_sunset);
+
             for (int i=0; i<2; i++) {
                 if (row.getField(i) != null) {
-                    row.getField(i).setTextSize(timeSizeSp);
+                    row.setTextSize(i, timeSizeSp);
                     //row.getField(i).setTypeface(row.getField(i).getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
                 }
             }
         }
+
+        row_blue4.setTextColor(0, color_sunset);
+        row_blue4.setTextColor(1, color_sunrise);
+        row_gold.setTextColor(0, color_sunset);
+        row_gold.setTextColor(1, color_sunrise);
+        row_solarnoon.setTextColor(0, color_sunset);
 
         txt_date.setTextColor(SuntimesUtils.colorStateList(labelColor, options.color_disabled, color_action));
         txt_date.setTextSize(titleSizeSp);
@@ -402,7 +542,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonlabel.setTypeface(moonlabel.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         lightmap.themeViews(context, theme);
-    }
+    }*/
 
     /**
      * @param context used to getStrings from resources
@@ -440,7 +580,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         if (showPosition && sun != null)
         {
             SuntimesCalculator calculator = sun.calculator();
-            SuntimesRiseSetData d = sun.dataCivil;
+            SuntimesRiseSetData d = sun.dataActual;    // TODO: configurable
 
             Calendar riseTime = (d != null ? d.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
@@ -496,11 +636,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
     }
 
-    public void highlightField( SolarEvents highlightEvent )
+    public void highlightField( String highlightEventID )
     {
-        for (SolarEvents event : timeFields.keySet()) {
-            if (event == highlightEvent) {
-                TimeFieldRow.highlight(timeFields.get(event));
+        for (String eventID : timeFields.keySet()) {
+            if (eventID.equals(highlightEventID)) {
+                TimeFieldRow.highlight(timeFields.get(eventID));
                 break;
             }
         }
@@ -509,7 +649,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public void resetHighlight()
     {
         for (TimeFieldRow row : rows) {
-            row.resetHighlight();
+            if (row != null) {
+                row.resetHighlight();
+            }
         }
         TextView[] views0 = moonrise.getTimeViews(SolarEvents.MOONRISE);
         for (TextView view : views0) {
@@ -518,6 +660,79 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         TextView[] views1 = moonrise.getTimeViews(SolarEvents.MOONSET);
         for (TextView view : views1) {
             TimeFieldRow.resetHighlight(view);
+        }
+    }
+
+    @Nullable
+    public TimeFieldRow getRow(String name)
+    {
+        WidgetSettings.TimeMode mode;
+        try {
+            mode = WidgetSettings.TimeMode.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            Log.w(getClass().getSimpleName(), "getRow: unrecognized:" + e);
+            return null;
+        }
+        return getRow(mode);
+    }
+
+    @Nullable
+    public TimeFieldRow getRow(WidgetSettings.TimeMode mode)
+    {
+        switch (mode)
+        {
+            case GOLD: return row_gold;
+            case NOON: return row_solarnoon;
+            case OFFICIAL: return row_actual;
+            case CIVIL: return row_civil;
+            case NAUTICAL: return row_nautical;
+            case ASTRONOMICAL: return row_astro;
+            case BLUE4: return row_blue4;
+            case BLUE8: return row_blue8;
+            case MIDNIGHT: return null;  // TODO
+            default: return null;
+        }
+    }
+
+    /**
+     * startUpdateTask
+     */
+    public void startUpdateTask()
+    {
+        //Log.d("DEBUG", "startUpdateTask: " + this);
+        if (lightmap != null) {
+            lightmap.removeCallbacks(updateTask);
+            updateTask_isRunning = true;
+            lightmap.post(updateTask);
+        }
+    }
+
+    private final Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (lightmap != null && updateTask_isRunning)
+            {
+                lightmap.getColors().now = Calendar.getInstance().getTimeInMillis();
+                //Log.d("DEBUG", "updating lightmap id-" + getAdapterPosition() + " @ " + lightmap.getNow() + "\t :: view-" + Integer.toHexString(lightmap.getColors().hashCode()));
+                lightmap.updateViews(true);
+                lightmap.postDelayed(this, UPDATE_RATE);
+            }
+        }
+    };
+    private boolean updateTask_isRunning = false;
+    public static final int UPDATE_RATE = 30000;
+
+    /**
+     * stopUpdateTask
+     */
+    public void stopUpdateTask()
+    {
+        //Log.d("DEBUG", "stopUpdateTask: " + this);
+        if (lightmap != null) {
+            updateTask_isRunning = false;
+            lightmap.removeCallbacks(updateTask);
         }
     }
 
@@ -543,7 +758,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 this.fields = new TextView[fieldIDs.length];
 
                 for (int i=0; i<fieldIDs.length; i++) {
-                    this.fields[i] = (TextView) parent.findViewById(fieldIDs[i]);
+                    this.fields[i] = ((fieldIDs[i] != 0) ? (TextView) parent.findViewById(fieldIDs[i]) : null);
                 }
             }
         }
@@ -553,11 +768,43 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return label;
         }
 
+        @Nullable
         public TextView getField( int i )
         {
             if (i >= 0 && i < fields.length)
                 return fields[i];
             else return null;
+        }
+
+        public void setTextColor(int i, int color)
+        {
+            TextView v = getField(i);
+            if (v != null) {
+                v.setTextColor(color);
+            }
+        }
+
+        public void setTextSize(int i, float size)
+        {
+            TextView v = getField(i);
+            if (v != null) {
+                v.setTextSize(size);
+            }
+        }
+
+        private boolean isEmphasized = false;
+        public boolean isEmphasized() {
+            return isEmphasized;
+        }
+        public void setEmphasized(Context context, boolean value)
+        {
+            isEmphasized = value;
+            float textSizePx = label.getTextSize() + (isEmphasized ? context.getResources().getDimension(R.dimen.table_row_fontsize_emphasized) : 0);
+            for (TextView field : fields) {
+                if (field != null) {
+                    field.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
+                }
+            }
         }
 
         public void resetHighlight()
@@ -613,6 +860,214 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
         }
 
+    }
+
+    /**
+     * CustomRows
+     */
+    public static class CustomRows
+    {
+        public static int[] resID_labels = new int[] {R.id.bucket1_labels, R.id.bucket2_labels, R.id.bucket3_labels, R.id.bucket4_labels, R.id.bucket5_labels, R.id.bucket6_labels, R.id.bucket7_labels, R.id.bucket8_labels};
+        public static int[] resID_rising = new int[] {R.id.bucket1_rising, R.id.bucket2_rising, R.id.bucket3_rising, R.id.bucket4_rising, R.id.bucket5_rising, R.id.bucket6_rising, R.id.bucket7_rising, R.id.bucket8_rising};
+        public static int[] resID_setting = new int[] {R.id.bucket1_setting, R.id.bucket2_setting, R.id.bucket3_setting, R.id.bucket4_setting, R.id.bucket5_setting, R.id.bucket6_setting, R.id.bucket7_setting, R.id.bucket8_setting};
+
+        public LinearLayout[] layout_labels = new LinearLayout[resID_labels.length];
+        public LinearLayout[] layout_rising = new LinearLayout[layout_labels.length];
+        public LinearLayout[] layout_setting = new LinearLayout[layout_labels.length];
+        public ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
+
+        public CustomRows(View view, CardAdapter.CardAdapterOptions options)
+        {
+            for (int i = 0; i< layout_labels.length; i++) {
+                layout_labels[i] = (LinearLayout) view.findViewById(resID_labels[i]);
+                layout_rising[i] = (LinearLayout) view.findViewById(resID_rising[i]);
+                layout_setting[i] = (LinearLayout) view.findViewById(resID_setting[i]);
+                angleList.add(new ArrayList<Double>());
+            }
+            hideAll();
+        }
+
+        public Collection<TimeFieldRow> initRows(Context context, Set<String> events)
+        {
+            clearAll();
+            for (String eventID : events) {
+                TimeFieldRow row = addRow(context, EventSettings.loadEvent(context, eventID));
+                rows.put(eventID, row);
+            }
+            adjustBottomMargin();
+            return rows.values();
+        }
+
+        protected HashMap<String, TimeFieldRow> rows = new HashMap<>();
+        public HashMap<String, TimeFieldRow> getTimeFieldRows() {
+            return rows;
+        }
+
+        @SuppressLint("ResourceType")
+        public TimeFieldRow addRow(Context context, EventSettings.EventAlias event)
+        {
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.table_risingColor, R.attr.table_settingColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int color_label = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));
+            int color_rising = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.sunIcon_color_rising_dark));
+            int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
+            typedArray.recycle();
+
+            if (event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH || event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
+            {
+                double angle = 0;
+                switch (event.getType())
+                {
+                    case SHADOWLENGTH:
+                        AlarmEventProvider.ShadowLengthEvent event1 = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event1 != null ? event1.getAngle() : 0);
+                        break;
+
+                    case SUN_ELEVATION:
+                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event0 != null ? event0.getAngle() : 0);
+                        break;
+                }
+
+                int i = getLayoutForAngle(angle);
+                ArrayList<Double> angles = angleList.get(i);
+                int j = getPositionForAngle(angles, angle);
+                angles.add(j, angle);
+
+                int margin = (int)context.getResources().getDimension(R.dimen.table_cell_spacing);
+
+                TextView text_label = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_label.setText(event.getLabel());  // + " " + j + " " + angle);
+                text_label.setTextColor(color_label);
+                layout_labels[i].addView(text_label, j);
+
+                TextView text_rising = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_rising.setTextColor(angle > 0 ? color_setting : color_rising);
+                layout_rising[i].addView(text_rising, j);
+
+                TextView text_setting = initTextView(context, initLayoutParams(0, 0, 0, margin));
+                text_setting.setTextColor(angle > 0 ? color_rising : color_setting);
+                layout_setting[i].addView(text_setting, j);
+
+                setVisibility(i, true);
+                return new TimeFieldRow(text_label, text_rising, text_setting);
+
+            } else {
+                return null;
+            }
+        }
+
+        protected void adjustBottomMargin()
+        {
+            for (LinearLayout layout : layout_labels) {
+                adjustBottomMargin(layout);
+            }
+            for (LinearLayout layout : layout_rising) {
+                adjustBottomMargin(layout);
+            }
+            for (LinearLayout layout : layout_setting) {
+                adjustBottomMargin(layout);
+            }
+        }
+
+        protected void adjustBottomMargin(LinearLayout layout)
+        {
+            if (layout != null) {
+                View v = layout.getChildAt(layout.getChildCount()-1);
+                if (v != null) {
+                    v.setLayoutParams(initLayoutParams(0, 0, 0, 0));
+                }
+            }
+        }
+
+        protected LinearLayout.LayoutParams initLayoutParams(int marginLeft, int marginTop, int marginRight, int marginBottom)
+        {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);;
+            params.setMargins(marginLeft, marginTop, marginRight, marginBottom);
+            params.gravity = Gravity.CENTER_VERTICAL;
+            return params;
+        }
+
+        protected TextView initTextView(Context context, LinearLayout.LayoutParams layoutParams)
+        {
+            int[] attr = { R.attr.text_size_small };
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            float textSizePx = context.getResources().getDimension(typedArray.getResourceId(0, R.dimen.tablerow_label_fontsize));
+            typedArray.recycle();
+
+            TextView view = new TextView(context, null, R.style.SunsetTimeTextView);
+            view.setTextAppearance(context, android.R.style.TextAppearance_Small);
+            view.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
+            view.getPaint().setAntiAlias(true);
+            view.setLayoutParams(layoutParams);
+            view.setPadding(0, 0, 0, 0);
+            if (Build.VERSION.SDK_INT >= 21) {
+                view.setLetterSpacing(0.01f);
+            }
+            view.setText(context.getString(R.string.time_none));
+            return view;
+        }
+
+        public int getPositionForAngle(ArrayList<Double> angles, double angle) {
+            for (int j = 0; j < angles.size(); j++) {
+                if (angle <= angles.get(j)) {
+                    return j;
+                }
+            }
+            return angles.size();
+        }
+
+        public int getLayoutForAngle(double angle) {
+            if (angle >= 6) {
+                return 7;
+            } else if (angle >= 0) {
+                return 6;
+            } else if (angle >= -4) {
+                return 5;
+            } else if (angle >= -6) {
+                return 4;
+            } else if (angle >= -8) {
+                return 3;
+            } else if (angle >= -12) {
+                return 2;
+            } else if (angle >= -18) {
+                return 1;
+            } else return 0;
+        }
+
+        public void setVisibility(int i, boolean visible)
+        {
+            if (i>=0 && i< layout_labels.length) {
+                int visibility = (visible ? View.VISIBLE : View.GONE);
+                layout_labels[i].setVisibility(visibility);
+                layout_rising[i].setVisibility(visibility);
+                layout_setting[i].setVisibility(visibility);
+            }
+        }
+
+        protected void clearRow(int i)
+        {
+            if (i>=0 && i< layout_labels.length) {
+                layout_labels[i].removeAllViews();
+                layout_rising[i].removeAllViews();
+                layout_setting[i].removeAllViews();
+                angleList.get(i).clear();
+            }
+        }
+
+        public void hideAll() {
+            for (int i = 0; i< layout_labels.length; i++) {
+                setVisibility(i, false);
+            }
+        }
+
+        public void clearAll() {
+            for (int i = 0; i< layout_labels.length; i++) {
+                clearRow(i);
+            }
+            rows.clear();
+        }
     }
 
 }

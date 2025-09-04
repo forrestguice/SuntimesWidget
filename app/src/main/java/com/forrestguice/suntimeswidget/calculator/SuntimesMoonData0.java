@@ -30,21 +30,13 @@ import java.util.HashMap;
 
 public class SuntimesMoonData0 extends SuntimesData
 {
-    protected Context context;
-
-    public SuntimesMoonData0(Context context, int appWidgetId)
-    {
-        this.context = context;
+    public SuntimesMoonData0(Context context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
+    public SuntimesMoonData0(Context context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
-    public SuntimesMoonData0(SuntimesMoonData0 other)
-    {
-        this.context = other.context;
+    public SuntimesMoonData0(SuntimesMoonData0 other) {
         initFromOther(other);
     }
 
@@ -96,9 +88,10 @@ public class SuntimesMoonData0 extends SuntimesData
 
     /**
      * calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
         initCalculator(context);
         initTimezone(context);
@@ -107,13 +100,13 @@ public class SuntimesMoonData0 extends SuntimesData
         otherCalendar = Calendar.getInstance(timezone);
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        super.calculate();
+        super.calculate(context);
     }
 
     public static boolean isSuperMoon( @NonNull SuntimesCalculator.MoonPosition position )
@@ -131,7 +124,7 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param c2 an end time (with difference from start no greater than 48 days)
      * @return the midpoint between start and end.
      */
-    protected Calendar midpoint(Calendar c1, Calendar c2)
+    public static Calendar midpoint(Calendar c1, Calendar c2)
     {
         int midpoint = (int)((c2.getTimeInMillis() - c1.getTimeInMillis()) / 2);   // int: capacity ~24 days
         Calendar retValue = (Calendar)c1.clone();

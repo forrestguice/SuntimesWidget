@@ -20,12 +20,14 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:padding="8dp" android:orientation="horizontal">
 
-    <TimePicker
+    <TimePicker android:theme="@style/TimePickerStyle"
         android:id="@+id/timepicker"
         android:timePickerMode="spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end" />
+        android:layout_gravity="end"
+        android:nextFocusRight="@+id/locationPicker"
+        />
 
     <LinearLayout
         android:layout_width="0dp" android:layout_weight="1"  android:minWidth="200dp"
@@ -47,7 +49,10 @@
             android:layout_marginBottom="0dp"
             android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingBottom="4dp"
             android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
-            tools:text="Location" />
+            tools:text="Location"
+            android:nextFocusLeft="@+id/timepicker"
+            android:nextFocusDown="@+id/datePicker" android:nextFocusRight="@+id/datePicker"
+            />
 
         <TextView
             android:id="@+id/datePicker" android:background="?attr/selectableItemBackground"
@@ -56,7 +61,9 @@
             android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
             android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="4dp" android:paddingBottom="4dp"
             android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
-            tools:text="Any Date" />
+            tools:text="Any Date"
+            android:nextFocusUp="@+id/timepicker"
+            />
 
     </LinearLayout>
 

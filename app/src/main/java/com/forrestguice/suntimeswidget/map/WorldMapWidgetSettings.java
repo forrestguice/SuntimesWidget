@@ -26,7 +26,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 public class WorldMapWidgetSettings
 {
@@ -75,13 +79,61 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
 
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    public static final String[] ALL_KEYS = new String[] {
+            WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP    // TODO: preserve other map settings related keys?
+    };
+
+    public static PrefTypeInfo getPrefTypeInfo()
+    {
+        return new PrefTypeInfo() {
+            public String[] allKeys() {
+                return ALL_KEYS;
+            }
+            public String[] intKeys() {
+                return new String[0];
+            }
+            public String[] longKeys() {
+                return new String[0];
+            }
+            public String[] floatKeys() {
+                return new String[0];
+            }
+            public String[] boolKeys() {
+                return new String[0];
+            }
+        };
+    }
+
+    private static Map<String,Class> types = null;
+    public static Map<String,Class> getPrefTypes()
+    {
+        if (types == null)
+        {
+            types = new TreeMap<>();
+            for (String key : ALL_KEYS) {                // all others are type String
+                for (String tag : MAPTAGS) {
+                    if (!types.containsKey(key + tag)) {
+                        types.put(key + tag, String.class);
+                    }
+                }
+            }
+        }
+        return types;
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
     /**
      * WorldMapWidgetMode
      */
     public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
         EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_1, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_01, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
@@ -231,11 +283,14 @@ public class WorldMapWidgetSettings
         prefs.putBoolean(prefs_prefix + key + mapTag, value);
         prefs.apply();
     }
-    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag) {
+        return loadWorldMapPref(context, appWidgetId, key, mapTag, null);
+    }
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag, Boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
-        return prefs.getBoolean(prefs_prefix + key + mapTag, defaultWorldMapFlag(key));
+        return prefs.getBoolean(prefs_prefix + key + mapTag, (defaultValue != null ? defaultValue : defaultWorldMapFlag(key)));
     }
     public static void deleteWorldMapPref(Context context, int appWidgetId, String key, String mapTag)
     {

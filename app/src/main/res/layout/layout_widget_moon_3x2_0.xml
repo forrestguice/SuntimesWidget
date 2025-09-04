@@ -23,7 +23,7 @@
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
         android:orientation="vertical" android:layout_width="match_parent">
 
-        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
+        <TextView android:id="@+id/text_title" style="@style/WidgetTitleTextView"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:gravity="start" tools:text="title" />
 

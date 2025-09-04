@@ -5,5 +5,6 @@
     <string name="default_location_latitude">-36.8468</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">174.8256</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">39</string>         <!-- meters -->
+    <string name="default_timezone">Pacific/Auckland</string>         <!-- tzid -->
 
 </resources>

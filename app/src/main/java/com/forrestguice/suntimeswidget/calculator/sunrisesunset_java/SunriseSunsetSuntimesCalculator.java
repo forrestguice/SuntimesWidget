@@ -135,6 +135,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSolarMidnightCalendarForDate(Calendar date) {
+        return null;    // TODO
+    }
+
+    @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
         return calculator.getCivilSunsetCalendarForDate(date);
@@ -270,6 +275,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar calendar, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar calendar, double objHeight, double shadowLength) {
+        return null;
+    }
+
+    @Override
     public double equationOfTime(Calendar dateTime)
     {
         return Double.POSITIVE_INFINITY;
@@ -296,5 +311,21 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public TimeZone getTimeZone() {
         return param_timezone;
     }
+
+    @Override
+    public long getTropicalYearLength(Calendar date) {
+        return (long)Math.floor(365.24 * 24 * 60 * 60 * 1000);
+    }
+
+    @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, double angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, double angle ) {
+        return null;   // TODO: supported by this lib?
+    }
+
 }
 

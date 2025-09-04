@@ -22,13 +22,13 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.R;
 
-public class DarkThemeTrans extends DarkTheme
+public class DarkThemeTrans extends DarkTheme1
 {
     public static final String THEMEDEF_NAME = "dark_transparent";
-    public static final String THEMEDEF_DISPLAYSTRING = "Dark (transparent)";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
+    private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.TRANSPARENT;
     public static final boolean THEMEDEF_TITLEBOLD = true;
@@ -40,15 +40,18 @@ public class DarkThemeTrans extends DarkTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
+        this.themeDisplayString = context.getString(R.string.widgetThemes_dark_transparent);
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = Color.TRANSPARENT;
         this.themeTitleBold = THEMEDEF_TITLEBOLD;
         this.themeTimeBold = THEMEDEF_TIMEBOLD;
     }
 
-    public ThemeDescriptor themeDescriptor()
+    public static ThemeDescriptor themeDescriptor(Context context)
     {
-        return DarkThemeTrans.THEMEDEF_DESCRIPTOR;
+        if (THEMEDEF_DESCRIPTOR == null) {
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark_transparent), THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
+        }
+        return THEMEDEF_DESCRIPTOR;
     }
 }

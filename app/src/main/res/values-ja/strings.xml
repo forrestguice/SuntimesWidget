@@ -5,5 +5,6 @@
     <string name="default_location_latitude">35.6732</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">139.5703</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">49</string>         <!-- meters -->
+    <string name="default_timezone">Asia/Tokyo</string>         <!-- tzid -->
 
 </resources>

@@ -27,22 +27,37 @@ A hunting and fishing add-on for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
 A 24-hour clock & roman timekeeping add-on for Suntimes.<br/><br />
-    
+
+<a href="https://github.com/forrestguice/SuntimesNFC/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_suntimesnfc.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesNFC/">Suntimes NFC</a> <br />
+An NFC Addon for Suntimes Alarms; dismiss alarms with an NFC tag.<br/><br />
+
+<a href="https://github.com/forrestguice/IntervalMidpoints/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_imidpoints.png" height="64" /></a> <a href="https://github.com/forrestguice/IntervalMidpoints/">Interval Midpoints</a> <br />
+A midpoint calculator add-on for Suntimes Alarms; schedule alarms for event midpoints.<br/><br />
+
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
 * displays the time until the next rising/setting event.
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
-* displays the current moon phase, illumination, moonrise and moonset times, and major phase dates.
-* displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble).
-* displays the solstices and equinoxes, and notes the time until the next event.
+* displays the current moon phase, illumination, moonrise, moonset, lunar noon, lunar midnight, apogee, perigee, and major phase dates.
+* displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble, or azimuthal maps).
+* displays the total amount of sunlight over the year, and earliest/latest sunrise and sunset times.
+* displays the solstices, equinoxes, and cross-quarter days, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
+* includes support for custom rising/setting events; the time when the sun is at a given angle, or an object casts a shadow of given length.
 * includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
+* includes a "Quick Settings" tile that displays information as part of the settings tray.
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
 * *does not* require network connectivity (or other unnecessary permissions). All calculations are performed locally on the device. 
+
+The alarm clock:
+* supports different types; schedule "alarms", "notifications", or "quick notifications".
+* supports astronomical events (in addition to ordinary alarms), and repeating alarms that are rescheduled as event times change throughout the year.
+* includes features for heavy sleepers; challenges to dismiss alarms ("easy math"), snooze limits, and bright fullscreen alarms.
+* includes a bedtime mode that schedules alarms using sleep cycles, and manages do-not-disturb during sleep hours.
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
@@ -60,28 +75,42 @@ Widgets are resizable and include...
 **Clock widgets:**
 * 1x1 digital clock widget that displays solar time (or a given timezone).
 
+**Alarm widgets:**
+* 1x1 alarm widget that displays the time of the next alarm.
+* 2x2 alarm widget that displays a basic list of upcoming alarms.
+* 3x2 alarm widget that displays a detailed list of upcoming alarms.
+
+**Date widgets:**
+* 1x1 date widget that displays the date with a given calendars (Chinese, Coptic, Ethiopian, Gregorian, Hebrew, Indian, Japanese, Julian, Korean, Minguo, Solar Hijiri, Thai Solar, or Vietnamese).
+
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
 * 1x1 sun widget that displays both sunrise and sunset times.
 * 1x1 sun widget that flips between sunrise and sunset times.
-* 2x1 sun widget that displays the sunrise and sunset times, and the difference in daylight between today and tomorrow (or yesterday).
+* 2x1 and 3x1 sun widgets that displays the sunrise and sunset times, and the difference in daylight between today and tomorrow (or yesterday).
 
 **Moon widgets:**
 * 1x1 moon widget that displays moonrise and moonset.
 * 1x1 moon widget that displays next major phase.
 * 1x1 moon widget that displays phase and illumination (or phase only, or illumination only).
+* 1x1 moon widget that displays the number of days since the new moon.
 * 2x1 moon widget that displays moonrise and moonset, phase, and illumination.
 * 3x1 moon widget that displays upcoming major moon phases.
 
 **Solstice widgets:**
-* 1x1 solstice widget that tracks the upcoming solstice or equinox.
+* 1x1 solstice widget that tracks the upcoming solstice, equinox, or cross-quarter day.
 
 **Position widgets:**
 * 1x1 sun position widget that tracks the sun's altitude and azimuth.
 * 1x1 sun position widget that tracks the sun's declination and right ascension.
 * 3x1 sun position widget that displays the lightmap graph, and tracks the sun's altitude and azimuth (current, sunrise/sunset, and at noon).
 * 3x2 sun position widget that displays current sunlight and moonlight projected over a world map.
+* 3x2 sun position widget that displays the sun's altitude as a line graph.
+* 3x2 sun position widget that displays sunlight over the year.
 
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_1x1_preview.png" align="center"></img>
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_2x2_preview.png" align="center"></img>
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_3x2_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/clockwidget_1x1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
@@ -109,10 +138,14 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
+|ACCESS_NOTIFICATION_POLICY|To enable do-not-disturb at bedtime.|v0.16.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|FOREGROUND_SERVICE|To display alarms and notifications.|v0.16.0|
 |POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
+|REQUEST_IGNORE_BATTERY_OPTIMIZATIONS|To help ensure reliable delivery of alarms.|v0.14.11|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
+|USE_FULL_SCREEN_INTENT|To display alarms over the lock screen.|v0.16.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
 Version `v0.13.8` removed READ_EXTERNAL_STORAGE for api&ge;19 (replaced with persistent URI permissions). 
@@ -131,6 +164,7 @@ Version `0.9.*` contained the following additional permissions (removed in v0.10
 Do you find value in this software? Pay as you feel. 
 
 [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+<noscript><a href="https://liberapay.com/forrestguice/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
 I want to express my thanks to those who have sent me something. This is greatly appreciated.
 
@@ -143,7 +177,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2022 Forrest Guice<br/>
+Copyright &#169; 2014-2024 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -167,18 +201,20 @@ Libraries used:
 
 German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, and <u>CSTRSK</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
-French translation by <u>Jej</u>, <u>Aloha</u> and <u>ldmpub</u>.<br/>
+French translation by <u>Jej</u>, <u>Aloha</u>, <u>ldmpub</u>, and <u>grenagit</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
-Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
+Italian translation by <u>Matteo Caoduro</u>, <u>GiovaGa</u>, and <u>McCio</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
-Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
+Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>, and <u><a href=https://github.com/Adelechka>Adelechka</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
-Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
+Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
+Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>.<br />
+
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

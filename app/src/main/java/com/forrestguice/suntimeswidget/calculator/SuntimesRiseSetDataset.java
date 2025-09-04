@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,15 +21,18 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 public class SuntimesRiseSetDataset
@@ -39,10 +42,24 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataNautical;
     public SuntimesRiseSetData dataAstro;
     public SuntimesRiseSetData dataNoon;
+    public SuntimesRiseSetData dataMidnight;
     public SuntimesRiseSetData dataGold;
     public SuntimesRiseSetData dataBlue8;
     public SuntimesRiseSetData dataBlue4;
-    private ArrayList<SuntimesRiseSetData> dataset = new ArrayList<>();
+
+    private HashMap<String, SuntimesRiseSetData> dataset = new HashMap<>();
+    public SuntimesRiseSetData getData(String id) {
+        return dataset.get(id);
+    }
+    public void putData(String id, SuntimesRiseSetData data) {
+        dataset.put(id, data);
+    }
+    public Collection<String> getDataModes() {
+        return dataset.keySet();
+    }
+    public int size() {
+        return dataset.size();
+    }
 
     public SuntimesRiseSetDataset(Context context)
     {
@@ -54,16 +71,30 @@ public class SuntimesRiseSetDataset
         init(context, appWidgetID);
     }
 
-    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other)
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other) {
+        this(other, WidgetSettings.TimeMode.values());
+    }
+
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other, WidgetSettings.TimeMode[] modes)
     {
-        dataset.add(this.dataActual = new SuntimesRiseSetData(other.dataActual));
-        dataset.add(this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
-        dataset.add(this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
-        dataset.add(this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
-        dataset.add(this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
-        dataset.add(this.dataGold = new SuntimesRiseSetData(other.dataGold));
-        dataset.add(this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
-        dataset.add(this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
+        this.calculator = other.calculator;
+        this.calculatorDescriptor = other.calculatorDescriptor;
+
+        for (WidgetSettings.TimeMode mode : modes)
+        {
+            switch (mode)
+            {
+                case OFFICIAL: dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), this.dataActual = new SuntimesRiseSetData(other.dataActual)); break;
+                case CIVIL: dataset.put(WidgetSettings.TimeMode.CIVIL.name(), this.dataCivil = new SuntimesRiseSetData(other.dataCivil)); break;
+                case NAUTICAL: dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), this.dataNautical = new SuntimesRiseSetData(other.dataNautical)); break;
+                case ASTRONOMICAL: dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), this.dataAstro = new SuntimesRiseSetData(other.dataAstro)); break;
+                case NOON: dataset.put(WidgetSettings.TimeMode.NOON.name(), this.dataNoon = new SuntimesRiseSetData(other.dataNoon)); break;
+                case MIDNIGHT: dataset.put(WidgetSettings.TimeMode.MIDNIGHT.name(), this.dataMidnight = new SuntimesRiseSetData(other.dataMidnight)); break;
+                case GOLD: dataset.put(WidgetSettings.TimeMode.GOLD.name(), this.dataGold = new SuntimesRiseSetData(other.dataGold)); break;
+                case BLUE8: dataset.put(WidgetSettings.TimeMode.BLUE8.name(), this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8)); break;
+                case BLUE4: dataset.put(WidgetSettings.TimeMode.BLUE4.name(), this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4)); break;
+            }
+        }
     }
 
     private void init(Context context, int appWidgetID)
@@ -71,110 +102,64 @@ public class SuntimesRiseSetDataset
         dataActual = new SuntimesRiseSetData(context, appWidgetID);
         dataActual.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         dataActual.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-        dataset.add(dataActual);
+        dataset.put(WidgetSettings.TimeMode.OFFICIAL.name(), dataActual);
 
         dataCivil = new SuntimesRiseSetData(dataActual);
         dataCivil.setTimeMode(WidgetSettings.TimeMode.CIVIL);
-        dataset.add(dataCivil);
+        dataset.put(WidgetSettings.TimeMode.CIVIL.name(), dataCivil);
 
         dataNautical = new SuntimesRiseSetData(dataActual);
         dataNautical.setTimeMode(WidgetSettings.TimeMode.NAUTICAL);
-        dataset.add(dataNautical);
+        dataset.put(WidgetSettings.TimeMode.NAUTICAL.name(), dataNautical);
 
         dataAstro = new SuntimesRiseSetData(dataActual);
         dataAstro.setTimeMode(WidgetSettings.TimeMode.ASTRONOMICAL);
-        dataset.add(dataAstro);
+        dataset.put(WidgetSettings.TimeMode.ASTRONOMICAL.name(), dataAstro);
 
         dataNoon = new SuntimesRiseSetData(dataActual);
         dataNoon.setTimeMode(WidgetSettings.TimeMode.NOON);
-        dataset.add(dataNoon);
+        dataset.put(WidgetSettings.TimeMode.NOON.name(), dataNoon);
+
+        dataMidnight = new SuntimesRiseSetData(dataActual);
+        dataMidnight.setTimeMode(WidgetSettings.TimeMode.MIDNIGHT);
+        dataset.put(WidgetSettings.TimeMode.MIDNIGHT.name(), dataMidnight);
 
         dataGold = new SuntimesRiseSetData(dataActual);
         dataGold.setTimeMode(WidgetSettings.TimeMode.GOLD);
-        dataset.add(dataGold);
+        dataset.put(WidgetSettings.TimeMode.GOLD.name(), dataGold);
 
         dataBlue8 = new SuntimesRiseSetData(dataActual);
         dataBlue8.setTimeMode(WidgetSettings.TimeMode.BLUE8);
-        dataset.add(dataBlue8);
+        dataset.put(WidgetSettings.TimeMode.BLUE8.name(), dataBlue8);
 
         dataBlue4 = new SuntimesRiseSetData(dataActual);
         dataBlue4.setTimeMode(WidgetSettings.TimeMode.BLUE4);
-        dataset.add(dataBlue4);
+        dataset.put(WidgetSettings.TimeMode.BLUE4.name(), dataBlue4);
     }
 
-    public void calculateData()
+    public void calculateData(Context context)
     {
-        SuntimesCalculator calculator = null;
-        SuntimesCalculatorDescriptor descriptor = null;
+        SuntimesCalculator calculator = this.calculator;
+        SuntimesCalculatorDescriptor descriptor = this.calculatorDescriptor;
 
         boolean first = true;
-        ArrayList<WidgetSettings.TimeMode> events0 = new ArrayList<WidgetSettings.TimeMode>();
-        ArrayList<WidgetSettings.TimeMode> events1 = new ArrayList<WidgetSettings.TimeMode>();
-
-        for (SuntimesRiseSetData data : dataset )
+        for (SuntimesRiseSetData data : dataset.values())
         {
-            if (first)
+            if (first && descriptor == null)
             {
-                data.calculate();
+                data.calculate(context);
                 calculator = data.calculator();
                 descriptor = data.calculatorMode();
                 first = false;
 
             } else {
                 data.setCalculator(calculator, descriptor);
-                data.calculate();
-            }
-
-            WidgetSettings.TimeMode mode = data.timeMode();
-            if (mode == WidgetSettings.TimeMode.NOON || mode == WidgetSettings.TimeMode.GOLD
-                    || mode == WidgetSettings.TimeMode.BLUE4 || mode == WidgetSettings.TimeMode.BLUE8)
-                continue;
-
-            if (data.sunriseCalendarToday() != null || data.sunsetCalendarToday() != null) {
-                events0.add(mode);
-            }
-            if (data.sunriseCalendarOther() != null || data.sunsetCalendarOther() != null) {
-                events1.add(mode);
+                data.calculate(context);
             }
         }
 
-        SuntimesCalculator.SunPosition position0 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.calendar())) : null);
-        if (events0.isEmpty())
-        {
-            if (position0 == null) {
-                dataActual.dayLengthToday = -1;
-                dataCivil.dayLengthToday = -1;
-
-            } else if (position0.elevation > 0) {
-                dataActual.dayLengthToday = SuntimesData.DAY_MILLIS;    // perpetual day
-                dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;
-
-            } else if (position0.elevation > -6) {
-                dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;    // perpetual civil twilight
-            }
-
-        } else if (events0.contains(WidgetSettings.TimeMode.OFFICIAL) && !events0.contains(WidgetSettings.TimeMode.CIVIL)) {
-            dataCivil.dayLengthToday = SuntimesData.DAY_MILLIS;
-        }
-
-        SuntimesCalculator.SunPosition position1 = (calculator != null ? calculator.getSunPosition(nowThen(dataActual.getOtherCalendar())) : null);
-        if (events1.isEmpty())
-        {
-            if (position1 == null) {
-                dataActual.dayLengthOther = -1;
-                dataCivil.dayLengthOther = -1;
-
-            } else if (position1.elevation > 0) {
-                dataActual.dayLengthOther = SuntimesData.DAY_MILLIS;    // perpetual day
-                dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;
-
-            } else if (position1.elevation > -6) {
-                dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;    // perpetual civil twilight
-            }
-
-        } else if (events1.contains(WidgetSettings.TimeMode.OFFICIAL) && !events0.contains(WidgetSettings.TimeMode.CIVIL)) {
-            dataCivil.dayLengthOther = SuntimesData.DAY_MILLIS;
-        }
+        makeDayLengthCorrections(this, calculator, false);
+        makeDayLengthCorrections(this, calculator, true);
     }
 
     public boolean isCalculated()
@@ -184,24 +169,51 @@ public class SuntimesRiseSetDataset
 
     public void invalidateCalculation()
     {
-        for (SuntimesRiseSetData data : dataset )
+        for (SuntimesRiseSetData data : dataset.values() )
         {
             data.invalidateCalculation();
         }
     }
 
-    public Calendar findNextEvent()
+    public static class SearchResult
+    {
+        private Calendar calendar;
+        private boolean isRising;
+        private WidgetSettings.RiseSetDataMode mode;
+
+        public SearchResult(WidgetSettings.RiseSetDataMode mode, Calendar calendar, boolean isRising)
+        {
+            this.mode = mode;
+            this.calendar = calendar;
+            this.isRising = isRising;
+        }
+        public Calendar getCalendar() {
+            return calendar;
+        }
+        public boolean isRising() {
+            return isRising;
+        }
+        public WidgetSettings.RiseSetDataMode getMode() {
+            return mode;
+        }
+    }
+
+    public SearchResult findNextEvent()
     {
         Calendar now = now();
         long nearestTime = -1;
+        boolean isRising = false;
+        WidgetSettings.RiseSetDataMode mode = null;
 
-        Calendar nearest = dataset.get(0).sunriseCalendarToday();
-        for (SuntimesRiseSetData data : dataset)
+        Collection<SuntimesRiseSetData> values = dataset.values();
+        Calendar nearest = values.toArray(new SuntimesRiseSetData[0])[0].sunriseCalendarToday();
+        for (SuntimesRiseSetData data : values)
         {
-            Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunriseCalendarOther(),
-                                                 data.sunsetCalendarToday(), data.sunsetCalendarOther() };
-            for (Calendar event : events)
+            Calendar[] events = new Calendar[] { data.sunriseCalendarToday(), data.sunsetCalendarToday(),
+                                                 data.sunriseCalendarOther(), data.sunsetCalendarOther() };
+            for (int i=0; i<events.length; i++)
             {
+                Calendar event = events[i];
                 if (event != null)
                 {
                     long timeUntil = event.getTime().getTime() - now.getTime().getTime();
@@ -209,16 +221,14 @@ public class SuntimesRiseSetDataset
                     {
                         nearestTime = timeUntil;
                         nearest = event;
+                        isRising = (i % 2 == 0);
+                        mode = ((data.dataMode() != null) ? data.dataMode() : data.timeMode());
+                        //Log.d("DEBUG", "findNextEvent: mode is: " + mode);
                     }
                 }
             }
         }
-        return nearest;
-    }
-
-    public SuntimesCalculator calculator()
-    {
-        return dataActual.calculator();
+        return new SearchResult(mode, nearest, isRising);
     }
 
     public Calendar todayIs()
@@ -276,14 +286,14 @@ public class SuntimesRiseSetDataset
     }
     public void setLocation(Location location)
     {
-        for (SuntimesRiseSetData data : dataset ) {
+        for (SuntimesRiseSetData data : dataset.values() ) {
             data.setLocation(location);
         }
     }
 
     public void setTodayIs(Calendar date)
     {
-        for (SuntimesRiseSetData data : dataset ) {
+        for (SuntimesRiseSetData data : dataset.values() ) {
             data.setTodayIs(date);
         }
     }
@@ -292,7 +302,7 @@ public class SuntimesRiseSetDataset
         return dataActual.timezone();
     }
     public void setTimeZone(Context context, TimeZone value) {
-        for (SuntimesRiseSetData data : dataset) {
+        for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
             data.setTimezone(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
@@ -318,16 +328,30 @@ public class SuntimesRiseSetDataset
         return dataActual.timezoneMode();
     }
     public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
-        for (SuntimesRiseSetData data : dataset) {
+        for (SuntimesRiseSetData data : dataset.values()) {
             data.setTimeZoneMode(value);
             data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
         }
     }
 
-    public SuntimesCalculatorDescriptor calculatorMode()
-    {
-        return dataActual.calculatorMode();
+    public SuntimesCalculator calculator() {
+        return (calculator != null ? calculator : dataActual.calculator());
     }
+    public SuntimesCalculatorDescriptor calculatorMode() {
+        return (calculatorDescriptor != null ? calculatorDescriptor: dataActual.calculatorMode());
+    }
+
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor value)
+    {
+        this.calculatorDescriptor = value;
+        this.calculator = new SuntimesCalculatorFactory(context, value).createCalculator(location(), timezone());
+    }
+    public void setCalculator(Context context, SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+        this.calculatorDescriptor = calculatorDescriptor;
+        this.calculator = calculator;
+    }
+    protected SuntimesCalculator calculator;
+    protected SuntimesCalculatorDescriptor calculatorDescriptor;
 
     public Calendar now()
     {
@@ -487,27 +511,34 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public Calendar[] getRiseSetEvents(SolarEvents event)
+    public Calendar[] getRiseSetEvents(String eventID)
     {
-        switch (event) {
-            case NOON:
-                return dataNoon.getEvents(event);
-            case SUNRISE: case SUNSET:
-                return dataActual.getEvents(event);
-            case MORNING_CIVIL: case EVENING_CIVIL:
-                return dataCivil.getEvents(event);
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL:
-                return dataNautical.getEvents(event);
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
-                return dataAstro.getEvents(event);
-            case MORNING_GOLDEN: case EVENING_GOLDEN:
-                return dataGold.getEvents(event);
-            case MORNING_BLUE4: case EVENING_BLUE4:
-                return dataBlue4.getEvents(event);
-            case MORNING_BLUE8: case EVENING_BLUE8:
-                return dataBlue8.getEvents(event);
+        //Log.d("DEBUG", "getRiseSetEvents: " + eventID);
+        SuntimesRiseSetData d;
+        if (SolarEvents.hasValue(eventID))
+        {
+            try {
+                SolarEvents event = SolarEvents.valueOf(eventID);
+                d = getData(SolarEvents.toTimeMode(eventID).name());
+                if (d != null) {
+                    return d.getEvents(event.isRising());
+                } else return new Calendar[] { null, null };
+
+            } catch (IllegalArgumentException | NullPointerException e) {
+                Log.w(getClass().getSimpleName(), "getRisSetEvents: " + e);
+            }
         }
-        return new Calendar[] { null, null };
+
+        //Log.d("DEBUG", "getRiseSetEvents: EventAlias: " + eventID);
+        boolean isRising = eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+        if (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) || eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+        }
+        d = getData(eventID);
+
+        if (d != null) {
+            return d.getEvents(isRising);
+        } else return new Calendar[] { null, null };
     }
 
     @Override
@@ -516,6 +547,88 @@ public class SuntimesRiseSetDataset
         return "" + date().getTime();
     }
 
+    public static int NONE_DAY = 0;      // no daylength because the sun doesn't set lower
+    public static int NONE_NIGHT = -1;    // no daylength because the sun doesn't rise higher
+
+    public static void makeDayLengthCorrections(SuntimesRiseSetDataset data, SuntimesCalculator calculator, boolean isOther)
+    {
+        SuntimesRiseSetData dataActual = data.dataActual;
+        SuntimesRiseSetData dataCivil = data.dataCivil;
+        SuntimesRiseSetData dataNautical = data.dataNautical;
+        SuntimesRiseSetData dataAstro = data.dataAstro;
+
+        Calendar calendar = (isOther ? dataActual.getOtherCalendar() : dataActual.calendar());
+        Calendar midnight = (calculator != null ? calculator.getSolarMidnightCalendarForDate(calendar) : null);
+        SuntimesCalculator.SunPosition atMidnight = (calculator != null && midnight != null ? calculator.getSunPosition(midnight) : null);
+        if (atMidnight != null)
+        {
+            if (atMidnight.elevation > -2) {                              // [0, ...]
+                if (dayLengthIs(dataActual, isOther, 0)) {
+                    setDayLength(dataActual, isOther, SuntimesData.DAY_MILLIS);     // polar day (midnight sun)
+                    setDayLength(dataCivil, isOther, NONE_DAY);
+                    setDayLength(dataNautical, isOther, NONE_DAY);
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -6) {                       // (-6, 0]
+                if (dayLengthIs(dataCivil, isOther, 0)) {
+                    setDayLength(dataCivil, isOther, SuntimesData.DAY_MILLIS);       // midnight twilight
+                    setDayLength(dataNautical, isOther, NONE_DAY);
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -12) {                      // (-12, -6]
+                if (dayLengthIs(dataNautical, isOther, 0)) {
+                    setDayLength(dataNautical, isOther, SuntimesData.DAY_MILLIS);    // midnight twilight
+                    setDayLength(dataAstro, isOther, NONE_DAY);
+                }
+
+            } else if (atMidnight.elevation >= -18) {                      // (-18, 12]
+                if (dayLengthIs(dataAstro, isOther, 0)) {
+                    setDayLength(dataAstro, isOther, SuntimesData.DAY_MILLIS);       // midnight twilight
+                }
+            }
+        }
+
+        Calendar noon = (calculator != null ? calculator.getSolarNoonCalendarForDate(calendar) : null);
+        SuntimesCalculator.SunPosition atNoon = (calculator != null && noon != null ? calculator.getSunPosition(noon) : null);
+        if (atNoon != null)
+        {
+            if (atNoon.elevation <= 0) {                                             // polar night
+                if (dayLengthIs(dataActual, isOther, 0)) {
+                    setDayLength(dataActual, isOther, NONE_NIGHT);
+                }
+
+                if (atNoon.elevation < -6) {
+                    if (dayLengthIs(dataCivil, isOther, 0)) {
+                        setDayLength(dataCivil, isOther, NONE_NIGHT);
+                    }
+
+                    if (atNoon.elevation < -12) {
+                        if (dayLengthIs(dataNautical, isOther, 0)) {
+                            setDayLength(dataNautical, isOther, NONE_NIGHT);
+                        }
+
+                        if (atNoon.elevation < -18 && dayLengthIs(dataAstro, isOther, 0)) {
+                            setDayLength(dataAstro, isOther, NONE_NIGHT);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean dayLengthIs(SuntimesRiseSetData data,  boolean other, long length) {
+        return other ? (data.dayLengthOther == length)
+                : (data.dayLengthToday == length);
+    }
+    public static void setDayLength(SuntimesRiseSetData data, boolean other, long length)
+    {
+        if (other) {
+            data.dayLengthOther = length;
+        } else {
+            data.dayLengthToday = length;
+        }
+    }
+
 }
-
-

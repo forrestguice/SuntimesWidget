@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
@@ -36,17 +35,23 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
-import com.forrestguice.suntimeswidget.layouts.SunLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,8 +100,28 @@ public class SuntimesWidget0 extends AppWidgetProvider
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        newOptions.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, getClass().getSimpleName());
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, newOptions);
         initLocale(context);
         updateWidget(context, appWidgetManager, appWidgetId);
+        WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
+    }
+
+    @Override
+    @TargetApi(21)
+    public void onRestored (Context context, int[] oldAppWidgetIds, int[] newAppWidgetIds)
+    {
+        if (oldAppWidgetIds != null && newAppWidgetIds != null)
+        {
+            boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
+            for (int i=0; i<newAppWidgetIds.length; i++) {
+                setUpdateAlarm(context, newAppWidgetIds[i]);
+            }
+            // TODO: api30+ should set AppWidgetManager#OPTION_APPWIDGET_RESTORE_COMPLETED true
+
+        } else {
+            Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
+        }
     }
 
     /**
@@ -136,6 +161,27 @@ public class SuntimesWidget0 extends AppWidgetProvider
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED)) {
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_OPTIONS_CHANGED :: " + getClass());
 
+        } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_RESTORED)) {
+            Log.d(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: " + getClass());
+            /*if (Build.VERSION.SDK_INT >= 21)
+            {
+                int[] oldAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_OLD_IDS);  // old (now invalid) appWidgetIds
+                int[] newAppWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);      // new (valid) appWidgetIds
+                if (oldAppWidgetIds != null && newAppWidgetIds != null)
+                {
+                    boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
+                    for (int i=0; i<newAppWidgetIds.length; i++) {
+                        setUpdateAlarm(context, newAppWidgetIds[i]);
+                    }
+                } else {
+                    Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
+                }
+            }*/
+
+        } else if (action != null && action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
+            Log.d(TAG, "onReceive: suntimeswidget.alarm.ui.update :: " + getClass());
+            onAlarmUpdateUIBroadcast(context);
+
         } else if (action != null && action.equals(SUNTIMES_THEME_UPDATE)) {
             String themeName = (intent.hasExtra(KEY_THEME) ? intent.getStringExtra(KEY_THEME) : null);
             Log.d(TAG, "onReceive: SUNTIMES_THEME_UPDATE :: " + getClass() + " :: " + themeName);
@@ -153,13 +199,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
             // TODO: handle TIME_SET better .. when automatic/network time is enabled this thing fires /frequently/ ...
 
         } else if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            /**
+             * ACTION_APPWIDGET_UPDATE should be broadcast by the system at `R.dimen.widget_updateInterval`,
+             * or whenever the system feels like updating widgets.
+             */
             Log.d(TAG, "onReceive: ACTION_APPWIDGET_UPDATE :: " + getClass());
             if (extras != null)
             {
                 int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
                 if (appWidgetIds != null)
                 {
-                    for (int appWidgetId : appWidgetIds) {
+                    for (int appWidgetId : appWidgetIds)
+                    {
+                        if (widgetIsStale(context, appWidgetId)) {
+                            Log.w(TAG, "AppWidget " + appWidgetId + " is stale! The scheduled update may have failed; updating now...");
+                            onUpdate(context, AppWidgetManager.getInstance(context), new int[] { appWidgetId });
+                        }
                         setUpdateAlarm(context, appWidgetId);
                     }
                 }
@@ -169,6 +224,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
             Log.d(TAG, "onReceive: unhandled :: " + action + " :: " + getClass());
         }
     }
+
+    protected void onAlarmUpdateUIBroadcast(Context context) {}
 
     public boolean isClickAction(String action)
     {
@@ -217,13 +274,14 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
         {
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
             return true;
         }
 
         // OnTap: Update All
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name()))
         {
-            updateAllWidgets(context);
+            WidgetListAdapter.updateAllWidgetAlarms(context);
             return true;
         }
 
@@ -237,10 +295,11 @@ public class SuntimesWidget0 extends AppWidgetProvider
                     (extraString != null && !extraString.isEmpty() && extraString.contains("%")) )
             {
                 data = getData(context, appWidgetId);
-                data.calculate();
+                data.calculate(context);
             }
             WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass(), Intent.FLAG_ACTIVITY_NEW_TASK);
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
             return true;
         }
 
@@ -332,6 +391,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         for (int appWidgetId : appWidgetIds)
         {
             updateWidget(context, appWidgetManager, appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
@@ -343,18 +403,15 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
-    public static void updateAllWidgets(Context context)
-    {
-        Intent intent = new Intent();
-        intent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(intent);
-    }
-
     public void initLocale(Context context)
     {
         AppSettings.initLocale(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.TimeMode.initDisplayStrings(context);
+    }
+
+    public static boolean widgetIsStale(Context context, int appWidgetId) {
+        return (WidgetSettings.getNextSuggestedUpdate(context, appWidgetId) < System.currentTimeMillis());
     }
 
     /**
@@ -471,9 +528,22 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SunLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
-                                                          : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+            //int minDimen_x4 = context.getResources().getInteger(R.integer.widget_size_minWidthDp4x1);
+            int minDimen_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            int minDimen_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+
+            //int minWidth1x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            //layout = ((mustFitWithinDp[0] >= minWidth1x3) ? new SunLayout_2x1_0()
+            //                                              : WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId));
+
+            if (mustFitWithinDp[0] >= minDimen_x3) {
+                layout = new SunLayout_3x1_0();
+            } else if (mustFitWithinDp[0] >= minDimen_x2) {
+                layout = new SunLayout_2x1_0();
+            } else {
+                layout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
+            }
+
         } else {
             layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }
@@ -516,6 +586,17 @@ public class SuntimesWidget0 extends AppWidgetProvider
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
+    protected static boolean isCurrentLocationMode(Context context, int appWidgetId) {
+        return (WidgetSettings.loadLocationModePref(context, appWidgetId) == WidgetSettings.LocationMode.CURRENT_LOCATION);
+    }
+    protected static void updateLocationToLastKnown(Context context, int appWidgetId)
+    {
+        android.location.Location currentLocation = GetFixHelper.lastKnownLocation(context);
+        if (currentLocation != null) {
+            WidgetSettings.saveLocationPref(context, appWidgetId, new Location(context.getString(R.string.gps_lastfix_title_found), currentLocation));
+        }
+    }
+
     /**
      * @param context the context
      * @param appWidgetManager widget manager
@@ -524,15 +605,19 @@ public class SuntimesWidget0 extends AppWidgetProvider
      */
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
     {
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
+        }
+
         SuntimesRiseSetData data = getRiseSetData(context, appWidgetId);
-        data.calculate();
+        data.calculate(context);
 
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         if (showSolarNoon)
         {
             SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
             noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-            noonData.calculate();
+            noonData.calculate(context);
             data.linkData(noonData);
         }
 
@@ -636,8 +721,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 } else {
                     alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
                 }
-                Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
-            } else Log.d(TAG, "setUpdateAlarm: skipping " + alarmID);
+                Log.d(TAG, "SuntimesWidget.setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            } else Log.w(TAG, "SuntimesWidget.setUpdateAlarm: skipping " + alarmID);
         }
     }
 
@@ -652,7 +737,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             alarmManager.cancel(alarmIntent);
-            Log.d(TAG, "unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter() + "(" + alarmID + ")");
+            Log.d(TAG, "SuntimesWidget.unsetUpdateAlarm: unset alarm --> " + getUpdateIntentFilter() + "(" + alarmID + ")");
         }
     }
 
@@ -673,23 +758,23 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
     }
 
-    protected long getUpdateTimeMillis(Calendar suggestedUpdateTime)
+    protected long getUpdateTimeMillis(@Nullable Calendar suggestedUpdateTime)
     {
         Calendar updateTime = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
 
-        if (now.before(suggestedUpdateTime))
+        if (suggestedUpdateTime != null && now.before(suggestedUpdateTime))
         {
             updateTime.setTimeInMillis(suggestedUpdateTime.getTimeInMillis());
-            Log.d(TAG, "getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
+            Log.d(TAG, "SuntimesWidget.getUpdateTimeMillis: next update is at: " + updateTime.getTimeInMillis());
 
         } else {
-            updateTime.set(Calendar.MILLISECOND, 0);   // reset seconds, minutes, and hours to 0
-            updateTime.set(Calendar.MINUTE, 0);
+            updateTime.set(Calendar.MILLISECOND, 0);
+            updateTime.set(Calendar.MINUTE, 1);
             updateTime.set(Calendar.SECOND, 0);
             updateTime.set(Calendar.HOUR_OF_DAY, 0);
-            updateTime.add(Calendar.DAY_OF_MONTH, 1);  // and increment the date by 1 day
-            Log.d(TAG, "getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
+            updateTime.add(Calendar.DAY_OF_YEAR, 1);
+            Log.d(TAG, "SuntimesWidget.getUpdateTimeMillis: next update is at midnight: " + updateTime.getTimeInMillis());
         }
         return updateTime.getTimeInMillis();
     }
@@ -710,6 +795,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         String updateFilter = getUpdateIntentFilter();
         Intent intent = new Intent(updateFilter);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.putExtra(KEY_WIDGETCLASS, getClass().toString());
 

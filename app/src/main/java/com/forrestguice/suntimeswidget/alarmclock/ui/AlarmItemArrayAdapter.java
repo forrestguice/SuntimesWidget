@@ -40,7 +40,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,9 +52,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AlarmDialog;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
+
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -657,7 +658,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         if (view.text_location != null)
         {
             view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
-            AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
+            AlarmEventDialog.updateLocationLabel(context, view.text_location, item.location);
 
             if (!isSelected || item.enabled) {
                 Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledColor);
@@ -692,6 +693,13 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
         }
 
+        /*if (view.text_action2 != null)
+        {
+            view.text_action2.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            view.text_action2.setText( actionDisplayChip(item, 2, isSelected));
+            view.text_action2.setVisibility( item.actionID2 != null ? View.VISIBLE : View.GONE );
+        }*/
+
         // vibrate
         if (view.check_vibrate != null)
         {
@@ -705,7 +713,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // repeating
         if (view.text_repeat != null)
         {
-            boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+            boolean noRepeat = (item.repeatingDays != null && item.repeatingDays.isEmpty());
             String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                     ? context.getString(R.string.alarmOption_repeat_all)
                     : noRepeat
@@ -778,8 +786,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         ImageSpan actionIcon = (isSelected || item.enabled)
                 ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
                 : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
-        String actionName = item.getActionID(actionNum);  // TODO
-        String actionString = isSelected ? (item.actionID1 != null ? actionName : "") : "";
+        String actionName = item.getActionID(actionNum);
+        String actionString = isSelected ? (actionName != null ? actionName : "") : "";
         String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
         return SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
     }
@@ -818,7 +826,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             }
         }
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -838,6 +846,12 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     case R.id.setAlarmSound:
                         if (adapterListener != null) {
                             adapterListener.onRequestRingtone(item);
+                        }
+                        return true;
+
+                    case R.id.setAlarmDismissChallenge:
+                        if (adapterListener != null) {
+                            adapterListener.onRequestDismissChallenge(item);
                         }
                         return true;
 
@@ -885,9 +899,9 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         return false;
                 }
             }
-        });
+        }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 
@@ -903,7 +917,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.alarmtype, menu.getMenu());
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
@@ -913,14 +927,20 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     case R.id.alarmTypeNotification:
                         return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
 
+                    case R.id.alarmTypeNotification1:
+                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+
+                    case R.id.alarmTypeNotification2:
+                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
+
                     case R.id.alarmTypeAlarm:
                     default:
                         return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
                 }
             }
-        });
+        }));
 
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
 

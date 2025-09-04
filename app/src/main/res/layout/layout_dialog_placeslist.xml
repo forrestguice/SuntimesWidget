@@ -24,7 +24,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/placesList"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:descendantFocusability="afterDescendants" />
 
     <include layout="@layout/layout_empty_placeslist" />
 

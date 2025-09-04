@@ -29,21 +29,21 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="end"
             android:minWidth="125dp"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true" android:clickable="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView style="@style/SunsetTimeTextView"
+            <TextView style="@style/ClockTextView"
                       android:id="@+id/text_time"
                       android:layout_gravity="end"
                       android:text=""
-                      android:textSize="56sp"
                       tools:text="12:00" />
 
             <TextView android:id="@+id/text_time_suffix"
-                      style="@style/SunsetTimeTextSuffixView"
+                      style="@style/ClockSuffixTextView"
                       android:layout_gravity="center_vertical|bottom|end"
-                      android:textSize="18sp"
-                      android:text="" android:maxEms="@integer/clock_amppm_maxems"
+                      android:text=""
                       tools:text="p.m." />
         </LinearLayout>
 
@@ -52,6 +52,8 @@
                   android:maxLines="2" android:ellipsize="end"
                   android:gravity="end" android:layout_width="0dp"
                   android:textColor="?attr/text_buttonSelector"
+                  android:background="?attr/selectableItemBackground"
+                  android:focusable="true" android:clickable="true"
                   android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
                   app:layout_constraintTop_toBottomOf="@+id/text_time_layout"
                   app:layout_constraintEnd_toEndOf="parent"

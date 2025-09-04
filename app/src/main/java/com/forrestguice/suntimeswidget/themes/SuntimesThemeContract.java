@@ -91,6 +91,11 @@ public interface SuntimesThemeContract
     String THEME_MOONNEWCOLOR = "moonnewcolor";                                                     // int (color)
     String THEME_MOONFULLCOLOR = "moonfullcolor";                                                   // int (color)
 
+    String THEME_MOONWANINGCOLOR_TEXT = "moonwaningtextcolor";                                      // int (color)
+    String THEME_MOONWAXINGCOLOR_TEXT = "moonwaxingtextcolor";                                      // int (color)
+    String THEME_MOONNEWCOLOR_TEXT = "moonnewtextcolor";                                            // int (color)
+    String THEME_MOONFULLCOLOR_TEXT = "moonfulltextcolor";                                          // int (color)
+
     String THEME_MOONFULL_STROKE_WIDTH = "moonfull_strokewidth";
     String THEME_MOONNEW_STROKE_WIDTH = "moonnew_strokewidth";
     float THEME_MOON_STROKE_MIN = 0.0f;

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -41,7 +42,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.ref.WeakReference;
@@ -53,6 +54,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class WidgetTimezones
@@ -61,32 +63,35 @@ public class WidgetTimezones
     public static final String TZID_SUNTIMES = "SUNTIMES";
     public static final String TZID_SYSTEM = "SYSTEM";
 
-    public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate )
+    public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate ) {
+        return isProbablyNotLocal(timezone, atLocation.getLongitudeAsDouble(), onDate);
+    }
+    public static boolean isProbablyNotLocal(TimeZone timezone, double longitude, Date onDate )
     {
         if (timezone.getID().equals(TZID_UTC) || timezone.getID().equals(SiderealTime.TZID_GMST) || timezone.getID().equals(SiderealTime.TZID_LMST)) {
             return false;
         }
 
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000d * 60d * 60d);   // timezone offset in hrs
-        double lonOffset = atLocation.getLongitudeAsDouble() * 24d / 360d;               // longitude offset in hrs
+        double lonOffset = longitude * 24d / 360d;               // longitude offset in hrs
         double offsetDiff = Math.abs(lonOffset - zoneOffset);
 
-        double offsetTolerance = 3;    // tolerance in hrs
         //noinspection UnnecessaryLocalVariable
-        boolean isProbablyNotLocal = (offsetDiff > offsetTolerance);
+        boolean isProbablyNotLocal = (offsetDiff >= WARNING_TOLERANCE_HOURS);
         //Log.d("DEBUG", "offsets: " + zoneOffset + ", " + lonOffset);
         //Log.d("DEBUG", "offset delta: " +  offsetDiff +" [" + offsetTolerance + "] (" + isProbablyNotLocal + ")");
 
         return isProbablyNotLocal;
     }
+    public static final double WARNING_TOLERANCE_HOURS = 3;
 
-    public static TimeZone getTimeZone(String tzId, @Nullable Double longitude)
+    public static TimeZone getTimeZone(String tzId, @Nullable Double longitude, @Nullable SuntimesCalculator calculator)
     {
         if (longitude == null) {
             longitude = 0.0;
         }
         switch (tzId) {
-            case ApparentSolarTime.TIMEZONEID: return new ApparentSolarTime(longitude, tzId);
+            case ApparentSolarTime.TIMEZONEID: return new ApparentSolarTime(longitude, tzId, calculator);
             case LocalMeanTime.TIMEZONEID: case SiderealTime.TZID_LMST: return new LocalMeanTime(longitude, tzId);
             case SiderealTime.TZID_GMST: return new LocalMeanTime(0, tzId);
             case TZID_SYSTEM: case TZID_SUNTIMES: return TimeZone.getDefault();
@@ -270,7 +275,7 @@ public class WidgetTimezones
             super(longitude, name);
         }
 
-        public ApparentSolarTime(double longitude, String name, SuntimesCalculator calculator)
+        public ApparentSolarTime(double longitude, String name, @Nullable SuntimesCalculator calculator)
         {
             super(longitude, name);
             this.calculator = calculator;
@@ -280,6 +285,9 @@ public class WidgetTimezones
         public void setCalculator(SuntimesCalculator calculator)
         {
             this.calculator = calculator;
+        }
+        protected SuntimesCalculator getCalculator() {
+            return calculator;
         }
 
         @Override
@@ -434,13 +442,21 @@ public class WidgetTimezones
     {
         private final String timeZoneID;
         private final String displayString;
-        private final double offsetHr;
+        private final double offsetHr, rawOffsetHr;
 
         public TimeZoneItem(String timeZoneID, String displayString, double offsetHr)
         {
             this.timeZoneID = timeZoneID;
             this.displayString = displayString;
+            this.offsetHr = this.rawOffsetHr = offsetHr;
+        }
+
+        public TimeZoneItem(String timeZoneID, String displayString, double offsetHr, double rawOffsetHr)
+        {
+            this.timeZoneID = timeZoneID;
+            this.displayString = displayString;
             this.offsetHr = offsetHr;
+            this.rawOffsetHr = rawOffsetHr;
         }
 
         public String getID()
@@ -455,12 +471,17 @@ public class WidgetTimezones
 
         public double getOffsetHr()
         {
-            return offsetHr;
+            return offsetHr;   // offset today
         }
 
         public String getOffsetString()
         {
             return offsetHr + "";
+        }
+
+        public double getRawOffsetHr()
+        {
+            return rawOffsetHr;
         }
 
         public String toString()
@@ -559,8 +580,7 @@ public class WidgetTimezones
             primaryText.setText(String.format(line1, timezone.getID()));
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
-            if (secondaryText != null)
-            {
+            if (secondaryText != null) {
                 secondaryText.setText(String.format(line2, timezone.getOffsetString(), timezone.getDisplayString()));
             }
 
@@ -570,7 +590,7 @@ public class WidgetTimezones
                 if (colorize)
                 {
                     GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
-                    d.setColor(getColorForTimeZoneOffset(timezone.getOffsetHr()));
+                    d.setColor(getColorForTimeZoneOffset(timezone.getRawOffsetHr()));
                     d.invalidateSelf();
                     icon.setVisibility(View.VISIBLE);
 
@@ -614,15 +634,27 @@ public class WidgetTimezones
             return ord;
         }
 
-        public TimeZoneItem[] values()
+        public TimeZoneItem[] values() {
+            return items.toArray(new TimeZoneItem[0]);
+        }
+
+        public TimeZoneItem[] findItems(double longitude)
         {
-            int numTimeZones = items.size();
-            TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
-            for (int i=0; i<numTimeZones; i++)
+            ArrayList<TimeZoneItem> matches = new ArrayList<>();
+            double lonOffsetHr = longitude * 24d / 360d;
+            double nearest = Double.POSITIVE_INFINITY;
+            for (TimeZoneItem item : items)
             {
-                retArray[i] = items.get(i);
+                double d = Math.abs(lonOffsetHr - item.getRawOffsetHr());
+                if (d <= nearest) {
+                    if (d < nearest) {
+                        nearest = d;
+                        matches.clear();
+                    }
+                    matches.add(0, item);
+                }
             }
-            return retArray;
+            return matches.toArray(new TimeZoneItem[0]);
         }
 
         public List<TimeZoneItem> getValues()
@@ -735,8 +767,7 @@ public class WidgetTimezones
         public void onSortTimeZones( TimeZoneItemAdapter adapter, WidgetTimezones.TimeZoneSort sortMode )
         {
             String msg = context.getString(R.string.timezone_sort_msg, sortMode.getDisplayString());
-            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-            toast.show();
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         }
 
         protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
@@ -884,14 +915,17 @@ public class WidgetTimezones
                 sortBy = sorts[0];
             }
 
+            Date today = new Date();
             ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
             String[] allTimezoneValues = TimeZone.getAvailableIDs();
             //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < allTimezoneValues.length; i++)
             {
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
-                double offsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
-                timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName(), offsetHr));
+                double rawOffsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
+                double offsetHr = timezone.getOffset(today.getTime()) / (double)(1000 * 60 * 60);
+                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, SuntimesUtils.getLocale());
+                timezones.add(new TimeZoneItem(timezone.getID(), displayName, offsetHr, rawOffsetHr));
             }
 
             if (sortBy != null)

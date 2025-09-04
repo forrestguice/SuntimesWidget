@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +35,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.EventIcons;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
@@ -115,6 +122,8 @@ public class AlarmEvent
      */
     public static class AlarmEventItem
     {
+        public static final long MAX_WAIT_MS = 1000;
+
         protected SolarEvents event;
         protected String title = "", summary = null;
         protected AlarmEventPhrase phrase = null;
@@ -130,21 +139,30 @@ public class AlarmEvent
             resolved = true;
         }
 
-        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable final ContentResolver resolver)
         {
             event = null;
             uri = AlarmAddon.getEventInfoUri(authority, name);
-            resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+            resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
         }
 
-        public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
+        public AlarmEventItem( @Nullable String eventUri, @Nullable final ContentResolver resolver)
         {
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
                 title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
-                resolved = AlarmAddon.queryDisplayStrings(this, resolver);
+                resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
             }
+        }
+
+        private Callable<Boolean> resolveItemTask(@Nullable final ContentResolver resolver)
+        {
+            return new Callable<Boolean>() {
+                public Boolean call() {
+                    return AlarmAddon.queryDisplayStrings(AlarmEventItem.this, resolver);
+                }
+            };
         }
 
         @NonNull
@@ -154,7 +172,7 @@ public class AlarmEvent
 
         @Nullable
         public String getSummary() {
-            return (event != null ? "" : summary);
+            return (event != null ? null : summary);
         }
 
         @Nullable
@@ -167,8 +185,16 @@ public class AlarmEvent
             return phrase;
         }
 
-        public int getIcon() {
-            return (event != null ? event.getIcon() : R.attr.icActionExtension);
+        public int getIcon(@Nullable Context context) {
+            return (event != null)
+                    ? EventIcons.getResID(context, event.getIcon(), R.attr.icActionExtension)
+                    : EventIcons.getIconResID(context, EventIcons.getIconTag(context, uri));
+        }
+
+        public Integer getColor(@Nullable Context context) {
+            if (event == null) {
+                return EventIcons.getIconTint(context, EventIcons.getIconTag(context, uri));
+            } else return null;
         }
 
         public int supportsRepeating() {
@@ -179,6 +205,9 @@ public class AlarmEvent
         }
         public boolean requiresLocation() {
             return (event != null ? AlarmEvent.requiresLocation(event) : requires_location);
+        }
+        public void setRequiresLocation(boolean value) {
+            requires_location = value;
         }
 
         public String toString() {
@@ -293,20 +322,17 @@ public class AlarmEvent
             }
 
             ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);   // retrieve icon
-            int[] iconAttr = { items.get(position).getIcon() };
-            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
-            int def = R.drawable.ic_moon_rise;
-            int iconResource = typedArray.getResourceId(0, def);
-            typedArray.recycle();
+
+            int iconResource = item.getIcon(context);
 
             SolarEvents event = item.getEvent();                                      // apply icon
             if (event != null) {
                 SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
+
             } else {
                 Resources resources = context.getResources();
-                int s = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-                int[] iconDimen = new int[] {s,s};
-                adjustIcon(iconResource, iconView, iconDimen, 8);
+                int dimen = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                adjustIcon(context, iconResource, iconView, new int[] {dimen, dimen}, 8, item.getColor(context));
             }
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);     // apply text
@@ -316,14 +342,16 @@ public class AlarmEvent
 
             TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
             if (textView2 != null) {
-                textView2.setText(item.getSummary());
+                String summary = item.getSummary();
+                textView2.setText(summary);
+                textView2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
             }
 
             return view;
         }
     }
 
-    public static void adjustIcon(int iconRes, ImageView iconView, int[] dimen, int marginDp)
+    public static void adjustIcon(Context context, int iconRes, ImageView iconView, int[] dimen, int marginDp, Integer color)
     {
         Resources resources = iconView.getContext().getResources();
         ViewGroup.LayoutParams iconParams = iconView.getLayoutParams();
@@ -339,13 +367,32 @@ public class AlarmEvent
         }
 
         iconView.setImageDrawable(null);
-        iconView.setBackgroundResource(iconRes);
+        if (color != null)
+        {
+            Drawable eventIcon = EventIcons.getIconDrawable(context, iconRes, dimen[0], dimen[1], EventIcons.getIconScale((String)null), EventIcons.getIconDrawableInset(context, (String)null), color);
+            if (Build.VERSION.SDK_INT >= 16) {
+                iconView.setBackground(eventIcon);
+            } else {
+                iconView.setBackgroundDrawable(eventIcon);
+            }
+        } else {
+            iconView.setBackgroundResource(iconRes);
+        }
     }
 
     public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
-        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         ArrayList<AlarmEventItem> items = new ArrayList<>();
+
+        Set<String> customEvents = EventSettings.loadVisibleEvents(context);
+        for (String eventID : customEvents)
+        {
+            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+        }
+
+        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
         }

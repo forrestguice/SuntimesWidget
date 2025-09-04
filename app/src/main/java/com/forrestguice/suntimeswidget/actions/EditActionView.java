@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,14 +50,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,19 +81,6 @@ public class EditActionView extends LinearLayout
     protected static final String HELPTAG_LAUNCH = "action_launch";
 
     private static HashMap<String,PackageSuggestion> PACKAGE_SUGGESTIONS = null;
-    private static String[] ACTION_SUGGESTIONS = new String[] {
-            Intent.ACTION_VIEW, Intent.ACTION_SEARCH, Intent.ACTION_PICK, Intent.ACTION_GET_CONTENT,
-            Intent.ACTION_SEND,  Intent.ACTION_SENDTO, Intent.ACTION_SEND_MULTIPLE, "android.intent.action.PASTE",
-            Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_INSERT_OR_EDIT, Intent.ACTION_DELETE,
-            Intent.ACTION_RUN,  Intent.ACTION_SYNC, Intent.ACTION_CHOOSER,  Intent.ACTION_ATTACH_DATA,
-            Intent.ACTION_WEB_SEARCH, Intent.ACTION_SYNC,  Intent.ACTION_VOICE_COMMAND, Intent.ACTION_MAIN,
-            "android.intent.action.OPEN_DOCUMENT", "android.intent.action.CREATE_DOCUMENT", "android.intent.action.ASSIST", "android.intent.action.SHOW_APP_INFO",
-            "android.intent.action.MUSIC_PLAYER", "com.android.music.PLAYBACK_VIEWER", "android.intent.action.MEDIA_SEARCH",
-            "android.media.action.MEDIA_PLAY_FROM_SEARCH", "android.media.action.VIDEO_PLAY_FROM_SEARCH", "android.media.action.TEXT_OPEN_FROM_SEARCH",
-            Intent.ACTION_SET_WALLPAPER, "com.android.camera.action.REVIEW",
-            "android.intent.action.SHOW_ALARMS", "android.intent.action.SHOW_TIMERS", "android.intent.action.SET_ALARM", "android.intent.action.SET_TIMER"
-    };
-
     private static String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
     private static String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
 
@@ -192,7 +182,7 @@ public class EditActionView extends LinearLayout
         spinner_launchType.setAdapter(launchTypeAdapter);
 
         text_launchAction = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_action);
-        initAdapter(context, text_launchAction, ACTION_SUGGESTIONS);
+        initAdapter(context, text_launchAction, WidgetActions.ANDROID_ACTION_SUGGESTIONS);
 
         ImageButton button_launchActionSuggest = (ImageButton) findViewById(R.id.appwidget_action_launch_action_suggest);
         if (button_launchActionSuggest != null) {
@@ -497,7 +487,7 @@ public class EditActionView extends LinearLayout
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
                     Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
                     snackbar.show();
                     return;
                 }
@@ -517,7 +507,7 @@ public class EditActionView extends LinearLayout
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
             Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+            ViewUtils.themeSnackbar(getContext(), snackbar, null);
             snackbar.show();
         }
     }
@@ -539,7 +529,7 @@ public class EditActionView extends LinearLayout
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
         for (MenuItem item : restrictedItems)
@@ -553,7 +543,7 @@ public class EditActionView extends LinearLayout
         menu.show();
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -576,7 +566,7 @@ public class EditActionView extends LinearLayout
                     return false;
             }
         }
-    };
+    });
 
     public void saveIntent()
     {
@@ -645,19 +635,24 @@ public class EditActionView extends LinearLayout
      * @param context Context
      * @param id Intent id (or null)
      */
-    public void loadIntent(Context context, int appWidgetId, @Nullable String id)
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id) {
+        loadIntent(context, appWidgetId, id, WidgetActions.defaultLaunchPrefValues());
+    }
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id, ContentValues defaults)
     {
-        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
-        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
-        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
+        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC));
+        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null, defLaunchPrefValue(defaults, ""));
+        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE));
+        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA));
+        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS));
         Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
+
+        initAdapter(context, text_launchAction, WidgetActions.getSuggestedActions(launchString));    // re-initialize action adapter with additional suggestions
 
         setIntentTitle(title);
         setIntentDesc(desc);
@@ -673,6 +668,13 @@ public class EditActionView extends LinearLayout
         lastLoadedID = id;
     }
     private String lastLoadedID = null;
+
+    public static String defLaunchPrefValue(@NonNull ContentValues values, String key)
+    {
+        if (values.containsKey(key)) {
+            return values.getAsString(key);
+        } else return WidgetActions.defaultLaunchPrefValue(key);
+    }
 
     /**
      * restoreDefaults
@@ -703,7 +705,7 @@ public class EditActionView extends LinearLayout
     public void setData(SuntimesData data) {
         this.data = data;
         if (!this.data.isCalculated()) {
-            data.calculate();
+            data.calculate(getContext());
         }
     }
 
@@ -903,7 +905,7 @@ public class EditActionView extends LinearLayout
         {
             Context context = getContext();
             if (context != null) {
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_action_url))));
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_action_path))));
             }
         }
     };

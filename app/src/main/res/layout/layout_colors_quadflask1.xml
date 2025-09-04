@@ -27,7 +27,7 @@
         app:lightnessSliderView="@+id/color_lightness1" app:alphaSliderView="@+id/color_alpha1"
         app:density="12" app:wheelType="CIRCLE" />
 
-    <com.flask.colorpicker.slider.LightnessSlider
+    <com.forrestguice.suntimeswidget.settings.colors.quadflask.LightnessSlider
         android:id="@+id/color_lightness1"
         android:layout_width="match_parent" android:layout_height="48dp" />
 
@@ -35,9 +35,8 @@
         android:id="@+id/color_alpha1"
         android:layout_width="match_parent" android:layout_height="48dp" />
 
-    <View android:id="@+id/preview_color1"
-        android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1"
-        android:background="@color/deep_teal_500"
-        android:layout_marginTop="8dp"/>
+    <include layout="@layout/layout_colors_preview"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

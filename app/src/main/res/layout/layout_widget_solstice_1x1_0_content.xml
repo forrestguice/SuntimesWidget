@@ -18,12 +18,30 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView style="@style/SunsetTimeTextTitleView"
+    <TextView style="@style/WidgetTitleTextView"
               android:id="@+id/text_title" android:visibility="gone"
               android:layout_width="match_parent" android:layout_height="wrap_content"
               android:gravity="start"
               tools:text="title" />
 
-    <include layout="@layout/info_time_solstice_0" />
+    <LinearLayout style="@style/SunsetTimeLayout"
+        android:orientation="vertical" android:layout_gravity="center_horizontal">
+
+        <TextView
+            style="@style/WidgetTimeTextView2" android:visibility="gone"
+            android:id="@+id/text_time_event_label"
+            tools:text="Spring Equinox" />
+
+        <TextView
+            style="@style/WidgetTimeTextView"
+            android:id="@+id/text_time_event"
+            tools:text="March 20, 3:28 AM" />
+
+        <TextView
+            style="@style/WidgetTimeTextView2"
+            android:id="@+id/text_time_event_note"
+            tools:text="20d 14h from now" />
+
+    </LinearLayout>
 
 </merge>

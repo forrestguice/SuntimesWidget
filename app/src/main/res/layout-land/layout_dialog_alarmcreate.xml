@@ -26,7 +26,7 @@
         android:orientation="horizontal" android:gravity="center_vertical|start">
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/dialog_header"
         android:background="?attr/dialogBackgroundAlt"
         android:layout_width="match_parent" android:layout_height="56dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
@@ -61,7 +61,8 @@
     </android.support.design.widget.TabLayout>
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:minHeight="160dp">
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:minHeight="160dp"
+        android:baselineAligned="false">
 
         <FrameLayout android:background="?attr/dialogBackgroundAlt"
             android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="200dp">

@@ -2,14 +2,24 @@
 <resources>
     <bool name="api_pre_14">true</bool>
     <bool name="api_post_14">false</bool>
+    <bool name="api_post_24">false</bool>
+    <bool name="is_watch">false</bool>
 
     <attr name="dialogFrame" format="reference" />
     <attr name="dialogBackground" format="reference" />
     <attr name="dialogBackgroundAlt" format="reference" />
+    <attr name="widgetBackground" format="reference" />
+    <attr name="popupMenuBackground" format="reference" />
     <attr name="settingsCardBackground" format="reference" />
     <attr name="timeCardBackground" format="reference" />
+    <attr name="tileCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
+
+    <attr name="text_primaryColor" format="reference" />
+    <attr name="text_primaryInverseColor" format="reference" />
+    <attr name="text_secondaryColor" format="reference" />
+    <attr name="text_tertiaryColor" format="reference" />
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
@@ -19,6 +29,11 @@
     <attr name="alarmColorEnabled" format="reference" />
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
+    <attr name="alarmCardSounding" format="reference" />
+    <attr name="alarmCardSnoozing" format="reference" />
+    <attr name="alarmCardTimeout" format="reference" />
+    <attr name="alarmCardControls" format="reference" />
+    <attr name="alarmCardBackdrop" format="reference" />
     <attr name="gridItemSelected" format="reference" />
     <attr name="selectableItemCard" format="reference" />
 
@@ -34,10 +49,24 @@
     <attr name="graphColor_astronomical" format="reference" />
     <attr name="graphColor_pointFill" format="reference" />
     <attr name="graphColor_pointStroke" format="reference" />
+    <attr name="graphColor_axis" format="reference" />
+    <attr name="graphColor_grid" format="reference" />
+    <attr name="graphColor_labels" format="reference" />
+    <attr name="graphColor_labels_bg" format="reference" />
 
     <attr name="table_risingColor" format="reference" />
     <attr name="table_settingColor" format="reference" />
+    <attr name="table_civilColor" format="reference" />
+    <attr name="table_nauticalColor" format="reference" />
+    <attr name="table_astroColor" format="reference" />
+    <attr name="table_nightColor" format="reference" />
     <attr name="table_noonColor" format="reference" />
+    <attr name="table_moonRisingColor" format="reference" />
+    <attr name="table_moonSettingColor" format="reference" />
+    <attr name="table_springColor" format="reference" />
+    <attr name="table_summerColor" format="reference" />
+    <attr name="table_fallColor" format="reference" />
+    <attr name="table_winterColor" format="reference" />
 
     <attr name="sunriseIconSmall" format="reference" />
     <attr name="sunriseIconLarge" format="reference" />
@@ -46,16 +75,26 @@
     <attr name="sunsetIconLarge" format="reference" />
     <attr name="sunsetColor" format="reference" />
     <attr name="sunnoonIcon" format="reference" />
+    <attr name="sunnightIcon" format="reference" />
+    <attr name="sunnightColor0" format="reference" />
+    <attr name="sunnightColor1" format="reference" />
 
     <attr name="moonriseIcon" format="reference" />
     <attr name="moonriseColor" format="reference" />
     <attr name="moonsetIcon" format="reference" />
     <attr name="moonsetColor" format="reference" />
+    <attr name="moonnoonIcon" format="reference" />
+    <attr name="moonnightIcon" format="reference" />
 
     <attr name="moonPhaseIcon0" format="reference" />
     <attr name="moonPhaseIcon1" format="reference" />
     <attr name="moonPhaseIcon2" format="reference" />
     <attr name="moonPhaseIcon3" format="reference" />
+
+    <attr name="moonNewColor" format="reference" />
+    <attr name="moonWaxingColor" format="reference" />
+    <attr name="moonFullColor" format="reference" />
+    <attr name="moonWaningColor" format="reference" />
 
     <attr name="springColor" format="reference" />
     <attr name="summerColor" format="reference" />
@@ -70,18 +109,31 @@
     <attr name="snackbar_accentColor" format="reference" />
     <attr name="snackbar_backgroundColor" format="reference" />
 
+    <attr name="fab_foregroundColor" format="reference" />
     <attr name="fab_backgroundColor" format="reference" />
     <attr name="fab_rippleColor" format="reference" />
+
+    <attr name="fab_foregroundColorAlt" format="reference" />
+    <attr name="fab_backgroundColorAlt" format="reference" />
+    <attr name="fab_rippleColorAlt" format="reference" />
+
+    <attr name="fab_backgroundDrawable" format="reference" />   <!-- background drawable to make ImageButton look like a fab -->
 
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
     <attr name="icActionWorldMap" format="reference" />
+    <attr name="icActionGraph" format="reference" />
     <attr name="icActionTime" format="reference" />
     <attr name="icActionDst" format="reference" />
+    <attr name="icActionDnd" format="reference" />
     <attr name="icActionAlarm" format="reference" />
+    <attr name="icActionHome" format="reference" />
+    <attr name="icActionBedtime" format="reference" />
     <attr name="icActionCalendar" format="reference" />
     <attr name="icActionNotification" format="reference" />
+    <attr name="icActionNotification1" format="reference" />
+    <attr name="icActionNotification2" format="reference" />
     <attr name="icActionVibrationEnabled" format="reference" />
     <attr name="icActionSoundEnabled" format="reference" />
     <attr name="icActionSoundDisabled" format="reference" />
@@ -89,10 +141,13 @@
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
     <attr name="icActionWidgets" format="reference" />
+    <attr name="icActionEvents" format="reference" />
     <attr name="icActionAppearance" format="reference" />
     <attr name="icActionExtension" format="reference" />
     <attr name="icActionAltitude" format="reference" />
     <attr name="icActionShadow" format="reference" />
+    <attr name="icActionSun" format="reference" />
+    <attr name="icActionSunChart" format="reference" />
     <attr name="icActionLocale" format="reference" />
     <attr name="icActionSettings" format="reference" />
     <attr name="icActionHelp" format="reference" />
@@ -114,6 +169,9 @@
     <attr name="icActionCancel" format="reference" />
     <attr name="icActionShare" format="reference" />
     <attr name="icActionSnooze" format="reference" />
+    <attr name="icActionLabel" format="reference" />
+    <attr name="icActionAddLabel" format="reference" />
+    <attr name="icActionDeselect" format="reference" />
 
     <attr name="icActionPlay" format="reference" />
     <attr name="icActionPause" format="reference" />
@@ -124,12 +182,39 @@
     <attr name="icActionPrevious" format="reference" />
 
     <attr name="icActionExpand" format="reference" />
+    <attr name="icActionVisibilityOn" format="reference" />
+    <attr name="icActionVisibilityOff" format="reference" />
 
-    <attr name="icActionGPS" format="reference" />
+    <attr name="icActionGPS" format="reference" />    <!-- TODO: rename these icActionLocation_ -->
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+    <attr name="icActionGPS_satellite" format="reference" />
+    <attr name="icActionGPS_cell" format="reference" />
+    <attr name="icActionGPS_network" format="reference" />
 
+    <attr name="icPlaceUser" format="reference" />
+    <attr name="icPlaceCity" format="reference" />
+    <attr name="icPlaceCapital" format="reference" />
+    <attr name="icPlaceMisc" format="reference" />
+    <attr name="icPlaceGPS" format="reference" />
+    <attr name="icPlaceInfo" format="reference" />
+    <attr name="icPlaceHome" format="reference" />
+
+    <attr name="checkFavorite" format="reference" />
+    <attr name="checkAltitude" format="reference" />
     <attr name="checkVibrate" format="reference" />
+    <attr name="checkDnd" format="reference" />
+    <attr name="checkVisibility" format="reference" />
+    <attr name="checkReminder" format="reference" />
+
+    <attr name="text_size_tiny" format="dimension" />
+    <attr name="text_size_xsmall" format="dimension" />
+    <attr name="text_size_small" format="dimension" />
+    <attr name="text_size_medium" format="dimension" />
+    <attr name="text_size_large" format="dimension" />
+    <attr name="text_size_xlarge" format="dimension" />
+    <attr name="text_size_huge" format="dimension" />
+    <attr name="text_size_enormous" format="dimension" />
 
     <declare-styleable name="EditActionView">
         <attr name="startExpanded" format="boolean" />
@@ -144,13 +229,25 @@
     <declare-styleable name="EquinoxView">
         <attr name="minimized" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="EquinoxCardView">
+        <attr name="minimized" />
+    </declare-styleable>
 
     <declare-styleable name="MoonPhaseView">
         <attr name="illuminationAtLunarNoon" format="boolean" />
+        <attr name="illuminationRange" format="boolean" />
         <attr name="showPosition" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="MoonPhaseView1">
+        <attr name="illuminationAtLunarNoon" />
+        <attr name="illuminationRange" />
+        <attr name="showPosition" />
     </declare-styleable>
 
     <declare-styleable name="MoonRiseSetView">
+        <attr name="showPosition" />
+    </declare-styleable>
+    <declare-styleable name="MoonRiseSetView1">
         <attr name="showPosition" />
     </declare-styleable>
 
@@ -165,6 +262,12 @@
         <attr name="hintText" />
     </declare-styleable>
 
+    <declare-styleable name="AlarmButton">
+        <attr name="android:text" />
+        <attr name="android:src" />
+        <attr name="dragActivatedDirection" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="MillisecondPickerPreference">
         <attr name="mode" format="enum">
             <enum name="seconds" value="20"/>
@@ -176,10 +279,93 @@
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="TimeOffsetPicker">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" format="boolean" />
+        <attr name="allowPickMinutes" format="boolean" />
+        <attr name="allowPickHours" format="boolean" />
+        <attr name="allowPickDays" format="boolean" />
+        <attr name="allowPickBeforeAfter" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="TimeOffsetPickerPreference">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="allowPickSeconds" />
+        <attr name="allowPickMinutes" />
+        <attr name="allowPickHours" />
+        <attr name="allowPickDays" />
+        <attr name="allowPickBeforeAfter" />
+        <attr name="zeroValueText" />
+        <attr name="resetDefaultsText" format="string" />
+        <attr name="resetDefaultsValue" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="IntegerPickerPreference">
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="zeroValueText" />
+    </declare-styleable>
+
+    <declare-styleable name="ActionButtonPreference">
+        <attr name="actionButtonContentDescription" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorListPreference">
+        <attr name="colorValues" format="reference" />
+        <attr name="android:numColumns" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorCollectionPreference">
+        <attr name="colorTag" format="string" />
+        <attr name="appWidgetID" format="integer" />
+        <attr name="showAlpha" format="boolean" />
+        <attr name="previewKeys" format="reference" />
+        <attr name="previewMode" format="integer" />
+        <attr name="android:summary" />
+    </declare-styleable>
+    <integer name="colorpicker_preview_text">0</integer>        <!-- previewMode value -->
+    <integer name="colorpicker_preview_contrast">10</integer>   <!-- previewMode value -->
+    <integer name="colorpicker_preview_luminance">10</integer>  <!-- previewMode value -->
+
     <declare-styleable name="HelpPreference">
         <attr name="helpText" format="string" />
         <attr name="helpLink" format="string" />
+        <attr name="helpPath" format="string" />
         <attr name="moreHelpButtonText" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="LocationConfigDialog">
+        <attr name="hideHeader" format="boolean" />
+        <attr name="hideFooter" format="boolean" />
+        <attr name="hideTitle" format="boolean" />
+        <attr name="hideMode" format="boolean" />
+        <attr name="collapse" format="boolean" />
+        <attr name="showAddButton" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TimeZoneConfigDialog">
+        <attr name="hideHeader" />
+        <attr name="hideFooter" />
+        <attr name="hideTitle" />
+        <attr name="hideMode" />
+    </declare-styleable>
+
+    <declare-styleable name="LocationProviderStatus">
+        <attr name="icActionAltitude" />
+        <attr name="icActionGPS_cell" />
+        <attr name="icActionGPS_network" />
+        <attr name="icActionGPS_satellite" />
+    </declare-styleable>
+
+    <item type="id" name="text0"/>
+    <item type="id" name="text1"/>
+    <item type="id" name="text2"/>
+    <item type="id" name="text3"/>
+    <item type="id" name="link0"/>
+    <item type="id" name="link1"/>
+    <item type="id" name="link2"/>
+    <item type="id" name="link3"/>
+    <item type="id" name="link4"/>
 
 </resources>

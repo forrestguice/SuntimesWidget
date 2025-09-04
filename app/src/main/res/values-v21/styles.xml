@@ -3,17 +3,58 @@
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
     </style>
 
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:navigationBarColor">@color/nav_bg_dark</item>
     </style>
+
+    <style name="SystemThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="DarkThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/grey_850</item>
+        <item name="android:textColor">@color/grey_200</item>
+    </style>
+    <style name="LightThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/grey_200</item>
+        <item name="android:textColor">@color/grey_850</item>
+    </style>
+    <style name="ThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">?attr/colorBackgroundFloating</item>
+        <item name="android:textColor">@drawable/btn_themetoggle</item>
+    </style>
+
+    <style name="ToastTextAppearance">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="TooltipTextAppearance">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="LockScreenActivityStyleBase" parent="AppTheme.System">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+    </style>
+
 </resources>

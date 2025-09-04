@@ -7,8 +7,14 @@
     <integer name="table_weight1">2</integer>
 
     <dimen name="table_heading_date_fontsize">15sp</dimen>
+    <style name="TableHeadDateView" parent="TableHeadDateView0">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
     <integer name="table_heading_date_maxems">8</integer>
 
-    <dimen name="table_heading_label_fontsize">14sp</dimen>
+    <dimen name="table_heading_label_fontsize">@dimen/text_size_medium</dimen>
+    <style name="TableHeadTextView" parent="TableHeadTextView0">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
     <dimen name="table_heading_label_maxdim">100dp</dimen>
 </resources>

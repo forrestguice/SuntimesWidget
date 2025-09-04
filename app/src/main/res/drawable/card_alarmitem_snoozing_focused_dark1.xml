@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visible="false" android:oneshot="false">
+
+    <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
+        android:drawable="@drawable/card_alarmitem_snoozing_focused_dark1_0"/>
+
+    <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
+        android:drawable="@drawable/card_alarmitem_snoozing_focused_dark1_1"/>
+
+    <!--<item android:duration="@integer/anim_alarmitem_snoozing0_duration"
+        android:drawable="@drawable/card_alarmitem_snoozing_dark1_2"/>
+
+    <item android:duration="@integer/anim_alarmitem_snoozing0_duration"
+        android:drawable="@drawable/card_alarmitem_snoozing_dark1_3"/>-->
+
+</animation-list>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item android:id="@+id/addEvent"
+            android:title="@string/configAction_addEvent"
+            android:icon="?attr/icActionNew"
+            app:showAsAction="ifRoom">
+
+            <menu>
+                <group>
+
+                    <item android:id="@+id/addEvent_sunEvent"
+                        android:title="@string/configAction_addEvent_sunEvent"
+                        android:icon="?attr/icActionNew"
+                        app:showAsAction="never" />
+
+                    <item android:id="@+id/addEvent_shadowEvent"
+                        android:title="@string/configAction_addEvent_shadowEvent"
+                        android:icon="?attr/icActionNew"
+                        app:showAsAction="never" />
+
+                </group>
+            </menu>
+
+        </item>
+
+        <item android:id="@+id/clearEvents"
+            android:title="@string/configAction_clearEvents"
+            android:icon="?attr/icActionDelete"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/exportEvents"
+            android:title="@string/configAction_exportEvents"
+            android:icon="?attr/icActionSave"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/importEvents"
+            android:title="@string/configAction_importEvents"
+            android:icon="?attr/icActionCopy"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/helpEvents"
+            android:title="@string/configAction_help"
+            android:icon="?attr/icActionHelp"
+            app:showAsAction="never" />
+
+    </group>
+</menu>

@@ -1,4 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="minAlarmReminderHours">0</integer>
+    <integer name="maxAlarmOffsetMillis">82800000</integer>   <!-- 23 hours -->
+    <integer name="minAlarmReminderMillis">0</integer>
+    <integer name="maxAlarmReminderMillis">43200000</integer>    <!-- 12 hours -->
+    <integer name="maxAlarmSnoozeLimit">5</integer>
+    <integer name="minAlarmSnoozeMillis">120000</integer>    <!-- 2 minutes -->
+    <integer name="maxAlarmSnoozeMillis">14400000</integer>   <!-- 4 hours -->
+    <integer name="minAlarmTimeoutMillis">60000</integer>     <!-- 1 minute -->
+    <integer name="maxAlarmTimeoutMillis">7200000</integer>   <!-- 2 hours -->
+    <integer name="minAlarmAutoDismissMillis">5000</integer>
+    <integer name="maxAlarmAutoDismissMillis">43200000</integer>   <!-- 12 hours -->
+
+    <integer name="minAlarmBootCompletedDelayMillis">5000</integer>
+    <integer name="maxAlarmBootCompletedDelayMillis">600000</integer>
+
+    <integer name="minAlarmFullscreenFadeinMillis">15000</integer>
+    <integer name="maxAlarmFullscreenFadeinMillis">180000</integer>
+
+    <integer name="minSleepCycleMillis">300000</integer>     <!-- 5 min -->
+    <integer name="maxSleepCycleMillis">10800000</integer>   <!-- 3 hour -->
+
+    <integer name="minFallAsleepMinutes">0</integer>
+    <integer name="maxFallAsleepMinutes">90</integer>
+    <integer name="minFallAsleepMillis">0</integer>
+    <integer name="maxFallAsleepMillis">10800000</integer>   <!-- 3 hours -->
+
+    <integer name="anim_alarmscreen_sounding_pulse_duration">4000</integer>
+    <integer name="anim_alarmscreen_snoozing_pulse_duration">6000</integer>
+    <integer name="anim_alarmscreen_snoozing_dimming_duration">1000</integer>
+    <integer name="anim_alarmscreen_snoozing_screenon_duration">5000</integer>
+
+    <integer name="anim_alarmitem_sounding_fadeIn_duration">250</integer>    <!-- Sounding -->
+    <integer name="anim_alarmitem_sounding_fadeOut_duration">500</integer>
+    <integer name="anim_alarmitem_sounding0_duration">1750</integer>
+    <integer name="anim_alarmitem_sounding1_duration">750</integer>
+
+    <integer name="anim_alarmitem_snoozing_fadeIn_duration">3000</integer>    <!-- Snoozing -->
+    <integer name="anim_alarmitem_snoozing_fadeOut_duration">3000</integer>
+    <integer name="anim_alarmitem_snoozing0_duration">3000</integer>
+    <integer name="anim_alarmitem_snoozing1_duration">1500</integer>
+
+    <integer name="anim_alarmitem_timeout_fadeIn_duration">250</integer>    <!-- Timeout -->
+    <integer name="anim_alarmitem_timeout_fadeOut_duration">500</integer>
+    <integer name="anim_alarmitem_timeout0_duration">1750</integer>
+    <integer name="anim_alarmitem_timeout1_duration">1000</integer>
+
+    <dimen name="alarmdismiss_margin">16dp</dimen>
+
+    <dimen name="alarmcard_stroke_focused">3dp</dimen>
+
+    <dimen name="alarmcard_corners_controls">8dp</dimen>
+    <dimen name="alarmcard_corners_pressed">8dp</dimen>
+    <dimen name="alarmcard_corners_enabled">8dp</dimen>
+    <dimen name="alarmcard_corners_disabled">8dp</dimen>
+    <dimen name="alarmcard_corners_sounding">8dp</dimen>
+    <dimen name="alarmcard_corners_snoozing">8dp</dimen>
+    <dimen name="alarmcard_corners_timeout">8dp</dimen>
+    <dimen name="alarmcard_corners">8dp</dimen>
+
+    <dimen name="clockcard_corners">4dp</dimen>
+    <dimen name="clockcard_corners_controls">8dp</dimen>
+
+    <integer-array name="alarm_bright_colors_list">
+        <item>@color/white</item>
+        <item>@color/blue_grey_100</item>
+        <item>@color/brown_100</item>
+
+        <item>@color/yellow_a100</item>
+        <item>@color/yellow_a200</item>
+        <item>@color/yellow_a400</item>
+
+        <item>@color/lime_a100</item>
+        <item>@color/lime_a200</item>
+        <item>@color/lime_a400</item>
+
+        <item>@color/light_green_a100</item>
+        <item>@color/light_green_a200</item>
+        <item>@color/light_green_a400</item>
+
+        <item>@color/green_a100</item>
+        <item>@color/green_a200</item>
+        <item>@color/green_a400</item>
+
+        <item>@color/teal_a100</item>
+        <item>@color/teal_a200</item>
+        <item>@color/teal_a400</item>
+
+        <item>@color/cyan_a100</item>
+        <item>@color/cyan_a200</item>
+        <item>@color/cyan_a400</item>
+
+        <item>@color/light_blue_a100</item>
+        <item>@color/light_blue_a200</item>
+        <item>@color/light_blue_a400</item>
+
+        <item>@color/blue_a100</item>
+        <item>@color/blue_a200</item>
+        <item>@color/blue_a400</item>
+
+        <item>@color/indigo_a100</item>
+        <item>@color/indigo_a200</item>
+        <item>@color/indigo_a400</item>
+
+        <item>@color/deep_purple_a100</item>
+        <item>@color/deep_purple_a200</item>
+        <item>@color/deep_purple_a400</item>
+
+        <item>@color/purple_a100</item>
+        <item>@color/purple_a200</item>
+        <item>@color/purple_a400</item>
+
+        <item>@color/pink_a100</item>
+        <item>@color/pink_a200</item>
+        <item>@color/pink_a400</item>
+
+        <item>@color/red_a100</item>
+        <item>@color/red_a200</item>
+        <item>@color/red_a400</item>
+
+        <item>@color/deep_orange_a100</item>
+        <item>@color/deep_orange_a200</item>
+        <item>@color/deep_orange_a400</item>
+
+        <item>@color/orange_a100</item>
+        <item>@color/orange_a200</item>
+        <item>@color/orange_a400</item>
+
+        <item>@color/amber_a100</item>
+        <item>@color/amber_a200</item>
+        <item>@color/amber_a400</item>
+    </integer-array>
+
 </resources>

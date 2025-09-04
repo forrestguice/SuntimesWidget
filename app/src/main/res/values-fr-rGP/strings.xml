@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Les Abymes, Guadeloupe</string>
+    <string name="default_location_latitude">16.26914</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-61.50965</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>             <!-- meters -->
+    <string name="default_timezone">America/Guadeloupe</string>         <!-- tzid -->
+</resources>

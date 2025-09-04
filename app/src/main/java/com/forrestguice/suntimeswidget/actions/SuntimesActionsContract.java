@@ -52,6 +52,10 @@ public interface SuntimesActionsContract
     String TAG_DEFAULT = "default";
     String TAG_SUNTIMES = "suntimes";
     String TAG_SUNTIMESALARMS = "suntimesalarms";
+    String TAG_CALENDAR = "calendar";
+    String TAG_LOCATION = "location";
+    String TAG_ALARM = "alarm";
+    String TAG_SETTINGS = "settings";
 
     String TYPE_ACTIVITY = "ACTIVITY";                  // LaunchType enum names
     String TYPE_BROADCAST = "BROADCAST";

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,14 +18,24 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.content.Intent;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject2;
+import android.widget.DatePicker;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +46,9 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 
+import java.io.IOException;
+
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -43,85 +56,124 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Automated UI tests for the TimeDateDialog.
  */
 @LargeTest
+@BehaviorTest
 @RunWith(AndroidJUnit4.class)
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
     @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, false, false);
+
+    @Rule
+    public RetryRule retry = new RetryRule(3);
+
+    @Before
+    public void beforeTest() throws IOException {
+        setAnimationsEnabled(false);
+        saveConfigState(getContext());
+        overrideConfigState(getContext());
+    }
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
+        restoreConfigState(getContext());
+    }
+
+    @Test @QuickTest
+    public void test_TimeDateDialog()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        new TimeDateDialogRobot()
+                .showDialog(context)
+                .assertDialogShown(context)
+                //.captureScreenshot(context, "suntimes-dialog-date0")
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
+
+    @Test
+    public void test_TimeDateDialog_rotate()
+    {
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        Activity context = activityRule.getActivity();
+        new TimeDateDialogRobot()
+                .showDialog(context)
+                .assertDialogShown(context)
+
+                .doubleRotateDevice(context)
+                .assertDialogShown(context)
+
+                .cancelDialog(context)
+                .assertDialogNotShown(context);
+    }
 
     /**
-     * UI Test
-     * Show the date dialog, rotate, swap modes, rotate again, repeatedly swap modes,
-     * and then cancel the dialog.
+     * DateDialogRobot
      */
-    @Test
-    public void test_showDateDialog()
+    public static class TimeDateDialogRobot extends DialogTest.DialogRobot<TimeDateDialogRobot>
     {
-        showDateDialog(activityRule.getActivity());
-        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-date0");
+        public TimeDateDialogRobot() {
+            super();
+            setRobot(this);
+        }
 
-        rotateDevice(activityRule);
-        verifyDateDialog(activityRule.getActivity());
+        public TimeDateDialogRobot showDialog(Activity context)
+        {
+            String actionDateText = context.getString(R.string.configAction_viewDate);
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            onView(withText(actionDateText)).perform(click());
+            return this;
+        }
+        @Override
+        public TimeDateDialogRobot cancelDialog(Context context) {
+            onView(withId(R.id.appwidget_date_custom)).perform(pressBack());
+            return this;
+        }
+        public TimeDateDialogRobot selectDate( int year, int month, int day ) {
+            onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(year, month, day));
+            return this;
+        }
+        public TimeDateDialogRobot clickTodayButton() {
+            onView(withText(R.string.today)).perform(click());
+            return this;
+        }
+        public TimeDateDialogRobot clickClearButton() {
+            onView(withText(R.string.configAction_clearDate)).perform(click());
+            return this;
+        }
 
-        cancelDateDialog();
-    }
-
-    public static void showDateDialog(Context context)
-    {
-        showDateDialog(context, true);
-    }
-    public static void showDateDialog(Context context, boolean verify)
-    {
-        String actionDateText = context.getString(R.string.configAction_setDate);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(actionDateText)).perform(click());
-        if (verify) {
-            verifyDateDialog(context);
+        @Override
+        public TimeDateDialogRobot assertDialogShown(Context context) {
+            onView(withId(R.id.appwidget_date_custom)).check(ViewAssertionHelper.assertShown);
+            return this;
+        }
+        @Override
+        public TimeDateDialogRobot assertDialogNotShown(Context context) {
+            onView(withId(R.id.appwidget_date_custom)).check(doesNotExist());
+            return this;
         }
     }
 
-    public static void verifyDateDialog(Context context)
+    /**
+     * TimeDateDialogAutomator
+     */
+    public static class TimeDateDialogAutomator
     {
-        onView(withId(R.id.appwidget_date_custom)).check(assertShown);
+        protected UiDevice device;
 
-        WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, 0);
-        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
-            verifyDateDialog_modeCurrent();
-        else verifyDateDialog_modeCustom();
+        public TimeDateDialogAutomator() {
+            device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        }
+
+        public TimeDateDialogAutomator clickApplyButton()
+        {
+            final UiObject2 button = device.findObject(By.desc("Set"));
+            if (button != null && button.isClickable()) {
+                button.click();
+            } else {
+                Assert.fail("UIObject not found: apply button");
+            }
+            return this;
+        }
     }
-
-    public static void verifyDateDialog_modeCurrent()
-    {
-        // TODO
-    }
-
-    public static void verifyDateDialog_modeCustom()
-    {
-        // TODO
-    }
-
-    public static WidgetSettings.DateMode getDateDialog_mode(Context context)
-    {
-        return WidgetSettings.loadDateModePref(context, 0);
-    }
-
-    public static void inputDateDialog_date( int year, int month, int day )
-    {
-        // TODO: set datepicker to year, month, day
-        //onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, month + 1, day));
-    }
-
-    public static void applyDateDialog(Context context)
-    {
-        String setDateText = context.getString(R.string.timedate_dialog_ok);
-        onView(withText(setDateText)).perform(click());
-        // TODO: verify action
-    }
-
-    public static void cancelDateDialog()
-    {
-        onView(withId(R.id.appwidget_date_custom)).perform(pressBack());
-        onView(withId(R.id.appwidget_date_custom)).check(doesNotExist());
-    }
-
 }

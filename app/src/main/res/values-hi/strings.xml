@@ -5,5 +5,6 @@
     <string name="default_location_latitude">19.1246</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">72.7932</string>   <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_timezone">Asia/Calcutta</string>         <!-- tzid -->
 
 </resources>

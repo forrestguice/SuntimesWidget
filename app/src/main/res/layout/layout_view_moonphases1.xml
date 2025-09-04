@@ -19,30 +19,33 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:clipChildren="false" android:clipToPadding="false">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/moonphases_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView android:id="@+id/moonphases_card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:itemCount="4" tools:orientation="horizontal"
+            tools:listitem="@layout/info_time_moonphase" />
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_gravity="end|bottom" android:elevation="8dp">
+            android:orientation="horizontal" android:layout_gravity="end|bottom"
+            android:padding="3dp">
             <ImageButton
                 android:id="@+id/info_time_prevbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"
                 android:src="?attr/icActionPrevious"
-                android:background="@drawable/ic_colortab"
+                android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
 
             <ImageButton
                 android:id="@+id/info_time_nextbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"
                 android:src="?attr/icActionNext"
-                android:background="@drawable/ic_colortab"
+                android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
         </LinearLayout>
@@ -52,7 +55,7 @@
                   android:gravity="center" android:layout_gravity="center"
                   android:visibility="gone"
                   android:layout_margin="16dp"
-                  android:textSize="12sp"
+                  android:textSize="?attr/text_size_small"
                   android:text="@string/feature_not_supported_by_source" />
 
     </FrameLayout>

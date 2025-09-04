@@ -29,9 +29,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 public class LightTheme extends SuntimesTheme
 {
     public static final String THEMEDEF_NAME = "light";
-    public static final String THEMEDEF_DISPLAYSTRING = "Light";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.LIGHT.name(), Color.LTGRAY);
+    private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.LIGHT;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_light;
@@ -92,7 +91,7 @@ public class LightTheme extends SuntimesTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
+        this.themeDisplayString = context.getString(R.string.widgetThemes_light1);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -134,6 +133,11 @@ public class LightTheme extends SuntimesTheme
         this.themeMoonWaxingColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
         this.themeMoonFullColor = ContextCompat.getColor(context, THEMEDEF_MOONFULLCOLOR_ID);
 
+        this.themeMoonWaningTextColor = ContextCompat.getColor(context, THEMEDEF_MOONWANINGCOLOR_ID);
+        this.themeMoonNewTextColor = ContextCompat.getColor(context, R.color.moonIcon_color_new_text_light);
+        this.themeMoonWaxingTextColor = ContextCompat.getColor(context, THEMEDEF_MOONWAXINGCOLOR_ID);
+        this.themeMoonFullTextColor = ContextCompat.getColor(context, R.color.moonIcon_color_full_text_light);
+
         this.themeMoonFullStroke = THEMEDEF_MOONFULL_STROKEWIDTH;
         this.themeMoonNewStroke = THEMEDEF_MOONNEW_STROKEWIDTH;
 
@@ -159,8 +163,11 @@ public class LightTheme extends SuntimesTheme
         this.themeActionColor = ContextCompat.getColor(context, THEMEDEF_ACTION_ID);
     }
 
-    public ThemeDescriptor themeDescriptor()
+    public static ThemeDescriptor themeDescriptor(Context context)
     {
-        return LightTheme.THEMEDEF_DESCRIPTOR;
+        if (THEMEDEF_DESCRIPTOR == null) {
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light1), THEMEDEF_VERSION, ThemeBackground.LIGHT.name(), Color.LTGRAY);
+        }
+        return THEMEDEF_DESCRIPTOR;
     }
 }

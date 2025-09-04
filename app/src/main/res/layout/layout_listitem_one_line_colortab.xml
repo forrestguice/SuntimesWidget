@@ -7,7 +7,7 @@
     android:baselineAligned="false">
 
     <View
-        android:id="@+id/icon1" android:background="@color/accent"
+        android:id="@+id/icon1" android:background="@color/tertiaryColor"
         android:layout_width="8dp" android:layout_height="match_parent"
         tools:ignore="ContentDescription"
         android:visibility="visible" />

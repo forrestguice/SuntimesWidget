@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017-2021 Forrest Guice
+    Copyright (C) 2017-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,8 +27,12 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
-import com.forrestguice.suntimeswidget.layouts.SolsticeLayout_1x1_0;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset1;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
+import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -83,21 +87,11 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
-        SuntimesEquinoxSolsticeData data;
-        boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
-        if (overrideMode)
-        {
-            SuntimesEquinoxSolsticeDataset dataset = new SuntimesEquinoxSolsticeDataset(context, appWidgetId);
-            dataset.calculateData();
-
-            SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
-            data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
-
-        } else {
-            data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-            data.calculate();
+        if (isCurrentLocationMode(context, appWidgetId)) {
+            updateLocationToLastKnown(context, appWidgetId);
         }
 
+        SuntimesEquinoxSolsticeData data = getSolsticeEquinoxData(context, appWidgetId);
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 
@@ -109,9 +103,31 @@ public class SolsticeWidget0 extends SuntimesWidget0
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    protected static SuntimesEquinoxSolsticeData getSolsticeEquinoxData(Context context, int appWidgetId)
+    {
+        SuntimesEquinoxSolsticeData data;
+        boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
+        if (overrideMode)
+        {
+            boolean showCrossQuarter = SolsticeWidgetSettings.loadWidgetBool(context, appWidgetId, SolsticeWidgetSettings.PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, SolsticeWidgetSettings.PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);   //AppSettings.loadShowCrossQuarterPref(context);
+            int eventTrackingLevel = showCrossQuarter ? WidgetSettings.TRACKINGLEVEL_MAX : WidgetSettings.TRACKINGLEVEL_MIN; //WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+            SuntimesEquinoxSolsticeDataset dataset = (eventTrackingLevel > 0 ? new SuntimesEquinoxSolsticeDataset1(context, appWidgetId)
+                                                                             : new SuntimesEquinoxSolsticeDataset(context, appWidgetId));
+            dataset.calculateData(context);
+
+            SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
+            data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
+
+        } else {
+            data = new SuntimesEquinoxSolsticeData(context, appWidgetId);
+            data.calculate(context);
+        }
+        return data;
+    }
+
     @Override
     protected SuntimesData getData(Context context, int appWidgetId) {
-        return new SuntimesEquinoxSolsticeDataset(context, appWidgetId).dataEquinoxSpring;
+        return getSolsticeEquinoxData(context, appWidgetId);
     }
 
     public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, WidgetSettings.TrackingMode trackingMode) {

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -39,13 +39,25 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * AlarmDatabaseAdapter
+ *
+ * @version 4
+ *
+ * version history:
+ * 1 initial version
+ * 2 adds column ALARM_TIMEZONE ("timezone")
+ * 3 adds column ALARM_ACTION0 ("actionID0"), ALARM_ACTION1 ("actionID1")
+ * 4 adds column ALARM_NOTE ("note"), ALARM_FLAGS ("flags"), ALARM_ACTION2 ("actionID2"), ALARM_ACTION3 ("actionID3")
+ */
 public class AlarmDatabaseAdapter
 {
     public static final String DATABASE_NAME = "suntimesAlarms";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
 
     //
     // Table: Alarms
@@ -110,11 +122,23 @@ public class AlarmDatabaseAdapter
     public static final String KEY_ALARM_ACTION1 = "actionID1";                                     // actionID 1 (optional)  .. action on dismiss
     public static final String DEF_ALARM_ACTION1 = KEY_ALARM_ACTION1 + " text";
 
+    public static final String KEY_ALARM_ACTION2 = "actionID2";                                     // actionID 2 (optional)  .. action on reminder
+    public static final String DEF_ALARM_ACTION2 = KEY_ALARM_ACTION2 + " text";
+
+    public static final String KEY_ALARM_ACTION3 = "actionID3";                                     // actionID 3 (optional)  .. <unused/placeholder>
+    public static final String DEF_ALARM_ACTION3 = KEY_ALARM_ACTION3 + " text";
+
     public static final String KEY_ALARM_RINGTONE_NAME = "ringtoneName";                            // ringtone uri (optional)
     public static final String DEF_ALARM_RINGTONE_NAME = KEY_ALARM_RINGTONE_NAME + " text";
 
     public static final String KEY_ALARM_RINGTONE_URI = "ringtoneURI";                              // ringtone uri (optional)
     public static final String DEF_ALARM_RINGTONE_URI = KEY_ALARM_RINGTONE_URI + " text";
+
+    public static final String KEY_ALARM_NOTE = "note";                                             // note (optional)
+    public static final String DEF_ALARM_NOTE = KEY_ALARM_NOTE + " text";
+
+    public static final String KEY_ALARM_FLAGS = "flags";                                           // alarm flags (optional)
+    public static final String DEF_ALARM_FLAGS = KEY_ALARM_FLAGS + " text";
 
     private static final String TABLE_ALARMS = "alarms";
     private static final String TABLE_ALARMS_CREATE_COLS = DEF_ROWID + ", "
@@ -146,21 +170,30 @@ public class AlarmDatabaseAdapter
                                                          + DEF_ALARM_TIMEZONE + ", "
 
                                                          + DEF_ALARM_ACTION0 + ", "
-                                                         + DEF_ALARM_ACTION1;
+                                                         + DEF_ALARM_ACTION1 + ", "
+                                                         + DEF_ALARM_ACTION2 + ", "
+                                                         + DEF_ALARM_ACTION3 + ", "
+
+                                                         + DEF_ALARM_FLAGS + ", "
+                                                         + DEF_ALARM_NOTE;
 
     private static final String TABLE_ALARMS_CREATE = "create table " + TABLE_ALARMS + " (" + TABLE_ALARMS_CREATE_COLS + ");";
     private static final String[] TABLE_ALARMS_UPGRADE_1_2 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_TIMEZONE };
     private static final String[] TABLE_ALARMS_UPGRADE_2_3 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION0,
                                                                             "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION1 };
+    private static final String[] TABLE_ALARMS_UPGRADE_3_4 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION2,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_ACTION3,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_FLAGS,
+                                                                            "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_NOTE };
     private static final String[] TABLE_ALARMS_DOWNGRADE = new String[] { "DROP TABLE " + TABLE_ALARMS, TABLE_ALARMS_CREATE };
 
-    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
+    private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL, KEY_ALARM_FLAGS };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_REPEATING, KEY_ALARM_REPEATING_DAYS,
                                                                           KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
                                                                           KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI,
-                                                                          KEY_ALARM_TIMEZONE, KEY_ALARM_ACTION0, KEY_ALARM_ACTION1 };
+                                                                          KEY_ALARM_TIMEZONE, KEY_ALARM_ACTION0, KEY_ALARM_ACTION1, KEY_ALARM_ACTION2, KEY_ALARM_ACTION3, KEY_ALARM_FLAGS, KEY_ALARM_NOTE };
 
     //
     // Table: AlarmState
@@ -322,13 +355,40 @@ public class AlarmDatabaseAdapter
         return cursor;
     }
 
-    public Long findUpcomingAlarmId(long nowMillis) throws SQLException
+    public Long findUpcomingAlarmId(long nowMillis) throws SQLException {
+        return findUpcomingAlarmId(nowMillis, new String[] { AlarmClockItem.AlarmType.ALARM.name() });
+    }
+    public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {
         String[] columns = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME_ADJUSTED };
-        String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
-        String[] selectionArgs = new String[] { "ALARM", "1" };
+        StringBuilder selection = new StringBuilder(KEY_ALARM_ENABLED + " = ?");
+        List<String> selectionArgs = new ArrayList<>(Collections.singletonList("1"));
+        if (types != null && types.length > 0)
+        {
+            boolean multipleTypes = (types.length > 1);
 
-        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection, selectionArgs, null, null, null, null );
+            selection.append(" AND ");
+            if (multipleTypes) {
+                selection.append("(");
+            }
+            for (int i=0; i<types.length; i++)
+            {
+                if (i > 0) {
+                    selection.append(" OR ");
+                }
+                selection.append(KEY_ALARM_TYPE + "= ?");
+                selectionArgs.add(types[i]);
+            }
+            if (multipleTypes) {
+                selection.append(")");
+            }
+        }
+        //String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
+        //String[] selectionArgs = ((type != null)
+        //        ? new String[] { "1", type }
+        //        : new String[] { "1" });
+
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection.toString(), selectionArgs.toArray(new String[0]), null, null, null, null );
         if (cursor != null)
         {
             Long upcomingAlarmId = null;
@@ -337,11 +397,16 @@ public class AlarmDatabaseAdapter
             cursor.moveToFirst();
             while (!cursor.isAfterLast())
             {
-                long alarmtime = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED));
-                long timeToAlarm = alarmtime - nowMillis;
-                if (timeToAlarm > 0 && timeToAlarm < timeToUpcomingAlarm) {
-                    timeToUpcomingAlarm = timeToAlarm;
-                    upcomingAlarmId = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID));
+                try {
+                    long alarmtime = cursor.getLong(cursor.getColumnIndexOrThrow(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED));
+                    int i_rowID = cursor.getColumnIndexOrThrow(AlarmDatabaseAdapter.KEY_ROWID);
+                    long timeToAlarm = alarmtime - nowMillis;
+                    if (timeToAlarm > 0 && timeToAlarm < timeToUpcomingAlarm) {
+                        timeToUpcomingAlarm = timeToAlarm;
+                        upcomingAlarmId = cursor.getLong(i_rowID);
+                    }
+                } catch (IllegalArgumentException e) {
+                    Log.w("AlarmDatabaseAdapter", "findUpcomingAlarmId: missing required columns! " + e);
                 }
                 cursor.moveToNext();
             }
@@ -434,7 +499,11 @@ public class AlarmDatabaseAdapter
                 KEY_ALARM_RINGTONE_NAME + separator +
                 KEY_ALARM_RINGTONE_URI + separator +
                 KEY_ALARM_ACTION0 + separator +
-                KEY_ALARM_ACTION1;
+                KEY_ALARM_ACTION1 + separator +
+                KEY_ALARM_ACTION2 + separator +
+                KEY_ALARM_ACTION3 + separator +
+                KEY_ALARM_FLAGS + separator +
+                KEY_ALARM_NOTE;
         return line;
     }
     public String addAlarmCSV_row( ContentValues alarm )
@@ -461,7 +530,11 @@ public class AlarmDatabaseAdapter
                       alarm.getAsString(KEY_ALARM_RINGTONE_NAME) + separator +
                       alarm.getAsString(KEY_ALARM_RINGTONE_URI) + separator +
                       alarm.getAsString(KEY_ALARM_ACTION0) + separator +
-                      alarm.getAsString(KEY_ALARM_ACTION1);
+                      alarm.getAsString(KEY_ALARM_ACTION1) + separator +
+                      alarm.getAsString(KEY_ALARM_ACTION2) + separator +
+                      alarm.getAsString(KEY_ALARM_ACTION3) + separator +
+                      alarm.getAsString(KEY_ALARM_FLAGS) + separator +
+                      alarm.getAsString(KEY_ALARM_NOTE);
         return line;
     }
 
@@ -533,9 +606,7 @@ public class AlarmDatabaseAdapter
             switch (DATABASE_VERSION)
             {
                 //noinspection ConstantConditions
-                case 0:
-                //noinspection ConstantConditions
-                case 1:
+                case 0: case 1: case 2: case 3: case 4:
                 default:
                     db.execSQL(TABLE_ALARMS_CREATE);
                     db.execSQL(TABLE_ALARMSTATE_CREATE);
@@ -552,17 +623,16 @@ public class AlarmDatabaseAdapter
                 switch (newVersion)
                 {
                     case 2:
-                        for (int i=0; i<TABLE_ALARMS_UPGRADE_1_2.length; i++) {
-                            db.execSQL(TABLE_ALARMS_UPGRADE_1_2[i]);
-                        }
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_1_2);
                         break;
                     case 3:
-                        for (int i=0; i<TABLE_ALARMS_UPGRADE_1_2.length; i++) {
-                            db.execSQL(TABLE_ALARMS_UPGRADE_1_2[i]);
-                        }
-                        for (int i=0; i<TABLE_ALARMS_UPGRADE_2_3.length; i++) {
-                            db.execSQL(TABLE_ALARMS_UPGRADE_2_3[i]);
-                        }
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_1_2);
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_2_3);
+                        break;
+                    case 4:
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_1_2);
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_2_3);
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_3_4);
                         break;
                 }
 
@@ -570,11 +640,28 @@ public class AlarmDatabaseAdapter
                 switch (newVersion)
                 {
                     case 3:
-                        for (int i=0; i<TABLE_ALARMS_UPGRADE_2_3.length; i++) {
-                            db.execSQL(TABLE_ALARMS_UPGRADE_2_3[i]);
-                        }
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_2_3);
+                        break;
+                    case 4:
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_2_3);
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_3_4);
                         break;
                 }
+
+            } else if (oldVersion == 3) {
+                switch (newVersion)
+                {
+                    case 4:
+                        applyUpgrade(db, TABLE_ALARMS_UPGRADE_3_4);
+                        break;
+                }
+            }
+        }
+
+        protected void applyUpgrade(SQLiteDatabase db, String[] upgrade)
+        {
+            for (int i=0; i<upgrade.length; i++) {
+                db.execSQL(upgrade[i]);
             }
         }
 
@@ -611,32 +698,39 @@ public class AlarmDatabaseAdapter
             if (rowIDs.length > 0)
             {
                 db.open();
-                Cursor cursor0 = db.getAlarm(rowIDs[0]);
-                if (cursor0 != null)
-                {
-                    cursor0.moveToFirst();
-                    if (!cursor0.isAfterLast())
-                    {
-                        ContentValues itemValues = new ContentValues();
-                        DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
-                        item = new AlarmClockItem(contextRef.get(), itemValues);
-
-                        Cursor cursor1 = db.getAlarmState(rowIDs[0]);
-                        if (cursor1 != null)
-                        {
-                            cursor1.moveToFirst();
-                            if (!cursor1.isAfterLast())
-                            {
-                                ContentValues stateValues = new ContentValues();
-                                DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
-                                item.state = new AlarmState(stateValues);
-                            }
-                            cursor1.close();
-                        }
-                    }
-                    cursor0.close();
-                }
+                item = loadAlarmClockItem(contextRef.get(), db, rowIDs[0]);
                 db.close();
+            }
+            return item;
+        }
+
+        public static AlarmClockItem loadAlarmClockItem(Context context, AlarmDatabaseAdapter db, long rowId)
+        {
+            AlarmClockItem item = null;
+            Cursor cursor0 = db.getAlarm(rowId);
+            if (cursor0 != null)
+            {
+                cursor0.moveToFirst();
+                if (!cursor0.isAfterLast())
+                {
+                    ContentValues itemValues = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
+                    item = new AlarmClockItem(context, itemValues);
+
+                    Cursor cursor1 = db.getAlarmState(rowId);
+                    if (cursor1 != null)
+                    {
+                        cursor1.moveToFirst();
+                        if (!cursor1.isAfterLast())
+                        {
+                            ContentValues stateValues = new ContentValues();
+                            DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
+                            item.state = new AlarmState(stateValues);
+                        }
+                        cursor1.close();
+                    }
+                }
+                cursor0.close();
             }
             return item;
         }
@@ -942,13 +1036,16 @@ public class AlarmDatabaseAdapter
 
                 while (!cursor.isAfterLast())
                 {
-                    String index = (param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID;
-                    long alarmId = cursor.getLong(cursor.getColumnIndex(index));
-                    if (passesFilter(cursor, alarmId)) {
-                        alarmIds.add(alarmId);
+                    int index = cursor.getColumnIndex((param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID);
+                    if (index >= 0) {
+                        long alarmId = cursor.getLong(index);
+                        if (passesFilter(cursor, alarmId)) {
+                            alarmIds.add(alarmId);
+                        }
                     }
                     cursor.moveToNext();
                 }
+                cursor.close();
             }
 
             db.close();

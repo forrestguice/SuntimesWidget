@@ -18,7 +18,10 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -61,17 +64,6 @@ public class HelpDialog extends BottomSheetDialogFragment
             txtView.setText(content);
         }
     }
-
-    /**
-     * @param savedInstanceState a previously saved state (or null)
-     * @return a Dialog object ready to be displayed
-     */
-    /**@NonNull @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
-    {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        return dialog;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
@@ -122,6 +114,11 @@ public class HelpDialog extends BottomSheetDialogFragment
         txtView = (TextView) dialogView.findViewById(R.id.txt_help_content);
         buttonFrame = dialogView.findViewById(R.id.dialog_buttons);
         neutralButton = (Button)dialogView.findViewById(R.id.dialog_button_neutral);
+        if (neutralButton != null) {
+            if (AppSettings.isTelevision(getActivity())) {
+                neutralButton.setFocusableInTouchMode(true);
+            }
+        }
     }
 
     public void updateViews()
@@ -166,4 +163,23 @@ public class HelpDialog extends BottomSheetDialogFragment
     public String getListenerTag() {
         return listenerTag;
     }
+
+    /**
+     * getOnlineHelp
+     */
+    public static View.OnClickListener getOnlineHelpClickListener(final Context context, final int helpPathID)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(getOnlineHelpIntent(context, context.getString(helpPathID)));
+            }
+        };
+    }
+
+    public static Intent getOnlineHelpIntent(Context context, String helpPath) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + Uri.parse(helpPath)));
+    }
+
 }

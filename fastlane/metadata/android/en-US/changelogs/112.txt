@@ -1,0 +1,4 @@
+- adds online user manual (https://forrestguice.codeberg.page/Suntimes/help/).
+- fixes app crash when using custom themes (#792).
+- updates translation to Polish and Esperanto.
+- updates translations to Simplified Chinese, and Traditional Chinese.

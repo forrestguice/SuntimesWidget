@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,23 +21,28 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -46,6 +51,7 @@ import java.util.TimeZone;
 public class TimeDateDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
+    public static final String KEY_DIALOG_TITLE = "dialog_title";
 
     protected DatePicker picker;
 
@@ -55,6 +61,10 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     }
     public TimeZone getTimeZone() {
         return timezone;
+    }
+
+    public TimeDateDialog() {
+        setArguments(new Bundle());
     }
 
     public void init(Calendar date)
@@ -70,6 +80,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         picker.init(year, month, day, null);
     }
 
+    protected ImageButton btn_accept;
+
     /**
      * @param context a context used to access resources
      * @param dialogContent an inflated layout containing the dialog's other views
@@ -78,14 +90,35 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
 
-        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
-        btn_cancel.setOnClickListener(onDialogCancelClick);
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            if (getArguments().containsKey(KEY_MIN_DATETIME)) {
+                picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
+            }
+            if (getArguments().containsKey(KEY_MAX_DATETIME)) {
+                picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+            }
+        }
 
-        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
+        btn_cancel.setOnClickListener(onDialogCancelClick);
+        if (AppSettings.isTelevision(getActivity())) {
+            btn_cancel.setFocusableInTouchMode(true);
+        }
+
+        btn_accept = (ImageButton) dialogContent.findViewById(R.id.dialog_button_accept);
+        TooltipCompat.setTooltipText(btn_accept, btn_accept.getContentDescription());
         btn_accept.setOnClickListener(onDialogAcceptClick);
 
         Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
         btn_neutral.setOnClickListener(onDialogNeutralClick);
+
+        String title = getDialogTitle();
+        TextView text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
+        if (text_title != null && title != null) {
+            text_title.setText(title);
+        }
     }
 
     @Override
@@ -130,9 +163,9 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * Restore the dialog state from the provided bundle.
      * @param bundle state loaded from this Bundle
      */
-    protected void loadSettings(Bundle bundle)
-    {
-        appWidgetId = bundle.getInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
+    protected void loadSettings(Bundle bundle) {
+        //getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
+        //getArguments().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
     }
 
     /**
@@ -141,10 +174,11 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      */
     protected void loadSettings(Context context)
     {
+        int appWidgetId = getAppWidgetId();
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
-            init(Calendar.getInstance(timezone));
+            init(getInitialDateTime());
 
         } else {
             WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
@@ -155,13 +189,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     /**
      * @param context a context used to access shared prefs
      */
-    protected void saveSettings(Context context)
-    {
-        WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
-        WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
-
-        WidgetSettings.DateInfo dateInfo = getDateInfo();
-        WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+    protected void saveSettings(Context context) {
+        /* EMPTY */
     }
 
     public WidgetSettings.DateInfo getDateInfo() {
@@ -172,23 +201,26 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
      * @param bundle state persisted to this Bundle
      */
-    protected void saveSettings(Bundle bundle)
-    {
-        bundle.putInt(KEY_TIMEDATE_APPWIDGETID, appWidgetId);
+    protected void saveSettings(Bundle bundle) {
     }
 
     /**
      * @return the appWidgetID used by this dialog when saving/loading prefs (use 0 for main app)
      */
-    public int getAppWidgetId()
-    {
-        return appWidgetId;
+    public int getAppWidgetId() {
+        return getArguments().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
-    public void setAppWidgetId(int value)
-    {
-        appWidgetId = value;
+    public void setAppWidgetId(int value) {
+        getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, value);
     }
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
+    @Nullable
+    public String getDialogTitle() {
+        return getArguments().getString(KEY_DIALOG_TITLE);
+    }
+    public void setDialogTitle(@Nullable String title) {
+        getArguments().putString(KEY_DIALOG_TITLE, title);
+    }
 
     /**
      * A listener that is triggered when the dialog is accepted.
@@ -206,6 +238,11 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     public void setOnCanceledListener( DialogInterface.OnClickListener listener )
     {
         onCanceled = listener;
+    }
+
+    private DialogInterface.OnShowListener onShowListener;
+    public void setOnShowListener( DialogInterface.OnShowListener listener ) {
+        onShowListener = listener;
     }
 
     public boolean isToday()
@@ -229,8 +266,16 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
-        public void onShow(DialogInterface dialog) {
-            // EMPTY; placeholder
+        public void onShow(DialogInterface dialog)
+        {
+            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            if (onShowListener != null) {
+                onShowListener.onShow(dialog);
+            }
+
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_accept.requestFocus();
+            }
         }
     };
 
@@ -291,4 +336,27 @@ public class TimeDateDialog extends BottomSheetDialogFragment
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
+    public static final String KEY_MIN_DATETIME = "min_datetime";
+    public void setMinDate(long datetime) {
+        getArguments().putLong(KEY_MIN_DATETIME, datetime);
+    }
+
+    public static final String KEY_MAX_DATETIME = "max_datetime";
+    public void setMaxDate(long datetime) {
+        getArguments().putLong(KEY_MAX_DATETIME, datetime);
+    }
+
+    public static final String KEY_INITIAL_DATETIME = "initial_datetime";
+    public void setInitialDateTime(long datetime) {
+        getArguments().putLong(KEY_INITIAL_DATETIME, datetime);
+    }
+    public Calendar getInitialDateTime()
+    {
+        Calendar calendar = Calendar.getInstance(timezone);
+        long datetime = getArguments().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
+        calendar.setTimeInMillis(datetime);
+        return calendar;
+    }
+
 }

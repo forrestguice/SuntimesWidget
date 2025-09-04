@@ -1,0 +1,23 @@
+name: Mirror to Codeberg
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 0
+    - uses: yesolutions/mirror-action@master
+      with:
+        REMOTE: 'https://codeberg.org/forrestguice/suntimes.git'
+        GIT_USERNAME: forrestguice
+        GIT_PASSWORD: ${{ secrets.CB_GIT_PASSWORD }}
+    

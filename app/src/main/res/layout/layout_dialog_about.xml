@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                 android:text="@string/app_name"
-                android:gravity="center"
+                android:gravity="center" android:textSize="?attr/text_size_xlarge"
                 android:textColor="@drawable/btn_datetxt_dark" android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -56,7 +56,7 @@
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/app_shortdesc" />
+            android:textSize="?attr/text_size_small" android:text="@string/app_shortdesc" />
 
         <TextView
             android:id="@+id/txt_about_version"
@@ -67,7 +67,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start"
-            android:text="@string/app_version"
+            android:text="@string/app_version" android:textSize="?attr/text_size_small"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
@@ -76,8 +76,19 @@
             android:layout_marginBottom="2dp"
             android:id="@+id/txt_about_support"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_support_url" />
+
+        <TextView
+            android:id="@+id/txt_help_url"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
+            android:text="@string/help_url"
+            android:autoLink="web" />
+
 
         <TextView
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
@@ -85,7 +96,7 @@
             android:layout_marginTop="2dp"
             android:id="@+id/txt_about_legal1"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_legal1"
             android:autoLink="web" />
 
@@ -95,8 +106,8 @@
             android:layout_marginBottom="2dp"
             android:layout_marginTop="0dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/app_url"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
+            android:text="@string/help_app_url"
             android:autoLink="web" />
 
         <TextView
@@ -105,7 +116,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_legal2" />
 
         <TextView
@@ -114,7 +125,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
             android:text="@string/app_legal3"
             android:autoLink="web" />
 
@@ -123,7 +134,7 @@
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:text="@string/app_about_media"
+            android:text="@string/app_about_media" android:textSize="?attr/text_size_small"
             android:autoLink="web" />
 
         <View
@@ -137,7 +148,7 @@
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            tools:text="Privacy:"
+            tools:text="Privacy:" android:textSize="?attr/text_size_small"
             android:autoLink="web" />
 
         <View
@@ -150,8 +161,8 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/privacy_url"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
+            android:text="@string/help_privacy_url"
             android:autoLink="web" />
 
         <View

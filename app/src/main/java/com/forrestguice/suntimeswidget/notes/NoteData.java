@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,32 +19,34 @@
 package com.forrestguice.suntimeswidget.notes;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.Date;
 
 public class NoteData
 {
-    public SolarEvents noteMode;
+    public String noteMode;
     public SuntimesUtils.TimeDisplayText timeText;
     public String prefixText;
     public String noteText;
     public int noteIconResource;
     public int noteIconStroke;
-    public int noteColor, noteColor2;
+    public int textColor, iconColor, iconColor2;
     public Date time;
     public boolean tomorrow = false;
+    public boolean squareIcon = false;
 
-    public NoteData(SolarEvents noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int noteColor, int noteColor2, int noteIconStroke)
+    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
         this.prefixText = prefixText;
         this.noteText = noteText;
         this.noteIconResource = noteIconResource;
-        this.noteColor = noteColor;
-        this.noteColor2 = noteColor2;
+        this.textColor = textColor;
+        this.iconColor = iconColor;
+        this.iconColor2 = iconColor2;
         this.noteIconStroke = noteIconStroke;
+        this.squareIcon = squareIcon;
     }
 
     public NoteData( NoteData other )
@@ -54,9 +56,11 @@ public class NoteData
         this.prefixText = other.prefixText;
         this.noteText = other.noteText;
         this.noteIconResource = other.noteIconResource;
-        this.noteColor = other.noteColor;
-        this.noteColor2 = other.noteColor2;
+        this.textColor = other.textColor;
+        this.iconColor = other.iconColor;
+        this.iconColor2 = other.iconColor2;
         this.noteIconStroke = other.noteIconStroke;
+        this.squareIcon = other.squareIcon;
     }
 
     @Override
@@ -66,7 +70,7 @@ public class NoteData
             return false;
 
         final NoteData other = (NoteData) obj;
-        if (other.noteMode != noteMode)
+        if (!other.noteMode.equals(noteMode))
             return false;
 
         if (!other.timeText.getValue().equals(timeText.getValue()))

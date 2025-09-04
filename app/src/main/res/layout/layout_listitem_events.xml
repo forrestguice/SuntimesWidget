@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/itemLayout" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:padding="4dp" android:background="?attr/selectableItemBackground">
+
+    <LinearLayout android:id="@+id/icon_layout"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="4dp"
+        android:layout_marginStart="8dp" android:layout_marginEnd="4dp"
+        android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
+
+        <ImageView android:id="@android:id/icon1"
+            android:layout_width="8dp" android:layout_height="32dp"
+            android:background="@color/tertiaryColor" tools:ignore="contentDescription" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_toRightOf="@+id/icon_layout" android:layout_toEndOf="@+id/icon_layout" android:layout_centerVertical="true">
+
+        <TextView android:id="@android:id/text1" style="?android:attr/dropDownItemStyle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:textSize="?attr/text_size_medium"
+            android:singleLine="true" android:duplicateParentState="true"
+            tools:text="title" />
+
+        <TextView android:id="@android:id/text2" style="?android:attr/dropDownItemStyle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:textSize="@dimen/text_size_small"
+            android:singleLine="true" android:duplicateParentState="true"
+            tools:text="summary" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@id/checkbox" android:enabled="false" android:visibility="invisible"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_margin="8dp" android:button="?attr/checkVisibility"
+        android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/icon_layout" android:layout_alignBottom="@+id/icon_layout" />
+
+</RelativeLayout>

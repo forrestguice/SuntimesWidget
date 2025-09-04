@@ -13,6 +13,16 @@
             android:title="@string/loadaction_dialog_title"
             app:showAsAction="ifRoom" />
 
+        <item android:id="@+id/action_export"
+            android:icon="?attr/icActionSave"
+            android:title="@string/configAction_createBackup"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_import"
+            android:icon="?attr/icActionWidgets"
+            android:title="@string/configAction_restoreBackup"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
             android:title="@string/configAction_help"

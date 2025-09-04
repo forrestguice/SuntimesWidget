@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+<LinearLayout
+    android:id="@+id/moondialog_layout"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="?attr/dialogBackground">
+
+    <include layout="@layout/layout_dialog_moon_header" />
+    <include layout="@layout/layout_dialog_moon_content0" />
+
+    <View android:id="@+id/divider1" style="@style/SunsetTimeHorizontalRule"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:layout_marginTop="0dp" android:layout_marginBottom="8dp"/>
+
+    <com.forrestguice.suntimeswidget.moon.MoonPhasesView1 android:id="@+id/moonphases_view"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <View android:id="@+id/divider2" style="@style/SunsetTimeHorizontalRule"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:layout_marginTop="4dp" android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="@dimen/dialog_margin"
+        android:orientation="vertical" android:layout_marginBottom="8dp">
+
+        <com.forrestguice.suntimeswidget.moon.MoonApsisView android:id="@+id/moonapsis_view"
+            android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        <include layout="@layout/layout_dialog_moon_distance" />
+
+    </LinearLayout>
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

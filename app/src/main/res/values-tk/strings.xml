@@ -4,4 +4,5 @@
     <string name="default_location_latitude">37.9375</string>      <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">58.38</string>       <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">219</string>          <!-- meters -->
+    <string name="default_timezone">Asia/Ashgabat</string>         <!-- tzid -->
 </resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
+
+        <item android:id="@+id/action_alarm"
+            android:title="@string/configAction_setAlarm"
+            android:icon="?attr/icActionAlarm"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/addonSubMenu"
+            android:icon="?attr/icActionTimeReset"
+            android:title="@string/configAction_viewDateWith"
+            app:showAsAction="never"
+            android:orderInCategory="0">
+
+            <menu>         <!-- submenu is populated at runtime -->
+
+                <item android:id="@+id/action_date"
+                    android:title="@string/app_name"
+                    android:icon="?attr/icActionTimeReset"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_sunposition"
+                    android:title="@string/configAction_sunDialog"
+                    android:icon="@drawable/ic_sun"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap"
+                    android:title="@string/configAction_worldMap"
+                    android:icon="?attr/icActionWorldMap"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
+            </menu>
+
+        </item>
+
+        <item android:id="@+id/action_share"
+            android:title="@string/configAction_share"
+            android:icon="?attr/icActionShare"
+            app:showAsAction="never" />
+
+    </group>
+
+</menu>

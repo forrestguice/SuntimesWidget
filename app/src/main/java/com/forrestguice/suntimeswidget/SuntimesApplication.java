@@ -19,6 +19,9 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Application;
+import android.content.Context;
+import android.os.StrictMode;
+import android.util.Log;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -28,14 +31,27 @@ public class SuntimesApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        ApplicationStarter.initialize(this, false);
+        //init(this);    // initialization has been moved to CalculatorProvider.onCreate
+    }
 
-        /*if (BuildConfig.DEBUG) {
-            try {
-                Class.forName("dalvik.system.CloseGuard").getMethod("setEnabled", boolean.class).invoke(null, true);
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
+    private static boolean initialized = false;
+    public static boolean isInitialized() {
+        return initialized;
+    }
+
+    public static void init(Context context)
+    {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "SuntimesApplication.init:");
+        }
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(context, Thread.getDefaultUncaughtExceptionHandler()));
+        ApplicationStarter.initialize(context, false);
+
+        if (BuildConfig.DEBUG)
+        {
+            StrictMode.enableDefaults();
+            StrictMode.allowThreadDiskWrites();
+        }
+        initialized = true;
     }
 }

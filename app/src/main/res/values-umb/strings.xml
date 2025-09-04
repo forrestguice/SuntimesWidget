@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Benguela</string>
+    <string name="default_location_latitude">-12.55</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">13.41667</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>           <!-- meters -->
+    <string name="default_timezone">Etc/GMT+1</string>         <!-- tzid -->
+</resources>

@@ -5,5 +5,6 @@
     <string name="default_location_latitude">-17.8165</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">30.9167</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">1433</string>         <!-- meters -->
+    <string name="default_timezone">Africa/Harare</string>         <!-- tzid -->
 
 </resources>

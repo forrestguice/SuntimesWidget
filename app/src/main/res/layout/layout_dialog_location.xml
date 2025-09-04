@@ -29,15 +29,25 @@
             android:background="?attr/dialogFrame" android:id="@+id/dialog_header"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|start"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-            android:paddingTop="16dp" android:paddingBottom="16dp">
+            >
+
+            <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:src="?attr/icActionBack"
+                android:contentDescription="@string/dialog_cancel" />
 
             <TextView
                 android:id="@+id/dialog_title"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:gravity="start|center_vertical"
                 style="@style/Base.DialogWindowTitle.AppCompat"
                 android:text="@string/location_dialog_title" />
+
+            <ImageButton android:id="@+id/dialog_button_accept"
+                style="@style/ActionButton" android:contentDescription="@string/location_dialog_ok"
+                android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
+                android:src="?attr/icActionAccept"
+                android:tint="?attr/text_accentColor" />
 
         </LinearLayout>
 
@@ -46,21 +56,21 @@
             android:layout_height="wrap_content"
             android:background="?attr/dialogBackground">
 
-            <com.forrestguice.suntimeswidget.LocationConfigView
+            <com.forrestguice.suntimeswidget.getfix.LocationConfigView
                 android:id="@+id/locationConfig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/dialog_footer"
             android:background="?attr/dialogFrame"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|end"
             android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
             android:paddingTop="8dp" android:paddingBottom="8dp">
 
-            <Button
+            <!-- <Button
                 style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
                 android:id="@+id/dialog_button_cancel"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -72,7 +82,7 @@
                 android:id="@+id/dialog_button_accept"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/location_dialog_ok" />
+                android:text="@string/location_dialog_ok" /> -->
 
         </LinearLayout>
 

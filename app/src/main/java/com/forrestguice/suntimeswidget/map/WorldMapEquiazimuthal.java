@@ -37,6 +37,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
         if (options.showSunShadow && options.showMoonLight)
         {
-            int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
+            int combinedColor = ColorUtils.compositeColors(options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT), options.colors.getColor(WorldMapColorValues.COLOR_SUN_SHADOW));
             for (int j = 0; j < h; j++)
             {
                 j0 = (360 * j);
@@ -120,9 +121,9 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     if (sunIntensity <= 0 && moonIntensity > 0) {
                         pixels[z] = combinedColor;
                     } else if (sunIntensity <= 0) {
-                        pixels[z] = options.sunShadowColor;
+                        pixels[z] = options.colors.getColor(WorldMapColorValues.COLOR_SUN_SHADOW);
                     } else if (moonIntensity > 0) {
-                        pixels[z] = options.moonLightColor;
+                        pixels[z] = options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT);
                     }
                     z++;
                 }
@@ -142,7 +143,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     v2 = m[i + j2];
 
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                    pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
+                    pixels[z] = (sunIntensity <= 0) ? options.colors.getColor(WorldMapColorValues.COLOR_SUN_SHADOW) : Color.TRANSPARENT;
                     z++;
                 }
             }
@@ -161,7 +162,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     v2 = m[i + j2];
 
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-                    pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
+                    pixels[z] = (moonIntensity > 0) ? options.colors.getColor(WorldMapColorValues.COLOR_MOON_LIGHT) : Color.TRANSPARENT;
                     z++;
                 }
             }
@@ -191,7 +192,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         paintScaled.setFilterBitmap(true);
 
         paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);      // to draw background color
-        paintBackground.setColor(options.backgroundColor);
+        paintBackground.setColor(options.colors.getColor(WorldMapColorValues.COLOR_BACKGROUND));
         paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
 
         paintForeground = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -207,28 +208,28 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
         paintLocation_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLocation_fill.setStyle(Paint.Style.FILL_AND_STROKE);
-        paintLocation_fill.setColor(options.locationFillColor);
+        paintLocation_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_POINT_FILL));
 
         paintLocation_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLocation_stroke.setStyle(Paint.Style.STROKE);
-        paintLocation_stroke.setColor(options.locationStrokeColor);
+        paintLocation_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_POINT_STROKE));
         paintLocation_stroke.setStrokeWidth(0.5f);
 
         paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_fill.setStyle(Paint.Style.FILL);
-        paintSun_fill.setColor(options.sunFillColor);
+        paintSun_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_SUN_FILL));
 
         paintSun_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_stroke.setStyle(Paint.Style.STROKE);
-        paintSun_stroke.setColor(options.sunStrokeColor);
+        paintSun_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_SUN_STROKE));
 
         paintMoon_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMoon_fill.setStyle(Paint.Style.FILL);
-        paintMoon_fill.setColor(options.moonFillColor);
+        paintMoon_fill.setColor(options.colors.getColor(WorldMapColorValues.COLOR_MOON_FILL));
 
         paintMoon_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMoon_stroke.setStyle(Paint.Style.STROKE);
-        paintMoon_stroke.setColor(options.moonStrokeColor);
+        paintMoon_stroke.setColor(options.colors.getColor(WorldMapColorValues.COLOR_MOON_STROKE));
 
         paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
@@ -559,13 +560,13 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
-        paintGrid.setColor(options.gridXColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         for (int i=0; i<grid_x.size(); i++) {
             drawConnectedLines(c, grid_x.get(i), paintGrid);
         }
 
         paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        paintGrid.setColor(options.gridYColor);
+        paintGrid.setColor(options.colors.getColor(WorldMapColorValues.COLOR_GRID_MAJOR));
         for (int i=0; i<grid_y.size(); i++) {
             drawConnectedLines(c, grid_y.get(i), paintGrid);
         }

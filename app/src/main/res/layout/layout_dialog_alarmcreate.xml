@@ -26,8 +26,8 @@
         android:orientation="horizontal" android:gravity="center_vertical|start">
     </LinearLayout>
 
-    <LinearLayout
-        android:background="?attr/dialogBackgroundAlt"
+    <LinearLayout android:id="@+id/dialog_header"
+        android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="56dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
@@ -45,7 +45,7 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
-        android:background="?attr/dialogBackgroundAlt"
+        android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="32dp"
         android:layout_marginBottom="8dp">
 
@@ -63,9 +63,11 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainer1"
-        android:layout_width="match_parent" android:layout_height="wrap_content" />
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:nextFocusRight="@+id/layout_datetime"
+        />
 
-    <FrameLayout android:background="?attr/dialogBackgroundAlt"
+    <FrameLayout android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content" >
 
         <include layout="@layout/layout_listitem_alarmtime"

@@ -3,9 +3,9 @@
 <item>
     <shape android:shape="rectangle">
         <size android:width="24dp" android:height="24dp" />
-        <solid android:color="@color/text_accent_light" />
-        <stroke android:width="2dp" android:color="@color/text_accent_light" />
-        <corners android:radius="3dp" />
+        <solid android:color="@color/chip_bg_pressed_light" />
+        <stroke android:width="@dimen/chip_stroke" android:color="@color/chip_bg_pressed_stroke_light" />
+        <corners android:radius="@dimen/chip_radius" />
     </shape>
 </item>
 </layer-list>

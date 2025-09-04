@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/optionsSubMenu"
+        android:icon="?attr/icActionSettings"
+        android:title="@string/configAction_options"
+        app:showAsAction="never">
+        <menu>
+
+            <item android:id="@+id/graphOption_colors"
+                android:title="@string/configAction_colors"
+                android:icon="?attr/icActionAppearance"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showCrosshair"
+                android:title="@string/graph_option_crosshair"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showGrid"
+                android:title="@string/graph_option_grid"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showLabels"
+                android:title="@string/graph_option_labels"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showAxis"
+                android:title="@string/graph_option_axis"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showPoints"
+                android:title="@string/graph_option_points"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showTwilights"
+                android:title="@string/graph_option_twilights"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showCivil"
+                android:title="@string/timeMode_civil"
+                android:checkable="true" android:visible="false"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showNautical"
+                android:title="@string/timeMode_nautical"
+                android:checkable="true" android:visible="false"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showAstro"
+                android:title="@string/timeMode_astronomical"
+                android:checkable="true" android:visible="false"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/graphOption_showSeasons"
+                android:title="@string/graph_option_seasons"
+                android:checkable="true"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+    <item android:id="@+id/action_timezone"
+        android:icon="?attr/icActionTime"
+        android:title="@string/configLabel_timezone"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_share"
+        android:title="@string/configAction_share"
+        android:icon="?attr/icActionShare"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_help"
+        android:title="@string/configAction_help"
+        android:icon="?attr/icActionHelp"
+        android:visible="false"
+        app:showAsAction="never" />
+
+</menu>

@@ -5,5 +5,6 @@
     <string name="default_location_latitude">12.0961</string>    <!-- decimal degrees (DD) -->
     <string name="default_location_longitude">-86.3985</string>  <!-- decimal degrees (DD) -->
     <string name="default_location_altitude">410</string>         <!-- meters -->
+    <string name="default_timezone">America/Managua</string>         <!-- tzid -->
 
 </resources>

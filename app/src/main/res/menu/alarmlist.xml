@@ -21,6 +21,17 @@
                         android:icon="?attr/icActionSort" />
 
                 </group>
+
+                <item android:id="@+id/sortEnabledFirst"
+                    android:checkable="true" android:checked="false"
+                    android:title="@string/configAction_sortAlarms_enabled_first"
+                    android:icon="?attr/icActionSort" />
+
+                <item android:id="@+id/showOffset"
+                    android:checkable="true" android:checked="false"
+                    android:title="@string/configAction_sortAlarms_offset"
+                    android:icon="?attr/icActionVisibilityOn" />
+
             </menu>
 
         </item>

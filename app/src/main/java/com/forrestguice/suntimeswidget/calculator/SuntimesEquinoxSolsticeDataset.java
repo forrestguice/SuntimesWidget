@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -35,27 +34,24 @@ public class SuntimesEquinoxSolsticeDataset
     public SuntimesEquinoxSolsticeData dataSolsticeSummer;
     public SuntimesEquinoxSolsticeData dataEquinoxAutumnal;
     public SuntimesEquinoxSolsticeData dataSolsticeWinter;
+    public SuntimesEquinoxSolsticeData[] dataSolsticesEquinoxes;
 
     public SuntimesEquinoxSolsticeDataset(Context context)
     {
         dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
-
-        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
-
-        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataEquinoxAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
-
-        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
-        dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
+        initSolsticeEquinoxData();
     }
 
     public SuntimesEquinoxSolsticeDataset(Context context, int appWidgetId)
     {
         dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, appWidgetId);
         dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
+        initSolsticeEquinoxData();
+    }
 
+    protected void initSolsticeEquinoxData()
+    {
         dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
 
@@ -64,6 +60,7 @@ public class SuntimesEquinoxSolsticeDataset
 
         dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
+        dataSolsticesEquinoxes = new SuntimesEquinoxSolsticeData[] { dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
     }
 
     public SuntimesEquinoxSolsticeDataset( SuntimesEquinoxSolsticeData dataEquinoxSpring,
@@ -72,49 +69,45 @@ public class SuntimesEquinoxSolsticeDataset
                                            SuntimesEquinoxSolsticeData dataSolsticeWinter )
     {
         this.dataEquinoxSpring = dataEquinoxSpring;
-        if (dataEquinoxSpring == null)
-        {
+        if (dataEquinoxSpring == null) {
             throw new NullPointerException("dataEquinoxSpring must not be null!");
         }
 
         this.dataSolsticeSummer = dataSolsticeSummer;
-        if (dataSolsticeSummer == null)
-        {
+        if (dataSolsticeSummer == null) {
             throw new NullPointerException("dataSolsticeSummer must not be null!");
         }
 
         this.dataEquinoxAutumnal = dataEquinoxAutumnal;
-        if (dataEquinoxAutumnal == null)
-        {
+        if (dataEquinoxAutumnal == null) {
             throw new NullPointerException("dataEquinoxAutumnal must not be null!");
         }
 
         this.dataSolsticeWinter = dataSolsticeWinter;
-        if (dataSolsticeWinter == null)
-        {
+        if (dataSolsticeWinter == null) {
             throw new NullPointerException("dataSolsticeWinter must not be null!");
         }
+        dataSolsticesEquinoxes = new SuntimesEquinoxSolsticeData[] { dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
     }
 
-    public SuntimesCalculator calculator()
-    {
+    public SuntimesCalculator calculator() {
         return dataEquinoxSpring.calculator();
     }
 
-    public void calculateData()
+    public void calculateData(Context context)
     {
-        dataEquinoxSpring.calculate();
+        dataEquinoxSpring.calculate(context);
         SuntimesCalculator calculator = dataEquinoxSpring.calculator();
         SuntimesCalculatorDescriptor descriptor = dataEquinoxSpring.calculatorMode();
 
         dataSolsticeSummer.setCalculator(calculator, descriptor);
-        dataSolsticeSummer.calculate();
+        dataSolsticeSummer.calculate(context);
 
         dataEquinoxAutumnal.setCalculator(calculator, descriptor);
-        dataEquinoxAutumnal.calculate();
+        dataEquinoxAutumnal.calculate(context);
         
         dataSolsticeWinter.setCalculator(calculator, descriptor);
-        dataSolsticeWinter.calculate();
+        dataSolsticeWinter.calculate(context);
     }
 
     public SuntimesEquinoxSolsticeData findSoonest(Calendar now) {
@@ -133,10 +126,9 @@ public class SuntimesEquinoxSolsticeDataset
     {
         long timeDeltaMin = Long.MAX_VALUE;
         SuntimesEquinoxSolsticeData closest = null;
-        SuntimesEquinoxSolsticeData[] dataset = {dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
-        for (SuntimesEquinoxSolsticeData data : dataset)
+        for (SuntimesEquinoxSolsticeData data : dataset())
         {
-            Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarOtherYear()};
+            Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarNextYear()};
             for (Calendar event : events)
             {
                 if (event != null)
@@ -156,25 +148,26 @@ public class SuntimesEquinoxSolsticeDataset
         return closest;
     }
 
-    public void setLocation(Location location)
-    {
-        dataEquinoxSpring.setLocation(location);
-        dataSolsticeSummer.setLocation(location);
-        dataEquinoxAutumnal.setLocation(location);
-        dataSolsticeWinter.setLocation(location);
+    public SuntimesEquinoxSolsticeData[] dataset() {
+        return new SuntimesEquinoxSolsticeData[] { dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
     }
 
-    public boolean isCalculated()
+    public void setLocation(Location location)
     {
+        for (SuntimesEquinoxSolsticeData data : dataSolsticesEquinoxes) {
+            data.setLocation(location);
+        }
+    }
+
+    public boolean isCalculated() {
         return dataEquinoxSpring.isCalculated();
     }
 
     public void invalidateCalculation()
     {
-        dataEquinoxSpring.invalidateCalculation();
-        dataSolsticeSummer.invalidateCalculation();
-        dataEquinoxAutumnal.invalidateCalculation();
-        dataSolsticeWinter.invalidateCalculation();
+        for (SuntimesEquinoxSolsticeData data : dataSolsticesEquinoxes) {
+            data.invalidateCalculation();
+        }
     }
 
     public boolean isImplemented() {
@@ -183,29 +176,24 @@ public class SuntimesEquinoxSolsticeDataset
 
     public void setTodayIs(Calendar date)
     {
-        dataEquinoxSpring.setTodayIs(date);
-        dataEquinoxAutumnal.setTodayIs(date);
-        dataSolsticeSummer.setTodayIs(date);
-        dataSolsticeWinter.setTodayIs(date);
+        for (SuntimesEquinoxSolsticeData data : dataSolsticesEquinoxes) {
+            data.setTodayIs(date);
+        }
     }
 
-    public Calendar todayIs()
-    {
+    public Calendar todayIs() {
         return dataEquinoxSpring.todayIs();
     }
 
-    public boolean todayIsNotToday()
-    {
+    public boolean todayIsNotToday() {
         return dataEquinoxSpring.todayIsNotToday();
     }
 
-    public String timezone()
-    {
+    public String timezone() {
         return dataEquinoxSpring.timezone().getID();
     }
 
-    public Calendar now()
-    {
+    public Calendar now() {
         return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
     }
 
@@ -213,8 +201,7 @@ public class SuntimesEquinoxSolsticeDataset
     {
         double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
         SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
-        return data.eventCalendarOtherYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
+        return data.tropicalYearLength();
     }
+
 }
-
-

@@ -110,6 +110,10 @@ public class SuntimesMoonData extends SuntimesMoonData0
     {
         return (calculator == null ? -1 : calculator.getMoonIlluminationForDate( (todayIsNotToday() ? nowThen(calendar()) : now()) ));
     }
+    public double getMoonIllumination(Calendar datetime) {
+        return (calculator == null ? -1 : calculator.getMoonIlluminationForDate(datetime));
+    }
+
 
     /**
      * result: moon transit time
@@ -178,15 +182,13 @@ public class SuntimesMoonData extends SuntimesMoonData0
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
     }
 
-    public Calendar[] getRiseSetEvents(SolarEvents event)
+    public Calendar[] getRiseSetEvents(String eventID)
     {
-        switch (event) {
-            case MOONRISE:
-                return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow() };
-            case MOONSET:
-                return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
-        }
-        return new Calendar[] { null, null, null };
+        if (SolarEvents.MOONRISE.name().equals(eventID)) {
+            return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow() };
+        } else if (SolarEvents.MOONSET.name().equals(eventID)) {
+            return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
+        } else return new Calendar[] { null, null };
     }
 
     /**
@@ -204,11 +206,12 @@ public class SuntimesMoonData extends SuntimesMoonData0
 
     /**
      * calculate
+     * @param context
      */
     @Override
-    public void calculate()
+    public void calculate(Context context)
     {
-        super.calculate();
+        super.calculate(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
@@ -216,9 +219,9 @@ public class SuntimesMoonData extends SuntimesMoonData0
 
         if (todayIsNotToday())
         {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar0.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar0.setTimeInMillis(todayIs.getTimeInMillis());
         }
 
         otherCalendar0.add(Calendar.DAY_OF_MONTH, -1);   // yesterday
@@ -409,6 +412,18 @@ public class SuntimesMoonData extends SuntimesMoonData0
                                    (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
                                    (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
+    }
+
+    public static MoonPhaseDisplay findCurrentPhaseOf(Context context, Calendar calendar, SuntimesMoonData data)
+    {
+        SuntimesMoonData data1 = new SuntimesMoonData(data);
+        data1.setTodayIs(calendar);
+        data1.calculate(context);
+
+        SuntimesCalculator.MoonPhase nextPhase = data1.nextPhase(calendar);
+        Calendar nextPhaseDate = data1.moonPhases.get(nextPhase);
+        boolean nextPhaseIsNow = (nextPhaseDate != null) && (Math.abs(nextPhaseDate.getTimeInMillis() - calendar.getTimeInMillis()) <= (2000 * 60));
+        return (nextPhaseIsNow ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
     public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase) {
