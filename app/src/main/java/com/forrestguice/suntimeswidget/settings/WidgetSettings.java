@@ -248,6 +248,7 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_OFFSET = "dateOffset";    // offset in days
     public static final int PREF_DEF_DATE_OFFSET = 0;
 
+    public static final String PREF_KEY_LASTUPDATE = "lastUpdate";
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
@@ -314,7 +315,8 @@ public class WidgetSettings
 
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
 
-            PREF_KEY_NEXTUPDATE
+            PREF_KEY_NEXTUPDATE,
+            PREF_KEY_LASTUPDATE
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -339,7 +341,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP
     };
     public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
-    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
+    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE, PREF_KEY_LASTUPDATE };
     public static String[] INT_KEYS = new String[]
     {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,   // enum as ordinal
@@ -1602,7 +1604,8 @@ public class WidgetSettings
         NOON("Noon", "Solar Noon", null),
         GOLD("Golden", "Golden Hour", 6d),
         BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
+        BLUE4("Blue", "Blue Hour", -4d),      // 4 deg; morning end, evening start
+        MIDNIGHT("Midnight", "Solar Midnight", null);
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
@@ -1658,6 +1661,9 @@ public class WidgetSettings
 
             NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
                     context.getString(R.string.timeMode_noon) );
+
+            MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
+                    context.getString(R.string.timeMode_midnight) );
 
             GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
                     context.getString(R.string.timeMode_golden) );
@@ -1736,6 +1742,30 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
         prefs.remove(prefs_prefix + PREF_KEY_NEXTUPDATE);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long getTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        return prefs.getLong(prefs_prefix + PREF_KEY_LASTUPDATE, -1);
+    }
+    public static void saveTimeLastUpdate(Context context, int appWidgetId, long value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.putLong(prefs_prefix + PREF_KEY_LASTUPDATE, value);
+        prefs.apply();
+    }
+    public static void deleteTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.remove(prefs_prefix + PREF_KEY_LASTUPDATE);
         prefs.apply();
     }
 
@@ -3353,6 +3383,7 @@ public class WidgetSettings
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        deleteTimeLastUpdate(context, appWidgetId);
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
 

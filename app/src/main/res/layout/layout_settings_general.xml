@@ -18,7 +18,8 @@
 -->
 <merge xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout android:id="@+id/appwidget_general_layout0"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
         style="@style/SunsetTimeWidget_dark"
         android:layout_marginBottom="@dimen/settingsGroup_margin"

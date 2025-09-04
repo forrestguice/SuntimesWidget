@@ -35,6 +35,10 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
+/**
+ * A dialog preference that allows selecting a millisecond value as either hours, minutes, or
+ * seconds.
+ */
 @TargetApi(11)
 public class MillisecondPickerPreference extends DialogPreference
 {

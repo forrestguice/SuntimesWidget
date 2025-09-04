@@ -5,23 +5,34 @@
     android:layout_width="match_parent" android:layout_height="match_parent" android:minWidth="175dp"
     android:layout_gravity="center">
 
-    <TextView android:id="@+id/layout_drag_hint_top"
+    <FrameLayout android:id="@+id/layout_drag_hint_top"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/drag_hint"
-        android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_gravity="top|center_horizontal"
-        android:rotation="0" />
+        android:clipChildren="false">
 
-    <TextView android:id="@+id/layout_drag_hint_bottom"
+        <TextView android:id="@+id/text_drag_hint_top"
+            android:layout_width="100dp" android:layout_height="wrap_content"
+            android:text="@string/drag_hint"
+            android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:rotation="0" />
+    </FrameLayout>
+
+    <FrameLayout android:id="@+id/layout_drag_hint_bottom"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/drag_hint"
-        android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_gravity="bottom|center_horizontal"
-        android:rotation="0" />
+        android:clipChildren="false">
+
+        <TextView android:id="@+id/text_drag_hint_bottom"
+            android:layout_width="100dp" android:layout_height="wrap_content"
+            android:text="@string/drag_hint"
+            android:textSize="?attr/text_size_tiny" android:textColor="?attr/text_accentColor"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:rotation="0" />
+
+    </FrameLayout>
 
     <FrameLayout android:id="@+id/layout_drag_hint_start"
         android:layout_width="32dp" android:layout_height="wrap_content"

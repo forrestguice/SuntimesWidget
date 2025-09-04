@@ -32,10 +32,12 @@ import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidget0ConfigFragment;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 
 import java.util.List;
 
@@ -70,6 +72,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionWeeks(true);
         showOptionHours(true);
         showOptionTimeDate(true);
+        showOptionShowDate(true);
         showOptionAbbrvMonth(true);
         showOptionLabels(true);
         showOptionShowNoon(false);
@@ -80,6 +83,16 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionLocalizeHemisphere(true);
         hideLayoutSettings();
         showMoreGeneralSettings(true);
+        reorderOptions();
+    }
+
+    protected void reorderOptions() {
+        moveViewToBeforeOther(R.id.appwidget_general_layout0, R.id.appwidget_general_showDate_layout, R.id.appwidget_appearance_showLabels);
+    }
+
+    @Override
+    protected void loadCalendarSettings(Context context) {
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, SolsticeLayout.PREF_DEF_CALENDAR_SHOWDATE));
     }
 
     @Override

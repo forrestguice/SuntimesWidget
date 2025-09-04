@@ -27,11 +27,11 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.8.0
+ * @version 1.8.1
  */
 public interface SuntimesCalculator
 {
-    int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times (1.0.0)
+    int FEATURE_RISESET = 0;      // feature: rise, set, and twilight times (1.0.0, 1.8.1)
     int FEATURE_SOLSTICE = 10;    // feature: solstice/equinox times (1.2.0)
     int FEATURE_ALTITUDE = 20;    // feature: altitude based refinement (1.0.0)
     int FEATURE_GOLDBLUE = 30;    // feature: gold, blue hour times (1.3.0)
@@ -120,6 +120,14 @@ public interface SuntimesCalculator
      * @since 1.0.0 (FEATURE_RISESET)
      */
     Calendar getSolarNoonCalendarForDate( Calendar date );
+
+    /**
+     * Solar Midnight
+     * @param date a Calendar representing a given date
+     * @return a Calendar for solar midnight for the given date
+     * @since 1.8.1 (FEATURE_RISESET)
+     */
+    Calendar getSolarMidnightCalendarForDate( Calendar date );
 
     /**
      * Sunset

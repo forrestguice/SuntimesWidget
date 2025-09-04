@@ -19,12 +19,14 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,12 +35,22 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.util.Locale;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
+    public static final String ARG_HIDE_AFTER_SAVE = "hideAfterSave";    // sheet is hidden/dismissed after saving from edit dialog
+    public static final boolean DEF_HIDE_AFTER_SAVE = true;
+
+    public static final String ARG_PERSIST_SELECTION = "persistSelection";    // selection is automatically persisted from list dialog
+    public static final boolean DEF_PERSIST_SELECTION = true;
+
+    public static final String DIALOG_LIST = "listDialog";
+    public static final String DIALOG_EDIT = "editDialog";
+    
     public static final int MODE_SELECT = 0;
     public static final int MODE_EDIT = 1;
 
@@ -56,6 +68,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         onModeChanged();
     }
 
+    protected ColorValuesEditFragment.ColorValuesEditViewModel editViewModel;
+    public ColorValuesEditFragment.ColorValuesEditViewModel getEditViewModel() {
+        return editViewModel;
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -65,23 +82,48 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
         View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
-
-        listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
-        listDialog.setAppWidgetID(getAppWidgetID());
-        listDialog.setColorTag(getColorTag());
-        listDialog.setTheme(getThemeResID());
-
-        editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
-        editDialog.setTheme(getThemeResID());
-        editDialog.setFilter(getFilter());
-        editDialog.setApplyFilter(applyFilter());
-
-        getChildFragmentManager().beginTransaction().add(R.id.layout_color_sheet, listDialog).add(R.id.layout_color_sheet, editDialog).commit();
-
+        editViewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
+        initViews();
         return content;
+    }
+
+    protected void initViews()
+    {
+        FragmentManager fragments = getChildFragmentManager();
+        listDialog = (ColorValuesSelectFragment) fragments.findFragmentByTag(DIALOG_LIST);
+        editDialog = (ColorValuesEditFragment) fragments.findFragmentByTag(DIALOG_EDIT);
+
+        if (listDialog == null)
+        {
+            listDialog = new ColorValuesSelectFragment(); //(ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
+            listDialog.setAppWidgetID(getAppWidgetID());
+            listDialog.setColorTag(getColorTag());
+            listDialog.setTheme(getThemeResID());
+            listDialog.setShowBack(getShowBack());
+            listDialog.setShowMenu(getShowMenu());
+            listDialog.setPreviewKeys(previewKeys());
+
+            FragmentTransaction transaction = fragments.beginTransaction();
+            transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
+            transaction.addToBackStack(DIALOG_LIST);
+            transaction.commit();
+        }
+        if (editDialog == null)
+        {
+            editDialog = new ColorValuesEditFragment();  // (ClockColorValuesEditFragment) fragments.findFragmentById(R.id.colorsFragment);
+            editDialog.setTheme(getThemeResID());
+            editDialog.setFilter(getFilter());
+            editDialog.setApplyFilter(applyFilter());
+
+            FragmentTransaction transaction = fragments.beginTransaction();
+            transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
+            transaction.addToBackStack(DIALOG_EDIT);
+            transaction.commit();
+        }
+        fragments.executePendingTransactions();
     }
 
     @Override
@@ -89,7 +131,6 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
         //listDialog = (ColorValuesSelectFragment) fragments.findFragmentById(R.id.colorsCollectionFragment);
         if (listDialog != null) {
             listDialog.setColorCollection(colorCollection);
@@ -130,11 +171,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
+        colorCollection = savedState.getParcelable("colorCollection");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("mode", mode);
+        outState.putParcelable("colorCollection", colorCollection);
         super.onSaveInstanceState(outState);
     }
 
@@ -163,6 +206,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             }
         }
         updateViews();
+    }
+
+    public void setPreviewKeys(String... keys) {
+        getArguments().putStringArray("previewKeys", keys);
+    }
+    public String[] previewKeys() {
+        return getArguments().getStringArray("previewKeys");
     }
 
     protected String suggestColorValuesID(Context context)
@@ -218,11 +268,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             Context context = getActivity();
             if (context != null)
             {
+                String suggestedID = suggestColorValuesID(context);
                 ColorValues values = (colorsID == null)
                         ? colorCollection.getDefaultColors(context)
                         : colorCollection.getColors(context, colorsID);
                 editDialog.setColorValues(values);
-                editDialog.setID(suggestColorValuesID(context));
+                editDialog.setID(suggestedID);
+                editDialog.setLabel(suggestedID);
                 editDialog.setAllowDelete(false);
                 if (listener != null) {
                     editDialog.setDefaultValues(listener.getDefaultValues());
@@ -254,7 +306,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         public void onDeleteClicked(@Nullable String colorsID)
         {
             Context context = getActivity();
-            if (context != null && colorsID != null)
+            if (context != null && !colorCollection.isDefaultColorID(colorsID))
             {
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
@@ -288,8 +340,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         {
             //Log.d("DEBUG", "onItemSelected " + item.colorsID);
             Context context = getActivity();
-            if (context != null) {
-                colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID(), getColorTag());
+            if (context != null)
+            {
+                if (persistSelection()) {
+                    colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID(), getColorTag());
+                }
                 ColorValues selectedColors = colorCollection.getColors(context, item.colorsID);
                 onSelectColors(selectedColors, "onItemSelected");
             }
@@ -345,10 +400,14 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID(), getColorTag());
                 onSelectColors(colorCollection.getColors(context, colorsID), "onSaveClicked");
 
+                listDialog.updateViews();
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
-                requestHideSheet();
                 Toast.makeText(context, getString(R.string.msg_colors_saved, colorsID), Toast.LENGTH_SHORT).show();
+
+                if (getHideAfterSave()) {
+                    requestHideSheet();
+                }
             }
         }
 
@@ -389,6 +448,38 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             toggleFragmentVisibility(getMode());
             onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()), "cancelEdit");
         }
+    }
+
+    public boolean persistSelection() {
+        return getArguments().getBoolean(ARG_PERSIST_SELECTION, DEF_PERSIST_SELECTION);
+    }
+    public void setPersistSelection(boolean value) {
+        getArguments().putBoolean(ARG_PERSIST_SELECTION, value);
+    }
+
+    public void setHideAfterSave(boolean showBack) {
+        getArguments().putBoolean(ARG_HIDE_AFTER_SAVE, showBack);
+    }
+    public boolean getHideAfterSave() {
+        return getArguments().getBoolean(ARG_HIDE_AFTER_SAVE, DEF_HIDE_AFTER_SAVE);
+    }
+
+    public void setShowBack(boolean showBack) {
+        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
+    }
+    public boolean getShowBack() {
+        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
+    }
+
+    public void setShowMenu(boolean showMenu) {
+        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, showMenu);
+    }
+    public boolean getShowMenu() {
+        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
+    }
+
+    public String getSelectedID() {
+        return (listDialog != null ? listDialog.getSelectedID() : null);
     }
 
     public void setAppWidgetID(int id)
@@ -444,9 +535,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
-    protected ColorValuesCollection colorCollection = null;
-    public void setColorCollection(ColorValuesCollection collection) {
+    protected ColorValuesCollection<ColorValues> colorCollection = null;
+    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
+    }
+    public ColorValuesCollection<?> getColorCollection() {
+        return colorCollection;
     }
 
     protected void requestPeekHeight(int height) {

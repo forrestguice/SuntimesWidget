@@ -30,10 +30,11 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
 import java.util.Calendar;
@@ -67,7 +68,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = utils.displayStringForTitlePattern(context, titlePattern, data);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
         CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
@@ -76,7 +77,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     protected void updateLabelViews(Context context, RemoteViews views, AlarmClockItem item)
     {
         String itemLabel = item.getLabel(item.getLabel(context));
-        String eventDisplay = AlarmTileService.formatEventDisplay(context, item);
+        String eventDisplay = AlarmTileBase.formatEventDisplay(context, item);
         views.setTextViewText(android.R.id.text1, itemLabel);
         views.setTextViewText(R.id.text_event, eventDisplay);
         views.setViewVisibility(R.id.text_event, (eventDisplay != null && !eventDisplay.isEmpty() ? View.VISIBLE : View.GONE));

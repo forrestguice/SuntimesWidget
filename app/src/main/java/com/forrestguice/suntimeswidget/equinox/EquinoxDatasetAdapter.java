@@ -173,7 +173,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
 
         SuntimesEquinoxSolsticeDataset retValue = new SuntimesEquinoxSolsticeDataset(context, 0);
         retValue.setTodayIs(date);
-        retValue.calculateData();
+        retValue.calculateData(context);
         return retValue;
     }
 
@@ -197,6 +197,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return options.highlightPosition;
     }
 
+    @Deprecated
     public void setThemeOverride( SuntimesTheme theme ) {
         options.themeOverride = theme;
     }

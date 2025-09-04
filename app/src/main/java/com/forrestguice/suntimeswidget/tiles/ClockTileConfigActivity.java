@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-@SuppressWarnings("Convert2Diamond")
 public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
 {
     public ClockTileConfigActivity()
@@ -49,12 +48,24 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
         return new WidgetSettings.ActionMode[] { WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY };
     }
 
+    @Override
     protected WidgetSettings.ActionMode defaultActionMode() {
-        return WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+        return ClockTileBase.DEF_ACTION_MODE;
     }
 
+    @Override
     public boolean getDefaultLocationFromApp() {
-        return ClockTileService.DEF_LOCATION_FROM_APP;
+        return ClockTileBase.DEF_LOCATION_FROM_APP;
+    }
+
+    @Override
+    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode() {
+        return ClockTileBase.DEF_TIMEZONE_MODE;
+    }
+
+    @Override
+    protected void onResetWidget() {
+        new ClockTileBase(this).initDefaults(this);
     }
 
 }

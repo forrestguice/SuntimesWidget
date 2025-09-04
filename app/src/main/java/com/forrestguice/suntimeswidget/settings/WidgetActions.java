@@ -35,6 +35,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -287,8 +288,8 @@ public class WidgetActions
         if (values != null)
         {
             String id = values.getAsString(PREF_KEY_ACTION_LAUNCH_ID);
-            if (id != null)
-            {
+            //if (id != null)
+            //{
                 String tagString = values.getAsString(PREF_KEY_ACTION_LAUNCH_TAGS);
                 String[] tags = (tagString != null ? tagString.split("\\|") : new String[0]);
 
@@ -305,7 +306,7 @@ public class WidgetActions
                         values.getAsString(PREF_KEY_ACTION_LAUNCH_DATATYPE),
                         values.getAsString(PREF_KEY_ACTION_LAUNCH_EXTRAS), true);
                 return true;
-            }
+            //}
         }
         return false;
     }
@@ -620,7 +621,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            Uri dataUri = Uri.parse(Uri.decode(displayStringForPattern(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(context, dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -702,7 +703,7 @@ public class WidgetActions
                 } else {
                     if (value.contains("%"))
                     {
-                        String v = displayStringForPattern(context, value, data);
+                        String v = DataSubstitutions.displayStringForTitlePattern0(context, value, data);
                         if (!v.contains("%")) {
                             applyExtra(context, intent, key + "=" + v, data);    // recursive call
 
@@ -719,27 +720,6 @@ public class WidgetActions
 
         } else {
             Log.w(TAG, "applyExtras: skipping " + extra);
-        }
-    }
-
-    public static String displayStringForPattern(Context context, String pattern, SuntimesData data)
-    {
-        SuntimesUtils utils = new SuntimesUtils();
-
-        if (data instanceof SuntimesRiseSetData) {    // cast to most specific type                 // TODO: a better way to handle this..
-            return utils.displayStringForTitlePattern(context, pattern, (SuntimesRiseSetData) data);
-
-        } else if (data instanceof SuntimesClockData) {
-            return utils.displayStringForTitlePattern(context, pattern, (SuntimesClockData) data);
-
-        } else if (data instanceof SuntimesMoonData) {
-            return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
-
-        } else if (data instanceof SuntimesEquinoxSolsticeData) {
-            return utils.displayStringForTitlePattern(context, pattern, (SuntimesMoonData) data);
-
-        } else {
-            return utils.displayStringForTitlePattern(context, pattern, data);
         }
     }
 

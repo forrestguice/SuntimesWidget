@@ -200,6 +200,7 @@ public class EquinoxCardView extends LinearLayout
         ImageViewCompat.setImageTintList(resetBackButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
     }
 
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         if (theme != null)
@@ -330,6 +331,17 @@ public class EquinoxCardView extends LinearLayout
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             outRect.left = outRect.right = outRect.top = outRect.bottom = 0;
         }
+    }
+
+    /**
+     * setShowDate
+     * @param value 
+     */
+    public void setShowDate(boolean value) {
+        options.showDate = value;
+    }
+    public boolean getShowDate() {
+        return options.showDate;
     }
 
     /**

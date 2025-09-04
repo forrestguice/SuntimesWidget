@@ -59,7 +59,8 @@ public class AlarmSettingsTest0
                 AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED_DURATION,
                 AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED_RESULT,
                 AlarmSettings.PREF_KEY_ALARM_SYSTEM_TIMEZONE_ID,
-                AlarmSettings.PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET
+                AlarmSettings.PREF_KEY_ALARM_SYSTEM_TIMEZONE_OFFSET,
+                AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION,
         };
 
         Set<String> set = new HashSet<>();

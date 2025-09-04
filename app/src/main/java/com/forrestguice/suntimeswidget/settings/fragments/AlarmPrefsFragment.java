@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2023 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -45,15 +49,26 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
+import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
+import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
@@ -133,7 +148,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
         } else return true;
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     protected void setBootCompletedPrefEnabled(boolean value)
     {
@@ -189,45 +206,55 @@ public class AlarmPrefsFragment extends PreferenceFragment
         Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
-            boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
-            if (notificationsEnabled)
+            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
-                if (isDeviceSecure(context) && !notificationsOnLockScreen(context))
-                {
-                    String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning));
+                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+
+                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
+
                 } else {
-                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, enabledString));
+                    String message = context.getString(R.string.configLabel_alarms_notifications_on);
+                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, message));
                 }
             } else {
-                String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
-                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+                String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
 
         Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
         if (fullscreenNotificationPrefs != null)
         {
-            fullscreenNotificationPrefs.setOnPreferenceChangeListener(onFullscreenNotificationPrefsClicked(context));
+            fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
-            /*boolean fullScreenIntentsEnabled = false;   // TODO: use NotificationManager#canUseFullScreenIntent() here
-            if (fullScreenIntentsEnabled)
+            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
             } else {
                 String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
                 fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
-            }*/
+            }
         }
 
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
+        }
+
+        final ColorValuesCollectionPreference brightColorsPref = (ColorValuesCollectionPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BRIGHTMODE_COLORS);
+        if (brightColorsPref != null)
+        {
+            brightColorsPref.setCollection(context, new BrightAlarmColorValuesCollection<BrightAlarmColorValues>(context));
+            brightColorsPref.initPreferenceOnClickListener(fragment.getActivity(), SettingsActivityInterface.REQUEST_PICKCOLORS_BRIGHTALARM);
+            brightColorsPref.setPreviewIntentBuilder(brightColorPreviewIntent);
         }
 
         Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
@@ -251,7 +278,49 @@ public class AlarmPrefsFragment extends PreferenceFragment
             powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
         }
 
+        CheckBoxPreference dndPermission = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        if (dndPermission != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                boolean bedtimeDndEnabled = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+                boolean hasDndPermission = BedtimeSettings.hasDoNotDisturbPermission(context);
+
+                SpannableString summary = (hasDndPermission
+                        ? new SpannableString(context.getString(R.string.configLabel_permissionGranted))
+                        : new SpannableString(SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
+
+                if (bedtimeDndEnabled && !hasDndPermission) {
+                    summary = SuntimesUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
+                }
+
+                dndPermission.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
+                dndPermission.setOnPreferenceClickListener(onDndPermissionClicked(context));
+                dndPermission.setSummary(summary);
+
+            } else {
+                PreferenceCategory category = (PreferenceCategory)fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
+                removePrefFromCategory(dndPermission, category);  // dnd is api 23+
+            }
+        }
+
+        CheckBoxPreference dndRuleBased = (CheckBoxPreference) fragment.findPreference(BedtimeSettings.PREF_KEY_BEDTIME_DND_RULEBASED);
+        if (dndRuleBased != null)
+        {
+            dndRuleBased.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context));
+            dndRuleBased.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    return true;
+                }
+            });
+        }
+
         initPref_alarms_bootCompleted(fragment);
+        initPref_alarms_clearAll(fragment);
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
@@ -270,6 +339,91 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     return false;
                 }
             });
+        }
+    }
+
+    private static ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
+    public static class BrightColorsPreviewIntent implements ColorValuesSheetActivity.PreviewColorsIntentBuilder
+    {
+        public BrightColorsPreviewIntent() {}
+
+        private BrightColorsPreviewIntent(Parcel in) {}
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {}
+
+        public static final Parcelable.Creator<BrightColorsPreviewIntent> CREATOR = new Parcelable.Creator<BrightColorsPreviewIntent>()
+        {
+            public BrightColorsPreviewIntent createFromParcel(Parcel in) {
+                return new BrightColorsPreviewIntent(in);
+            }
+
+            public BrightColorsPreviewIntent[] newArray(int size) {
+                return new BrightColorsPreviewIntent[size];
+            }
+        };
+
+        @Override
+        public Intent getIntent(Context context, String colorsID)
+        {
+            return AlarmNotifications.getFullscreenIntent(context, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1))
+                    .setAction(AlarmDismissActivity.ACTION_PREVIEW)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE_ID, colorsID)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
+                    .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
+        }
+    };
+
+    /**
+     * this method calls areNotificationsPaused (api29+) via reflection
+     */
+    private static boolean areNotificationsPaused(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
+        } else return false;
+    }
+
+    /**
+     * this method calls canUseFullScreenIntent (api34+) via reflection
+     */
+    private static boolean canUseFullScreenIntent(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 34) {
+            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
+            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
+        } else return true;
+    }
+
+    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
+    {
+        if (object != null)
+        {
+            try {
+                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
+                try {
+                    boolean result = (boolean) method.invoke(object);
+                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
+                    return result;
+
+                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                    return defaultValue;
+                }
+            } catch (SecurityException | NoSuchMethodException e) {
+                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
+                return defaultValue;
+            }
+        } else {
+            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
+            return defaultValue;
         }
     }
 
@@ -317,16 +471,37 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
+    private static void initPref_alarms_clearAll(final AlarmPrefsFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        if (context == null) {
+            return;
+        }
+
+        final Preference clearAllPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
+        if (clearAllPref != null) {
+            clearAllPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference)
+                {
+                    AlarmListDialog.confirmClearAlarms(context);
+                    return true;
+                }
+            });
+        }
+    }
+
     /**
      * opens screen to manage full-screen intent limits introduced in api34
      * https://source.android.com/docs/core/permissions/fsi-limits
      */
-    private static Preference.OnPreferenceChangeListener onFullscreenNotificationPrefsClicked(final Context context)
+    private static Preference.OnPreferenceClickListener onFullscreenNotificationPrefsClicked(final Context context)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new Preference.OnPreferenceClickListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            public boolean onPreferenceClick(Preference preference)
             {
                 if (Build.VERSION.SDK_INT >= 34) {
                     AlarmSettings.openFullScreenIntentSettings(context);
@@ -344,7 +519,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
      */
     private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
-        final boolean notificationsOnLockScreen = notificationsOnLockScreen(context);
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
@@ -430,22 +605,16 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    /**
-     * https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
-     * @param context
-     * @return true notifications allowed on lock screen (global setting)
-     */
-    public static boolean notificationsOnLockScreen(Context context)
+    private static Preference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {                  // per app "on lock screen" setting introduce in Android7
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);    // TODO
-
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // global "on lock screen" setting introduced in Android5
-            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
-
-        } else {
-            return true;
-        }
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                BedtimeSettings.startDoNotDisturbAccessActivity(context);
+                return false;
+            }
+        };
     }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)

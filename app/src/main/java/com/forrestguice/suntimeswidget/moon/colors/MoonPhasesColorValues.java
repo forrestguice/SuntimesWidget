@@ -58,6 +58,12 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Parcel
                 R.string.configLabel_themeColorMoonFull, R.string.configLabel_themeColorMoonWaning,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.moonIcon_color_new_dark, R.color.moonIcon_color_waxing,

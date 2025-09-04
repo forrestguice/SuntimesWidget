@@ -105,6 +105,20 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
                 R.string.configLabel_themeColorGraphMoonPathNightFill, R.string.configLabel_themeColorGraphMoonPathNightStroke,
         };
     }
+    public int[] getColorRoles() {
+        return new int[] {
+                ROLE_BACKGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_TEXT, ROLE_BACKGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND,
+                ROLE_BACKGROUND, ROLE_FOREGROUND
+        };
+    }
     public int[] getColorsResDark() {
         return new int[] {
                 R.color.graphColor_night_dark,

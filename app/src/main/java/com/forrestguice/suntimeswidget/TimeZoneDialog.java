@@ -412,13 +412,17 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private void startUpdateTask()
     {
         stopUpdateTask();
-        if (preview_time != null)
+        if (preview_time != null) {
+            updateTask_isRunning = true;
             preview_time.post(updateTask);
+        }
     }
     private void stopUpdateTask()
     {
-        if (preview_time != null)
+        if (preview_time != null) {
+            updateTask_isRunning = false;
             preview_time.removeCallbacks(updateTask);
+        }
     }
 
     public static final int UPDATE_RATE = 3000;
@@ -429,10 +433,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         {
             Activity context = getActivity();
             updatePreview(context);
-            if (preview_time != null && context != null)
+            if (preview_time != null && context != null && updateTask_isRunning) {
                 preview_time.postDelayed(this, UPDATE_RATE);
+            }
         }
     };
+    private boolean updateTask_isRunning = false;
 
     @Override
     public void onStop()

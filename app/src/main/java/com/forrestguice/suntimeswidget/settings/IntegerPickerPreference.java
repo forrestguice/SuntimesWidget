@@ -145,6 +145,7 @@ public class IntegerPickerPreference extends DialogPreference
         pickerLabel.setText(createSummaryString(value));
     }
 
+    @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder)
     {
         super.onPrepareDialogBuilder(builder);

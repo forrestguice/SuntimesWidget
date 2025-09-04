@@ -80,6 +80,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
                 Calendar now = Calendar.getInstance();
                 SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
+                text_datetime.setVisibility(options.showDate ? View.VISIBLE : View.GONE);
                 text_label.setText(data.timeMode().getLongDisplayString());
                 updateNote(context, now, data, WidgetSettings.loadShowWeeksPref(context, 0), WidgetSettings.loadShowHoursPref(context, 0), options);
                 themeViews(context, data, options);
@@ -167,6 +168,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    @Deprecated
     protected void themeViews(Context context, @NonNull SuntimesTheme theme, EquinoxViewOptions options)
     {
         options.labelColor = options.textColor = theme.getTextColor();

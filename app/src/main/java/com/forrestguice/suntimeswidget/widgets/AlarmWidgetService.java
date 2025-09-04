@@ -43,7 +43,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
+import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -178,7 +178,7 @@ public class AlarmWidgetService extends RemoteViewsService
             view.setTextColor(android.R.id.text2, theme.getTimeColor());
 
             String itemLabel = item.getLabel(item.getLabel(context));
-            String eventDisplay = AlarmTileService.formatEventDisplay(context, item);
+            String eventDisplay = AlarmTileBase.formatEventDisplay(context, item);
             view.setTextViewText(android.R.id.text1, itemLabel);
             view.setTextViewText(R.id.text_event, eventDisplay);
             view.setViewVisibility(R.id.text_event, (eventDisplay != null && !eventDisplay.isEmpty() ? View.VISIBLE : View.GONE));

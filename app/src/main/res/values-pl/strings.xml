@@ -27,18 +27,21 @@
     <string name="configAction_export">Eksportuj</string>
     <string name="configAction_import">Importuj</string>
     <string name="configAction_info">Więcej informacji</string>
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="configAction_sortBy">Sortuj</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="configAction_openNavDrawer">Otwórz panel nawigacyjny</string>
+    <string name="configAction_closeNavDrawer">Zamknij panel nawigacyjny</string>
+    <string name="configAction_clock">Zegar</string>
+    <string name="configAction_lightGraphDialog">Światło słoneczne</string>
+    <string name="configAction_lightGraph">Wykres światła słonecznego</string>
     <string name="configAction_lineGraph">Wykres wysokości</string>
     <string name="configAction_seekAltitude">Namierz wysokość</string>        <!-- checkbox label -->
     <string name="configAction_search">Wyszukaj</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Wyczyść wybór</string>
+    <string name="configAction_checkNone">Nic</string>
+    <string name="configAction_checkAll">Wszystko</string>
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
     <string name="configAction_onlineHelp">Pomoc online</string>
@@ -110,8 +113,9 @@
     -->
     <string name="delta_day_tomorrow">Jutrzejszy dzień będzie</string>
     <string name="delta_day_yesterday">Wczorajszy dzień był</string>
-    <string name="delta_day_shorter">krótszy</string>
-    <string name="delta_day_longer">dłuższy</string>
+    <string name="delta_day_shorter">krótszy.</string>
+    <string name="delta_day_longer">dłuższy.</string>
+    <string name="delta_day_same">tej samej długości.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -159,6 +163,7 @@
     <string name="until_nauticalTwilight">świtu żeglarskiego</string>
     <string name="until_sunrise">wschodu Słońca</string>
     <string name="until_noon">kulminacji Słońca</string>
+    <string name="until_midnight">północy prawdziwej</string>
     <string name="until_sunset">zachodu Słońca</string>
     <string name="untilEnd_civilTwilight">zmierzchu cywilnego</string>
     <string name="untilEnd_nauticalTwilight">zmierzchu żeglarskiego</string>
@@ -330,17 +335,17 @@
     <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showIcons">Wyświetl ikony</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showEnabledOnly">Wyświetl ikony tylko aktywnych</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
-    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+    <string name="configLabel_navigation">Nawigacja</string>           <!-- group title -->
+    <string name="configLabel_navigation_mode">Styl nawigacji</string>      <!-- spinner label -->
+    <string name="configLabel_navigation_mode_simple">Prosty (starszy)</string>
+    <string name="configLabel_navigation_mode_sidebar">Panel boczny</string>
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Który:</string>     <!-- label -->
@@ -350,6 +355,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Kulminacja</string>                    <!-- setting -->
     <string name="timeMode_noon">Kulminacja Słońca</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Północ</string>                    <!-- setting -->
+    <string name="timeMode_midnight">Północ słoneczna</string>                    <!-- setting -->
     <string name="timeMode_official_short">Rzeczywisty</string>              <!-- setting -->
     <string name="timeMode_official">Rzeczywisty wschód/zachód</string>               <!-- setting -->
     <string name="timeMode_civil_short">Cywilny</string>                  <!-- setting -->
@@ -367,6 +374,11 @@
     <string name="timeMode_blue4_short">Błękitna (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Błękitna godzina (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">Brak</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Noc polarna</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnightsun">Dzień polarny</string>                 <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight">Biała noc astronomiczna</string>       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight_whitenight">Biała noc</string>  <!-- a label (not an actual timeMode setting) -->
 
     <string name="timeMode_equinox_vernal">Równonoc wiosenna</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Równonoc</string>       <!-- setting -->
@@ -473,14 +485,14 @@
     <string name="widgetMode1x1_moonillum">Tylko oświetlenie Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Następna faza główna</string>     <!-- setting -->
 
-    <string name="widgetMode1x1_nextalarm">Next Alarm</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode2x2_nextalarm">Next Alarm (details)</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_nextalarm">Następny alarm</string>     <!-- setting -->
+    <string name="widgetMode2x2_nextalarm">Następny alarm (szczegóły)</string>     <!-- setting -->
+    <string name="widgetMode2x2_alarmlist">Lista alarmów</string>     <!-- setting -->
+    <string name="widgetMode3x2_alarmlist">Lista alarmów (szczegóły)</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x2mode">2×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
@@ -490,7 +502,7 @@
     <string name="actionMode_update">Aktualizuj widżet</string>           <!-- setting -->
     <string name="actionMode_update_all">Aktualizuj wszystkie widżety</string>           <!-- setting -->
     <string name="actionMode_config">Edytuj widżet</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Wykonaj akcję</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
@@ -680,8 +692,8 @@
     <string name="widgetThemes_dark_translucent">Ciemna (półprzezroczysta)</string>      <!-- default widget theme name -->
     <string name="widgetThemes_light">Jasna</string>                              <!-- default widget theme name -->
     <string name="widgetThemes_light_transparent">Jasna (przezroczysta)</string>    <!-- default widget theme name -->
-    <string name="widgetThemes_dark1">Ciemna (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
-    <string name="widgetThemes_light1">Jasna (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
+    <string name="widgetThemes_dark1">Ciemna (starsza)</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_light1">Jasna (starsza)</string>                              <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -726,12 +738,12 @@
     <string name="configLabel_themeColorFall">Jesienny kolor</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zimowy kolor</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Spring (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorSummer_text">Summer (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorWinter_text">Winter (text)</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorSpring_text">Wiosna (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer_text">Lato (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Jesień (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter_text">Zima (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Akcentów</string> <!-- color label -->
+    <string name="configLabel_themeColorAccent">Akcent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Akcja</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Tło mapy</string> <!-- color label -->
@@ -739,8 +751,8 @@
     <string name="configLabel_themeColorMapSunShadow">Cień</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Podświetlenie</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Moonrise (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonset_text">Moonset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise_text">Wschód Księżyca (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset_text">Zachód Księżyca (tekst)</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Kolor wschodu Księżyca</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Kolor zachodu Księżyca</string> <!-- color label -->
@@ -751,44 +763,48 @@
 
     <string name="configLabel_themeColorMoonFullText">Pełnia (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNewText">Nów (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogee (text)</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigee (text)</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonApogeeText">Apogeum (tekst)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonPerigeeText">Perygeum (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Sunrise (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunrise_text">Wschód Słońca (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorSunrise">Kolor wschodu Słońca</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Sunset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunset_text">Zachód Słońca (tekst)</string> <!-- color label -->
     <string name="configLabel_themeColorSunset">Kolor zachodu Słońca</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="configLabel_themeColorNoon">Kolor południa</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">Sun (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunStroke">Sun (Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">Sun Path (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">Sun Path (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunFill">Słońce (wypełnienie)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunStroke">Słońce (obwódka)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathDayFill">Droga Słońca (wypełnienie dzień)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathDayStroke">Droga Słońca (obwódka dzień)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathNightFill">Droga Słońca (wypełnienie noc)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphSunPathNightStroke">Droga Słońca (obwódka noc)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathDayFill">Moon Path (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathDayStroke">Moon Path (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathNightFill">Moon Path (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphMoonPathNightStroke">Moon Path (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightText">Północ słoneczna (tekst)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightFill">Północ słoneczna (wypełnienie)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Północ słoneczna (obwódka)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphPointFill">Points (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphPointStroke">Points (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphMoonFill">Księżyc (wypełnienie)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonStroke">Księżyc (obwódka)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathDayFill">Droga Księżyca (wypełnienie dzień)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathDayStroke">Droga Księżyca (obwódka dzień)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathNightFill">Droga Księżyca (wypełnienie noc)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphMoonPathNightStroke">Droga Księżyca (obwódka noc)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">Labels (text)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphLabelsBG">Labels (background)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphPointFill">Punkty (wypełnienie)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphPointStroke">Punkty (obwódka)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphBackground">Graph Background</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphAxis">Axis</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphGridMajor">Grid (major)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphGridMinor">Grid (minor)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphLabels">Etykiety (tekst)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphLabelsBG">Etykiety (tło)</string>         <!-- color label -->
+
+    <string name="configLabel_themeColorGraphBackground">Tło wykresu</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphAxis">Osie</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphGridMajor">Siatka (główna)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphGridMinor">Siatka (szczegółowa)</string>         <!-- color label -->
 
     <string name="configLabel_themeColorFill">Wypełnienie</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
@@ -843,6 +859,19 @@
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
     <string name="widgetLabel_distance">Odległość</string>           <!-- label -->
 
+    <string name="configLabel_alarms_bg_startColor">Tło (początek)</string>               <!-- color label -->
+    <string name="configLabel_alarms_bg_endColor">Tło (koniec)</string>                <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_startColor">Miganie (alarm)</string>      <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_endColor">Miganie (alarm)</string>        <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">Miganie (drzemka)</string>      <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">Miganie (drzemka)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColor">Główny tekst</string>                         <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColorInverse">Główny tekst (odwrotność)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColor">Poboczny tekst</string>                     <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">Poboczny tekst (odwrotność)</string>    <!-- color label -->
+    <string name="configLabel_alarms_text_timeColor">Tekst godziny</string>                               <!-- color label -->
+    <string name="configLabel_alarms_text_timeColorInverse">Tekst godziny (odwrotność)</string>              <!-- color label -->
+    <string name="configLabel_alarms_text_disabledColor">Nieaktywny</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -862,7 +891,7 @@
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> na <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
     <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
+    <string name="shadowevent_title">Cień</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
     <string name="configLabel_manageEvents">Zarządzaj zdarzeniami</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">Dodawaj i usuwaj własne zdarzenia.</string>
@@ -876,8 +905,8 @@
     <string name="configAction_deleteEvent">Usuń</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Usuń wszystkie</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_sunEvent">Dodaj (wysokość Słońca)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_shadowEvent">Dodaj (długość cienia)</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -908,14 +937,14 @@
     <string name="editevent_dialog_angle_suffix">°</string>
     <string name="editevent_dialog_angle_error">Kąt jest wymagany!</string>
 
-    <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
-    <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
-    <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
-    <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
+    <string name="editevent_dialog_length">Długość cienia</string>
+    <string name="editevent_dialog_length_hint">6</string>
+    <string name="editevent_dialog_length_error">Długość cienia jest wymagana!</string>
+    <string name="editevent_dialog_label_suggested1">Długość cienia</string>
 
-    <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->
-    <string name="editevent_dialog_height_hint">1</string>    <!-- TODO -->
-    <string name="editevent_dialog_height_error">Object height is required!</string>    <!-- TODO -->
+    <string name="editevent_dialog_height">Wysokość obiektu</string>
+    <string name="editevent_dialog_height_hint">1</string>
+    <string name="editevent_dialog_height_error">Wysokość obiektu jest wymagana!</string>
 
     <string name="delevent_dialog_msg">Czy na pewno usunąć zdarzenie %1$s (%2$s)?\n\nAlarmy, powiadomienia i widżety korzystające z tego zdarzenia przestaną działać i będą wymagać rekonfiguracji.</string>
     <string name="delevent_dialog_ok">Usuń</string>
@@ -1067,6 +1096,9 @@
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Uruchomienie przy starcie urządzenia jest wyłączone!\nAlarmy mogą nie działać po ponownym uruchomieniu.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Aplikacja jest ograniczona!\nAlarmy mogą nie działać bezawaryjnie.</string>  <!-- snackbar message -->
+    <string name="help_restricted_bucket">Aplikacja została włączona do zbioru rzadko używanych lub ograniczonych aplikacji. Alarmy mogą nie działać bezawaryjnie.</string>
+
     <string name="configLabel_alarms_notifications">Powiadomienia</string>
     <string name="configLabel_alarms_notifications_on">Włączone</string>
     <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
@@ -1074,12 +1106,12 @@
     <string name="configLabel_alarms_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen">Powiadomienia pełnoekranowe</string>
+    <string name="configLabel_alarms_notifications_fullscreen_on">Włączone</string>
+    <string name="configLabel_alarms_notifications_fullscreen_off">Wyłączone.\nAlarmy mogą nie wyświetlić się na zablokowanym ekranie.</string>
     <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="configLabel_alarms_notifications_fullscreen_summary1">Zarządza uprawnieniami powiadomień pełnoekranowych.</string>
+    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia pełnoekranowe są wyłączone. Alarmy mogą się nie wyświetlać na zablokowanym ekranie.</string>  <!-- snackbar message -->
 
     <string name="configLabel_alarms_bootcompleted">Rozruch zakończono</string>
     <string name="configLabel_alarms_bootcompleted_summary">Alarmy są automatycznie ponownie planowane kilka minut po starcie systemu.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
@@ -1087,6 +1119,8 @@
     <string name="configLabel_alarms_bootcompleted_info_never">nigdy</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Czy zaplanować ponownie wszystkie alarmy i powiadomienia?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Ponowne planowanie alarmów i powiadomień…</string>
+
+    <string name="configLabel_alarms_background_action_message">%s pracuje w tle.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
@@ -1112,20 +1146,28 @@
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
     <string name="configLabel_alarms_fadein_disabled">Wył.</string>
 
-    <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
+    <string name="configLabel_alarmFullscreen">Pełny ekran</string>            <!-- group title -->
+    <string name="configLabel_alarms_brightMode">Jasne alarmy</string>
+    <string name="configLabel_alarms_brightMode_summary">Pełnoekranowe alarmy są początkowo ciemne, a następnie powoli zmieniają kolor i zwiększają swoją jasność.</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_fadein">Stopniowo zwiększaj jasność</string>
+    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
+    <string name="configLabel_alarms_brightMode_colors">Kolory jasnych alarmów</string>
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
 
-    <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="brightMode_colors_label_sunrise">słoneczny</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_foliage">zielony</string>
+    <string name="brightMode_colors_label_bluesky">błękitny</string>
+
+    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
+    <string name="configLabel_alarms_nextAlarm_none">brak alarmu</string>            <!-- widget text (no alarm set msg) -->
+    <string name="configLabel_alarms_nextAlarm_error">Nie udało się wczytać!</string>            <!-- widget text (null/missing error) -->
+
+    <string name="alarmtile_dialogmsg_none">Brak ustawionego alarmu.</string>
+    <string name="alarmtile_dialogmsg_format0">Następny alarm jest ustawiony na <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format1">Następny alarm jest ustawiony na <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
 
     <string name="configLabel_alarms_hardwarebuttons">Fizyczne przyciski</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Drzemka">%s</xliff:g></string>
@@ -1182,74 +1224,77 @@
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_bedtime">Czas snu</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
-    <string name="configAction_dismissBedtime">Turn off</string>                     <!-- TODO -->
+    <string name="configAction_startBedtime">Włącz teraz</string>
+    <string name="configAction_dismissBedtime">Zakończ</string>
 
-    <string name="configAction_set">Set</string>                   <!-- TODO -->
-    <string name="configAction_setBedtime">Set bedtime</string>                     <!-- TODO -->
-    <string name="configAction_setBedtime_fromAlarm">Set bedtime from alarm</string>                     <!-- TODO -->
-    <string name="configAction_setBedtime_toNow">Set bedtime to now</string>                     <!-- TODO -->
-    <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
-    <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
+    <string name="configAction_set">Ustaw</string>
+    <string name="configAction_setBedtime">Ustaw czas snu</string>
+    <string name="configAction_setBedtime_fromAlarm">Ustaw czas snu do alarmu</string>
+    <string name="configAction_setBedtime_toNow">Ustaw czas snu od teraz</string>
+    <string name="configAction_pauseBedtime">Wstrzymaj</string>
+    <string name="configAction_resumeBedtime">Wznów</string>
 
-    <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
+    <string name="configAction_setSleep">Ustaw czas snu</string>
 
-    <string name="msg_bedtime_sleep_length">Sleep for %s.</string>                             <!-- e.g. "Sleep for 8h" -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_other_plus">This is %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles">This is %1$s of %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">This is %1$s of %2$s, plus %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length">Śpij przez %s.</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="msg_bedtime_sleep_length_other_plus">To jest %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="msg_bedtime_sleep_length_cycles">To jest %1$s po %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="msg_bedtime_sleep_length_cycles_plus">To jest %1$s po %2$s, plus %3$s zasypiania.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">Turn off bedtime automatically</string>    <!-- TODO -->
-    <string name="configLabel_sleepBedtimeAlarmOff">Turn off bedtime with alarm</string>    <!-- TODO -->
+    <string name="configLabel_sleepBedtimeAutoOff">Automatycznie zakończ czas snu</string>
+    <string name="configLabel_sleepBedtimeAlarmOff">Zakończ czas snu wraz z alarmem</string>
 
-    <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
-    <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
-    <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->
-    <string name="configLabel_numSleepCycles">Sleep for %1$s of %2$s, or %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <string name="configLabel_sleepOffset">Czas zasypiania</string>
+    <string name="configLabel_sleepCycle">Długość cyklu snu</string>
+    <string name="configLabel_sleepCycles">Liczba cykli</string>
+    <string name="configLabel_numSleepCycles">Śpij przez %1$s po %2$s, lub %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
     <plurals name="cyclePlural">
-        <item quantity="one">%d cycle</item>    <!-- TODO -->
-        <item quantity="other">%d cycles</item>    <!-- TODO -->
-        <item quantity="few">%d cycles</item>    <!-- TODO -->
-        <item quantity="many">%d cycles</item>    <!-- TODO -->
+        <item quantity="one">%d cykl</item>
+        <item quantity="other">%d cykli</item>
+        <item quantity="few">%d cykle</item>
+        <item quantity="many">%d cykli</item>
     </plurals>
-    <string name="cycleNone">None</string>  <!-- TODO -->
+    <string name="cycleNone">brak</string>
 
-    <string name="configAction_setWakeUp">Set wake up time</string>                     <!-- TODO -->
-    <string name="configAction_setWakeUp_fromBedtime">Set wake up from bedtime</string>                     <!-- TODO -->
+    <string name="configAction_setWakeUp">Ustaw czas pobudki</string>
+    <string name="configAction_setWakeUp_fromBedtime">Ustaw czas pobudki po czasie snu</string>
 
-    <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text (next line shows time) -->   <!-- TODO -->
-    <string name="msg_bedtime_notset">Bedtime is not set.</string>                            <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
-    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text (next line shows time) -->   <!-- TODO -->
-    <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_note">Bedtime in %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->   <!-- TODO -->
+    <string name="msg_bedtime_active">Tryb czasu snu jest aktywny.</string>              <!-- textview text -->
+    <string name="msg_bedtime_paused">Tryb czasu snu jest wstrzymany.</string>              <!-- textview text -->
+    <string name="msg_bedtime_set">Czas snu rozpocznie się o</string>                                        <!-- textview text (next line shows time) -->
+    <string name="msg_bedtime_notset">Czas snu nie jest ustawiony.</string>                            <!-- textview text -->
+    <string name="msg_bedtime_reminder">Wyświetl przypomnienie %1$s przed czasem snu.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="msg_bedtime_wakeup_set">Pobudka o</string>                                 <!-- textview text (next line shows time) -->
+    <string name="msg_bedtime_wakeup_notset">Czas pobudki nie jest ustawiony.</string>                <!-- textview text -->
+    <string name="msg_bedtime_note">Czas snu rozpocznie się za %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
-    <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_notify_off">Bedtime (off)</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_reminder">Bedtime (reminder)</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_wakeup">Wake up</string>             <!-- AlarmItem label for wake up alarm --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_notify">czas snu</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="configLabel_bedtime_alarm_notify_off">czas snu (koniec)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="configLabel_bedtime_alarm_reminder">czas snu (przypomnienie)</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="configLabel_bedtime_alarm_wakeup">pobudka</string>             <!-- AlarmItem label for wake up alarm -->
 
-    <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
-    <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
-    <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
+    <string name="configLabel_bedtime_tile_normal">Czas snu</string>             <!-- Quick Settings Tile labels -->
+    <string name="configLabel_bedtime_tile_active">Czas snu (aktywny)</string>
+    <string name="configLabel_bedtime_tile_paused">Czas snu (wstrzymany)</string>
 
-    <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased">Reguła dla trybu „Nie przeszkadzać”</string>
+    <string name="configLabel_dnd_rulebased_summary">Kontroluj ustawienie trybu „Nie przeszkadzać” za pomocą automatycznej reguły.</string>
 
-    <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
-    <string name="configLabel_dnd">Do Not Disturb</string>              <!-- textview text (next line shows time) -->    <!-- TODO -->
-    <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->    <!-- TODO -->
-    <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->    <!-- TODO -->
-    <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->    <!-- TODO -->
+    <string name="configLabel_bedtime_zenrule_name">Czasu snu (Czasy Słońca)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
-    <string name="prompt_bedtime_setFrom_wakeup">Set the bedtime to %s before wake up time?</string>    <!-- snackbar message -->    <!-- TODO -->
-    <string name="prompt_bedtime_setFrom_bedtime">Set the wake up alarm to %s after bedtime?</string>    <!-- snackbar message -->    <!-- TODO -->
+    <string name="configAction_dnd_allow">Nadaj uprawnienie</string>              <!-- button label when requesting permission -->
+    <string name="configLabel_dnd">Nie przeszkadzać</string>              <!-- textview text (next line shows time) -->
+    <string name="configLabel_dnd_disabled">Nie przeszkadzać: wyłączony</string>         <!-- do-not-disturb menu item -->
+    <string name="configLabel_dnd_priority">Nie przeszkadzać: tylko priorytetowe</string>    <!-- do-not-disturb menu item -->
+    <string name="configLabel_dnd_alarms">Nie przeszkadzać: tylko alarmy</string>        <!-- do-not-disturb menu item -->
 
-    <string name="configActionDesc_triggerBedtime">Turn on bedtime mode</string>  <!-- TODO -->
-    <string name="configActionDesc_dismissBedtime">Turn off bedtime mode</string>  <!-- TODO -->
+    <string name="prompt_bedtime_setFrom_wakeup">Czy ustawić czas snu na %s przed pobudką?</string>    <!-- snackbar message -->
+    <string name="prompt_bedtime_setFrom_bedtime">Czy ustawić budzik na %s po czasie snu?</string>    <!-- snackbar message -->
+
+    <string name="configActionDesc_triggerBedtime">Włącz tryb czasu snu</string>
+    <string name="configActionDesc_dismissBedtime">Wyłącz tryb czasu snu</string>
 
     <!--
          APP SETTINGS
@@ -1267,9 +1312,10 @@
     <string name="configAction_restoreBackup">Przywróć z kopii zapasowej</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarmy</string>
     <string name="restorebackup_dialog_item_appsettings">Ustawienia aplikacji</string>
-    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors">Kolory</string>
+    <string name="restorebackup_dialog_item_colors_appcolors">Kolory aplikacji</string>
+    <string name="restorebackup_dialog_item_colors_mapcolors">Kolory mapy</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Kolory alarmów</string>
     <string name="restorebackup_dialog_item_widgetsettings">Ustawienia widżetów</string>
     <string name="restorebackup_dialog_item_widgetthemes">Skórki widżetów</string>
     <string name="restorebackup_dialog_item_placeitems">Miejsca</string>
@@ -1292,6 +1338,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Próbuj zgadnąć</b>. Zaimportowane ustawienia zostaną zastosowane do istniejących widżetów według rodzajów.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Bezpośredni import</b>. Zaimportowane ustawienia zostaną zastosowane bezpośrednio. Zadziała to tylko dla widżetów o niezmienionych identyfikatorach.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
+    <string name="resetwidget_dialog_message">Czy na pewno chcesz przywrócić wartości domyślne?</string>
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Wyczyść</b>. Istniejące alarmy zostaną usunięte przed zaimportowaniem alarmów z kopii zapasowej.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Zachowaj istniejące</b>. Istniejące alarmy zostaną zachowane (może dać duplikaty).<br/>]]></string>
@@ -1340,7 +1387,7 @@
 
     <string name="place_label_AN">Antarktyda</string>
     <string name="place_label_AF">Afryka</string>
-    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
+    <string name="place_label_AF_EG">Afryka (Egipt)</string>
     <string name="place_label_AS">Azja</string>
     <string name="place_label_AS_CN">Azja (Chiny)</string>
     <string name="place_label_AS_IN">Azja (Indie)</string>
@@ -1354,12 +1401,12 @@
     <string name="place_label_NA_CA">Ameryka Północna (Kanada)</string>
     <string name="place_label_NA_US">Ameryka Północna (USA)</string> 
     <string name="place_label_OC">Oceania</string>
-    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
+    <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">Ameryka Centralna i Południowa</string>
     <string name="place_label_other">Inne</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="configLabel_launcherMode">Aktywność startowa</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
@@ -1462,10 +1509,10 @@
     <string name="configActionDesc_mapLocation">Wyświetl miejsce na mapie</string>
     <string name="configActionDesc_setAlarm">Ustaw alarm</string>
     <string name="configActionDesc_worldMap">Okno „mapa świata”</string>
-    <string name="configActionDesc_equinoxDialog">Okno „przesilenie/równonoc”</string>
+    <string name="configActionDesc_equinoxDialog">Okno „Przesilenie/równonoc”</string>
     <string name="configActionDesc_moon">Okno „Księżyc”</string>
-    <string name="configActionDesc_sunDialog">Okno „pozycja Słońca”</string>
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Okno „Pozycja Słońca”</string>
+    <string name="configActionDesc_sunlightDialog">Okno „Światło słoneczne”</string>
     <string name="configActionDesc_setDate">Ustaw datę</string>
     <string name="configActionDesc_setTimeZone">Ustaw strefę czasową</string>>
     <string name="configActionDesc_setLocation">Ustaw lokalizację</string>
@@ -1480,15 +1527,15 @@
     <string name="configActionDesc_nextSunrise">Wyświetl następny wschód Słońca</string>
     <string name="configActionDesc_nextSunset">Wyświetl następny zachód Słońca</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="configActionDesc_timerList">Lista alarmów</string>
+    <string name="configActionDesc_dateSettings">Ustawienia czasu</string>
+    <string name="configActionDesc_displaySettings">Ustawienia wyświetlacza</string>
+    <string name="configActionDesc_localeSettings">Ustawienia języka</string>
+    <string name="configActionDesc_locationSettings">Ustawienia lokalizacji</string>
+    <string name="configActionDesc_createCalendarRisingEvent">Utwórz wydarzenie w kalendarzu (czas wschodu)</string>
+    <string name="configActionDesc_createCalendarSettingEvent">Utwórz wydarzenie w kalendarzu (czas zachodu)</string>
+    <string name="configLabel_android">Android</string>
+    <string name="configLabel_calendarEvent">Wydarzenie w kalendarzu</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>
@@ -1662,21 +1709,22 @@
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunrise">Latest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_earliest_sunrise">Najwcześniejszy wschód Słońca</string>       <!-- label / contentDescription -->
+    <string name="configLabel_earliest_sunset">Najwcześniejszy zachód Słońca</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunrise">Najpóźniejszy wschód Słońca</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunset">Najpóźniejszy zachód Słońca</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_crosshair">Krzyżyk</string>
     <string name="graph_option_grid">Siatka</string>
     <string name="graph_option_labels">Etykiety</string>
     <string name="graph_option_axis">Osie</string>
-    <string name="graph_option_points">Points</string>    <!-- TODO -->
-    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
-    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
+    <string name="graph_option_points">Punkty</string>
+    <string name="graph_option_twilights">Zmierzchy</string>
+    <string name="graph_option_seasons">Pory roku</string>
     <string name="graph_option_filledpath">Pole pod wykresem</string>
     <string name="graph_option_moon">Wyświetl Księżyc</string>
 
@@ -1732,10 +1780,11 @@
         <item>przesilenie zimowe</item>
         <item>górowanie Księżyca</item>
         <item>dołowanie Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>świt astronomiczny</item>
@@ -1765,10 +1814,11 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ słoneczna</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>świt astronomiczny</item>
@@ -1798,10 +1848,11 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-        <item>@string/timeMode_cross_midwinter</item>
-        <item>@string/timeMode_cross_midspring</item>
-        <item>@string/timeMode_cross_midsummer</item>
-        <item>@string/timeMode_cross_midautumnal</item>
+        <item>półmetek zimy</item>
+        <item>półmetek wiosny</item>
+        <item>półmetek lata</item>
+        <item>półmetek jesieni</item>
+        <item>północ słoneczna</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1883,7 +1934,7 @@
     <string name="themesexport_dialog_message">Eksportowanie skórek do pliku.</string>        
         
     <!-- Dialog: Export -->
-    <string name="msg_export_success">Tymczasowo skopiowano do <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Zapisano do <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Eksport do <xliff:g id="filepath">%s</xliff:g> nieudany!</string>
     <string name="msg_export_to">Eksportuj używając</string>  <!-- title displayed over "share action" chooser -->
 
@@ -1907,7 +1958,8 @@
     <string name="color_dialog_msg">Wybierz kolor</string>
     <string name="color_dialog_ok">Ustaw</string>
     <string name="color_dialog_cancel">Anuluj</string>
-    <string name="color_dialog_suggest">Suggest</string>   <!-- TODO -->
+    <string name="color_dialog_suggest">Sugerowany</string>
+    <string name="color_dialog_recent">Ostatnie</string>    <!-- recent color list label -->
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
@@ -1918,38 +1970,40 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
-    <string name="configAction_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
-    <string name="configAction_addColors">Add</string>    <!-- TODO -->
-    <string name="configAction_editColors">Edit</string>    <!-- TODO -->
-    <string name="configAction_saveColors">Save</string>    <!-- TODO -->
-    <string name="configAction_deleteColors">Delete</string>    <!-- TODO -->
-    <string name="configAction_importColors">@string/configAction_import</string>    <!-- TODO -->
-    <string name="configAction_exportColors">@string/configAction_export</string>    <!-- TODO -->
+    <string name="configAction_colors">Kolory</string>
+    <string name="configAction_filterColors">Filtruj</string>    <!-- checkbox label -->
+    <string name="configAction_addColors">Dodaj</string>
+    <string name="configAction_editColors">Edytuj</string>
+    <string name="configAction_saveColors">Zapisz</string>
+    <string name="configAction_deleteColors">Usuń</string>
+    <string name="configAction_importColors">@string/configAction_import</string>
+    <string name="configAction_exportColors">@string/configAction_export</string>
 
-    <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
-    <string name="hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->
-    <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->    <!-- TODO -->
-    <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->    <!-- TODO -->
-    <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->    <!-- TODO -->
-    <string name="msg_colors_deleted">Removed %s</string>    <!-- toast -->    <!-- TODO -->
-    <string name="msg_colors_imported">Imported colors %s</string>    <!-- toast -->    <!-- TODO -->
-    <string name="msg_colors_import_failed">Failed to import colors!</string>    <!-- toast -->    <!-- TODO -->
+    <string name="suggest_colorid">Własny</string>       <!-- edittext hint -->
+    <string name="hint_colorid">Nazwa</string>              <!-- edittext hint -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="error_colorlabel_empty">Etykieta jest wymagana</string>           <!-- edittext error text -->
+    <string name="error_colorid_empty">Nazwa jest wymagana</string>                  <!-- edittext error text -->
+    <string name="error_colorid_spaces">Nazwa nie może zawierać spacji</string>   <!-- edittext error text -->
+    <string name="msg_colors_saved">Zapisano kolory %s</string>        <!-- toast -->
+    <string name="msg_colors_deleted">Usunięto kolory %s</string>    <!-- toast -->
+    <string name="msg_colors_imported">Zaimportowano kolory %s</string>    <!-- toast -->
+    <string name="msg_colors_import_failed">Nie udało się zaimportować kolorów!</string>    <!-- toast -->
 
-    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>    <!-- TODO -->
-    <string name="colorsimport_dialog_hint">Paste previously shared colors here.</string>    <!-- TODO -->
-    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>    <!-- TODO -->
-    <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>    <!-- TODO -->
+    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_hint">Wklej tutaj poprzednio udostępnione kolory.</string>
+    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="colorsdelete_dialog_title">Remove Colors?</string>    <!-- toast -->    <!-- TODO -->
-    <string name="colorsdelete_dialog_message">Are you sure you want to remove %s?</string>    <!-- toast -->    <!-- TODO -->
-    <string name="colorsdelete_dialog_ok">Remove</string>    <!-- toast -->    <!-- TODO -->
-    <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->    <!-- TODO -->
+    <string name="colorsdelete_dialog_title">Czy usunąć kolory?</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_message">Czy na pewno usunąć schemat kolorów „%s”?</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_ok">Usuń</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">O programie</string>
     <string name="app_name">Czasy Słońca</string>
-    <string name="app_name_alarmclock">Czasy Słońca: alarm</string>
+    <string name="app_name_alarmclock">Czasy Słońca: alarmy</string>
     <string name="app_name_widget0">Czasy Słońca</string>
     <string name="app_name_widget1">Czasy Słońca (przełączalny)</string>
     <string name="app_name_widget2">Pozycja Słońca</string>
@@ -2007,6 +2061,7 @@
                 * <b>%dY</b> dla roku (np. 2018) <br/>
                 * <b>%dt</b> dla czasu ostatniej aktualizacji <br/>
                 * <b>%dT</b> dla czasu ostatniej aktualizacji (uwzględniając sekundy) <br/>
+                * <b>%dm</b> dla czasu ostatniej aktualizacji (w milisekundach) <br/>
                 <br/>
                 * <b>%loc</b> dla etykiety (np. Warszawa) <br />
                 * <b>%lat</b> dla szerokości geograficznej <br />
@@ -2017,6 +2072,8 @@
                 * <b>%t</b> dla strefy czasowej (id) (np. Europe/Warsaw) <br/>
                 * <b>%id</b> dla ID widżetu <br/>
          <br/>
+         <b>Widżety dat:</b> <br/>
+                * <b>%M</b> dla kalendarza (np. gregoriański) <br/>
          <b>Widżety Słońca:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
@@ -2068,11 +2125,11 @@
     ]]></string>
 
     <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           [Icon Bedtime] Tryb czasu snu pozwala na zaplanowanie trybu <b>Nie przeszkadzać</b> podczas godzin snu.<br/>
            <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
+           [Icon Reminder] Wyświetla powiadomienie przypominające przed czasem snu.<br/>
+           [Icon Alarm] Zaplanowany alarm następnego ranka.<br/><br/>
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] : anuluj bez wprowadzania zmian.<br/>
@@ -2091,27 +2148,34 @@
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          Dla <b>świtów</b> podane czasy wyznaczają początek danego świtu, a dla <b>zmierzchów</b> podane czasy wyznaczją ich koniec.<br/><br/>
+          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się mniej niż 6&nbsp;stopni pod horyzontem. Widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się od 6 do 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się od 12 do 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          <b>Noc astronomiczna:</b> Słońce znajduje się więcej niż 18&nbsp;stopni pod horyzontem. Najmniej jasne gwiazdy są widoczne.<br/><br/>
     ]]></string>
-
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>Biała noc:</b> Słońce nie schodzi niżej niż 6 stopni pod linię horyzontu. Jest wystarczająco jasno dla większości czynności na dworze przez całą noc.<br/><br/>
+          <b>Biała noc astronomiczna:</b> Słońce nie schodzi niżej niż 18 stopni pod linię horyzontu. Przez całą noc jest jasno jak o świcie/zmierzchu, a niebo nie jest w pełni czarne.<br/><br/>
+          <b>Dzień polarny:</b> Słońce nie schodzi pod linię horyzontu (24 godziny światła dziennego).<br/><br/>
+          <b>Noc polarna:</b> Słońce nie wchodzi nad linię horyzontu (24 godziny ciemności).<br/><br/>
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Dziesiejszy:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
+          <b>Dzisiejszy:</b> czasy wschodu i zachodu dla dzisiejszej daty.<br/><br/>
           <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
     ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
           <b>Równonoc wiosenna:</b> początek astronomicznej wiosny. Ma miejsce w <em>marcu</em> na półkuli północnej i we <em>wrześniu</em> na półkuli południowej.<br/><br/>
           <b>Przesilenie letnie:</b> początek astronomicznego lata. Ma miejsce w <em>czerwcu</em> na półkuli północnej i w <em>grudniu</em> na półkuli południowej.<br/><br/>
           <b>Równonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
-          <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na pólkuli południowej.<br/>
+          <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na półkuli południowej.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
           <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wszystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
     ]]></string>
 
 <string name="help_general_solartime"><![CDATA[
-          <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
+          <b>Prawdziwy czas słoneczny:</b> czas zegara słonecznego. Czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
           Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24&nbsp;godziny (maksymalnie do 30&nbsp;s).
           Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
           <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
@@ -2182,7 +2246,7 @@
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Uprawnienie <b>odczytu zawartości karty SD</b> jest wymagane do odczytu plików dźwiękowych znajdujących się na karcie SD.<br/><br/>To uprawnienie jest opcjonalne; w przypadku odmowy udzielenia, będzie odtworzony domyślny dźwięk. To uprawnienie nie jest potrzebne dla dźwięków systemowych (przechowywanie multimediów).]]></string>
-    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
+    <string name="privacy_permission_dnd"><![CDATA[Aplikacja Czasy Słońca wymaga uprawnienia <b>dostępu do trybu Nie przeszkadzać</b> aby zmienić to ustawienie podczas czasu snu.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Czy udzielić uprawnień teraz?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignoruj</string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
@@ -2194,8 +2258,10 @@
     <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
     <string name="reboot_required_message">Aby zastosować zmiany, może być konieczne ponowne uruchomienie urządzenia.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">Aby zastosować zmiany, może być konieczne ponowne uruchomienie aplikacji.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Udzielono uprawnienia</string>
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="drag_hint">Przesuń tutaj</string>
+    <string name="hint_label">Etykieta</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">Potwierdź</string>
     <string name="dialog_cancel">Anuluj</string>
@@ -2216,7 +2282,7 @@
         <br/>
         Ustawienie to wpływa na szybkość i dokładność obliczeń, i może ograniczyć dostępne funkcje. <br/>
         <br/>
-        Więcej informacji o dostępnych algorytmach/bibliotekach i jak rozszerzyć aplikację od dodatkowe bilbioteki znajdziesz w pomocy online (w j. angielskim).
+        Więcej informacji o dostępnych algorytmach/bibliotekach i jak rozszerzyć aplikację o dodatkowe biblioteki znajdziesz w pomocy online (w j. angielskim).
     ]]>
     </string>
 

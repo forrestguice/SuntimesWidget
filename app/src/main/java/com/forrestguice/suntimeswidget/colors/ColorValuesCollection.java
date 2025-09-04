@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -28,6 +29,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -66,12 +68,15 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public String[] getCollection() {
         return collection.toArray(new String[0]);
     }
-    protected void loadCollection(SharedPreferences prefs) {
+    protected void loadCollection(SharedPreferences prefs)
+    {
         collection.clear();
+        collection.addAll(Arrays.asList(getDefaultColorIDs()));
         Set<String> ids = prefs.getStringSet(KEY_COLLECTION, null);
         collection.addAll(ids != null ? ids : new TreeSet<String>());
     }
-    protected void saveCollection(SharedPreferences prefs) {
+    protected void saveCollection(SharedPreferences prefs)
+    {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet(KEY_COLLECTION, collection);
         editor.apply();
@@ -80,8 +85,10 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     protected ColorValues loadColors(Context context, SharedPreferences prefs, String colorsID)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-        ColorValues values = getDefaultColors(context);
-        values.loadColorValues(prefs, prefix);
+        ColorValues values = getDefaultColors(context, colorsID);
+        if (!isDefaultColorID(colorsID)) {
+            values.loadColorValues(prefs, prefix);
+        }
         return values;
     }
     protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values)
@@ -98,7 +105,36 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         }
     }
 
+    /**
+     * Override to define additional default ids; also override getDefaultColors to define corresponding
+     * colors for those ids.
+     * @return array of default ids
+     */
+    protected String[] getDefaultColorIDs() {
+        return new String[0];
+    }
+    public String getDefaultLabel(Context context, @NonNull String colorsID) {
+        return colorsID;
+    }
+    public boolean isDefaultColorID(String colorsID)
+    {
+        if (colorsID == null) {
+            return true;
+        }
+        for (String id : getDefaultColorIDs()) {
+            if (id.equals(colorsID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public abstract T getDefaultColors(Context context);
+    protected T getDefaultColors(Context context, @Nullable String colorsID) {
+        return getDefaultColors(context);
+    }
+
     protected HashMap<String, ColorValues> colorValues = new HashMap<>();
     @Nullable
     public ColorValues getColors( Context context, @Nullable String colorsID )
@@ -121,7 +157,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     }
     public void setColors(Context context, @NonNull String colorsID, ColorValues values)
     {
-        ColorValues v = getDefaultColors(context);
+        ColorValues v = getDefaultColors(context, colorsID);
         v.loadColorValues(values);    // copy defined colors into a new instance
         colorValues.put(colorsID, v);
 
@@ -175,7 +211,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     @Nullable
     public String getSelectedColorsID(Context context, int appWidgetID, @Nullable String tag) {
         SharedPreferences prefs = getSharedPreferences(context);
-        return prefs.getString(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""), null);
+        return prefs.getString(getSelectedColorsKey(appWidgetID, tag), null);
     }
 
     public void setSelectedColorsID(Context context, @Nullable String colorsID) {
@@ -187,7 +223,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public void setSelectedColorsID(Context context, @Nullable String colorsID, int appWidgetID, @Nullable String tag)
     {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""), colorsID);
+        editor.putString(getSelectedColorsKey(appWidgetID, tag), colorsID);
         editor.apply();
     }
 
@@ -200,8 +236,62 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
     public void clearSelectedColorsID(Context context, int appWidgetID, @Nullable String tag)
     {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.remove(getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : ""));
+        editor.remove(getSelectedColorsKey(appWidgetID, tag));
         editor.apply();
+    }
+
+    public String getSelectedColorsKey(int appWidgetID, @Nullable String tag) {
+        return getSharedPrefsPrefix() + appWidgetID + "_" + KEY_SELECTED + ((tag != null) ? ("_" + tag) : "");
+    }
+
+    @Nullable
+    public String getSelectedColorsLabel(Context context, int appWidgetID, @Nullable String tag)
+    {
+        String colorsID = getSelectedColorsID(context, appWidgetID, tag);
+        return getColorsLabel(context, colorsID);
+    }
+    @Nullable
+    public String getColorsLabel(Context context, @Nullable String colorsID)
+    {
+        if (colorsID != null)
+        {
+            if (isDefaultColorID(colorsID)) {
+                return getDefaultLabel(context, colorsID);
+
+            } else {
+                SharedPreferences prefs = getCollectionSharedPreferences(context);
+                String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+                return ColorValues.loadColorValuesLabel(prefs, prefix);
+            }
+        } else return null;
+    }
+    @Nullable
+    public int[] getColors(Context context, @Nullable String colorsID, int defaultValue, String... keys)
+    {
+        if (colorsID != null)
+        {
+            if (isDefaultColorID(colorsID))
+            {
+                if (keys != null)
+                {
+                    ColorValues values = getDefaultColors(context, colorsID);
+                    int[] retValue = new int[keys.length];
+                    for (int i=0; i<keys.length; i++) {
+                        retValue[i] = values.getColor(keys[i]);
+                    }
+                    return retValue;
+
+                } else {
+                    return new int[] { defaultValue };
+                }
+
+            } else {
+                SharedPreferences prefs = getCollectionSharedPreferences(context);
+                String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
+                return ColorValues.loadColorValuesColors(prefs, prefix, defaultValue, keys);
+            }
+
+        } else return new int[] { defaultValue };
     }
 
     @Nullable

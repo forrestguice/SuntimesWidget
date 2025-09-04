@@ -24,344 +24,783 @@
         <item>places_AS, place_label_AS</item>                <!-- Asia (unsorted) -->
         <item>places_AS_CN, place_label_AS_CN</item>          <!-- Asia; China -->
         <item>places_AS_IN, place_label_AS_IN</item>          <!-- Asia; India -->
+        <item>places_AS_IR, place_label_AS_IR</item>          <!-- Asia; Iran -->
+        <item>places_AS_IQ, place_label_AS_IQ</item>          <!-- Asia; Iraq -->
         <item>places_AS_JP, place_label_AS_JP</item>          <!-- Asia; Japan -->
+        <item>places_AS_PK, place_label_AS_PK</item>          <!-- Asia; Pakistan -->
         <item>places_AS_SA, place_label_AS_SA</item>          <!-- Asia; Saudi Arabia -->
+        <item>places_AS_RU, place_label_AS_RU</item>          <!-- Asia; Russia -->
         <item>places_AS_VN, place_label_AS_VN</item>          <!-- Asia; Vietnam -->
     </string-array>
     <string-array name="place_group_EU">
         <item>places_EU, place_label_EU</item>                <!-- Europe (unsorted) -->
+        <item>places_EU_DE, place_label_EU_DE</item>          <!-- Europe; Germany -->
+        <item>places_EU_DK, place_label_EU_DK</item>          <!-- Europe; Denmark -->
         <item>places_EU_ES, place_label_EU_ES</item>          <!-- Europe; Spain -->
-        <item>places_EU_UK, place_label_EU_UK</item>          <!-- Europe; United Kingdom -->
+        <item>places_EU_FI, place_label_EU_FI</item>          <!-- Europe; Finland -->
+        <item>places_EU_FR, place_label_EU_FR</item>          <!-- Europe; France -->
+        <item>places_EU_GB, place_label_EU_GB</item>          <!-- Europe; United Kingdom -->
+        <item>places_EU_GR, place_label_EU_GR</item>          <!-- Europe; Greece -->
+        <item>places_EU_IT, place_label_EU_IT</item>          <!-- Europe; Italy -->
+        <item>places_EU_NL, place_label_EU_NL</item>          <!-- Europe; Netherlands -->
+        <item>places_EU_NO, place_label_EU_NO</item>          <!-- Europe; Norway -->
+        <item>places_EU_PL, place_label_EU_PL</item>          <!-- Europe; Poland -->
+        <item>places_EU_PT, place_label_EU_PT</item>          <!-- Europe; Portugal -->
+        <item>places_EU_RU, place_label_EU_RU</item>          <!-- Europe; Russia -->
+        <item>places_EU_SE, place_label_EU_SE</item>          <!-- Europe; Sweden -->
     </string-array>
     <string-array name="place_group_NA">
         <item>places_NA, place_label_NA</item>                <!-- North America (unsorted) -->
         <item>places_NA_CA, place_label_NA_CA</item>          <!-- North America; Canada -->
+        <item>places_NA_MX, place_label_NA_MX</item>          <!-- North America; Mexico -->
         <item>places_NA_US, place_label_NA_US</item>          <!-- North America; US -->
+        <item>places_NA_US_W, place_label_NA_US_W</item>
+        <item>places_NA_US_MW, place_label_NA_US_MW</item>
+        <item>places_NA_US_NE, place_label_NA_US_NE</item>
+        <item>places_NA_US_S, place_label_NA_US_S</item>
     </string-array>
     <string-array name="place_group_OC">
         <item>places_OC, place_label_OC</item>                <!-- Oceania (unsorted) -->
-        <item>places_OC_AU, place_label_OC_AU</item>                <!-- Oceania (unsorted) -->
+        <item>places_OC_AU, place_label_OC_AU</item>          <!-- Oceania (Australia) -->
     </string-array>
     <string-array name="place_group_SA">
         <item>places_SA, place_label_SA</item>                <!-- South and Central America (unsorted) -->
+        <item>places_SA_AR, place_label_SA_AR</item>          <!-- South and Central America; Argentina -->
+        <item>places_SA_BR, place_label_SA_BR</item>          <!-- South and Central America; Brazil -->
+        <item>places_SA_BO, place_label_SA_BO</item>          <!-- South and Central America; Bolivia -->
+        <item>places_SA_CO, place_label_SA_CO</item>          <!-- South and Central America; Colombia -->
+        <item>places_SA_EC, place_label_SA_EC</item>          <!-- South and Central America; Ecuador -->
+        <item>places_SA_CL, place_label_SA_CL</item>          <!-- South and Central America; Chile -->
+        <item>places_SA_PE, place_label_SA_PE</item>          <!-- South and Central America; Peru -->
+        <item>places_SA_VE, place_label_SA_VE</item>          <!-- South and Central America; Venezuela -->
     </string-array>
     <string-array name="place_group_unsorted">
         <item>places_unsorted, place_label_other</item>    <!-- all others -->
+        <item>places_deeps, place_label_other</item>
+        <item>places_mount, place_label_other</item>
     </string-array>
 
     <!-- Antarctica -->
     <string-array name="places_AN">
-        <item>"Casey Station", -66.28222, 110.52347, 32</item>
-        <item>"Davis Station", -68.57669, 77.96725, 27</item>
-        <item>"Halley Station", -75.61241, -26.19852, 37</item>
-        <item>"Mawson Station", -67.60307, 62.87119, 15</item>
-        <item>"McMurdo Station", -77.84553, 166.67017, 10</item>
-        <item>"Mirny Station", -66.55318, 93.00892, 35</item>
-        <item>"Orcadas Base", -60.73789, -44.73870, 8</item>
-        <item>"Syowa Station", -69.00448, 39.57996, 29</item>
-        <item>"Vostok Station", -78.46433, 106.83598, 3490</item>
+        <item>"Casey Station", -66.28222, 110.52347, 32, [misc][AU-AAT]</item>
+        <item>"Davis Station", -68.57669, 77.96725, 27, [misc][AU-AAT]</item>
+        <item>"Halley Station", -75.61241, -26.19852, 37, [misc][AQ]</item>
+        <item>"Mawson Station", -67.60307, 62.87119, 15, [misc][AU-AAT]</item>
+        <item>"McMurdo Station", -77.84553, 166.67017, 10, [misc][AQ]</item>
+        <item>"Mirny Station", -66.55318, 93.00892, 35, [misc][AU-AAT]</item>
+        <item>"Orcadas Base", -60.73789, -44.73870, 8, [misc][AR-V]</item>
+        <item>"Syowa Station", -69.00448, 39.57996, 29, [misc][AQ]</item>
+        <item>"Vostok Station", -78.46433, 106.83598, 3490, [misc][AU-AAT]</item>
     </string-array>
 
     <!-- Africa -->
     <string-array name="places_AF">
-        <item>"Abidjan", 5.34872, -3.98679, 18</item>
-        <item>"Algiers", 36.74782, 3.07333, 0</item>
-        <item>"Bamako", 12.66148, -7.99798, 350</item>
-        <item>"Bangui", 34.36195, 18.58294, 370</item>
-        <item>"Brazzaville", -4.27758, 15.24504, 320</item>
-        <item>"Bujumbura", -3.37672, 29.38364, 774</item>
-        <item>"Cape Town", -33.90419, 18.40110, 0</item>
-        <item>"Casablanca", 33.56592, -7.61412, 0</item>
-        <item>"Conakry", 19.57276, -13.60708, 0</item>
-        <item>"Dakar", 14.76354, -17.47550, 0</item>
-        <item>"Dar es Salaam", -6.81361, 39.30010, 0</item>
-        <item>"Douala", 4.0359, 9.7074, 18</item>
-        <item>"Harare", -17.8165, 30.9167, 1433</item>
-        <item>"Johannesburg", -26.2069, 28.0438, 1755</item>
-        <item>"Kampala", 0.3138, 32.5290, 1203</item>
-        <item>"Khartoum", 15.59872, 32.51307, 381</item>
-        <item>"Kano", 11.99000, 8.53609, 488</item>
-        <item>"Kigali", -1.96446, 30.07506, 1567</item>
-        <item>"Kinshasa", -4.45418, 15.28757, 240</item>
-        <item>"Lagos", 6.5482, 3.2574, 27</item>
-        <item>"Luanda", -8.80879, 13.22332, 0</item>
-        <item>"Lusaka", -15.4167, 28.2036, 1262</item>
-        <item>"Maputo", -25.97148, 32.57326, 47</item>
-        <item>"Marrakesh", 31.62649, -7.99649, 466</item>
-        <item>"Mogadishu", 2.03979, 45.36332, 0</item>
-        <item>"Nairobi", -1.3047, 36.7073, 1860</item>
-        <item>"Niamey", 13.5127, 2.0489, 192</item>
-        <item>"Nouakchott", 18.07932, -15.96449, 7</item>
-        <item>"Tripoli", 32.89500, 13.18431, 81</item>
-        <item>"Tunis", 36.82443, 10.17103, 0</item>
-        <item>"Windhoek", -22.5637, 16.9921, 1617</item>
+        <item>"Abidjan", 5.34872, -3.98679, 18, [CI]</item>                 <!-- Ivory Coast -->
+        <item>"Algiers", 36.74782, 3.07333, 0, [capital][DZ]</item>         <!-- Algeria -->
+        <item>"Bamako", 12.66148, -7.99798, 350, [capital][ML]</item>       <!-- Mali -->
+        <item>"Bangui", 4.36195, 18.58294, 370, [capital][CF]</item>        <!-- Central African Republic -->
+        <item>"Brazzaville", -4.27758, 15.24504, 320, [capital][CG]</item>  <!-- Republic of the Congo -->
+        <item>"Bujumbura", -3.37672, 29.38364, 774, [capital][BI]</item>    <!-- Burundi -->
+        <item>"Cape Town", -33.90419, 18.40110, 0, [capital][ZA]</item>     <!-- South Africa -->
+        <item>"Casablanca", 33.56592, -7.61412, 0, [MA]</item>              <!-- Morocco -->
+        <item>"Conakry", 9.57276, -13.60708, 0, [capital][GN]</item>        <!-- Guinea -->
+        <item>"Dakar", 14.76354, -17.47550, 0, [capital][SN]</item>         <!-- Senegal -->
+        <item>"Dar es Salaam", -6.81361, 39.30010, 0, [TZ]</item>           <!-- Tanzania -->
+        <item>"Douala", 4.0359, 9.7074, 18, [capital][CM]</item>            <!-- Cameroon -->
+        <item>"Harare", -17.8165, 30.9167, 1433, [capital][ZW]</item>       <!-- Zimbabwe -->
+        <item>"Johannesburg", -26.2069, 28.0438, 1755, [ZA]</item>          <!-- South Africa -->
+        <item>"Kampala", 0.3138, 32.5290, 1203, [capital][UG]</item>        <!-- Uganda -->
+        <item>"Khartoum", 15.59872, 32.51307, 381, [capital][SD]</item>     <!-- Sudan -->
+        <item>"Kano", 11.99000, 8.53609, 488, [NG]</item>                   <!-- Nigeria -->
+        <item>"Kigali", -1.96446, 30.07506, 1567, [capital][RW]</item>      <!-- Rwanda -->
+        <item>"Kinshasa", -4.45418, 15.28757, 240, [capital][CD]</item>     <!-- Democratic Republic of the Congo -->
+        <item>"Lagos", 6.5482, 3.2574, 27, [NG]</item>                      <!-- Nigeria -->
+        <item>"Luanda", -8.80879, 13.22332, 0, [capital][AO]</item>         <!-- Angola -->
+        <item>"Lusaka", -15.4167, 28.2036, 1262, [capital][ZM]</item>       <!-- Zambia -->
+        <item>"Maputo", -25.97148, 32.57326, 47, [capital][MZ]</item>       <!-- Mozambique -->
+        <item>"Marrakesh", 31.62649, -7.99649, 466, [MA]</item>             <!-- Morocco -->
+        <item>"Mogadishu", 2.03979, 45.36332, 0, [capital][SO]</item>       <!-- Somalia -->
+        <item>"Nairobi", -1.3047, 36.7073, 1860, [capital][KE]</item>       <!-- Kenya -->
+        <item>"Niamey", 13.5127, 2.0489, 192, [capital][NE]</item>          <!-- Niger -->
+        <item>"Nouakchott", 18.07932, -15.96449, 7, [capital][MR]</item>    <!-- Mauritania -->
+        <item>\"Tripoli, Libya\", 32.89500, 13.18431, 81, [capital][LY]</item>  <!-- Libya -->
+        <item>"Tunis", 36.82443, 10.17103, 0, [capital][TN]</item>          <!-- Tunisia -->
+        <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
     </string-array>
     <string-array name="places_AF_EG">    <!-- Egypt -->
-        <item>"Alexandria", 31.20558, 29.87522, 0</item>
-        <item>"Aswan", 24.09189, 32.8860, 194</item>
-        <item>"Cairo", 30.0594, 31.2234, 36</item>
-        <item>"Giza", 29.97519, 31.13780, 30</item>
-        <item>"Luxor", 25.69925, 32.64036, 89</item>
+        <item>"Alexandria", 31.20558, 29.87522, 0, [EG]</item>
+        <item>"Aswan", 24.09189, 32.8860, 194, [EG]</item>
+        <item>"Cairo", 30.0594, 31.2234, 36, [capital][EG]</item>
+        <item>"Giza", 29.97519, 31.13780, 30, [EG]</item>
+        <item>"Luxor", 25.69925, 32.64036, 89, [EG]</item>
     </string-array>
 
     <!-- Asia -->
     <string-array name="places_AS">
-        <item>"Ankara", 39.92668, 32.86314, 938</item>
-        <item>"Almaty", 43.21613, 76.91578, 500</item>
-        <item>"Ashgabat", 37.9375, 58.38, 219</item>
-        <item>"Baghdad", 33.27353, 44.38063, 34</item>
-        <item>"Basra", 30.56576, 47.74777, 5</item>
-        <item>"Baku", 40.39404, 49.8658, -28</item>
-        <item>"Bangkok", 13.75653, 100.49333, 2</item>
-        <item>"Beirut", 33.87861, 35.48003, 0</item>
-        <item>"Bishkek", 42.87954, 74.60022, 800</item>
-        <item>"Damascus", 33.51378, 36.27654, 680</item>
-        <item>"Dhaka", 23.7806, 90.3492, 3</item>
-        <item>"Doha", 25.29069, 51.53225, 0</item>
-        <item>"Dubai", 25.23561, 55.29685, 0</item>
-        <item>"Dushanbe", 38.60366, 68.78098, 823</item>
-        <item>"Jakarta", -6.2297, 106.7594, 20</item>
-        <item>"Jerusalem", 31.7962, 35.1053, 643</item>
-        <item>"Kabul", 34.51569, 69.13544, 1791</item>
-        <item>"Karachi", 25.0108, 66.7845, 97</item>
-        <item>"Kathmandu", 27.73078, 85.32092, 1400</item>
-        <item>"Kuwait City", 29.36950, 47.99377, 0</item>
-        <item>"Kokrajhar", 26.4018, 90.2607, 51</item>
-        <item>"Lahore", 31.55091, 74.34373, 217</item>
-        <item>"Manama", 26.28596, 50.57698, 0</item>
-        <item>"Manila", 14.5964, 120.9094, 0</item>
-        <item>"Mashhad", 36.30091, 59.59229, 995</item>
-        <item>"Muscat", 23.60333, 58.40487, 0</item>
-        <item>"Nicosia", 35.1922, 33.3273, 140</item>
-        <item>"Phnom Penh", 11.57604, 104.92290, 27</item>
-        <item>"Pyongyang", 39.0291, 125.6720, 28</item>
-        <item>"Sanaa", 15.36238, 44.19534, 2250</item>
-        <item>"Seoul", 37.5650, 126.8494, 14</item>
-        <item>"Singapore", 1.2976, 103.9053, 10</item>
-        <item>"Taipei", 25.0330, 121.5654, 0</item>
-        <item>"Tashkent", 41.31026, 69.2805, 455</item>
-        <item>"Tehran", 35.70251, 51.35131, 900</item>
-        <item>"Ufa", 54.72611, 55.9475, 150</item>
-        <item>"Ulaanbaatar", 47.90029, 106.94324, 1350</item>
-        <item>"Yakutsk", 62.02538, 129.73172, 95</item>
-        <item>"Yangon", 16.79525, 96.15955, 23</item>
+        <item>"Ankara", 39.92668, 32.86314, 938, [capital][TR]</item>
+        <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
+        <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
+        <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
+        <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
+        <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
+        <item>"Bishkek", 42.87954, 74.60022, 800, [capital][KG]</item>
+        <item>"Damascus", 33.51378, 36.27654, 680, [capital][SY]</item>
+        <item>"Dhaka", 23.7806, 90.3492, 3, [capital][BD]</item>
+        <item>"Doha", 25.29069, 51.53225, 0, [capital][QA]</item>
+        <item>"Dubai", 25.23561, 55.29685, 0, [capital][AE-DU]</item>
+        <item>"Dushanbe", 38.60366, 68.78098, 823, [capital][TJ]</item>
+        <item>"Jakarta", -6.2297, 106.7594, 20, [capital][ID]</item>
+        <item>"Jerusalem", 31.7962, 35.1053, 643, [capital][IL][PS]</item>
+        <item>"Kabul", 34.51569, 69.13544, 1791, [capital][AF]</item>
+        <item>"Kathmandu", 27.73078, 85.32092, 1400, [capital][NP]</item>
+        <item>"Kuwait City", 29.36950, 47.99377, 0, [capital][KW]</item>
+        <item>"Manama", 26.28596, 50.57698, 0, [capital][BH]</item>
+        <item>"Manila", 14.5964, 120.9094, 0, [capital][PH]</item>
+        <item>"Muscat", 23.60333, 58.40487, 0, [capital][OM]</item>
+        <item>"Nicosia", 35.1922, 33.3273, 140, [capital][CY]</item>
+        <item>"Phnom Penh", 11.57604, 104.92290, 27, [capital][KH]</item>
+        <item>"Pyongyang", 39.0291, 125.6720, 28, [capital][KP]</item>
+        <item>"Sanaa", 15.36238, 44.19534, 2250, [capital][YE]</item>
+        <item>"Seoul", 37.5650, 126.8494, 14, [capital][KR]</item>
+        <item>"Singapore", 1.2976, 103.9053, 10, [capital][SG]</item>
+        <item>"Taipei", 25.0330, 121.5654, 0, [capital][TW]</item>
+        <item>"Tashkent", 41.31026, 69.2805, 455, [capital][UZ]</item>
+        <item>"Ulaanbaatar", 47.90029, 106.94324, 1350, [capital][MN]</item>
+        <item>"Yangon", 16.79525, 96.15955, 23, [capital][MM]</item>
     </string-array>
     <string-array name="places_AS_CN">    <!-- China -->
-        <item>"Beijing", 39.9042, 116.4074, 0</item>
-        <item>"Chongqing", 29.57075, 106.50416, 244</item>
-        <item>"Guangzhou", 23.134924, 113.23749, 21</item>
-        <item>"Hong Kong", 22.3576, 113.9809, 0</item>
-        <item>"Kashgar", 39.47514, 75.99195, 1270</item>
-        <item>"Lhasa", 29.6487, 91.0052, 3649</item>
-        <item>"Macau", 22.1634, 113.5284, 0</item>
-        <item>"Shanghai", 31.2231, 120.9163, 0</item>
-        <item>"Shenzhen", 22.55307, 114.05560, 0</item>
-        <item>"Tianjin", 39.07444, 117.17202, 5</item>
-        <item>"Ürümqi", 44.03198, 87.80816, 862</item>
-        <item>"Wuhan", 30.557477, 114.25426, 37</item>
+        <item>"Beijing", 39.9042, 116.4074, 0, [capital][CN-BJ]</item>
+        <item>"Chongqing", 29.57075, 106.50416, 244, [CN-CQ]</item>
+        <item>"Guangzhou", 23.134924, 113.23749, 21, [capital][CN-GD]</item>
+        <item>"Hong Kong", 22.3576, 113.9809, 0, [HK]</item>
+        <item>"Kashgar", 39.47514, 75.99195, 1270, [CN-XJ]</item>
+        <item>"Lhasa", 29.6487, 91.0052, 3649, [capital][CN-XZ]</item>
+        <item>"Macau", 22.1634, 113.5284, 0, [CN-MO]</item>
+        <item>"Shanghai", 31.2231, 120.9163, 0, [CN-SH]</item>
+        <item>"Shenzhen", 22.55307, 114.05560, 0, [CN-GD]</item>
+        <item>"Tianjin", 39.07444, 117.17202, 5, [CN-TJ]</item>
+        <item>"Ürümqi", 44.03198, 87.80816, 862, [capital][CN-XJ]</item>
+        <item>"Wuhan", 30.557477, 114.25426, 37, [capital][CN-HB]</item>
     </string-array>
     <string-array name="places_AS_IN">    <!-- India -->
-        <item>"Ahmedabad", 23.0203, 72.5097, 49</item>
-        <item>"Bengaluru", 12.97688, 77.59360, 920</item>
-        <item>"Chennai", 13.08989, 80.27250, 5</item>
-        <item>"Delhi", 28.68803, 77.21791, 215</item>
-        <item>"Guwahati", 26.1429, 91.5627, 49</item>
-        <item>"Kochi", 9.93626, 76.24488, 6</item>
-        <item>"Kolkata", 22.6754, 88.0884, 6</item>
-        <item>"Mumbai", 19.1246, 72.7932, 0</item>
-        <item>"Pune", 18.52023, 73.85529, 570</item>
+        <item>"Ahmedabad", 23.0203, 72.5097, 49, [IN-GJ]</item>
+        <item>"Bengaluru", 12.97688, 77.59360, 920, [capital][IN-KA]</item>
+        <item>"Chennai", 13.08989, 80.27250, 5, [capital][IN-TN]</item>
+        <item>"Delhi", 28.68803, 77.21791, 215, [capital][IN-DL]</item>
+        <item>"Guwahati", 26.1429, 91.5627, 49, [IN-AS]</item>
+        <item>"Kochi", 9.93626, 76.24488, 6, [IN-KL]</item>
+        <item>"Kokrajhar", 26.4018, 90.2607, 51, [IN-AS]</item>
+        <item>"Kolkata", 22.6754, 88.0884, 6, [capital][IN-WB]</item>
+        <item>"Mumbai", 19.1246, 72.7932, 0, [capital][IN-MH]</item>
+        <item>"Pune", 18.52023, 73.85529, 570, [IN-MH]</item>
+    </string-array>
+    <string-array name="places_AS_IR">    <!-- Iran -->
+        <item>"Ahvaz", 31.32103, 48.67098, 15, [IR]</item>                      <!-- Khuzestan -->
+        <item>"Isfahan", 32.66434, 51.66906, 1570, [IR]</item>                  <!-- Isfahan -->
+        <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>                   <!-- Razavi Khorasan -->
+        <item>"Shiraz", 29.60519, 52.53324, 1500, [IR]</item>                   <!-- Fars -->
+        <item>"Tabriz", 38.07682, 46.28055, 1350, [IR]</item>                   <!-- East Azarbaijan -->
+        <item>"Tehran", 35.70251, 51.35131, 900, [capital][IR]</item>           <!-- Tehran -->
+    </string-array>
+    <string-array name="places_AS_IQ">    <!-- Iraq -->
+        <item>"Baghdad", 33.27353, 44.38063, 34, [capital][IQ]</item>
+        <item>"Basra", 30.56576, 47.74777, 5, [IQ]</item>
+        <item>"Erbil", 36.18305, 44.00976, 390, [IQ]</item>
+        <item>"Mosul", 36.33859, 43.13503, 220, [IQ]</item>
     </string-array>
     <string-array name="places_AS_JP">    <!-- Japan -->
-        <item>"Kyoto", 35.02304, 135.76201, 9</item>
-        <item>"Nagoya", 35.16373, 136.89961, 17</item>
-        <item>"Osaka", 34.68596, 135.52548, 20</item>
-        <item>"Sapporo", 43.06317, 141.34262, 31</item>
-        <item>"Tokyo", 35.6732, 139.5703, 49</item>
-        <item>"Yokohama", 35.42296, 139.63807, 15</item>
+        <item>"Kyoto", 35.02304, 135.76201, 9, [JP]</item>
+        <item>"Nagoya", 35.16373, 136.89961, 17, [JP]</item>
+        <item>"Osaka", 34.68596, 135.52548, 20, [JP]</item>
+        <item>"Sapporo", 43.06317, 141.34262, 31, [JP]</item>
+        <item>"Tokyo", 35.6732, 139.5703, 49, [JP]</item>
+        <item>"Yokohama", 35.42296, 139.63807, 15, [JP]</item>
+    </string-array>
+    <string-array name="places_AS_PK">    <!-- Pakistan -->
+        <item>"Islamabad", 33.6936, 73.06797, 500, [capital][PK-IS]</item>
+        <item>"Karachi", 25.0108, 66.7845, 97, [PK-SD]</item>
+        <item>"Lahore", 31.55091, 74.34373, 217, [PK-PB]</item>
+        <item>"Multan", 30.19769, 71.47397, 0, [PK-PB]</item>
     </string-array>
     <string-array name="places_AS_SA">    <!-- Saudi Arabia -->
-        <item>"Jeddah", 21.53003, 39.15633, 12</item>
-        <item>"Mecca", 21.42090, 39.82562, 277</item>
-        <item>"Medina", 24.42607, 39.59699, 620</item>
-        <item>"Riyadh", 24.61984, 46.70894, 612</item>
+        <item>"Jeddah", 21.53003, 39.15633, 12, [SA]</item>
+        <item>"Mecca", 21.42090, 39.82562, 277, [SA]</item>
+        <item>"Medina", 24.42607, 39.59699, 620, [SA]</item>
+        <item>"Riyadh", 24.61984, 46.70894, 612, [SA]</item>
     </string-array>
     <string-array name="places_AS_VN">    <!-- Vietnam -->
-        <item>"Da Nang", 16.07320, 108.19174, 0</item>
-        <item>"Hanoi", 21.0226, 105.8019, 15</item>
-        <item>"Ho Chi Minh City", 10.74745, 106.62460, 19</item>
+        <item>"Da Nang", 16.07320, 108.19174, 0, [VN]</item>
+        <item>"Hanoi", 21.0226, 105.8019, 15, [VN]</item>
+        <item>"Ho Chi Minh City", 10.74745, 106.62460, 19, [VN]</item>
+    </string-array>
+    <string-array name="places_AS_RU">    <!-- Russia -->
+        <item>"Ufa", 54.72611, 55.9475, 150, [capital][RU-BA]</item>
+        <item>"Yakutsk", 62.02538, 129.73172, 95, [capital][RU-SA]</item>
     </string-array>
 
     <!-- Europe -->
     <string-array name="places_EU">
-        <item>"Ajaccio", 41.91805, 8.73605, 0</item>
-        <item>"Alghero", 40.55984, 8.31647, 7</item>
-        <item>"Amsterdam", 52.3745, 4.758, 0</item>
-        <item>"Athens", 37.9908, 23.7033, 41</item>
-        <item>"Bjalistoko", 53.1324, 23.1592, 139</item>
-        <item>"Berlin", 52.5243, 13.4105, 40.0</item>
-        <item>"Bergen", 60.38713, 5.32006, 0</item>
-        <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62</item>
-        <item>"Budapest", 47.4811, 18.9902, 225</item>
-        <item>"Bucharest", 44.4378, 26.0245, 94</item>
-        <item>"Brussels", 50.8549, 4.3053, 86</item>
-        <item>"Cagliari", 39.22138, 9.11069, 4</item>
-        <item>"Cheboksary", 56.15384, 47.24776, 150</item>
-        <item>"Chur", 46.8531, 9.4978, 564</item>
-        <item>"Chisinau", 46.9998, 28.7881, 215</item>
-        <item>"Copenhagen", 55.6712, 12.4907, 9</item>
-        <item>"Dublin", 53.33348, -6.20512, 0</item>
-        <item>"Grozny", 43.3125, 45.698611, 130</item>
-        <item>"Helsinki", 60.1639, 24.9001, 0</item>
-        <item>"Istanbul", 41.0039, 28.4517, 0</item>
-        <item>"Kazan", 55.79638, 49.10888, 60</item>
-        <item>"Kyiv", 50.4496, 30.5252, 179</item>
-        <item>"Lisbon", 38.7436, -9.1952, 84</item>
-        <item>"Luxembourg", 49.61056, 6.13048, 230</item>
-        <item>"Minsk", 53.8838, 27.4548, 242</item>
-        <item>"Monaco", 43.73233, 7.42731, 0</item>
-        <item>"Moscow", 55.7656, 37.6040, 186</item>
-        <item>"Naples", 40.83526, 14.2515, 0</item>
-        <item>"Oslo", 59.8937, 10.6450, 0</item>
-        <item>"Paris", 48.8566, 2.3518, 41</item>
-        <item>"Prague", 50.0595, 14.3255, 361</item>
-        <item>"Reykjavik", 64.1322, -21.9224, 17</item>
-        <item>"Rennes", 48.1159, -1.7234, 46</item>
-        <item>"Rīga", 56.9713, 23.9890, 7</item>
-        <item>"Rome", 41.9099, 12.3959, 79</item>
-        <item>"Sarajevo", 43.8937, 18.3129, 546</item>
-        <item>"Schaan", 47.1521, 9.5201, 557</item>
-        <item>"Sevastopol", 44.61195, 33.49049, 100</item>
-        <item>"Sofia", 42.6953, 23.1838, 695</item>
-        <item>"Stockholm", 59.3260, 17.8474, 20</item>
-        <item>"Tallinn", 59.4248, 24.5981, 17</item>
-        <item>"Tbilisi", 41.74824, 44.78995, 380</item>
-        <item>"Tiranë", 41.3309, 19.7828, 84</item>
-        <item>"Toulouse", 43.60437, 1.44327, 151</item>
-        <item>"Tórshavn", 62.01692, -6.75492, 0</item>
-        <item>"Udine", 46.06595, 13.23763, 113</item>
-        <item>"Vienna", 48.19992, 16.36757, 151</item>
-        <item>"Warszawa", 52.2319, 21.0067, 143</item>
-        <item>"Vilnius", 54.7000, 25.1128, 170</item>
-        <item>"Yerevan", 40.1533, 44.4185, 865</item>
-        <item>"Zagreb", 45.8401, 15.8942, 330</item>
-        <item>"Zurich", 47.3774, 8.4666, 559</item>
+        <item>"Antwerp", 51.21189, 4.41452, 8, [BE-VLG]</item>           <!-- Belgium -->
+        <item>\"Birkirkara, Malta\", 35.8957, 14.4478, 62, [MT]</item>   <!-- Malta -->
+        <item>"Budapest", 47.4811, 18.9902, 225, [capital][HU]</item>    <!-- Hungary -->
+        <item>"Bucharest", 44.4378, 26.0245, 94, [capital][RO]</item>    <!-- Romania -->
+        <item>"Brussels", 50.8549, 4.3053, 86, [capital][BE-BRU]</item>  <!-- Belgium -->
+        <item>"Chur", 46.8531, 9.4978, 564, [CH]</item>                  <!-- Switzerland -->
+        <item>"Chisinau", 46.9998, 28.7881, 215, [capital][MD]</item>    <!-- Moldova -->
+        <item>"Dublin", 53.33348, -6.20512, 0, [capital][IE]</item>      <!-- Republic of Ireland -->
+        <item>"Gibraltar", 36.11072, -5.34687, 0, [GI]</item>
+        <item>"Istanbul", 41.0039, 28.4517, 0, [TR]</item>               <!-- Turkey -->
+        <item>"Kyiv", 50.4496, 30.5252, 179, [capital][UA]</item>        <!-- Ukraine -->
+        <item>"Luxembourg", 49.61056, 6.13048, 230, [LU]</item>          <!-- Luxembourg -->
+        <item>"Minsk", 53.8838, 27.4548, 242, [capital][BY]</item>       <!-- Belarus -->
+        <item>"Monaco", 43.73233, 7.42731, 0, [MC]</item>                <!-- Monaco -->
+        <item>"Prague", 50.0595, 14.3255, 361, [capital][CZ]</item>      <!-- Czech Republic -->
+        <item>"Reykjavik", 64.1322, -21.9224, 17, [capital][IS]</item>   <!-- Iceland -->
+        <item>"Rīga", 56.9713, 23.9890, 7, [capital][LV]</item>          <!-- Latvia -->
+        <item>"Sarajevo", 43.8937, 18.3129, 546, [capital][BA]</item>    <!-- Bosnia and Herzegovina -->
+        <item>"Schaan", 47.1521, 9.5201, 557, [LI]</item>                <!-- Liechtenstein -->
+        <item>"Sevastopol", 44.61195, 33.49049, 100, [UA]</item>         <!-- Ukraine -->
+        <item>"Sofia", 42.6953, 23.1838, 695, [capital][BG]</item>       <!-- Bulgaria -->
+        <item>"Tallinn", 59.4248, 24.5981, 17, [capital][EE]</item>      <!-- Estonia -->
+        <item>"Tbilisi", 41.74824, 44.78995, 380, [capital][GE]</item>   <!-- Georgia -->
+        <item>"Tiranë", 41.3309, 19.7828, 84, [capital][AL]</item>       <!-- Albania -->
+        <item>"Vienna", 48.19992, 16.36757, 151, [capital][AT]</item>    <!-- Austria -->
+        <item>"Vilnius", 54.7000, 25.1128, 170, [capital][LT]</item>     <!-- Lithuania -->
+        <item>"Yerevan", 40.1533, 44.4185, 865, [capital][AM]</item>     <!-- Armenia -->
+        <item>"Zagreb", 45.8401, 15.8942, 330, [capital][HR]</item>      <!-- Croatia -->
+        <item>"Zurich", 47.3774, 8.4666, 559, [CH]</item>                <!-- Switzerland -->
+    </string-array>
+    <string-array name="places_EU_DK">    <!-- Denmark -->
+        <item>"Aarhus", 56.15649, 10.21021, 6, [DK]</item>
+        <item>"Copenhagen", 55.6712, 12.4907, 9, [capital][DK]</item>
+        <item>"Odense", 55.39477, 10.39034, 12, [DK]</item>
+        <item>"Tórshavn", 62.01692, -6.75492, 0, [capital][FO]</item>    <!-- Faroe Islands -->
+    </string-array>
+    <string-array name="places_EU_DE">    <!-- Germany -->
+        <item>"Berlin", 52.5243, 13.4105, 40.0, [capital][DE]</item>        <!-- Berlin -->
+        <item>"Bremen", 53.08107, 8.80278, 12, [capital][DE-HB]</item>      <!-- Bremen -->
+        <item>"Cologne", 50.94594, 6.95008, 37, [DE-NW]</item>              <!-- North Rhine-Westphalia -->
+        <item>"Düsseldorf", 51.22293, 6.77891, 38, [capital][DE-NW]</item>  <!-- North Rhine-Westphalia -->
+        <item>"Dresden", 51.05281, 13.74511, 110, [capital][DE-SN]</item>   <!-- Saxony -->
+        <item>"Frankfurt", 50.10909, 8.69103, 110, [DE-HE]</item>           <!-- Hesse -->
+        <item>"Hamburg", 53.54684, 9.97856, 10, [capital][DE-HH]</item>     <!-- Hamburg -->
+        <item>"Hanover", 53.54926, 9.97125, 10, [capital][DE-NI]</item>     <!-- Lower Saxony -->
+        <item>"Leipzig", 51.3423926, 12.3821, 123, [DE-SN]</item>           <!-- Saxony -->
+        <item>"Munich", 48.14183, 11.56438, 520, [capital][DE-BY]</item>    <!-- Bavaria -->
+        <item>"Nuremberg", 49.45092, 11.08949, 300, [DE-BY]</item>          <!-- Bavaria -->
+        <item>"Stuttgart", 48.77856, 9.17955, 245, [capital][DE-BW]</item>  <!-- Baden-Württemberg -->
     </string-array>
     <string-array name="places_EU_ES">    <!-- Spain -->
-        <item>"A Coruña", 43.36914, -8.4092, 0</item>
-        <item>"Barcelona", 41.3825, 2.1769, 31</item>
-        <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258</item>
-        <item>"Oviedo", 43.36135, -5.85050, 232</item>
-        <item>"Madrid", 40.4378, -3.8196, 681</item>
-        <item>"Zaragoza", 41.64881, -0.87935, 243</item>
+        <item>"A Coruña", 43.36914, -8.4092, 0, [ES-GA]</item>               <!-- Galicia -->
+        <item>"Alicante", 38.34465, -0.4784, 0, [ES-VC]</item>               <!-- Valencian Community-->
+        <item>"Barcelona", 41.3825, 2.1769, 31, [capital][ES-CT]</item>      <!-- Catalonia -->
+        <item>"Bilbao", 43.26302, -2.93485, 20, [ES-PV]</item>               <!-- Basque Country -->
+        <item>"Euskal Herriko erdigunea", 42.883008, -1.935491, 1258, [ES-PV]</item>
+        <item>"Oviedo", 43.36135, -5.85050, 232, [capital][ES-AS]</item>     <!-- Asturias -->
+        <item>"Palma", 39.56563, 2.65005, 12, [capital][ES-IB]</item>        <!-- Balearic Islands -->
+        <item>"Las Palmas", 28.12976, -15.42897, 0, [capital][ES-CN]</item>  <!-- Canary Islands -->
+        <item>"Madrid", 40.4378, -3.8196, 681, [capital][ES-MD]</item>       <!-- Community of Madrid -->
+        <item>"Málaga", 36.71591, -4.42942, 0, [ES-AN]</item>                <!-- Andalusia -->
+        <item>"Murcia", 37.99229, -1.13067, 42, [capital][ES-MC]</item>      <!-- Region of Murcia -->
+        <item>"Seville", 37.38008, -5.99771, 6, [capital][ES-AN]</item>      <!-- Andalusia -->
+        <item>"Valencia", 39.47464, -0.37544, 15, [capital][ES-VC]</item>    <!-- Valencian Community -->
+        <item>"Zaragoza", 41.64881, -0.87935, 243, [capital][ES-AR]</item>   <!-- Aragon -->
     </string-array>
-    <string-array name="places_EU_UK">    <!-- United Kingdom -->
-        <item>"Cardiff", 51.5022, -3.2694, 51</item>
-        <item>\"Douglas, Isle of Man\", 54.15705, -4.47684, 0</item>
-        <item>"Glasgow", 55.86111, -4.25000, 8</item>
-        <item>"London", 51.5073, -0.1276, 18</item>
-        <item>"Truro", 50.2648, -5.0827, 64</item>
+    <string-array name="places_EU_FI">    <!-- Finland -->
+        <item>"Helsinki", 60.1639, 24.9001, 0, [capital][FI-18]</item>      <!-- Uusimaa -->
+        <item>"Oulu", 65.00913, 25.4543, 0, [FI-14]</item>                  <!-- North Ostrobothnia -->
+        <item>"Tampere", 61.50216, 23.78038, 85, [FI-11]</item>             <!-- Pirkanmaa -->
+        <item>"Turku", 60.44945, 22.2502, 10, [FI-19]</item>                <!-- Southwest Finland -->
+    </string-array>
+    <string-array name="places_EU_FR">    <!-- France -->
+        <item>"Ajaccio", 41.91805, 8.73605, 0, [FR]</item>                    <!-- Corsica -->
+        <item>"Bordeaux", 44.84509, -0.57778, 7, [FR]</item>                  <!-- Nouvelle-Aquitaine -->
+        <item>"Lille", 50.61834, 3.05012, 30, [FR]</item>                     <!-- Hauts-de-France -->
+        <item>"Lyon", 45.76854, 4.84207, 170, [FR]</item>                     <!-- Auvergne-Rhône-Alpes -->
+        <item>"Marseille", 43.30504, 5.37308, 0, [FR]</item>                  <!-- Provence-Alpes-Côte d'Azur -->
+        <item>"Montpellier", 43.61448, 3.87197, 15, [FR]</item>               <!-- Occitanie -->
+        <item>"Nantes", 47.21951, -1.54288, 20, [FR]</item>                   <!-- Pays de la Loire -->
+        <item>"Nice", 43.69463, 7.26718, 0, [FR]</item>                       <!-- Provence-Alpes-Côte d'Azur -->
+        <item>"Paris", 48.8566, 2.3518, 41, [capital][FR]</item>              <!-- Île-de-France -->
+        <item>"Rennes", 48.1159, -1.7234, 46, [FR]</item>                     <!-- Brittany -->
+        <item>"Strasbourg", 48.5791, 7.76648, 150, [FR]</item>                <!-- Grand Est -->
+        <item>"Toulouse", 43.60437, 1.44327, 151, [FR]</item>                 <!-- Occitania -->
+    </string-array>
+    <string-array name="places_EU_GB">    <!-- United Kingdom -->
+        <item>"Aberdeen", 57.15414, -2.12045, 65, [GB-SCT]</item>
+        <item>"Belfast", 54.59676, -5.9356, 0, [capital][GB-NIR]</item>
+        <item>"Birmingham", 52.47998, -1.90998, 140, [GB-ENG]</item>
+        <item>"Bristol", 51.45055, -2.59468, 48, [GB-ENG]</item>
+        <item>"Cardiff", 51.5022, -3.2694, 51, [capital][GB-WLS]</item>
+        <item>"Derry", 54.99641, -7.3124, 5, [GB-NIR]</item>
+        <item>\"Douglas, Isle of Man\", 54.15705, -4.47684, 0, [capital][IM]</item>
+        <item>"Dundee", 56.46493, -2.98523, 45, [GB-SCT]</item>
+        <item>"Edinburgh", 55.94951, -3.19877, 23, [capital][GB-SCT]</item>
+        <item>"Glasgow", 55.86111, -4.25000, 8, [GB-SCT]</item>
+        <item>"Inverness", 57.49536, -4.23725, 12, [GB-SCT]</item>
+        <item>"Liverpool", 53.40885, -2.98146, 30, [GB-ENG]</item>
+        <item>"Leeds", 53.79884, -1.55179, 50, [GB-ENG]</item>
+        <item>"London", 51.5073, -0.1276, 18, [capital][GB-ENG]</item>
+        <item>"Manchester", 53.47784, -2.25281, 118, [GB-ENG]</item>
+        <item>\"Newport, Wales\", 51.57923, -3.001285, 60, [GB-WLS]</item>
+        <item>"Nottingham", 52.94977, -1.15329, 60, [GB-ENG]</item>
+        <item>"Sheffield", 53.3835, -1.46015, 130, [GB-ENG]</item>
+        <item>"Swansea", 51.613,-3.98091, 180, [GB-WLS]</item>
+        <item>"Truro", 50.2648, -5.0827, 64, [GB-ENG]</item>
+        <item>"Wrexham", 53.04318, -3.0008, 140, [GB-WLS]</item>
+    </string-array>
+    <string-array name="places_EU_GR">
+        <item>"Athens", 37.9908, 23.7033, 41, [capital][GR-I]</item>              <!-- Attica -->
+        <item>"Heraklion", 35.34305, 25.13447, 0, [capital][GR-M]</item>          <!-- Crete -->
+        <item>"Lamia", 38.89945, 22.4335, 20, [capital][GR-H]</item>              <!-- Central Greece -->
+        <item>"Patras", 38.250699, 21.73267, 0, [capital][GR-G]</item>            <!-- Western Greece -->
+        <item>"Thessaloniki", 40.63652, 22.94464, 250, [capital][GR-B]</item>     <!-- Macedonia -->
+    </string-array>
+    <string-array name="places_EU_IT">    <!-- Italy -->
+        <item>"Alghero", 40.55984, 8.31647, 7, [IT-88]</item>                        <!-- Sardinia -->
+        <item>"Bari", 41.12551, 16.86188, 5, [capital][IT-75]</item>                 <!-- Apulia -->
+        <item>"Bologna", 44.4938, 11.34303, 55, [capital][IT-45]</item>              <!-- Emilia-Romagna -->
+        <item>"Cagliari", 39.22138, 9.11069, 4, [capital][IT-88]</item>              <!-- Sardinia -->
+        <item>"Catania", 37.51681, 15.1057, 5, [IT-82]</item>                        <!-- Sicily -->
+        <item>"Florence", 43.78389, 11.26189, 50, [capital][IT-52]</item>            <!-- Tuscany -->
+        <item>"Genoa", 44.40297, 8.94501, 20, [capital][IT-42]</item>                <!-- Liguria -->
+        <item>"Milan", 45.48353, 9.18931, 120, [capital][IT-25]</item>               <!-- Lombardy -->
+        <item>"Naples", 40.83526, 14.2515, 0, [capital][IT-72]</item>                <!-- Campania -->
+        <item>"Palermo", 38.11746, 13.37461, 15, [capital][IT-82]</item>             <!-- Sicily -->
+        <item>"Udine", 46.06595, 13.23763, 113, [IT-36]</item>                       <!-- Friuli-Venezia Giulia -->
+        <item>"Rome", 41.9099, 12.3959, 79, [capital][IT-62]</item>                  <!-- Lazio -->
+        <item>"Turin", 45.06562, 7.671, 240, [IT-21]</item>                          <!-- Piedmont -->
+        <item>"Venice", 45.43758, 12.32985, 1, [IT-34]</item>                        <!-- Veneto -->
+    </string-array>
+    <string-array name="places_EU_NL">    <!-- Kingdom of the Netherlands -->
+        <item>"Amsterdam", 52.3745, 4.758, 0, [capital][NL-NH]</item>       <!-- North Holland -->
+        <item>"Rotterdam", 51.92444, 4.47778, 1, [NL-ZH]</item>             <!-- South Holland -->
+        <item>"The Hague", 52.08633, 4.24238, 0, [capital][NL-ZH]</item>    <!-- South Holland -->
+        <item>"Utrecht", 52.0895, 5.1284, 5, [capital][NL-UT]</item>        <!-- Utrecht -->
+    </string-array>
+    <string-array name="places_EU_NO">    <!-- Norway -->
+        <item>"Bergen", 60.38713, 5.32006, 0, [NO-46]</item>                <!-- Vestland -->
+        <item>"Stavanger", 58.96696, 5.72154, 0, [NO-11]</item>             <!-- Rogaland -->
+        <item>"Trondheim", 63.43048, 10.39511, 0, [NO-50]</item>            <!-- Trøndelag -->
+        <item>"Longyearbyen", 78.22933, 15.60139, 0, [NO-21]</item>         <!-- Svalbard -->
+        <item>"Oslo", 59.8937, 10.6450, 0, [capital][NO-03]</item>          <!-- Oslo -->
+    </string-array>
+    <string-array name="places_EU_PL">    <!-- Poland -->
+        <item>"Bjalistoko", 53.1324, 23.1592, 139, [PL-20]</item>           <!-- Podlaskie -->
+        <item>"Kraków", 50.06274, 19.91763, 200, [PL-12]</item>             <!-- Lesser Poland -->
+        <item>"Łódź", 51.77079, 19.4656, 170, [PL-10]</item>                <!-- Łódź -->
+        <item>"Lublin", 51.23725, 22.55945, 170, [PL-06]</item>             <!-- Lublin -->
+        <item>"Poznań", 52.40528, 16.93531, 80, [PL-30]</item>              <!-- Greater Poland -->
+        <item>"Warsaw", 52.2319, 21.0067, 143, [capital][PL-14]</item>      <!-- Masovian -->
+        <item>"Wrocław", 51.11128, 17.03841, 110, [PL-02]</item>            <!-- Lower Silesian -->
+    </string-array>
+    <string-array name="places_EU_PT">    <!-- Portugal -->
+        <item>"Lisbon", 38.7436, -9.1952, 84, [capital][PT-11]</item>
+        <item>"Porto", 41.1579, -8.62913, 100, [PT-13]</item>
+        <item>"Coimbra", 40.2057, -8.42131, 10, [PT-06]</item>
+        <item>\"Faro, Portugal\", 37.02148, -7.93097, 10, [PT-08]</item>
+    </string-array>
+    <string-array name="places_EU_RU">    <!-- Russia -->
+        <item>"Grozny", 43.3125, 45.698611, 130, [capital][RU]</item>
+        <item>"Moscow", 55.7656, 37.6040, 186, [capital][RU]</item>
+        <item>"Kazan", 55.79638, 49.10888, 60, [capital][RU-TA]</item>       <!-- Tatarstan -->
+        <item>"Cheboksary", 56.15384, 47.24776, 150, [capital][RU-CU]</item> <!-- Chuvashia -->
+    </string-array>
+    <string-array name="places_EU_SE">    <!-- Sweden -->
+        <item>"Gothenburg", 57.70687, 11.96932, 12, [SE]</item>
+        <item>"Stockholm", 59.3260, 17.8474, 20, [capital][SE]</item>
+        <item>"Malmö", 55.59009, 12.98881, 10, [SE]</item>
+        <item>"Uppsala", 59.85844, 17.6455, 15, [SE]</item>
     </string-array>
 
     <!-- North America -->
     <string-array name="places_NA">
-        <item>"Charlotte Amalie", 18.3412, -64.9479, 37</item>
-        <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0</item>
-        <item>"Havana", 23.0504, -82.6129, 0</item>
-        <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18</item>
-        <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0</item>
-        <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0</item>
-        <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0</item>
-        <item>"México City", 19.3204, -99.2926, 2904</item>
-        <item>"Nassau", 25.0322, -77.4763, 6</item>
-        <item>"Nuuk", 64.1789, -51.7412, 5</item>
-        <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0</item>
-        <item>"Port-au-Prince", 18.54242, -72.33583, 0</item>
-        <item>"Road Town", 18.4243, -64.6333, 255</item>
-        <item>"San Juan", 18.3848, -66.1283, 30</item>
-        <item>"Santo Domingo", 18.4803, -70.0169, 12</item>
-        <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0</item>
+        <item>\"Fort-de-France, Martinique\", 14.603, -61.0677, 0, [MQ]</item>
+        <item>\"Havana, Cuba\", 23.0504, -82.6129, 0, [capital][CU]</item>
+        <item>\"Kingston, Jamaica\", 18.0179, -76.8356, 18, [capital][JM]</item>
+        <item>\"Little Bay, Montserrat\", 16.8002, -62.2136, 0, [capital][MS]</item>
+        <item>\"Les Abymes, Guadeloupe\", 16.26914, -61.50965, 0, [GP]</item>
+        <item>\"Marigot, Saint Martin\", 18.07346, -63.08373, 0, [capital][MF]</item>
+        <item>\"Nassau, The Bahamas\", 25.0322, -77.4763, 6, [capital][BS]</item>
+        <item>\"Nuuk, Greenland\", 64.1789, -51.7412, 5, [capital][GL]</item>
+        <item>\"Philipsburg, Sint Maarten\", 18.02419, -63.05048, 0, [capital][SX]</item>
+        <item>\"Port-au-Prince, Haiti\", 18.54242, -72.33583, 0, [capital][HT]</item>
+        <item>"Road Town", 18.4243, -64.6333, 255, [GB][VG]</item>                    <!-- British Virgin Islands -->
+        <item>"Santo Domingo", 18.4803, -70.0169, 12, [capital][DO]</item>
+        <item>\"St. George\'s, Bermuda\", 32.37944, -64.67777, 0, [BM]</item>
     </string-array>
+
+    <string-array name="places_NA_MX">
+        <item>"Acapulco", 16.85802, -99.87352, 30, [MX-GRO]</item>                         <!-- Guerrero -->
+        <item>"Aguascalientes", 21.87959, -102.30324, 1890, [capital][MX-AGU]</item>       <!-- Aguascalientes -->
+        <item>"Campeche", 19.85627, -90.52714, 10, [capital][MX-CAM]</item>                <!-- Campeche -->
+        <item>"Cancún", 21.16363, -86.82578, 0, [MX-ROO]</item>                            <!-- Quintana Roo -->
+        <item>"Chetumal", 18.50194, -88.28108, 10, [capital][MX-ROO]</item>                <!-- Quintana Roo -->
+        <item>"Chihuahua City", 28.64026, -106.08664, 1410, [capital][MX-CHH]</item>       <!-- Chihuahua -->
+        <item>"Chilpancingo", 17.55595, -99.50405, 1250, [capital][MX-GRO]</item>          <!-- Guerrero -->
+        <item>"Colima City", 19.24001, -103.72458, 1000, [capital][MX-COL]</item>          <!-- Colima -->
+        <item>"Cuernavaca", 18.93046, -99.22218, 1500, [capital][MX-MOR]</item>            <!-- Morelos -->
+        <item>"Culiacán", 24.80909, -107.4016, 70, [capital][MX-SIN]</item>                <!-- Sinaloa -->
+        <item>"Ciudad Victoria", 23.72496, -99.15286, 315, [capital][MX-TAM]</item>        <!-- Tamaulipas -->
+        <item>"Hermosillo", 29.07864, -110.94772, 200, [capital][MX-SON]</item>            <!-- Sonora -->
+        <item>"Juárez City", 31.71903, -106.48947, 1440, [MX-CHH]</item>                   <!-- Chihuahua -->
+        <item>"Guadalajara", 20.68019, -103.34068, 1560, [capital][MX-JAL]</item>          <!-- Jalisco -->
+        <item>"Guanajuato", 21.01772, -101.25607, 2040, [capital][MX-GUA]</item>           <!-- Guanajuato -->
+        <item>\"La Paz, Baja California\", 24.15556, -110.32298, 30, [capital][MX-BCS]</item>  <!-- Baja California Sur -->
+        <item>"León de Los Aldama", 21.13201, -101.68925, 1810, [MX-GUA]</item>            <!-- Guanajuato -->
+        <item>"Pachuca", 20.09602, -98.76601, 2400, [capital][MX-HID]</item>               <!-- Hidalgo -->
+        <item>\"Manzanillo, Colima\", 19.06161, -104.30534, 0, [MX-COL]</item>             <!-- Colima -->
+        <item>\"Mérida, Yucatán\", 20.96702, -89.6236, 10, [capital][MX-YUC]</item>        <!-- Yucatán -->
+        <item>"Mexicali", 32.63173, -115.441, 10, [capital][MX-BCN]</item>                 <!-- Baja California -->
+        <item>"México City", 19.3204, -99.2926, 2904, [capital][MX-CMX]</item>             <!-- Ciudad de México -->
+        <item>"Monterrey", 25.67607, -100.32115, 1770, [capital][MX-NLE]</item>            <!-- Nuevo León -->
+        <item>"Morelia", 19.70249, -101.19364, 1900, [capital][MX-MIC]</item>              <!-- Michoacán -->
+        <item>"Oaxaca City", 17.06055, -96.72548, 1550, [capital][MX-OAX]</item>           <!-- Oaxaca -->
+        <item>"Puebla de Zaragoza", 19.04577, -98.20838, 2130, [capital][MX-PUE]</item>    <!-- Puebla -->
+        <item>"Querétaro", 20.58799, -100.38798, 1820, [capital][MX-QUE]</item>            <!-- Querétaro -->
+        <item>"Saltillo", 25.42523, -101.00848, 1600, [capital][MX-COA]</item>             <!-- Coahuila -->
+        <item>"San Luis Potosí", 22.15167, -100.97118, 1860, [capital][MX-SLP]</item>      <!-- San Luis Potosí -->
+        <item>"Tepic", 21.50721, -104.89311, 900, [capital][MX-NAY]</item>                 <!-- Nayarit -->
+        <item>"Tijuana", 32.49916, -116.99265, 20, [MX-BCN]</item>                         <!-- Baja California -->
+        <item>"Toluca", 19.29005, -99.66173, 2650, [capital][MX-MEX]</item>                <!-- Mexico -->
+        <item>"Tlaxcala", 19.31692, -98.23812, 2200, [capital][MX-TLA]</item>              <!-- Tlaxcala -->
+        <item>"Tuxtla", 16.75465, -93.11565, 520, [capital][MX-CHP]</item>                 <!-- Chiapas -->
+        <item>"Veracruz", 19.1948, -96.13569, 10, [MX-VER]</item>                          <!-- Veracruz -->
+        <item>"Victoria de Durango", 24.02084, -104.66887, 1900, [capital][MX-DUR]</item>  <!-- Durango -->
+        <item>"Villahermosa", 17.9771, -92.94272, 20, [capital][MX-TAB]</item>             <!-- Tabasco -->
+        <item>"Xalapa", 19.53233, -96.93015, 1420, [capital][MX-VER]</item>                <!-- Veracruz -->
+        <item>"Zacatecas", 22.77308, -102.57658, 2400, [capital][MX-ZAC]</item>            <!-- Zacatecas -->
+    </string-array>
+
     <string-array name="places_NA_CA">
-        <item>"Calgary", 51.04519, -114.04585, 1000</item>
-        <item>"Edmonton", 53.54199, -113.48061, 645</item>
-        <item>"Kuujjuaq", 58.1, -68.4, 40</item>
-        <item>"Montreal", 45.5600, -73.8521, 30</item>
-        <item>"Ottawa", 45.41625, -75.71416, 70</item>
-        <item>"Québec City", 46.80170, -71.21773, 98</item>
-        <item>"Saskatoon", 52.14982, -106.68429, 480</item>
-        <item>"Toronto", 43.6159, -79.3769, 78</item>
-        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670</item>
-        <item>"Winnipeg", 49.89908, -97.12469, 239</item>
-        <item>"Vancouver", 49.27934, -123.13920, 0</item>
+        <item>"Calgary", 51.04519, -114.04585, 1000, [CA-AB]</item>                              <!-- Alberta -->
+        <item>"Charlottetown", 46.23231, -63.12129, 0, [capital][CA-PE]</item>                   <!-- Prince Edward Island -->
+        <item>"Edmonton", 53.54199, -113.48061, 645, [capital][CA-AB]</item>                     <!-- Alberta -->
+        <item>"Fredericton", 45.95697, -66.6649, 50, [capital][CA-NB]</item>                     <!-- New Brunswick -->
+        <item>\"Halifax, Nova Scotia\", 44.64946, -63.58516, 240, [capital][CA-NS]</item>        <!-- Nova Scotia -->
+        <item>"Iqaluit", 63.73904, -68.51471, 30, [capital][CA-NU]</item>                        <!-- Nunavut -->
+        <item>"Kuujjuaq", 58.1, -68.4, 40, [CA-QC]</item>                                        <!-- Quebec -->
+        <item>"Moncton", 46.10622, -64.78438, 0, [CA-NB]</item>                                  <!-- New Brunswick -->
+        <item>"Montreal", 45.5600, -73.8521, 30, [CA-QC]</item>                                  <!-- Quebec -->
+        <item>"Ottawa", 45.41625, -75.71416, 70, [capital][CA-ON]</item>                         <!-- Ontario -->
+        <item>"Québec City", 46.80170, -71.21773, 98, [capital][CA-QC]</item>                    <!-- Quebec -->
+        <item>\"Regina, Saskatchewan\", 50.46446, -104.61158, 580, [capital][CA-SK]</item>       <!-- Saskatchewan -->
+        <item>"Saskatoon", 52.14982, -106.68429, 480, [CA-SK]</item>                             <!-- Saskatchewan -->
+        <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capital][CA-NL]</item>     <!-- Newfoundland and Labrador -->
+        <item>"Toronto", 43.6159, -79.3769, 78, [capital][CA-ON]</item>                          <!-- Ontario -->
+        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670, [CA-YT]</item>                   <!-- Yukon -->
+        <item>"Winnipeg", 49.89908, -97.12469, 239, [capital][CA-MB]</item>                      <!-- Manitoba -->
+        <item>"Vancouver", 49.27934, -123.13920, 0, [CA-BC]</item>                               <!-- British Columbia -->
+        <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capital][CA-BC]</item>   <!-- British Columbia -->
+        <item>"Yellowknife", 62.45498, -114.36085, 200, [capital][CA-NT]</item>                  <!-- Northwest Territories -->
     </string-array>
+
     <string-array name="places_NA_US">
-        <item>\"Anchorage, AK\", 61.15496, -150.05585, 31</item>
-        <item>"Chicago", 41.86859, -87.61582, 176</item>
-        <item>"Houston", 29.76010, -95.37176, 32</item>
-        <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731</item>
-        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6</item>
-        <item>"Los Angeles", 34.05094, -118.2506, 93</item>
-        <item>"New York City", 40.68620, -74.02619, 0</item>
-        <item>"Philadelphia", 39.94704, -75.15252, 12</item>
-        <item>"Phoenix", 33.45579, -111.94580, 385</item>
-        <item>\"Ponemah, MN\", 48.01935, -94.90867, 365</item>
-        <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007</item>
-        <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251</item>
-        <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731</item>
-        <item>"San Francisco", 37.80907, -122.41289, 0</item>
-        <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044</item>
+        <item>"Charlotte Amalie", 18.3412, -64.9479, 37, [capital][US-VI]</item>
+        <item>\"San Juan, Puerto Rico\", 18.3848, -66.1283, 30, [capital][US-PR]</item>
+    </string-array>
+    <string-array name="places_NA_US_W">
+        <item>\"Anchorage, AK\", 61.15496, -150.05585, 31, [US-AK]</item>
+        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
+        <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capital][US-AK]</item>
+        <item>"Phoenix", 33.45579, -111.94580, 385, [capital][US-AZ]</item>
+        <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731, [US-AZ]</item>
+        <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044, [US-AZ]</item>
+        <item>\"Tucson, AZ\", 32.28142, -110.93382, 728, [US-AZ]</item>
+        <item>"Los Angeles", 34.05094, -118.2506, 93, [US-CA]</item>
+        <item>\"Sacramento, CA\", 38.5755, -121.49126, 10, [capital][US-CA]</item>
+        <item>"San Diego", 32.70585, -117.16723, 0, [US-CA]</item>
+        <item>"San Francisco", 37.80907, -122.41289, 0, [US-CA]</item>
+        <item>\"San Jose, CA\", 37.34325, -121.90372, 0, [US-CA]</item>
+        <item>\"Denver, CO\", 39.73914, -104.98874, 1600, [capital][US-CO]</item>
+        <item>\"Towaoc, CO\", 37.20138, -108.72988, 1731, [US-CO]</item>
+        <item>\"Boise, ID\", 43.61714, -116.20022, 824, [capital][US-ID]</item>
+        <item>\"Helena, MT\", 46.58654, -112.01834, 1218, [capital][US-MT]</item>
+        <item>\"Albuquerque, NM\", 35.13037, -106.68346, 1620, [US-NM]</item>
+        <item>\"Santa Fe, NM\", 35.68739, -105.93855, 2133, [capital][US-NM]</item>
+        <item>\"Carson City, NV\", 39.16278, -119.76614, 1427, [capital][US-NV]</item>
+        <item>"Las Vegas", 36.16823, -115.18886, 610, [US-NV]</item>
+        <item>\"Reno, NV\", 39.54412, -119.81675, 1373, [US-NV]</item>
+        <item>\"Portland, OR\", 45.51883, -122.67915, 50, [US-OR]</item>
+        <item>\"Salem, OR\", 44.94154, -123.04313, 50, [capital][US-OR]</item>
+        <item>"Salt Lake City", 40.76153, -111.90117, 1300, [capital][US-UT]</item>
+        <item>\"Olympia, WA\", 47.03652, -122.90324, 30, [capital][US-WA]</item>
+        <item>"Seattle", 47.59338, -122.31852, 0, [US-WA]</item>
+        <item>\"Cheyenne, WY\", 41.14, -104.81986, 1855, [capital][US-WY]</item>
+    </string-array>
+    <string-array name="places_NA_US_NE">
+        <item>\"Hartford, CT\", 41.77408, -72.6667, 0, [capital][US-CT]</item>
+        <item>\"Washington, DC\", 38.88953, -77.03525, 0, [capital][US-DC]</item>
+        <item>\"Dover, DE\", 39.16751, -75.52066, 10, [capital][US-DE]</item>
+        <item>\"Boston\", 42.35514, -71.0656, 0, [capital][US-MA]</item>
+        <item>\"Annapolis, MD\", 38.97432, -76.48709, 0, [capital][US-MD]</item>
+        <item>\"Baltimore, MD\", 39.28923, -76.5817, 0, [US-MD]</item>
+        <item>\"Augusta, ME\", 44.31623, -69.76809, 37, [capital][US-ME]</item>
+        <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capital][US-NH]</item>
+        <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capital][US-NJ]</item>
+        <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capital][US-NY]</item>
+        <item>"New York City", 40.68620, -74.02619, 0, [US-NY]</item>
+        <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capital][US-PA]</item>
+        <item>"Philadelphia", 39.94704, -75.15252, 12, [US-PA]</item>
+        <item>"Pittsburgh", 40.43997, -79.97385, 300, [US-PA]</item>
+        <item>\"Providence, RI\", 41.82034, -71.40712, 0, [capital][US-RI]</item>
+        <item>\"Montpelier, VT\", 44.26184, -72.58080, 160, [capital][US-VT]</item>
+    </string-array>
+    <string-array name="places_NA_US_MW">
+        <item>\"Des Moines, IA\", 41.58929, -93.60334, 242, [capital][US-IA]</item>
+        <item>"Indianapolis", 39.772, -86.1569, 220, [capital][US-IN]</item>
+        <item>"Chicago", 41.86859, -87.61582, 176, [US-IL]</item>
+        <item>"Detroit", 42.3318, -83.0467, 200, [US-IL]</item>
+        <item>\"Springfield, IL\", 39.79779, -89.65408, 183, [capital][US-IL]</item>
+        <item>\"Topeka, KS\", 39.04932, -95.67765, 286, [capital][US-KS]</item>
+        <item>"Cincinnati", 39.10153, -84.49811, 226, [US-OH]</item>
+        <item>"Cleveland", 41.49918, -81.71361, 200, [US-OH]</item>
+        <item>\"Columbus, OH\", 39.95645, -83.00415, 240, [capital][US-OH]</item>
+        <item>\"Lansing, MI\", 42.73363, -84.55644, 260, [capital][US-OH]</item>
+        <item>\"Ponemah, MN\", 48.01935, -94.90867, 365, [US-MN]</item>
+        <item>\"St. Paul, MN\", 44.95362, -93.10223, 250, [capital][US-MN]</item>
+        <item>\"Jefferson City, MO\", 38.5787, -92.17359, 192, [capital][US-MO]</item>
+        <item>\"Kansas City, MO\", 39.11523, -94.55513, 277, [US-MO]</item>
+        <item>\"St. Louis, MO\", 38.60653, -90.25826, 0, [US-MO]</item>
+        <item>\"Lincoln, NE\", 40.82562, -96.73025, 366, [capital][US-NE]</item>
+        <item>\"Bismarck, ND\", 46.81772, -100.78280, 532, [capital][US-ND]</item>
+        <item>\"Pierre, SD\", 44.36136, -100.36171, 500, [capital][US-SD]</item>
+        <item>\"Porcupine, SD\", 43.2770, -102.4068, 1007, [US-SD]</item>
+        <item>\"Sioux Falls, SD\", 43.54604, -96.72092, 446, [US-SD]</item>
+        <item>\"Madison, WI\", 43.074, -89.38327, 266, [capital][US-WI]</item>
+        <item>\"Milwaukee, WI\", 43.0338, -87.89532, 188, [US-WI]</item>
+    </string-array>
+    <string-array name="places_NA_US_S">
+        <item>\"Montgomery, AL\", 32.37624, -86.30344, 70, [capital][US-AL]</item>
+        <item>\"Little Rock, AR\", 34.74511, -92.28837, 85, [capital][US-AR]</item>
+        <item>\"Jacksonville, FL\", 30.32936, -81.65925, 0, [US-FL]</item>
+        <item>\"Miami, FL\", 25.77613, -80.18594, 0, [US-FL]</item>
+        <item>\"Tallahassee, FL\", 30.45352, -84.2757, 60, [capital][US-FL]</item>
+        <item>"Atlanta", 33.7485, -84.38719, 320, [capital][US-GA]</item>
+        <item>\"Frankfort, KY\", 38.20006, -84.87667, 154, [capital][US-KY]</item>
+        <item>\"Louisville, KY\", 38.26080, -85.74276, 142, [US-KY]</item>
+        <item>\"Baton Rouge, LA\", 30.45552, -91.18725, 15, [capital][US-LA]</item>
+        <item>\"New Orleans\", 30.00173, -90.09298, 0, [US-LA]</item>
+        <item>\"Jackson, MS\", 32.29806, -90.21307, 110, [capital][US-MS]</item>
+        <item>\"Charlotte, NC\", 35.1868, -80.77201, 0, [US-NC]</item>
+        <item>\"Raleigh, NC\", 35.77763, -78.64253, 100, [capital][US-NC]</item>
+        <item>\"Oklahoma City, OK\", 35.47431, -97.5719, 365, [capital][US-OK]</item>
+        <item>\"Tahlequah, OK\", 35.9045, -95.0135, 251, [OK][US-OK]</item>
+        <item>\"Columbia, SC\", 34.00112, -81.03335, 90, [capital][US-SC]</item>
+        <item>\"Memphis, TN\", 35.14758, -89.9923, 100, [US-TN]</item>
+        <item>\"Nashville, TN\", 36.16662, -86.7783, 170, [capital][US-TN]</item>
+        <item>\"Austin, TX\", 30.28528, -97.7344, 185, [capital][US-TX]</item>
+        <item>\"Dallas, TX\", 32.77274, -96.78683, 147, [US-TX]</item>
+        <item>"Houston", 29.76010, -95.37176, 32, [US-TX]</item>
+        <item>\"El Paso, TX\", 31.75961, -106.48835, 1185, [US-TX]</item>
+        <item>\"San Antonio\", 29.428, -98.48916, 220, [US-TX]</item>
+        <item>\"Richmond, VA\", 37.53832, -77.4341, 65, [capital][US-VA]</item>
+        <item>\"Charleston, WV\", 38.33012, -81.58262, 180, [capital][US-WV]</item>
     </string-array>
 
     <!-- Oceania -->
     <string-array name="places_OC">
-        <item>"Apia", -13.8600, 171.8031, 0</item>
-        <item>"Auckland", -36.8468, 174.8256, 39</item>
-        <item>\"Hagåtña, Guam\", 13.47916, 144.75, 0</item>
-        <item>"Honiara", -9.4351, 159.9382, 67</item>
-        <item>"Honolulu", 21.3280, -157.8691, 0</item>
-        <item>"Pago Pago", -14.27176, -170.70223, 0</item>
-        <item>"Palikir", 6.9192, 158.1412, 20</item>
-        <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0</item>
-        <item>"Suva", -18.14857, 178.42384, 0</item>
+        <item>\"Apia, Samoa\", -13.8600, 171.8031, 0, [capital][WS]</item>
+        <item>"Auckland", -36.8468, 174.8256, 39, [NZ]</item>
+        <item>\"Hagåtña, Guam\", 13.47916, 144.75, 0, [capital][GU]</item>
+        <item>\"Hanga Roa, Easter Island\", -27.15157, -109.43997, 0, [CL]</item>
+        <item>\"Honiara, Solomons\", -9.4351, 159.9382, 67, [capital][SB]</item>
+        <item>"Honolulu", 21.3280, -157.8691, 0, [capital][US-HI]</item>
+        <item>"Pago Pago", -14.27176, -170.70223, 0, [capital][AS]</item>
+        <item>\"Palikir, Micronesia\", 6.9192, 158.1412, 20, [capital][FM]</item>
+        <item>\"Papeete, Tahiti\", -17.53653, -149.56887, 0, [capital][PF]</item>
+        <item>\"Suva, Fiji\", -18.14857, 178.42384, 0, [capital][FJ]</item>
     </string-array>
     <string-array name="places_OC_AU">
-        <item>"Adelaide", -34.94418, 138.50037, 0</item>
-        <item>"Brisbane", -27.47464, 153.02998, 32</item>
-        <item>"Canberra", -35.30676, 149.12177, 578</item>
-        <item>"Darwin", -12.43165, 130.83440, 0</item>
-        <item>"Hobart", -42.88881, 147.33821, 0</item>
-        <item>"Melbourne", -37.81100, 144.95491, 31</item>
-        <item>"Perth", -31.96644, 115.83743, 0</item>
-        <item>"Sydney", -33.8981, 151.2328, 40</item>
+        <item>"Adelaide", -34.94418, 138.50037, 0, [AU-SA]</item>
+        <item>"Brisbane", -27.47464, 153.02998, 32, [AU-QLD]</item>
+        <item>"Canberra", -35.30676, 149.12177, 578, [capital][AU-ACT]</item>
+        <item>"Darwin", -12.43165, 130.83440, 0, [AU-NT]</item>
+        <item>\"Hobart, Tasmania\", -42.88881, 147.33821, 0, [AU-TAS]</item>
+        <item>"Melbourne", -37.81100, 144.95491, 31, [AU-VIC]</item>
+        <item>"Perth", -31.96644, 115.83743, 0, [AU-WA]</item>
+        <item>"Sydney", -33.8981, 151.2328, 40, [AU-NSW]</item>
     </string-array>
 
     <!-- South and Central America -->
     <string-array name="places_SA">
-        <item>"Asuncion", -25.2968, -57.6681, 65</item>
-        <item>"Bogotá", 4.71111, -74.07222, 2640</item>
-        <item>"Buenos Aires", -34.6156, -58.5734, 29</item>
-        <item>"Caracas", 10.49474, -66.89362, 900</item>
-        <item>"Cayenne", 4.9436, -52.33112, 0</item>
-        <item>"Guatemala City", 14.61333, -90.53527, 1500</item>
-        <item>\"Kralendijk, Bonaire\", 12.14558, -68.27616, 0</item>
-        <item>"Lima", -12.0553, -77.0802, 77</item>
-        <item>"Managua", 12.0961, -86.3985, 410</item>
-        <item>"Montevideo", -34.8198, -56.3702, 17</item>
-        <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0</item>
-        <item>"Panama City", 9.0831, -79.5924, 98</item>
-        <item>"Paramaribo", 5.84737, -55.16054, 0</item>
-        <item>"Santiago", -33.4724, -70.9100, 635</item>
-        <item>"São Paulo", -23.6821, -46.8754, 815</item>
-        <item>"San José", 9.9356, -84.1483, 1017</item>
-        <item>"San Salvador", 13.6914, -89.2847, 1019</item>
-        <item>"Sucre", -19.0206, -65.3298, 2841</item>
-        <item>"Tegucigalpa", 14.09372, -87.2016, 990</item>
-        <item>"Quito", -0.1865, -78.5706, 4092.0</item>
-        <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0</item>
+        <item>"Asuncion", -25.2968, -57.6681, 65, [capital][PY]</item>    <!-- Paraguay -->
+        <item>"Ciudad del Este", -25.50433, -54.66376, 65, [PY]</item>    <!-- Alto Paraná (Paraguay) -->
+        <item>"Belize City", 17.49181, -88.18155, 0, [BZ]</item>
+        <item>"Cayenne", 4.9436, -52.33112, 0, [GF]</item>
+        <item>"Guatemala City", 14.61333, -90.53527, 1500, [capital][GT]</item>
+        <item>\"Kralendijk, Bonaire\", 12.14558, -68.27616, 0, [capital][BQ-BO]</item>
+        <item>"Managua", 12.0961, -86.3985, 410, [capital][NI]</item>
+        <item>"Montevideo", -34.8198, -56.3702, 17, [capital][UY]</item>
+        <item>\"Oranjestad, Aruba\", 12.51578, -70.03545, 0, [capital][AW]</item>
+        <item>"Panama City", 9.0831, -79.5924, 98, [capital][PA]</item>
+        <item>"Paramaribo", 5.84737, -55.16054, 0, [capital][SR]</item>
+        <item>\"San José, Costa Rica\", 9.9356, -84.1483, 1017, [capital][CR]</item>
+        <item>"San Salvador", 13.7013,-89.22475, 1019, [capital][SV-SS]</item>
+        <item>"Tegucigalpa", 14.09372, -87.2016, 990, [capital][HN-FM]</item>
+        <item>\"Willemstad, Curaçao\", 12.11018, -68.95539, 0, [capital][CW]</item>
+    </string-array>
+    <string-array name="places_SA_EC">    <!-- Ecuador -->
+        <item>\"Cuenca, Ecuador\", -2.89749, -79.00449, 2400, [capital][EC-A]</item>          <!-- Azuay -->
+        <item>\"Quito\", -0.1865, -78.5706, 4092.0, [capital][EC-P]</item>                    <!-- Pichincha -->
+        <item>\"Guayaquil\", -2.18996, -79.88765, 5, [capital][EC-G]</item>                   <!-- Guayas -->
+    </string-array>
+    <string-array name="places_SA_CO">    <!-- Colombia -->
+        <item>"Medellín", 6.23913, -75.58993, 1495, [capital][CO-ANT]</item>                  <!-- Antioquia -->
+        <item>"Barranquilla", 11.01386, -74.81382, 20, [capital][CO-ATL]</item>               <!-- Atlántico -->
+        <item>\"Cartagena, Colombia\", 10.38671, -75.52931, 0, [capital][CO-BOL]</item>       <!-- Bolívar -->
+        <item>"Bogotá", 4.71111, -74.07222, 2640, [capital][CO-DC]</item>                     <!-- Capital District -->
+        <item>"Montería", 8.7439, -75.87742, 20, [capital][CO-COR]</item>                     <!-- Córdoba -->
+        <item>"Santa Marta", 11.24255, -74.21555, 15, [capital][CO-MAG]</item>                <!-- Magdalena -->
+        <item>"Villavicencio", 4.1386,-73.61934, 465, [capital][CO-MET]</item>                <!-- Meta -->
+        <item>"San Juan de Pasto", 1.21044, -77.2766, 2525, [capital][CO-NAR]</item>          <!-- Nariño -->
+        <item>"Cúcuta", 7.88779, -72.50756, 320, [capital][CO-NSA]</item>                     <!-- Norte de Santander -->
+        <item>"Bucaramanga", 7.1251, -73.11909, 960, [capital][CO-SAN]</item>                 <!-- Santander -->
+        <item>"Ibagué", 4.43284, -75.22758, 1285, [capital][CO-TOL]</item>                    <!-- Tolima -->
+        <item>"Santiago de Cali", 3.43153,-76.54245, 1020, [capital][CO-VAC]</item>          <!-- Valle del Cauca -->
+    </string-array>
+    <string-array name="places_SA_BO">    <!-- Bolivia -->
+        <item>\"Trinidad, Beni\", -14.8349, -64.90411, 130, [capital][BO-B]</item>           <!-- Beni -->
+        <item>\"Cochabamba\", -17.38229, -66.15182, 2560, [capital][BO-C]</item>             <!-- Cochabamba -->
+        <item>\"Sucre\", -19.0206, -65.3298, 2841, [capital][BO-H]</item>                    <!-- Chuquisaca -->
+        <item>\"La Paz\", -16.49571, -68.13333, 3640, [BO-L]</item>                          <!-- La Paz -->
+        <item>\"Oruro\", -17.96964, -67.1147, 3740, [capital][BO-O]</item>                   <!-- Oruro -->
+        <item>\"Cobija\", -11.02993, -68.7626, 280, [capital][BO-N]</item>                   <!-- Pando -->
+        <item>\"Potosí\", -19.58899, -65.75343, 4090, [capital][BO-P]</item>                 <!-- Potosí -->
+        <item>\"Santa Cruz de la Sierra\", -17.7833, -63.18222, 400, [capital][BO-S]</item>  <!-- Santa Cruz -->
+        <item>\"Tarija\", -21.53535, -64.73212, 1850, [capital][BO-T]</item>                 <!-- Tarija -->
+    </string-array>
+    <string-array name="places_SA_BR">    <!-- Brazil -->
+        <item>\"Rio Branco, Acre\", -9.98182, -67.80461, 140, [capital][BR-AC]</item>        <!-- Acre (AC) -->
+        <item>\"Maceió\", -9.6702521,-35.737055, 0, [capital][BR-AL]</item>                  <!-- Alagoas (AL) -->
+        <item>\"Macapá\", 0.03693, -51.0482, 0, [capital][BR-AP]</item>                      <!-- Amapá (AP) -->
+        <item>\"Manaus\", -3.13041, -60.02245, 90, [capital][BR-AM]</item>                   <!-- Amazonas (AM) -->
+        <item>\"Salvador, Bahia\", -13.01148, -38.49575, 0, [capital][BR-BA]</item>          <!-- Bahia (BA) -->
+        <item>\"Fortaleza\", -3.72115, -38.50768, 0, [capital][BR-CE]</item>                 <!-- Ceará (CE) -->
+        <item>\"Brasília\", -15.79707, -47.87281, 1170, [capital][BR-DF]</item>              <!-- Distrito Federal (DF) -->
+        <item>\"Vitória, Espírito Santo\", -20.31724, -40.3292, 0, [capital][BR-ES]</item>   <!-- Espírito Santo (ES) -->
+        <item>\"Goiânia\", -16.68049, -49.25642, 750, [capital][BR-GO]</item>                <!-- Goiás (GO) -->
+        <item>\"São Luís, Maranhão\", -2.52646, -44.30691, 0, [capital][BR-MA]</item>        <!-- Maranhão (MA) -->
+        <item>\"Cuiabá\", -15.59674, -56.09209, 165, [capital][BR-MT]</item>                 <!-- Mato Grosso (MT) -->
+        <item>\"Campo Grande\", -20.46466, -54.61635, 590, [capital][BR-MS]</item>           <!-- Mato Grosso do Sul (MS) -->
+        <item>\"Belo Horizonte\", -19.92275, -43.9451, 850, [capital][BR-MG]</item>          <!-- Minas Gerais (MG) -->
+        <item>\"Belém\", -1.4630032,-48.503798, 10, [capital][BR-PA]</item>                  <!-- Pará (PA) -->
+        <item>\"João Pessoa, Paraíba\", -7.12487, -34.82312, 0, [capital][BR-PB]</item>      <!-- Paraíba (PB) -->
+        <item>\"Curitiba\", -25.43596, -49.27321, 930, [capital][BR-PR]</item>               <!-- Paraná (PR) -->
+        <item>\"Recife\", -8.0632248, -34.87113, 0, [capital][BR-PE]</item>                  <!-- Pernambuco (PE) -->
+        <item>\"Teresina\", -5.09173, -42.81295, 85, [capital][BR-PI]</item>                 <!-- Piauí (PI) -->
+        <item>\"Rio de Janeiro\", -22.92322, -43.1687, 0, [capital][BR-RJ]</item>            <!-- Rio de Janeiro (RJ) -->
+        <item>\"Natal, Rio Grande do Norte\", -5.78176, -35.19244, 0, [BR-RN]</item>         <!-- Rio Grande do Norte (RN) -->
+        <item>\"Porto Alegre\", -30.05602, -51.23345, 0, [capital][BR-RS]</item>             <!-- Rio Grande do Sul (RS) -->
+        <item>\"Porto Velho\", -8.76561, -63.90831, 80, [capital][BR-RO]</item>              <!-- Rondônia (RO) -->
+        <item>\"Boa Vista, Roraima\", 2.82068, -60.67253, 90, [capital][BR-RR]</item>        <!-- Roraima (RR) -->
+        <item>\"Florianópolis\", -27.59226, -48.56023, 5, [capital][BR-SC]</item>            <!-- Santa Catarina (SC) -->
+        <item>\"São Paulo\", -23.6821, -46.8754, 815, [capital][BR-SP]</item>                <!-- São Paulo (SP) -->
+        <item>\"Aracaju\", -10.92422, -37.04408, 0, [capital][BR-SE]</item>                  <!-- Sergipe (SE) -->
+        <item>\"Palmas, Tocantins\", -10.18943, -48.36444, 230, [capital][BR-TO]</item>      <!-- Tocantins (TO) -->
+    </string-array>
+    <string-array name="places_SA_AR">    <!-- Argentina -->
+        <item>\"Buenos Aires\", -34.6156, -58.5734, 29, [capital][AR-B]</item>
+        <item>\"La Plata\", -34.92133, -57.95464, 25, [capital][AR-B]</item>                  <!-- Buenos Aires -->
+        <item>\"Ciudad de Catamarca\", -28.46968, -65.78708, 500, [capital][AR-K]</item>      <!-- Catamarca -->
+        <item>\"Resistencia, Chaco\", -27.46276, -58.98451, 25, [capital][AR-H]</item>        <!-- Chaco -->
+        <item>\"Rawson, Chubut\", -43.29978, -65.10573, 5, [capital][AR-U]</item>             <!-- Chubut -->
+        <item>\"Córdoba, Argentina\", -31.42864, -64.18487, 350, [capital][AR-X]</item>       <!-- Córdoba -->
+        <item>\"Corrientes\", -27.48446, -58.7825, 50, [capital][AR-W]</item>                 <!-- Corrientes -->
+        <item>\"Paraná, Entre Ríos\", -31.74013, -60.52750, 78, [capital][AR-E]</item>        <!-- Entre Ríos -->
+        <item>\"Formosa, Argentina\", -26.18554, -58.20302, 55, [capital][AR-P]</item>        <!-- Formosa -->
+        <item>\"San Salvador de Jujuy\", -24.18285, -65.3147, 1260, [capital][AR-Y]</item>    <!-- Jujuy -->
+        <item>\"Santa Rosa, La Pampa\", -36.62039, -64.29061, 175, [capital][AR-L]</item>     <!-- La Pampa -->
+        <item>\"La Rioja, Argentina\", -29.41563, -66.85977, 515, [capital][AR-F]</item>      <!-- La Rioja -->
+        <item>\"Mendoza, Argentina\", -32.88984, -68.84462, 745, [capital][AR-M]</item>       <!-- Mendoza -->
+        <item>\"Posadas, Misiones\", -27.36893, -55.89768, 120, [capital][AR-N]</item>        <!-- Misiones -->
+        <item>\"Neuquén\", -38.95244, -68.05423, 270, [capital][AR-Q]</item>                  <!-- Neuquén -->
+        <item>\"Viedma, Río Negro\", -40.80857,-62.99469, 10, [capital][AR-R]</item>          <!-- Río Negro -->
+        <item>\"Salta\", -24.78921, -65.42813, 1150, [capital][AR-A]</item>                   <!-- Salta -->
+        <item>\"San Juan, Argentina\", -31.53718, -68.52509, 640, [capital][AR-J]</item>      <!-- San Juan -->
+        <item>\"San Luis, Argentina\", -33.30214, -66.33692, 710, [capital][AR-D]</item>      <!-- San Luis -->
+        <item>\"Río Gallegos, Santa Cruz\", -51.62336, -69.21611, 20, [capital][AR-Z]</item>  <!-- Santa Cruz -->
+        <item>\"Santa Fe, Argentina\", -31.63713,-60.71, 25, [capital][AR-S]</item>           <!-- Santa Fe -->
+        <item>\"Santiago del Estero\", -27.7877, -64.2597, 180, [capital][AR-G]</item>        <!-- Santiago del Estero -->
+        <item>\"Ushuaia\", -54.80941, -68.31165, 20, [capital][AR-V]</item>                   <!-- Tierra del Fuego -->
+        <item>\"San Miguel de Tucumán\", -26.82592, -65.22504, 430, [capital][AR-T]</item>    <!-- Tucumán -->
+    </string-array>
+    <string-array name="places_SA_CL">    <!-- Chile -->
+        <item>\"Santiago\", -33.4724, -70.9100, 635, [capital][CL-RM]</item>            <!-- Metropolitan -->
+        <item>\"Arica\", -18.47818, -70.30993, 5, [capital][CL-AP]</item>               <!-- Arica and Parinacota -->
+        <item>\"Iquique\", -20.23172, -70.14696, 0, [capital][CL-TA]</item>             <!-- Tarapacá -->
+        <item>\"Antofagasta\", -23.65153, -70.39778, 40, [capital][CL-AN]</item>        <!-- Antofagasta -->
+        <item>\"Copiapó\", -27.36663, -70.33204, 390, [capital][CL-AT]</item>           <!-- Atacama -->
+        <item>\"La Serena, Chile\", -29.90269, -71.25198, 30, [capital][CL-CO]</item>   <!-- Coquimbo -->
+        <item>\"Valparaíso\", -33.04259, -71.60884, 0, [capital][CL-VS]</item>          <!-- Valparaíso -->
+        <item>\"Rancagua\", -34.16903, -70.72266, 570, [capital][CL-LI]</item>          <!-- O'Higgins -->
+        <item>\"Talca\", -35.42657, -71.66592, 100, [capital][CL-ML]</item>             <!-- Maule -->
+        <item>\"Chillán\", -36.60952,-72.10903, 125, [capital][CL-NB]</item>            <!-- Ñuble -->
+        <item>\"Concepción, Chile\", -36.81572, -73.03151, 10, [capital][CL-BI]</item>  <!-- Biobío -->
+        <item>\"Temuco\", -38.74002, -72.59036, 360, [capital][CL-AR]</item>            <!-- Araucanía -->
+        <item>\"Valdivia\", -39.81418, -73.24582, 5, [capital][CL-LR]</item>            <!-- Los Ríos -->
+        <item>\"Puerto Montt\", -41.47865, -72.95118, 15, [capital][CL-LL]</item>       <!-- Los Lagos -->
+        <item>\"Coyhaique\", -45.5709,-72.06834, 300, [capital][CL-AI]</item>           <!-- Aysén -->
+        <item>\"Punta Arenas\", -53.16281, -70.90869, 35, [capital][CL-MA]</item>       <!-- Magallanes -->
+    </string-array>
+    <string-array name="places_SA_PE">    <!-- Peru -->
+        <item>"Lima", -12.0553, -77.0802, 77, [capital][PE-LIM]</item>
+        <item>"Arequipa", -16.4035, -71.54836, 2335, [capital][PE-ARE]</item>           <!-- Arequipa -->
+        <item>"Chimbote", -9.07456, -78.59356, 5, [capital][PE-ANC]</item>              <!-- Ancash -->
+        <item>"Cusco", -13.53171, -71.96829, 3400, [capital][PE-CUS]</item>             <!-- Cusco -->
+        <item>"Huancayo", -12.06811, -75.21007, 3260, [capital][PE-JUN]</item>          <!-- Huancayo -->
+        <item>\"Ica, Peru\", -14.06406, -75.72915, 405, [capital][PE-ICA]</item>        <!-- Ica -->
+        <item>\"Trujillo, Peru\", -8.11184, -79.02877, 35, [capital][PE-LAL]</item>     <!-- La Libertad -->
+        <item>"Chiclayo", -6.77155, -79.84794, 25, [capital][PE-LAM]</item>             <!-- Lambayeque -->
+        <item>"Iquitos", -3.74931, -73.24456, 100, [capital][PE-LOR]</item>             <!-- Loreto -->
+        <item>"Piura", -5.17472, -80.66198, 55, [capital][PE-PIU]</item>                <!-- Piura -->
+        <item>"Juliaca", -15.49313, -70.13547, 3825, [capital][PE-PUN]</item>           <!-- San Román -->
+        <item>"Tacna", -18.00988, -70.24546, 550, [capital][PE-TAC]</item>              <!-- Tacna -->
+        <item>"Pucallpa", -8.39247, -74.55638, 155, [capital][PE-UCA]</item>            <!-- Ucayali -->
+    </string-array>
+    <string-array name="places_SA_VE">    <!-- Venezuela -->
+        <item>"Caracas", 10.49474, -66.89362, 900, [capital][VE-A]</item>
+        <item>"Puerto Ayacucho", 5.66656, -67.62857, 520, [capital][VE-Z]</item>            <!-- Amazonas  -->
+        <item>"San Fernando de Apure", 7.88975, -67.47176, 50, [capital][VE-C]</item>       <!-- Apure -->
+        <item>"Maracay", 10.24932, -67.59338, 435, [capital][VE-D]</item>                   <!-- Aragua -->
+        <item>\"Barinas, Barinas\", 8.63512, -70.23679, 187, [capital][VE-E]</item>         <!-- Barinas -->
+        <item>"Ciudad Bolívar", 8.14362, -63.55158, 55, [capital][VE-F]</item>              <!-- Bolívar -->
+        <item>"Ciudad Guayana", 8.35519, -62.63061, 5, [VE-F]</item>                        <!-- Bolívar -->
+        <item>\"Valencia, Venezuela\", 10.16552, -68.00053, 520, [capital][VE-G]</item>     <!-- Carabobo -->
+        <item>"Barquisimeto", 10.06093, -69.33239, 565, [capital][VE-K]</item>              <!-- Lara -->
+        <item>"Maturín", 9.74757, -63.1819, 65, [capital][VE-N]</item>                      <!-- Monagas -->
+        <item>"Cumaná", 10.4591, -64.17615, 45, [capital][VE-R]</item>                      <!-- Sucre -->
+        <item>"Maracaibo", 10.66582, -71.60626, 5, [capital][VE-V]</item>                   <!-- Zulia -->
     </string-array>
 
     <!-- Unsorted -->
     <string-array name="places_unsorted">
+        <item>"Grasberg mine", -4.05876, 137.11323, 4270, [misc][ID]</item>    <!-- Indonesia -->
+    </string-array>
+
+    <string-array name="places_deeps">    <!-- deepest places -->
+        <item>\"Challenger Deep, West Pacific\", 11.37333, 142.59166, -10925, [misc]</item>
+        <item>\"Horizon Deep, South West Pacific\", -23.25833, -174.72666, -10820, [misc]</item>
+        <item>\"Sirena Deep, West Pacific\", 12.0654, 144.58113, -10714, [misc]</item>
+        <item>\"Brownson Deep, Atlantic Ocean\", 19.58333, -66.5, -8376, [misc]</item>
+        <item>\"Weber Deep, Banda Sea\", -5.43927, 131.01452, -7351, [misc]</item>
+        <item>\"Molloy Deep, Greenland Sea\", 79.13666, 2.8166, -5550, [misc]</item>
+        <item>\"Litke Deep, Arctic Ocean\", 82.4, 19.51666, -5449, [misc]</item>
+        <item>\"Calypso Deep, Mediterranean Sea\", 36.56666, 21.13333, -5200, [misc]</item>
+        <item>\"Sigsbee Deep, Gulf of Mexico\", 23.86666, -91.58333, -4384, [misc]</item>
+    </string-array>
+
+    <string-array name="places_mount">    <!-- highest places -->
+        <item>"Mount Everest", 27.98833, 86.92527, 8848.86, [misc][summit]</item>    <!-- Asia -->
+        <item>"Aconcagua", -32.65332, -70.012, 6960.8, [misc][summit]</item>         <!-- South America -->
+        <item>"Chimborazo", -1.46916, -78.8175, 6263.47, [misc][summit]</item>       <!-- South America -->
+        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc][summit]</item>          <!-- North America -->
+        <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895, [misc][summit]</item>    <!-- Africa -->
+        <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc][summit]</item>          <!-- Russia -->
+        <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc][summit]</item>      <!-- Antarctica -->
+        <item>"Puncak Jaya", -4.07888, 137.15833, 4884, [misc][summit]</item>        <!-- Indonesia -->
+        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc][summit]</item>        <!-- Europe -->
+        <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228, [misc][summit]</item>  <!-- Australia -->
     </string-array>
 
 </resources>

@@ -25,6 +25,7 @@
     <drawable name="ic_sunset_ref">@drawable/ic_sunset_light</drawable>
     <drawable name="ic_sunset_large_ref">@drawable/ic_sunset_large_light</drawable>
     <drawable name="ic_noon_large_ref">@drawable/ic_noon_large_light</drawable>
+    <drawable name="ic_midnight_large_ref">@drawable/ic_midnight_large_light</drawable>
 
     <drawable name="ic_moon_rise_ref">@drawable/ic_moon_rise_light</drawable>
     <drawable name="ic_moon_set_ref">@drawable/ic_moon_set_light</drawable>
@@ -34,6 +35,9 @@
     <drawable name="ic_action_location_found_ref">@drawable/ic_action_location_found_light</drawable>
     <drawable name="ic_action_location_off_ref">@drawable/ic_action_location_off_light</drawable>
     <drawable name="ic_action_location_searching_ref">@drawable/ic_action_location_searching_light</drawable>
+    <drawable name="ic_satellite_ref">@drawable/ic_satellite_light</drawable>
+    <drawable name="ic_network_ref">@drawable/ic_network_light</drawable>
+    <drawable name="ic_celltower_ref">@drawable/ic_celltower_light</drawable>
 
     <drawable name="ic_action_place_ref">@drawable/ic_action_place_light</drawable>
     <drawable name="ic_action_map1_ref">@drawable/ic_action_map1_light</drawable>
@@ -85,6 +89,9 @@
     <drawable name="ic_action_label_ref">@drawable/ic_action_label_light</drawable>
     <drawable name="ic_action_addlabel_ref">@drawable/ic_action_addlabel_light</drawable>
     <drawable name="ic_action_deselect_ref">@drawable/baseline_deselect_light_24</drawable>
+    <drawable name="ic_action_stars_ref">@drawable/ic_action_stars_light</drawable>
+    <drawable name="ic_action_flagcircle_ref">@drawable/ic_action_flagcircle_light</drawable>
+    <drawable name="ic_action_flag_ref">@drawable/ic_action_flag_light</drawable>
 
     <drawable name="ic_action_play_ref">@drawable/ic_action_play_light</drawable>
     <drawable name="ic_action_pause_ref">@drawable/ic_action_pause_light</drawable>
@@ -105,5 +112,8 @@
     <drawable name="ic_action_previous_item_ref">@drawable/ic_action_previous_item_light</drawable>
 
     <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_light</drawable>
+    <drawable name="tilecard_bg_ref">@drawable/tilecard_bg_light</drawable>
+    <drawable name="tilecard_bg_ref1">@drawable/tilecard_bg_light1</drawable>
+
 
 </resources>

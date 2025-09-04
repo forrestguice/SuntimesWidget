@@ -13,6 +13,11 @@
                 android:icon="?attr/icActionAppearance"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/graphOption_showCrosshair"
+                android:title="@string/graph_option_crosshair"
+                android:checkable="true"
+                app:showAsAction="never" />
+
             <item android:id="@+id/graphOption_showGrid"
                 android:title="@string/graph_option_grid"
                 android:checkable="true"
@@ -68,8 +73,8 @@
 
     <item android:id="@+id/action_share"
         android:title="@string/configAction_share"
-        android:icon="?attr/icActionShare" android:visible="false"
-        app:showAsAction="never" />   <!-- TODO -->
+        android:icon="?attr/icActionShare"
+        app:showAsAction="never" />
 
     <item android:id="@+id/action_help"
         android:title="@string/configAction_help"

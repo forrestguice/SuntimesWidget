@@ -29,21 +29,35 @@ public class PlaceItem implements Parcelable
 
     public long rowID = -1;
     public Location location = null;
-    public boolean isDefault = false;
+    public String comment = null;
 
     public PlaceItem() {}
 
-    public PlaceItem(long rowID, Location location )
+    public PlaceItem(long rowID, Location location)
     {
         this.rowID = rowID;
         this.location = location;
+    }
+    public PlaceItem(long rowID, Location location, String comment)
+    {
+        this.rowID = rowID;
+        this.location = location;
+        this.comment = comment;
     }
 
     public PlaceItem( Parcel in )
     {
         this.rowID = in.readLong();
         this.location = in.readParcelable(getClass().getClassLoader());
-        this.isDefault = (in.readInt() == 1);
+        //this.isDefault = (in.readInt() == 1);
+        this.comment = in.readString();
+    }
+
+    public boolean isDefault() {
+        return hasTag(PlaceItem.TAG_DEFAULT);
+    }
+    public boolean hasTag(String tag) {
+        return (comment != null && comment.contains(tag));
     }
 
     @Override
@@ -55,7 +69,8 @@ public class PlaceItem implements Parcelable
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(rowID);
         dest.writeParcelable(location, 0);
-        dest.writeInt(isDefault ? 1 : 0);
+        //dest.writeInt(isDefault ? 1 : 0);
+        dest.writeString(comment);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator()

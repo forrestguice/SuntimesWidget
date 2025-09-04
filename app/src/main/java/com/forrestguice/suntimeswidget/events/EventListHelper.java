@@ -57,6 +57,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -70,6 +74,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -84,7 +89,7 @@ public class EventListHelper
     public static final String DIALOGTAG_HELP = "help";
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
 
     private int selectedChild = -1;
@@ -128,6 +133,11 @@ public class EventListHelper
         disallowSelect = value;
     }
 
+    private String[] typeFilter = null;
+    public void setTypeFilter(@Nullable String[] filter) {
+        typeFilter = filter;
+    }
+
     private boolean expanded = false;
     public void setExpanded( boolean value ) {
         expanded = value;
@@ -137,6 +147,11 @@ public class EventListHelper
         //Log.d("DEBUG", "setSelected: " + eventID);
         selectedItem = adapter.findItemByID(eventID);
         adapter.setSelected(selectedItem);
+    }
+
+    private Location location = null;
+    public void setLocation(Location value) {
+        location = value;
     }
 
     public void onRestoreInstanceState(Bundle savedState)
@@ -295,8 +310,23 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-        events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+        List<EventSettings.EventAlias> events = new ArrayList<>();
+        if (typeFilter != null && typeFilter.length > 0)
+        {
+            for (String filter : typeFilter)
+            {
+                try {
+                    AlarmEventProvider.EventType type = AlarmEventProvider.EventType.valueOf(filter);
+                    events.addAll(EventSettings.loadEvents(context, type));
+                } catch (IllegalArgumentException e) {
+                    Log.w("EventListHelper", "initAdapter: invalid type filter: " + e);
+                }
+            }
+
+        } else {
+            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION));
+            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
+        }
 
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
@@ -312,6 +342,7 @@ public class EventListHelper
         if (expanded)
         {
             ExpandableEventDisplayAdapter adapter0 = new ExpandableEventDisplayAdapter(context, R.layout.layout_listitem_events, R.layout.layout_listitem_events1, events);
+            adapter0.setLocation(location);
             ExpandableListView expandedList = (ExpandableListView) list;
             expandedList.setAdapter(adapter0);
             adapter = adapter0;
@@ -591,7 +622,7 @@ public class EventListHelper
         importListener0 = listener;
     }
 
-    private EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
+    private final EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -787,11 +818,12 @@ public class EventListHelper
      */
     public static class ExpandableEventDisplayAdapter extends BaseExpandableListAdapter implements EventDisplayAdapterInterface
     {
-        private WeakReference<Context> contextRef;
-        private int groupResourceID, childResourceID;
-        private List<EventSettings.EventAlias> objects;
+        private final WeakReference<Context> contextRef;
+        private final int groupResourceID, childResourceID;
+        private final List<EventSettings.EventAlias> objects;
         private EventSettings.EventAlias selectedItem;
         private int selectedChild = -1;
+        private final SuntimesUtils utils = new SuntimesUtils();
 
         public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventSettings.EventAlias> objects)
         {
@@ -799,6 +831,7 @@ public class EventListHelper
             this.groupResourceID = groupResourceID;
             this.childResourceID = childResourceID;
             this.objects = objects;
+            SuntimesUtils.initDisplayStrings(context);
         }
 
         @Override
@@ -880,6 +913,7 @@ public class EventListHelper
             if (icon != null) {
                 icon.setBackgroundColor(item.getColor());
             }
+
             return view;
         }
 
@@ -918,7 +952,32 @@ public class EventListHelper
                 icon.setImageDrawable( drawable );
             }
 
+            TextView timeText = (TextView)view.findViewById(R.id.time_preview);
+            if (timeText != null)
+            {
+                Calendar now = Calendar.getInstance();
+                String uri = item.getUri() + (rising ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
+                Calendar eventTime = AlarmNotifications.updateAlarmTime_addonEvent(context, context.getContentResolver(), uri, getLocation(context), 0, false, AlarmClockItem.everyday(), now);
+                boolean isSoon = (eventTime != null && (Math.abs(now.getTimeInMillis() - eventTime.getTimeInMillis()) < 1000 * 60 * 260 * 48));
+                timeText.setText(eventTime != null
+                        ? ( isSoon ? utils.calendarTimeShortDisplayString(context, eventTime).toString()
+                                   : utils.calendarDateTimeDisplayString(context, eventTime, false, true, false, true).getValue())
+                        : "");
+                timeText.setVisibility(eventTime != null ? View.VISIBLE : View.GONE);
+            }
+
             return view;
+        }
+
+        private Location location = null;
+        public void setLocation(@Nullable Location value) {
+            location = value;
+        }
+        public Location getLocation(Context context) {
+            if (location == null) {
+                location = WidgetSettings.loadLocationPref(context, 0);
+            }
+            return location;
         }
 
         public void setSelected( EventSettings.EventAlias item ) {

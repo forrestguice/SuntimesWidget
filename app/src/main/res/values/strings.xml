@@ -41,6 +41,8 @@
     <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Clear Selection</string>
+    <string name="configAction_checkNone">None</string>    <!-- TODO -->
+    <string name="configAction_checkAll">All</string>    <!-- TODO -->
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
     <string name="configAction_onlineHelp">Online Help</string>
@@ -156,6 +158,7 @@
     <string name="delta_day_yesterday">Yesterday was</string>
     <string name="delta_day_shorter">shorter</string>
     <string name="delta_day_longer">longer</string>
+    <string name="delta_day_same">the same length</string>    <!-- TODO -->
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -197,6 +200,7 @@
     <string name="until_nauticalTwilight">nautical twilight</string>
     <string name="until_sunrise">sunrise</string>
     <string name="until_noon">solar noon</string>
+    <string name="until_midnight">solar midnight</string>    <!-- TODO -->
     <string name="until_sunset">sunset</string>
     <string name="untilEnd_civilTwilight">civil twilight</string>
     <string name="untilEnd_nauticalTwilight">nautical twilight</string>
@@ -421,6 +425,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
     <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Midnight</string>                    <!-- setting -->   <!-- TODO -->
+    <string name="timeMode_midnight">Solar Midnight</string>                    <!-- setting -->   <!-- TODO -->
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
@@ -438,6 +444,11 @@
     <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">None</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Polar Night</string>                   <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnightsun">Midnight Sun</string>                 <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight">Midnight Twilight</string>       <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
+    <string name="timeMode_midnighttwilight_whitenight">White Night</string>  <!-- a label (not an actual timeMode setting) --> <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -861,6 +872,10 @@
     <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->
 
+    <string name="configLabel_themeColorGraphMidnightText">Midnight (Text)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightFill">Midnight (Fill)</string>         <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorGraphMidnightStroke">Midnight (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+
     <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphMoonPathDayFill">Moon Path (Day Fill)</string>         <!-- color label -->
@@ -919,7 +934,7 @@
     <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+    <string name="configHint_themeName">@string/hint_label</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
@@ -935,10 +950,33 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->
 
+    <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->
+    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->
+    <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->
+    <string name="configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->
+    <string name="configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->
+    <string name="configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->
+    <string name="configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->
+    <string name="configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->
+    <string name="configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->
+
     <!--
          CUSTOM EVENTS
     -->
-    <string name="eventType_sun_elevation">Sun (elevation)</string>
+    <string name="eventType_sun_elevation">Sun (elevation)</string>           <!-- TODO -->
+    <string name="eventType_sun_shadowlength">Sun (shadow length)</string>    <!-- TODO -->
+    <string name="eventType_date">Date</string>                               <!-- TODO -->
+    <string name="eventType_alias">Alias</string>                             <!-- TODO -->
+    <string name="eventType_default">Default</string>                         <!-- TODO -->
+    <string name="eventType_default_sun">Sun</string>                         <!-- TODO -->
+    <string name="eventType_default_moon">Moon</string>                       <!-- TODO -->
+    <string name="eventType_default_moonphases">Moon Phases</string>          <!-- TODO -->
+    <string name="eventType_default_seasons">Seasons</string>                 <!-- TODO -->
+
     <string name="eventlist_dialog_title">Custom Events</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
@@ -993,7 +1031,7 @@
 
     <string name="editevent_dialog_title">Event</string>    <!-- 'add event' title -->
     <string name="editevent_dialog_title1">Event</string>    <!-- 'edit event' title -->
-    <string name="editevent_dialog_label_label">Label</string>
+    <string name="editevent_dialog_label_label">@string/hint_label</string>
     <string name="editevent_dialog_label_hint">Event Label</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Custom Angle</string>
@@ -1139,7 +1177,7 @@
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->
+    <string name="alarmlabel_hint">@string/hint_label</string>        <!-- EditText hint -->
 
     <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->
 
@@ -1171,7 +1209,10 @@
     <string name="configLabel_alarms_autostart_on">On</string>
     <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>
     <string name="configLabel_alarms_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="autostartWarning"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
+
+    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>
 
     <string-array name="aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
@@ -1190,7 +1231,7 @@
         <item>Unihertz</item>
         <!--<item>Google</item>--> <!-- uncomment to test with emulator -->
     </string-array>
-    
+
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">On</string>
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
@@ -1207,6 +1248,8 @@
     <string name="notificationChannel_notifications1_desc">@string/alarmMode_notification1</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_title">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
     <string name="notificationChannel_misc_desc">@string/configLabel_alarmMisc</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_title">@string/configLabel_bedtime</string>  <!-- notification channel title -->
+    <string name="notificationChannel_bedtime_desc">@string/configLabel_bedtime</string>  <!-- notification channel title -->
 
     <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>
     <string name="configLabel_alarms_notifications_fullscreen_on">On</string>
@@ -1221,6 +1264,11 @@
     <string name="configLabel_alarms_bootcompleted_info_never">Never</string>
     <string name="configLabel_alarms_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="configLabel_alarms_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
+
+    <string name="configLabel_alarms_bootcompleted_delay">Boot Completed (delay)</string>  <!-- TODO -->
+    <string name="configLabel_alarms_bootcompleted_delay_summary">%s</string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
@@ -1247,12 +1295,41 @@
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
     <string name="configLabel_alarms_fadein_disabled">Off</string>
 
+    <string name="configLabel_alarms_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string-array name="fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
+        <item>Linear</item>
+        <item>Cubic</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="fadeInMethod_values" translatable="false">
+        <item>0</item>    <!-- handler (linear) -->
+        <item>1</item>    <!-- handler (cubic) -->
+    </string-array>
+
     <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->
     <string name="configLabel_alarms_brightMode">Bright Alarms</string>
     <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>
 
     <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>
     <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>
+    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+
+    <string name="configAction_preview">Preview</string>    <!-- TODO -->
+    <string name="configAction_previewColors">@string/configAction_preview</string>
+
+    <string-array name="brightMode_colors_previewKeys" translatable="false">
+        <item>color_bright_bg_end</item>
+        <!--<item>color_sounding_pulse_start</item>
+        <item>color_sounding_pulse_end</item>
+        <item>color_control_enabled</item>
+        <item>color_control_pressed</item>-->
+    </string-array>
+
+    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_foliage">Foliage</string>
+    <string name="brightMode_colors_label_bluesky">Blue Sky</string>
 
     <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
     <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->
@@ -1305,6 +1382,10 @@
         <item quantity="other">%s days</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
+    <string name="configAction_addTime_hours">hours</string>       <!-- + hours -->        <!-- TODO -->
+    <string name="configAction_addTime_minutes">minutes</string>   <!-- + minutes -->      <!-- TODO -->
+    <string name="configAction_addTime_seconds">seconds</string>   <!-- + seconds -->      <!-- TODO -->
+    <string name="configAction_addTime_days">days</string>         <!-- + days -->         <!-- TODO -->
 
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
@@ -1312,6 +1393,9 @@
 
     <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>
     <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_clearall">Clear Alarms</string>    <!-- TODO -->
+    <string name="configLabel_alarms_clearall_summary">Clear the list of alarms and notifications.</string>     <!-- TODO -->
 
     <!--
       BEDTIME
@@ -1371,6 +1455,9 @@
     <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>
     <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>
 
+    <string name="configLabel_dnd_rulebased">DND Rules</string>
+    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>
+
     <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
     <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->
@@ -1409,6 +1496,7 @@
     <string name="restorebackup_dialog_item_colors">Colors</string>
     <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>
     <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>
     <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string>
     <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string>
     <string name="restorebackup_dialog_item_placeitems">Places</string>
@@ -1431,6 +1519,7 @@
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
     <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
     <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+    <string name="resetwidget_dialog_message">Are you sure you want to reset to defaults?</string>
 
     <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
     <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string>
@@ -1483,18 +1572,49 @@
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (China)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
+    <string name="place_label_AS_IR">Asia (Iran)</string>    <!-- TODO -->
+    <string name="place_label_AS_IQ">Asia (Iraq)</string>    <!-- TODO -->
     <string name="place_label_AS_JP">Asia (Japan)</string>
+    <string name="place_label_AS_PK">Asia (Pakistan)</string>    <!-- TODO -->
     <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_BE">Europe (Belgium)</string>   <!-- TODO -->
+    <string name="place_label_EU_DE">Europe (Germany)</string>   <!-- TODO -->
+    <string name="place_label_EU_DK">Europe (Denmark)</string>   <!-- TODO -->
     <string name="place_label_EU_ES">Europe (Spain)</string>
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>
+    <string name="place_label_EU_FI">Europe (Finland)</string>    <!-- TODO -->
+    <string name="place_label_EU_FR">Europe (France)</string>    <!-- TODO -->
+    <string name="place_label_EU_GB">Europe (United Kingdom)</string>    <!-- TODO -->
+    <string name="place_label_EU_GR">Europe (Greece)</string>    <!-- TODO -->
+    <string name="place_label_EU_UK">Europe (United Kingdom)</string>   <!-- deprecated; use _GB instead; TODO: remove all references -->
+    <string name="place_label_EU_IT">Europe (Italy)</string>    <!-- TODO -->
+    <string name="place_label_EU_NL">Europe (Netherlands)</string>   <!-- TODO -->
+    <string name="place_label_EU_NO">Europe (Norway)</string>   <!-- TODO -->
+    <string name="place_label_EU_PL">Europe (Poland)</string>   <!-- TODO -->
+    <string name="place_label_EU_PT">Europe (Portugal)</string>   <!-- TODO -->
+    <string name="place_label_EU_RU">Europe (Russia)</string>    <!-- TODO -->
+    <string name="place_label_EU_SE">Europe (Sweden)</string>    <!-- TODO -->
     <string name="place_label_NA">North America</string>
     <string name="place_label_NA_CA">North America (Canada)</string>
+    <string name="place_label_NA_MX">North America (Mexico)</string>    <!-- TODO -->
     <string name="place_label_NA_US">North America (US)</string>
+    <string name="place_label_NA_US_W">North America (US, West)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_S">North America (US, South)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_NE">North America (US, North East)</string>    <!-- TODO -->
+    <string name="place_label_NA_US_MW">North America (US, Midwest)</string>    <!-- TODO -->
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
+    <string name="place_label_SA_AR">Argentina</string>   <!-- TODO -->
+    <string name="place_label_SA_BR">Brazil</string>   <!-- TODO -->
+    <string name="place_label_SA_BO">Bolivia</string>   <!-- TODO -->
+    <string name="place_label_SA_CO">Colombia</string>   <!-- TODO -->
+    <string name="place_label_SA_CL">Chile</string>   <!-- TODO -->
+    <string name="place_label_SA_EC">Ecuador</string>   <!-- TODO -->
+    <string name="place_label_SA_PE">Peru</string>   <!-- TODO -->
+    <string name="place_label_SA_VE">Venezuela</string>   <!-- TODO -->
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
@@ -1540,6 +1660,10 @@
     <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
     <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
@@ -1547,6 +1671,10 @@
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+
+    <!-- App Setting: Show Equinox / Solstice (date) -->
+    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -1972,6 +2100,8 @@
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
 
+    <string name="configLabel_locationproviders">Location Providers</string>        <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Language</string>   <!-- group title -->
 
@@ -2055,7 +2185,7 @@
         <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>|<a href=https://github.com/grenagit>grenagit</a>]]></item>
         <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>|<a href=https://github.com/cstrsk>CSTRSK</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Erci>Erci</a>|<a href=https://github.com/titanicbobo>titanicbobo</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>|<a href=https://github.com/GiovaGa>GiovaGa</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>|<a href=https://github.com/GiovaGa>GiovaGa</a>|<a href=https://github.com/McCio>McCio</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
@@ -2174,6 +2304,7 @@
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
+    <string name="graph_option_crosshair">Crosshair</string>
     <string name="graph_option_grid">Grid</string>
     <string name="graph_option_labels">Labels</string>
     <string name="graph_option_axis">Axis</string>
@@ -2241,6 +2372,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
@@ -2274,6 +2406,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>start of morning astronomical twilight</item>
@@ -2307,6 +2440,7 @@
         <item>@string/timeMode_cross_midspring</item>
         <item>@string/timeMode_cross_midsummer</item>
         <item>@string/timeMode_cross_midautumnal</item>
+        <item>@string/timeMode_midnight</item>
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
@@ -2342,6 +2476,7 @@
         <item>other</item>    <!-- cross summer -->
         <item>other</item>    <!-- cross autumn -->
         <item>other</item>    <!-- cross winter -->
+        <item>other</item>    <!-- midnight -->
     </string-array>
     <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
         <item>1</item>    <!-- start of astronomical twilight -->
@@ -2375,6 +2510,7 @@
         <item>1</item>    <!-- cross summer -->
         <item>1</item>    <!-- cross autumn -->
         <item>1</item>    <!-- cross winter -->
+        <item>1</item>    <!-- midnight -->
     </integer-array>
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
     <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
@@ -2481,9 +2617,11 @@
     <string name="color_dialog_ok">Select</string>
     <string name="color_dialog_cancel">Cancel</string>
     <string name="color_dialog_suggest">Suggest</string>
+    <string name="color_dialog_recent">Recent</string>    <!-- recent color list label -->
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
+    <string name="color_dialog_tab4">4</string>
     <string name="color_dialog_label_r">R</string>
     <string name="color_dialog_label_g">G</string>
     <string name="color_dialog_label_b">B</string>
@@ -2502,6 +2640,8 @@
 
     <string name="suggest_colorid">Custom</string>       <!-- edittext hint -->
     <string name="hint_colorid">ID</string>              <!-- edittext hint -->
+    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->
     <string name="error_colorid_empty">ID required</string>                  <!-- edittext error text -->
     <string name="error_colorid_spaces">ID may not contains spaces</string>   <!-- edittext error text -->
     <string name="msg_colors_saved">Saved %s</string>        <!-- toast -->
@@ -2518,6 +2658,16 @@
     <string name="colorsdelete_dialog_message">Are you sure you want to remove %s?</string>    <!-- toast -->
     <string name="colorsdelete_dialog_ok">Remove</string>    <!-- toast -->
     <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->
+
+    <!-- Dialog: Crash Report -->
+    <string name="crash_dialog_title">Crash Report</string>    <!-- TODO -->
+    <string name="crash_dialog_message">%s has crashed…</string>    <!-- TODO -->
+    <string name="crash_dialog_message1"><![CDATA[
+        Help improve this app by reporting this crash:<br/><br/>
+        <b>%1$s</b>
+    ]]></string>    <!-- TODO -->
+    <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
+    <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
@@ -2699,16 +2849,24 @@
     ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+          [Icon DST] is shown when the current time applies <b>Daylight Saving</b>, or has been adjusted by a similar rule.<br/><br/>
     ]]></string>
     <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>
+          The <b>rising times</b> indicate the beginning of each twilight period (<b>dawn</b>), and <b>setting times</b> indicate their end (<b>dusk</b>).<br/><br/>
+          <b>Civil Twilight:</b> The sun is less than 6 degrees below the horizon. The brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 6 to 12 degrees below the horizon. Object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 12 to 18 degrees below the horizon. Near darkness of night.<br/><br/>
+          <b>Night:</b> The sun is more than 18 degrees below the horizon. The faintest stars are visible.<br/><br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>White Night:</b> The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.<br/><br/>
+          <b>Midnight Twilight:</b> The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.<br/><br/>
+          <b>Midnight Sun:</b> The sun does not set below the horizon (24 hours of daylight). This is also called <b>polar day</b>.<br/><br/>
+          <b>Polar night:</b> The sun does not rise above the horizon (24 hours of darkness).<br/><br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
@@ -2821,8 +2979,11 @@
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
     <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Permission Granted</string>
+    <string name="configLabel_permissionRequired">Permission Required</string>
 
     <string name="drag_hint">Drag here</string>
+    <string name="hint_label">Label</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

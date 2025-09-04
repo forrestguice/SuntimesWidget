@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:title="@string/configLabel_appearance">
@@ -17,14 +18,16 @@
             android:title="@string/appThemes_lightTheme"
             android:dialogTitle="@string/appThemes_lightTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
-            android:summary="%s" />
+            android:summary="%s"
+            app:actionButtonContentDescription="@string/configActionDesc_themeList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_appearance_theme_dark"
             android:title="@string/appThemes_darkTheme"
             android:dialogTitle="@string/appThemes_darkTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
-            android:summary="%s" />
+            android:summary="%s"
+            app:actionButtonContentDescription="@string/configActionDesc_themeList" />
 
         <com.forrestguice.suntimeswidget.settings.TextSizePreference
             android:key="app_appearance_textsize"
@@ -107,6 +110,11 @@
             android:title="@string/configLabel_ui_showgoldhour"
             android:defaultValue="@bool/def_app_ui_showgoldhour" />
 
+        <CheckBoxPreference
+            android:key="app_ui_showfields_7"
+            android:title="@string/timeMode_midnight"
+            android:defaultValue="@bool/def_app_ui_showmidnight" />
+
     </PreferenceCategory>
 
     <!--<PreferenceCategory
@@ -184,6 +192,12 @@
             android:defaultValue="@bool/def_app_ui_showequinox" />
 
         <CheckBoxPreference
+            android:key="app_ui_showequinox_date"
+            android:title="@string/configLabel_ui_showEquinoxDate"
+            android:summary="@string/configLabel_ui_showEquinoxDate_summary"
+            android:defaultValue="@bool/def_app_ui_showequinox_date" />
+
+        <CheckBoxPreference
             android:key="app_ui_showcrossquarter"
             android:title="@string/configLabel_ui_showCrossQuarter"
             android:summary="@string/configLabel_ui_showCrossQuarter_summary"
@@ -246,7 +260,7 @@
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
             android:defaultValue="@string/def_app_ui_clocktapaction"
-            />
+            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction"
@@ -254,7 +268,8 @@
             android:dialogTitle="@string/configLabel_action_onDateTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
-            android:defaultValue="@string/def_app_ui_datetapaction" />
+            android:defaultValue="@string/def_app_ui_datetapaction"
+            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction1"
@@ -262,7 +277,8 @@
             android:dialogTitle="@string/configLabel_action_onDateTap1"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
-            android:defaultValue="@string/def_app_ui_datetapaction1" />
+            android:defaultValue="@string/def_app_ui_datetapaction1"
+            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_notetapaction"
@@ -270,7 +286,8 @@
             android:dialogTitle="@string/configLabel_action_onNoteTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
-            android:defaultValue="@string/def_app_ui_notetapaction" />
+            android:defaultValue="@string/def_app_ui_notetapaction"
+            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
 
     </PreferenceCategory>
 

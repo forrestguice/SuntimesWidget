@@ -23,17 +23,29 @@
     <LinearLayout
         android:id="@+id/dialog_header"
         android:background="?attr/dialogFrame"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal" android:gravity="center_vertical"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="16dp" android:paddingBottom="16dp">
+        android:paddingTop="8dp" android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/dialog_title"
+        <LinearLayout
             android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="start"
-            style="@style/Base.DialogWindowTitle.AppCompat"
-            android:text="@string/color_dialog_msg" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="start"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                android:text="@string/color_dialog_msg" />
+
+            <TextView
+                android:id="@+id/dialog_subtitle" android:visibility="gone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="start" style="@style/DialogSubTitleStyle"
+                tools:text="Background" />
+
+        </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/color_pager_tabs" android:visibility="visible"
@@ -56,6 +68,11 @@
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab3" />
 
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem4"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:text="@string/color_dialog_tab4" />
+
         </android.support.design.widget.TabLayout>
 
     </LinearLayout>
@@ -67,14 +84,14 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/color_recent"
             android:layout_width="wrap_content" android:layout_height="match_parent"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:elevation="5dp"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="8dp"
             android:orientation="vertical" app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:itemCount="8" tools:listitem="@layout/layout_listitem_color" />
+            tools:itemCount="16" tools:listitem="@layout/layout_listitem_color" />
 
         <com.forrestguice.suntimeswidget.settings.colors.NoSwipeViewPager
             android:id="@+id/color_pager"
             android:layout_width="wrap_content" android:layout_height="match_parent"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" />
+            android:paddingRight="?dialogPreferredPadding" />
 
     </LinearLayout>
 
@@ -83,8 +100,7 @@
         android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical|end"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="8dp" android:paddingBottom="8dp">
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding">
 
 
         <Button

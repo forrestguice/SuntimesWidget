@@ -1,0 +1,5 @@
+- adds "preview" action to the "bright alarm colors" selector.
+- fixes bug "boot completed hangs after phone restart" (#842).
+- fixes bug "FGS not allowed to start from BOOT_COMPLETED!" (Android 15).
+- fixes bug where "moon dialog displays the wrong phase label" (#843).
+- updates translation to Polish and Esperanto.

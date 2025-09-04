@@ -123,6 +123,15 @@
 			app:layout_constraintBottom_toTopOf="@+id/btn_dismiss"
 			tools:text="00:00 AM" />
 
+		<TextView
+			style="@style/TextAppearance.AppCompat.Medium"
+			android:id="@+id/txt_clock_timezone"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/alarmdismiss_margin" android:layout_marginEnd="@dimen/alarmdismiss_margin"
+			android:gravity="top|center_horizontal"
+			app:layout_constraintTop_toBottomOf="@+id/txt_clock_time"
+			tools:text="Local Mean Time" />
+
 		<!--<Button android:id="@+id/btn_snooze" android:visibility="gone"
 			style="@style/Widget.AppCompat.Button.Borderless"
 			android:layout_width="0dp" android:layout_height="96dp"
@@ -173,7 +182,7 @@
 		<TextView android:id="@+id/txt_snooze" android:visibility="visible"
 			style="@style/TextAppearance.AppCompat.Small"
 			android:layout_width="0dp" android:layout_height="wrap_content"
-			android:gravity="center"
+			android:gravity="end" android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
 			app:layout_constraintStart_toEndOf="@+id/layout_back" android:layout_marginBottom="@dimen/alarmdismiss_margin"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"

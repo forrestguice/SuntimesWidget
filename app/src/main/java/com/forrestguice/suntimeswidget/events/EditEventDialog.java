@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022-2024 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -47,15 +47,13 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmOffsetDialog;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
+import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
-import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
-
-import java.util.Locale;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -546,26 +544,30 @@ public class EditEventDialog extends EditBottomSheetDialog
         {
             if (Build.VERSION.SDK_INT >= 11)
             {
-                AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-                offsetDialog.setShowDays(false);
-                offsetDialog.setOffset(getOffset());
-                offsetDialog.setOnAcceptedListener(onOffsetChanged);
-                offsetDialog.show(getChildFragmentManager(), DIALOGTAG_OFFSET);
+                TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
+                dialog.setFlags(false, true, true, false, true);
+                dialog.setRange(0, getResources().getInteger(R.integer.maxAlarmOffsetMillis));
+                dialog.setShowLabel(false);
+                dialog.setValue(getOffset());
+                dialog.setZeroText(getString(R.string.configAction_clearOffset));
+                dialog.setDialogListener(onOffsetChanged);
+                dialog.show(getChildFragmentManager(), DIALOGTAG_OFFSET);
 
             }  else {
                 Toast.makeText(getActivity(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
             }
         }
     };
-    private final DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+    private final TimeOffsetPickerDialog.DialogListener onOffsetChanged = new TimeOffsetPickerDialog.DialogListener()
+    {
         @Override
-        public void onClick(DialogInterface dialog, int which)
+        public void onDialogAccepted(long value)
         {
             FragmentManager fragments = getChildFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            TimeOffsetPickerDialog offsetDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null)
             {
-                int offset = (int)offsetDialog.getOffset();
+                int offset = (int) value;
 
                 Double angle = getAngle();
                 if (angle == null) {
@@ -804,10 +806,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     };
 
-    private final ColorDialog.ColorChangeListener onColorChanged = new ColorDialog.ColorChangeListener() {
+    private final ColorChangeListener onColorChanged = new ColorChangeListener() {
         @Override
         public void onColorChanged(int color) {
-            super.onColorChanged(color);
             setIsModified(true);
         }
     };

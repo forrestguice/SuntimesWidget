@@ -23,15 +23,18 @@
     <string name="def_app_locale" translatable="false">en</string>
 
     <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
+    <string name="def_getFix_maxAge" translatable="false">900000</string>
     <bool name="def_getFix_passiveMode" translatable="false">false</bool>
 
     <bool name="def_app_ui_showwarnings" translatable="false">true</bool>
     <bool name="def_app_ui_showmoon" translatable="false">true</bool>
     <bool name="def_app_ui_showmoon_noon" translatable="false">false</bool>
+    <bool name="def_app_ui_showmoon_phases_showdate" translatable="false">true</bool>
     <bool name="def_app_ui_showequinox" translatable="false">true</bool>
+    <bool name="def_app_ui_showequinox_date" translatable="false">true</bool>
     <bool name="def_app_ui_showcrossquarter" translatable="false">true</bool>
     <bool name="def_app_ui_showlightmap" translatable="false">true</bool>
+    <bool name="def_app_ui_showmidnight" translatable="false">false</bool>
     <bool name="def_app_ui_showgoldhour" translatable="false">true</bool>
     <bool name="def_app_ui_showbluehour" translatable="false">false</bool>
     <bool name="def_app_ui_showheader_icon" translatable="false">true</bool>
@@ -52,9 +55,12 @@
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_snoozeLimit" translatable="false">0</string>      <!-- no snooze limit -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <bool name="def_app_alarms_bright" translatable="false">false</bool>       <!-- bright mode alarms -->
-    <string name="def_app_alarms_bright_fadein" translatable="false">60000</string>       <!-- bright mode fade in 60s -->
-    <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
+    <bool name="def_app_alarms_bright" translatable="false">true</bool>                            <!-- bright mode alarms -->
+    <string name="def_app_alarms_bright_fadein" translatable="false">30000</string>                 <!-- alarm bright mode fade in 30s -->
+    <color name="def_app_alarms_bright_color_start" translatable="false">@color/black</color>       <!-- alarm bright mode start color -->
+    <color name="def_app_alarms_bright_color_end" translatable="false">@color/white</color>         <!-- alarm bright mode end color -->
+    <string name="def_app_alarms_fadein" translatable="false">30000</string>       <!-- fade-in 30s to full volume -->
+    <string name="def_app_alarms_fadein_method" translatable="false">1</string>       <!-- 1 (handler (cubic fade)) -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
     <string name="def_app_alarms_autodismiss" translatable="false">30000</string>    <!-- auto-dismiss after 30s -->
     <bool name="def_app_alarms_autoenable" translatable="false">false</bool>   <!-- automatically enable new alarms (false) -->
@@ -63,5 +69,8 @@
     <string name="def_app_alarms_dismiss_challenge" translatable="false">NONE</string>
 
     <string name="def_app_bedtime_sleepCycleMillis" translatable="false">5400000</string>   <!-- 90m -->
+    <bool name="def_app_bedtime_dnd_rulebased">true</bool>
+
+    <string name="def_app_alarms_bootcompleted_delay" translatable="false">5000</string>    <!-- delay "after boot completed" by 5s -->
 
 </resources>

@@ -151,12 +151,13 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         }
     }
 
+    @SuppressWarnings({"rawtypes", "unused"})
     public void verify_stringArrayValuesOfEnum(String tag1, int array1Id, Class enumClass)
     {
         Context context = activityRule.getActivity();
         String[] values = context.getResources().getStringArray(array1Id);
         for (String value : values) {
-            Enum e = Enum.valueOf(enumClass, value);
+            Enum<?> e = Enum.valueOf(enumClass, value);
         }
     }
 
@@ -170,6 +171,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String value : values)
         {
             try {
+                @SuppressWarnings("unused")
                 WidgetActions.SuntimesAction action = WidgetActions.SuntimesAction.valueOf(value);
 
             } catch (IllegalArgumentException e) {
@@ -179,8 +181,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             }
         }
 
-        assertTrue("The array + (" + tag1 + ") contains invalid enum values: " + badValuesString,
-                badValues.size() == 0);
+        assertEquals("The array + (" + tag1 + ") contains invalid enum values: " + badValuesString, 0, badValues.size());
     }
 
     public void verify_stringArrayLength(String tag1, int array1Id, String tag2, int array2Id)
@@ -207,8 +208,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
 
     public void verify_arrayLength(String tag1, Object[] a1, String tag2, Object[] a2)
     {
-        assertTrue("The size of " + tag1 + " (" + a1.length + ") and " + tag2 + " (" + a2.length + ") DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
-                a1.length == a2.length);
+        assertEquals("The size of " + tag1 + " (" + a1.length + ") and " + tag2 + " (" + a2.length + ") DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(), a1.length, a2.length);
     }
 
     @Test
@@ -273,10 +273,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         }
     }
 
-    public void verify_pluralFormat(String tag1, int pluralID, double value[], String displayValue[])
+    public void verify_pluralFormat(String tag1, int pluralID, double[] value, String[] displayValue)
     {
         Context context = activityRule.getActivity();
-        assertTrue("value[] and displayValue[] must have the same dimension!", value.length == displayValue.length);
+        assertEquals("value[] and displayValue[] must have the same dimension!", value.length, displayValue.length);
 
         boolean[] r = new boolean[value.length];
         for (int i=0; i<value.length; i++)
@@ -297,7 +297,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
     }
 
-    public void verify_pluralFormatI(String tag1, int pluralID, double value[])
+    public void verify_pluralFormatI(String tag1, int pluralID, double[] value)
     {
         Context context = activityRule.getActivity();
         boolean[] r = new boolean[value.length];
@@ -367,7 +367,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             {
                 assertNotNull(item);
                 String[] itemParts = BuildPlacesTask.splitCSV(item, ','); //item.split(",");
-                assertEquals(item + " should have 4 parts but has " + itemParts.length, 4, itemParts.length);
+                assertTrue(item + " should have at least 4 parts but has " + itemParts.length, itemParts.length >= 4);
+                assertTrue(item + " should have no more than 5 parts but has " + itemParts.length, itemParts.length <= 5);   // may contain optional comment
                 assertNotNull(itemParts[0]);
                 assertNotNull(itemParts[1]);
                 assertNotNull(itemParts[2]);
@@ -390,6 +391,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
     protected void verifyStringIsDouble(String message, String value)
     {
         try {
+            @SuppressWarnings("unused")
             double d = Double.parseDouble(value);
         } catch (NumberFormatException e) {
             fail(message);

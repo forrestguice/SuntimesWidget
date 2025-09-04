@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -263,6 +264,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     private int foregroundColor;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, theme.getMapForegroundColor());
@@ -564,27 +566,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             {
                 if (result.getResult())
                 {
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType(result.getMimeType());
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    try {
-                        Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile());
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            shareIntent.setClipData(ClipData.newRawUri("", shareURI));
-                        }
-
-                        String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
-                        Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
-                        context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
-                        return;   // successful export ends here...
-
-                    } catch (Exception e) {
-                        Log.e(LOGTAG, "Failed to share file URI! " + e);
-                    }
+                    String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                    Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                    ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+                    return;
 
                 } else {
                     File file = result.getExportFile();

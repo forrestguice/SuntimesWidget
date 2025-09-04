@@ -455,7 +455,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         if (context != null && text_locationAltUnits != null)
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             switch (units)
             {
                 case IMPERIAL:
@@ -477,7 +477,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
                     WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
-            item.isDefault = item0.isDefault;
+            item.comment = item0.comment;
 
         } else {
             item.rowID = -1;

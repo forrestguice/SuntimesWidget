@@ -106,6 +106,14 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
             R.string.configLabel_themeColorGraphLabels, R.string.configLabel_themeColorGraphLabelsBG,
             R.string.configLabel_themeColorSpring, R.string.configLabel_themeColorSummer, R.string.configLabel_themeColorFall, R.string.configLabel_themeColorWinter
     };
+    public static final int[] COLOR_ROLES = new int[] {
+            ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND,
+            ROLE_FOREGROUND, ROLE_FOREGROUND,
+            ROLE_FOREGROUND, ROLE_FOREGROUND,
+            ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND,
+            ROLE_TEXT, ROLE_BACKGROUND,
+            ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND, ROLE_FOREGROUND
+    };
     protected static final int[] COLORS_FALLBACK = new int[]
     {
             Color.YELLOW, Color.CYAN, Color.BLUE, Color.DKGRAY, Color.BLACK,
@@ -128,6 +136,10 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
     @Override
     public int[] getColorLabelsRes() {
         return LABELS_RESID;
+    }
+    @Override
+    public int[] getColorRoles() {
+        return COLOR_ROLES;
     }
     @Override
     public int[] getColorsResDark() {
