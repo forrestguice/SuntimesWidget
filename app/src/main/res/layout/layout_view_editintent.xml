@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
+            <AutoCompleteTextView android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_package" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_package" android:layout_width="0dp"
+            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_package" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_package" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -182,7 +182,7 @@
                 android:layout_gravity="bottom"
                 android:text="@string/configLabel_action_launch_action" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
+            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_action" android:text=""
                 android:layout_gravity="bottom"
@@ -216,7 +216,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_data" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
+            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_data" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -233,7 +233,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_datatype" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_datatype" android:layout_width="0dp"
+            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_datatype" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_datatype" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
