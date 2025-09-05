@@ -35,7 +35,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@id/checkbox" android:enabled="false" android:visibility="invisible"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_margin="8dp" android:button="?attr/checkVisibility"
