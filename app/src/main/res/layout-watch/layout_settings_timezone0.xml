@@ -59,7 +59,7 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/sort_timezones"
+            <ImageButton android:id="@+id/sort_timezones"
                 style="@style/ActionButton" android:visibility="visible"
                 android:src="?attr/icActionSort" app:tint="@drawable/btn_accent"
                 android:layout_width="wrap_content" android:layout_height="32dp"
@@ -91,7 +91,7 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_solartime_help"
+            <ImageButton android:id="@+id/appwidget_solartime_help"
                 style="@style/ActionButton" android:visibility="visible"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:layout_width="wrap_content" android:layout_height="32dp"

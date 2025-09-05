@@ -60,7 +60,7 @@
                 android:gravity="center_vertical" android:layout_gravity="center_vertical"
                 tools:text="custom1" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_reset"
+            <ImageButton android:id="@+id/edit_intent_reset"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_action_new" android:tint="?attr/colorAccent"
