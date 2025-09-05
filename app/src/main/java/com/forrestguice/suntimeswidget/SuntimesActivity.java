@@ -48,7 +48,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
-import android.widget.CheckBox;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -243,7 +243,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private TextView txt_datasource;
     private View layout_datasource;
-    private CheckBox check_altitude;
+    private AppCompatCheckBox check_altitude;
     private TextView txt_altitude;
     private View layout_altitude;
 
@@ -1077,7 +1077,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         txt_altitude = (TextView) findViewById(R.id.txt_altitude);
-        check_altitude = (CheckBox) findViewById(R.id.check_altitude);
+        check_altitude = (AppCompatCheckBox) findViewById(R.id.check_altitude);
 
         layout_altitude = findViewById(R.id.layout_altitude);
         if (layout_altitude != null)

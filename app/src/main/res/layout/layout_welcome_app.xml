@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="8">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size"
             android:layout_marginTop="16dp" android:layout_marginBottom="8dp"

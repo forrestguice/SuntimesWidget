@@ -147,7 +147,7 @@
                 android:layout_marginStart="0dp" android:layout_marginEnd="8dp"
                 android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_allowResize" />
 
-            <ImageButton android:id="@+id/appwidget_appearance_allowResize_helpButton"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_allowResize_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"

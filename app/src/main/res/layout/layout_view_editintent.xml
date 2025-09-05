@@ -67,7 +67,7 @@
             android:inputType="textMultiLine|textNoSuggestions"
             android:hint="@string/configHint_action_launch_title" />
 
-        <ImageButton android:id="@+id/appwidget_action_launch_load"
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_load"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Widget.AppCompat.ActionButton"
@@ -75,7 +75,7 @@
             android:src="?attr/icActionExtension"
             android:contentDescription="@string/configAction_loadAction" />
 
-        <ImageButton android:id="@+id/appwidget_action_launch_menu"
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="?attr/actionOverflowButtonStyle"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_helpButton"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch" />
 
-            <AutoCompleteTextView android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_package" />
 
-            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_package" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_package" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_package" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -156,14 +156,14 @@
 
             <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_package_clear"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_clear"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
                 android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
                 android:contentDescription="@string/dialog_cancel" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_package_suggest"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_suggest"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
@@ -182,7 +182,7 @@
                 android:layout_gravity="bottom"
                 android:text="@string/configLabel_action_launch_action" />
 
-            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_action" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_action" android:text=""
                 android:layout_gravity="bottom"
@@ -191,14 +191,14 @@
 
             <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_action_clear"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_clear"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
                 android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
                 android:contentDescription="@string/dialog_cancel" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_action_suggest"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_suggest"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:layout_gravity="bottom"
@@ -216,7 +216,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_data" />
 
-            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_data" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_data" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -233,7 +233,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_action_launch_datatype" />
 
-            <AutoCompleteTextView android:id="@+id/appwidget_action_launch_datatype" android:layout_width="0dp"
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch_datatype" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:hint="@string/configHint_action_launch_datatype" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"

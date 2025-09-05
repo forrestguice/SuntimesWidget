@@ -21,13 +21,13 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <ImageButton android:id="@+id/appwidget_general_calendarFormat_editButton"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarFormat_editButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="visible" android:enabled="false"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
                 android:src="?attr/icActionEdit" android:contentDescription="@string/configAction_editCalendarFormat" />
 
-            <ImageButton android:id="@+id/appwidget_general_calendarFormat_helpButton"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarFormat_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible" android:enabled="false"
                 android:layout_height="wrap_content" android:layout_width="0dp"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -55,7 +55,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="?attr/text_size_small"
                 android:inputType="textVisiblePassword" />
 
-            <ImageButton android:id="@+id/appwidget_general_calendarPattern_helpButton"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarPattern_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
