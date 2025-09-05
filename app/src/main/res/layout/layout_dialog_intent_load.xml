@@ -34,7 +34,7 @@
             style="@style/Base.DialogWindowTitle.AppCompat"
             android:text="@string/loadaction_dialog_title" />
 
-        <ImageButton android:id="@+id/edit_intent_menu"
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_menu"
             style="@style/Widget.AppCompat.ActionButton.Overflow"
             android:layout_height="wrap_content" android:layout_width="wrap_content" />
 

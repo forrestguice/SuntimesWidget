@@ -100,7 +100,7 @@
             android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
             android:animateLayoutChanges="true">
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/check_donate"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
