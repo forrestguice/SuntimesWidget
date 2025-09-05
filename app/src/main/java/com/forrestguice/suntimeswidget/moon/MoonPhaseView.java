@@ -143,6 +143,7 @@ public class MoonPhaseView extends LinearLayout
     }
 
     protected SuntimesTheme themeOverride = null;
+    @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
         this.themeOverride = theme;

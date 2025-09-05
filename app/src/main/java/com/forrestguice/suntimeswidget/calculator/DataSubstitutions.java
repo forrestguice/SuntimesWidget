@@ -21,7 +21,9 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -39,9 +41,14 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class DataSubstitutions
 {
+    public static final String PATTERN_MARKER = "%";
+    public static final String PATTERN_EVENT_MARKER = "@";
+
     public static final String PATTERN_m = "%m";    // mode (short)
     public static final String PATTERN_M = "%M";    // mode
     public static final String PATTERN_o = "%o";    // order
@@ -175,6 +182,9 @@ public class DataSubstitutions
     public static <T extends SuntimesData> Calendar getCalendarForEvent(@NonNull SolarEvents event, @NonNull T data)
     {
         if (data == null || data.calculator() == null) {
+            if (BuildConfig.DEBUG) {
+                Log.w("DEBUG", "getCalendarForEvent: null data or calculator! returning null...");
+            }
             return null;
         }
 
@@ -315,7 +325,7 @@ public class DataSubstitutions
      * @param patterns list of patterns to look for
      * @return true if the string contains at least one of the patterns, false if there were none
      */
-    public static boolean containsAtLeastOne(@NonNull String displayString, @NonNull List<String> patterns)
+    public static boolean containsAtLeastOne(@NonNull String displayString, @NonNull Iterable<String> patterns)
     {
         for (String pattern : patterns) {
             if (displayString.contains(pattern)) {
@@ -323,6 +333,15 @@ public class DataSubstitutions
             }
         }
         return false;
+    }
+
+    @Nullable
+    public static String addToSet(@NonNull Set<String> set, @Nullable String value)
+    {
+        if (value != null) {
+            set.add(value);
+        }
+        return value;
     }
 
     protected static SuntimesUtils utils = new SuntimesUtils();
@@ -333,7 +352,12 @@ public class DataSubstitutions
     /**
      * displayStringForTitlePattern
      */
-    public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data) {
+    public static <T extends SuntimesData> String displayStringForTitlePattern0(Context context, String titlePattern, @Nullable T data)
+    {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "displayStringForTitlePattern0: " + titlePattern);
+        }
+
         String displayString;
         if (data instanceof SuntimesRiseSetData) {
             displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesRiseSetData) data);
@@ -369,35 +393,53 @@ public class DataSubstitutions
 
         if (data == null)
         {
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "displayStringForTitlePattern0: null data; removing patterns");
+            }
             for (String pattern : positionPatterns) {
                 displayString = removePattern(displayString, pattern);
             }
             return displayString;
         }
 
+        Set<String> eventPatterns = new TreeSet<>();
         for (SolarEvents event : events)
         {
-            if (!DataSubstitutions.containsAtLeastOne(displayString, positionPatterns)) {
+            if (!displayString.contains(PATTERN_MARKER)) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: done");
+                }
                 break;
             }
 
-            String pattern_em = patterns_em.get(event);
-            String pattern_et = patterns_et.get(event);
-            String pattern_eT = patterns_eT.get(event);
-            String pattern_ea = patterns_ea.get(event);
-            String pattern_eA = patterns_eA.get(event);
-            String pattern_ez = patterns_ez.get(event);
-            String pattern_eZ = patterns_eZ.get(event);
-            String pattern_ed = patterns_ed.get(event);
-            String pattern_eD = patterns_eD.get(event);
-            String pattern_er = patterns_er.get(event);
-            String pattern_eR = patterns_eR.get(event);
-            String pattern_es = patterns_es.get(event);
-            String pattern_eS = patterns_eS.get(event);
+            eventPatterns.clear();
+            String pattern_em = addToSet(eventPatterns, patterns_em.get(event));
+            String pattern_et = addToSet(eventPatterns, patterns_et.get(event));
+            String pattern_eT = addToSet(eventPatterns, patterns_eT.get(event));
+            String pattern_ea = addToSet(eventPatterns, patterns_ea.get(event));
+            String pattern_eA = addToSet(eventPatterns, patterns_eA.get(event));
+            String pattern_ez = addToSet(eventPatterns, patterns_ez.get(event));
+            String pattern_eZ = addToSet(eventPatterns, patterns_eZ.get(event));
+            String pattern_ed = addToSet(eventPatterns, patterns_ed.get(event));
+            String pattern_eD = addToSet(eventPatterns, patterns_eD.get(event));
+            String pattern_er = addToSet(eventPatterns, patterns_er.get(event));
+            String pattern_eR = addToSet(eventPatterns, patterns_eR.get(event));
+            String pattern_es = addToSet(eventPatterns, patterns_es.get(event));
+            String pattern_eS = addToSet(eventPatterns, patterns_eS.get(event));
+
+            if (!DataSubstitutions.containsAtLeastOne(displayString, eventPatterns)) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: no patterns for " + event.name() + "; continuing...");
+                }
+                continue;
+            }
 
             Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
 
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "displayStringForTitlePattern0: eventTime for " + event.name() + " is " + (eventTime != null ? eventTime.getTimeInMillis() : "null"));
+            }
             if (eventTime != null)
             {
                 if (pattern_em != null && displayString.contains(pattern_em)) {
@@ -452,7 +494,10 @@ public class DataSubstitutions
                 }
 
             } else {
-                for (String pattern : positionPatterns) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "displayStringForTitlePattern0: null eventTime for " + event.name() + "; removing patterns");
+                }
+                for (String pattern : eventPatterns) {
                     displayString = displayString.replaceAll(pattern, "");
                 }
             }

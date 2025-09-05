@@ -29,11 +29,15 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
  * non-instrumented tests moved from androidTest/SuntimesUtilsTest
  */
+@SuppressWarnings("UnusedReturnValue")
 public class SuntimesUtilsTest0
 {
     private SuntimesUtils utils;
@@ -48,18 +52,18 @@ public class SuntimesUtilsTest0
     {
         // test constructor ()
         SuntimesUtils.TimeDisplayText text1 = new SuntimesUtils.TimeDisplayText();
-        assertTrue(text1.getValue().equals(""));
-        assertTrue(text1.getUnits().equals(""));
-        assertTrue(text1.getSuffix().equals(""));
-        assertTrue("toString should be empty", text1.toString().equals(""));
+        assertEquals("", text1.getValue());
+        assertEquals("", text1.getUnits());
+        assertEquals("", text1.getSuffix());
+        assertEquals("toString should be empty", "", text1.toString());
 
         // test constructor (value)
         String value2 = "value2";
         SuntimesUtils.TimeDisplayText text2 = new SuntimesUtils.TimeDisplayText(value2);
-        assertTrue(text2.getValue().equals(value2));
-        assertTrue(text2.getUnits().equals(""));
-        assertTrue(text2.getSuffix().equals(""));
-        assertTrue("toString should be value only", text2.toString().equals(value2));
+        assertEquals(text2.getValue(), value2);
+        assertEquals("", text2.getUnits());
+        assertEquals("", text2.getSuffix());
+        assertEquals("toString should be value only", text2.toString(), value2);
 
         // test constructor (value, units, suffix)
         String value3 = "value3";
@@ -67,49 +71,50 @@ public class SuntimesUtilsTest0
         String suffix3 = "longer";
         String toString3 = value3 + " " + units3 + " " + suffix3;
         SuntimesUtils.TimeDisplayText text3 = new SuntimesUtils.TimeDisplayText(value3, units3, suffix3);
-        assertTrue(text3.getValue().equals(value3));
-        assertTrue(text3.getUnits().equals(units3));
-        assertTrue(text3.getSuffix().equals(suffix3));
-        assertTrue("toString should \"" + toString3 + "\"", text3.toString().equals(toString3));
+        assertEquals(text3.getValue(), value3);
+        assertEquals(text3.getUnits(), units3);
+        assertEquals(text3.getSuffix(), suffix3);
+        assertEquals("toString should \"" + toString3 + "\"", text3.toString(), toString3);
 
         // test equals & setSuffix
         SuntimesUtils.TimeDisplayText text4 = new SuntimesUtils.TimeDisplayText(value3, units3, suffix3);
-        assertTrue("should be equal", text3.equals(text4));
+        assertEquals("should be equal", text3, text4);
 
         String suffix4 = "shorter";
         text4.setSuffix(suffix4);
-        assertTrue(text4.getSuffix().equals(suffix4));
-        assertTrue("no longer equal", !text3.equals(text4));
+        assertEquals(text4.getSuffix(), suffix4);
+        assertNotEquals("no longer equal", text3, text4);
 
         text4.setSuffix("");
         String expected4 = value3 + " " + units3;
-        assertTrue("toString should be \"" + expected4 + "\"", text4.toString().equals(expected4));
+        assertEquals("toString should be \"" + expected4 + "\"", text4.toString(), expected4);
 
         // test toString
         SuntimesUtils.TimeDisplayText text5 = new SuntimesUtils.TimeDisplayText(value3, "", suffix3);
         String expected5 = value3 + " " + suffix3;
-        assertTrue("toString should be \"" + expected5 + "\"", text5.toString().equals(expected5));
+        assertEquals("toString should be \"" + expected5 + "\"", text5.toString(), expected5);
 
         SuntimesUtils.TimeDisplayText text6 = new SuntimesUtils.TimeDisplayText("", units3, "");
-        assertTrue("toString should be \"" + units3 + "\"", text6.toString().equals(units3));
+        assertEquals("toString should be \"" + units3 + "\"", text6.toString(), units3);
 
         SuntimesUtils.TimeDisplayText text7 = new SuntimesUtils.TimeDisplayText("", "", suffix3);
-        assertTrue("toString should be \"" + suffix3 + "\"", text7.toString().equals(suffix3));
+        assertEquals("toString should be \"" + suffix3 + "\"", text7.toString(), suffix3);
 
         SuntimesUtils.TimeDisplayText text8 = new SuntimesUtils.TimeDisplayText("", units3, suffix3);
         String expected8 = units3 + " " + suffix3;
-        assertTrue("toString should be \"" + expected8 + "\"", text8.toString().equals(expected8));
+        assertEquals("toString should be \"" + expected8 + "\"", text8.toString(), expected8);
 
         // test rawValue
         long time = Calendar.getInstance().getTimeInMillis();
         text8.setRawValue(time);
-        assertTrue(text8.getRawValue() == time);
+        assertEquals(text8.getRawValue(), time);
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void test_timeDeltaDisplayString()
     {
-        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        assertEquals("test precondition: english language", "en", AppSettings.getLocale().getLanguage());
         Date date1 = Calendar.getInstance().getTime();
 
         SuntimesUtils.TimeDisplayText text1 = utils.timeDeltaDisplayString(date1, null);
@@ -156,27 +161,28 @@ public class SuntimesUtilsTest0
     protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected)
     {
         SuntimesUtils.TimeDisplayText text = utils.timeDeltaDisplayString(date, new Date(date.getTime() + timeDelta));
-        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
-        assertTrue(text.getRawValue() == timeDelta);
+        assertEquals("result should be " + expected + " but was " + text.toString(), text.toString(), expected);
+        assertEquals(text.getRawValue(), timeDelta);
         assertTrue(text.getSuffix().isEmpty());
         return text;
     }
     protected SuntimesUtils.TimeDisplayText test_timeDeltaDisplayString(Date date, long timeDelta, String expected, boolean showWeeks, boolean showHours)
     {
         SuntimesUtils.TimeDisplayText text = utils.timeDeltaDisplayString(date, new Date(date.getTime() + timeDelta), showWeeks, showHours);
-        assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
-        assertTrue(text.getRawValue() == timeDelta);
+        assertEquals("result should be " + expected + " but was " + text.toString(), text.toString(), expected);
+        assertEquals(text.getRawValue(), timeDelta);
         assertTrue(text.getSuffix().isEmpty());
         return text;
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void test_timeDeltaLongDisplayString()
     {
-        assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
+        assertEquals("test precondition: english language", "en", AppSettings.getLocale().getLanguage());
         long date1 = Calendar.getInstance().getTimeInMillis();
 
-        test_timeDeltaLongDisplayString(date1,0, "1m shorter");
+        test_timeDeltaLongDisplayString(date1,0, "1m the same");
         test_timeDeltaLongDisplayString(date1,-1000 * 30, "30s shorter", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "30s longer", true);
         test_timeDeltaLongDisplayString(date1,1000 * 30, "1m longer", false);
@@ -200,13 +206,15 @@ public class SuntimesUtilsTest0
     protected SuntimesUtils.TimeDisplayText test_timeDeltaLongDisplayString(long date, long timeDelta, String expected, boolean showSeconds)
     {
         SuntimesUtils.TimeDisplayText text = utils.timeDeltaLongDisplayString(date, date + timeDelta, showSeconds);
-        assertTrue("result should be " + expected + ", but was " + text.toString(), text.toString().equals(expected));
+        assertEquals("result should be " + expected + ", but was " + text.toString(), text.toString(), expected);
 
-        if (timeDelta <= 0)
-            assertTrue(text.getSuffix().equals("shorter"));
-        else assertTrue(text.getSuffix().equals("longer"));
+        if (timeDelta == 0)
+            assertEquals("the same", text.getSuffix());
+        else if (timeDelta < 0)
+            assertEquals("shorter", text.getSuffix());
+        else assertEquals("longer", text.getSuffix());
 
-        assertTrue(text.getRawValue() == timeDelta);
+        assertEquals(text.getRawValue(), timeDelta);
         return text;
     }
 
@@ -216,13 +224,13 @@ public class SuntimesUtilsTest0
         String tag = "[tag]";
         ImageSpan imageSpan = new ImageSpan((Drawable)null);
         SuntimesUtils.ImageSpanTag spanTag = new SuntimesUtils.ImageSpanTag(tag, imageSpan);
-        assertTrue("getTag() must return the same tag set by the constructor!", spanTag.getTag().equals(tag));
-        assertTrue("getSpan() must return the same span set by the constructor!", spanTag.getSpan().equals(imageSpan) );
-        assertTrue("getBlank() must return a string that is the same length as the tag!", spanTag.getBlank().length() == tag.length());
+        assertEquals("getTag() must return the same tag set by the constructor!", spanTag.getTag(), tag);
+        assertEquals("getSpan() must return the same span set by the constructor!", spanTag.getSpan(), imageSpan);
+        assertEquals("getBlank() must return a string that is the same length as the tag!", spanTag.getBlank().length(), tag.length());
         assertTrue("getBlank() must return a blank string!", spanTag.getBlank().trim().isEmpty());
 
         SuntimesUtils.ImageSpanTag spanTag2 = new SuntimesUtils.ImageSpanTag(tag, null);
-        assertTrue("getSpan() should return null (as set by constructor)", spanTag2.getSpan() == null);
+        assertNull("getSpan() should return null (as set by constructor)", spanTag2.getSpan());
     }
 
 }

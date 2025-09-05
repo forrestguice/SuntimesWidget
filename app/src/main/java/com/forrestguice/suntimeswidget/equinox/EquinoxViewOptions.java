@@ -71,6 +71,7 @@ public class EquinoxViewOptions
         typedArray.recycle();
     }
 
+    @Deprecated
     public void init(SuntimesTheme theme)
     {
         if (theme != null)

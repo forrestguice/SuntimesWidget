@@ -197,6 +197,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return options.highlightPosition;
     }
 
+    @Deprecated
     public void setThemeOverride( SuntimesTheme theme ) {
         options.themeOverride = theme;
     }
