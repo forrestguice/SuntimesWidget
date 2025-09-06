@@ -1,5 +1,18 @@
 ### ~
 
+### v0.16.10 (2025-09-05)
+* adds a crash report notification that displays the stacktrace when the application crashes.
+* adds "Boot Completed (Delay)" to alarm settings; an intentional delay when rescheduling alarms after reboot.
+* adds "show cross-quarter days" option to the solstice widget.
+* fixes "app crash after phone restart" (#894).
+* fixes "app crash in the Sun Dialog when rotating the device".
+* fixes missing "reconfigure widget" action (api28+); pressing and holding the widget reveals the settings button.
+* fixes bug where custom event alarm times are truncated to the minute.
+* fixes bug where content provider fails to schedule custom events on past days.
+* increments `CalculatorProviderContract` version 8 -> 9; adds support for custom events to the `sun` query (projections may include custom event ids).
+* increments `AlarmEventContract` version 1 -> 2; eventInfo can now be queried by type with selectionArgs.
+* updates translation to Italian (it) (#893 by McCio).
+
 ### v0.16.9 (2025-07-28)
 * improves reliability of location updates (#884); adds "fused" location provider (api31+).
 * fixes bug where "data patterns display nothing at higher latitudes" (#874).
