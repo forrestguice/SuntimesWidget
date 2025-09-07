@@ -137,7 +137,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private final LocationListener locationListener = new LocationListener()
     {
         @Override
-        public void onLocationChanged(Location location)
+        public synchronized void onLocationChanged(Location location)
         {
             if (location != null)
             {
