@@ -1147,7 +1147,7 @@ public class SuntimesActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResult(Location result, boolean wasCancelled)
+            public void onResult(Location result, long elapsed, boolean wasCancelled)
             {
                 if (refreshItem != null)
                 {
@@ -1158,7 +1158,7 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, result.getProvider(), result.getAccuracy(), System.currentTimeMillis(), elapsed);
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {

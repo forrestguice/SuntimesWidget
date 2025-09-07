@@ -47,5 +47,5 @@ public abstract class GetFixUI
     public abstract void updateUI(Location... locations);
     public abstract void showProgress(boolean showProgress);
     public abstract void onStart();
-    public abstract void onResult(Location result, boolean wasCancelled);
+    public abstract void onResult(Location result, long elapsed, boolean wasCancelled);
 }

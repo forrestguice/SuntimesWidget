@@ -341,7 +341,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, false);
+            uiObj.onResult(result, elapsedTime, false);
         }
         signalFinished(result);
     }
@@ -370,7 +370,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, true);
+            uiObj.onResult(result, elapsedTime, true);
         }
         signalCancelled();
     }

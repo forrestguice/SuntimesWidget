@@ -455,7 +455,7 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled)
+        public void onResult(Location result, long elapsed, boolean wasCancelled)
         {
             button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
             button_getfix.setVisibility(View.VISIBLE);
@@ -514,7 +514,7 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled)
+        public void onResult(Location result, long elapsed, boolean wasCancelled)
         {
             button_auto.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
             button_auto.setVisibility(View.VISIBLE);
