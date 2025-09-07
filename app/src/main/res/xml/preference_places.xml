@@ -10,6 +10,11 @@
     <PreferenceCategory
         android:title="@string/configLabel_location">
 
+        <Preference
+            android:key="places_location_last_info"
+            android:persistent="false"
+            android:title="@string/configLabel_getFix_lastRequest" />
+
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxElapsed"
             android:title="@string/configLabel_getFix_maxElapse"

@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -89,6 +90,31 @@ public class PlacesPrefsFragment extends PreferenceFragment
         Preference buildPlacesPref = findPreference("places_build");
         base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
         updateLocationProviderPrefs();
+        updateLocationLastRequestInfo(getActivity());
+    }
+
+    protected void updateLocationLastRequestInfo(Context context)
+    {
+        Preference lastRequestPref = findPreference("places_location_last_info");
+        if (lastRequestPref != null)
+        {
+            long time = LocationHelperSettings.lastAutoLocationRequest(context);
+            if (time != 0)
+            {
+                long timeAgo = LocationHelperSettings.timeSinceLastAutoLocationRequest(context);
+                String provider = LocationHelperSettings.lastLocationProvider(context);
+                float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
+                long elapsed = LocationHelperSettings.lastLocationElapsed(context);
+                int satellites = LocationHelperSettings.lastLocationSatellites(context);
+
+                CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report,
+                        utils.calendarDateTimeDisplayString(context, time).getValue(),
+                        utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                        provider.toUpperCase(), accuracy+"", satellites+"",
+                        (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                lastRequestPref.setSummary(lastRequestDisplay);
+            } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
+        }
     }
 
     protected void updateLocationProviderPrefs()

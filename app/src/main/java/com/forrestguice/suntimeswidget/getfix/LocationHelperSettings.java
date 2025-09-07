@@ -145,4 +145,21 @@ public class LocationHelperSettings
         pref.apply();
     }
 
+    public static String lastLocationProvider(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LOCATION_LAST_PROVIDER, "");
+    }
+    public static float lastLocationAccuracy(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getFloat(PREF_KEY_LOCATION_LAST_ACCURACY, -1);
+    }
+    public static long lastLocationElapsed(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_LOCATION_LAST_ELAPSED, 0);
+    }
+    public static int lastLocationSatellites(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getInt(PREF_KEY_LOCATION_LAST_SATELLITES, 0);
+    }
+
 }
