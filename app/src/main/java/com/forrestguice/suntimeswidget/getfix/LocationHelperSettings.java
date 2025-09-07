@@ -34,6 +34,7 @@ public class LocationHelperSettings
     public static final String PREF_KEY_LOCATION_LAST_PROVIDER = "getFix_last_provider";    // location provider of last request
     public static final String PREF_KEY_LOCATION_LAST_ACCURACY = "getFix_last_accuracy";    // accuracy of last request
     public static final String PREF_KEY_LOCATION_LAST_ELAPSED = "getFix_last_elapsed";    // time needed to complete last request
+    public static final String PREF_KEY_LOCATION_LAST_SATELLITES = "getFix_last_satellites";    // number of satellites in last request (if gps)
 
     public static final String PREF_KEY_LOCATION_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_LOCATION_PASSIVE = false;
@@ -133,13 +134,14 @@ public class LocationHelperSettings
         }
         return t;
     }
-    public static void saveLastAutoLocationRequest(Context context, String provider, float accuracy, long atTime, long elapsed)
+    public static void saveLastAutoLocationRequest(Context context, String provider, float accuracy, int satellites, long atTime, long elapsed)
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putLong(PREF_KEY_LOCATION_LAST_TIME, atTime);
         pref.putLong(PREF_KEY_LOCATION_LAST_ELAPSED, elapsed);
         pref.putString(PREF_KEY_LOCATION_LAST_PROVIDER, provider);
         pref.putFloat(PREF_KEY_LOCATION_LAST_ACCURACY, accuracy);
+        pref.putInt(PREF_KEY_LOCATION_LAST_SATELLITES, satellites);
         pref.apply();
     }
 
