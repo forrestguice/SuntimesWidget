@@ -162,25 +162,26 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     locationTime = location.getTime();
                 }
                 long locationAge = now - locationTime;
-
-                if (bestFix == null) {
-                    if (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge) {
+                if (passesFilter(locationAge, maxAge))
+                {
+                    if (bestFix == null) {
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
-                        onProgressUpdate(bestFix.getLocation());
-                        if (BuildConfig.DEBUG) {
-                            Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
-                        }
-                    } else if (BuildConfig.DEBUG) {
-                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: fails (too old): " + locationAge + " > " + maxAge);
-                    }
-                } else {
-                    bestFix.addToFilter(location, locationTime);
-                    onProgressUpdate(bestFix.getLocation());
-                    if (BuildConfig.DEBUG) {
+                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
+
+                    } else {
+                        bestFix.addToFilter(location, locationTime);
                         Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
                     }
+                    onProgressUpdate(bestFix.getLocation());
+
+                } else if (BuildConfig.DEBUG) {
+                    Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: fails (too old): " + locationAge + " > " + maxAge);
                 }
             }
+        }
+
+        private boolean passesFilter(long locationAge, int maxAge) {
+            return (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge);
         }
 
         @Override
