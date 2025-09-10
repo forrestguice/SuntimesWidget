@@ -35,6 +35,8 @@ public class LocationHelperSettings
     public static final String PREF_KEY_LOCATION_LAST_ACCURACY = "getFix_last_accuracy";    // accuracy of last request
     public static final String PREF_KEY_LOCATION_LAST_ELAPSED = "getFix_last_elapsed";    // time needed to complete last request
     public static final String PREF_KEY_LOCATION_LAST_SATELLITES = "getFix_last_satellites";    // number of satellites in last request (if gps)
+    public static final String PREF_KEY_LOCATION_LAST_LOG = "getFix_last_log";    // debug log for last request
+    public static final String PREF_KEY_LOCATION_LAST_LOG_FLAG = "getFix_last_log_enabled";
 
     public static final String PREF_KEY_LOCATION_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_LOCATION_PASSIVE = false;
@@ -134,17 +136,44 @@ public class LocationHelperSettings
         }
         return t;
     }
-    public static void saveLastAutoLocationRequest(Context context, String provider, float accuracy, int satellites, long atTime, long elapsed)
+    public static void saveLastAutoLocationRequest(Context context, long atTime, String provider, float accuracy, int satellites, long elapsed, String log)
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putLong(PREF_KEY_LOCATION_LAST_TIME, atTime);
-        pref.putLong(PREF_KEY_LOCATION_LAST_ELAPSED, elapsed);
+        if (keepLastLocationLog(context)) {
+            saveLastLocationLog(context, provider, accuracy, satellites, elapsed, log);
+        }
+        pref.apply();
+    }
+    public static void saveLastLocationLog(Context context, String provider, float accuracy, int satellites, long elapsed, String log)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_LOCATION_LAST_LOG, log);
         pref.putString(PREF_KEY_LOCATION_LAST_PROVIDER, provider);
         pref.putFloat(PREF_KEY_LOCATION_LAST_ACCURACY, accuracy);
+        pref.putLong(PREF_KEY_LOCATION_LAST_ELAPSED, elapsed);
         pref.putInt(PREF_KEY_LOCATION_LAST_SATELLITES, satellites);
         pref.apply();
     }
+    public static void clearLastLocationLog(Context context)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.remove(PREF_KEY_LOCATION_LAST_LOG);
+        pref.remove(PREF_KEY_LOCATION_LAST_PROVIDER);
+        pref.remove(PREF_KEY_LOCATION_LAST_ACCURACY);
+        pref.remove(PREF_KEY_LOCATION_LAST_ELAPSED);
+        pref.remove(PREF_KEY_LOCATION_LAST_SATELLITES);
+        pref.apply();
+    }
 
+    public static boolean keepLastLocationLog(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_LOCATION_LAST_LOG_FLAG, false);
+    }
+    public static String lastLocationLog(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getString(PREF_KEY_LOCATION_LAST_LOG, "");
+    }
     public static String lastLocationProvider(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_LOCATION_LAST_PROVIDER, "");
@@ -161,5 +190,4 @@ public class LocationHelperSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getInt(PREF_KEY_LOCATION_LAST_SATELLITES, 0);
     }
-
 }

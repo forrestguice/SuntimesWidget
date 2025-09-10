@@ -2092,7 +2092,11 @@
         <item>-1</item>
     </string-array>
 
+    <string name="configLabel_getFix_lastRequest_flag">Debug Log</string>  <!-- pref title --> <!-- TODO -->
     <string name="configLabel_getFix_lastRequest">Last Update</string>  <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
     <string name="configLabel_getFix_lastRequest_report"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
         \n\n<xliff:g id="provider">%3$s</xliff:g> +- <xliff:g id="accuracy">%4$s</xliff:g>m (<xliff:g id="satellites">%5$s</xliff:g> satellites)

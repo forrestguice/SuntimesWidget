@@ -132,9 +132,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         @Override
-        public void onResult(android.location.Location result, long elapsed, boolean wasCancelled)
+        public void onResult(LocationResult result)
         {
-            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+            button_getfix.setImageResource((result.getResult() == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
             button_getfix.setVisibility(View.VISIBLE);
             button_getfix.setEnabled(true);
         }

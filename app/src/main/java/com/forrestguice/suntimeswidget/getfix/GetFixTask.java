@@ -83,6 +83,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private final WeakReference<LocationHelper> helperRef;
     public GetFixTask(Context parent, LocationHelper helper)
     {
+        this.log_flag = LocationHelperSettings.keepLastLocationLog(parent);
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<LocationHelper>(helper);
         this.locationProviders = initLocationProviders(parent);
@@ -147,7 +148,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             if (location != null)
             {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
+                    Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: " + location.toString());
                 }
 
                 long now;
@@ -167,29 +168,43 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
                         onProgressUpdate(bestFix.getLocation());
                         if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onLocationChanged: found location: " + locationAge + " <= " + maxAge);
+                            Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
                         }
                     } else if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "onLocationChanged: ignoring location (too old): " + locationAge + " > " + maxAge);
+                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: fails (too old): " + locationAge + " > " + maxAge);
                     }
                 } else {
                     bestFix.addToFilter(location, locationTime);
                     onProgressUpdate(bestFix.getLocation());
                     if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "onLocationChanged: added location: " + locationAge + " <= " + maxAge);
+                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
                     }
                 }
             }
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) { }
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log_d(TAG, provider.toUpperCase() + ": provider: " + getStatusDisplay(status));
+        }
+        protected String getStatusDisplay(int status) {
+            switch (status) {
+                case LocationProvider.OUT_OF_SERVICE: return "OUT_OF_SERVICE";
+                case LocationProvider.AVAILABLE: return "AVAILABLE";
+                case LocationProvider.TEMPORARILY_UNAVAILABLE: return "TEMPORARILY_UNAVAILABLE";
+                default: return "";
+            }
+        }
 
         @Override
-        public void onProviderEnabled(String provider) { }
+        public void onProviderEnabled(String provider) {
+            Log_d(TAG, provider.toUpperCase() + ": provider enabled");
+        }
 
         @Override
-        public void onProviderDisabled(String provider) { }
+        public void onProviderDisabled(String provider) {
+            Log_d(TAG, provider.toUpperCase() + ": provider disabled");
+        }
     };
 
     public static long calculateLocationAge(android.location.Location location)
@@ -213,6 +228,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     @Override
     protected void onPreExecute()
     {
+        clearLog();
         final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
@@ -261,7 +277,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                                 locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, "unable to access location provider; " + provider + "; " + e);
                         }
                     }
                 }
@@ -279,7 +295,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                                 requestLocationUpdates(locationManager, provider, locationListener);
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, "unable to access location provider; " + provider + "; " + e);
                         }
                     }
                 }
@@ -307,7 +323,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void requestLocationUpdates(LocationManager locationManager, String provider, LocationListener listener)
     {
         if (BuildConfig.DEBUG) {
-            Log.i(TAG, "requesting location updates from: " + provider);
+            Log_i(TAG, "Listener: requesting from " + provider.toUpperCase());
         }
         locationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
@@ -334,13 +350,13 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void onPostExecute(Location result)
     {
         try {
-            locationManager.removeUpdates(locationListener);
             removeGpsStatusListener(locationManager);
+            locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "stopped location listener");
+                Log_d(TAG, "Listener: stopped");
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log_e(TAG, "Listener: unable to stop... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         final LocationHelper helper = helperRef.get();
@@ -351,7 +367,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, elapsedTime, false);
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, getLog()));
         }
         if (result != null) {
             result.getExtras().putInt("satellites", gps_numSatellites);
@@ -367,12 +383,13 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void onCancelled(Location result)
     {
         try {
+            removeGpsStatusListener(locationManager);
             locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "stopped location listener");
+                Log_d(TAG, "Listener: stopped");
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log_e(TAG, "Listener: unable to stop... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         LocationHelper helper = helperRef.get();
@@ -383,7 +400,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, elapsedTime, true);
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
         }
         signalCancelled();
     }
@@ -438,6 +455,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
      */
     protected void addGpsStatusListener(LocationManager locationManager)
     {
+        if (Build.VERSION.SDK_INT >= 28) {
+            Log_d(TAG, "GPS: " + locationManager.getGnssHardwareModelName() + " (" + locationManager.getGnssYearOfHardware() + ")");
+        }
         if (Build.VERSION.SDK_INT >= 24) {
             locationManager.registerGnssStatusCallback(gnssStatusCallback());
         } else {
@@ -462,33 +482,53 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     @TargetApi(24)
     private Object gnssStatusCallback = null;
 
+    /**
+     * api 24+
+     */
     @TargetApi(24)
     private GnssStatus.Callback gnssStatusCallback()
     {
         gnssStatusCallback = new GnssStatus.Callback()
         {
-            private int getSatelliteCount(GnssStatus status)
+            private List<Integer> getSatellites(GnssStatus status)
             {
-                int c = 0;
-                for (int i = 0; i < status.getSatelliteCount(); i++) {
+                ArrayList<Integer> indices = new ArrayList<>();
+                for (int i=0; i<status.getSatelliteCount(); i++) {
                     if (status.usedInFix(i)) {
+                        indices.add(i);
+                    }
+                }
+                return indices;
+            }
+            private String getSignalToNoiseRatio(GnssStatus status)
+            {
+                StringBuilder result = new StringBuilder();
+                if (status != null)
+                {
+                    int c = 0;
+                    for (int i : getSatellites(status))
+                    {
+                        if (c != 0) {
+                            result.append("|");
+                        }
+                        result.append(status.getCn0DbHz(i));
                         c++;
                     }
                 }
-                return c;
+                return result.toString();
             }
 
             @Override
             public void onStarted()
             {
                 super.onStarted();
-                Log.d(TAG, "GPS: started; t_" + elapsedTime);
+                Log_d(TAG, "GPS: started; t_" + elapsedTime);
             }
 
             @Override
             public void onStopped() {
                 super.onStopped();
-                Log.d(TAG, "GPS: stopped; t_" + elapsedTime);
+                Log_d(TAG, "GPS: stopped; t_" + elapsedTime);
             }
 
             @Override
@@ -496,56 +536,74 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 super.onFirstFix(ttffMillis);
                 gps_timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
-                Log.d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites; t_" + elapsedTime);
+                Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + getSignalToNoiseRatio(lastStatus) + "); t_" + elapsedTime);
             }
 
             @Override
             public void onSatelliteStatusChanged(GnssStatus status) {
                 super.onSatelliteStatusChanged(status);
-                gps_numSatellites = getSatelliteCount(status);
-                Log.d(TAG, "GPS: status: " + gps_numSatellites + " satellites; t_" + elapsedTime);
+                lastStatus = status;
+                gps_numSatellites = getSatellites(status).size();
+                Log_d(TAG, "GPS: status: " + gps_numSatellites + " satellites; t_" + elapsedTime);
             }
+            private GnssStatus lastStatus = null;
         };
         return (GnssStatus.Callback) gnssStatusCallback;
     }
 
+    /**
+     * api 23 and lower
+     */
     private final GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener()
     {
-        private int getSatelliteCount(int currentCount)
+        private List<GpsSatellite> getSatelliteList()
         {
-            int i = 0;
+            ArrayList<GpsSatellite> list = new ArrayList<>();
             for (GpsSatellite satellite : locationManager.getGpsStatus(null).getSatellites()) {
                 if (satellite.usedInFix()) {
-                    i++;
+                    list.add(satellite);
                 }
             }
-            return (i != 0 ? i : currentCount);
+            return list;
+        }
+        private int getSatelliteCount(List<GpsSatellite> list, int current) {
+            int i = getSatelliteList().size();
+            return (i != 0 ? i : current);
+        }
+        private String getSignalToNoiseRatio(List<GpsSatellite> list)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i=0; i<list.size(); i++) {
+                if (i != 0) {
+                    result.append("|");
+                }
+                result.append(list.get(i).getSnr());
+            }
+            return result.toString();
         }
 
         @Override
         public void onGpsStatusChanged(int event)
         {
-            int numSatellites = 0;
             switch (event)
             {
                 case GpsStatus.GPS_EVENT_STARTED:
-                    numSatellites = gps_numSatellites = getSatelliteCount(gps_numSatellites);
-                    Log.d(TAG, "GPS: started: " + numSatellites + " satellites; t_" + elapsedTime);
+                    Log_d(TAG, "GPS: started: t_" + elapsedTime);
                     break;
 
                 case GpsStatus.GPS_EVENT_FIRST_FIX:
                     gps_timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
-                    gps_numSatellites = getSatelliteCount(gps_numSatellites);
-                    Log.d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites; t_" + elapsedTime);
+                    gps_numSatellites = getSatelliteCount(getSatelliteList(), gps_numSatellites);
+                    Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + getSignalToNoiseRatio(getSatelliteList()) + "); t_" + elapsedTime);
                     break;
 
                 case GpsStatus.GPS_EVENT_STOPPED:
-                    Log.d(TAG, "GPS: stopped: " + numSatellites + " satellites; t_" + elapsedTime);
+                    Log_d(TAG, "GPS: stopped: t_" + elapsedTime);
                     break;
 
                 case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                    numSatellites = getSatelliteCount(0);
-                    Log.d(TAG, "GPS: status: " + numSatellites + " satellites; t_" + elapsedTime);
+                    int numSatellites = getSatelliteCount(getSatelliteList(), 0);
+                    Log_d(TAG, "GPS: status: " + numSatellites + " satellites; t_" + elapsedTime);
                     break;
             }
         }
@@ -589,7 +647,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             q = q0;
             c = 1;
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "initFilter: init to " + location.toString());
+                Log.d(TAG, "Filter: init to " + location.toString());
             }
         }
 
@@ -615,9 +673,47 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                 location.setAltitude(location.getAltitude() + (k * (location1.getAltitude() - location.getAltitude())));
                 location.setAccuracy((float)Math.sqrt(variance));
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "addToFilter: accuracy now " + location.getAccuracy());
+                    Log.d(TAG, "Filter: adding " + location + ", accuracy now " + location.getAccuracy());
                 }
             }
         }
     }
+
+    public void Log_e(String tag, String msg) {
+        Log.e(tag, msg);
+        if (log_flag) {
+            appendLog("E/: " + msg);
+        }
+    }
+    public void Log_w(String tag, String msg) {
+        Log.e(tag, msg);
+        if (log_flag) {
+            appendLog("W/: " + msg);
+        }
+    }
+    public void Log_i(String tag, String msg) {
+        Log.i(tag, msg);
+        if (log_flag) {
+            appendLog("I/: " + msg);
+        }
+    }
+    public void Log_d(String tag, String msg) {
+        if (BuildConfig.DEBUG) {
+            Log.d(tag, msg);
+        }
+        if (log_flag) {
+            appendLog("D/: " + msg);
+        }
+    }
+    private synchronized void appendLog(String line) {
+        log = log + "\n" + line;
+    }
+    private synchronized void clearLog() {
+        log = "";
+    }
+    public synchronized String getLog() {
+        return log;
+    }
+    private String log = "";
+    private final boolean log_flag;    // set to `LocationHelperSettings.keepLastLocationLog(parent)` from constructor
 }

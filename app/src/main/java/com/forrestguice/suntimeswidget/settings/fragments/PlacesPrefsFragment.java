@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.settings.fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -39,13 +38,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -53,7 +52,6 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
 import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
@@ -93,28 +91,69 @@ public class PlacesPrefsFragment extends PreferenceFragment
         updateLocationLastRequestInfo(getActivity());
     }
 
-    protected void updateLocationLastRequestInfo(Context context)
+    protected void updateLocationLastRequestInfo(final Context context)
     {
         Preference lastRequestPref = findPreference("places_location_last_info");
         if (lastRequestPref != null)
         {
+            lastRequestPref.setOnPreferenceClickListener(onLastRequestPrefClicked);
+
+            boolean hasLog = (!LocationHelperSettings.lastLocationLog(context).isEmpty());
             long time = LocationHelperSettings.lastAutoLocationRequest(context);
             if (time != 0)
             {
                 long timeAgo = LocationHelperSettings.timeSinceLastAutoLocationRequest(context);
-                String provider = LocationHelperSettings.lastLocationProvider(context);
-                float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
-                long elapsed = LocationHelperSettings.lastLocationElapsed(context);
-                int satellites = LocationHelperSettings.lastLocationSatellites(context);
+                if (hasLog)
+                {
+                    String provider = LocationHelperSettings.lastLocationProvider(context);
+                    float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
+                    long elapsed = LocationHelperSettings.lastLocationElapsed(context);
+                    int satellites = LocationHelperSettings.lastLocationSatellites(context);
 
-                CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report,
-                        utils.calendarDateTimeDisplayString(context, time).getValue(),
-                        utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                        provider.toUpperCase(), accuracy+"", satellites+"",
-                        (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
-                lastRequestPref.setSummary(lastRequestDisplay);
+                    CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report,
+                            utils.calendarDateTimeDisplayString(context, time).getValue(),
+                            utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                            provider.toUpperCase(), accuracy+"", satellites+"",
+                            (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    lastRequestPref.setSummary(lastRequestDisplay);
+
+                } else {
+                    CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
+                            utils.calendarDateTimeDisplayString(context, time).getValue(),
+                            utils.timeDeltaLongDisplayString(0, timeAgo).getValue());
+                    lastRequestPref.setSummary(lastRequestDisplay);
+                }
             } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
         }
+    }
+
+    private final Preference.OnPreferenceClickListener onLastRequestPrefClicked = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            if (!LocationHelperSettings.lastLocationLog(preference.getContext()).isEmpty()) {
+                showLocationLastRequestReport(preference.getContext());
+            }
+            return false;
+        }
+    };
+    protected void showLocationLastRequestReport(Context context)
+    {
+        TextView text = new TextView(context);
+        text.setTextSize(context.getResources().getDimension(R.dimen.text_size_tiny));
+        text.setText(LocationHelperSettings.lastLocationLog(context));
+        text.setVerticalScrollBarEnabled(true);
+        text.setHorizontalScrollBarEnabled(true);
+
+        int padding = (int) context.getResources().getDimension(R.dimen.dialog_margin);
+        ScrollView scroll = new ScrollView(context);
+        scroll.setPadding(padding, padding, padding, padding);
+        scroll.addView(text);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(context.getString(R.string.configLabel_getFix_lastRequest));
+        dialog.setView(scroll);
+        dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
+        dialog.show();
     }
 
     protected void updateLocationProviderPrefs()

@@ -47,5 +47,34 @@ public abstract class GetFixUI
     public abstract void updateUI(Location... locations);
     public abstract void showProgress(boolean showProgress);
     public abstract void onStart();
-    public abstract void onResult(Location result, long elapsed, boolean wasCancelled);
+    public abstract void onResult(LocationResult result);
+
+    public static class LocationResult
+    {
+        protected Location result;
+        protected long elapsed;
+        protected boolean wasCancelled;
+        protected String log;
+
+        public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
+        {
+            this.result = result;
+            this.elapsed = elapsed;
+            this.wasCancelled = wasCancelled;
+            this.log = log;
+        }
+
+        public Location getResult() {
+            return result;
+        }
+        public long getElapsed() {
+            return elapsed;
+        }
+        public boolean wasCancelled() {
+            return wasCancelled;
+        }
+        public String getLog() {
+            return log;
+        }
+    }
 }
