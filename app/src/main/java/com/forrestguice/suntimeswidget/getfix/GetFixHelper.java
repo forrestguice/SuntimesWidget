@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -177,48 +178,43 @@ public class GetFixHelper implements LocationHelper
 
     public void fallbackToLastLocation()
     {
-        LocationManager locationManager = (LocationManager)myParent.getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager != null)
-        {
-            GetFixUI uiObj = getUI();
-            try {
-                Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                if (location == null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location == null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    }
-                }
-                fix = location;
-                gotFix = (fix != null);
-                uiObj.updateUI(location);
-                uiObj.onResult(new GetFixUI.LocationResult(location, 0, false, "D/" + GetFixTask.TAG + "fallbackToLastLocation: " + location.getProvider().toUpperCase()));
+        GetFixUI uiObj = getUI();
+        try {
+            Location location = lastKnownLocation(myParent);
+            String logItem = "D/" + "fallback to last location: " + (location != null ? location.getProvider().toUpperCase() : "null");
 
-            } catch (SecurityException e) {
-                Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
-            }
-        } else Log.w("GetFixHelper", "unable to fallback to last location ... LocationManager is null!");
+            fix = location;
+            gotFix = (fix != null);
+            uiObj.updateUI(location);
+            uiObj.onResult(new GetFixUI.LocationResult(location, 0, false, logItem));
+
+        } catch (SecurityException e) {
+            Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
+        }
     }
 
+    @Nullable
     public android.location.Location getLastKnownLocation(Context context) {
         return GetFixHelper.lastKnownLocation(context);
     }
 
+    @Nullable
     public static android.location.Location lastKnownLocation(Context context)
     {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null)
         {
             try {
-                t_locationProvider = LocationManager.PASSIVE_PROVIDER;
-                android.location.Location location = locationManager.getLastKnownLocation(t_locationProvider);
-                if (location == null) {
-                    location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.NETWORK_PROVIDER);
-                    if (location == null) {
-                        location = locationManager.getLastKnownLocation(t_locationProvider = LocationManager.GPS_PROVIDER);
+                String[] providers = new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, GetFixTask.FUSED_PROVIDER, LocationManager.PASSIVE_PROVIDER };
+                for (int i=0; i<providers.length; i++)
+                {
+                    t_locationProvider = providers[i];
+                    android.location.Location location = locationManager.getLastKnownLocation(t_locationProvider);
+                    if (location != null) {
+                        return location;
                     }
                 }
-                return location;
+                return null;
 
             } catch (SecurityException e) {
                 Log.e("lastKnownLocation", "Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
