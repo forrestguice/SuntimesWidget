@@ -560,7 +560,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             public void onFirstFix(int ttffMillis)
             {
                 super.onFirstFix(ttffMillis);
-                gps_timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
+                gps_timeToFirstFix = ttffMillis;
                 Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + getSignalToNoiseRatio(lastStatus) + "); t_" + elapsedTime);
             }
 
