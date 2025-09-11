@@ -61,14 +61,16 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MAX_AGE_ANY = -1;
 
     public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
-    public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
+    public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, FUSED_PROVIDER };
 
     private final String[] locationProviders;
     protected String[] initLocationProviders(@NonNull Context context)
     {
         List<String> providers = new ArrayList<String>(Arrays.asList(LOCATION_PROVIDERS));
         List<String> notRequested = new ArrayList<>();
-        for (String provider : providers) {
+        for (int i=0; i<providers.size(); i++)
+        {
+            String provider = providers.get(i);
             if (!LocationHelperSettings.isProviderRequested(context, provider)) {
                 notRequested.add(provider);
             }
@@ -272,7 +274,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
                 if (maxAge != MAX_AGE_NONE)
                 {
-                    for (String provider : providers) {
+                    locationListenerTag = TAG_LAST_LOCATION;
+                    for (int i=0; i<providers.length; i++)
+                    {
+                        String provider = providers[i];
                         try {
                             if (locationManager.isProviderEnabled(provider)) {
                                 locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
@@ -285,8 +290,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
                 if (bestFix == null)
                 {
-                    for (String provider : providers)
+                    locationListenerTag = TAG_LOCATION_CHANGED;
+                    for (int i=0; i<providers.length; i++)
                     {
+                        String provider = providers[i];
                         try {
                             if (locationManager.isProviderEnabled(provider))
                             {
