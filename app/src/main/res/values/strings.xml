@@ -2097,10 +2097,14 @@
     <string name="configLabel_getFix_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest_report"><xliff:g id="atTime">%1$s</xliff:g>
+    <string name="configLabel_getFix_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
         \n\n<xliff:g id="provider">%3$s</xliff:g> +- <xliff:g id="accuracy">%4$s</xliff:g>m (<xliff:g id="satellites">%5$s</xliff:g> satellites)
         \nElapsed: <xliff:g id="elapsedTime">%6$s</xliff:g>
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago (not found)
+        \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
 
     <!-- App Setting: calendars -->

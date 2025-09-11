@@ -1165,7 +1165,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     } else {
                         if (LocationHelperSettings.keepLastLocationLog(SuntimesActivity.this)) {
-                            LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, "", -1, 0, results.getElapsed(), results.getLog());
+                            LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, false, System.currentTimeMillis(), "", -1, 0, results.getElapsed(), results.getLog());
                         }
                         String msg = (results.wasCancelled() ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
                         Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();

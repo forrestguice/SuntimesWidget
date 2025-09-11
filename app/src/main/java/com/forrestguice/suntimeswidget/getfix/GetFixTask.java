@@ -142,6 +142,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private long startTime, stopTime, elapsedTime;
     private FilteredLocation bestFix;
     private final LocationManager locationManager;
+
     private final LocationListener locationListener = new LocationListener()
     {
         @Override
@@ -149,10 +150,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         {
             if (location != null)
             {
-                if (BuildConfig.DEBUG) {
-                    Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: " + location.toString());
-                }
-
                 long now;
                 long locationTime;
                 if (Build.VERSION.SDK_INT >= 17)
@@ -168,27 +165,26 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                 {
                     if (bestFix == null) {
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
-                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
+                        Log_d(TAG, listenerLogLine(locationListenerTag, location, "PASS: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
 
                     } else {
                         bestFix.addToFilter(location, locationTime);
-                        Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: passes: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : ""));
+                        Log_d(TAG, listenerLogLine(locationListenerTag, location, "PASS: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
                     }
                     onProgressUpdate(bestFix.getLocation());
 
                 } else if (BuildConfig.DEBUG) {
-                    Log_d(TAG, location.getProvider().toUpperCase() + ": onLocationChanged: fails (too old): " + locationAge + " > " + maxAge);
+                    Log_d(TAG, listenerLogLine(locationListenerTag, location, "FAIL: too old: " + locationAge + " > " + maxAge));
                 }
             }
         }
-
         private boolean passesFilter(long locationAge, int maxAge) {
             return (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log_d(TAG, provider.toUpperCase() + ": provider: " + getStatusDisplay(status));
+            Log_d(TAG, provider.toUpperCase() + ": provider status changed: " + getStatusDisplay(status));
         }
         protected String getStatusDisplay(int status) {
             switch (status) {
@@ -209,6 +205,15 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             Log_d(TAG, provider.toUpperCase() + ": provider disabled");
         }
     };
+    protected String listenerLogLine(String tag, Location location, String message) {
+        return listenerLogLine(tag, location.getProvider(), message);
+    }
+    protected String listenerLogLine(String tag, String provider, String message) {
+        return provider.toUpperCase() + ": " + tag + ": " + message;
+    }
+    private final String TAG_LOCATION_CHANGED = "check location";
+    private final String TAG_LAST_LOCATION = "last location";
+    protected String locationListenerTag = TAG_LOCATION_CHANGED;
 
     public static long calculateLocationAge(android.location.Location location)
     {
@@ -283,7 +288,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                                 locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log_e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, listenerLogLine(locationListenerTag, provider, "unable to access provider; " + e));
                         }
                     }
                 }
@@ -297,13 +302,13 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                         try {
                             if (locationManager.isProviderEnabled(provider))
                             {
-                                if (provider.equals(LocationManager.GPS_PROVIDER)) {
+                                if (provider.equals(LocationManager.GPS_PROVIDER) && log_flag) {
                                     addGpsStatusListener(locationManager);
                                 }
                                 requestLocationUpdates(locationManager, provider, locationListener);
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log_e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, listenerLogLine(locationListenerTag, provider, "unable to access provider; " + e));
                         }
                     }
                 }
@@ -330,9 +335,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
     protected void requestLocationUpdates(LocationManager locationManager, String provider, LocationListener listener)
     {
-        if (BuildConfig.DEBUG) {
-            Log_i(TAG, "Listener: requesting from " + provider.toUpperCase());
-        }
+        Log_i(TAG, "Listener: requesting from " + provider.toUpperCase());
         locationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
 
@@ -361,7 +364,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             removeGpsStatusListener(locationManager);
             locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log_d(TAG, "Listener: stopped");
+                Log_d(TAG, "Listener: finished (success)");
             }
         } catch (SecurityException e) {
             Log_e(TAG, "Listener: unable to stop... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
@@ -394,10 +397,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             removeGpsStatusListener(locationManager);
             locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log_d(TAG, "Listener: stopped");
+                Log_d(TAG, "Listener: cancelled");
             }
         } catch (SecurityException e) {
-            Log_e(TAG, "Listener: unable to stop... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log_e(TAG, "Listener: unable to cancel... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         LocationHelper helper = helperRef.get();
@@ -575,7 +578,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             return list;
         }
         private int getSatelliteCount(List<GpsSatellite> list, int current) {
-            int i = getSatelliteList().size();
+            int i = list.size();
             return (i != 0 ? i : current);
         }
         private String getSignalToNoiseRatio(List<GpsSatellite> list)

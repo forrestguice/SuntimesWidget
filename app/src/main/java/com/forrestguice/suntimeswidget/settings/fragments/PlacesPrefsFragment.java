@@ -99,10 +99,10 @@ public class PlacesPrefsFragment extends PreferenceFragment
             lastRequestPref.setOnPreferenceClickListener(onLastRequestPrefClicked);
 
             boolean hasLog = (!LocationHelperSettings.lastLocationLog(context).isEmpty());
-            long time = LocationHelperSettings.lastAutoLocationRequest(context);
+            long time = LocationHelperSettings.lastLocationLogTime(context);
             if (time != 0)
             {
-                long timeAgo = LocationHelperSettings.timeSinceLastAutoLocationRequest(context);
+                long timeAgo = System.currentTimeMillis() - time;
                 if (hasLog)
                 {
                     String provider = LocationHelperSettings.lastLocationProvider(context);
@@ -110,11 +110,20 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     long elapsed = LocationHelperSettings.lastLocationElapsed(context);
                     int satellites = LocationHelperSettings.lastLocationSatellites(context);
 
-                    CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report,
-                            utils.calendarDateTimeDisplayString(context, time).getValue(),
-                            utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                            provider.toUpperCase(), accuracy+"", satellites+"",
-                            (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    CharSequence lastRequestDisplay;
+                    if (LocationHelperSettings.lastLocationResult(context))
+                    {
+                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
+                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                provider.toUpperCase(), accuracy+"", satellites+"",
+                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    } else {
+                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
+                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    }
                     lastRequestPref.setSummary(lastRequestDisplay);
 
                 } else {
