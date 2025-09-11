@@ -143,10 +143,20 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private FilteredLocation bestFix;
     private final LocationManager locationManager;
 
-    private final LocationListener locationListener = new LocationListener()
+    private final GetFixTaskLocationListener locationListener = new GetFixTaskLocationListener();
+    private class GetFixTaskLocationListener implements LocationListener
     {
         @Override
-        public synchronized void onLocationChanged(Location location)
+        public synchronized void onLocationChanged(Location location) {
+            onLocationChanged(TAG_LOCATION_CHANGED, location);
+        }
+
+        /**
+         * @param tag tag
+         * @param location location
+         * @return true location was used, false location was discarded
+         */
+        public synchronized boolean onLocationChanged(String tag, Location location)
         {
             if (location != null)
             {
@@ -165,18 +175,21 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                 {
                     if (bestFix == null) {
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
-                        Log_d(TAG, listenerLogLine(locationListenerTag, location, "PASS: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
+                        Log_d(TAG, listenerLogLine(tag, location, "PASS: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
 
                     } else {
                         bestFix.addToFilter(location, locationTime);
-                        Log_d(TAG, listenerLogLine(locationListenerTag, location, "PASS: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
+                        Log_d(TAG, listenerLogLine(tag, location, "PASS: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
                     }
                     onProgressUpdate(bestFix.getLocation());
+                    return true;
 
-                } else if (BuildConfig.DEBUG) {
-                    Log_d(TAG, listenerLogLine(locationListenerTag, location, "FAIL: too old: " + locationAge + " > " + maxAge));
+                } else {
+                    Log_d(TAG, listenerLogLine(tag, location, "FAIL: too old: " + locationAge + " > " + maxAge));
+                    return false;
                 }
             }
+            return false;
         }
         private boolean passesFilter(long locationAge, int maxAge) {
             return (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge);
@@ -204,16 +217,16 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         public void onProviderDisabled(String provider) {
             Log_d(TAG, provider.toUpperCase() + ": provider disabled");
         }
-    };
+    }
+
     protected String listenerLogLine(String tag, Location location, String message) {
         return listenerLogLine(tag, location.getProvider(), message);
     }
     protected String listenerLogLine(String tag, String provider, String message) {
         return provider.toUpperCase() + ": " + tag + ": " + message;
     }
-    private final String TAG_LOCATION_CHANGED = "check location";
-    private final String TAG_LAST_LOCATION = "last location";
-    protected String locationListenerTag = TAG_LOCATION_CHANGED;
+    private static final String TAG_LOCATION_CHANGED = "check location";
+    private static final String TAG_LAST_LOCATION = "last location";
 
     public static long calculateLocationAge(android.location.Location location)
     {
@@ -275,27 +288,28 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 String[] providers = passiveMode
                         ? new String[] { LocationManager.PASSIVE_PROVIDER }
-                        : locationProviders;  //: new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
+                        : locationProviders;  //: new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, FUSED_PROVIDER };
 
                 if (maxAge != MAX_AGE_NONE)
                 {
-                    locationListenerTag = TAG_LAST_LOCATION;
                     for (int i=0; i<providers.length; i++)
                     {
                         String provider = providers[i];
                         try {
                             if (locationManager.isProviderEnabled(provider)) {
-                                locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
+                                boolean usedLastLocation = locationListener.onLocationChanged(TAG_LAST_LOCATION, locationManager.getLastKnownLocation(provider));
+                                if (usedLastLocation) {
+                                    break;
+                                }
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log_e(TAG, listenerLogLine(locationListenerTag, provider, "unable to access provider; " + e));
+                            Log_e(TAG, listenerLogLine(TAG_LAST_LOCATION, provider, "unable to access provider; " + e));
                         }
                     }
                 }
 
                 if (bestFix == null)
                 {
-                    locationListenerTag = TAG_LOCATION_CHANGED;
                     for (int i=0; i<providers.length; i++)
                     {
                         String provider = providers[i];
@@ -308,7 +322,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                                 requestLocationUpdates(locationManager, provider, locationListener);
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log_e(TAG, listenerLogLine(locationListenerTag, provider, "unable to access provider; " + e));
+                            Log_e(TAG, listenerLogLine(TAG_LOCATION_CHANGED, provider, "unable to access provider; " + e));
                         }
                     }
                 }

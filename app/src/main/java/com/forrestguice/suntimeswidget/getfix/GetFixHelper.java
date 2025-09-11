@@ -176,6 +176,7 @@ public class GetFixHelper implements LocationHelper
         gettingFix = value;
     }
 
+    @Override
     public void fallbackToLastLocation()
     {
         GetFixUI uiObj = getUI();
