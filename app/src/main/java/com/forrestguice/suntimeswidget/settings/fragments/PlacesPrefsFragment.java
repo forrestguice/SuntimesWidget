@@ -248,11 +248,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 android.location.Location location = locationManager.getLastKnownLocation(locationProvider.getName());
                 if (location != null)
                 {
-                    if (utils == null) {
-                        utils = new SuntimesUtils();
-                        SuntimesUtils.initDisplayStrings(getActivity());
-                    }
-
+                    SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
                     summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
                 }
@@ -280,7 +276,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         };
         return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
     }
-    protected SuntimesUtils utils = null;
+    protected SuntimesUtils utils = new SuntimesUtils();
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;
     protected void requestLocationPermissions()
