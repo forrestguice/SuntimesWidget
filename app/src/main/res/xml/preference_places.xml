@@ -39,6 +39,7 @@
         android:title="@string/configLabel_locationproviders" />   <!-- populated at runtime -->
 
     <PreferenceCategory
+        android:key="getFix_debug"
         android:title="@string/configLabel_getFix_lastRequest">
 
         <CheckBoxPreference

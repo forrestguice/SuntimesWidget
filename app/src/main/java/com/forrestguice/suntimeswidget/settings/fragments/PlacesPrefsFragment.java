@@ -93,9 +93,31 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
     protected void updateLocationLastRequestInfo(final Context context)
     {
+        CheckBoxPreference debugPref = (CheckBoxPreference) findPreference("getFix_last_log_enabled");
+        if (debugPref != null)
+        {
+            debugPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    if (!(Boolean) newValue) {
+                        LocationHelperSettings.clearLastLocationLog(preference.getContext());
+                    }
+
+                    Preference lastRequestPref = findPreference("places_location_last_info");
+                    if (lastRequestPref != null) {
+                        lastRequestPref.setEnabled((Boolean) newValue);
+                    }
+                    return true;
+                }
+            });
+        }
+
         Preference lastRequestPref = findPreference("places_location_last_info");
         if (lastRequestPref != null)
         {
+            lastRequestPref.setEnabled(LocationHelperSettings.keepLastLocationLog(context));
             lastRequestPref.setOnPreferenceClickListener(onLastRequestPrefClicked);
 
             boolean hasLog = (!LocationHelperSettings.lastLocationLog(context).isEmpty());
@@ -127,9 +149,11 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     lastRequestPref.setSummary(lastRequestDisplay);
 
                 } else {
+                    long time0 = LocationHelperSettings.lastAutoLocationRequest(context);
+                    long timeAgo0 = System.currentTimeMillis() - time0;
                     CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
-                            utils.calendarDateTimeDisplayString(context, time).getValue(),
-                            utils.timeDeltaLongDisplayString(0, timeAgo).getValue());
+                            utils.calendarDateTimeDisplayString(context, time0).getValue(),
+                            utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
                     lastRequestPref.setSummary(lastRequestDisplay);
                 }
             } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
@@ -148,7 +172,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
     protected void showLocationLastRequestReport(Context context)
     {
         TextView text = new TextView(context);
-        text.setTextSize(context.getResources().getDimension(R.dimen.text_size_tiny));
+        text.setTextSize(10);
         text.setText(LocationHelperSettings.lastLocationLog(context));
         text.setVerticalScrollBarEnabled(true);
         text.setHorizontalScrollBarEnabled(true);
