@@ -1158,9 +1158,8 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        int numSatellites = result.getExtras().getInt("satellites", 0);
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), numSatellites, results.getElapsed(), results.getLog());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getNumSatellites(), results.getElapsed(), results.getLog());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {

@@ -34,6 +34,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -41,6 +42,7 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -349,7 +351,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
     protected void requestLocationUpdates(LocationManager locationManager, String provider, LocationListener listener)
     {
-        Log_i(TAG, "Listener: requesting from " + provider.toUpperCase());
+        Log_d(TAG, listenerLogLine("listener", provider, "requesting updates..."));
         locationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
 
@@ -392,10 +394,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, getLog()));
-        }
-        if (result != null) {
-            result.getExtras().putInt("satellites", gps_numSatellites);
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, gps_numSatellites, getLog()));
         }
         signalFinished(result);
     }
@@ -425,7 +424,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, gps_numSatellites, getLog()));
         }
         signalCancelled();
     }
@@ -504,48 +503,93 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private int gps_numSatellites = 0;
     private int gps_timeToFirstFix;
 
+    /**
+     * GnssStatus: api 24+
+     */
+    @TargetApi(24)
+    public static class GnssStatusDisplay
+    {
+        public static List<Integer> getSatellites(GnssStatus status)
+        {
+            ArrayList<Integer> indices = new ArrayList<>();
+            for (int i=0; i<status.getSatelliteCount(); i++) {
+                if (status.getCn0DbHz(i) != 0) {
+                    indices.add(i);
+                }
+            }
+            return indices;
+        }
+        public static String getSignalToNoiseRatio(GnssStatus status)
+        {
+            StringBuilder result = new StringBuilder();
+            if (status != null)
+            {
+                int c = 0;
+                for (int i : getSatellites(status))
+                {
+                    if (c != 0) {
+                        result.append("|");
+                    }
+                    result.append(status.getCn0DbHz(i));
+                    c++;
+                }
+            }
+            return result.toString();
+        }
+        public static String getConstellationCount(GnssStatus status)
+        {
+            StringBuilder result = new StringBuilder();
+            HashMap<Integer, Integer> count = countConstellations(status);
+
+            int c = 0;
+            for (int type : count.keySet())
+            {
+                if (c != 0) {
+                    result.append("|");
+                }
+                result.append(constellationTypeLabel(type)).append(" ");
+                result.append(count.get(type));
+                c++;
+            }
+
+            return result.toString();
+        }
+        public static HashMap<Integer, Integer> countConstellations(@Nullable GnssStatus status)
+        {
+            HashMap<Integer, Integer> count = new HashMap<>();
+            if (status != null) {
+                for (int i : getSatellites(status)) {
+                    int type = status.getConstellationType(i);
+                    int c = (count.containsKey(type) ? count.get(type) : 0);
+                    count.put(type, ++c);
+                }
+            }
+            return count;
+        }
+        public static String constellationTypeLabel(int type)
+        {
+            switch (type) {
+                case GnssStatus.CONSTELLATION_GPS: return "GPS";
+                case GnssStatus.CONSTELLATION_SBAS: return "SBAS";
+                case GnssStatus.CONSTELLATION_GLONASS: return "GLONASS";
+                case GnssStatus.CONSTELLATION_QZSS: return "QZSS";
+                case GnssStatus.CONSTELLATION_BEIDOU: return "BEIDOU";
+                case GnssStatus.CONSTELLATION_GALILEO: return "GALILEO";
+                case GnssStatus.CONSTELLATION_UNKNOWN: default: return "UNKNOWN";
+            }
+        }
+    }
+
     @TargetApi(24)
     private Object gnssStatusCallback = null;
 
-    /**
-     * api 24+
-     */
     @TargetApi(24)
     private GnssStatus.Callback gnssStatusCallback()
     {
         gnssStatusCallback = new GnssStatus.Callback()
         {
-            private List<Integer> getSatellites(GnssStatus status)
-            {
-                ArrayList<Integer> indices = new ArrayList<>();
-                for (int i=0; i<status.getSatelliteCount(); i++) {
-                    if (status.usedInFix(i)) {
-                        indices.add(i);
-                    }
-                }
-                return indices;
-            }
-            private String getSignalToNoiseRatio(GnssStatus status)
-            {
-                StringBuilder result = new StringBuilder();
-                if (status != null)
-                {
-                    int c = 0;
-                    for (int i : getSatellites(status))
-                    {
-                        if (c != 0) {
-                            result.append("|");
-                        }
-                        result.append(status.getCn0DbHz(i));
-                        c++;
-                    }
-                }
-                return result.toString();
-            }
-
             @Override
-            public void onStarted()
-            {
+            public void onStarted() {
                 super.onStarted();
                 Log_d(TAG, "GPS: started; t_" + elapsedTime);
             }
@@ -561,15 +605,20 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 super.onFirstFix(ttffMillis);
                 gps_timeToFirstFix = ttffMillis;
-                Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + getSignalToNoiseRatio(lastStatus) + "); t_" + elapsedTime);
+                gps_numSatellites = GnssStatusDisplay.getSatellites(lastStatus).size();
+                Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; "
+                        + gps_numSatellites + " satellites" + " (" + GnssStatusDisplay.getSignalToNoiseRatio(lastStatus)
+                        + "); t_" + elapsedTime);
             }
 
             @Override
             public void onSatelliteStatusChanged(GnssStatus status) {
                 super.onSatelliteStatusChanged(status);
                 lastStatus = status;
-                gps_numSatellites = getSatellites(status).size();
-                Log_d(TAG, "GPS: status: " + gps_numSatellites + " satellites; t_" + elapsedTime);
+                gps_numSatellites = GnssStatusDisplay.getSatellites(status).size();
+                Log_d(TAG, "GPS: status: " + gps_numSatellites + " satellites"
+                        + " (" + GnssStatusDisplay.getConstellationCount(status)
+                        + "); t_" + elapsedTime);
             }
             private GnssStatus lastStatus = null;
         };
@@ -577,7 +626,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     /**
-     * api 23 and lower
+     * GpsStatus: api 23 and lower
      */
     private final GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener()
     {
