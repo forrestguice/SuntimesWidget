@@ -293,6 +293,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
                     summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
+                    summary += " (+- " + location.getAccuracy() + "m)";
                 }
             } catch (SecurityException | IllegalArgumentException e) {
                 Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
