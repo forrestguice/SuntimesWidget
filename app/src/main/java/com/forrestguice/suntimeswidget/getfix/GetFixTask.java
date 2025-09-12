@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.GnssStatus;
-import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
@@ -34,7 +33,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -42,7 +40,6 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -89,7 +86,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public GetFixTask(Context parent, LocationHelper helper)
     {
         this.log_flag = LocationHelperSettings.keepLastLocationLog(parent);
-        locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
+        this.locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<LocationHelper>(helper);
         this.locationProviders = initLocationProviders(parent);
     }
@@ -351,9 +348,11 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         while (elapsedTime < maxElapsed && !isCancelled())
         {
             try {
-                Thread.sleep(100);
+                //noinspection BusyWait
+                Thread.sleep(200);
             } catch (InterruptedException e) {
-                // e.printStackTrace();   // silent
+                Log_i(TAG, "interrupted! " + e);
+                break;
             }
 
             stopTime = System.currentTimeMillis();
@@ -494,6 +493,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         }
     }
 
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
     /**
      * addGpsStatusListener
      */
@@ -523,83 +525,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private int gps_numSatellites = 0;
     private int gps_timeToFirstFix;
 
-    /**
-     * GnssStatus: api 24+
-     */
-    @TargetApi(24)
-    public static class GnssStatusDisplay
-    {
-        public static List<Integer> getSatellites(GnssStatus status)
-        {
-            ArrayList<Integer> indices = new ArrayList<>();
-            for (int i=0; i<status.getSatelliteCount(); i++) {
-                if (status.getCn0DbHz(i) != 0) {
-                    indices.add(i);
-                }
-            }
-            return indices;
-        }
-        public static String getSignalToNoiseRatio(GnssStatus status)
-        {
-            StringBuilder result = new StringBuilder();
-            if (status != null)
-            {
-                int c = 0;
-                for (int i : getSatellites(status))
-                {
-                    if (c != 0) {
-                        result.append("|");
-                    }
-                    result.append(status.getCn0DbHz(i));
-                    c++;
-                }
-            }
-            return result.toString();
-        }
-        public static String getConstellationCount(GnssStatus status)
-        {
-            StringBuilder result = new StringBuilder();
-            HashMap<Integer, Integer> count = countConstellations(status);
-
-            int c = 0;
-            for (int type : count.keySet())
-            {
-                if (c != 0) {
-                    result.append("|");
-                }
-                result.append(constellationTypeLabel(type)).append(" ");
-                result.append(count.get(type));
-                c++;
-            }
-
-            return result.toString();
-        }
-        public static HashMap<Integer, Integer> countConstellations(@Nullable GnssStatus status)
-        {
-            HashMap<Integer, Integer> count = new HashMap<>();
-            if (status != null) {
-                for (int i : getSatellites(status)) {
-                    int type = status.getConstellationType(i);
-                    int c = (count.containsKey(type) ? count.get(type) : 0);
-                    count.put(type, ++c);
-                }
-            }
-            return count;
-        }
-        public static String constellationTypeLabel(int type)
-        {
-            switch (type) {
-                case GnssStatus.CONSTELLATION_GPS: return "GPS";
-                case GnssStatus.CONSTELLATION_SBAS: return "SBAS";
-                case GnssStatus.CONSTELLATION_GLONASS: return "GLONASS";
-                case GnssStatus.CONSTELLATION_QZSS: return "QZSS";
-                case GnssStatus.CONSTELLATION_BEIDOU: return "BEIDOU";
-                case GnssStatus.CONSTELLATION_GALILEO: return "GALILEO";
-                case GnssStatus.CONSTELLATION_UNKNOWN: default: return "UNKNOWN";
-            }
-        }
-    }
-
     @TargetApi(24)
     private Object gnssStatusCallback = null;
 
@@ -625,9 +550,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 super.onFirstFix(ttffMillis);
                 gps_timeToFirstFix = ttffMillis;
-                gps_numSatellites = GnssStatusDisplay.getSatellites(lastStatus).size();
+                gps_numSatellites = GpsDebugDisplay.getSatellites(lastStatus).size();
                 Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; "
-                        + gps_numSatellites + " satellites" + " (" + GnssStatusDisplay.getSignalToNoiseRatio(lastStatus)
+                        + gps_numSatellites + " satellites" + " (" + GpsDebugDisplay.getSignalToNoiseRatio(lastStatus)
                         + "); t_" + elapsedTime);
             }
 
@@ -635,9 +560,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             public void onSatelliteStatusChanged(GnssStatus status) {
                 super.onSatelliteStatusChanged(status);
                 lastStatus = status;
-                gps_numSatellites = GnssStatusDisplay.getSatellites(status).size();
+                gps_numSatellites = GpsDebugDisplay.getSatellites(status).size();
                 Log_d(TAG, "GPS: status: " + gps_numSatellites + " satellites"
-                        + " (" + GnssStatusDisplay.getConstellationCount(status)
+                        + " (" + GpsDebugDisplay.getConstellationCount(status)
                         + "); t_" + elapsedTime);
             }
             private GnssStatus lastStatus = null;
@@ -650,35 +575,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
      */
     private final GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener()
     {
-        private List<GpsSatellite> getSatelliteList()
-        {
-            ArrayList<GpsSatellite> list = new ArrayList<>();
-            for (GpsSatellite satellite : locationManager.getGpsStatus(null).getSatellites()) {
-                if (satellite.usedInFix()) {
-                    list.add(satellite);
-                }
-            }
-            return list;
-        }
-        private int getSatelliteCount(List<GpsSatellite> list, int current) {
-            int i = list.size();
-            return (i != 0 ? i : current);
-        }
-        private String getSignalToNoiseRatio(List<GpsSatellite> list)
-        {
-            StringBuilder result = new StringBuilder();
-            for (int i=0; i<list.size(); i++) {
-                if (i != 0) {
-                    result.append("|");
-                }
-                result.append(list.get(i).getSnr());
-            }
-            return result.toString();
-        }
-
         @Override
         public void onGpsStatusChanged(int event)
         {
+            GpsStatus status = locationManager.getGpsStatus(null);
             switch (event)
             {
                 case GpsStatus.GPS_EVENT_STARTED:
@@ -687,8 +587,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
                 case GpsStatus.GPS_EVENT_FIRST_FIX:
                     gps_timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
-                    gps_numSatellites = getSatelliteCount(getSatelliteList(), gps_numSatellites);
-                    Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + getSignalToNoiseRatio(getSatelliteList()) + "); t_" + elapsedTime);
+                    gps_numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status), gps_numSatellites);
+                    Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + GpsDebugDisplay.getSignalToNoiseRatio(GpsDebugDisplay.getSatelliteList(status)) + "); t_" + elapsedTime);
                     break;
 
                 case GpsStatus.GPS_EVENT_STOPPED:
@@ -696,12 +596,14 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     break;
 
                 case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                    int numSatellites = getSatelliteCount(getSatelliteList(), 0);
-                    Log_d(TAG, "GPS: status: " + numSatellites + " satellites; t_" + elapsedTime);
+                    int numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status), 0);
+                    Log_d(TAG, "GPS: status: " + numSatellites + " satellites (" + GpsDebugDisplay.getSignalToNoiseRatio(GpsDebugDisplay.getSatelliteList(status)) + "); t_" + elapsedTime);
                     break;
             }
         }
     };
+
+    //////////////////////////////////////////////////
 
     /**
      * FilteredLocation
@@ -714,7 +616,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         private Location location;
         private double variance;
         private long locationTime;  // millis
-        private long maxAge;        // millis
+        private final long maxAge;        // millis
         private float q;        // meters per second
         private int c = 0;
 
@@ -772,6 +674,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             }
         }
     }
+
+    //////////////////////////////////////////////////
 
     public void Log_e(String tag, String msg) {
         Log.e(tag, msg);
