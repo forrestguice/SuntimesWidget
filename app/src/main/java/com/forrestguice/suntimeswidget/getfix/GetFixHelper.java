@@ -95,6 +95,11 @@ public class GetFixHelper implements LocationHelper
         return LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
     }
 
+    public int getMinElapsedTimeSinceFirstFix() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
+        return LocationHelperSettings.loadPrefGpsMinElapsedSinceFirstFix(prefs, GetFixTask.MIN_ELAPSED_FF);
+    }
+
     /**
      * Get a fix; main entry point for GPS "get fix" button in location settings.
      * Spins up a GetFixTask; allows only one such task to execute at a time.
@@ -111,6 +116,7 @@ public class GetFixHelper implements LocationHelper
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
                     getFixTask = new GetFixTask(myParent, this);
                     getFixTask.setMinElapsed(getMinElapsedTime());
+                    getFixTask.setMinElapsedSinceFirstFix(getMinElapsedTimeSinceFirstFix());
 
                     int maxElapsed = LocationHelperSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
                     getFixTask.setMaxElapsed(maxElapsed);

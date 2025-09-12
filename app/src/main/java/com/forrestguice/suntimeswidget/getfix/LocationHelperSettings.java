@@ -26,7 +26,8 @@ import android.util.Log;
 @SuppressWarnings("Convert2Diamond")
 public class LocationHelperSettings
 {
-    public static final String PREF_KEY_LOCATION_MIN_ELAPSED = "getFix_minElapsed";
+    public static final String PREF_KEY_LOCATION_MIN_ELAPSED = "getFix_minElapsed";    // total elapsed time
+    public static final String PREF_KEY_LOCATION_MIN_ELAPSED_FF = "getFix_minElapsedFF";    // elapsed time since first fix
     public static final String PREF_KEY_LOCATION_MAX_ELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_LOCATION_MAX_AGE = "getFix_maxAge";
 
@@ -92,6 +93,10 @@ public class LocationHelperSettings
             retValue = defaultValue;
         }
         return retValue;
+    }
+
+    public static int loadPrefGpsMinElapsedSinceFirstFix(SharedPreferences prefs, int defaultValue) {
+        return prefs.getInt(PREF_KEY_LOCATION_MIN_ELAPSED_FF, defaultValue);
     }
 
     /**

@@ -56,7 +56,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 {
     public static final String TAG = "LocationTask";
 
-    public static final int MIN_ELAPSED = 1000 * 3;        // wait at least 3s before settling on a fix
+    public static final int MIN_ELAPSED_FF = 1500;           // wait at least 1s before allowing finish (counted from time of "first fix")
+    public static final int MIN_ELAPSED = 1000 * 3;        // wait at least 3s before allowing finish (counted from request for update)
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 15;      // consider fixes over 15min be "too old"
     public static final int MAX_AGE_NONE = 0;
@@ -116,6 +117,17 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     /**
+     * Property: minimum amount of time to continue searching after acquiring the "first fix".
+     */
+    private int minElapsed1 = MIN_ELAPSED_FF;
+    public int getMinElapsedSinceFirstFix() {
+        return minElapsed1;
+    }
+    public void setMinElapsedSinceFirstFix(int millis) {
+        minElapsed1 = millis;
+    }
+
+    /**
      * Property: maximum amount of time that may elapsed while searching for a location.
      */
     private int maxElapsed = MAX_ELAPSED;
@@ -142,6 +154,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
+    private Long firstFixTime = null;
     private FilteredLocation bestFix;
     private final LocationManager locationManager;
 
@@ -150,7 +163,10 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     {
         @Override
         public synchronized void onLocationChanged(Location location) {
-            onLocationChanged(TAG_LOCATION_CHANGED, location);
+            boolean result = onLocationChanged(TAG_LOCATION_CHANGED, location);
+            if (firstFixTime == null && result) {
+                firstFixTime = System.currentTimeMillis();
+            }
         }
 
         /**
@@ -227,8 +243,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected String listenerLogLine(String tag, String provider, String message) {
         return provider.toUpperCase() + ": " + tag + ": " + message;
     }
-    private static final String TAG_LOCATION_CHANGED = "check location";
-    private static final String TAG_LAST_LOCATION = "last location";
+    private static final String TAG_LOCATION_CHANGED = "location";
+    private static final String TAG_LAST_LOCATION = "lastLocation";
 
     public static long calculateLocationAge(android.location.Location location)
     {
@@ -267,6 +283,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             helper.setGettingFix(true);
         }
         bestFix = null;
+        firstFixTime = null;
         elapsedTime = 0;
         startTime = stopTime = System.currentTimeMillis();
     }
@@ -340,9 +357,12 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             }
 
             stopTime = System.currentTimeMillis();
-            elapsedTime = stopTime - startTime;
+            elapsedTime = stopTime - startTime;                                                // total time elapsed
+            long elapsedTime1 = stopTime - (firstFixTime != null ? firstFixTime : stopTime);   // elapsed since first fix
 
-            if (bestFix != null && elapsedTime > minElapsed) {
+            if (bestFix != null && (elapsedTime > minElapsed) &&
+                    (firstFixTime == null || elapsedTime1 > minElapsed1)   // bestFix is either a good "last location", or the result of updating for over minDuration
+            ) {
                 break;
             }
         }
