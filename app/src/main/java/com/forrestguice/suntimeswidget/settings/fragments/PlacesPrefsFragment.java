@@ -22,6 +22,8 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -169,11 +171,12 @@ public class PlacesPrefsFragment extends PreferenceFragment
             return false;
         }
     };
-    protected void showLocationLastRequestReport(Context context)
+    protected void showLocationLastRequestReport(final Context context)
     {
+        final String report = LocationHelperSettings.lastLocationLog(context);
         TextView text = new TextView(context);
         text.setTextSize(10);
-        text.setText(LocationHelperSettings.lastLocationLog(context));
+        text.setText(report);
         text.setVerticalScrollBarEnabled(true);
         text.setHorizontalScrollBarEnabled(true);
 
@@ -186,7 +189,22 @@ public class PlacesPrefsFragment extends PreferenceFragment
         dialog.setTitle(context.getString(R.string.configLabel_getFix_lastRequest));
         dialog.setView(scroll);
         dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
+        dialog.setNeutralButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                copyToClipboard(context, report);
+            }
+        });
         dialog.show();
+    }
+    private void copyToClipboard(Context context, String message) {
+        if (context != null && message != null) {
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.configLabel_getFix_lastRequest), message));
+                Toast.makeText(context, "Copied to the clipboard.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     protected void updateLocationProviderPrefs()
