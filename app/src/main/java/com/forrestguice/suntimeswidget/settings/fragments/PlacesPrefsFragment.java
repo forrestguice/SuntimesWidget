@@ -45,6 +45,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -165,29 +166,34 @@ public class PlacesPrefsFragment extends PreferenceFragment
     private final Preference.OnPreferenceClickListener onLastRequestPrefClicked = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
-            if (!LocationHelperSettings.lastLocationLog(preference.getContext()).isEmpty()) {
-                showLocationLastRequestReport(preference.getContext());
+            Context context = preference.getContext();
+            if (context != null && !LocationHelperSettings.lastLocationLog(context).isEmpty()) {
+                showLocationLastRequestReport(context, LocationHelperSettings.lastLocationLog(context));
             }
             return false;
         }
     };
-    protected void showLocationLastRequestReport(final Context context)
+    protected void showLocationLastRequestReport(final Context context, final String report)
     {
-        final String report = LocationHelperSettings.lastLocationLog(context);
         TextView text = new TextView(context);
+        text.setTextIsSelectable(true);
         text.setTextSize(12);
         text.setText(report);
         text.setVerticalScrollBarEnabled(true);
         text.setHorizontalScrollBarEnabled(true);
+        text.setHorizontallyScrolling(true);
 
         int padding = (int) context.getResources().getDimension(R.dimen.dialog_margin);
-        ScrollView scroll = new ScrollView(context);
-        scroll.setPadding(padding, padding, padding, padding);
-        scroll.addView(text);
+        ScrollView vScroll = new ScrollView(context);
+        vScroll.addView(text);
+
+        HorizontalScrollView hScroll = new HorizontalScrollView(context);
+        hScroll.setPadding(padding, padding, padding, padding);
+        hScroll.addView(vScroll);
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setTitle(context.getString(R.string.configLabel_getFix_lastRequest));
-        dialog.setView(scroll);
+        dialog.setView(hScroll);
         dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
         dialog.setNeutralButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener() {
             @Override
@@ -202,7 +208,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             if (clipboard != null) {
                 clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.configLabel_getFix_lastRequest), message));
-                Toast.makeText(context, "Copied to the clipboard.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.location_dialog_toast_copied), Toast.LENGTH_SHORT).show();
             }
         }
     }
