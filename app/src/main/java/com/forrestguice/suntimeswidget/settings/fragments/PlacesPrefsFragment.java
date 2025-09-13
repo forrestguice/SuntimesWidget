@@ -175,7 +175,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
     {
         final String report = LocationHelperSettings.lastLocationLog(context);
         TextView text = new TextView(context);
-        text.setTextSize(10);
+        text.setTextSize(12);
         text.setText(report);
         text.setVerticalScrollBarEnabled(true);
         text.setHorizontalScrollBarEnabled(true);
@@ -293,7 +293,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
                     summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
-                    summary += " (+- " + location.getAccuracy() + "m)";
+                    summary += " (±" + location.getAccuracy() + "m)";
                 }
             } catch (SecurityException | IllegalArgumentException e) {
                 Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
