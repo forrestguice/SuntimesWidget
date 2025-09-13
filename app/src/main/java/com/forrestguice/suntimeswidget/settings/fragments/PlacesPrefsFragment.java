@@ -208,7 +208,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             if (clipboard != null) {
                 clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.configLabel_getFix_lastRequest), message));
-                Toast.makeText(context, context.getString(R.string.location_dialog_toast_copied), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard), Toast.LENGTH_SHORT).show();
             }
         }
     }
