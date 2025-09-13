@@ -3004,6 +3004,8 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->
 
+    <string name="toast_copied_to_clipboard">Copied to clipboard.</string>
+
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
