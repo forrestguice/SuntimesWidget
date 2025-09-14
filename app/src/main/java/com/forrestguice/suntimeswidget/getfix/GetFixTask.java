@@ -36,6 +36,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ import java.util.concurrent.TimeUnit;
  * good location fix to be acquired; updates progress.
  */
 @SuppressWarnings("Convert2Diamond")
-public class GetFixTask extends AsyncTask<Object, Location, Location>
+public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
 {
     public static final String TAG = "LocationTask";
 
@@ -91,7 +92,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         this.locationProviders = initLocationProviders(parent);
     }
 
-    public AsyncTask<Object, Location, Location> executeTask(Object... params)
+    public AsyncTask<Object, LocationProgress, Location> executeTask(Object... params)
     {
         if (Build.VERSION.SDK_INT >= 11) {
             return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
@@ -196,7 +197,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                         bestFix.addToFilter(location, locationTime);
                         Log_d(TAG, listenerLogLine(tag, location, "PASS: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
                     }
-                    onProgressUpdate(bestFix.getLocation());
+                    onProgressUpdate(new LocationProgress(bestFix.getLocation(), System.currentTimeMillis() - startTime));
                     return true;
 
                 } else {
@@ -378,7 +379,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
      * @param locations a list of android.location.Location to be displayed during progress update
      */
     @Override
-    protected void onProgressUpdate(Location... locations)
+    protected void onProgressUpdate(LocationProgress... locations)
     {
         final LocationHelper helper = helperRef.get();
         if (helper != null)

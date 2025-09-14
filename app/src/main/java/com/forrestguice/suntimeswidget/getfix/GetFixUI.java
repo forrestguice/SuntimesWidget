@@ -44,24 +44,55 @@ public abstract class GetFixUI
     }
 
     public abstract void enableUI(boolean value);
+    @Deprecated
     public abstract void updateUI(Location... locations);
     public abstract void showProgress(boolean showProgress);
     public abstract void onStart();
     public abstract void onResult(LocationResult result);
 
-    public static class LocationResult
+    public void updateUI(LocationProgress... progress)
     {
-        protected Location result;
-        protected long elapsed;
+        Location[] locations = new Location[progress.length];
+        for (int i=0; i<progress.length; i++) {
+            locations[i] = (progress != null ? progress[i].result : null);
+        }
+        updateUI(locations);
+    }
+
+    /**
+     * LocationResult
+     */
+    public static class LocationResult extends LocationProgress
+    {
         protected boolean wasCancelled;
         protected String log;
 
         public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
         {
-            this.result = result;
-            this.elapsed = elapsed;
+            super(result, elapsed);
             this.wasCancelled = wasCancelled;
             this.log = log;
+        }
+
+        public boolean wasCancelled() {
+            return wasCancelled;
+        }
+        public String getLog() {
+            return log;
+        }
+    }
+
+    /**
+     * LocationProgress
+     */
+    public static class LocationProgress
+    {
+        protected Location result;
+        protected long elapsed;
+
+        public LocationProgress(Location location, long elapsed) {
+            this.result = location;
+            this.elapsed = elapsed;
         }
 
         public Location getResult() {
@@ -69,12 +100,6 @@ public abstract class GetFixUI
         }
         public long getElapsed() {
             return elapsed;
-        }
-        public boolean wasCancelled() {
-            return wasCancelled;
-        }
-        public String getLog() {
-            return log;
         }
     }
 }
