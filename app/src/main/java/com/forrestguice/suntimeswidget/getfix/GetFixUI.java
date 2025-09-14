@@ -55,14 +55,12 @@ public abstract class GetFixUI
         protected long elapsed;
         protected boolean wasCancelled;
         protected String log;
-        protected int numSatellites;
 
-        public LocationResult(Location result, long elapsed, boolean wasCancelled, int numSatellites, String log)
+        public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
         {
             this.result = result;
             this.elapsed = elapsed;
             this.wasCancelled = wasCancelled;
-            this.numSatellites = numSatellites;
             this.log = log;
         }
 
@@ -74,9 +72,6 @@ public abstract class GetFixUI
         }
         public boolean wasCancelled() {
             return wasCancelled;
-        }
-        public int getNumSatellites() {
-            return numSatellites;
         }
         public String getLog() {
             return log;

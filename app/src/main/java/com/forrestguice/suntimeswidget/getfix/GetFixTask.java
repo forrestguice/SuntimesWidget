@@ -413,7 +413,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, gps_numSatellites, getLog()));
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, getLog()));
         }
         signalFinished(result);
     }
@@ -443,7 +443,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, gps_numSatellites, getLog()));
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
         }
         signalCancelled();
     }
@@ -502,7 +502,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void addGpsStatusListener(LocationManager locationManager)
     {
         if (Build.VERSION.SDK_INT >= 28) {
-            Log_d(TAG, "GPS: " + locationManager.getGnssHardwareModelName() + "" + locationManager.getGnssYearOfHardware());
+            Log_d(TAG, "GPS: " + locationManager.getGnssHardwareModelName() + " " + locationManager.getGnssYearOfHardware());
         }
         if (Build.VERSION.SDK_INT >= 24) {
             locationManager.registerGnssStatusCallback(gnssStatusCallback());
@@ -521,9 +521,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             locationManager.removeGpsStatusListener(gpsStatusListener);
         }
     }
-
-    private int gps_numSatellites = 0;
-    private int gps_timeToFirstFix;
 
     @TargetApi(24)
     private Object gnssStatusCallback = null;
@@ -549,9 +546,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             public void onFirstFix(int ttffMillis)
             {
                 super.onFirstFix(ttffMillis);
-                gps_timeToFirstFix = ttffMillis;
                 Location location = (bestFix != null) ? bestFix.getLocation() : null;
-                Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix
+                Log_d(TAG, "GPS: timeToFirstFix: " + ttffMillis
                         + (location != null ? ", accuracy: " + location.getAccuracy() + "m" : "")
                         + "; t_" + elapsedTime);
             }
@@ -560,7 +556,6 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             public void onSatelliteStatusChanged(GnssStatus status)
             {
                 super.onSatelliteStatusChanged(status);
-                gps_numSatellites = GpsDebugDisplay.getSatellites(status, true).size();
 
                 int c = GpsDebugDisplay.countSatellitesWithSignal(status);
                 int n = status.getSatelliteCount();
@@ -581,6 +576,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         @Override
         public void onGpsStatusChanged(int event)
         {
+            int numSatellites = 0;
             GpsStatus status = locationManager.getGpsStatus(null);
             switch (event)
             {
@@ -589,9 +585,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     break;
 
                 case GpsStatus.GPS_EVENT_FIRST_FIX:
-                    gps_timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
-                    gps_numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), gps_numSatellites);
-                    Log_d(TAG, "GPS: timeToFirstFix: " + gps_timeToFirstFix + "; " + gps_numSatellites + " satellites (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, true)) + "); t_" + elapsedTime);
+                    int timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
+                    numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), numSatellites);
+                    Log_d(TAG, "GPS: timeToFirstFix: " + timeToFirstFix + "; " + numSatellites + " satellites (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, true)) + "); t_" + elapsedTime);
                     break;
 
                 case GpsStatus.GPS_EVENT_STOPPED:
@@ -599,8 +595,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     break;
 
                 case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                    gps_numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), gps_numSatellites);
-                    int numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), 0);
+                    numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), 0);
                     Log_d(TAG, "GPS: status: " + numSatellites + "/" + GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, false), 0) + " (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, false)) + "); t_" + elapsedTime);
                     break;
             }

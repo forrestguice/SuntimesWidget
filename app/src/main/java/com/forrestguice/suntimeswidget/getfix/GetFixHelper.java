@@ -193,7 +193,7 @@ public class GetFixHelper implements LocationHelper
             fix = location;
             gotFix = (fix != null);
             uiObj.updateUI(location);
-            uiObj.onResult(new GetFixUI.LocationResult(location, 0, false, 0, logItem));
+            uiObj.onResult(new GetFixUI.LocationResult(location, 0, false, logItem));
 
         } catch (SecurityException e) {
             Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
