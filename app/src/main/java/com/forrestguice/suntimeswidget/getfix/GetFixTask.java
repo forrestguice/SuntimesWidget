@@ -102,6 +102,17 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     }
 
     /**
+     * Property: autoStop; true (default) the task stops early when a fix is found, false the task continues until interrupted or maxElapsed has passed
+     */
+    private boolean auto_stop = true;
+    public boolean autoStop() {
+        return auto_stop;
+    }
+    public void setAutoStop(boolean flag) {
+        auto_stop = flag;
+    }
+
+    /**
      * Property: minimum amount of time that must elapse while searching for a location.
      */
     private int minElapsed = MIN_ELAPSED;
@@ -360,7 +371,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
             elapsedTime = stopTime - startTime;                                                // total time elapsed
             long elapsedTime1 = stopTime - (firstFixTime != null ? firstFixTime : stopTime);   // elapsed since first fix
 
-            if (bestFix != null && (elapsedTime > minElapsed) &&
+            if (auto_stop && bestFix != null && (elapsedTime > minElapsed) &&
                     (firstFixTime == null || elapsedTime1 > minElapsed1)   // bestFix is either a good "last location", or the result of updating for over minDuration
             ) {
                 break;
