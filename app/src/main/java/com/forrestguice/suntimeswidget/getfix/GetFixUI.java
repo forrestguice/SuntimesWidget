@@ -56,6 +56,7 @@ public abstract class GetFixUI
         for (int i=0; i<progress.length; i++) {
             locations[i] = (progress != null ? progress[i].result : null);
         }
+        //noinspection deprecation
         updateUI(locations);
     }
 
@@ -87,19 +88,40 @@ public abstract class GetFixUI
      */
     public static class LocationProgress
     {
-        protected Location result;
-        protected long elapsed;
-
         public LocationProgress(Location location, long elapsed) {
             this.result = location;
             this.elapsed = elapsed;
+            this.accuracy = (location != null ? location.getAccuracy() : -1);
+        }
+        public LocationProgress(Location location, long elapsed, int signal_i, int signal_n) {
+            this(location, elapsed);
+            this.signal_i = signal_i;
+            this.signal_n = signal_n;
         }
 
+        protected Location result;
         public Location getResult() {
             return result;
         }
+
+        protected long elapsed;
         public long getElapsed() {
             return elapsed;
+        }
+
+        protected int signal_i = 0;
+        public int getSignalI() {
+            return signal_i;
+        }
+
+        protected int signal_n = 0;
+        public int getSignalN() {
+            return signal_n;
+        }
+
+        protected double accuracy;
+        public double getAccuracy() {
+            return accuracy;
         }
     }
 }
