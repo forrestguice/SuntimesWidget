@@ -1159,12 +1159,12 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getNumSatellites(), results.getElapsed(), results.getLog());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getElapsed(), results.getLog());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {
                         if (LocationHelperSettings.keepLastLocationLog(SuntimesActivity.this)) {
-                            LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, false, System.currentTimeMillis(), "", -1, 0, results.getElapsed(), results.getLog());
+                            LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, false, System.currentTimeMillis(), "", -1, results.getElapsed(), results.getLog());
                         }
                         String msg = (results.wasCancelled() ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
                         Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();

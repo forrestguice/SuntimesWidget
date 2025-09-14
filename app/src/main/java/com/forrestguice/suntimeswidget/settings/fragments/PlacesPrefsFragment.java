@@ -133,7 +133,6 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     String provider = LocationHelperSettings.lastLocationProvider(context);
                     float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
                     long elapsed = LocationHelperSettings.lastLocationElapsed(context);
-                    int satellites = LocationHelperSettings.lastLocationSatellites(context);
 
                     CharSequence lastRequestDisplay;
                     if (LocationHelperSettings.lastLocationResult(context))
@@ -141,7 +140,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
                                 utils.calendarDateTimeDisplayString(context, time).getValue(),
                                 utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                                provider.toUpperCase(), accuracy+"", satellites+"",
+                                provider.toUpperCase(), accuracy+"",
                                 (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
