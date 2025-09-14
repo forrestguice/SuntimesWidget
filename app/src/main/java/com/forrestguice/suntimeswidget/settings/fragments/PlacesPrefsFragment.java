@@ -140,7 +140,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
                                 utils.calendarDateTimeDisplayString(context, time).getValue(),
                                 utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                                provider.toUpperCase(), accuracy+"",
+                                provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
                                 (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
@@ -298,7 +298,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
                     summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
-                    summary += " (±" + location.getAccuracy() + "m)";
+                    summary += " (±" + String.format(Locale.getDefault(), "%.2f", location.getAccuracy()) + "m)";
                 }
             } catch (SecurityException | IllegalArgumentException e) {
                 Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
