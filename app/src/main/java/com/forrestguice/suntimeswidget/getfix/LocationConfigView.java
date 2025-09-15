@@ -460,10 +460,10 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled)
+        public void onResult(LocationResult result)
         {
             if (button_getfix != null) {
-                button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+                button_getfix.setImageResource((result.getResult() == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
                 button_getfix.setVisibility(View.VISIBLE);
                 button_getfix.setEnabled(true);
             }
@@ -525,9 +525,9 @@ public class LocationConfigView extends LinearLayout
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled)
+        public void onResult(LocationResult result)
         {
-            button_auto.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+            button_auto.setImageResource((result.getResult() == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
             button_auto.setVisibility(View.VISIBLE);
             button_auto.setEnabled(true);
         }

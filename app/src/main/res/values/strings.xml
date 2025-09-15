@@ -2092,6 +2092,21 @@
         <item>-1</item>
     </string-array>
 
+    <string name="configLabel_getFix_lastRequest_flag">Debug Log</string>  <!-- pref title --> <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest">Last Update</string>  <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
+        \n\n<xliff:g id="provider">%3$s</xliff:g> ±<xliff:g id="accuracy">%4$s</xliff:g>m
+        \nElapsed: <xliff:g id="elapsedTime">%5$s</xliff:g>
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago (not found)
+        \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title for "calendars" app setting -->
     <string name="configLabel_calendars_enabled">Calendar Integration</string>
@@ -2990,6 +3005,8 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->
+
+    <string name="toast_copied_to_clipboard">Copied to clipboard.</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -143,10 +144,10 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         @Override
-        public void onResult(android.location.Location result, boolean wasCancelled)
+        public void onResult(LocationResult result)
         {
             if (button_getfix != null) {
-                button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+                button_getfix.setImageResource((result.getResult() == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
                 button_getfix.setVisibility(View.VISIBLE);
                 button_getfix.setEnabled(true);
             }
@@ -408,7 +409,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
@@ -674,7 +675,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             Window window = getDialog().getWindow();
             if (window != null) {
-                View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+                View decorView = window.getDecorView().findViewById(ViewUtils.getTouchOutsideResourceID());
                 decorView.setOnClickListener(null);
             }
         }

@@ -18,10 +18,14 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.location.GnssStatus;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +36,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -45,25 +50,28 @@ import java.util.concurrent.TimeUnit;
  * good location fix to be acquired; updates progress.
  */
 @SuppressWarnings("Convert2Diamond")
-public class GetFixTask extends AsyncTask<Object, Location, Location>
+public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
 {
-    public static final String TAG = "GetFixTask";
+    public static final String TAG = "LocationTask";
 
-    public static final int MIN_ELAPSED = 1000 * 3;        // wait at least 3s before settling on a fix
+    public static final int MIN_ELAPSED_FF = 1500;           // wait at least 1s before allowing finish (counted from time of "first fix")
+    public static final int MIN_ELAPSED = 1000 * 3;        // wait at least 3s before allowing finish (counted from request for update)
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 15;      // consider fixes over 15min be "too old"
     public static final int MAX_AGE_NONE = 0;
     public static final int MAX_AGE_ANY = -1;
 
     public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
-    public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
+    public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, FUSED_PROVIDER };
 
     private final String[] locationProviders;
     protected String[] initLocationProviders(@NonNull Context context)
     {
         List<String> providers = new ArrayList<String>(Arrays.asList(LOCATION_PROVIDERS));
         List<String> notRequested = new ArrayList<>();
-        for (String provider : providers) {
+        for (int i=0; i<providers.size(); i++)
+        {
+            String provider = providers.get(i);
             if (!LocationHelperSettings.isProviderRequested(context, provider)) {
                 notRequested.add(provider);
             }
@@ -78,18 +86,30 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     private final WeakReference<LocationHelper> helperRef;
     public GetFixTask(Context parent, LocationHelper helper)
     {
-        locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
+        this.log_flag = LocationHelperSettings.keepLastLocationLog(parent);
+        this.locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<LocationHelper>(helper);
         this.locationProviders = initLocationProviders(parent);
     }
 
-    public AsyncTask<Object, Location, Location> executeTask(Object... params)
+    public AsyncTask<Object, LocationProgress, Location> executeTask(Object... params)
     {
         if (Build.VERSION.SDK_INT >= 11) {
             return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
         } else {
             return execute(params);
         }
+    }
+
+    /**
+     * Property: autoStop; true (default) the task stops early when a fix is found, false the task continues until interrupted or maxElapsed has passed
+     */
+    private boolean auto_stop = true;
+    public boolean autoStop() {
+        return auto_stop;
+    }
+    public void setAutoStop(boolean flag) {
+        auto_stop = flag;
     }
 
     /**
@@ -103,6 +123,17 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public void setMinElapsed( int timeInMs )
     {
         minElapsed = timeInMs;
+    }
+
+    /**
+     * Property: minimum amount of time to continue searching after acquiring the "first fix".
+     */
+    private int minElapsed1 = MIN_ELAPSED_FF;
+    public int getMinElapsedSinceFirstFix() {
+        return minElapsed1;
+    }
+    public void setMinElapsedSinceFirstFix(int millis) {
+        minElapsed1 = millis;
     }
 
     /**
@@ -132,19 +163,30 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
+    private Long firstFixTime = null;
     private FilteredLocation bestFix;
     private final LocationManager locationManager;
-    private final LocationListener locationListener = new LocationListener()
+
+    private final GetFixTaskLocationListener locationListener = new GetFixTaskLocationListener();
+    private class GetFixTaskLocationListener implements LocationListener
     {
         @Override
-        public void onLocationChanged(Location location)
+        public synchronized void onLocationChanged(Location location) {
+            boolean result = onLocationChanged(TAG_LOCATION_CHANGED, location);
+            if (firstFixTime == null && result) {
+                firstFixTime = System.currentTimeMillis();
+            }
+        }
+
+        /**
+         * @param tag tag
+         * @param location location
+         * @return true location was used, false location was discarded
+         */
+        public synchronized boolean onLocationChanged(String tag, Location location)
         {
             if (location != null)
             {
-                if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
-                }
-
                 long now;
                 long locationTime;
                 if (Build.VERSION.SDK_INT >= 17)
@@ -156,36 +198,62 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     locationTime = location.getTime();
                 }
                 long locationAge = now - locationTime;
-
-                if (bestFix == null) {
-                    if (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge) {
+                if (passesFilter(locationAge, maxAge))
+                {
+                    if (bestFix == null) {
                         bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
-                        onProgressUpdate(bestFix.getLocation());
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onLocationChanged: found location: " + locationAge + " <= " + maxAge);
-                        }
-                    } else if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "onLocationChanged: ignoring location (too old): " + locationAge + " > " + maxAge);
+                        Log_d(TAG, listenerLogLine(tag, location, "PASS: init: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
+
+                    } else {
+                        bestFix.addToFilter(location, locationTime);
+                        Log_d(TAG, listenerLogLine(tag, location, "PASS: adding: " + locationAge + "ms " + (maxAge > 0 ? " <= " + maxAge + "ms" : "") + ": " + location.toString()));
                     }
+                    onProgressUpdate(new LocationProgress(bestFix.getLocation(), System.currentTimeMillis() - startTime));
+                    return true;
+
                 } else {
-                    bestFix.addToFilter(location, locationTime);
-                    onProgressUpdate(bestFix.getLocation());
-                    if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "onLocationChanged: added location: " + locationAge + " <= " + maxAge);
-                    }
+                    Log_d(TAG, listenerLogLine(tag, location, "FAIL: too old: " + locationAge + " > " + maxAge));
+                    return false;
                 }
+            }
+            return false;
+        }
+        private boolean passesFilter(long locationAge, int maxAge) {
+            return (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log_d(TAG, provider.toUpperCase() + ": provider status: " + getStatusDisplay(status));
+        }
+        protected String getStatusDisplay(int status) {
+            switch (status) {
+                case LocationProvider.OUT_OF_SERVICE: return "OUT_OF_SERVICE";
+                case LocationProvider.AVAILABLE: return "AVAILABLE";
+                case LocationProvider.TEMPORARILY_UNAVAILABLE: return "TEMPORARILY_UNAVAILABLE";
+                default: return "";
             }
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) { }
+        public void onProviderEnabled(String provider) {
+            Log_d(TAG, provider.toUpperCase() + ": provider enabled");
+        }
 
         @Override
-        public void onProviderEnabled(String provider) { }
+        public void onProviderDisabled(String provider) {
+            Log_d(TAG, provider.toUpperCase() + ": provider disabled");
+        }
+    }
 
-        @Override
-        public void onProviderDisabled(String provider) { }
-    };
+    protected String listenerLogLine(String tag, Location location, String message) {
+        return listenerLogLine(tag, location.getProvider(), message);
+    }
+    protected String listenerLogLine(String tag, String provider, String message) {
+        return provider.toUpperCase() + ": " + tag + ": " + message;
+    }
+    private static final String TAG_LOCATION_CHANGED = "location";
+    private static final String TAG_LAST_LOCATION = "lastLocation";
 
     public static long calculateLocationAge(android.location.Location location)
     {
@@ -208,6 +276,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     @Override
     protected void onPreExecute()
     {
+        clearLog();
         final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
@@ -223,6 +292,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             helper.setGettingFix(true);
         }
         bestFix = null;
+        firstFixTime = null;
         elapsedTime = 0;
         startTime = stopTime = System.currentTimeMillis();
     }
@@ -246,31 +316,41 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 String[] providers = passiveMode
                         ? new String[] { LocationManager.PASSIVE_PROVIDER }
-                        : locationProviders;  //: new String[] { LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, FUSED_PROVIDER };
+                        : locationProviders;  //: new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, FUSED_PROVIDER };
 
                 if (maxAge != MAX_AGE_NONE)
                 {
-                    for (String provider : providers) {
+                    for (int i=0; i<providers.length; i++)
+                    {
+                        String provider = providers[i];
                         try {
                             if (locationManager.isProviderEnabled(provider)) {
-                                locationListener.onLocationChanged(locationManager.getLastKnownLocation(provider));
+                                boolean usedLastLocation = locationListener.onLocationChanged(TAG_LAST_LOCATION, locationManager.getLastKnownLocation(provider));
+                                if (usedLastLocation) {
+                                    break;
+                                }
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, listenerLogLine(TAG_LAST_LOCATION, provider, "unable to access provider; " + e));
                         }
                     }
                 }
 
                 if (bestFix == null)
                 {
-                    for (String provider : providers)
+                    for (int i=0; i<providers.length; i++)
                     {
+                        String provider = providers[i];
                         try {
-                            if (locationManager.isProviderEnabled(provider)) {
+                            if (locationManager.isProviderEnabled(provider))
+                            {
+                                if (provider.equals(LocationManager.GPS_PROVIDER) && log_flag) {
+                                    addGpsStatusListener(locationManager);
+                                }
                                 requestLocationUpdates(locationManager, provider, locationListener);
                             }
                         } catch (IllegalArgumentException | SecurityException e) {
-                            Log.e(TAG, "unable to access location provider; " + provider + "; " + e);
+                            Log_e(TAG, listenerLogLine(TAG_LOCATION_CHANGED, provider, "unable to access provider; " + e));
                         }
                     }
                 }
@@ -280,15 +360,20 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         while (elapsedTime < maxElapsed && !isCancelled())
         {
             try {
-                Thread.sleep(100);
+                //noinspection BusyWait
+                Thread.sleep(200);
             } catch (InterruptedException e) {
-                // e.printStackTrace();   // silent
+                Log_i(TAG, "interrupted! " + e);
+                break;
             }
 
             stopTime = System.currentTimeMillis();
-            elapsedTime = stopTime - startTime;
+            elapsedTime = stopTime - startTime;                                                // total time elapsed
+            long elapsedTime1 = stopTime - (firstFixTime != null ? firstFixTime : stopTime);   // elapsed since first fix
 
-            if (bestFix != null && elapsedTime > minElapsed) {
+            if (auto_stop && bestFix != null && (elapsedTime > minElapsed) &&
+                    (firstFixTime == null || elapsedTime1 > minElapsed1)   // bestFix is either a good "last location", or the result of updating for over minDuration
+            ) {
                 break;
             }
         }
@@ -297,9 +382,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
 
     protected void requestLocationUpdates(LocationManager locationManager, String provider, LocationListener listener)
     {
-        if (BuildConfig.DEBUG) {
-            Log.i(TAG, "requesting location updates from: " + provider);
-        }
+        Log_d(TAG, listenerLogLine("listener", provider, "requesting updates..."));
         locationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
 
@@ -307,7 +390,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
      * @param locations a list of android.location.Location to be displayed during progress update
      */
     @Override
-    protected void onProgressUpdate(Location... locations)
+    protected void onProgressUpdate(LocationProgress... locations)
     {
         final LocationHelper helper = helperRef.get();
         if (helper != null)
@@ -325,12 +408,13 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void onPostExecute(Location result)
     {
         try {
+            removeGpsStatusListener(locationManager);
             locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "stopped location listener");
+                Log_d(TAG, "Listener: finished (success)");
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log_e(TAG, "Listener: unable to stop... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         final LocationHelper helper = helperRef.get();
@@ -341,7 +425,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, false);
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, getLog()));
         }
         signalFinished(result);
     }
@@ -354,12 +438,13 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     protected void onCancelled(Location result)
     {
         try {
+            removeGpsStatusListener(locationManager);
             locationManager.removeUpdates(locationListener);
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "stopped location listener");
+                Log_d(TAG, "Listener: cancelled");
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log_e(TAG, "Listener: unable to cancel... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         LocationHelper helper = helperRef.get();
@@ -370,7 +455,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             GetFixUI uiObj = helper.getUI();
             uiObj.showProgress(false);
             uiObj.enableUI(true);
-            uiObj.onResult(result, true);
+            uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
         }
         signalCancelled();
     }
@@ -420,6 +505,117 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         }
     }
 
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * addGpsStatusListener
+     */
+    protected void addGpsStatusListener(LocationManager locationManager)
+    {
+        if (Build.VERSION.SDK_INT >= 28) {
+            Log_d(TAG, "GPS: " + locationManager.getGnssHardwareModelName() + " " + locationManager.getGnssYearOfHardware());
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            locationManager.registerGnssStatusCallback(gnssStatusCallback());
+        } else {
+            locationManager.addGpsStatusListener(gpsStatusListener);
+        }
+    }
+
+    protected void removeGpsStatusListener(LocationManager locationManager)
+    {
+        if (Build.VERSION.SDK_INT >= 24) {
+            if (gnssStatusCallback != null) {
+                locationManager.unregisterGnssStatusCallback((GnssStatus.Callback) gnssStatusCallback);
+            }
+        } else {
+            locationManager.removeGpsStatusListener(gpsStatusListener);
+        }
+    }
+
+    @TargetApi(24)
+    private Object gnssStatusCallback = null;
+
+    @TargetApi(24)
+    private GnssStatus.Callback gnssStatusCallback()
+    {
+        gnssStatusCallback = new GnssStatus.Callback()
+        {
+            @Override
+            public void onStarted() {
+                super.onStarted();
+                Log_d(TAG, "GPS: started; key: " + GpsDebugDisplay.getSatelliteKey() + "; t_" + elapsedTime);
+            }
+
+            @Override
+            public void onStopped() {
+                super.onStopped();
+                Log_d(TAG, "GPS: stopped; t_" + elapsedTime);
+            }
+
+            @Override
+            public void onFirstFix(int ttffMillis)
+            {
+                super.onFirstFix(ttffMillis);
+                Location location = (bestFix != null) ? bestFix.getLocation() : null;
+                Log_d(TAG, "GPS: timeToFirstFix: " + ttffMillis
+                        + (location != null ? ", accuracy: " + location.getAccuracy() + "m" : "")
+                        + "; t_" + elapsedTime);
+            }
+
+            @Override
+            public void onSatelliteStatusChanged(GnssStatus status)
+            {
+                super.onSatelliteStatusChanged(status);
+
+                int c = GpsDebugDisplay.countSatellitesWithSignal(status);
+                int n = status.getSatelliteCount();
+                Log_d(TAG, "GPS: status: " + (c > 9 ? c : " " + c) + "/" + n
+                        + " (" + GpsDebugDisplay.getSatelliteReport(status, false) + ")"
+                        + " (" + GpsDebugDisplay.getConstellationCount(status, false) + ")"
+                        + "; t_" + elapsedTime);
+            }
+        };
+        return (GnssStatus.Callback) gnssStatusCallback;
+    }
+
+    /**
+     * GpsStatus: api 23 and lower
+     */
+    private final GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener()
+    {
+        @Override
+        public void onGpsStatusChanged(int event)
+        {
+            int numSatellites = 0;
+            GpsStatus status = locationManager.getGpsStatus(null);
+            switch (event)
+            {
+                case GpsStatus.GPS_EVENT_STARTED:
+                    Log_d(TAG, "GPS: started; key: " + GpsDebugDisplay.getSatelliteKey() + "; t_" + elapsedTime);
+                    break;
+
+                case GpsStatus.GPS_EVENT_FIRST_FIX:
+                    int timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
+                    numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), numSatellites);
+                    Log_d(TAG, "GPS: timeToFirstFix: " + timeToFirstFix + "; " + numSatellites + " satellites (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, true)) + "); t_" + elapsedTime);
+                    break;
+
+                case GpsStatus.GPS_EVENT_STOPPED:
+                    Log_d(TAG, "GPS: stopped: t_" + elapsedTime);
+                    break;
+
+                case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                    numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), 0);
+                    Log_d(TAG, "GPS: status: " + numSatellites + "/" + GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, false), 0) + " (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, false)) + "); t_" + elapsedTime);
+                    break;
+            }
+        }
+    };
+
+    //////////////////////////////////////////////////
+
     /**
      * FilteredLocation
      *
@@ -431,7 +627,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         private Location location;
         private double variance;
         private long locationTime;  // millis
-        private long maxAge;        // millis
+        private final long maxAge;        // millis
         private float q;        // meters per second
         private int c = 0;
 
@@ -458,7 +654,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             q = q0;
             c = 1;
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "initFilter: init to " + location.toString());
+                Log.d(TAG, "Filter: init to " + location.toString());
             }
         }
 
@@ -484,9 +680,49 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                 location.setAltitude(location.getAltitude() + (k * (location1.getAltitude() - location.getAltitude())));
                 location.setAccuracy((float)Math.sqrt(variance));
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "addToFilter: accuracy now " + location.getAccuracy());
+                    Log.d(TAG, "Filter: adding " + location + ", accuracy now " + location.getAccuracy());
                 }
             }
         }
     }
+
+    //////////////////////////////////////////////////
+
+    public void Log_e(String tag, String msg) {
+        Log.e(tag, msg);
+        if (log_flag) {
+            appendLog("E/: " + msg);
+        }
+    }
+    public void Log_w(String tag, String msg) {
+        Log.e(tag, msg);
+        if (log_flag) {
+            appendLog("W/: " + msg);
+        }
+    }
+    public void Log_i(String tag, String msg) {
+        Log.i(tag, msg);
+        if (log_flag) {
+            appendLog("I/: " + msg);
+        }
+    }
+    public void Log_d(String tag, String msg) {
+        if (BuildConfig.DEBUG) {
+            Log.d(tag, msg);
+        }
+        if (log_flag) {
+            appendLog("D/: " + msg);
+        }
+    }
+    private synchronized void appendLog(String line) {
+        log = log + "\n" + line;
+    }
+    private synchronized void clearLog() {
+        log = "";
+    }
+    public synchronized String getLog() {
+        return log;
+    }
+    private String log = "";
+    private final boolean log_flag;    // set to `LocationHelperSettings.keepLastLocationLog(parent)` from constructor
 }
