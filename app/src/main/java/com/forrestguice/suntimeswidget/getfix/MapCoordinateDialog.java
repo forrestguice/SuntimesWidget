@@ -29,6 +29,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -122,7 +123,7 @@ public class MapCoordinateDialog extends BottomSheetDialogFragment
         {
             int colorEnabled = Color.BLACK;    // TODO
             int colorPressed = Color.RED;
-            marker.setImageTintList(SuntimesUtils.colorStateList(colorEnabled, colorEnabled, colorPressed));
+            ImageViewCompat.setImageTintList(marker, SuntimesUtils.colorStateList(colorEnabled, colorEnabled, colorPressed));
             marker.setAlpha(0f);    // setVisible from onShow
         }
 
