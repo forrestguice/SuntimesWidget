@@ -705,7 +705,7 @@ public class LocationConfigView extends LinearLayout
     };
 
     public void lookupLocation() {
-        getFixHelper.getFix(0);
+        getFixHelper.getFix(0, true);
     }
 
 
@@ -1379,7 +1379,7 @@ public class LocationConfigView extends LinearLayout
         @Override
         public void onClick(View view)
         {
-            getFixHelper.getFix(1);
+            getFixHelper.getFix(1, true);
         }
     };
 

@@ -105,7 +105,12 @@ public class GetFixHelper implements LocationHelper
      * Spins up a GetFixTask; allows only one such task to execute at a time.
      * @return true if location permission is granted (and action was taken)
      */
-    public boolean getFix()
+
+    @Override
+    public boolean getFix() {
+        return getFix(true);
+    }
+    public boolean getFix(boolean autoStop)
     {
         if (!gettingFix)
         {
@@ -117,6 +122,7 @@ public class GetFixHelper implements LocationHelper
                     getFixTask = new GetFixTask(myParent, this);
                     getFixTask.setMinElapsed(getMinElapsedTime());
                     getFixTask.setMinElapsedSinceFirstFix(getMinElapsedTimeSinceFirstFix());
+                    getFixTask.setAutoStop(autoStop);
 
                     int maxElapsed = LocationHelperSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
                     getFixTask.setMaxElapsed(maxElapsed);
@@ -160,12 +166,13 @@ public class GetFixHelper implements LocationHelper
             return true;
         }
     }
-    public void getFix( int i )
+    @Override
+    public void getFix( int i, boolean autoStop )
     {
         if (!gettingFix)
         {
             setUiIndex( i );
-            getFix();
+            getFix(autoStop);
 
         } else {
             Log.w("GetFixHelper", "getFix called while already running! ignored");

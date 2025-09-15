@@ -617,6 +617,7 @@
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
+    <string name="configAction_avgFix">Average Location</string>    <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
 

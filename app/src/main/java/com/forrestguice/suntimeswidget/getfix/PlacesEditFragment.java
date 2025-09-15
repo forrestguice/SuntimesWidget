@@ -31,6 +31,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.PopupMenu;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +51,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -287,9 +289,15 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             @Override
             public void onClick(View v) {
-                if (getFixHelper != null) {
-                    getFixHelper.getFix(0);
-                }
+                getFix();
+            }
+        });
+        button_getfix.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v) {
+                showGetFixMenu(v.getContext(), v);
+                return true;
             }
         });
 
@@ -298,6 +306,44 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             getFixHelper.setFragment(this);
         }
         updateGPSButtonIcons();
+    }
+
+    /**
+     * GetFix Menu
+     */
+    protected void showGetFixMenu(Context context, View v) {
+        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null);
+        Menu menu = popup.getMenu();
+        popup.show();
+    }
+    private final PopupMenu.OnMenuItemClickListener onGetFixMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem)
+        {
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_location_quickfix:
+                    getFix();
+                    break;
+
+                case R.id.action_location_average:
+                    averageFix();
+                    break;
+            }
+            return false;
+        }
+    };
+
+    protected void getFix() {
+        if (getFixHelper != null) {
+            getFixHelper.getFix(0, true);
+        }
+    }
+    protected void averageFix() {
+        if (getFixHelper != null) {
+            getFixHelper.getFix(0, false);
+        }
     }
 
     public static final String DIALOGTAG_MAP = "mapDialog";

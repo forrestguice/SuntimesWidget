@@ -37,7 +37,7 @@ public interface LocationHelper
     void addUI( GetFixUI ui );
 
     boolean getFix();
-    void getFix( int i );
+    void getFix( int i, boolean autoStop );
     void setGettingFix(boolean value);
     boolean gettingFix();
     void cancelGetFix();
