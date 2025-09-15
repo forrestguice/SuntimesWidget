@@ -74,7 +74,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.getfix.GetFixProgress;
+import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -1128,11 +1128,11 @@ public class SuntimesActivity extends AppCompatActivity
             }
 
             @Override
-            public void updateUI(GetFixProgress... progress)
+            public void updateUI(LocationProgress... progress)
             {
-                if (progress[0] != null && progress[0].location != null)
+                if (progress[0] != null && progress[0].getResult() != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), progress[0].location);
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
                     actionBar.setSubtitle(location.toString());
                 }
             }
