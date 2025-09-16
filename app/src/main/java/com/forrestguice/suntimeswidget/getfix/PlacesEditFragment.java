@@ -21,7 +21,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +34,9 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
@@ -47,11 +55,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -80,6 +90,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
+    private TextView progress_getfix_label;
 
     private ImageButton button_map;
 
@@ -104,8 +115,70 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     public GetFixUI getFixUI() {
         return getFixUI_editMode;
     }
-    private GetFixUI getFixUI_editMode = new GetFixUI()
+    private final GetFixUI getFixUI_editMode = new GetFixUI()
     {
+        private WidgetSettings.LengthUnit lengthUnit = WidgetSettings.LengthUnit.METRIC;
+
+        protected void setProgressColor(int color)
+        {
+            if (progress_getfix != null)
+            {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    progress_getfix.setIndeterminateTintList(SuntimesUtils.colorStateList(color, color));
+                } else {
+                    Drawable d = progress_getfix.getIndeterminateDrawable();
+                    d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                }
+            }
+        }
+        protected void resetProgressColor()
+        {
+            if (progress_getfix != null)
+            {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    progress_getfix.setIndeterminateTintList(null);
+                } else {
+                    Drawable d = progress_getfix.getIndeterminateDrawable();
+                    d.setColorFilter(null);
+                }
+            }
+        }
+
+        protected int getDefaultColorIDForAccuracy(double accuracy) {
+            if (accuracy <= 0) return 0;
+            else if (accuracy <= 10) return R.color.green_a200;
+            else if (accuracy <= 110) return R.color.blue_a100;
+            else if (accuracy <= 1000) return R.color.yellow_700;
+            else return R.color.red_a200;
+        }
+
+        protected Integer getColorForAccuracy(Context context, double accuracy)
+        {
+            /*if (accuracy <= 0) return null;
+            else if (accuracy <= 10) return Color.GREEN;
+            else if (accuracy <= 110) return Color.BLUE;
+            else if (accuracy <= 1000) return Color.YELLOW;
+            else return Color.RED;*/
+
+            int i;
+            if (accuracy <= 0) i = -1;
+            else if (accuracy <= 10) i = 0;
+            else if (accuracy <= 110) i = 1;
+            else if (accuracy <= 1000) i = 2;
+            else i = 3;
+
+            if (i >= 0)
+            {
+                //int[] attr = new int[] { R.attr.springColor, R.attr.winterColor, R.attr.summerColor, R.attr.tagColor_error};    // TODO: attr
+                //TypedArray a = context.obtainStyledAttributes(attr);
+                //int color = ContextCompat.getColor(context, a.getResourceId(i, getDefaultColorIDForAccuracy(accuracy)));
+                //a.recycle();
+                //return color;
+                return ContextCompat.getColor(context, getDefaultColorIDForAccuracy(accuracy));
+
+            } else return null;
+        }
+
         @Override
         public void enableUI(boolean value)
         {
@@ -117,21 +190,57 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         @Override
-        public void updateUI(android.location.Location... locations)
+        public void updateUI(LocationProgress... progress)
         {
-            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            if (locations != null && locations[0] != null)
+            super.updateUI(progress);
+            Context context = getActivity();
+            if (progress[0] != null && progress_getfix_label != null && context != null)
             {
-                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-                text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), 0)) );
+                double accuracy = progress[0].getAccuracy();
+                if (accuracy > 0) {
+                    progress_getfix_label.setText(SuntimesUtils.formatAsHeight(context, progress[0].getAccuracy(), lengthUnit, 2, true).toString());
+                } else {
+                    progress_getfix_label.setText(progress[0].getSignalI() + "/" + progress[0].getSignalN());
+                }
+
+                Integer color = getColorForAccuracy(context, accuracy);
+                if (color != null) {
+                    setProgressColor(color);
+                } else resetProgressColor();
             }
         }
 
         @Override
-        public void showProgress(boolean showProgress) {
+        public void updateUI(android.location.Location... locations)
+        {
+            Context context = getActivity();
+            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
+            if (locations != null && locations[0] != null && context != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( altitudeDisplayString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(context, 0)) );
+            }
+        }
+
+        @Override
+        public void showProgress(boolean showProgress)
+        {
             if (progress_getfix != null) {
                 progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+                if (!showProgress) {
+                    resetProgressColor();
+                }
+            }
+            if (progress_getfix_label != null)
+            {
+                if (getActivity() != null) {
+                    lengthUnit = WidgetSettings.loadLengthUnitsPref(getActivity(), 0);
+                }
+                progress_getfix_label.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+                if (!showProgress) {
+                    progress_getfix_label.setText("");
+                }
             }
         }
 
@@ -240,7 +349,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         return view;
     }
 
-    protected void initViews(Context context, View content)
+    protected void initViews(Context context, final View content)
     {
         WidgetSettings.initDisplayStrings(context);
 
@@ -278,9 +387,24 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             });
         }
 
+        progress_getfix_label = (TextView) content.findViewById(R.id.appwidget_location_getfixprogress_label);
+        if (progress_getfix_label != null) {
+            progress_getfix_label.setVisibility(View.GONE);
+        }
+
         progress_getfix = (ProgressBar) content.findViewById(R.id.appwidget_location_getfixprogress);
-        if (progress_getfix != null) {
+        if (progress_getfix != null)
+        {
             progress_getfix.setVisibility(View.GONE);
+            progress_getfix.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    if (getFixHelper != null) {
+                        getFixHelper.cancelGetFix();
+                    }
+                }
+            });
         }
 
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
@@ -289,7 +413,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             @Override
             public void onClick(View v) {
-                getFix();
+                showGetFixMenu(v.getContext(), v);
+                //getFix();
             }
         });
         button_getfix.setOnLongClickListener(new View.OnLongClickListener()
@@ -314,6 +439,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     protected void showGetFixMenu(Context context, View v) {
         PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null);
         Menu menu = popup.getMenu();
+        PopupMenuCompat.forceActionBarIcons(menu);
         popup.show();
     }
     private final PopupMenu.OnMenuItemClickListener onGetFixMenuItemClicked = new PopupMenu.OnMenuItemClickListener()

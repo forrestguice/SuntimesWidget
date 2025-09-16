@@ -457,7 +457,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
             uiObj.enableUI(true);
             uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
         }
-        signalCancelled();
+        signalCancelled(result);
     }
 
     private final ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
@@ -496,12 +496,13 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
                 listener.onFinished(result);
         }
     }
-    protected void signalCancelled()
+    protected void signalCancelled(Location result)
     {
         for (GetFixTaskListener listener : listeners)
         {
-            if (listener != null)
-                listener.onCancelled();
+            if (listener != null) {
+                listener.onCancelled(result);
+            }
         }
     }
 

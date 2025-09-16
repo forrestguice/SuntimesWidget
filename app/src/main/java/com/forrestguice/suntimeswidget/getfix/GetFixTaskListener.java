@@ -26,4 +26,7 @@ public abstract class GetFixTaskListener
     public void onStarted() {}
     public void onFinished(Location result) {}
     public void onCancelled() {}
+    public void onCancelled(Location result) {
+        onCancelled();
+    }
 }
