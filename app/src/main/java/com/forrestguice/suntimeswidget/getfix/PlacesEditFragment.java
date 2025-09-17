@@ -18,9 +18,11 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -40,6 +42,9 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
+import android.text.Selection;
+import android.text.SpannableString;
+import android.text.method.ScrollingMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +57,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
@@ -91,6 +97,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
     private TextView progress_getfix_label;
+
+    private TextView text_log;
+    private ScrollView scroll_log;
 
     private ImageButton button_map;
 
@@ -199,14 +208,26 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                 double accuracy = progress[0].getAccuracy();
                 if (accuracy > 0) {
                     progress_getfix_label.setText(SuntimesUtils.formatAsHeight(context, progress[0].getAccuracy(), lengthUnit, 2, true).toString());
-                } else {
-                    progress_getfix_label.setText(progress[0].getSignalI() + "/" + progress[0].getSignalN());
-                }
+                } else progress_getfix_label.setText("");
 
                 Integer color = getColorForAccuracy(context, accuracy);
                 if (color != null) {
                     setProgressColor(color);
                 } else resetProgressColor();
+
+                if (text_log != null)
+                {
+                    text_log.setText(progress[0].getLog());
+                    text_log.post(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            if (scroll_log != null) {
+                                scroll_log.fullScroll(View.FOCUS_DOWN);
+                            }
+                        }
+                    });
+                }
             }
         }
 
@@ -407,6 +428,18 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             });
         }
 
+        scroll_log = (ScrollView) content.findViewById(R.id.scroll_debug_log);
+        if (scroll_log != null) {
+            scroll_log.setVisibility(LocationHelperSettings.keepLastLocationLog(context) && loadLogViewState() ? View.VISIBLE : View.GONE);
+        }
+
+        text_log = (TextView) content.findViewById(R.id.text_debug_log);
+        if (text_log != null) {
+            text_log.setHorizontalScrollBarEnabled(true);
+            text_log.setHorizontallyScrolling(true);
+            text_log.setTextIsSelectable(true);
+        }
+
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
         TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
         button_getfix.setOnClickListener(new View.OnClickListener()
@@ -414,14 +447,14 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             @Override
             public void onClick(View v) {
                 showGetFixMenu(v.getContext(), v);
-                //getFix();
             }
         });
         button_getfix.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
             public boolean onLongClick(View v) {
-                showGetFixMenu(v.getContext(), v);
+                //showGetFixMenu(v.getContext(), v);
+                getFix();
                 return true;
             }
         });
@@ -439,6 +472,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     protected void showGetFixMenu(Context context, View v) {
         PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null);
         Menu menu = popup.getMenu();
+
+        MenuItem logItem = menu.findItem(R.id.action_location_togglelog);
+        if (logItem != null) {
+            logItem.setVisible(LocationHelperSettings.keepLastLocationLog(context));
+            logItem.setChecked(scroll_log.getVisibility() == View.VISIBLE);
+        }
+
         PopupMenuCompat.forceActionBarIcons(menu);
         popup.show();
     }
@@ -449,6 +489,10 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             switch (menuItem.getItemId())
             {
+                case R.id.action_location_togglelog:
+                    toggleLogView();
+                    break;
+
                 case R.id.action_location_quickfix:
                     getFix();
                     break;
@@ -470,6 +514,31 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (getFixHelper != null) {
             getFixHelper.getFix(0, false);
         }
+    }
+
+    protected void toggleLogView() {
+        if (scroll_log != null) {
+            scroll_log.setVisibility(scroll_log.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+            saveLogViewState();
+        }
+    }
+    protected void saveLogViewState()
+    {
+        Activity activity = getActivity();
+        if (activity != null) {
+            SharedPreferences.Editor prefs = activity.getPreferences(0).edit();
+            if (prefs != null) {
+                prefs.putBoolean("showLog", scroll_log.getVisibility() == View.VISIBLE);
+                prefs.apply();
+            }
+        }
+    }
+    protected boolean loadLogViewState()
+    {
+        SharedPreferences prefs = (getActivity() != null) ? getActivity().getPreferences(0) : null;
+        if (prefs != null) {
+            return prefs.getBoolean("showLog", false);
+        } else return false;
     }
 
     public static final String DIALOGTAG_MAP = "mapDialog";

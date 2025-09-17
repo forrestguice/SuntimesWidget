@@ -142,4 +142,16 @@
 
     </LinearLayout>
 
+    <ScrollView android:id="@+id/scroll_debug_log"
+        android:layout_width="match_parent" android:layout_height="72dp" android:layout_margin="4dp"
+        android:background="?attr/dialogBackground">
+
+        <TextView android:id="@+id/text_debug_log"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="4dp"
+            android:textSize="?attr/text_size_tiny"
+            android:scrollHorizontally="true" android:textIsSelectable="true"
+            tools:text="log\ncontent\ngoes\nhere\non\nmultiple\nlines" />
+
+    </ScrollView>
+
 </LinearLayout>
