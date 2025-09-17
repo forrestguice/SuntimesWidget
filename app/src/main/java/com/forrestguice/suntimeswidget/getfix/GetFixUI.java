@@ -65,21 +65,15 @@ public abstract class GetFixUI
      */
     public static class LocationResult extends LocationProgress
     {
-        protected boolean wasCancelled;
-        protected String log;
-
         public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
         {
-            super(result, elapsed);
+            super(result, elapsed, log);
             this.wasCancelled = wasCancelled;
-            this.log = log;
         }
 
+        protected boolean wasCancelled;
         public boolean wasCancelled() {
             return wasCancelled;
-        }
-        public String getLog() {
-            return log;
         }
     }
 
@@ -88,13 +82,14 @@ public abstract class GetFixUI
      */
     public static class LocationProgress
     {
-        public LocationProgress(Location location, long elapsed) {
+        public LocationProgress(Location location, long elapsed, String log) {
             this.result = location;
             this.elapsed = elapsed;
             this.accuracy = (location != null ? location.getAccuracy() : -1);
+            this.log = log;
         }
-        public LocationProgress(Location location, long elapsed, int signal_i, int signal_n) {
-            this(location, elapsed);
+        public LocationProgress(Location location, long elapsed, String log, int signal_i, int signal_n) {
+            this(location, elapsed, log);
             this.signal_i = signal_i;
             this.signal_n = signal_n;
         }
@@ -122,6 +117,11 @@ public abstract class GetFixUI
         protected double accuracy;
         public double getAccuracy() {
             return accuracy;
+        }
+
+        protected String log;
+        public String getLog() {
+            return log;
         }
     }
 }
