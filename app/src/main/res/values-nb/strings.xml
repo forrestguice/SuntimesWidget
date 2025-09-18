@@ -35,10 +35,13 @@
     <string name="configAction_closeNavDrawer">Lukk navigasjon</string>
     <string name="configAction_clock">Klokke</string>
     <string name="configAction_lightGraphDialog">Sollys</string>
+    <string name="configAction_lightGraph">Lysgraf</string>
     <string name="configAction_lineGraph">Høydegraf</string>
     <string name="configAction_seekAltitude">Søk høyde</string>        <!-- checkbox label -->
     <string name="configAction_search">Søk</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Fjern valg</string>
+    <string name="configAction_checkNone">Ingen</string>
+    <string name="configAction_checkAll">Alle</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
     <string name="configAction_onlineHelp">Hjelp på nett</string>
@@ -117,6 +120,7 @@
     <string name="delta_day_yesterday">I går var</string>
     <string name="delta_day_shorter">kortere</string>
     <string name="delta_day_longer">lengre</string>
+    <string name="delta_day_same">den samme lengden</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -158,6 +162,7 @@
     <string name="until_nauticalTwilight">nautisk tussmørke</string>
     <string name="until_sunrise">soloppgang</string>
     <string name="until_noon">lokal middag</string>
+    <string name="until_midnight">astronomisk midnatt</string>
     <string name="until_sunset">solnedgang</string>
     <string name="untilEnd_civilTwilight">alminnelig tussmørke</string>
     <string name="untilEnd_nauticalTwilight">nautisk tussmørke</string>
@@ -372,6 +377,11 @@
     <string name="timeMode_blue4_short">Blå (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blåtimen (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">Ingen</string>                 <!-- label -->
+
+    <string name="timeMode_polarnight">Polarnatt</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnightsun">Midnattssol</string>                 <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight">Midnattstussmørke</string>       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_midnighttwilight_whitenight">Hvit natt</string>  <!-- a label (not an actual timeMode setting) -->
 
     <string name="timeMode_equinox_vernal">Vårjevndøgn</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Jevndøgn</string>       <!-- setting -->
@@ -1412,6 +1422,10 @@
     <!-- App Setting: Moon Phase Columns -->
     <string name="configLabel_ui_showmoon_phase_columns">Kolonner (faser)</string>
 
+    <!-- App Setting: Moon Phase Date -->
+    <string name="configLabel_ui_showMoonPhaseDate">Vis fasedatoer</string>
+    <string name="configLabel_ui_showMoonPhaseDate_summary">Inkluder datoen ved visning av månefaser.</string>
+
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
     <string name="configLabel_ui_showCrossQuarter_summary">Inkluder midtpunkter mellom solverv og jevndøgn.</string>
@@ -1419,6 +1433,10 @@
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Vis Solverv / Jevndøgn</string>
     <string name="configLabel_ui_showEquinox_summary">Vis tid til neste solverv eller jevndøgn.</string>
+
+    <!-- App Setting: Show Equinox / Solstice (date) -->
+    <string name="configLabel_ui_showEquinoxDate">Solvervsdato</string>
+    <string name="configLabel_ui_showEquinoxDate_summary">Inkluder datoen ved visning av tid til neste solverv eller jevndøgn.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solvervsporing</string>
@@ -2142,9 +2160,17 @@
           <b>Faktisk tid:</b> Den omtrentlige tiden for soloppgang og solnedgang.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Alminnelig tussmørke:</b> Solen er 6 grader under horisonten; de lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
-          <b>Nautisk tussmørke:</b> Solen er 12 grader under horisonten; objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
-          <b>Astronomisk tussmørke:</b> Solen er 18 grader under horisonten. Nær nattens mørke.<br/>
+          <b>Soloppgangstidene</b> angir begynnelsen på hver tussmørkeperiode (<b>daggry</b>), og <b>solnedgangstidene</b> angir slutten på dem (<b>skumring</b>).<br/><br/>
+          <b>Alminnelig tussmørke:</b> Solen er mindre enn 6 grader under horisonten. De lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
+          <b>Nautisk tussmørke:</b> Solen er 6 til 12 grader under horisonten. Objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
+          <b>Astronomisk tussmørke:</b> Solen er 12 til 18 grader under horisonten. Nær nattens mørke.<br/>
+          <b>Natt:</b> Solen er mer enn 18 grader under horisonten. Svake stjerner er synlige.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>Hvit natt:</b> Solen går ikke ned mer enn 6 grader under horisonten. Det er lyst nok for de fleste utendørsaktiviteter hele natten lang.<br/><br/>
+          <b>Midnattstussmørke:</b> Solen går ikke ned mer enn 18 grader under horisonten. Det er tussmørke hele natten, og himmelen blir aldri helt mørk.<br/><br/>
+          <b>Midnattssol:</b> Solen går ikke ned under horisonten (24 timer med dagslys). Dette kalles også <b>polardag</b>.<br/><br/>
+          <b>Polarnatt:</b> Solen stiger ikke over horisonten (24 timer med mørke).<br/><br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>I dag:</b> Oppgang- og nedgangstider for dagens dato.<br/><br/>
