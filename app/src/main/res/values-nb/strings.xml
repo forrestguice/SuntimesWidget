@@ -2163,7 +2163,7 @@
           <b>Soloppgangstidene</b> angir begynnelsen på hver tussmørkeperiode (<b>daggry</b>), og <b>solnedgangstidene</b> angir slutten på dem (<b>skumring</b>).<br/><br/>
           <b>Alminnelig tussmørke:</b> Solen er mindre enn 6 grader under horisonten. De lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
           <b>Nautisk tussmørke:</b> Solen er 6 til 12 grader under horisonten. Objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
-          <b>Astronomisk tussmørke:</b> Solen er 12 til 18 grader under horisonten. Nær nattens mørke.<br/>
+          <b>Astronomisk tussmørke:</b> Solen er 12 til 18 grader under horisonten. Nær nattens mørke.<br/><br/>
           <b>Natt:</b> Solen er mer enn 18 grader under horisonten. Svake stjerner er synlige.<br/><br/>
     ]]></string>
     <string name="help_general_twilight_more"><![CDATA[
