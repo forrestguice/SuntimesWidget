@@ -23,10 +23,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,14 +36,9 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
-import android.text.Selection;
-import android.text.SpannableString;
-import android.text.method.ScrollingMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,7 +61,6 @@ import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
-import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -100,6 +93,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     private TextView text_log;
     private ScrollView scroll_log;
+    private GnssStatusView gpsStatusView;
 
     private ImageButton button_map;
 
@@ -321,6 +315,10 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         super.onStop();
         cancelGetFix();
+
+        if (gpsStatusView != null) {
+            gpsStatusView.stopMonitoring();
+        }
     }
 
     @Override
@@ -332,6 +330,10 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (mapDialog != null) {
             mapDialog.setColorCollection(new WorldMapColorValuesCollection<>(getActivity()));
             mapDialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(mapDialog));
+        }
+
+        if (gpsStatusView != null && (gpsStatusView.getVisibility() == View.VISIBLE)) {
+            gpsStatusView.startMonitoring();
         }
     }
 
@@ -440,6 +442,11 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             text_log.setTextIsSelectable(true);
         }
 
+        gpsStatusView = (GnssStatusView) content.findViewById(R.id.gps_status);
+        if (gpsStatusView != null) {
+            gpsStatusView.setVisibility(View.GONE);
+        }
+
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
         TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
         button_getfix.setOnClickListener(new View.OnClickListener()
@@ -506,14 +513,23 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     };
 
     protected void getFix() {
+        getFix(true);
+    }
+    protected void getFix(boolean autoStop)
+    {
+        if (gpsStatusView != null)
+        {
+            gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
+            if (!gpsStatusView.isMonitoring()) {
+                gpsStatusView.startMonitoring();
+            }
+        }
         if (getFixHelper != null) {
-            getFixHelper.getFix(0, true);
+            getFixHelper.getFix(0, autoStop);
         }
     }
     protected void averageFix() {
-        if (getFixHelper != null) {
-            getFixHelper.getFix(0, false);
-        }
+        getFix(false);
     }
 
     protected void toggleLogView() {

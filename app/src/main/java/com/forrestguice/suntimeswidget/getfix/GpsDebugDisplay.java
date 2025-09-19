@@ -218,7 +218,7 @@ public class GpsDebugDisplay
     /**
      * SatelliteInfo
      */
-    private static class SatelliteInfo<T> implements Comparable<SatelliteInfo<T>>
+    public static class SatelliteInfo<T> implements Comparable<SatelliteInfo<T>>
     {
         public final int i;
         public final int id;
