@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_item"
+    android:layout_width="16dp" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="bottom">
+
+    <FrameLayout
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:layout_marginLeft="1dp" android:layout_marginRight="1dp"
+        android:rotation="180">
+
+        <View android:id="@+id/bar_signal"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="bottom|center_horizontal"
+            android:scaleY="0.5" android:transformPivotY="0dp"
+            android:background="@color/blue_a200" />
+
+        <View android:id="@+id/bar_used"
+            android:layout_width="4dp" android:layout_height="2dp"
+            android:layout_marginLeft="1dp" android:layout_marginRight="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@color/green_200" />
+
+    </FrameLayout>
+
+    <View android:id="@+id/bar_constellation"
+        android:layout_width="match_parent" android:layout_height="2dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/blue_grey_700" />
+
+    <TextView android:id="@+id/text_id"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="8sp"
+        android:layout_gravity="bottom|center_horizontal"
+        tools:text="12" />
+
+</LinearLayout>
