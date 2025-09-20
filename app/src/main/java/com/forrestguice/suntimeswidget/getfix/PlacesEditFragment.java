@@ -36,9 +36,12 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.PopupMenu;
+import android.text.SpannableString;
+import android.text.method.ScrollingMovementMethod;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -92,7 +95,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private TextView progress_getfix_label;
 
     private TextView text_log;
-    private ScrollView scroll_log;
+    private NestedScrollView scroll_log;
     private GnssStatusView gpsStatusView;
 
     private ImageButton button_map;
@@ -209,19 +212,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                     setProgressColor(color);
                 } else resetProgressColor();
 
-                if (text_log != null)
-                {
-                    text_log.setText(progress[0].getLog());
-                    text_log.post(new Runnable()
-                    {
-                        @Override
-                        public void run() {
-                            if (scroll_log != null) {
-                                scroll_log.fullScroll(View.FOCUS_DOWN);
-                            }
-                        }
-                    });
-                }
+                updateLogView(progress[0].getLog());
             }
         }
 
@@ -430,15 +421,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             });
         }
 
-        scroll_log = (ScrollView) content.findViewById(R.id.scroll_debug_log);
+        scroll_log = (NestedScrollView) content.findViewById(R.id.scroll_debug_log);
         if (scroll_log != null) {
             scroll_log.setVisibility(LocationHelperSettings.keepLastLocationLog(context) && loadLogViewState() ? View.VISIBLE : View.GONE);
         }
 
         text_log = (TextView) content.findViewById(R.id.text_debug_log);
         if (text_log != null) {
-            text_log.setHorizontalScrollBarEnabled(true);
-            text_log.setHorizontallyScrolling(true);
             text_log.setTextIsSelectable(true);
         }
 
@@ -532,10 +521,15 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         getFix(false);
     }
 
-    protected void toggleLogView() {
-        if (scroll_log != null) {
+    protected void toggleLogView()
+    {
+        if (scroll_log != null)
+        {
             scroll_log.setVisibility(scroll_log.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
             saveLogViewState();
+            if (scroll_log.getVisibility() == View.VISIBLE) {
+                scrollLogViewToBottom();
+            }
         }
     }
     protected void saveLogViewState()
@@ -555,6 +549,25 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (prefs != null) {
             return prefs.getBoolean("showLog", false);
         } else return false;
+    }
+
+    protected void updateLogView(String log) {
+        if (text_log != null) {
+            text_log.setText(log);
+        }
+        scrollLogViewToBottom();
+    }
+    protected void scrollLogViewToBottom()
+    {
+        if (scroll_log != null) {
+            scroll_log.post(new Runnable() {
+                public void run() {
+                    if (scroll_log != null) {
+                        scroll_log.fullScroll(View.FOCUS_DOWN);
+                    }
+                }
+            });
+        }
     }
 
     public static final String DIALOGTAG_MAP = "mapDialog";
