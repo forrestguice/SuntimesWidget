@@ -2108,6 +2108,13 @@
         \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
 
+    <string name="configLabel_getFix_gnss">GNSS</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_almanac">Almanac</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_ephemeris">Ephemeris</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_used">Used</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_signal">Signal</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_cnrFormat">%s db</string>    <!-- TODO -->
+
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title for "calendars" app setting -->
     <string name="configLabel_calendars_enabled">Calendar Integration</string>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="8dp" android:background="?attr/popupMenuBackground">
+
+    <TextView android:id="@+id/text_satellite_label"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        tools:text="32 (GPS)" />
+
+    <TextView android:id="@+id/text_satellite_cnr"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        tools:text="30.5 db" />
+
+    <View
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+        android:background="?attr/hrColor" />
+
+    <CheckBox android:id="@+id/check_satellite_signal"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        android:buttonTint="@color/gnss_signal"
+        android:textColor="@color/gnss_signal"
+        android:text="@string/configLabel_getFix_gnss_signal"
+        tools:ignore="UnusedAttribute" />
+
+    <CheckBox android:id="@+id/check_satellite_almanac"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        android:buttonTint="@color/gnss_signal_almanac"
+        android:textColor="@color/gnss_signal_almanac"
+        android:text="@string/configLabel_getFix_gnss_almanac"
+        tools:ignore="UnusedAttribute" />
+
+    <CheckBox android:id="@+id/check_satellite_ephemeris"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        android:buttonTint="@color/gnss_signal_ephemeris"
+        android:textColor="@color/gnss_signal_ephemeris"
+        android:text="@string/configLabel_getFix_gnss_ephemeris"
+        tools:ignore="UnusedAttribute" />
+
+    <CheckBox android:id="@+id/check_satellite_usedInFix"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_small"
+        android:buttonTint="@color/gnss_used"
+        android:textColor="@color/gnss_used"
+        android:text="@string/configLabel_getFix_gnss_used"
+        tools:ignore="UnusedAttribute" />
+
+</LinearLayout>

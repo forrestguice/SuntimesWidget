@@ -138,17 +138,19 @@ public class GpsDebugDisplay
         return count;
     }
 
-    @TargetApi(24)
-    public static String constellationTypeLabel(int type)
+    public static String constellationTypeLabel(int type) {
+        return constellationTypeLabel(type, true);
+    }
+    public static String constellationTypeLabel(int type, boolean withKey)
     {
         switch (type) {
             case GnssStatus.CONSTELLATION_GPS: return "GPS";
-            case GnssStatus.CONSTELLATION_SBAS: return "SBAS²";
-            case GnssStatus.CONSTELLATION_GLONASS: return "GLONASS³";
-            case GnssStatus.CONSTELLATION_QZSS: return "QZSS⁴";
-            case GnssStatus.CONSTELLATION_BEIDOU: return "BEIDOU˙";
-            case GnssStatus.CONSTELLATION_GALILEO: return "GALILEO˚";
-            case CONSTELLATION_IRNSS: return "IRNSS´";
+            case GnssStatus.CONSTELLATION_SBAS: return "SBAS" + (withKey ? "²" : "");
+            case GnssStatus.CONSTELLATION_GLONASS: return "GLONASS" + (withKey ?  "³" : "");
+            case GnssStatus.CONSTELLATION_QZSS: return "QZSS" + (withKey ? "⁴" : "");
+            case GnssStatus.CONSTELLATION_BEIDOU: return "BEIDOU" + (withKey ? "˙" : "");
+            case GnssStatus.CONSTELLATION_GALILEO: return "GALILEO" + (withKey ? "˚" : "");
+            case CONSTELLATION_IRNSS: return "IRNSS" + (withKey ?  "´" : "");
             case GnssStatus.CONSTELLATION_UNKNOWN: default: return "UNKNOWN";
         }
     }
