@@ -29,9 +29,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
@@ -74,6 +78,8 @@ public class GnssStatusBarView extends GnssStatusView
 
         adapter = new SatelliteAdapter(context);
         list.setAdapter(adapter);
+
+        initViewListener();
     }
 
     @TargetApi(24)
@@ -82,7 +88,7 @@ public class GnssStatusBarView extends GnssStatusView
         if (adapter != null) {
             adapter.updateViews(status);
         }
-        updateViews();
+        updateViews(getContext());
     }
 
     @Override
@@ -90,13 +96,18 @@ public class GnssStatusBarView extends GnssStatusView
         if (adapter != null) {
             adapter.updateViews(status);
         }
-        updateViews();
+        updateViews(getContext());
     }
 
-    protected void updateViews() {
+    protected void updateViews(Context context)
+    {
         if (label != null) {
-            label.setText(adapter != null ? adapter.getUsedItemCount() + "/" + adapter.getItemCount() : "");
+            label.setText((adapter != null && context != null)
+                    ? context.getString(R.string.configLabel_getFix_num_satellites, adapter.getUsedItemCount() + "", adapter.getItemCount() + "")
+                    : "");
+            label.setVisibility(adapter.getOptions().showLabels ? View.VISIBLE : View.INVISIBLE);
         }
+        updateSatellitePopup(context);
     }
 
     @Override
@@ -108,6 +119,60 @@ public class GnssStatusBarView extends GnssStatusView
         }
     }
 
+    public void toggleLabelVisibility(Context context)
+    {
+        if (adapter != null && context != null)
+        {
+            SatelliteViewHolderOptions options = adapter.getOptions();
+
+            if (!options.showLabels && !options.debug) {
+                options.showLabels = true;
+            } else if (options.showLabels && !options.debug) {
+                options.debug = true;
+            } else {
+                options.showLabels = false;
+                options.debug = false;
+            }
+
+            adapter.notifyDataSetChanged();
+            updateViews(context);
+        }
+    }
+
+    /**
+     * SatellitePopupView
+     */
+    public void showSatellitePopup(View v, SatelliteItem item)
+    {
+        if (popup != null) {
+            popup.dismiss();
+            return;
+        }
+
+        popupItem = new GnssStatusItemView(v.getContext());
+        popupItem.updateViews(v.getContext(), item);
+        popup = new PopupWindow(popupItem, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+        popup.setOnDismissListener(onSatellitePopupDismissed);
+        popup.showAtLocation(v, Gravity.END, 0, getTop());
+    }
+    private final PopupWindow.OnDismissListener onSatellitePopupDismissed= new PopupWindow.OnDismissListener() {
+        @Override
+        public void onDismiss() {
+            popup = null;
+            popupItem = null;
+        }
+    };
+    protected void updateSatellitePopup(Context context) {
+        if (popupItem != null && adapter != null) {
+            SatelliteItem item = adapter.getItem(popupItem.id, popupItem.constellation);
+            if (item != null) {
+                popupItem.updateViews(context, item);
+            } else popup.dismiss();
+        }
+    }
+    protected PopupWindow popup = null;
+    protected GnssStatusItemView popupItem;
+
     /**
      * SatelliteAdapter
      */
@@ -115,14 +180,20 @@ public class GnssStatusBarView extends GnssStatusView
     {
         private final ArrayList<SatelliteItem> items = new ArrayList<>();
         private final WeakReference<Context> contextRef;
+        private final SatelliteViewHolderOptions options;
 
         public SatelliteAdapter(Context context) {
             contextRef = new WeakReference<>(context);
+            options = new SatelliteViewHolderOptions(context);
         }
-        
+
         @Override
         public int getItemCount() {
             return items.size();
+        }
+
+        public SatelliteViewHolderOptions getOptions() {
+            return options;
         }
 
         @NonNull
@@ -135,8 +206,18 @@ public class GnssStatusBarView extends GnssStatusView
         }
 
         @Override
-        public void onBindViewHolder(@NonNull SatelliteViewHolder holder, int i) {
-            holder.onBindDataToViewHolder(items.get(i));
+        public void onBindViewHolder(@NonNull SatelliteViewHolder holder, int i)
+        {
+            SatelliteItem item = items.get(i);
+            holder.onBindDataToViewHolder(item, options);
+            attachClickListeners(holder, item);
+        }
+
+        @Override
+        public void onViewRecycled(@NonNull SatelliteViewHolder holder)
+        {
+            detachClickListeners(holder);
+            super.onViewRecycled(holder);
         }
 
         @TargetApi(24)
@@ -167,11 +248,12 @@ public class GnssStatusBarView extends GnssStatusView
                 int i = 0;
                 for (GpsSatellite satellite : status.getSatellites())
                 {
-                    SatelliteItem item = new SatelliteItem(i, satellite.getPrn(), 0);
+                    int constellation = (satellite.getPrn() > 65 && satellite.getPrn() < 88) ? 3 : 1;    // GnssStatus.CONSTELLATION_GPS(1), GLONASS(3)
+                    SatelliteItem item = new SatelliteItem(i, satellite.getPrn(), constellation);
                     int position = items.indexOf(item);
                     if (position < 0) {
                         items.add(item);
-                    }
+                    } else item = items.get(items.indexOf(item));
                     updateItem(satellite, item);
                     i++;
                 }
@@ -182,7 +264,7 @@ public class GnssStatusBarView extends GnssStatusView
 
         protected void updateItem(GnssStatus status, int i, SatelliteItem item)
         {
-            item.snr = status.getCn0DbHz(i);
+            item.cnr = status.getCn0DbHz(i);
             item.hasAlmanac = status.hasAlmanacData(i);
             item.hasEphemeris = status.hasEphemerisData(i);
             item.usedInFix = status.usedInFix(i);
@@ -193,7 +275,7 @@ public class GnssStatusBarView extends GnssStatusView
 
         protected void updateItem(GpsSatellite satellite, SatelliteItem item)
         {
-            item.snr = satellite.getSnr();
+            item.cnr = satellite.getSnr();
             item.hasAlmanac = satellite.hasAlmanac();
             item.hasEphemeris = satellite.hasEphemeris();
             item.usedInFix = satellite.usedInFix();
@@ -235,6 +317,83 @@ public class GnssStatusBarView extends GnssStatusView
             }
             return i;
         }
+
+        @Nullable
+        public SatelliteItem getItem(int id, int constellation)
+        {
+            for (SatelliteItem item : items) {
+                if (item.id == id && item.constellation == constellation) {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        protected void attachClickListeners(SatelliteViewHolder holder, SatelliteItem item) {
+            if (hasAdapterListener()) {
+                if (holder.layout != null) {
+                    holder.layout.setOnClickListener(onItemClicked(item.id, item.constellation));
+                    holder.layout.setOnLongClickListener(onItemLongClicked(item.id, item.constellation));
+                }
+            }
+        }
+        protected void detachClickListeners(SatelliteViewHolder holder) {
+            if (holder.layout != null) {
+                holder.layout.setOnClickListener(null);
+            }
+        }
+
+        protected View.OnClickListener onItemClicked(final int id, final int constellation) {
+            return new OnClickListener() {
+                public void onClick(View v) {
+                    notifyItemClicked(v, getItem(id, constellation));
+                }
+            };
+        }
+
+        protected View.OnLongClickListener onItemLongClicked(final int id, final int constellation) {
+            return new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return notifyItemLongClicked(v, getItem(id, constellation));
+                }
+            };
+        }
+
+        /**
+         * AdapterListener
+         */
+        public interface AdapterListener
+        {
+            void onItemClicked(View v, SatelliteAdapter adapter, SatelliteItem item);
+            boolean onItemLongClicked(View v, SatelliteAdapter adapter, SatelliteItem item);
+            void onOptionsChanged(SatelliteViewHolderOptions options);
+        }
+
+        public void setAdapterListener(AdapterListener listener) {
+            adapterListener = listener;
+        }
+        protected boolean hasAdapterListener() {
+            return adapterListener != null;
+        }
+        private AdapterListener adapterListener = null;
+
+        protected void notifyItemClicked(View v, SatelliteItem item) {
+            if (item != null && adapterListener != null) {
+                adapterListener.onItemClicked(v, SatelliteAdapter.this, item);
+            }
+        }
+        protected boolean notifyItemLongClicked(View v, SatelliteItem item) {
+            if (item != null && adapterListener != null) {
+                return adapterListener.onItemLongClicked(v, this, item);
+            } else return false;
+        }
+
+        public void notifyOptionsChanged() {
+            if (adapterListener != null) {
+                adapterListener.onOptionsChanged(options);
+            }
+        }
     }
 
     /**
@@ -243,7 +402,8 @@ public class GnssStatusBarView extends GnssStatusView
     public static class SatelliteViewHolderOptions
     {
         public int colorUsed = Color.GREEN, colorSignal = Color.BLUE, colorAlmanac = Color.BLUE, colorEphemeris = Color.BLUE;
-        private boolean debug = false;
+        public boolean debug = false;
+        public boolean showLabels = false;
 
         public SatelliteViewHolderOptions(Context context)
         {
@@ -283,8 +443,7 @@ public class GnssStatusBarView extends GnssStatusView
         public View bar_used;
         public View bar_constellation;
         public TextView text_id;
-
-        public SatelliteViewHolderOptions options;
+        public TextView text_debug;
 
         public SatelliteViewHolder(Context context, @NonNull View itemView)
         {
@@ -294,13 +453,13 @@ public class GnssStatusBarView extends GnssStatusView
             bar_used = itemView.findViewById(R.id.bar_used);
             bar_constellation = itemView.findViewById(R.id.bar_constellation);
             text_id = itemView.findViewById(R.id.text_id);
-            options = new SatelliteViewHolderOptions(context);
+            text_debug = itemView.findViewById(R.id.text_debug);
         }
 
-        protected void onBindDataToViewHolder(SatelliteItem item)
+        protected void onBindDataToViewHolder(SatelliteItem item, SatelliteViewHolderOptions options)
         {
             if (bar_signal != null) {
-                bar_signal.setScaleY(item.snr == 0 ? 0 : (float) (item.snr / SatelliteItem.MAX_SNR));
+                bar_signal.setScaleY(item.cnr == 0 ? 0 : (float) (item.cnr / SatelliteItem.MAX_CNR));
                 bar_signal.setBackgroundColor(
                         item.hasEphemeris ? options.colorEphemeris
                         : item.hasAlmanac ? options.colorAlmanac : options.colorSignal);
@@ -312,20 +471,60 @@ public class GnssStatusBarView extends GnssStatusView
             if (bar_constellation != null) {
                 bar_constellation.setBackgroundColor(options.getConstellationColor(item.constellation));
             }
-            if (text_id != null)
-            {
-                if (options.debug) {
-                    String symbol = item.hasEphemeris ? GpsDebugDisplay.SYMBOL_HAS_EPHEMERIS
-                            : item.hasAlmanac ? GpsDebugDisplay.SYMBOL_HAS_ALMANAC : GpsDebugDisplay.SYMBOL_HAS_NO_ALMANAC;
-                    text_id.setText(symbol);
-                } else {
-                    text_id.setText(item.id + "");
-                }
+            if (text_debug != null) {
+                String symbol = item.hasEphemeris ? GpsDebugDisplay.SYMBOL_HAS_EPHEMERIS
+                        : item.hasAlmanac ? GpsDebugDisplay.SYMBOL_HAS_ALMANAC : GpsDebugDisplay.SYMBOL_HAS_NO_ALMANAC;
+                text_debug.setText(options.debug && options.showLabels ? symbol : "");
+                text_debug.setVisibility(options.debug && options.showLabels ? View.VISIBLE : View.GONE);
+            }
+            if (text_id != null) {
+                text_id.setText(options.showLabels ? item.id + "" : "");
+                text_id.setVisibility(options.showLabels ? View.VISIBLE : View.GONE);
             }
         }
 
         public static int suggestedLayoutResID() {
             return R.layout.layout_listitem_gnssbar;
+        }
+    }
+
+    /**
+     * ViewListener
+     */
+    public interface ViewListener extends SatelliteAdapter.AdapterListener {
+        /* EMPTY */
+    }
+
+    public void setViewListener(@Nullable ViewListener listener) {
+        viewListener = listener;
+        if (adapter != null) {
+            adapter.setAdapterListener(viewListener);
+        }
+    }
+
+    protected ViewListener viewListener;
+    protected void initViewListener()
+    {
+        viewListener = new ViewListener()
+        {
+            @Override
+            public void onItemClicked(View v, SatelliteAdapter adapter, SatelliteItem item) {
+                showSatellitePopup(v, item);
+            }
+
+            @Override
+            public boolean onItemLongClicked(View v, SatelliteAdapter adapter, SatelliteItem item) {
+                toggleLabelVisibility(getContext());
+                return true;
+            }
+
+            @Override
+            public void onOptionsChanged(SatelliteViewHolderOptions options) {
+                updateViews(getContext());
+            }
+        };
+        if (adapter != null) {
+            adapter.setAdapterListener(viewListener);
         }
     }
 
