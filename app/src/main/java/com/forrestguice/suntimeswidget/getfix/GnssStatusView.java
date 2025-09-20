@@ -65,17 +65,13 @@ public abstract class GnssStatusView extends FrameLayout
         if (isInEditMode()) {
             return;
         }
-        // TODO
     }
     public void loadSettings(Context context, Bundle bundle ) {
-        // TODO
     }
     public boolean saveSettings(Context context) {
-        // TODO
         return false;
     }
     public boolean saveSettings(Bundle bundle) {
-        // TODO
         return true;
     }
 
@@ -110,6 +106,10 @@ public abstract class GnssStatusView extends FrameLayout
 
     //////////////////////////////////////////////////
 
+    protected void onGnssStarted() {}
+    protected void onGnssStopped() {}
+    protected void onGnssFirstFix(long ttffMillis) {}
+
     @TargetApi(24)
     protected abstract void updateViews(@Nullable GnssStatus status);
     protected abstract void updateViews(@Nullable GpsStatus status);
@@ -118,10 +118,12 @@ public abstract class GnssStatusView extends FrameLayout
 
     public boolean hasPermission()
     {
-        Context context = getContext();
-        if (context != null) {
-            return (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
-        } else return false;
+        if (Build.VERSION.SDK_INT >= 21) {
+            Context context = getContext();
+            if (context != null) {
+                return (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+            } else return false;
+        } else return true;
     }
 
     protected boolean isMonitoring = false;
@@ -175,6 +177,21 @@ public abstract class GnssStatusView extends FrameLayout
         return new GnssStatus.Callback()
         {
             @Override
+            public void onStarted() {
+                super.onStarted();
+                onGnssStarted();
+            }
+            @Override
+            public void onStopped() {
+                super.onStopped();
+                onGnssStopped();
+            }
+            @Override
+            public void onFirstFix(int ttffMillis) {
+                super.onFirstFix(ttffMillis);
+                onGnssFirstFix(ttffMillis);
+            }
+            @Override
             public void onSatelliteStatusChanged(GnssStatus status) {
                 super.onSatelliteStatusChanged(status);
                 updateViews(status);
@@ -193,6 +210,12 @@ public abstract class GnssStatusView extends FrameLayout
             public void onGpsStatusChanged(int event) {
                 if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {
                     updateViews(locationManager.getGpsStatus(null));
+                } else if (event == GpsStatus.GPS_EVENT_STARTED) {
+                    onGnssStarted();
+                } else if (event == GpsStatus.GPS_EVENT_STOPPED) {
+                    onGnssStopped();
+                } else if (event == GpsStatus.GPS_EVENT_FIRST_FIX) {
+                    onGnssFirstFix(System.currentTimeMillis());
                 }
             }
         };
@@ -212,8 +235,8 @@ public abstract class GnssStatusView extends FrameLayout
         public double azimuth;
         public double elevation;
 
-        public double snr;
-        public static final double MAX_SNR = 60d;    // TODO
+        public double cnr;
+        public static final double MAX_CNR = 60d;    // db-hertz
 
         public boolean hasAlmanac = false;
         public boolean hasEphemeris = false;
