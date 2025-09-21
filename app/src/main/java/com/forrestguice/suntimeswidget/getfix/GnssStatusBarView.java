@@ -439,7 +439,7 @@ public class GnssStatusBarView extends GnssStatusView
     public static class SatelliteViewHolder extends RecyclerView.ViewHolder
     {
         public View layout;
-        public View bar_signal;
+        public View bar_signal, bar_signal1;
         public View bar_used;
         public View bar_constellation;
         public TextView text_id;
@@ -450,6 +450,7 @@ public class GnssStatusBarView extends GnssStatusView
             super(itemView);
             layout = itemView.findViewById(R.id.layout_item);
             bar_signal = itemView.findViewById(R.id.bar_signal);
+            bar_signal1 = itemView.findViewById(R.id.bar_signal1);
             bar_used = itemView.findViewById(R.id.bar_used);
             bar_constellation = itemView.findViewById(R.id.bar_constellation);
             text_id = itemView.findViewById(R.id.text_id);
@@ -462,7 +463,13 @@ public class GnssStatusBarView extends GnssStatusView
                 bar_signal.setScaleY(item.cnr == 0 ? 0 : (float) (item.cnr / SatelliteItem.MAX_CNR));
                 bar_signal.setBackgroundColor(
                         item.hasEphemeris ? options.colorEphemeris
-                        : item.hasAlmanac ? options.colorAlmanac : options.colorSignal);
+                                : item.hasAlmanac ? options.colorAlmanac : options.colorSignal);
+            }
+            if (bar_signal1 != null) {
+                bar_signal1.setBackgroundColor(
+                        item.hasEphemeris ? options.colorEphemeris
+                                : item.hasAlmanac ? options.colorAlmanac : 0);
+                bar_signal1.setVisibility(item.cnr <= 0 ? View.VISIBLE : View.INVISIBLE);
             }
             if (bar_used != null) {
                 bar_used.setBackgroundColor(options.colorUsed);
