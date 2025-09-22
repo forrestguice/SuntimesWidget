@@ -28,17 +28,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
@@ -55,7 +51,6 @@ import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.Pair;
@@ -64,7 +59,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,7 +68,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
+import com.forrestguice.suntimeswidget.getfix.GeoIntents;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -121,11 +115,9 @@ import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 import android.os.Handler;
@@ -1677,38 +1669,8 @@ public class SuntimesActivity extends AppCompatActivity
      * Intent filtering code based off answer by "gumberculese";
      * http://stackoverflow.com/questions/5734678/custom-filtering-of-intent-chooser-based-on-installed-android-package-name
      */
-    protected void showMap()
-    {
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(location.getUri());
-
-        List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
-        List<Intent> geoIntents = new ArrayList<Intent>();
-
-        if (!info.isEmpty())
-        {
-            for (ResolveInfo resolveInfo : info)
-            {
-                String packageName = resolveInfo.activityInfo.packageName;
-                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID))
-                {
-                    Intent geoIntent = new Intent(Intent.ACTION_VIEW);
-                    geoIntent.setPackage(packageName);
-                    geoIntent.setData(location.getUri());
-                    geoIntents.add(geoIntent);
-                }
-            }
-        }
-
-        if (geoIntents.size() > 0)
-        {
-            Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
-            startActivity(chooserIntent);
-
-        } else {
-            Toast.makeText(this, getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
-        }
+    protected void showMap() {
+        GeoIntents.shareLocation(this, location.getUri());
     }
 
     /**
