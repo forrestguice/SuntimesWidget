@@ -1665,6 +1665,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMap()
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.addCategory(Intent.CATEGORY_BROWSABLE);
         mapIntent.setData(location.getUri());
 
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
