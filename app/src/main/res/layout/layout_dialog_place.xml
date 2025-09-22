@@ -141,26 +141,40 @@
 
     </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView android:id="@+id/scroll_debug_log"
-        android:layout_width="match_parent" android:layout_height="100dp"
+
+    <LinearLayout android:id="@+id/layout_debug_log"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="4dp"
-        android:background="?attr/dialogBackground">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_margin="4dp">
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textSize="?attr/text_size_tiny" android:textStyle="bold"
+            android:text="@string/configLabel_getFix_gnss" />
 
-            <TextView android:id="@+id/text_debug_log"
+        <android.support.v4.widget.NestedScrollView android:id="@+id/scroll_debug_log"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:background="?attr/dialogBackground">
+
+            <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_tiny"
-                tools:text="log\ncontent\ngoes\nhere\non\nmultiple\nlines" />
+                android:layout_margin="4dp">
 
-        </LinearLayout>
+                <TextView android:id="@+id/text_debug_log"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_tiny"
+                    tools:text="log\ncontent\ngoes\nhere\non\nmultiple\nlines" />
 
-    </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
 
     <com.forrestguice.suntimeswidget.getfix.GnssStatusBarView android:visibility="visible"
         android:id="@+id/gps_status" android:layout_gravity="center"
+        android:layout_marginTop="4dp"
         android:layout_width="match_parent" android:layout_height="72dp"
         android:layout_marginLeft="4dp" android:layout_marginRight="4dp" />
 

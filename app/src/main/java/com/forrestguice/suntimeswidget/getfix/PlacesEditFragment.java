@@ -59,6 +59,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -69,6 +70,9 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -96,6 +100,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     private TextView text_log;
     private NestedScrollView scroll_log;
+    private View layout_log;
     private GnssStatusView gpsStatusView;
 
     private ImageButton button_map;
@@ -421,10 +426,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             });
         }
 
-        scroll_log = (NestedScrollView) content.findViewById(R.id.scroll_debug_log);
-        if (scroll_log != null) {
-            scroll_log.setVisibility(LocationHelperSettings.keepLastLocationLog(context) && loadLogViewState() ? View.VISIBLE : View.GONE);
+        layout_log = content.findViewById(R.id.layout_debug_log);
+        if (layout_log != null) {
+            layout_log.setVisibility(View.GONE);
         }
+
+        scroll_log = (NestedScrollView) content.findViewById(R.id.scroll_debug_log);
 
         text_log = (TextView) content.findViewById(R.id.text_debug_log);
         if (text_log != null) {
@@ -472,7 +479,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         MenuItem logItem = menu.findItem(R.id.action_location_togglelog);
         if (logItem != null) {
             logItem.setVisible(LocationHelperSettings.keepLastLocationLog(context));
-            logItem.setChecked(scroll_log.getVisibility() == View.VISIBLE);
+            logItem.setChecked(loadLogViewState());
         }
 
         PopupMenuCompat.forceActionBarIcons(menu);
@@ -506,6 +513,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
     protected void getFix(boolean autoStop)
     {
+        Context context = getActivity();
+        if (layout_log != null && context != null) {
+            boolean showLogView = LocationHelperSettings.keepLastLocationLog(context) && loadLogViewState()
+                    && LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER);
+            layout_log.setVisibility(showLogView ? View.VISIBLE : View.GONE);
+        }
         if (gpsStatusView != null)
         {
             gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
@@ -523,22 +536,22 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     protected void toggleLogView()
     {
-        if (scroll_log != null)
+        if (layout_log != null)
         {
-            scroll_log.setVisibility(scroll_log.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            saveLogViewState();
-            if (scroll_log.getVisibility() == View.VISIBLE) {
+            layout_log.setVisibility(layout_log.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+            saveLogViewState(layout_log.getVisibility() == View.VISIBLE);
+            if (layout_log.getVisibility() == View.VISIBLE) {
                 scrollLogViewToBottom();
             }
         }
     }
-    protected void saveLogViewState()
+    protected void saveLogViewState(boolean value)
     {
         Activity activity = getActivity();
         if (activity != null) {
             SharedPreferences.Editor prefs = activity.getPreferences(0).edit();
             if (prefs != null) {
-                prefs.putBoolean("showLog", scroll_log.getVisibility() == View.VISIBLE);
+                prefs.putBoolean("showLog", value);
                 prefs.apply();
             }
         }

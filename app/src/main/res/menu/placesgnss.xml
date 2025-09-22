@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_location_togglelog"
+        android:icon="?attr/icActionAbout"
+        android:title="@string/configLabel_getFix_lastRequest_flag"
+        android:checkable="true"
+        android:orderInCategory="100" />
+
+</menu>
