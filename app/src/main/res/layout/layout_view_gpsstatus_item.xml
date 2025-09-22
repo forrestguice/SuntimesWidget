@@ -13,6 +13,11 @@
         android:textSize="?attr/text_size_small"
         tools:text="30.5 db" />
 
+    <TextView android:id="@+id/text_satellite_position"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="?attr/text_size_tiny"
+        tools:text="35°∠ 180° S" />
+
     <View
         android:layout_width="match_parent" android:layout_height="1dp"
         android:layout_marginTop="8dp" android:layout_marginBottom="4dp"

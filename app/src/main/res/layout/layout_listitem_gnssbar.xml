@@ -33,12 +33,12 @@
     </FrameLayout>
 
     <View android:id="@+id/bar_constellation"
-        android:layout_width="match_parent" android:layout_height="2dp"
+        android:layout_width="match_parent" android:layout_height="2.5dp"
         android:layout_gravity="bottom|center_horizontal"
         android:background="@color/blue_grey_700" />
 
     <View android:id="@+id/bar_signal1"
-        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_width="match_parent" android:layout_height="2dp"
         android:layout_marginLeft="1dp" android:layout_marginRight="1dp"
         android:layout_gravity="bottom|center_horizontal"
         android:background="@color/blue_a200" />

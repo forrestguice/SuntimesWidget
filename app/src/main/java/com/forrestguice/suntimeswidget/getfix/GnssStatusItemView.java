@@ -29,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 import java.util.Locale;
 
@@ -51,6 +52,7 @@ public class GnssStatusItemView extends FrameLayout
 
     public void init(Context context)
     {
+        SuntimesUtils.initDisplayStrings(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(ViewHolder.getLayoutResID(), this);
         holder = new ViewHolder(context, this);
@@ -76,8 +78,11 @@ public class GnssStatusItemView extends FrameLayout
             return R.layout.layout_view_gpsstatus_item;
         }
 
+        private static final SuntimesUtils utils = new SuntimesUtils();
+
         public TextView text_label;
         public TextView text_cnr;
+        public TextView text_position;
         public CheckBox check_used;
         public CheckBox check_signal;
         public CheckBox check_almanac;
@@ -87,6 +92,7 @@ public class GnssStatusItemView extends FrameLayout
         {
             text_label = (TextView) itemView.findViewById(R.id.text_satellite_label);
             text_cnr = (TextView) itemView.findViewById(R.id.text_satellite_cnr);
+            text_position = (TextView) itemView.findViewById(R.id.text_satellite_position);
             check_used = (CheckBox) itemView.findViewById(R.id.check_satellite_usedInFix);
             check_signal = (CheckBox) itemView.findViewById(R.id.check_satellite_signal);
             check_almanac = (CheckBox) itemView.findViewById(R.id.check_satellite_almanac);
@@ -96,10 +102,21 @@ public class GnssStatusItemView extends FrameLayout
         public void updateViews(Context context, @Nullable GnssStatusView.SatelliteItem item)
         {
             if (text_label != null) {
-                text_label.setText(item != null ? GpsDebugDisplay.constellationTypeLabel(item.constellation, false) + " " + item.id : "");
+                text_label.setText(item != null ? context.getString(R.string.configLabel_getFix_gnss_labelFormat,
+                        GpsDebugDisplay.constellationTypeLabel(item.constellation, false), item.id + "")
+                        : "");
             }
             if (text_cnr != null) {
-                text_cnr.setText(item != null ? context.getString(R.string.configLabel_getFix_gnss_cnrFormat, String.format(Locale.getDefault(), "%.2f", item.cnr)) : "");
+                text_cnr.setText(item != null ? context.getString(R.string.configLabel_getFix_gnss_cnrFormat,
+                        String.format(Locale.getDefault(), "%.2f", item.cnr))
+                        : "");
+            }
+            if (text_position != null) {
+                text_position.setText(item != null ? context.getString(R.string.configLabel_getFix_gnss_positionFormat,
+                        utils.formatAsDirection(item.azimuth, 2),
+                        utils.formatAsElevation(item.elevation, 2).toString())
+                        : "");
+                text_position.setVisibility((item != null && item.azimuth != 0 && item.elevation != 0) ? View.VISIBLE : View.GONE);
             }
             if (check_used != null) {
                 check_used.setOnCheckedChangeListener(null);
