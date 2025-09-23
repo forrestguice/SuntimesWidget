@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -53,6 +54,6 @@ public interface LocationHelper
     boolean hasLocationPermission(Activity activity);
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 
-    void reloadAGPS(Activity context, boolean forceWarning, boolean coldStart);
     void reloadAGPS(Activity context, boolean coldStart);
+    void reloadAGPS(Activity context, boolean coldStart, DialogInterface.OnClickListener listener);
 }

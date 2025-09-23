@@ -592,9 +592,9 @@ public class GetFixHelper implements LocationHelper
     public static final String EXTRA_DELETE_AIDING_DATA = "delete_aiding_data";
 
     @Override
-    public void reloadAGPS(final Activity context, boolean forceWarning, final boolean coldStart)
+    public void reloadAGPS(final Activity context, final boolean coldStart, final DialogInterface.OnClickListener listener)
     {
-        if (forceWarning || !AppSettings.checkDialogDoNotShowAgain(context, DIALOG_WARNING_AGPS))
+        if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_WARNING_AGPS))
         {
             LayoutInflater layout = LayoutInflater.from(context);
             AppSettings.buildAlertDialog(DIALOG_WARNING_AGPS, layout,
@@ -602,6 +602,9 @@ public class GetFixHelper implements LocationHelper
                     context.getString(R.string.configLabel_getFix_gnss_agps_reload_warning), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             reloadAGPS(context, coldStart);
+                            if (listener != null) {
+                                listener.onClick(null, 0);
+                            }
                         }
                     }).setNegativeButton(R.string.dialog_cancel, null)
                     .show();
