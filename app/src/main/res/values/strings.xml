@@ -2119,6 +2119,11 @@
     <string name="configLabel_getFix_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
     <string name="configLabel_getFix_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
 
+    <string name="configLabel_getFix_gnss_agps">AGPS</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_reload_warning">Reloading AGPS data requires network connectivity.\n\nVerify your connection before proceeding…</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_delete">Delete AGPS data</string>    <!-- TODO -->
+
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title for "calendars" app setting -->
     <string name="configLabel_calendars_enabled">Calendar Integration</string>

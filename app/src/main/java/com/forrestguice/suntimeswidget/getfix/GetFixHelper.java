@@ -43,8 +43,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -581,6 +583,57 @@ public class GetFixHelper implements LocationHelper
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
         else return Html.fromHtml(htmlString);
+    }
+
+
+    public static final String DIALOG_WARNING_AGPS = "agpsWarningDialog";
+    public static final String EXTRA_FORCE_XTRA_INJECTION = "force_xtra_injection";
+    public static final String EXTRA_FORCE_TIME_INJECTION = "force_time_injection";
+    public static final String EXTRA_DELETE_AIDING_DATA = "delete_aiding_data";
+
+    @Override
+    public void reloadAGPS(final Activity context, boolean forceWarning, final boolean coldStart)
+    {
+        if (forceWarning || !AppSettings.checkDialogDoNotShowAgain(context, DIALOG_WARNING_AGPS))
+        {
+            LayoutInflater layout = LayoutInflater.from(context);
+            AppSettings.buildAlertDialog(DIALOG_WARNING_AGPS, layout,
+                    R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
+                    context.getString(R.string.configLabel_getFix_gnss_agps_reload_warning), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            reloadAGPS(context, coldStart);
+                        }
+                    }).setNegativeButton(R.string.dialog_cancel, null)
+                    .show();
+        }
+    }
+
+    @Override
+    public void reloadAGPS(Activity context, boolean coldStart)
+    {
+        if (context != null)
+        {
+            if (hasLocationPermission(context))
+            {
+                LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                if (locationManager != null)
+                {
+                    try {
+                        Log.i("GetFixHelper", "reloadAGPS: cold start? " + coldStart);
+                        if (coldStart) {
+                            locationManager.sendExtraCommand(LocationManager.GPS_PROVIDER, EXTRA_DELETE_AIDING_DATA, null);
+                        }
+                        locationManager.sendExtraCommand(LocationManager.GPS_PROVIDER, EXTRA_FORCE_XTRA_INJECTION, new Bundle());
+                        locationManager.sendExtraCommand(LocationManager.GPS_PROVIDER, EXTRA_FORCE_TIME_INJECTION, new Bundle());
+
+                    } catch (SecurityException e) {
+                        Log.e("GetFixHelper", "reloadAGPS: " + e);
+                    }
+                }
+            } else {
+                Log.e("GetFixHelper", "reloadAGPS: Location permissions are required! checkPermissions should have been called before this line...");
+            }
+        }
     }
 
 }

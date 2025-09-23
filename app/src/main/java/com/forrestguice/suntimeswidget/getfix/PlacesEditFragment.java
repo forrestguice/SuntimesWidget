@@ -492,6 +492,14 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         {
             switch (menuItem.getItemId())
             {
+                case R.id.action_location_agps_reload:
+                    reloadAGPS();
+                    break;
+
+                case R.id.action_location_agps_delete:
+                    deleteAGPS();
+                    break;
+
                 case R.id.action_location_togglelog:
                     toggleLogView();
                     break;
@@ -532,6 +540,17 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
     protected void averageFix() {
         getFix(false);
+    }
+
+    protected void reloadAGPS() {
+        if (getActivity() != null) {
+            getFixHelper.reloadAGPS(getActivity(), true,false);
+        }
+    }
+    protected void deleteAGPS() {
+        if (getActivity() != null) {
+            getFixHelper.reloadAGPS(getActivity(), true, true);
+        }
     }
 
     protected void toggleLogView()

@@ -11,4 +11,14 @@
         android:title="@string/configAction_avgFix"
         android:orderInCategory="20" />
 
+    <item android:id="@+id/action_location_agps_reload"
+        android:icon="?attr/icActionGPS_satellite"
+        android:title="@string/configLabel_getFix_gnss_agps_reload"
+        android:orderInCategory="200" />
+
+    <item android:id="@+id/action_location_agps_delete"
+        android:icon="?attr/icActionWarning"
+        android:title="@string/configLabel_getFix_gnss_agps_delete"
+        android:orderInCategory="300" />
+
 </menu>

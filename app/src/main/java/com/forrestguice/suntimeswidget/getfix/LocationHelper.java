@@ -52,4 +52,7 @@ public interface LocationHelper
 
     boolean hasLocationPermission(Activity activity);
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+
+    void reloadAGPS(Activity context, boolean forceWarning, boolean coldStart);
+    void reloadAGPS(Activity context, boolean coldStart);
 }
