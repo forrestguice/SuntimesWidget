@@ -237,6 +237,10 @@ public class GnssStatusBarView extends GnssStatusView
                 removeStaleItems();
                 Collections.sort(items);
                 notifyDataSetChanged();
+
+            } else {
+                items.clear();
+                notifyDataSetChanged();
             }
         }
 
@@ -512,6 +516,16 @@ public class GnssStatusBarView extends GnssStatusView
     protected ViewListener viewListener;
     protected void initViewListener()
     {
+        View clickArea = findViewById(R.id.clickArea);
+        if (clickArea != null) {
+            clickArea.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleLabelVisibility(getContext());
+                }
+            });
+        }
+
         viewListener = new ViewListener()
         {
             @Override
