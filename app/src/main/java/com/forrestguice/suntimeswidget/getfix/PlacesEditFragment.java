@@ -25,6 +25,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.GnssStatus;
+import android.location.GpsStatus;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -439,9 +441,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
 
         gpsStatusView = (GnssStatusView) content.findViewById(R.id.gps_status);
-        if (gpsStatusView != null) {
-            gpsStatusView.setVisibility(View.GONE);
-        }
+        hideGpsStatusView();
 
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
         TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
@@ -527,13 +527,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                     && LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER);
             layout_log.setVisibility(showLogView ? View.VISIBLE : View.GONE);
         }
-        if (gpsStatusView != null)
-        {
-            gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
-            if (!gpsStatusView.isMonitoring()) {
-                gpsStatusView.startMonitoring();
-            }
-        }
+        showGpsStatusView();
         if (getFixHelper != null) {
             getFixHelper.getFix(0, autoStop);
         }
@@ -543,13 +537,47 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
 
     protected void reloadAGPS() {
-        if (getActivity() != null) {
-            getFixHelper.reloadAGPS(getActivity(), true,false);
+        if (getActivity() != null)
+        {
+            getFixHelper.reloadAGPS(getActivity(), false, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    resetGpsStatusView();
+                }
+            });
         }
     }
     protected void deleteAGPS() {
         if (getActivity() != null) {
-            getFixHelper.reloadAGPS(getActivity(), true, true);
+            getFixHelper.reloadAGPS(getActivity(), true, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    resetGpsStatusView();
+                }
+            });
+        }
+    }
+
+    protected void showGpsStatusView()
+    {
+        if (gpsStatusView != null)
+        {
+            gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
+            if (!gpsStatusView.isMonitoring()) {
+                gpsStatusView.startMonitoring();
+            }
+        }
+    }
+    protected void hideGpsStatusView() {
+        if (gpsStatusView != null) {
+            gpsStatusView.setVisibility(View.GONE);
+        }
+    }
+    protected void resetGpsStatusView()
+    {
+        if (gpsStatusView != null && gpsStatusView.getVisibility() == View.VISIBLE)
+        {
+            if (Build.VERSION.SDK_INT >= 24) {
+                gpsStatusView.updateViews((GnssStatus) null);
+            } else gpsStatusView.updateViews((GpsStatus) null);
         }
     }
 
