@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import com.flask.colorpicker.BuildConfig;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
