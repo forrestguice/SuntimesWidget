@@ -1,5 +1,9 @@
 ### ~
 
+### v0.16.11 (2025-10-12)
+* fixes bug where "show map" and "share place" actions don't include the full list of supporting apps.
+* updates translation to Norwegian (nb) (#899 by FTno).
+
 ### v0.16.10 (2025-09-05)
 * adds a crash report notification that displays the stacktrace when the application crashes.
 * adds "Boot Completed (Delay)" to alarm settings; an intentional delay when rescheduling alarms after reboot.
