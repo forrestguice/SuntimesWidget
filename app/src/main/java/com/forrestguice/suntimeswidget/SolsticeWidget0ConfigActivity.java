@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,6 +24,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -35,9 +38,14 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+import com.forrestguice.suntimeswidget.widgets.SolsticeWidget0ConfigFragment;
+import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
 
 import java.util.List;
+
+import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER;
+import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER;
 
 /**
  * Solstice / Equinox widget config activity.
@@ -77,6 +85,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
         showOptionLocalizeHemisphere(true);
         hideLayoutSettings();
+        showMoreGeneralSettings(true);
         reorderOptions();
     }
 
@@ -107,16 +116,25 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         return R.mipmap.ic_launcher;
     }
 
-    @Override
-    protected void initTimeMode( Context context )
+    protected void initTimeModeAdapter(Context context, boolean allValues)
     {
         if (spinner_timeMode != null)
         {
-            EquinoxModeAdapter adapter = new EquinoxModeAdapter(this, R.layout.layout_listitem_oneline, SolsticeEquinoxMode.values());
+            SolsticeEquinoxMode[] values = (allValues)
+                    ? SolsticeEquinoxMode.values()
+                    : SolsticeEquinoxMode.partialValues(false);
+
+            EquinoxModeAdapter adapter = new EquinoxModeAdapter(this, R.layout.layout_listitem_oneline, values);
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
         }
+    }
+
+    @Override
+    protected void initTimeMode( Context context )
+    {
+        initTimeModeAdapter(context, true);  //SolsticeWidgetSettings.loadWidgetBool(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER));
 
         if (button_timeModeHelp != null)
         {
@@ -220,6 +238,80 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected void initWidgetModeLayout(Context context) {
+    }
+
+    public static final String TAG_FRAGMENT_MOREGENERALSETTINGS = "MoreGeneralSettings";
+
+    @Override
+    protected void initMoreGeneralSettings(final Context context)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null)
+        {
+            FragmentTransaction transaction = fragments.beginTransaction();
+            SolsticeWidget0ConfigFragment fragment = new SolsticeWidget0ConfigFragment();
+            fragment.setDialogListener(moreGeneralSettingsListener);
+            loadMoreGeneralSettings(context, fragment);
+            transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    protected void saveMoreGeneralSettings(final Context context)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null)
+        {
+            SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+            if (fragment != null)
+            {
+                boolean showCrossQuarter = fragment.getWidgetBool(PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);
+                SolsticeWidgetSettings.saveWidgetValue(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, showCrossQuarter);
+            }
+        }
+    }
+
+    @Override
+    protected void loadMoreGeneralSettings(final Context context)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null) {
+            loadMoreGeneralSettings(context, (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
+        }
+    }
+
+    protected void loadMoreGeneralSettings(final Context context, @Nullable SolsticeWidget0ConfigFragment fragment)
+    {
+        if (fragment != null) {
+            boolean showCrossQuarter = SolsticeWidgetSettings.loadWidgetBool(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);
+            fragment.setWidgetValue(PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, showCrossQuarter);
+        }
+    }
+
+    private final SolsticeWidget0ConfigFragment.DialogListener moreGeneralSettingsListener = new SolsticeWidget0ConfigFragment.DialogListener()
+    {
+        @Override
+        public void onChanged(SolsticeWidget0ConfigFragment dialog, String key)
+        {
+            /*if (PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER.equals(key))
+            {
+                boolean existingValue = SolsticeWidgetSettings.loadWidgetBool(SolsticeWidget0ConfigActivity.this, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);
+                initTimeModeAdapter(SolsticeWidget0ConfigActivity.this, dialog.getWidgetBool(key, existingValue));
+            }*/
+        }
+    };
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null) {
+            SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+            fragment.setDialogListener(moreGeneralSettingsListener);
+        }
     }
 
     /**

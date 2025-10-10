@@ -549,36 +549,8 @@ public class PlacesListFragment extends Fragment
     protected void sharePlace(@Nullable PlaceItem item)
     {
         Context context = getActivity();
-        if (item != null && item.location != null && context != null)
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(item.location.getUri()));
-            List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
-            List<Intent> geoIntents = new ArrayList<Intent>();
-
-            if (!info.isEmpty())
-            {
-                for (ResolveInfo resolveInfo : info)
-                {
-                    if (!TextUtils.equals(resolveInfo.activityInfo.packageName, BuildConfig.APPLICATION_ID))
-                    {
-                        Intent geoIntent = new Intent(Intent.ACTION_VIEW);
-                        geoIntent.setPackage(resolveInfo.activityInfo.packageName);
-                        geoIntent.setData(Uri.parse(item.location.getUri()));
-                        geoIntents.add(geoIntent);
-                    }
-                }
-            }
-
-            if (geoIntents.size() > 0)
-            {
-                Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
-                startActivity(chooserIntent);
-
-            } else {
-                Toast.makeText(context, context.getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
-            }
+        if (item != null && item.location != null && context != null) {
+            GeoIntents.shareLocation(context, Uri.parse(item.location.getUri()));
         }
     }
 
