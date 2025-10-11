@@ -996,7 +996,7 @@ public class AlarmEventProvider extends ContentProvider
         if (percent >= 0)    // positive values; day duration
         {
             Calendar sunrise = calculator.getOfficialSunriseCalendarForDate(day);
-            Calendar sunset = calculator.getOfficialSunriseCalendarForDate(day);
+            Calendar sunset = calculator.getOfficialSunsetCalendarForDate(day);
             if (sunrise != null && sunset != null)
             {
                 long duration = (sunset.getTimeInMillis() - sunrise.getTimeInMillis());
