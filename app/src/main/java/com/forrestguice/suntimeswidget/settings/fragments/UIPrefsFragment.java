@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -185,6 +186,11 @@ public class UIPrefsFragment extends PreferenceFragment
 
             switch (alias.getType())
             {
+                case DAYPERCENT:
+                    DayPercentEvent percentEvent = DayPercentEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((percentEvent != null ? (int)percentEvent.getAngle() : 0));
+                    break;
+
                 case SUN_ELEVATION:
                     SunElevationEvent elevationEvent = SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));

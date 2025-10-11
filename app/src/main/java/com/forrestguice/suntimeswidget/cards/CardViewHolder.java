@@ -48,6 +48,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
@@ -922,11 +923,16 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
             typedArray.recycle();
 
-            if (event.getType() == EventType.SHADOWLENGTH || event.getType() == EventType.SUN_ELEVATION)
+            if (event.getType() == EventType.SHADOWLENGTH || event.getType() == EventType.SUN_ELEVATION || event.getType() == EventType.DAYPERCENT)
             {
                 double angle = 0;
                 switch (event.getType())
                 {
+                    case DAYPERCENT:
+                        DayPercentEvent event2 = DayPercentEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (event2 != null ? event2.getAngle() : 0);
+                        break;
+
                     case SHADOWLENGTH:
                         ShadowLengthEvent event1 = ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
                         angle = (event1 != null ? event1.getAngle() : 0);

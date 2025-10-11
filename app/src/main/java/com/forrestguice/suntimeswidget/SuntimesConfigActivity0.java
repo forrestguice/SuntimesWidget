@@ -1373,7 +1373,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             {
                 EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(SuntimesConfigActivity0.this), eventID);
                 if (event.getType() == EventType.SUN_ELEVATION
-                        || event.getType() == EventType.SHADOWLENGTH)
+                        || event.getType() == EventType.SHADOWLENGTH
+                        || event.getType() == EventType.DAYPERCENT)
                 {
                     EventAliasTimeMode item = new EventAliasTimeMode(event);
                     adapter.insert(item, 0);
