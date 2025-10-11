@@ -22,6 +22,9 @@ public abstract class ElevationEvent
     public double getAngle() {
         return angle;
     }
+    public void setAngle(double value) {
+        angle = value;
+    }
 
     protected int offset;            // milliseconds
     public int getOffset() {
