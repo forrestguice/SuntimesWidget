@@ -28,7 +28,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
@@ -989,7 +989,7 @@ public class SuntimesTheme
     {
         return themeWinterColor;
     }
-    public int getSeasonColor(WidgetSettings.SolsticeEquinoxMode event)
+    public int getSeasonColor(SolsticeEquinoxMode event)
     {
         switch (event)
         {

@@ -60,7 +60,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
@@ -81,6 +82,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -286,7 +289,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void initLocale(Context context)
     {
         WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
-        WidgetSettings.SolarTimeMode.initDisplayStrings(dialogContent.getContext());
+        WidgetSettings.initDisplayStrings_SolarTimeMode(dialogContent.getContext());
 
         int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -623,8 +626,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private WidgetSettings.DateInfo getMapDate() {
-        return new WidgetSettings.DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+    private DateInfo getMapDate() {
+        return new DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
     }
     private long getMapTime(long now)
     {
@@ -660,7 +663,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
         if (utcTime != null)
         {
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
@@ -669,7 +672,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
-        SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+        TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
         String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);
@@ -1580,7 +1583,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new WorldMapColorValues(getActivity(), true);
+            return new WorldMapColorValues(AndroidResources.wrap(getActivity()), true);
         }
     };
 

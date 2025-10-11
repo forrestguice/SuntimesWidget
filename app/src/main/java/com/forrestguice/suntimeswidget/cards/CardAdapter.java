@@ -42,9 +42,15 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -125,17 +131,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> createData(Context context, int position)
     {
         Calendar date = Calendar.getInstance(options.timezone);
-        if (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE) {
+        if (options.dateMode != DateMode.CURRENT_DATE) {
             date.set(options.dateInfo.getYear(), options.dateInfo.getMonth(), options.dateInfo.getDay());
         }
         date.add(Calendar.DATE, position - TODAY_POSITION);
 
+        EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(contextInterface);
         for (String eventID : eventIDs)
         {
             SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
-            d.setDataMode(new WidgetSettings.EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
+            d.setDataMode(new EventAliasTimeMode(EventSettings.loadEvent(contextInterface, eventID)));
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);
@@ -587,8 +594,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      */
     public static class CardAdapterOptions
     {
-        private WidgetSettings.DateInfo dateInfo = null;
-        public WidgetSettings.DateMode dateMode = WidgetSettings.DateMode.CURRENT_DATE;
+        private DateInfo dateInfo = null;
+        public DateMode dateMode = DateMode.CURRENT_DATE;
         public TimeZone timezone = null;
 
         public boolean supportsGoldBlue = false;
@@ -597,7 +604,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
         public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
         public boolean showComparison = WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE;
-        public WidgetSettings.CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
+        public CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -623,8 +630,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             dateInfo = WidgetSettings.loadDatePref(context, 0);
 
             SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, 0);
-            data0.initCalculator(context);
-            data0.initTimezone(context);
+            data0.initCalculator();
+            data0.initTimezone(data0.getDataSettings(context));
             timezone = data0.timezone();
 
             supportsGoldBlue = data0.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);

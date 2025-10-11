@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,7 +175,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         }
 
         public void init(Context context) {
-            colors = new WorldMapColorValues(context, true);
+            colors = new WorldMapColorValues(AndroidResources.wrap(context), true);
         }
         public WorldMapColorValues colors;
         public int foregroundColor = Color.TRANSPARENT;

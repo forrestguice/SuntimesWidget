@@ -31,9 +31,11 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+import com.forrestguice.util.text.TimeDisplayText;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
@@ -43,7 +45,7 @@ public class SunLayout_2x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_2x1_0;
     }
 
-    protected WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    protected RiseSetOrder order = RiseSetOrder.TODAY;
 
     @Override
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
@@ -153,7 +155,7 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -171,7 +173,7 @@ public class SunLayout_2x1_0 extends SunLayout
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
-        views.setTextViewText(R.id.text_delta_day_prefix, data.dayDeltaPrefix());   // TODO: refactor to use only a single TextView and SpannableString
+        views.setTextViewText(R.id.text_delta_day_prefix, context.getString(data.dayDeltaPrefix()));   // TODO: refactor to use only a single TextView and SpannableString
         views.setTextViewText(R.id.text_delta_day_value, (isSame ? "" : (boldTime ? SuntimesUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue)));
         views.setTextViewText(R.id.text_delta_day_units, (isSame ? "" : dayDeltaUnits));
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);

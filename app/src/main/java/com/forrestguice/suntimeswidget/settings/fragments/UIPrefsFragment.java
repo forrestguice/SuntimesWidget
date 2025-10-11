@@ -45,14 +45,17 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
-import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
@@ -67,7 +70,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
@@ -169,10 +171,10 @@ public class UIPrefsFragment extends PreferenceFragment
     {
         ArrayList<Preference> eventPrefs = new ArrayList<>();
 
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
         for (final String eventID : eventIDs)
         {
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
@@ -184,12 +186,12 @@ public class UIPrefsFragment extends PreferenceFragment
             switch (alias.getType())
             {
                 case SUN_ELEVATION:
-                    AlarmEventProvider.SunElevationEvent elevationEvent = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    SunElevationEvent elevationEvent = SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));
                     break;
 
                 case SHADOWLENGTH:
-                    AlarmEventProvider.ShadowLengthEvent shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
                     break;
             }
@@ -231,7 +233,7 @@ public class UIPrefsFragment extends PreferenceFragment
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    EventSettings.setShown(context, eventID, false);
+                                    EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, false);
                                     category.removePreference(pref);
                                     context.setNeedsRecreateFlag();
                                 }
@@ -543,8 +545,8 @@ public class UIPrefsFragment extends PreferenceFragment
         SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == LengthUnit.METRIC);
         pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
         {
             @Override
@@ -554,7 +556,7 @@ public class UIPrefsFragment extends PreferenceFragment
                     double doubleValue = Double.parseDouble((String)newValue);
                     if (doubleValue > 0)
                     {
-                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                         preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
                         return true;
 
@@ -567,12 +569,12 @@ public class UIPrefsFragment extends PreferenceFragment
     }
     public static void loadPref_observerHeight(Context context, final LengthPreference pref)
     {
-        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
+        pref.setText((pref.isMetric() ? observerHeight : LengthUnit.metersToFeet(observerHeight)) + "");
         pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
     }
-    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
+    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, LengthUnit units, boolean convert)
     {
         String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
         return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);

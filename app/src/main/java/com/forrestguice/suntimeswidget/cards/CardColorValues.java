@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class CardColorValues extends ResourceColorValues implements Parcelable
+public class CardColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_RISING_SUN = AppColorKeys.COLOR_RISING_SUN;
     public static final String COLOR_RISING_SUN_TEXT = AppColorKeys.COLOR_RISING_SUN_TEXT;
 
@@ -128,26 +128,20 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
     public CardColorValues(ColorValues other) {
         super(other);
     }
-    public CardColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private CardColorValues(Parcel in) {
+    /*private CardColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public CardColorValues() {
         super();
     }
-    public CardColorValues(Context context) {
+    public CardColorValues(Resources context) {
         this(context, true);
     }
-    public CardColorValues(Context context, boolean darkTheme) {
+    public CardColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public CardColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<CardColorValues> CREATOR = new Creator<CardColorValues>()
+    /*public static final Creator<CardColorValues> CREATOR = new Creator<CardColorValues>()
     {
         public CardColorValues createFromParcel(Parcel in) {
             return new CardColorValues(in);
@@ -155,9 +149,14 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
         public CardColorValues[] newArray(int size) {
             return new CardColorValues[size];
         }
-    };
+    };*/
 
-    public static CardColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
+    public static CardColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new CardColorValues(new CardColorValues().getDefaultValues(context, darkTheme));
     }
 }

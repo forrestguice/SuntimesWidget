@@ -36,16 +36,13 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
-import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
@@ -54,6 +51,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -621,7 +619,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -703,7 +701,7 @@ public class WidgetActions
                 } else {
                     if (value.contains("%"))
                     {
-                        String v = DataSubstitutions.displayStringForTitlePattern0(context, value, data);
+                        String v = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), value, data);
                         if (!v.contains("%")) {
                             applyExtra(context, intent, key + "=" + v, data);    // recursive call
 
