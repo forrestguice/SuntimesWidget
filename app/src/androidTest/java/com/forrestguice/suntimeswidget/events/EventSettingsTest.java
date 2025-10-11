@@ -33,6 +33,8 @@ import org.junit.runner.RunWith;
 
 import java.util.Set;
 
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -47,7 +49,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_saveLoadDeleteEvent()
     {
-        Context context = activityRule.getActivity();
+        AndroidEventSettings context = AndroidEventSettings.wrap(activityRule.getActivity());
 
         EventType type0 = EventType.SUN_ELEVATION;
         String id0 = "TEST0";
@@ -91,10 +93,10 @@ public class EventSettingsTest extends SuntimesActivityTestBase
 
     public static Set<String> populateEventListWithTestItems(Context context)
     {
-        EventSettings.saveEvent(context, new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
-        EventSettings.saveEvent(context, new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
-        EventSettings.saveEvent(context, new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.RED, "uri2", false));
-        return EventSettings.loadEventList(getContext());
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.RED, "uri2", false));
+        return EventSettings.loadEventList(AndroidEventSettings.wrap(context));
     }
 
 }
