@@ -654,7 +654,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             Calendar now = dataset.now();
             Calendar midnight = SuntimesRiseSetDataset.midnight(dataset.dataActual.getOtherCalendar());
-            Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
+            //Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
 
             if (midnight.after(now))
                 setUpdateAlarm(alarmManager, midnight, getFullUpdateIntent(context));
@@ -669,7 +669,7 @@ public class SuntimesActivity extends AppCompatActivity
             Calendar now = dataset.now();
             Calendar updateTime = dataset.findNextEvent().getCalendar();
             if (updateTime != null && updateTime.after(now)) {
-                Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
+                //Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
                 setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
             }
             //else Log.d("UpdateAlarms", "..skipping alarm: partialUpdate (isPast)");
