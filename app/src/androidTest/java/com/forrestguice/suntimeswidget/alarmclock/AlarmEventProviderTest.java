@@ -160,7 +160,7 @@ public class AlarmEventProviderTest
     {
         String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
         EventType[] expected = new EventType[] {
-                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DATE, EventType.SOLAREVENT };
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
             assertEquals(expected[i], EventType.resolveEventType(AndroidEventSettings.wrap(context), events[i]));

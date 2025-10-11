@@ -93,6 +93,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     {
         EventSettings.saveEvent(context, new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
         EventSettings.saveEvent(context, new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        EventSettings.saveEvent(context, new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.RED, "uri2", false));
         return EventSettings.loadEventList(getContext());
     }
 
