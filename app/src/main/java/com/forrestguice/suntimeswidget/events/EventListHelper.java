@@ -328,6 +328,7 @@ public class EventListHelper
         } else {
             events.addAll(EventSettings.loadEvents(contextInterface, EventType.SUN_ELEVATION));
             events.addAll(EventSettings.loadEvents(contextInterface, EventType.SHADOWLENGTH));
+            events.addAll(EventSettings.loadEvents(contextInterface, EventType.DAYPERCENT));
         }
 
         Collections.sort(events, new Comparator<EventAlias>() {

@@ -66,6 +66,7 @@ public class EventSettings
     public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType)
     {
         switch (eventType) {
+            case DAYPERCENT: return context.getString(R.string.editevent_dialog_label_suggested2);
             case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
             case SUN_ELEVATION:
             default: return context.getString(R.string.editevent_dialog_label_suggested);

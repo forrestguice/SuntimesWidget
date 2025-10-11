@@ -174,6 +174,10 @@ public class EventListFragment extends Fragment
                 helper.addEvent(EventType.SHADOWLENGTH);
                 return true;
 
+            case R.id.addEvent_dayPercentEvent:
+                helper.addEvent(EventType.DAYPERCENT);
+                return true;
+
             case R.id.clearEvents:
                 helper.clearEvents();
                 return true;
