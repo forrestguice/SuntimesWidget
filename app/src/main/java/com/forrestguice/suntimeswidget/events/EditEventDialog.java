@@ -41,6 +41,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
@@ -82,6 +83,9 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         switch (type)
         {
+            //case DAYPERCENT:
+            //    return R.layout.layout_dialog_event_edit;
+
             //case SHADOWLENGTH:
             //    return R.layout.layout_dialog_event_edit;    // TODO: layout for shadow length?
 
@@ -404,12 +408,28 @@ public class EditEventDialog extends EditBottomSheetDialog
         edit_objHeight = (EditText) dialogContent.findViewById(R.id.edit_event_height);
         text_units_objHeight = (TextView) dialogContent.findViewById(R.id.text_event_height_units);
 
+        layout_percentValue = dialogContent.findViewById(R.id.layout_event_percent);
+        edit_percentValue = (EditText) dialogContent.findViewById(R.id.edit_event_percent);
+        radio_percentDay = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_day);
+        radio_percentNight = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_night);
+
         switch (type)
         {
+            case DAYPERCENT:
+                setViewVisibility(layout_percentValue, true);
+                setViewVisibility(layout_angle, false);
+                setViewVisibility(layout_objHeight, false);
+                setViewVisibility(layout_shadowLength, false);
+                if (edit_percentValue != null) {
+                    edit_percentValue.addTextChangedListener(percentWatcher);
+                }
+                break;
+
             case SHADOWLENGTH:
                 setViewVisibility(layout_objHeight, true);
                 setViewVisibility(layout_shadowLength, true);
                 setViewVisibility(layout_angle, false);
+                setViewVisibility(layout_percentValue, false);
                 if (edit_shadowLength != null) {
                     edit_shadowLength.addTextChangedListener(lengthWatcher);
                 }
@@ -424,6 +444,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_angle, true);
                 setViewVisibility(layout_objHeight, false);
                 setViewVisibility(layout_shadowLength, false);
+                setViewVisibility(layout_percentValue, false);
                 if (edit_angle != null) {
                     edit_angle.addTextChangedListener(angleWatcher);
                 }
@@ -531,6 +552,27 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
+            case DAYPERCENT:
+                double percent = 50;
+                DayPercentEvent percentEvent = null;
+                if (uri != null) {
+                    percentEvent = DayPercentEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_percentValue != null && percentEvent != null) {
+                    setPercentValue(percentValue = percentEvent.getPercentValue());
+                }
+
+                int percentEventOffset = ((percentEvent != null) ? percentEvent.getOffset() : 0);
+                setOffset(percentEventOffset);
+                if (text_offset != null)
+                {
+                    String offsetText = utils.timeDeltaLongDisplayString(0, percentEventOffset).getValue();
+                    text_offset.setText((percentEventOffset != 0)
+                            ? context.getResources().getQuantityString((percentEventOffset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int) percent, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, (int) percent));
+                }
+                break;
+
             case DATE:
             case SOLAREVENT:
             default:
@@ -578,6 +620,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                 String eventID;
                 switch (type)
                 {
+                    case DAYPERCENT:
+                        eventID = DayPercentEvent.getEventName(percentValue, offset, null);
+                        break;
+
                     case SHADOWLENGTH:
                         eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
                         break;
@@ -604,6 +650,10 @@ public class EditEventDialog extends EditBottomSheetDialog
         boolean isValid = validateInput_id() && validateInput_label();
         switch (type)
         {
+            case DAYPERCENT:
+                isValid = validateInput_percentValue() && isValid;
+                break;
+
             case SHADOWLENGTH:
                 isValid = validateInput_objHeight() && isValid;
                 isValid = validateInput_shadowLength() && isValid;
@@ -859,5 +909,92 @@ public class EditEventDialog extends EditBottomSheetDialog
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+
+    /**
+     * setPercentValue
+     */
+    protected void setPercentValue(double value)
+    {
+        percentValue = value;
+        Context context = getActivity();
+        if (edit_percentValue != null && context != null) {
+            edit_percentValue.setText(Math.abs(percentValue) + "");
+        }
+        if (radio_percentDay != null && radio_percentNight != null) {
+            if (percentValue >= 0) {
+                radio_percentDay.setChecked(true);
+            } else radio_percentNight.setChecked(true);
+        }
+    }
+
+    public Double getPercentValue()
+    {
+        Context context = getActivity();
+
+        boolean isDay = true;
+        if (radio_percentDay != null) {
+            isDay = radio_percentDay.isChecked();
+        }
+        if (edit_percentValue != null && context != null) {
+            try {
+                return (isDay ? 1 : -1) * Double.parseDouble(edit_percentValue.getText().toString());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private double percentValue = 50;
+    private View layout_percentValue = null;
+    protected EditText edit_percentValue = null;
+    protected RadioButton radio_percentDay = null;
+    protected RadioButton radio_percentNight = null;
+
+    protected boolean validateInput_percentValue()
+    {
+        if (edit_percentValue == null) {
+            return true;
+        }
+        try {
+            double percent = Double.parseDouble(edit_percentValue.getText().toString());
+            if (percent < MIN_PERCENT || percent > MAX_PERCENT) {
+                edit_percentValue.setError(getContext().getString(R.string.editevent_dialog_percent_error));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            edit_percentValue.setError(getContext().getString(R.string.editevent_dialog_percent_error));
+            return false;
+        }
+        edit_percentValue.setError(null);
+        return true;
+    }
+    public static final double MIN_PERCENT = -100;
+    public static final double MAX_PERCENT = 100;
+
+    private final TextWatcher percentWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                double percentInput = Double.parseDouble(s.toString());
+                Double percent = getPercentValue();
+                if (percent != null)
+                {
+                    String eventID = DayPercentEvent.getEventName(percent, getOffset(), null);
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setIsModified(true);
+                }
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not a percentage: " + e);
+            }
+        }
+    };
 
 }

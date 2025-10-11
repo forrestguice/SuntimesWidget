@@ -1018,6 +1018,7 @@
 
     <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_dayPercentEvent">Add (Day/Night Percent)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -1056,6 +1057,14 @@
     <string name="editevent_dialog_height_hint">1</string>
     <string name="editevent_dialog_height_suffix">m</string>
     <string name="editevent_dialog_height_error">Object height is required!</string>
+
+    <string name="editevent_dialog_percent">Percent</string>  <!-- TODO -->
+    <string name="editevent_dialog_percent_hint">25</string>  <!-- TODO -->
+    <string name="editevent_dialog_percent_suffix">%</string>  <!-- TODO -->
+    <string name="editevent_dialog_percent_error">Percent value is required!</string>  <!-- TODO -->
+    <string name="editevent_dialog_label_suggested2">Custom Event</string>  <!-- TODO -->
+    <string name="editevent_dialog_percent_ofday">of day</string>  <!-- TODO -->
+    <string name="editevent_dialog_percent_ofnight">of night</string>  <!-- TODO -->
 
     <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAlarms, notifications, or widgets using this event may no longer work and should be reassigned.</string>
     <string name="delevent_dialog_ok">Delete</string>
