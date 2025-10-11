@@ -691,7 +691,7 @@ public class CalculatorProvider extends ContentProvider
 
             EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), aliasID);
             EventType aliasType = alias.getType();
-            if (aliasType == EventType.SUN_ELEVATION || aliasType == EventType.SHADOWLENGTH)
+            if (aliasType == EventType.SUN_ELEVATION || aliasType == EventType.SHADOWLENGTH || aliasType == EventType.DAYPERCENT)
             {
                 Calendar now = Calendar.getInstance();
                 now.setTimeInMillis(day.getTimeInMillis());

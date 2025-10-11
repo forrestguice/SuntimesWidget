@@ -213,6 +213,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
             List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
             events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
             EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }

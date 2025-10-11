@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: SuntimesWidget.util.util">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/util/build/libs/util.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

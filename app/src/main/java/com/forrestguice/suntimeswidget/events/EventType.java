@@ -31,7 +31,8 @@ public enum EventType
     EVENTALIAS,
     SOLAREVENT,
     SUN_ELEVATION,
-    SHADOWLENGTH;
+    SHADOWLENGTH,
+    DAYPERCENT;
 
     private EventType() //String displayString)
     {
@@ -39,7 +40,7 @@ public enum EventType
     }
 
     public static EventType[] visibleTypes() {
-        return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH };
+        return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT };
     }
 
     private String displayString;
@@ -69,6 +70,9 @@ public enum EventType
         }
         if (ShadowLengthEvent.isShadowLengthEvent(eventID)) {
             return EventType.SHADOWLENGTH;
+        }
+        if (DayPercentEvent.isDayPercentEvent(eventID)) {
+            return EventType.DAYPERCENT;
         }
         for (SolarEvents event : SolarEvents.values()) {
             if (event.name().startsWith(eventID)) {

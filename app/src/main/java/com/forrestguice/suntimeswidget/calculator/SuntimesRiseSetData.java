@@ -23,6 +23,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
@@ -88,6 +89,7 @@ public class SuntimesRiseSetData extends SuntimesData
             switch (alias.getType()) {
                 case SUN_ELEVATION: event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
                 case SHADOWLENGTH: event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
+                case DAYPERCENT: event = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
                 default: event = null; break;
             }
             this.angle = (event == null ? null : event.getAngle());
