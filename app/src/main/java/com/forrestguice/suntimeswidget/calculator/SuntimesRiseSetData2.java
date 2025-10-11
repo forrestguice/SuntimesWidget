@@ -150,6 +150,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.fraction = other.fraction;
         this.offset = other.offset;
 
         this.dayLengthToday = other.dayLengthToday();
@@ -293,6 +294,9 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunrise[i] = calculator.getOfficialSunriseCalendarForDate(calendar[i]);
                     sunset[i] = calculator.getOfficialSunsetCalendarForDate(calendar[i]);
                     break;
+            }
+            if (fraction != null && sunrise[i] != null && sunset[i] != null) {
+                applyFraction(sunrise[i], sunset[i], fraction);
             }
             if (offset != 0) {
                 if (sunrise[i] != null) {

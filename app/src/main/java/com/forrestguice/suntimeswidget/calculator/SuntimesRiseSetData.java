@@ -18,6 +18,10 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
@@ -86,13 +90,25 @@ public class SuntimesRiseSetData extends SuntimesData
         {
             EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
             ElevationEvent event;
-            switch (alias.getType()) {
-                case SUN_ELEVATION: event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
-                case SHADOWLENGTH: event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
-                case DAYPERCENT: event = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri())); break;
+            switch (alias.getType())
+            {
+                case SUN_ELEVATION:
+                    event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case SHADOWLENGTH:
+                    event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case DAYPERCENT:
+                    DayPercentEvent dayPercentEvent = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.fraction = (dayPercentEvent != null ? dayPercentEvent.getPercentValue() / 100d : null);
+                    event = dayPercentEvent;
+                    break;
                 default: event = null; break;
             }
-            this.angle = (event == null ? null : event.getAngle());
             this.offset = (event == null ? 0 : event.getOffset());
         }
         TimeMode mode = dataMode.getTimeMode();
@@ -111,6 +127,17 @@ public class SuntimesRiseSetData extends SuntimesData
     }
     public void setAngle( double value ) {
         angle = value;
+    }
+
+    /**
+     * Property: fraction (used with time mode)
+     */
+    protected Double fraction = null;
+    public Double fraction() {
+        return fraction;
+    }
+    public void setFraction( double value ) {
+        fraction = value;
     }
 
     /**
@@ -269,6 +296,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.fraction = other.fraction;
         this.offset = other.offset;
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
@@ -352,8 +380,7 @@ public class SuntimesRiseSetData extends SuntimesData
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        if (angle != null)
-        {
+        if (angle != null) {
             sunriseCalendarToday = calculator.getSunriseCalendarForDate(todaysCalendar, angle);
             sunsetCalendarToday = calculator.getSunsetCalendarForDate(todaysCalendar, angle);
             sunriseCalendarOther = calculator.getSunriseCalendarForDate(otherCalendar, angle);
@@ -424,6 +451,15 @@ public class SuntimesRiseSetData extends SuntimesData
             }
         }
 
+        if (fraction != null) {
+            if (sunriseCalendarToday != null && sunsetCalendarToday != null) {
+                applyFraction(sunriseCalendarToday, sunsetCalendarToday, fraction);
+            }
+            if (sunriseCalendarOther != null && sunsetCalendarOther != null) {
+                applyFraction(sunriseCalendarOther, sunsetCalendarOther, fraction);
+            }
+        }
+
         if (offset != 0) {
             if (sunriseCalendarToday != null) {
                 sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
@@ -443,6 +479,26 @@ public class SuntimesRiseSetData extends SuntimesData
         dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
         super.calculate(context);
+    }
+
+    protected void applyFraction(Calendar rising, Calendar setting, double fraction)
+    {
+        if (rising != null && setting != null)
+        {
+            if (fraction >= 0) {
+                long duration = (setting.getTimeInMillis() - rising.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() + (fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() - (fraction * duration)));
+
+            } else {
+                if (rising.getTimeInMillis() < setting.getTimeInMillis()) {
+                    rising.add(Calendar.MILLISECOND, 24 * 60 * 60 * 1000);
+                }
+                long duration = (rising.getTimeInMillis() - setting.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() - (-fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() + (-fraction * duration)));
+            }
+        }
     }
 
     /**
