@@ -18,12 +18,20 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
-import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.util.Log;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class DayPercentEvent extends ElevationEvent
 {
@@ -132,4 +140,99 @@ public final class DayPercentEvent extends ElevationEvent
 
         } else return null;
     }
+
+    /**
+     * @param context context
+     * @param event DayPercentEvent
+     * @param data SuntimesData
+     * @param offset offset millis
+     * @param repeating true/false
+     * @param repeatingDays e.g. "[1,2,3,4,5,6,7]"
+     * @param now now
+     * @return calendar or null
+     */
+    public static Calendar updateAlarmTime(Context context, @NonNull DayPercentEvent event, @NonNull SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        data.initCalculator();
+        SuntimesCalculator calculator = data.calculator();
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime;
+
+        Calendar day = Calendar.getInstance();
+        data.setTodayIs(day);
+        data.calculate(context);
+
+        eventTime = getDayPercentEventCalendar(day, event, calculator);
+        if (eventTime != null) {
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        while (now.after(alarmTime)
+                || eventTime == null
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                android.util.Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            android.util.Log.d("AlarmReceiver", "updateAlarmTime: dayPercentEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            data.setTodayIs(day);
+            data.calculate(context);
+
+            eventTime = getDayPercentEventCalendar(day, event, calculator);
+            if (eventTime != null) {
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+                event.setAngle(calculator.getSunPosition(eventTime).elevation);
+            }
+            c++;
+        }
+        return eventTime;
+    }
+
+    @android.support.annotation.Nullable
+    public static Calendar getDayPercentEventCalendar(@NonNull Calendar day, @NonNull DayPercentEvent event, @NonNull SuntimesCalculator calculator)
+    {
+        double percent = event.getPercentValue() / 100d;
+        if (percent >= 0)    // positive values; day duration
+        {
+            Calendar sunrise = calculator.getOfficialSunriseCalendarForDate(day);
+            Calendar sunset = calculator.getOfficialSunsetCalendarForDate(day);
+            if (sunrise != null && sunset != null)
+            {
+                long duration = (sunset.getTimeInMillis() - sunrise.getTimeInMillis());
+                Calendar eventTime = Calendar.getInstance();
+                eventTime.setTimeInMillis((long) (event.isRising()
+                        ? sunrise.getTimeInMillis() + (percent * duration)
+                        : sunset.getTimeInMillis() - (percent * duration)));
+                return eventTime;
+            } // else // TODO: support edge cases
+            return null;
+
+        } else {    // negative values; night duration
+            Calendar sunset = calculator.getOfficialSunriseCalendarForDate(day);
+            Calendar sunrise = calculator.getOfficialSunriseCalendarForDate(tomorrowCalendar(day));
+            if (sunset != null && sunrise != null)
+            {
+                long duration = (sunrise.getTimeInMillis() - sunset.getTimeInMillis());
+                Calendar eventTime = Calendar.getInstance();
+                eventTime.setTimeInMillis((long) (event.isRising()
+                        ? sunrise.getTimeInMillis() - (-percent * duration)
+                        : sunset.getTimeInMillis() + (-percent * duration)));
+                return eventTime;
+            } // else // TODO: support edge cases
+            return null;
+        }
+    }
+
+    private static Calendar tomorrowCalendar(Calendar day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(day.getTimeInMillis() + (24 * 60 * 60 * 1000));
+        return calendar;
+    }
+
 }

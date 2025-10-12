@@ -912,7 +912,8 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    Calendar calendar = updateAlarmTime_dayPercentEvent(context, event, location, offset, repeating, repeatingDays, now);
+                    SuntimesData data = getData_shadowLengthEvent(context, location);
+                    Calendar calendar = DayPercentEvent.updateAlarmTime(context, event, data, offset, repeating, repeatingDays, now);
                     if (calendar != null) {
                         row[i] = calendar.getTimeInMillis();
                     }
@@ -956,94 +957,6 @@ public class AlarmEventProvider extends ContentProvider
         }
         return row;
     }
-
-    public static Calendar updateAlarmTime_dayPercentEvent(Context context, @NonNull DayPercentEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
-    {
-        SuntimesClockData data = getData_shadowLengthEvent(context, location);   // TODO: rename this method; getClockData
-        data.initCalculator();
-        SuntimesCalculator calculator = data.calculator();
-
-        Calendar alarmTime = Calendar.getInstance();
-        Calendar eventTime;
-
-        Calendar day = Calendar.getInstance();
-        data.setTodayIs(day);
-        data.calculate(context);
-
-        eventTime = getDayPercentEventCalendar(day, event, calculator);
-        if (eventTime != null) {
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-        }
-
-        int c = 0;
-        Set<Long> timestamps = new HashSet<>();
-        while (now.after(alarmTime)
-                || eventTime == null
-                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
-        {
-            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
-                Log.e(AlarmNotifications.TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
-                return null;
-            }
-
-            Log.d(AlarmNotifications.TAG, "updateAlarmTime: dayPercentEvent advancing by 1 day..");
-            day.add(Calendar.DAY_OF_YEAR, 1);
-            data.setTodayIs(day);
-            data.calculate(context);
-
-            eventTime = getDayPercentEventCalendar(day, event, calculator);
-            if (eventTime != null) {
-                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-                event.setAngle(calculator.getSunPosition(eventTime).elevation);
-            }
-            c++;
-        }
-        return eventTime;
-    }
-
-    @Nullable
-    protected static Calendar getDayPercentEventCalendar(@NonNull Calendar day, @NonNull DayPercentEvent event, @NonNull SuntimesCalculator calculator)
-    {
-        double percent = event.getPercentValue() / 100d;
-        if (percent >= 0)    // positive values; day duration
-        {
-            Calendar sunrise = calculator.getOfficialSunriseCalendarForDate(day);
-            Calendar sunset = calculator.getOfficialSunsetCalendarForDate(day);
-            if (sunrise != null && sunset != null)
-            {
-                long duration = (sunset.getTimeInMillis() - sunrise.getTimeInMillis());
-                Calendar eventTime = Calendar.getInstance();
-                eventTime.setTimeInMillis((long) (event.isRising()
-                        ? sunrise.getTimeInMillis() + (percent * duration)
-                        : sunset.getTimeInMillis() - (percent * duration)));
-                return eventTime;
-            } // else // TODO: support edge cases
-            return null;
-
-        } else {    // negative values; night duration
-            Calendar sunset = calculator.getOfficialSunriseCalendarForDate(day);
-            Calendar sunrise = calculator.getOfficialSunriseCalendarForDate(tomorrowCalendar(day));
-            if (sunset != null && sunrise != null)
-            {
-                long duration = (sunrise.getTimeInMillis() - sunset.getTimeInMillis());
-                Calendar eventTime = Calendar.getInstance();
-                eventTime.setTimeInMillis((long) (event.isRising()
-                        ? sunrise.getTimeInMillis() - (-percent * duration)
-                        : sunset.getTimeInMillis() + (-percent * duration)));
-                return eventTime;
-            } // else // TODO: support edge cases
-            return null;
-        }
-    }
-
-    protected static Calendar tomorrowCalendar(Calendar day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(day.getTimeInMillis() + (24 * 60 * 60 * 1000));
-        return calendar;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     private Object[] createRow(@NonNull Context context, MoonIllumEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
     {
