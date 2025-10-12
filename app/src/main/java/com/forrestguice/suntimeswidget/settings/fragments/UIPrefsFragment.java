@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
@@ -186,6 +187,11 @@ public class UIPrefsFragment extends PreferenceFragment
 
             switch (alias.getType())
             {
+                case MOONILLUM:
+                    //MoonIllumEvent illumEvent = MoonIllumEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder(0);
+                    break;
+
                 case DAYPERCENT:
                     DayPercentEvent percentEvent = DayPercentEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((percentEvent != null ? (int)percentEvent.getAngle() : 0));

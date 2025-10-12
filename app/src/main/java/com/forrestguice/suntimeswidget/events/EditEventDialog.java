@@ -83,6 +83,9 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         switch (type)
         {
+            //case MOONILLUM:
+            //    return R.layout.layout_dialog_event_edit;
+
             //case DAYPERCENT:
             //    return R.layout.layout_dialog_event_edit;
 
@@ -410,13 +413,26 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         layout_percentValue = dialogContent.findViewById(R.id.layout_event_percent);
         edit_percentValue = (EditText) dialogContent.findViewById(R.id.edit_event_percent);
+        layout_percentDayNight = dialogContent.findViewById(R.id.radiogroup_event_percent);
         radio_percentDay = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_day);
         radio_percentNight = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_night);
 
         switch (type)
         {
+            case MOONILLUM:
+                setViewVisibility(layout_percentValue, true);
+                setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_angle, false);
+                setViewVisibility(layout_objHeight, false);
+                setViewVisibility(layout_shadowLength, false);
+                if (edit_percentValue != null) {
+                    edit_percentValue.addTextChangedListener(illumWatcher);
+                }
+                break;
+
             case DAYPERCENT:
                 setViewVisibility(layout_percentValue, true);
+                setViewVisibility(layout_percentDayNight, true);
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_objHeight, false);
                 setViewVisibility(layout_shadowLength, false);
@@ -430,6 +446,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_shadowLength, true);
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_percentValue, false);
+                setViewVisibility(layout_percentDayNight, false);
                 if (edit_shadowLength != null) {
                     edit_shadowLength.addTextChangedListener(lengthWatcher);
                 }
@@ -445,6 +462,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_objHeight, false);
                 setViewVisibility(layout_shadowLength, false);
                 setViewVisibility(layout_percentValue, false);
+                setViewVisibility(layout_percentDayNight, false);
                 if (edit_angle != null) {
                     edit_angle.addTextChangedListener(angleWatcher);
                 }
@@ -573,6 +591,27 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
+            case MOONILLUM:
+                double illum = 0;
+                MoonIllumEvent illumEvent = null;
+                if (uri != null) {
+                    illumEvent = MoonIllumEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_percentValue != null && illumEvent != null) {
+                    setPercentValue(percentValue = illumEvent.getPercentValue());
+                }
+
+                int illumEventOffset = ((illumEvent != null) ? illumEvent.getOffset() : 0);
+                setOffset(illumEventOffset);
+                if (text_offset != null)
+                {
+                    String offsetText = utils.timeDeltaLongDisplayString(0, illumEventOffset).getValue();
+                    text_offset.setText((illumEventOffset != 0)
+                            ? context.getResources().getQuantityString((illumEventOffset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int) illum, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, (int) illum));
+                }
+                break;
+
             case DATE:
             case SOLAREVENT:
             default:
@@ -620,6 +659,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                 String eventID;
                 switch (type)
                 {
+                    case MOONILLUM:
+                        eventID = MoonIllumEvent.getEventName(percentValue, offset, null);
+                        break;
+
                     case DAYPERCENT:
                         eventID = DayPercentEvent.getEventName(percentValue, offset, null);
                         break;
@@ -650,6 +693,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         boolean isValid = validateInput_id() && validateInput_label();
         switch (type)
         {
+            case MOONILLUM:
             case DAYPERCENT:
                 isValid = validateInput_percentValue() && isValid;
                 break;
@@ -953,6 +997,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected EditText edit_percentValue = null;
     protected RadioButton radio_percentDay = null;
     protected RadioButton radio_percentNight = null;
+    protected View layout_percentDayNight = null;
 
     protected boolean validateInput_percentValue()
     {
@@ -982,11 +1027,31 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             try {
-                double percentInput = Double.parseDouble(s.toString());
                 Double percent = getPercentValue();
                 if (percent != null)
                 {
                     String eventID = DayPercentEvent.getEventName(percent, getOffset(), null);
+                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setIsModified(true);
+                }
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not a percentage: " + e);
+            }
+        }
+    };
+
+    private final TextWatcher illumWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                Double percent = getPercentValue();
+                if (percent != null)
+                {
+                    String eventID = MoonIllumEvent.getEventName(percent, getOffset(), null);
                     setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                     setIsModified(true);
                 }

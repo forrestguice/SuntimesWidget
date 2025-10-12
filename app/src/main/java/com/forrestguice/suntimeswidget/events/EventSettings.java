@@ -68,6 +68,7 @@ public class EventSettings
         switch (eventType) {
             case SUN_ELEVATION: return context.getString(R.string.editevent_dialog_label_suggested);
             case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
+            case MOONILLUM: return context.getString(R.string.moonillumevent_label_suggested);
             case DAYPERCENT:
             default: return context.getString(R.string.editevent_dialog_label_suggested2);
         }

@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -218,6 +219,9 @@ public class AlarmEventProvider extends ContentProvider
                 if (ofType == null || EventType.DAYPERCENT.name().equals(ofType)) {
                     events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
                 }
+                if (ofType == null || EventType.MOONILLUM.name().equals(ofType)) {
+                    events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
+                }
 
                 for (EventAlias event : events1)
                 {
@@ -330,6 +334,13 @@ public class AlarmEventProvider extends ContentProvider
                 DayPercentEvent percentEvent = DayPercentEvent.valueOf(eventID);
                 if (percentEvent != null) {
                     retValue.addRow(createRow(context, percentEvent, columns, selectionMap));
+                }
+                break;
+
+            case MOONILLUM:
+                MoonIllumEvent moonIllumEvent = MoonIllumEvent.valueOf(eventID);
+                if (moonIllumEvent != null) {
+                    retValue.addRow(createRow(context, moonIllumEvent, columns, selectionMap));
                 }
                 break;
 
@@ -1028,6 +1039,176 @@ public class AlarmEventProvider extends ContentProvider
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(day.getTimeInMillis() + (24 * 60 * 60 * 1000));
         return calendar;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    private Object[] createRow(@NonNull Context context, MoonIllumEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TIMEMILLIS:
+                    Location location = (selectionMap != null) ? CalculatorProvider.processSelection_location(selectionMap) : null;
+                    if (location == null) {
+                        location = WidgetSettings.loadLocationPref(context, 0);
+                    }
+                    String offsetString = selectionMap != null ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0";
+                    long offset = offsetString != null ? Long.parseLong(offsetString) : 0L;
+                    boolean repeating = selectionMap != null && Boolean.parseBoolean(selectionMap.get(EXTRA_ALARM_REPEAT));
+                    Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
+                    ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
+
+                    Calendar calendar = updateAlarmTime_moonIllumEvent(context, location, event, offset, repeating, repeatingDays, now);
+                    Log.d("DEBUG", "createRow: isRising? " + event.isWaxing() + ": " + calendar);
+                    if (calendar != null) {
+                        row[i] = calendar.getTimeInMillis();
+                    }
+                    break;
+
+                case COLUMN_EVENT_NAME:
+                    row[i] = event.getEventName();
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.MOONILLUM.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.MOONILLUM.getDisplayString();
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE:
+                    row[i] = event.getEventPhrase(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = event.getEventGender(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = 1;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = REPEAT_SUPPORT_BASIC;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
+                    row[i] = Boolean.toString(true);
+                    break;
+                case COLUMN_EVENT_REQUIRES_LOCATION:
+                    row[i] = Boolean.toString(false);
+                    break;
+                case COLUMN_EVENT_SUMMARY:
+                default:
+                    row[i] = event.getEventSummary(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+            }
+        }
+        return row;
+    }
+
+    public static Calendar updateAlarmTime_moonIllumEvent(Context context, Location location, @NonNull MoonIllumEvent event, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        SuntimesClockData data = getData_shadowLengthEvent(context, location);   // TODO: rename this method; getClockData
+        data.initCalculator();
+        SuntimesCalculator calculator = data.calculator();
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime;
+
+        Calendar day = Calendar.getInstance();
+        data.setTodayIs(day);
+        data.calculate(context);
+
+        eventTime = getMoonIllumEventCalendar(day, event, calculator);
+        if (eventTime != null) {
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        //while (now.after(alarmTime)
+       //         || eventTime == null
+       //         || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        //{
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                Log.e(AlarmNotifications.TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            Log.d(AlarmNotifications.TAG, "updateAlarmTime: moonIllumEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            data.setTodayIs(day);
+            data.calculate(context);
+
+            eventTime = getMoonIllumEventCalendar(day, event, calculator);
+            if (eventTime != null) {
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
+        //}
+        return eventTime;
+    }
+
+    @Nullable
+    protected static Calendar getMoonIllumEventCalendar(@NonNull Calendar day, @NonNull MoonIllumEvent event, @NonNull SuntimesCalculator calculator)
+    {
+        boolean isWaxing = event.isWaxing();
+        double eventPercent = Math.abs(event.getPercentValue() / 100d);
+
+        Calendar startDay;
+        Calendar endDay;
+
+        if (isWaxing) {
+            if (eventPercent < 0.5) {
+                startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW, day);
+                endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, startDay);
+            } else {
+                startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, day);
+                endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, startDay);
+            }
+        } else {
+            if (eventPercent >= 0.5) {
+                startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, day);
+                endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, startDay);
+            } else {
+                startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, day);
+                endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW, startDay);
+            }
+        }
+
+        Calendar mid = Calendar.getInstance();
+        long left = startDay.getTimeInMillis();
+        long right = endDay.getTimeInMillis();
+
+        while (left <= right)
+        {
+            long m = left + ((right - left) / 2L);
+            mid.setTimeInMillis(m);
+            double illum = calculator.getMoonIlluminationForDate(mid);
+
+            Log.d("DEBUG", "comparing " + illum + " to " + eventPercent);
+            if (almostEquals(illum, eventPercent)) {
+                return mid;
+
+            } else {
+                boolean isToRight = (isWaxing) ? illum < eventPercent
+                                               : illum > eventPercent;
+                boolean isToLeft = (isWaxing) ? illum > eventPercent
+                                              : illum < eventPercent;
+                if (isToRight) {
+                    left = m + 1;
+                } else if (isToLeft) {
+                    right = m - 1;
+                }
+            }
+        }
+        return null;
+    }
+
+    protected static boolean almostEquals(double a, double b) {
+        return Math.abs(a - b) < 0.0025;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

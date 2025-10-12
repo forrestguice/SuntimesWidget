@@ -95,7 +95,8 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     {
         EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
         EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
-        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.RED, "uri2", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.BLUE, "uri2", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.MOONILLUM, "TEST3", "label3", Color.CYAN, "uri3", false));
         return EventSettings.loadEventList(AndroidEventSettings.wrap(context));
     }
 

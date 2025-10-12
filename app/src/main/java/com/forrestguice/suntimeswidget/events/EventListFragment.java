@@ -178,6 +178,10 @@ public class EventListFragment extends Fragment
                 helper.addEvent(EventType.DAYPERCENT);
                 return true;
 
+            case R.id.addEvent_moonIllumEvent:
+                helper.addEvent(EventType.MOONILLUM);
+                return true;
+
             case R.id.clearEvents:
                 helper.clearEvents();
                 return true;

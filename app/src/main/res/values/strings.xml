@@ -1004,6 +1004,12 @@
     <string name="daypercentevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Day Duration 25%" -->
     <string name="daypercentevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
+    <string name="moonillumevent_title">Moon</string>                   <!-- (custom) moon illum event title; e.g. "Moon 25%" -->      <!-- TODO -->
+    <string name="moonillumevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) day percent event summary -->
+    <string name="moonillumevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Day Duration 25%" -->
+    <string name="moonillumevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="moonillumevent_label_suggested">Moon Illumination</string>  <!-- TODO -->
+
     <string name="configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">Add or remove custom events.</string>
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
@@ -1019,6 +1025,7 @@
     <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent_dayPercentEvent">Add (Day/Night Percent)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_moonIllumEvent">Add (Moon Illumination)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
