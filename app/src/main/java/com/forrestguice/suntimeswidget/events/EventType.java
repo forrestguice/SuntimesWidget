@@ -33,7 +33,8 @@ public enum EventType
     SUN_ELEVATION,
     SHADOWLENGTH,
     DAYPERCENT,
-    MOONILLUM;
+    MOONILLUM,
+    MOON_ELEVATION;
 
     private EventType() //String displayString)
     {
@@ -74,6 +75,9 @@ public enum EventType
         }
         if (DayPercentEvent.isDayPercentEvent(eventID)) {
             return EventType.DAYPERCENT;
+        }
+        if (MoonElevationEvent.isMoonElevationEvent(eventID)) {
+            return EventType.MOON_ELEVATION;
         }
         if (MoonIllumEvent.isMoonIllumEvent(eventID)) {
             return EventType.MOONILLUM;

@@ -89,7 +89,7 @@ public final class SunElevationEvent extends ElevationEvent
             int offsetMinutes = 0;
             boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
             try {
-                String contentString = eventName.substring(4, eventName.length() - (hasSuffix ? 1 : 0));
+                String contentString = eventName.substring(NAME_PREFIX.length(), eventName.length() - (hasSuffix ? 1 : 0));
                 String[] contentParts = contentString.split("\\|");
 
                 angle = Double.parseDouble(contentParts[0]);

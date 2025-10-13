@@ -215,6 +215,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
             events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
             events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOON_ELEVATION));
             EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }

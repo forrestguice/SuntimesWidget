@@ -192,7 +192,6 @@ public final class MoonIllumEvent extends BaseEvent
         return eventTime;
     }
 
-    @android.support.annotation.Nullable
     public static Calendar getMoonIllumEventCalendar(@NonNull Calendar day, @NonNull MoonIllumEvent event, @NonNull SuntimesCalculator calculator)
     {
         boolean isWaxing = event.isWaxing();

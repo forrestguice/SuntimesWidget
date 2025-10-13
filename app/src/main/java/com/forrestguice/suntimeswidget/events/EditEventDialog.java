@@ -456,6 +456,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
+            case MOON_ELEVATION:
             case SUN_ELEVATION:
             default:
                 setViewVisibility(layout_angle, true);
@@ -464,7 +465,9 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_percentValue, false);
                 setViewVisibility(layout_percentDayNight, false);
                 if (edit_angle != null) {
-                    edit_angle.addTextChangedListener(angleWatcher);
+                    if (type == EventType.MOON_ELEVATION) {
+                        edit_angle.addTextChangedListener(moonAngleWatcher);
+                    } else edit_angle.addTextChangedListener(sunAngleWatcher);
                 }
                 break;
         }
@@ -519,11 +522,14 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         switch (type)
         {
+            case MOON_ELEVATION:
             case SUN_ELEVATION:
                 double angle = 0;
-                SunElevationEvent event0 = null;
+                ElevationEvent event0 = null;
                 if (uri != null) {
-                    event0 = SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                    event0 = (type == EventType.MOON_ELEVATION
+                            ? MoonElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment())
+                            : SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment()));
                 }
                 if (edit_angle != null && event0 != null) {
                     setAngle(angle = event0.getAngle());
@@ -671,6 +677,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                         eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
                         break;
 
+                    case MOON_ELEVATION:
+                        eventID = MoonElevationEvent.getEventName(angle, offset, null);
+                        break;
+
                     case SUN_ELEVATION:
                     default:
                         eventID = SunElevationEvent.getEventName(angle, offset, null);
@@ -703,6 +713,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 isValid = validateInput_shadowLength() && isValid;
                 break;
 
+            case MOON_ELEVATION:
             case SUN_ELEVATION:
             default:
                 isValid = validateInput_angle() && isValid;
@@ -828,7 +839,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     };
 
-    private final TextWatcher angleWatcher = new TextWatcher() {
+    private final TextWatcher sunAngleWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         @Override
@@ -839,6 +850,26 @@ public class EditEventDialog extends EditBottomSheetDialog
             try {
                 double angle = Double.parseDouble(s.toString());
                 String eventID = SunElevationEvent.getEventName(angle, getOffset(), null);
+                setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                setIsModified(true);
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not an angle: " + e);
+            }
+        }
+    };
+
+    private final TextWatcher moonAngleWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                double angle = Double.parseDouble(s.toString());
+                String eventID = MoonElevationEvent.getEventName(angle, getOffset(), null);
                 setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
                 setIsModified(true);
 

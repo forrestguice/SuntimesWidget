@@ -114,7 +114,7 @@ public final class ShadowLengthEvent extends ElevationEvent
             int offsetMinutes = 0;
             boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
             try {
-                String contentString = eventName.substring(7, eventName.length() - (hasSuffix ? 1 : 0));    // SHADOW_<contentString>
+                String contentString = eventName.substring(NAME_PREFIX.length(), eventName.length() - (hasSuffix ? 1 : 0));    // SHADOW_<contentString>
                 String[] contentParts = contentString.split("\\|");
 
                 String[] shadowParts = contentParts[0].split(":");

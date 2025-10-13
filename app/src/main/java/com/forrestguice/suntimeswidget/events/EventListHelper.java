@@ -330,6 +330,7 @@ public class EventListHelper
             events.addAll(EventSettings.loadEvents(contextInterface, EventType.SHADOWLENGTH));
             events.addAll(EventSettings.loadEvents(contextInterface, EventType.DAYPERCENT));
             events.addAll(EventSettings.loadEvents(contextInterface, EventType.MOONILLUM));
+            events.addAll(EventSettings.loadEvents(contextInterface, EventType.MOON_ELEVATION));
         }
 
         Collections.sort(events, new Comparator<EventAlias>() {

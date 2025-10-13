@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -44,6 +45,7 @@ import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
@@ -220,6 +222,9 @@ public class AlarmEventProvider extends ContentProvider
                 if (ofType == null || EventType.DAYPERCENT.name().equals(ofType)) {
                     events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
                 }
+                if (ofType == null || EventType.MOON_ELEVATION.name().equals(ofType)) {
+                    events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOON_ELEVATION));
+                }
                 if (ofType == null || EventType.MOONILLUM.name().equals(ofType)) {
                     events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
                 }
@@ -342,6 +347,13 @@ public class AlarmEventProvider extends ContentProvider
                 MoonIllumEvent moonIllumEvent = MoonIllumEvent.valueOf(eventID);
                 if (moonIllumEvent != null) {
                     retValue.addRow(createRow(context, moonIllumEvent, columns, selectionMap));
+                }
+                break;
+
+            case MOON_ELEVATION:
+                MoonElevationEvent moonElevationEvent = MoonElevationEvent.valueOf(eventID);
+                if (moonElevationEvent != null) {
+                    retValue.addRow(createRow(context, moonElevationEvent, columns, selectionMap));
                 }
                 break;
 
@@ -841,7 +853,7 @@ public class AlarmEventProvider extends ContentProvider
 
     public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesClockData data = getData_shadowLengthEvent(context, location);
+        SuntimesClockData data = getClockData(context, location);
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
 
@@ -883,7 +895,7 @@ public class AlarmEventProvider extends ContentProvider
         return eventTime;
     }
 
-    private static SuntimesClockData getData_shadowLengthEvent(Context context, @NonNull Location location)
+    private static SuntimesClockData getClockData(Context context, @NonNull Location location)
     {
         SuntimesClockData data = new SuntimesClockData(context, 0);
         data.setLocation(location);
@@ -912,7 +924,7 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    SuntimesData data = getData_shadowLengthEvent(context, location);
+                    SuntimesData data = getClockData(context, location);
                     Calendar calendar = DayPercentEvent.updateAlarmTime(context, event, data, offset, repeating, repeatingDays, now);
                     if (calendar != null) {
                         row[i] = calendar.getTimeInMillis();
@@ -976,7 +988,7 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    SuntimesData data = getData_shadowLengthEvent(context, location);
+                    SuntimesData data = getClockData(context, location);
                     Calendar calendar = MoonIllumEvent.updateAlarmTime(context, event, data, offset, repeating, repeatingDays, now);
                     Log.d("DEBUG", "createRow: isRising? " + event.isWaxing() + ": " + calendar);
                     if (calendar != null) {
@@ -1023,8 +1035,78 @@ public class AlarmEventProvider extends ContentProvider
         return row;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    private Object[] createRow(@NonNull Context context, MoonElevationEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TIMEMILLIS:
+                    Location location = (selectionMap != null) ? CalculatorProvider.processSelection_location(selectionMap) : null;
+                    if (location == null) {
+                        location = WidgetSettings.loadLocationPref(context, 0);
+                    }
+                    String offsetString = selectionMap != null ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0";
+                    long offset = offsetString != null ? Long.parseLong(offsetString) : 0L;
+                    boolean repeating = selectionMap != null && Boolean.parseBoolean(selectionMap.get(EXTRA_ALARM_REPEAT));
+                    Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
+                    ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
+
+                    SuntimesMoonData data = getMoonData(context, location);
+                    Calendar calendar = MoonElevationEvent.updateAlarmTime(context, event, data, offset, repeating, repeatingDays, now);
+                    if (calendar != null) {
+                        row[i] = calendar.getTimeInMillis();
+                    }
+                    break;
+
+                case COLUMN_EVENT_NAME:
+                    row[i] = event.getEventName();
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.MOON_ELEVATION.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.MOON_ELEVATION.getDisplayString();
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE:
+                    row[i] = event.getEventPhrase(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = event.getEventGender(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = 1;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = REPEAT_SUPPORT_DAILY;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
+                    row[i] = Boolean.toString(false);
+                    break;
+                case COLUMN_EVENT_REQUIRES_LOCATION:
+                    row[i] = Boolean.toString(true);
+                    break;
+                case COLUMN_EVENT_SUMMARY:
+                default:
+                    row[i] = event.getEventSummary(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+            }
+        }
+        return row;
+    }
+
+    private static SuntimesMoonData getMoonData(Context context, @NonNull Location location)
+    {
+        SuntimesMoonData data = new SuntimesMoonData(context, 0);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
+        data.calculate(context);
+        return data;
+    }
 
     public static void initDisplayStrings_EventType(Context context) {
         EventType.SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));

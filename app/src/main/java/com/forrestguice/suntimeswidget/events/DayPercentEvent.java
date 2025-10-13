@@ -49,7 +49,7 @@ public final class DayPercentEvent extends ElevationEvent
         this.angle = (percent / 100d / 2d) * 90;    // angle is used solely to sort values in a list of ElevationEvents
     }
 
-    protected double percent = 50;
+    protected double percent;
     public double getPercentValue() {
         return percent;
     }

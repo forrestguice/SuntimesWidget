@@ -182,6 +182,10 @@ public class EventListFragment extends Fragment
                 helper.addEvent(EventType.MOONILLUM);
                 return true;
 
+            case R.id.addEvent_moonEvent:
+                helper.addEvent(EventType.MOON_ELEVATION);
+                return true;
+
             case R.id.clearEvents:
                 helper.clearEvents();
                 return true;
