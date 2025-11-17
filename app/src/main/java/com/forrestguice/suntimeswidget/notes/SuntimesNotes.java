@@ -574,6 +574,9 @@ public class SuntimesNotes
                 }
             }
         }
+        if (noteString == null) {
+            Log.w("DEBUG", "SuntimesNotes.noteString is null! " + eventID0 + ", hasEvent? " + EventSettings.hasEvent(contextInterface, eventID0));
+        }
 
         TimeDisplayText timeString = new TimeDisplayText();
         return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
