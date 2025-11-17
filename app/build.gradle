@@ -29,6 +29,7 @@ android
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh"
     }
 
     buildTypes
