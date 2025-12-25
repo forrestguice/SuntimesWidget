@@ -26,6 +26,7 @@ android
         versionCode 125
         versionName "0.16.11"
 
+        manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,6 +40,21 @@ android
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        fdroid {
+            dimension "version"
+        }
+        nightly {
+            dimension "version"
+            applicationIdSuffix ".nightly"
+            versionNameSuffix "-nightly"
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
+            def nightlyVersionCode = new Date().format('yyyyMMddhh') as int
+            versionCode nightlyVersionCode
         }
     }
 
