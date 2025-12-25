@@ -1912,8 +1912,7 @@ public class SuntimesActivity extends AppCompatActivity
             warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, !getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
         }
 
-        SpannableString locationSubtitle;
-        String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+        SpannableString locationSubtitle = null;
         boolean supportsAltitude = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_ALTITUDE);
         boolean enabledAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(SuntimesActivity.this, 0);
         String altitudeString = "";
@@ -1923,10 +1922,19 @@ public class SuntimesActivity extends AppCompatActivity
             SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
             altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
-            String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
-            locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
+
+            if (AppSettings.loadShowCoordinatesPref(context)) {
+                String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+                String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
+                locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
+            }
         } else {
-            locationSubtitle = new SpannableString(locationString);
+            if (AppSettings.loadShowCoordinatesPref(context)) {
+                String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+                locationSubtitle = new SpannableString(locationString);
+            } else {
+                locationSubtitle = null;
+            }
         }
 
         if (actionBar != null)

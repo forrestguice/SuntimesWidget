@@ -407,6 +407,10 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (WidgetSettings.loadLocationAltitudeEnabledPref(context, 0) ? 1 : 0);
                             break;
 
+                        case COLUMN_CONFIG_OPTION_COORDINATES:
+                            row[i] = (AppSettings.loadShowCoordinatesPref(context) ? 1 : 0);
+                            break;
+
                         case COLUMN_CONFIG_OPTION_WARNINGS:
                             row[i] = (AppSettings.loadShowWarningsPref(context) ? 1 : 0);
                             break;

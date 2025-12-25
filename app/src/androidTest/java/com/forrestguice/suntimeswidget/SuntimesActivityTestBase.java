@@ -337,6 +337,7 @@ public abstract class SuntimesActivityTestBase
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCOORDINATES, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOXDATE, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, false);

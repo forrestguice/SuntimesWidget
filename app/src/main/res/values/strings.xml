@@ -1715,6 +1715,10 @@
     <string name="configLabel_ui_showmapbutton">Show Map Button</string>
     <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
 
+    <!-- App Setting: show location coordinates -->
+    <string name="configLabel_ui_showcoordinates">Show Coordinates</string>    <!-- TODO -->
+    <string name="configLabel_ui_showcoordinates_summary">Show location coordinates in the action bar.</string>    <!-- TODO -->
+
     <!-- App Setting: emphasize field -->
     <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->
     <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
