@@ -104,6 +104,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         WidgetSettingsMetadata.saveMetaData(context, appWidgetId, newOptions);
         initLocale(context);
         updateWidget(context, appWidgetManager, appWidgetId);
+        WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
     }
 
     @Override
@@ -273,6 +274,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_UPDATE.name()))
         {
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
             return true;
         }
 
@@ -297,6 +299,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
             WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass(), Intent.FLAG_ACTIVITY_NEW_TASK);
             updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
             return true;
         }
 
@@ -388,6 +391,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         for (int appWidgetId : appWidgetIds)
         {
             updateWidget(context, appWidgetManager, appWidgetId);
+            WidgetSettings.saveTimeLastUpdate(context, appWidgetId, System.currentTimeMillis());
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
