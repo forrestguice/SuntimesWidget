@@ -107,7 +107,7 @@ public class ExceptionActivity extends AppCompatActivity
                 if (e != null)
                 {
                     clipboard.setPrimaryClip(ClipData.newPlainText("CRASH", e));
-                    Toast.makeText(context, "Copied to the clipboard.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard), Toast.LENGTH_SHORT).show();
 
                 } else Log.e("ExceptionActivity", "copyToClipboard: failed to copy exception; null report!");
             } else Log.e("ExceptionActivity", "copyToClipboard: failed to copy exception; null clipboard!");
