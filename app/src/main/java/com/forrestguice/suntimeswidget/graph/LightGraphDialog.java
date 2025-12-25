@@ -323,7 +323,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         return null;
     }
     private final int peekViewID =  R.id.layout_graph;
-    private final int sheetFrameID = android.support.design.R.id.design_bottom_sheet;  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+    private final int sheetFrameID = ViewUtils.getBottomSheetResourceID();
 
     private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
