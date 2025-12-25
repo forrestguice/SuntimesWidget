@@ -38,4 +38,20 @@
         android:key="getFix_providers"
         android:title="@string/configLabel_locationproviders" />   <!-- populated at runtime -->
 
+    <PreferenceCategory
+        android:key="getFix_debug"
+        android:title="@string/configLabel_getFix_lastRequest">
+
+        <CheckBoxPreference
+            android:key="getFix_last_log_enabled"
+            android:title="@string/configLabel_getFix_lastRequest_flag"
+            android:defaultValue="false" />
+
+        <Preference
+            android:key="places_location_last_info"
+            android:persistent="false"
+            android:title="@string/configLabel_getFix_lastRequest" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
