@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">New York City</string>
+    <string name="default_location_latitude">40.68620</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_units_length">METRIC</string>         <!-- METRIC, IMPERIAL, USC -->
+    <string name="default_timezone">America/New_York</string>         <!-- tzid -->
+
+    <!-- Widget Setting: time mode -->
+    <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
+    <string name="timeMode_cross_midsummer">Summer/Autumn Cross-Quarter</string>  <!-- setting -->
+    <string name="timeMode_cross_midautumnal">Autumn/Winter Cross-Quarter</string>    <!-- setting -->
+    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>
+
+    <!-- App Setting: WidgetThemes -->
+    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
+    <string name="configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Colour</string>      <!-- color label -->
+
+    <string name="configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
+    <string name="configLabel_themeColorText">Text Colour</string>       <!-- color label -->
+
+    <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->
+
+    <string name="configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
+    <string name="configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
+
+    <!-- Dialog: Color -->
+    <string name="color_dialog_msg">Choose Colour</string>
+
+    <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
+
+</resources>

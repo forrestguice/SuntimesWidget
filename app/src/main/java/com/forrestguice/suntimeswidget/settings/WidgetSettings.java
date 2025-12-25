@@ -244,6 +244,7 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_OFFSET = "dateOffset";    // offset in days
     public static final int PREF_DEF_DATE_OFFSET = 0;
 
+    public static final String PREF_KEY_LASTUPDATE = "lastUpdate";
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
@@ -317,10 +318,12 @@ public class WidgetSettings
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
 
             PREF_KEY_NEXTUPDATE,
+            PREF_KEY_LASTUPDATE,
 
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
+
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -347,7 +350,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
     };
     public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
-    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
+    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE, PREF_KEY_LASTUPDATE };
     public static String[] INT_KEYS = new String[]
     {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,   // enum as ordinal
@@ -1750,6 +1753,30 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
         prefs.remove(prefs_prefix + PREF_KEY_NEXTUPDATE);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long getTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        return prefs.getLong(prefs_prefix + PREF_KEY_LASTUPDATE, -1);
+    }
+    public static void saveTimeLastUpdate(Context context, int appWidgetId, long value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.putLong(prefs_prefix + PREF_KEY_LASTUPDATE, value);
+        prefs.apply();
+    }
+    public static void deleteTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.remove(prefs_prefix + PREF_KEY_LASTUPDATE);
         prefs.apply();
     }
 
@@ -3417,6 +3444,7 @@ public class WidgetSettings
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        deleteTimeLastUpdate(context, appWidgetId);
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
 
