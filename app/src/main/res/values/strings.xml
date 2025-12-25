@@ -225,6 +225,8 @@
     <string name="until_moonnight">lunar midnight</string>
 
     <!-- Table -->
+    <string name="dawn">Dawn</string>                             <!-- table title -->    <!-- TODO -->
+    <string name="dusk">Dusk</string>                             <!-- table title -->    <!-- TODO -->
     <string name="sunrise">Sunrise</string>                             <!-- contentDescription -->
     <string name="sunrise_short">Sunrise</string>                          <!-- table title -->
     <string name="sunset">Sunset</string>                               <!-- contentDescription -->
@@ -1747,11 +1749,13 @@
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>None</item>
         <item>Labels</item>
+        <!--<item>Labels</item>-->  <!-- TODO -->
         <item>Azimuth</item>
     </string-array>
     <string-array name="headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
         <item>0</item>   <!-- 0: none -->
         <item>1</item>   <!-- 1: labels -->
+        <!--<item>10</item>-->  <!-- 10: labels (alt) -->
         <item>2</item>   <!-- 2: azimuth -->
     </string-array>
 

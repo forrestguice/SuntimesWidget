@@ -149,7 +149,8 @@ public class AppSettings
     public static final boolean PREF_DEF_UI_SHOWHEADER_ICON = true;
 
     public static final int HEADER_TEXT_NONE = 0;
-    public static final int HEADER_TEXT_LABEL = 1;
+    public static final int HEADER_TEXT_LABEL = 1;         // sunrise/sunset
+    public static final int HEADER_TEXT_LABEL_ALT = 10;    // dawn/dusk
     public static final int HEADER_TEXT_AZIMUTH = 2;
 
     public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";

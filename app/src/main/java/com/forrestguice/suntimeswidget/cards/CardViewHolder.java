@@ -585,6 +585,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         icon_sunrise.setVisibility(iconVisibility);
         icon_sunset.setVisibility(iconVisibility);
 
+        int resID_risingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.dawn : R.string.sunrise_short);
+        int resID_settingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.dusk : R.string.sunset_short);
         boolean showPosition = (options.showHeaderText == AppSettings.HEADER_TEXT_AZIMUTH);
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         if (showPosition && sun != null)
@@ -597,7 +599,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             if (positionRising != null) {
                 styleAzimuthText(header_sunrise, positionRising.azimuth, null, 1);
             } else {
-                header_sunrise.setText(context.getString(R.string.sunrise_short));
+                header_sunrise.setText(context.getString(resID_risingLabel));    // R.string.sunrise_short
             }
 
             Calendar setTime = (d != null ? d.sunsetCalendarToday() : null);
@@ -605,12 +607,12 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             if (positionSetting != null) {
                 styleAzimuthText(header_sunset, positionSetting.azimuth, null, 1);
             } else {
-                header_sunset.setText(context.getString(R.string.sunset_short));
+                header_sunset.setText(context.getString(resID_settingLabel));    // R.string.sunset_short
             }
 
         } else {
-            header_sunrise.setText(context.getString(R.string.sunrise_short));
-            header_sunset.setText(context.getString(R.string.sunset_short));
+            header_sunrise.setText(context.getString(resID_risingLabel));
+            header_sunset.setText(context.getString(resID_settingLabel));
         }
     }
 
