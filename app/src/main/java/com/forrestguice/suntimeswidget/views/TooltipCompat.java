@@ -95,4 +95,12 @@ public class TooltipCompat
         return toast;
     }
 
+    /**
+     * initTooltip; sets v's tooltip to its contentDescription
+     * @param v View
+     */
+    public static void setTooltipText(View v) {
+        TooltipCompat.setTooltipText(v, v.getContentDescription());
+    }
+
 }

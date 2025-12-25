@@ -106,8 +106,16 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public View card_backdrop;
 
+    public View chip_snoozeLimit;
+    public TextView text_snoozeLimit;
+
+    public View chip_snoozeLength;
+    public TextView text_snoozeLength;
+
     public View chip_dismissChallenge;
     public TextView text_dismissChallenge;
+
+    protected View[] allChips;
 
     public int res_icAlarm, res_icNotification, res_icNotification1, res_icNotification2;
     public int res_icSoundOn, res_icSoundOff;
@@ -166,8 +174,19 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         tray_beforeAlert = parent.findViewById(R.id.tray_beforeAlert);
 
+        chip_snoozeLimit = parent.findViewById(R.id.chip_snoozeLimit);
+        text_snoozeLimit = (TextView) parent.findViewById(R.id.text_snoozeLimit);
+
+        chip_snoozeLength = parent.findViewById(R.id.chip_snoozeLength);
+        text_snoozeLength = (TextView) parent.findViewById(R.id.text_snoozeLength);
+
         chip_dismissChallenge = parent.findViewById(R.id.chip_dismiss_challenge);
         text_dismissChallenge = (TextView) parent.findViewById(R.id.text_dismiss_challenge);
+
+        allChips = new View[] {
+                chip_action0, chip_action1, chip_action2, chip_dismissChallenge, chip_event, chip_location,
+                chip_offset, chip_reminder, chip_repeat, chip_ringtone, chip_snoozeLimit, chip_snoozeLength, chip_vibrate
+        };
 
         initTooltips();
         themeHolder(context);
@@ -175,17 +194,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     protected void initTooltips()
     {
-        TooltipCompat.setTooltipText(edit_note, edit_note.getContentDescription());
-        TooltipCompat.setTooltipText(chip_offset, chip_offset.getContentDescription());
-        TooltipCompat.setTooltipText(chip_event, chip_event.getContentDescription());
-        TooltipCompat.setTooltipText(chip_location, chip_location.getContentDescription());
-        TooltipCompat.setTooltipText(chip_repeat, chip_repeat.getContentDescription());
-        TooltipCompat.setTooltipText(chip_reminder, chip_reminder.getContentDescription());
-        TooltipCompat.setTooltipText(chip_ringtone, chip_ringtone.getContentDescription());
-        TooltipCompat.setTooltipText(chip_action0, chip_action0.getContentDescription());
-        TooltipCompat.setTooltipText(chip_action1, chip_action1.getContentDescription());
-        TooltipCompat.setTooltipText(chip_action2, chip_action2.getContentDescription());
-        TooltipCompat.setTooltipText(chip_dismissChallenge, chip_dismissChallenge.getContentDescription());
+        for (View chip : allChips) {
+            TooltipCompat.setTooltipText(chip);
+        }
+        TooltipCompat.setTooltipText(edit_note);
     }
 
     @SuppressLint("ResourceType")
@@ -293,6 +305,23 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
 
+            long snoozeLimit = item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(context));
+            String snoozeLimitLabel = context.getString(R.string.configLabel_alarms_snoozeLimit);
+            String snoozeLimitString = (snoozeLimit > 0 ? "(" + snoozeLimit + ")" : context.getString(R.string.configLabel_alarms_snoozeLimit_none));
+            String snoozeLimitDisplay = snoozeLimitLabel + (snoozeLimit > 0 ? " " : "\n") + snoozeLimitString;
+            CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SuntimesUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
+            text_snoozeLimit.setText(snoozeLimitDisplay1);
+            text_snoozeLimit.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+
+            long snoozeMillis = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
+            int snoozeMinutes = (int)(snoozeMillis / (1000 * 60));
+            String snoozeLength = context.getResources().getQuantityString(R.plurals.units_minutes, snoozeMinutes, snoozeMinutes);
+            String snoozeLengthLabel = context.getString(R.string.configLabel_alarms_snooze);
+            String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
+            CharSequence snoozeLengthDisplay = SuntimesUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
+            text_snoozeLength.setText(snoozeLengthDisplay);
+            text_snoozeLength.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+
             AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
             text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
             text_dismissChallenge.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
@@ -347,6 +376,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action1.setText("");
             check_reminder.setChecked(false);
             text_action2.setText("");
+            text_snoozeLimit.setText("");
             text_dismissChallenge.setText("");
         }
     }
@@ -370,6 +400,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         check_reminder.setOnClickListener(null);
         check_reminder.setOnCheckedChangeListener(null);
         chip_action2.setOnClickListener(null);
+        chip_snoozeLimit.setOnClickListener(null);
+        chip_snoozeLength.setOnClickListener(null);
         chip_dismissChallenge.setOnClickListener(null);
     }
 

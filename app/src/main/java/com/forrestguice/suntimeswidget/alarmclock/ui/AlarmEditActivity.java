@@ -51,6 +51,9 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
+import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
+import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -100,6 +103,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
+    private static final String DIALOGTAG_SNOOZELIMIT = "snoozelimit";
+    private static final String DIALOGTAG_SNOOZELENGTH = "snoozelength";
     private static final String DIALOGTAG_HELP = "alarmhelp";
     private static final int HELP_PATH_ID = R.string.help_alarms_edit_path;
 
@@ -397,6 +402,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 AlarmClockItem item = editor.getItem();
                 boolean isAlarm = (item != null && item.type == AlarmClockItem.AlarmType.ALARM);
 
+                MenuItem item_snoozeLimit = optionsMenu.findItem(R.id.setAlarmSnoozeLimit);
+                if (item_snoozeLimit != null) {
+                    item_snoozeLimit.setVisible(isAlarm);
+                }
+
+                MenuItem item_snoozeLength = optionsMenu.findItem(R.id.setAlarmSnoozeLength);
+                if (item_snoozeLength != null) {
+                    item_snoozeLength.setVisible(isAlarm);
+                }
+
                 MenuItem item_menuDismissChallenge = optionsMenu.findItem(R.id.menuAlarmDismissChallenge);
                 if (item_menuDismissChallenge != null) {
                     item_menuDismissChallenge.setVisible(isAlarm);
@@ -477,6 +492,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case R.id.setAlarmSound:
                 editor.itemView.chip_ringtone.performClick();
+                return true;
+
+            case R.id.setAlarmSnoozeLimit:
+                editor.itemView.chip_snoozeLimit.performClick();
+                return true;
+
+            case R.id.setAlarmSnoozeLength:
+                editor.itemView.chip_snoozeLength.performClick();
                 return true;
 
             case R.id.setAlarmDismissChallenge:
@@ -690,6 +713,62 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * pickSnoozeLimit
+     * @param item AlarmClockItem
+     */
+    protected void pickSnoozeLimit(@NonNull AlarmClockItem item)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        IntegerPickerDialog dialog = new IntegerPickerDialog();
+        dialog.setParamMinMax(0, getResources().getInteger(R.integer.maxAlarmSnoozeLimit));
+        dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(AlarmEditActivity.this)));
+        dialog.setDialogListener(onSnoozeLimitDialogListener(item));
+        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snoozeLimit));
+        dialog.setParamZeroText(getString(R.string.configLabel_alarms_snoozeLimit_none));
+        dialog.show(fragments, DIALOGTAG_SNOOZELIMIT);
+    }
+
+    private IntegerPickerDialog.DialogListener onSnoozeLimitDialogListener(final AlarmClockItem forItem)
+    {
+        return new IntegerPickerDialog.DialogListener()
+        {
+            @Override
+            public void onDialogAccepted(long value) {
+                forItem.setFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, value);
+                editor.notifyItemChanged();
+            }
+        };
+    }
+
+    /**
+     * pickSnoozeLength
+     * @param item AlarmClockItem
+     */
+    protected void pickSnoozeLength(@NonNull AlarmClockItem item)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        MillisecondPickerDialog dialog = new MillisecondPickerDialog();
+        dialog.setMode(MillisecondPickerHelper.MODE_MINUTES);
+        dialog.setParamMinMax(getResources().getInteger(R.integer.minAlarmSnoozeMinutes), getResources().getInteger(R.integer.maxAlarmSnoozeMinutes));
+        dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(AlarmEditActivity.this)));
+        dialog.setDialogListener(onSnoozeLengthDialogListener(item));
+        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snooze));
+        dialog.show(fragments, DIALOGTAG_SNOOZELENGTH);
+    }
+
+    private MillisecondPickerDialog.DialogListener onSnoozeLengthDialogListener(final AlarmClockItem forItem)
+    {
+        return new MillisecondPickerDialog.DialogListener()
+        {
+            @Override
+            public void onDialogAccepted(long value) {
+                forItem.setFlag(AlarmClockItem.FLAG_SNOOZE, value);
+                editor.notifyItemChanged();
+            }
+        };
+    }
+
+    /**
      * pickDismissChallenge
      */
     protected void pickDismissChallenge(@NonNull final AlarmClockItem item) {
@@ -707,6 +786,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         PopupMenu popup = new PopupMenu(this, v);
         Menu menu = popup.getMenu();
 
+        AlarmSettings.DismissChallenge selectedChallenge = item.getDismissChallenge(this, true);
         ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
         challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
         final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
@@ -714,6 +794,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         for (int i=0; i<challenges.length; i++) {
             MenuItem menuItem = menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
             menuItem.setIcon(icDismissResId);
+            menuItem.setCheckable(true);
+            menuItem.setChecked((selectedChallenge.getID() == challenges[i].getID()));
         }
 
         int c = challenges.length + 1;
@@ -721,6 +803,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
             MenuItem menuItem = menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
             menuItem.setIcon(icExtensionResId);
+            menuItem.setCheckable(true);
+            menuItem.setChecked((selectedChallenge.getID() == addonInfo.getDismissChallengeID()));
             c++;
         }
 
@@ -735,6 +819,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }));
 
+        menu.setGroupCheckable(0, true, true);
         PopupMenuCompat.forceActionBarIcons(popup.getMenu());
         popup.show();
     }
@@ -1295,6 +1380,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onRequestDismissChallenge(AlarmClockItem forItem) {
         pickDismissChallenge(forItem);
+    }
+
+    @Override
+    public void onRequestSnoozeLimit(AlarmClockItem forItem) {
+        pickSnoozeLimit(forItem);
+    }
+
+    @Override
+    public void onRequestSnoozeLength(AlarmClockItem forItem) {
+        pickSnoozeLength(forItem);
     }
 
     @Override

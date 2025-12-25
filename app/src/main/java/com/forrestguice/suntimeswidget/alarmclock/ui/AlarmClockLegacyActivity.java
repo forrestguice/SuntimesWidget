@@ -822,6 +822,14 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestSnoozeLimit(AlarmClockItem forItem) {
+        }
+
+        @Override
+        public void onRequestSnoozeLength(AlarmClockItem forItem) {
+        }
+
+        @Override
         public void onRequestSolarEvent(AlarmClockItem forItem)
         {
             pickSolarEvent(forItem);
@@ -972,6 +980,14 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         @Override
         public void onRequestDismissChallenge(AlarmClockItem forItem) {
+        }
+
+        @Override
+        public void onRequestSnoozeLimit(AlarmClockItem forItem) {
+        }
+
+        @Override
+        public void onRequestSnoozeLength(AlarmClockItem forItem) {
         }
 
         @Override
