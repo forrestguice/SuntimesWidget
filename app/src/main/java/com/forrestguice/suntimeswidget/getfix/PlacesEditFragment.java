@@ -67,12 +67,14 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
     public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
+    public static final String KEY_LOCATION_COMMENT = "locationComment";
 
     private EditText text_locationAlt;
     private TextView text_locationAltUnits;
     private EditText text_locationLat;
     private EditText text_locationLon;
     private EditText text_locationName;
+    private EditText text_locationComment;
 
     private ImageButton button_cancel, button_save;
 
@@ -112,6 +114,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             text_locationLon.setEnabled(value);
             text_locationAlt.setEnabled(value);
             text_locationName.setEnabled(value);
+            text_locationComment.setEnabled(value);
         }
 
         @Override
@@ -173,6 +176,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         this.item = item;
         updateViews(item.location);
+        updateComment(item.comment);
     }
 
     @Override
@@ -232,6 +236,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         } else {
             updateViews(null);
+            updateComment(null);
         }
 
         //triggerActionMode(item);
@@ -247,6 +252,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         text_locationLon = (EditText) content.findViewById(R.id.appwidget_location_lon);
         text_locationAlt = (EditText) content.findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)content.findViewById(R.id.appwidget_location_alt_units);
+        text_locationComment = (EditText) content.findViewById(R.id.appwidget_location_comment);
 
         if (text_locationAlt != null) {
             text_locationAlt.setNextFocusDownId(R.id.save_button);
@@ -349,6 +355,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         bundle.putString(KEY_LOCATION_LONGITUDE, text_locationLon.getText().toString());
         bundle.putString(KEY_LOCATION_ALTITUDE, text_locationAlt.getText().toString());
         bundle.putString(KEY_LOCATION_LABEL, text_locationName.getText().toString());
+        bundle.putString(KEY_LOCATION_COMMENT, text_locationComment.getText().toString());
         if (getFixHelper != null) {
             getFixHelper.saveSettings(bundle);
         }
@@ -362,6 +369,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
         String latitude = bundle.getString(KEY_LOCATION_LATITUDE);
         String altitude = bundle.getString(KEY_LOCATION_ALTITUDE);
+        String comment = bundle.getString(KEY_LOCATION_COMMENT);
 
         if (longitude != null && latitude != null)
         {
@@ -370,6 +378,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                 location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude, altitude);
             else location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude);
             updateViews(location);
+            updateComment(comment);
         }
         if (getFixHelper != null) {
             getFixHelper.loadSettings(bundle);
@@ -498,6 +507,12 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
         updateAltitudeLabel(getActivity());
     }
+    private void updateComment(String comment)
+    {
+        if (text_locationComment != null) {
+            text_locationComment.setText((item == null || comment == null) ? "" : comment);
+        }
+    }
 
     private void updateAltitudeField(Context context, Location location)
     {
@@ -544,12 +559,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
                     WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
-            item.comment = item0.comment;
+            item.comment = (text_locationComment != null ? text_locationComment.getText().toString() : item0.comment);
 
         } else {
             item.rowID = -1;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
                     WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+            item.comment = (text_locationComment != null ? text_locationComment.getText().toString() : "");
         }
         return item;
     }
