@@ -62,4 +62,12 @@
         android:layout_height="match_parent"
         tools:text="@string/worldmap_dialog_speed_5m" android:gravity="center" />
 
+    <ImageButton
+        android:id="@+id/media_search"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
+        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:contentDescription="@string/configAction_seekTime"
+        android:src="?attr/icActionSearch" />
+
 </LinearLayout>
