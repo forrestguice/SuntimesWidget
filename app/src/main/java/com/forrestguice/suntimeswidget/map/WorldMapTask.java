@@ -412,6 +412,8 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
             return retvalue;
         }
+
+
     }
 
     /**

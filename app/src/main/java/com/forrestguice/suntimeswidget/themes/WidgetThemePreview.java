@@ -344,10 +344,14 @@ public class WidgetThemePreview
     {
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
+            case VANDERGRINTEN_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
                 return new int[] { 128, 128 };
+
+            case SINUSOIDAL_SIMPLE:
             case EQUIRECTANGULAR_BLUEMARBLE:
             case EQUIRECTANGULAR_SIMPLE:
             default:
