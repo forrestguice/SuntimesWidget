@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -73,7 +74,7 @@ public class AboutDialog extends BottomSheetDialogFragment
             @Override
             public void onShow(DialogInterface dialog) {
                 BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
-                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
                 if (layout != null)
                 {
                     layout.post(new Runnable() {
@@ -122,7 +123,7 @@ public class AboutDialog extends BottomSheetDialogFragment
         }
 
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
