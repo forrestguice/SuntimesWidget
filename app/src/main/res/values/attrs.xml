@@ -193,6 +193,8 @@
     <attr name="icActionGPS_cell" format="reference" />
     <attr name="icActionGPS_network" format="reference" />
 
+    <attr name="checkExpand" format="reference" />
+
     <attr name="icPlaceUser" format="reference" />
     <attr name="icPlaceCity" format="reference" />
     <attr name="icPlaceCapital" format="reference" />

@@ -26,7 +26,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
@@ -78,6 +81,16 @@ public class MoonWidget0ConfigActivity_3x1 extends MoonWidget0ConfigActivity
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_3x1);
         return intent;
+    }
+
+    @Override
+    protected MoonLayout defaultMoonLayout(Context context, int appWidgetId) {
+        return new MoonLayout_3x1_0();
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x1;
     }
 
     @Override

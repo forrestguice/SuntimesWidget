@@ -70,16 +70,16 @@ public class AlarmWidget0 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0.class, getMinSize(context), defLayout);
+        AlarmWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, AlarmWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, AlarmLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, AlarmLayout defLayout)
     {
         AlarmLayout layout = AlarmWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, AlarmLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, AlarmLayout layout, Class widgetClass)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate(context);
@@ -95,7 +95,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(context, appWidgetId, views);
 
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_alarms);
 
@@ -118,7 +118,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         SuntimesUtils.initDisplayStrings(context);
     }
 
-    protected static AlarmLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, AlarmLayout defLayout)
+    protected static AlarmLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize, AlarmLayout defLayout)
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
         AlarmLayout layout;

@@ -24,6 +24,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
+
 /**
  * Widget config activity (for resizable widget that falls back to 3x1 layout).
  */
@@ -60,6 +65,16 @@ public class SuntimesConfigActivity0_3x1 extends SuntimesConfigActivity0_2x1
     {
         super.initWidgetModeLayout(context);
         showOption3x1LayoutMode(true);
+    }
+
+    @Override
+    protected SunLayout defaultSunLayout(Context context, int appWidgetId) {
+        return new SunLayout_3x1_0();
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x1;
     }
 
     @Override

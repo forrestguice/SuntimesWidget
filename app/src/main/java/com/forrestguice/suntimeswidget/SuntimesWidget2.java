@@ -72,16 +72,16 @@ public class SuntimesWidget2 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SunPosLayout deflayout = WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2.class, getMinSize(context), deflayout);
+        SuntimesWidget2.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, SuntimesWidget2.class, getMinSize(context), deflayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunPosLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunPosLayout defLayout)
     {
         SunPosLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -98,7 +98,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, dataset);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(context, appWidgetId, views);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
         return new SuntimesRiseSetDataset(context, appWidgetId).dataActual;
     }
 
-    protected static SunPosLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunPosLayout defLayout)
+    protected static SunPosLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize, SunPosLayout defLayout)
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
         SunPosLayout layout;

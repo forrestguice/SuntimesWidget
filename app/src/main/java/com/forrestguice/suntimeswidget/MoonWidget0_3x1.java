@@ -40,7 +40,7 @@ public class MoonWidget0_3x1 extends MoonWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, MoonWidget0_3x1.class, getMinSize(context), new MoonLayout_3x1_0());
+        MoonWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, MoonWidget0_3x1.class, getMinSize(context), new MoonLayout_3x1_0());
     }
 
 }

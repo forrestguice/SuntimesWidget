@@ -55,16 +55,16 @@ public class MoonWidget0 extends SuntimesWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         MoonLayout defLayout = WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId); 
-        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, MoonWidget0.class, getMinSize(context), defLayout);
+        MoonWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, MoonWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, MoonLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, MoonLayout defLayout)
     {
         MoonLayout layout = MoonWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -82,7 +82,7 @@ public class MoonWidget0 extends SuntimesWidget0
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(context, appWidgetId, views);
 
         if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
         {
@@ -107,7 +107,7 @@ public class MoonWidget0 extends SuntimesWidget0
         return new SuntimesMoonData(context, appWidgetId);
     }
 
-    protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
+    protected static MoonLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
         MoonLayout layout;

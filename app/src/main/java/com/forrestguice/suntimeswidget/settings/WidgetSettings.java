@@ -18,23 +18,20 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_1;
@@ -66,7 +63,6 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
@@ -252,6 +248,12 @@ public class WidgetSettings
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
+    public static final String PREF_KEY_SETTINGS_GROUP_SHOW = "showSettingsGroup";
+
+    public static final String PREF_KEY_PREVIEW_GRID_WIDTH = "gridWidth";
+    public static final String PREF_KEY_PREVIEW_GRID_HEIGHT = "gridHeight";
+    public static final int[] PREF_DEF_PREVIEW_GRID = new int[] {5, 5};
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -316,7 +318,12 @@ public class WidgetSettings
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
 
             PREF_KEY_NEXTUPDATE,
-            PREF_KEY_LASTUPDATE
+            PREF_KEY_LASTUPDATE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
+
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -338,7 +345,9 @@ public class WidgetSettings
 
             PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
             PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
-            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
     };
     public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
     public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE, PREF_KEY_LASTUPDATE };
@@ -350,6 +359,8 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
     };
 
     public static PrefTypeInfo getPrefTypeInfo()
@@ -3379,6 +3390,56 @@ public class WidgetSettings
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, value);
+        prefs.apply();
+    }
+    public static boolean loadShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, defaultValue);
+    }
+    public static void deleteShowSettingsGroup(Context context, int appWidgetId, String groupID)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void savePreviewGridSize(Context context, int[] size)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.putInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, size[0]);
+        prefs.putInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_HEIGHT, size[1]);
+        prefs.apply();
+    }
+    public static int[] loadPreviewGridSize(Context context)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        int width = prefs.getInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, PREF_DEF_PREVIEW_GRID[0]);
+        int height = prefs.getInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, PREF_DEF_PREVIEW_GRID[1]);
+        return new int[] {width, height};
+    }
+    public static void deletePreviewGridSize(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH);
+        prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_HEIGHT);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void deletePrefs(Context context, int appWidgetId)
@@ -3449,6 +3510,16 @@ public class WidgetSettings
         WidgetActions.deletePrefs(context, appWidgetId);
         WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
         AlarmWidgetSettings.deletePrefs(context, appWidgetId);
+        ClockWidgetSettings.deletePrefs(context, appWidgetId);
+
+        deletePreviewGridSize(context);
+        deleteShowSettingsGroup(context, appWidgetId, "preview");
+        deleteShowSettingsGroup(context, appWidgetId, "appearance");
+        deleteShowSettingsGroup(context, appWidgetId, "general");
+        deleteShowSettingsGroup(context, appWidgetId, "timezone");
+        deleteShowSettingsGroup(context, appWidgetId, "location");
+        deleteShowSettingsGroup(context, appWidgetId, "layout");
+        deleteShowSettingsGroup(context, appWidgetId, "action");
     }
 
     public static void initDefaults( Context context )

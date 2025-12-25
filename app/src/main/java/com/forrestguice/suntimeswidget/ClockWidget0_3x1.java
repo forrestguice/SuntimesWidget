@@ -32,7 +32,7 @@ public class ClockWidget0_3x1 extends ClockWidget0
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        ClockWidget0_3x1.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context));
+        ClockWidget0_3x1.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, getMinSize(context));
     }
 
     @Override

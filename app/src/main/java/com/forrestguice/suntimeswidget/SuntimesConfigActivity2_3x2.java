@@ -26,7 +26,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
@@ -78,6 +80,16 @@ public class SuntimesConfigActivity2_3x2 extends SuntimesConfigActivity2
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);
         return intent;
+    }
+
+    @Override
+    protected SunPosLayout defaultSunPosLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadSunPos3x2ModePref_asLayout(context, appWidgetId);
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x2;
     }
 
     @Override

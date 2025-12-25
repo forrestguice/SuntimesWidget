@@ -26,6 +26,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
+
 public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
 {
     public MoonWidget0ConfigActivity_2x1()
@@ -69,6 +73,16 @@ public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
     }
 
     @Override
+    protected MoonLayout defaultMoonLayout(Context context, int appWidgetId) {
+        return new MoonLayout_2x1_0();
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_2x1;
+    }
+
+    @Override
     protected TextView getPrimaryWidgetModeLabel() {
         return label_2x1mode;
     }
@@ -82,4 +96,5 @@ public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_1x1mode, spinner_1x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
+
 }

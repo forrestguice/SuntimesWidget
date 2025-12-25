@@ -35,116 +35,13 @@ import java.util.zip.ZipOutputStream;
 /**
  * This task writes one or more (worldmap) bitmaps to zip file.
  */
-public class WorldMapExportTask extends ExportTask
+public class WorldMapExportTask extends BitmapExportTask
 {
-    public WorldMapExportTask(Context context, String exportTarget)
-    {
+    public WorldMapExportTask(Context context, String exportTarget) {
         super(context, exportTarget);
-        setZippedOutput(zippedOutput);
     }
-    public WorldMapExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
-    {
+    public WorldMapExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache) {
         super(context, exportTarget, useExternalStorage, saveToCache);
-        setZippedOutput(zippedOutput);
-    }
-
-    private ConcurrentLinkedQueue<byte[]> bitmaps;
-    public void setBitmaps( @NonNull Bitmap[] bitmaps ) {
-        this.bitmaps = new ConcurrentLinkedQueue<>();
-        for (Bitmap bitmap : bitmaps) {
-            addBitmap(bitmap);
-        }
-    }
-    public void addBitmap(@NonNull Bitmap bitmap)
-    {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        bitmap.compress(imageFormat, imageQuality, byteStream);
-        byte[] bytes = byteStream.toByteArray();
-        bitmaps.add(bytes);
-    }
-
-    private String imageExt = ".png";
-    private String imageMimeType = "image/png";
-    private Bitmap.CompressFormat imageFormat = Bitmap.CompressFormat.PNG;
-    private int imageQuality = 100;
-    public void setImageFormat(Bitmap.CompressFormat format, int quality, String fileExt)
-    {
-        imageFormat = format;
-        imageQuality = quality;
-        imageExt = fileExt;
-        switch (imageFormat)
-        {
-            case PNG:
-                imageMimeType = "image/png";
-                break;
-            case JPEG:
-                imageMimeType = "image/jpg";
-                break;
-            default:
-                imageMimeType = "image/*";
-                break;
-        }
-    }
-
-    private boolean zippedOutput = false;
-    public void setZippedOutput(boolean value)
-    {
-        zippedOutput = value;
-        if (zippedOutput)
-        {
-            ext = ".zip";
-            mimeType = "application/zip";
-
-        } else {
-            ext = imageExt;
-            mimeType = imageMimeType;
-        }
-    }
-
-    private boolean waitForFrames = false;
-    public void setWaitForFrames(boolean value) {
-        waitForFrames = value;
-    }
-
-    @Override
-    protected boolean export(Context context, BufferedOutputStream out) throws IOException
-    {
-        if (bitmaps != null && bitmaps.size() > 0)
-        {
-            if (zippedOutput)    // write entire bitmap array to zip
-            {
-                ZipOutputStream zippedOut = new ZipOutputStream(out);
-                try {
-
-                    int c = 0;
-                    while (!isCancelled() && (!bitmaps.isEmpty() || waitForFrames))
-                    {
-                        byte[] bitmap = bitmaps.poll();
-                        if (bitmap != null)
-                        {
-                            ZipEntry entry = new ZipEntry(c + imageExt);
-                            entry.setMethod(ZipEntry.DEFLATED);
-                            zippedOut.putNextEntry(entry);
-                            zippedOut.write(bitmap);
-                            zippedOut.flush();
-                            c++;
-                        }
-                    }
-
-                } catch (IOException e) {
-                    Log.e("ExportTask", "Error writing zip file: " + e);
-                    throw e;
-
-                } finally {
-                    zippedOut.close();
-                }
-
-            } else {
-                out.write(bitmaps.peek());
-                out.flush();
-            }
-            return true;
-        } else return true;
     }
 
 }

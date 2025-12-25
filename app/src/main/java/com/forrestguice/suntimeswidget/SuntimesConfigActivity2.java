@@ -22,14 +22,14 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.view.View;
 import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
 
 import java.util.ArrayList;
 
@@ -115,6 +115,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_1x1mode != null) {
             spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
@@ -126,7 +127,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         final WidgetSettings.WidgetModeSunPos1x1[] modes = WidgetSettings.WidgetModeSunPos1x1.values();
         WidgetSettings.WidgetModeSunPos1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
@@ -149,6 +150,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetMode3x1());
+            addOnItemSelectedListener(spinner_3x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x1()
@@ -170,7 +172,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x1(Context context)
+    protected void saveWidgetMode3x1(Context context, int appWidgetId)
     {
         if (spinner_3x1mode != null) {
             WidgetSettings.WidgetModeSunPos3x1 mode = (WidgetSettings.WidgetModeSunPos3x1) spinner_3x1mode.getSelectedItem();
@@ -196,6 +198,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null) {
             spinner_3x2mode.setAdapter(createAdapter_widgetMode3x2());
+            addOnItemSelectedListener(spinner_3x2mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
@@ -223,7 +226,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x2(Context context)
+    protected void saveWidgetMode3x2(Context context, int appWidgetId)
     {
         if (spinner_3x2mode != null)
         {
@@ -273,6 +276,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x3mode != null) {
             spinner_3x3mode.setAdapter(createAdapter_widgetMode3x3());
+            addOnItemSelectedListener(spinner_3x3mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x3()
@@ -288,7 +292,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveWidgetMode3x3(Context context)
+    protected void saveWidgetMode3x3(Context context, int appWidgetId)
     {
         if (spinner_3x3mode != null)
         {
@@ -308,5 +312,22 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
                 spinner_3x3mode.setSelection(pos);
             }
         }
+    }
+
+    @Override
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultSunPosLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    protected SunPosLayout defaultSunPosLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadSunPos1x1ModePref_asLayout(context, appWidgetId);
     }
 }

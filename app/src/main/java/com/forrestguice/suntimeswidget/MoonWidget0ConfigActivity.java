@@ -21,14 +21,13 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
+import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
-
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 
 public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
 {
@@ -91,7 +90,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         // EMPTY
     }
     @Override
-    protected void saveTimeMode(Context context)
+    protected void saveTimeMode(Context context, int appWidgetId)
     {
         // EMPTY
     }
@@ -102,6 +101,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         if (spinner_1x1mode != null)
         {
             spinner_1x1mode.setAdapter(createAdapter_widgetModeMoon1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon1x1()
@@ -112,7 +112,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         final WidgetSettings.WidgetModeMoon1x1[] modes = WidgetSettings.WidgetModeMoon1x1.values();
         WidgetSettings.WidgetModeMoon1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
@@ -131,6 +131,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_2x1mode != null) {
             spinner_2x1mode.setAdapter(createAdapter_widgetModeMoon2x1());
+            addOnItemSelectedListener(spinner_2x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon2x1()
@@ -146,6 +147,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetModeMoon3x1());
+            addOnItemSelectedListener(spinner_3x1mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetModeMoon3x1()
@@ -189,6 +191,23 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_2x1);
         return intent;
+    }
+
+    @Override
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultMoonLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    protected MoonLayout defaultMoonLayout(Context context, int appWidgetId) {
+        return WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
     }
 
 }

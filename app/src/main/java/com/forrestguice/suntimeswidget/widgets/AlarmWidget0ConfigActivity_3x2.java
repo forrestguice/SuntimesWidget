@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 
 /**
  * Alarm widget config activity.
@@ -61,6 +62,16 @@ public class AlarmWidget0ConfigActivity_3x2 extends AlarmWidget0ConfigActivity
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_ALARM_3x2);
         return intent;
+    }
+
+    @Override
+    protected AlarmLayout defaultAlarmLayout(Context context, int appWidgetId) {
+        return AlarmWidgetSettings.loadAlarm3x2ModePref_asLayout(context, appWidgetId);
+    }
+
+    @Override
+    protected String getPrimaryWidgetModeSize() {
+        return SIZE_3x2;
     }
 
     @Override

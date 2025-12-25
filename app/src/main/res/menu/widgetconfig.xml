@@ -9,6 +9,11 @@
             android:title="@string/configAction_addWidget"
             app:showAsAction="always" tools:ignore="AlwaysShowAction" />
 
+        <item android:id="@+id/action_share_preview"
+            android:icon="?attr/icActionShare"
+            android:title="@string/configAction_share"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_import"
             android:icon="?attr/icActionWidgets"
             android:title="@string/configAction_importWidget"

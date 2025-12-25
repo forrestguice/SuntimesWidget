@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,10 +21,19 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 
 /**
  * Clock widget config activity.
@@ -54,7 +63,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
-        hideOption1x1LayoutMode();
+
         showOptionWeeks(false);
         showOptionHours(false);
         showOptionTimeDate(false);
@@ -67,7 +76,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
 
         //showTimeFormatMode(true);
         showOptionLabels(true);
-        hideLayoutSettings();
+        showOptionAllowResize(false);
 
         moveSectionToTop(R.id.appwidget_timezone_layout);
         moveSectionToTop(R.id.appwidget_general_layout);
@@ -129,6 +138,95 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_CLOCK_1x1);
         return intent;
+    }
+
+    @Override
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_1x1mode;
+    }
+
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode };
+    }
+
+    @Override
+    protected void initWidgetModeLayout(Context context)
+    {
+        super.initWidgetModeLayout(context);
+        showOption2x2LayoutMode(false);
+        showOption3x2LayoutMode(false);
+        showOption2x1LayoutMode(false);
+        showOption3x1LayoutMode(false);
+    }
+
+    /**
+     * Mode 1x1
+     */
+
+    @Override
+    protected void initWidgetMode1x1(Context context)
+    {
+        if (spinner_1x1mode != null) {
+            spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            addOnItemSelectedListener(spinner_1x1mode, null);
+        }
+    }
+    @Override
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
+    {
+        if (spinner_1x1mode != null)
+        {
+            final ClockWidgetSettings.WidgetModeClock1x1[] modes = ClockWidgetSettings.WidgetModeClock1x1.values();
+            ClockWidgetSettings.WidgetModeClock1x1 mode = modes[spinner_1x1mode.getSelectedItemPosition()];
+            ClockWidgetSettings.saveClockModePref(context, appWidgetId, mode.name(), ClockWidgetSettings.MODE_1x1);
+        }
+    }
+    @Override
+    protected void loadWidgetMode1x1(Context context)
+    {
+        ClockWidgetSettings.WidgetModeClock1x1 mode1x1 = ClockWidgetSettings.loadClock1x1ModePref(context, appWidgetId);
+        if (spinner_1x1mode != null)
+        {
+            int p = searchForIndex(spinner_1x1mode, mode1x1);
+            if (p >= 0) {
+                spinner_1x1mode.setSelection(mode1x1.ordinal());
+            }
+        }
+    }
+    protected WidgetModeAdapter createAdapter_widgetMode1x1()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, ClockWidgetSettings.WidgetModeClock1x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
+    }
+
+    protected static int searchForIndex(Spinner spinner, Object enumValue)
+    {
+        for (int i=0; i<spinner.getAdapter().getCount(); i++) {
+            if (spinner.getAdapter().getItem(i).equals(enumValue)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    @Override
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSizePx);
+        return appWidgetManager.getView();
+    }
+
+    protected ClockLayout defaultClockLayout(Context context, int appWidgetId) {
+        return ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
     }
 
 }

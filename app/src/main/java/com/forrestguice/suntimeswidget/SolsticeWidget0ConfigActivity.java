@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -35,9 +36,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidget0ConfigFragment;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SolsticeLayout_1x1_0;
 
 import java.util.List;
 
@@ -125,6 +128,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
+            addOnItemSelectedListener(spinner_timeMode, null);
         }
     }
 
@@ -208,7 +212,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveTimeMode(Context context)
+    protected void saveTimeMode(Context context, int appWidgetId)
     {
         if (spinner_timeMode != null) {
             EquinoxModeAdapter adapter = (EquinoxModeAdapter) spinner_timeMode.getAdapter();
@@ -255,7 +259,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void saveMoreGeneralSettings(final Context context)
+    protected void saveMoreGeneralSettings(final Context context, int appWidgetId)
     {
         FragmentManager fragments = getSupportFragmentManager();
         if (fragments != null)
@@ -307,7 +311,9 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         FragmentManager fragments = getSupportFragmentManager();
         if (fragments != null) {
             SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
-            fragment.setDialogListener(moreGeneralSettingsListener);
+            if (fragment != null) {
+                fragment.setDialogListener(moreGeneralSettingsListener);
+            }
         }
     }
 
@@ -346,6 +352,22 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                 return themeValues.getAsInteger(SuntimesThemeContract.THEME_SPRINGCOLOR);
             }
         }
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    @Override
+    protected View createPreview(Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        SolsticeWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSolsticeLayout(context));
+        return appWidgetManager.getView();
+    }
+
+    protected SolsticeLayout defaultSolsticeLayout(Context context) {
+        return new SolsticeLayout_1x1_0();
     }
 
 }

@@ -21,18 +21,31 @@
        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@style/SunsetTimeWidget_dark"
-        android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp" android:paddingRight="5dp"
+        style="@style/SunsetTimeSettingsGroupLayout"
         android:id="@+id/settings_group_appearance">
 
-        <TextView style="@style/SunsetTimeSettingsGroupTitle"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configLabel_appearance" android:layout_marginBottom="8dp" />
+        <LinearLayout android:id="@+id/settings_group_appearance_header"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            style="@style/SunsetTimeSettingsGroupHeader">
+
+            <TextView style="@style/SunsetTimeSettingsGroupTitle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_appearance" />
+
+            <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
+
+            <CheckBox android:id="@+id/settings_group_appearance_button"
+                style="@style/SunsetTimeSettingsExpandCheckBox"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/settings_group_appearance_content"
+            style="@style/SunsetTimeSettingsGroupContentArea"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="horizontal" android:gravity="center_vertical"
             android:paddingLeft="@dimen/widget_settings_label_padding_left" android:paddingRight="8dp"
             android:paddingStart="@dimen/widget_settings_label_padding_left" android:paddingEnd="8dp">
 
@@ -40,12 +53,17 @@
                 android:id="@+id/appwidget_appearance_theme_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/configLabel_appearance_theme" android:layout_gravity="center_vertical"
-                android:textColor="@drawable/btn_labeltxt" android:textSize="?attr/text_size_small"
-                android:clickable="true" android:focusable="true" />
+                android:textSize="?attr/text_size_small" />
 
-            <Spinner android:id="@+id/appwidget_appearance_theme"
-                     android:dropDownVerticalOffset="16sp"
-                     android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <Spinner android:id="@+id/appwidget_appearance_theme" android:dropDownVerticalOffset="16sp"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_theme_button"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_palette"  android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_editTheme" />
 
         </LinearLayout>
 
@@ -77,6 +95,7 @@
             android:textSize="?attr/text_size_small"
             android:layout_height="wrap_content" android:text="@string/configLabel_appearance_scaleBase" />
 
+        </LinearLayout>
     </LinearLayout>
 
 </merge>

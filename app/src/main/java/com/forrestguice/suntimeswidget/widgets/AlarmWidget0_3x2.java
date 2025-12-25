@@ -45,7 +45,7 @@ public class AlarmWidget0_3x2 extends AlarmWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm3x2ModePref_asLayout(context, appWidgetId);
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0_3x2.class, getMinSize(context), defLayout);
+        AlarmWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, AlarmWidget0_3x2.class, getMinSize(context), defLayout);
     }
 
 }

@@ -41,7 +41,7 @@ public class SuntimesWidget2_3x3 extends SuntimesWidget2
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2_3x3.class, getMinSize(context), new SunPosLayout_3X3_0());
+        SuntimesWidget2.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, SuntimesWidget2_3x3.class, getMinSize(context), new SunPosLayout_3X3_0());
     }
 
 }

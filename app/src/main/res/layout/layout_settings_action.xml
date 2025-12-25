@@ -19,19 +19,32 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@style/SunsetTimeWidget_dark"
-        android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp" android:paddingRight="5dp">
+        style="@style/SunsetTimeSettingsGroupLayout">
 
-        <TextView style="@style/SunsetTimeSettingsGroupTitle"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configLabel_action" />
+        <LinearLayout android:id="@+id/settings_group_action_header"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            style="@style/SunsetTimeSettingsGroupHeader">
+
+            <TextView style="@style/SunsetTimeSettingsGroupTitle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_action" />
+
+            <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
+
+            <CheckBox android:id="@+id/settings_group_action_button"
+                style="@style/SunsetTimeSettingsExpandCheckBox"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/settings_group_action_content"
+            style="@style/SunsetTimeSettingsGroupContentArea"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp"
+            android:paddingLeft="@dimen/widget_settings_label_padding_left"
+            android:paddingRight="@dimen/widget_settings_label_padding_left"
             android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_action_onTap"
@@ -46,8 +59,8 @@
 
         <LinearLayout android:id="@+id/applayout_action_launch" android:visibility="visible"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp">
+            android:paddingLeft="@dimen/widget_settings_label_padding_left"
+            android:paddingRight="@dimen/widget_settings_label_padding_left">
 
             <com.forrestguice.suntimeswidget.actions.EditActionView
                 android:id="@+id/appwidget_action_launch_edit"
@@ -55,6 +68,7 @@
 
         </LinearLayout>
 
+        </LinearLayout>
     </LinearLayout>
 
 </merge>

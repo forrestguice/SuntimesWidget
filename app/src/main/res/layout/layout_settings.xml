@@ -20,7 +20,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:id="@+id/root_layout">
+    android:orientation="vertical" android:id="@+id/root_layout"
+    android:animateLayoutChanges="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/layout_app_menubar"
@@ -33,34 +34,50 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        android:paddingStart="@dimen/widgetActivity_padding">
+
+        <TextView android:id="@+id/activity_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/configLabel_title0" android:textSize="?attr/text_size_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/SunsetTimeSettingsGroupTitle" />
+
+        <TextView android:id="@+id/text_appwidgetid"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/check_showPreview"
+            android:textStyle="bold" android:textSize="?attr/text_size_xsmall"
+            tools:text="1234" tools:ignore="RelativeOverlap,SmallSp" />
+
+        <CheckBox android:id="@+id/check_showPreview"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:button="?attr/checkExpand"
+            app:layout_constraintTop_toTopOf="@+id/activity_title" app:layout_constraintBottom_toBottomOf="@+id/activity_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/configAction_preview" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout android:id="@+id/previewArea" android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="4dp" android:minHeight="80dp" android:layout_gravity="center"
+        android:clipChildren="false" />
+
+    <LinearLayout style="@style/SunsetTimeSettingsGroupTray"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/widgetActivity_padding"
-        android:animateLayoutChanges="true">
+        android:paddingLeft="@dimen/widgetActivity_padding" android:paddingRight="@dimen/widgetActivity_padding"
+        android:paddingTop="6dp">
 
         <ProgressBar android:id="@+id/progress" android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             style="?android:attr/progressBarStyleHorizontal"
             android:indeterminateOnly="true" />
-
-        <RelativeLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
-
-            <TextView android:id="@+id/activity_title"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/configLabel_title0" android:textSize="?attr/text_size_small"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-            <TextView android:id="@+id/text_appwidgetid"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp" android:layout_alignBottom="@+id/activity_title"
-                android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                android:textStyle="bold" android:textSize="?attr/text_size_xsmall"
-                tools:text="1234" tools:ignore="RelativeOverlap,SmallSp" />
-
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,83 +110,80 @@
                 android:focusable="true" android:focusableInTouchMode="true">
 
                 <LinearLayout android:id="@+id/appwidget_widget_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
                     <include layout="@layout/layout_settings_widget" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_appearance_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
                     <include layout="@layout/layout_settings_appearance" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_general_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
                     <include layout="@layout/layout_settings_general" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_timezone_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
-
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
                     <include layout="@layout/layout_settings_timezone" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding"
-                        android:paddingBottom="5dp">
-
-                        <CheckBox
-                            android:id="@+id/appwidget_timezone_fromapp"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/configLabel_timezone_fromapp" android:textSize="?attr/text_size_small" />
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_location_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
 
-                    <com.forrestguice.suntimeswidget.getfix.LocationConfigView
-                        android:id="@+id/appwidget_location_config"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <!-- <include layout="@layout/layout_settings_location" /> -->
-
-                    <LinearLayout
+                    <LinearLayout android:id="@+id/settings_group_location_header"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding"
-                        android:paddingBottom="5dp">
+                        style="@style/SunsetTimeSettingsGroupHeader">
 
-                        <CheckBox
-                            android:id="@+id/appwidget_location_fromapp"
+                        <TextView style="@style/SunsetTimeSettingsGroupTitle"
+                            android:id="@+id/appwidget_location_grouptitle"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_fromapp" />
+                            android:text="@string/configLabel_location" />
+
+                        <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
+
+                        <CheckBox android:id="@+id/settings_group_location_button"
+                            style="@style/SunsetTimeSettingsExpandCheckBox"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/settings_group_location_content"
+                        style="@style/SunsetTimeSettingsGroupContentArea"
+                        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                        <com.forrestguice.suntimeswidget.getfix.LocationConfigView
+                            android:id="@+id/appwidget_location_config"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            />
+                        <!-- <include layout="@layout/layout_settings_location" /> -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding"
+                            android:paddingBottom="5dp">
+
+                            <CheckBox
+                                android:id="@+id/appwidget_location_fromapp"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_fromapp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_action_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
+                    style="@style/SunsetTimeSettingsGroupLayout1"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
                     <include layout="@layout/layout_settings_action" />
                 </LinearLayout>
 

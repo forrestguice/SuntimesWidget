@@ -400,7 +400,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         SunLayout defLayout = WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
-        SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
+        SuntimesWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, SuntimesWidget0.class, getMinSize(context), defLayout);
     }
 
     public void initLocale(Context context)
@@ -457,13 +457,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     @TargetApi(17)
-    public static int widgetCategory(AppWidgetManager appWidgetManager, int appWidgetId)
+    public static int widgetCategory(WidgetManagerInterface appWidgetManager, int appWidgetId)
     {
         Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
         return widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY);
     }
 
-    protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected static int[] widgetSizeDp(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
         int[] mustFitWithinDp = {defSize[0], defSize[1]};
         //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
@@ -483,12 +483,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
             mustFitWithinDp[0] = Math.min( sizePortrait[0], sizeLandscape[0] );
             mustFitWithinDp[1] = Math.min( sizePortrait[1], sizeLandscape[1] );
-            //Log.d("widgetSizeDp", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
+            Log.d("widgetSizeDp", "1: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
         }
         return mustFitWithinDp;
     }
 
-    protected static int[] widgetMaxSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected static int[] widgetMaxSizeDp(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
         int[] mustFitWithinDp = {defSize[0], defSize[1]};
         //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
@@ -521,7 +521,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @return a SuntimesLayout that is appropriate for available space.
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    protected static SunLayout getWidgetLayout( Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunLayout defLayout )
+    protected static SunLayout getWidgetLayout( Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize, SunLayout defLayout )
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
 
@@ -553,7 +553,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return layout;
     }
 
-    public static int[] getWidgetSize( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
+    public static int[] getWidgetSize( Context context, WidgetManagerInterface appWidgetManager, int appWidgetId )
     {
         int[] defSize = new int[] { context.getResources().getInteger(R.integer.widget_size_minWidthDp),
                                     context.getResources().getInteger(R.integer.widget_size_minHeightDp) };
@@ -580,7 +580,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
     {
         SunLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
@@ -597,13 +597,63 @@ public class SuntimesWidget0 extends AppWidgetProvider
         }
     }
 
+    public interface WidgetManagerInterface
+    {
+        void updateAppWidget(Context context, int appWidgetId, RemoteViews views);
+        Bundle getAppWidgetOptions(int appWidgetId);
+        void notifyAppWidgetViewDataChanged(int appWidgetId, int resID);
+    }
+    public static class AppWidgetManagerWrapper implements WidgetManagerInterface
+    {
+        protected AppWidgetManager appWidgetManager;
+        public AppWidgetManagerWrapper(AppWidgetManager appWidgetManager) {
+            this.appWidgetManager = appWidgetManager;
+        }
+
+        @Override
+        public void updateAppWidget(Context context, int appWidgetId, RemoteViews views) {
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+
+        @Override
+        public Bundle getAppWidgetOptions(int appWidgetId) {
+            return appWidgetManager.getAppWidgetOptions(appWidgetId);
+        }
+
+        @Override
+        public void notifyAppWidgetViewDataChanged(int appWidgetId, int resID) {
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, resID);
+        }
+    }
+    public static class AppWidgetManagerView extends AppWidgetManagerWrapper implements WidgetManagerInterface
+    {
+        public AppWidgetManagerView(AppWidgetManager appWidgetManager) {
+            super(appWidgetManager);
+        }
+
+        protected View view = null;
+        public View getView() {
+            return view;
+        }
+
+        @Override
+        public void updateAppWidget(Context context, int appWidgetId, RemoteViews views) {
+            view = views.apply(context.getApplicationContext(), null);
+        }
+
+        @Override
+        public Bundle getAppWidgetOptions(int appWidgetId) {
+            return appWidgetManager.getAppWidgetOptions(appWidgetId);
+        }
+    }
+
     /**
      * @param context the context
-     * @param appWidgetManager widget manager
+     * @param updater interface implementation
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface updater, int appWidgetId, SunLayout layout, Class widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -631,7 +681,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        updater.updateAppWidget(context, appWidgetId, views);
 
         if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
         {
