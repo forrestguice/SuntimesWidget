@@ -19,6 +19,7 @@ android
     defaultConfig
     {
         applicationId "com.forrestguice.suntimeswidget"
+        resValue "string", "packageName", applicationId
         //noinspection MinSdkTooLow
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi

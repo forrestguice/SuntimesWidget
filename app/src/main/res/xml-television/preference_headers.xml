@@ -50,7 +50,7 @@
         android:title="@string/configLabel_widgetList"
         android:summary="">
 
-        <intent android:targetPackage="com.forrestguice.suntimeswidget"
+        <intent android:targetPackage="@string/packageName"
             android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
 
     </header>
