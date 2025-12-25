@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.view.ContextThemeWrapper;
@@ -46,6 +47,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -53,6 +55,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class PlacesEditFragment extends BottomSheetDialogFragment
@@ -75,6 +78,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
+
+    private ImageButton button_map;
 
     protected ActionMode actionMode = null;
     protected PlacesEditActionCompat actions = new PlacesEditActionCompat();
@@ -123,20 +128,32 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         @Override
         public void showProgress(boolean showProgress) {
-            progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+            if (progress_getfix != null) {
+                progress_getfix.setVisibility((showProgress ? View.VISIBLE : View.GONE));
+            }
         }
 
         @Override
         public void onStart() {
-            button_getfix.setVisibility(View.GONE);
+            if (button_getfix != null) {
+                button_getfix.setVisibility(View.GONE);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onResult(android.location.Location result, boolean wasCancelled)
         {
-            button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
-            button_getfix.setVisibility(View.VISIBLE);
-            button_getfix.setEnabled(true);
+            if (button_getfix != null) {
+                button_getfix.setImageResource((result == null) ? ICON_GPS_SEARCHING : ICON_GPS_FOUND);
+                button_getfix.setVisibility(View.VISIBLE);
+                button_getfix.setEnabled(true);
+            }
+            if (button_map != null) {
+                button_map.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -175,8 +192,15 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
+        FragmentManager fragments = getChildFragmentManager();
+        MapCoordinateDialog mapDialog = (MapCoordinateDialog) fragments.findFragmentByTag(DIALOGTAG_MAP);
+        if (mapDialog != null) {
+            mapDialog.setColorCollection(new WorldMapColorValuesCollection<>(getActivity()));
+            mapDialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(mapDialog));
+        }
     }
 
     public void setDialogThemOverride(@Nullable Integer resID)
@@ -240,8 +264,22 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             button_cancel.setOnClickListener(onCancelButtonClicked);
         }
 
+        button_map = (ImageButton) content.findViewById(R.id.appwidget_location_mapview);
+        if (button_map != null)
+        {
+            TooltipCompat.setTooltipText(button_map, button_map.getContentDescription());
+            button_map.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMapCoordinateDialog(getActivity());
+                }
+            });
+        }
+
         progress_getfix = (ProgressBar) content.findViewById(R.id.appwidget_location_getfixprogress);
-        progress_getfix.setVisibility(View.GONE);
+        if (progress_getfix != null) {
+            progress_getfix.setVisibility(View.GONE);
+        }
 
         button_getfix = (ImageButton) content.findViewById(R.id.appwidget_location_getfix);
         TooltipCompat.setTooltipText(button_getfix, button_getfix.getContentDescription());
@@ -260,6 +298,34 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             getFixHelper.setFragment(this);
         }
         updateGPSButtonIcons();
+    }
+
+    public static final String DIALOGTAG_MAP = "mapDialog";
+    protected void showMapCoordinateDialog(Context context)
+    {
+        MapCoordinateDialog dialog = new MapCoordinateDialog();
+        dialog.setColorCollection(new WorldMapColorValuesCollection<>(context));
+        dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
+        dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_MAP);
+    }
+
+    private DialogInterface.OnClickListener onMapCoordinateDialogAccepted(final MapCoordinateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                double latitude = dialog.getSelectedLatitude();
+                text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
+
+                double longitude = dialog.getSelectedLongitude();
+                text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
+
+
+            }
+        };
     }
 
     /**

@@ -700,4 +700,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         return options.now;
     }
 
+    /**
+     * @param x image coordinate x
+     * @param y image coordinate y
+     * @return corresponding [longitude, latitude] (or null)
+     */
+    @Nullable
+    public double[] getLatitudeLongitudeAt(float x, float y, double[] mid, int w, int h) {
+        return getMapProjection(mode).fromBitmapCoords((int) x, (int) y, mid, w, h);
+    }
 }
