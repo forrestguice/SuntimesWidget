@@ -13,6 +13,7 @@
     android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
 
     android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:widgetFeatures="reconfigurable"
     android:configure="com.forrestguice.suntimeswidget.MoonWidget0ConfigActivity_3x1">
 
 </appwidget-provider>
