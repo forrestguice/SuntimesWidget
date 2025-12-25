@@ -12,6 +12,7 @@
     android:minResizeWidth="@dimen/widget_size_minWidth" android:minResizeHeight="@dimen/widget_size_minHeight"
     android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:initialLayout="@layout/layout_widget_alarm_1x1_0"
+    android:widgetFeatures="reconfigurable"
     android:configure="com.forrestguice.suntimeswidget.widgets.AlarmWidget0ConfigActivity">
 
 </appwidget-provider>

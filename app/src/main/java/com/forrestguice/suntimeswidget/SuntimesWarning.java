@@ -32,6 +32,8 @@ import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.views.ViewUtils;
+
 import java.util.regex.Pattern;
 
 /**
@@ -153,13 +155,13 @@ public class SuntimesWarning
         snackbarView.setBackgroundColor(backgroundColor);
         snackbarWarning.setActionTextColor(accentColor);
 
-        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView snackbarText = (TextView)snackbarView.findViewById(ViewUtils.getSnackbarTextResourceID());
         if (snackbarText != null) {
             snackbarText.setTextColor(textColor);
             snackbarText.setMaxLines(5);
         }
 
-        View snackbarAction = snackbarView.findViewById(android.support.design.R.id.snackbar_action);
+        View snackbarAction = snackbarView.findViewById(ViewUtils.getSnackbarActionResourceID());
         if (snackbarAction != null) {
             if (Build.VERSION.SDK_INT >= 16) {
                 snackbarAction.setBackground(buttonDrawable);
@@ -232,7 +234,7 @@ public class SuntimesWarning
     {
         this.contentDescription = value;
         if (snackbar != null) {
-            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            TextView snackText = (TextView) snackbar.getView().findViewById(ViewUtils.getSnackbarTextResourceID());
             if (snackText != null) {
                 snackText.setContentDescription(contentDescription);
             }

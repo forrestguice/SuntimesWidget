@@ -1,0 +1,2 @@
+- fixes bug where "show map" doesn't include the full list of supporting apps.
+- updates translation to Norwegian.
