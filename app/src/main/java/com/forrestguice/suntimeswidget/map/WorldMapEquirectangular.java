@@ -52,6 +52,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return r;
     }
 
+    @Override
+    public double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h)
+    {
+        double[] r = new double[2];
+        r[0] = 180d * (x - mid[0]) / mid[0];
+        r[1] = 90d * (y - mid[1]) / -mid[1];
+        return r;
+    }
+
     protected boolean paintInitialized = false;
     protected Paint paintBackground = null;
     protected Paint paintForeground = null;
@@ -302,12 +311,12 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
                 drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
+        }
 
-            ////////////////
-            // draw locations
-            if (options.locations != null) {
-                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
-            }
+        ////////////////
+        // draw locations
+        if (options.locations != null) {
+            drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
         }
 
         if (options.hasTransparentBaseMap) {

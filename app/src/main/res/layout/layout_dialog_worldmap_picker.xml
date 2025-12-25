@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:minHeight="125dp"
+    android:orientation="vertical" android:gravity="start"
+    android:background="?dialogBackground"
+    tools:ignore="InconsistentLayout">
+
+    <LinearLayout android:id="@+id/dialog_header"
+        android:background="?attr/dialogFrame"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal" android:gravity="center_vertical|start">
+
+        <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:src="?attr/icActionBack"
+            android:contentDescription="@string/dialog_cancel" />
+
+        <LinearLayout
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                android:text="@string/mappick_dialog_title" />
+
+            <TextView
+                android:id="@+id/dialog_subtitle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:textSize="?attr/text_size_small"
+                tools:text="0.0, 0.0" />
+
+        </LinearLayout>
+
+        <ImageButton android:id="@+id/dialog_button_accept"
+            style="@style/ActionButton" android:contentDescription="@string/timedate_dialog_ok"
+            android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
+            android:src="?attr/icActionAccept"
+            android:nextFocusDown="@+id/dialog_button_neutral"
+            android:tint="?attr/text_accentColor" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/info_time_worldmap_layout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_header"
+        android:minHeight="50dp">
+
+        <com.forrestguice.suntimeswidget.map.WorldMapView
+            android:id="@+id/info_time_worldmap"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:minHeight="50dp" />
+
+        <ImageButton android:id="@+id/info_time_worldmap_marker"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="16dp" android:layout_height="16dp"
+            android:padding="0dp" android:layout_margin="0dp"
+            android:layout_gravity="start|top"
+            android:scaleType="fitCenter" android:src="?attr/icActionGPS"
+            android:clickable="false"
+            android:contentDescription="@string/configAction_selectPlace" />
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -40,5 +40,31 @@
             app:showAsAction="never"
             android:orderInCategory="400" />
 
+        <item android:id="@+id/action_sort"
+            android:icon="?attr/icActionSort"
+            android:title="@string/configAction_sortPlaces"
+            app:showAsAction="ifRoom"
+            android:orderInCategory="50">
+
+            <menu>
+                <group android:checkableBehavior="single">
+
+                    <item android:id="@+id/sortByLabelAsc"
+                        android:title="@string/configAction_sortPlaces_by_label_ascending"
+                        android:icon="?attr/icActionSort" />
+
+                    <item android:id="@+id/sortByLabelDesc"
+                        android:title="@string/configAction_sortPlaces_by_label_descending"
+                        android:icon="?attr/icActionSort" />
+
+                    <item android:id="@+id/sortByProximity"
+                        android:title="@string/configAction_sortPlaces_by_proximity"
+                        android:icon="?attr/icActionSort" />
+
+                </group>
+
+            </menu>
+        </item>
+
     </group>
 </menu>

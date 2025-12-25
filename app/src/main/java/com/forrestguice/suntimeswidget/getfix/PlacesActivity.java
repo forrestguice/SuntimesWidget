@@ -33,6 +33,7 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
@@ -149,6 +150,16 @@ public class PlacesActivity extends AppCompatActivity
 
         @Override
         public void onFilterChanged(String filterText, Long[] filterExceptions) {}
+
+        @Override
+        public void onToggleProgress(boolean value) {
+            toggleProgress(value);
+        }
+
+        @Override
+        public void onLiftAppBar(boolean value) {
+            getSupportActionBar().setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
+        }
     };
 
     protected void pickPlace(PlaceItem item)
@@ -160,6 +171,14 @@ public class PlacesActivity extends AppCompatActivity
         setResult(Activity.RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
+    }
+
+    protected void toggleProgress(boolean value)
+    {
+        View progress = findViewById(R.id.app_progress);
+        if (progress != null) {
+            progress.setVisibility(value ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override

@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
@@ -3520,6 +3521,10 @@ public class WidgetSettings
         deleteShowSettingsGroup(context, appWidgetId, "location");
         deleteShowSettingsGroup(context, appWidgetId, "layout");
         deleteShowSettingsGroup(context, appWidgetId, "action");
+
+        if (appWidgetId == 0) {
+            LocationHelperSettings.clearLastLocationLog(context);
+        }
     }
 
     public static void initDefaults( Context context )

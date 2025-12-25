@@ -19,10 +19,11 @@
 package com.forrestguice.suntimeswidget.settings.fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,13 +40,14 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -53,8 +55,8 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
-import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -89,6 +91,125 @@ public class PlacesPrefsFragment extends PreferenceFragment
         Preference buildPlacesPref = findPreference("places_build");
         base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
         updateLocationProviderPrefs();
+        updateLocationLastRequestInfo(getActivity());
+    }
+
+    protected void updateLocationLastRequestInfo(final Context context)
+    {
+        CheckBoxPreference debugPref = (CheckBoxPreference) findPreference("getFix_last_log_enabled");
+        if (debugPref != null)
+        {
+            debugPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    if (!(Boolean) newValue) {
+                        LocationHelperSettings.clearLastLocationLog(preference.getContext());
+                    }
+
+                    Preference lastRequestPref = findPreference("places_location_last_info");
+                    if (lastRequestPref != null) {
+                        lastRequestPref.setEnabled((Boolean) newValue);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        Preference lastRequestPref = findPreference("places_location_last_info");
+        if (lastRequestPref != null)
+        {
+            lastRequestPref.setEnabled(LocationHelperSettings.keepLastLocationLog(context));
+            lastRequestPref.setOnPreferenceClickListener(onLastRequestPrefClicked);
+
+            boolean hasLog = (!LocationHelperSettings.lastLocationLog(context).isEmpty());
+            long time = LocationHelperSettings.lastLocationLogTime(context);
+            if (time != 0)
+            {
+                long timeAgo = System.currentTimeMillis() - time;
+                if (hasLog)
+                {
+                    String provider = LocationHelperSettings.lastLocationProvider(context);
+                    float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
+                    long elapsed = LocationHelperSettings.lastLocationElapsed(context);
+
+                    CharSequence lastRequestDisplay;
+                    if (LocationHelperSettings.lastLocationResult(context))
+                    {
+                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
+                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
+                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    } else {
+                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
+                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    }
+                    lastRequestPref.setSummary(lastRequestDisplay);
+
+                } else {
+                    long time0 = LocationHelperSettings.lastAutoLocationRequest(context);
+                    long timeAgo0 = System.currentTimeMillis() - time0;
+                    CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
+                            utils.calendarDateTimeDisplayString(context, time0).getValue(),
+                            utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
+                    lastRequestPref.setSummary(lastRequestDisplay);
+                }
+            } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
+        }
+    }
+
+    private final Preference.OnPreferenceClickListener onLastRequestPrefClicked = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            Context context = preference.getContext();
+            if (context != null && !LocationHelperSettings.lastLocationLog(context).isEmpty()) {
+                showLocationLastRequestReport(context, LocationHelperSettings.lastLocationLog(context));
+            }
+            return false;
+        }
+    };
+    protected void showLocationLastRequestReport(final Context context, final String report)
+    {
+        TextView text = new TextView(context);
+        text.setTextIsSelectable(true);
+        text.setTextSize(12);
+        text.setText(report);
+        text.setVerticalScrollBarEnabled(true);
+        text.setHorizontalScrollBarEnabled(true);
+        text.setHorizontallyScrolling(true);
+
+        int padding = (int) context.getResources().getDimension(R.dimen.dialog_margin);
+        ScrollView vScroll = new ScrollView(context);
+        vScroll.addView(text);
+
+        HorizontalScrollView hScroll = new HorizontalScrollView(context);
+        hScroll.setPadding(padding, padding, padding, padding);
+        hScroll.addView(vScroll);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(context.getString(R.string.configLabel_getFix_lastRequest));
+        dialog.setView(hScroll);
+        dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
+        dialog.setNeutralButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                copyToClipboard(context, report);
+            }
+        });
+        dialog.show();
+    }
+    private void copyToClipboard(Context context, String message) {
+        if (context != null && message != null) {
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.configLabel_getFix_lastRequest), message));
+                Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     protected void updateLocationProviderPrefs()
@@ -174,13 +295,10 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 android.location.Location location = locationManager.getLastKnownLocation(locationProvider.getName());
                 if (location != null)
                 {
-                    if (utils == null) {
-                        utils = new SuntimesUtils();
-                        SuntimesUtils.initDisplayStrings(getActivity());
-                    }
-
+                    SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
                     summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
+                    summary += " (±" + String.format(Locale.getDefault(), "%.2f", location.getAccuracy()) + "m)";
                 }
             } catch (SecurityException | IllegalArgumentException e) {
                 Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
@@ -206,7 +324,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         };
         return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
     }
-    protected SuntimesUtils utils = null;
+    protected SuntimesUtils utils = new SuntimesUtils();
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;
     protected void requestLocationPermissions()

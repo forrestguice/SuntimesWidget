@@ -18,10 +18,14 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SunsetTimeWidget_dark" android:background="?attr/dialogBackgroundAlt"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:layout_marginBottom="8dp"
-    android:paddingLeft="5dp" android:paddingRight="5dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SunsetTimeWidget_dark"
+    android:background="?attr/dialogBackgroundAlt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <LinearLayout
         android:id="@+id/appwidget_location_name_layout"
@@ -91,18 +95,38 @@
                 <FrameLayout android:id="@+id/getFixProgress"
                     android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-                    <ImageButton android:id="@+id/appwidget_location_getfix"
+                    <LinearLayout android:id="@+id/appwidget_location_getfix_controls"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:src="?attr/icActionGPS_searching"
+                        android:orientation="vertical" android:layout_gravity="center">
+
+                        <ImageButton android:id="@+id/appwidget_location_getfix"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:src="?attr/icActionGPS_searching"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/configAction_getFix" />
+
+                        <ImageButton android:id="@+id/appwidget_location_mapview"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:src="?attr/icActionWorldMap"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/configAction_mapLocation" />
+
+                    </LinearLayout>
+
+                    <TextView android:id="@+id/appwidget_location_getfixprogress_label"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:singleLine="true" android:textSize="?attr/text_size_tiny"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/configAction_getFix" />
+                        android:layout_marginTop="32dp"
+                        tools:text="25.35m" />
 
                     <ProgressBar
                         android:id="@+id/appwidget_location_getfixprogress"
-                        style="?android:attr/progressBarStyle"
+                        style="?android:attr/progressBarStyle" android:background="?attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
+
                 </FrameLayout>
 
                 <LinearLayout android:id="@+id/getFixProgress_gone"
@@ -116,5 +140,45 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <LinearLayout android:id="@+id/layout_debug_log"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textSize="?attr/text_size_tiny" android:textStyle="bold"
+            android:text="@string/configLabel_getFix_gnss" />
+
+        <android.support.v4.widget.NestedScrollView android:id="@+id/scroll_debug_log"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:background="?attr/dialogBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_margin="4dp">
+
+                <TextView android:id="@+id/text_debug_log"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_tiny"
+                    tools:text="log\ncontent\ngoes\nhere\non\nmultiple\nlines" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <com.forrestguice.suntimeswidget.getfix.GnssStatusBarView android:visibility="visible"
+        android:id="@+id/gps_status" android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        android:layout_marginLeft="4dp" android:layout_marginRight="4dp" />
+
+
+
 
 </LinearLayout>

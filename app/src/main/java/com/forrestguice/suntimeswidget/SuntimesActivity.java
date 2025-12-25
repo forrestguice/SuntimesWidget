@@ -1121,6 +1121,16 @@ public class SuntimesActivity extends AppCompatActivity
             }
 
             @Override
+            public void updateUI(LocationProgress... progress)
+            {
+                if (progress[0] != null && progress[0].getResult() != null)
+                {
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
+                    actionBar.setSubtitle(location.toString());
+                }
+            }
+
+            @Override
             public void showProgress(boolean showProgress)
             {
                 note_progress.setVisibility((showProgress ? View.VISIBLE : View.GONE));
@@ -1141,10 +1151,11 @@ public class SuntimesActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResult(Location result, boolean wasCancelled)
+            public void onResult(LocationResult results)
             {
                 if (refreshItem != null)
                 {
+                    android.location.Location result = results.getResult();
                     refreshItem.setIcon((result != null) ? ICON_GPS_FOUND :
                             (getFixHelper.isLocationEnabled(SuntimesActivity.this) ? ICON_GPS_FOUND
                                                                                            : ICON_GPS_DISABLED));
@@ -1152,11 +1163,14 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getElapsed(), results.getLog());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {
-                        String msg = (wasCancelled ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
+                        if (LocationHelperSettings.keepLastLocationLog(SuntimesActivity.this)) {
+                            LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, false, System.currentTimeMillis(), "", -1, results.getElapsed(), results.getLog());
+                        }
+                        String msg = (results.wasCancelled() ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
                         Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);

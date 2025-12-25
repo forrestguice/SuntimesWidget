@@ -178,7 +178,7 @@ public class AppSettings
     public static final String PREF_KEY_GETFIX_MINELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MIN_ELAPSED;
     public static final String PREF_KEY_GETFIX_MAXELAPSED = LocationHelperSettings.PREF_KEY_LOCATION_MAX_ELAPSED;
     public static final String PREF_KEY_GETFIX_MAXAGE = LocationHelperSettings.PREF_KEY_LOCATION_MAX_AGE;
-    public static final String PREF_KEY_GETFIX_TIME = LocationHelperSettings.PREF_KEY_LOCATION_TIME;
+    public static final String PREF_KEY_GETFIX_TIME = LocationHelperSettings.PREF_KEY_LOCATION_LAST_TIME;
     public static final String PREF_KEY_GETFIX_PASSIVE = LocationHelperSettings.PREF_KEY_LOCATION_PASSIVE;
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";

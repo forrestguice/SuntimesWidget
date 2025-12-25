@@ -10,6 +10,7 @@
     <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />     <!-- needed to trigger AGPS reload -->
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
 

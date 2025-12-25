@@ -29,6 +29,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import static java.lang.Math.acos;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 /**
  * Location
  */
@@ -220,6 +224,21 @@ public class Location implements Parcelable
             uriString += "," + altitude;
         }
         return Uri.parse(uriString);
+    }
+
+    public double distanceTo(Location other) {
+        return distanceBetween(this, other);
+    }
+
+    private static final double R = 6371.009;   // km
+
+    public static double distanceBetween(Location location1, Location location2)
+    {
+        double lat1 = Math.toRadians(location1.getLatitudeAsDouble());
+        double lat2 = Math.toRadians(location2.getLatitudeAsDouble());
+        double deltaLon = Math.abs(Math.toRadians(location2.getLongitudeAsDouble()) - Math.toRadians(location1.getLongitudeAsDouble()));
+        double deltaSigma = acos((sin(lat1) * sin(lat2)) + (cos(lat1) * cos(lat2) * cos(deltaLon)));  // spherical law of cosines
+        return deltaSigma * R;
     }
 
     /**

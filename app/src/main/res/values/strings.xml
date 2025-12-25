@@ -28,6 +28,7 @@
     <string name="configAction_export">Export</string>
     <string name="configAction_import">Import</string>
     <string name="configAction_info">More Info</string>
+    <string name="configAction_sort">Sort</string>    <!-- TODO -->
     <string name="configAction_sortBy">Sort by</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
@@ -626,8 +627,10 @@
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->
+    <string name="configLabel_location_comment">Comment</string>   <!-- edittext hint -->    <!-- TODO -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
+    <string name="configAction_avgFix">Average Location</string>    <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
 
@@ -1085,7 +1088,7 @@
     <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
     <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
     <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">@string/configAction_sort</string>                <!-- action button / menu item -->   <!-- TODO: updated -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_enabled_first">Enabled First</string>                <!-- action button / menu item -->
@@ -1576,6 +1579,10 @@
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="configAction_sortPlaces">@string/configAction_sort</string>       <!-- button (contentDescription) -->
+    <string name="configAction_sortPlaces_by_label_ascending">Label (ascending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_sortPlaces_by_label_descending">Label (descending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_sortPlaces_by_proximity">Nearest (last known)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
 
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
@@ -2103,6 +2110,37 @@
         <item>-1</item>
     </string-array>
 
+    <string name="configLabel_getFix_lastRequest_flag">@string/configLabel_getFix_gnss_log</string>  <!-- pref title --> <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest">Last Update</string>  <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
+        \n\n<xliff:g id="provider">%3$s</xliff:g> ±<xliff:g id="accuracy">%4$s</xliff:g>m
+        \nElapsed: <xliff:g id="elapsedTime">%5$s</xliff:g>
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="configLabel_getFix_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
+        \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago (not found)
+        \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
+    </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="configLabel_getFix_num_satellites">%1$s/%2$s</string>    <!-- TODO -->
+
+    <string name="configLabel_getFix_gnss">GNSS</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_log">GNSS Log</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_almanac">Almanac</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_ephemeris">Ephemeris</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_used">Used</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_signal">Signal</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_cnrFormat">%s db</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
+
+    <string name="configLabel_getFix_gnss_agps">AGPS</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_reload_warning">Reloading AGPS data requires network connectivity.\n\nVerify your connection before proceeding…</string>    <!-- TODO -->
+    <string name="configLabel_getFix_gnss_agps_delete">Delete AGPS data</string>    <!-- TODO -->
+
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Calendars</string>   <!-- group title for "calendars" app setting -->
     <string name="configLabel_calendars_enabled">Calendar Integration</string>
@@ -2298,6 +2336,8 @@
     <string name="worldmap_dialog_speed_7d">&#215; 7d</string>      <!-- menu item; "x 1d"; increments of 7 day -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="mappick_dialog_title">@string/location_dialog_title</string>    <!-- TODO -->
 
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)

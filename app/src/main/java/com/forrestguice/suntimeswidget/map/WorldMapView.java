@@ -700,10 +700,20 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         return options.now;
     }
 
-    public void seekDateTime( Context context, long datetime )
-    {
+    public void seekDateTime( Context context, long datetime ) {
         long offsetMillis = datetime - options.now;
         options.offsetMinutes = (offsetMillis / 1000 / 60);
         updateViews(true);
     }
+
+    /**
+     * @param x image coordinate x
+     * @param y image coordinate y
+     * @return corresponding [longitude, latitude] (or null)
+     */
+    @Nullable
+    public double[] getLatitudeLongitudeAt(float x, float y, double[] mid, int w, int h) {
+        return getMapProjection(mode).fromBitmapCoords((int) x, (int) y, mid, w, h);
+    }
+
 }

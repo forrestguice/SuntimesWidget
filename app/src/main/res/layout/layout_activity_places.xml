@@ -8,12 +8,18 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:animateLayoutChanges="true" android:elevation="50dp">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-                app:title="@string/configLabel_places" />
+            android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+            app:title="@string/configLabel_places" />
 
+            <ProgressBar android:id="@+id/app_progress" android:visibility="visible"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:indeterminate="true"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="-12dp" android:layout_marginBottom="0dp" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
