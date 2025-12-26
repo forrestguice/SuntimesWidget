@@ -264,7 +264,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (extras != null)
         {
             appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            reconfigure = extras.getBoolean(EXTRA_RECONFIGURE, false);
+            reconfigure = extras.getBoolean(EXTRA_RECONFIGURE, WidgetSettings.isKnownWidgetID(context, appWidgetId));
+        } else {
+            reconfigure = WidgetSettings.isKnownWidgetID(context, appWidgetId);
         }
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -2748,6 +2750,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             saveSettings(context);
             updateWidgets(context,  new int[] {appWidgetId});
             CalculatorProvider.clearCachedConfig(appWidgetId);
+            WidgetSettings.addKnownWidgetID(context, appWidgetId);
 
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

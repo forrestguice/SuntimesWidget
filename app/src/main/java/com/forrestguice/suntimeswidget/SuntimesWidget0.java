@@ -426,6 +426,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             unsetUpdateAlarm(context, appWidgetId);
             WidgetSettings.deletePrefs(context, appWidgetId);
+            WidgetSettings.forgetKnownWidgetID(context, appWidgetId);
             WorldMapWidgetSettings.deletePrefs(context, appWidgetId);
         }
     }

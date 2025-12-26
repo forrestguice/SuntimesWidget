@@ -64,8 +64,10 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
@@ -254,6 +256,8 @@ public class WidgetSettings
     public static final String PREF_KEY_PREVIEW_GRID_WIDTH = "gridWidth";
     public static final String PREF_KEY_PREVIEW_GRID_HEIGHT = "gridHeight";
     public static final int[] PREF_DEF_PREVIEW_GRID = new int[] {5, 5};
+
+    public static final String PREF_KEY_KNOWNIDS = "knownAppWidgetIDs";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -3437,6 +3441,41 @@ public class WidgetSettings
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
         prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH);
         prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_HEIGHT);
+        prefs.apply();
+    }
+
+    public static final boolean isKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        return ids.contains(appWidgetId + "");
+    }
+
+    public static final void addKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        ids.add(appWidgetId + "");
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.putStringSet(PREF_KEY_KNOWNIDS, ids);
+        prefs.apply();
+    }
+
+    public static final void forgetKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        ids.remove(appWidgetId + "");
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.putStringSet(PREF_KEY_KNOWNIDS, ids);
+        prefs.apply();
+    }
+
+    public static final void clearKnownWidgetIDs(Context context) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.remove(PREF_KEY_KNOWNIDS);
         prefs.apply();
     }
 
