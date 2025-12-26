@@ -124,7 +124,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
     {
-        return WidgetSettings.TimezoneMode.SOLAR_TIME;
+        return WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
     }
 
     @Override
