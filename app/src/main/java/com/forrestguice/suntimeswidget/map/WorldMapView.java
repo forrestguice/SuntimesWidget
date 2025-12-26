@@ -597,7 +597,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 {
                     String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
                     Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-                    ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+                    ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), result.getExportFile(), result.getMimeType());
                     return;
 
                 } else {

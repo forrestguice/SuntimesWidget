@@ -47,7 +47,9 @@ import java.util.Map;
 @SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
 {
-    public static final String FILE_PROVIDER_AUTHORITY = "com.forrestguice.suntimeswidget.fileprovider";
+    public static String FILE_PROVIDER_AUTHORITY() {
+        return BuildConfig.APPLICATION_ID + ".fileprovider";
+    }
 
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
@@ -436,7 +438,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         try {
-            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, file);
+            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file);
             shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
             context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
 
