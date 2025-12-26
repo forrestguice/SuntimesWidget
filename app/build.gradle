@@ -56,7 +56,7 @@ android
             versionNameSuffix "-nightly"
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
-            def nightlyVersionCode = new Date().format('yyyyMMddhh') as int
+            def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
             versionCode nightlyVersionCode
         }
     }
