@@ -53,7 +53,7 @@ android
             applicationIdSuffix ".nightly"
             versionNameSuffix "-nightly"
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
-            def nightlyVersionCode = new Date().format('yyyyMMddhh') as int
+            def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
             versionCode nightlyVersionCode
         }
     }
