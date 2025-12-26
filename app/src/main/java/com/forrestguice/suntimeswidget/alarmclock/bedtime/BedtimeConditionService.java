@@ -39,12 +39,14 @@ public class BedtimeConditionService extends ConditionProviderService
 {
     public static final String ACTION_BEDTIME_UPDATE = "suntimeswidget.alarm.update_bedtime";
     public static final String ACTION_BEDTIME_STOP = "suntimeswidget.alarm.stop_bedtime";
-    protected static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    protected static final String REQUIRED_PERMISSION() {
+        return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
 
     @Override
     public void onConnected() {
         Log.d("DEBUG", "BedtimeConditionService :: onConnected");
-        registerReceiver(receiver, getReceiverIntentFilter(), REQUIRED_PERMISSION, null);
+        registerReceiver(receiver, getReceiverIntentFilter(), REQUIRED_PERMISSION(), null);
     }
 
     @Override

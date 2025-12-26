@@ -40,7 +40,9 @@ import java.util.List;
 @SuppressWarnings("Convert2Diamond")
 public class MenuAddon
 {
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    public static final String REQUIRED_PERMISSION() {
+      return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String ACTION_ABOUT = "suntimes.action.SHOW_ABOUT";
     public static final String ACTION_MENU_ITEM = "suntimes.action.ADDON_MENU_ITEM";
@@ -113,8 +115,9 @@ public class MenuAddon
     {
         boolean hasPermission = false;
         if (packageInfo.requestedPermissions != null) {
+            String requiredPermission = REQUIRED_PERMISSION();
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(requiredPermission)) {
                     hasPermission = true;
                     break;
                 }

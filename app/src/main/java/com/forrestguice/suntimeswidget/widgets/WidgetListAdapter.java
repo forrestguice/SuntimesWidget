@@ -47,6 +47,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ClockWidget0;
 import com.forrestguice.suntimeswidget.ClockWidget0_3x1;
 import com.forrestguice.suntimeswidget.MoonWidget0;
@@ -467,7 +468,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     public static final String ACTION_SUNTIMES_LISTWIDGETS = "suntimes.action.LIST_WIDGETS";
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String KEY_WIDGET_INFO_PROVIDER = "WidgetInfoProvider";
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    public static final String REQUIRED_PERMISSION() {
+        return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
 
     public static final String COLUMN_WIDGET_PACKAGENAME = "packagename";
     public static final String COLUMN_WIDGET_APPWIDGETID = "appwidgetid";
@@ -519,8 +522,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         boolean hasPermission = false;
         if (packageInfo.requestedPermissions != null)
         {
+            String requiredPermission = REQUIRED_PERMISSION();
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(requiredPermission)) {
                     hasPermission = true;
                     break;
                 }

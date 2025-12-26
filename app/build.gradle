@@ -28,6 +28,7 @@ android
         versionName "0.16.11"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
+        buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -54,6 +55,7 @@ android
             applicationIdSuffix ".nightly"
             versionNameSuffix "-nightly"
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
+            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
             def nightlyVersionCode = new Date().format('yyyyMMddhh') as int
             versionCode nightlyVersionCode
         }
