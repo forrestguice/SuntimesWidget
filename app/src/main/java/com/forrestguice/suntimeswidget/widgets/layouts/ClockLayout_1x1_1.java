@@ -28,6 +28,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -39,6 +40,8 @@ import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 {
@@ -81,24 +84,30 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
     public static String getNowString(Context context, int appWidgetId, Calendar now, ClockFaceOptions options)
     {
+        Date time = now.getTime();
+        TimeZone tz = now.getTimeZone();
+        SuntimesUtils.applyTimeZone(time, tz);
+        Log.d("DEBUG", "getNowString: tz: " + tz);
+
         switch (options.style)
         {
-            case ClockFaceOptions.STYLE_DIGITAL1:
-                WidgetSettings.TimeFormatMode timeFormat1 = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-                SimpleDateFormat hourFormat1 = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
-                return hourFormat1.format(now.getTime()) + " " + minuteFormat.format(now.getTime());
-                //return utils.calendarDateTimeDisplayString(context, now, false, false, true, false, timeFormat1).toString();
-
             case ClockFaceOptions.STYLE_DIGITAL0:
                 WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
                 SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
-                //return nowText.toString();
                 return nowText.getValue();
+
+            case ClockFaceOptions.STYLE_DIGITAL1:
+                SimpleDateFormat hourFormat1 = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
+                hourFormat1.setTimeZone(tz);
+                minuteFormat.setTimeZone(tz);
+                return hourFormat1.format(time) + " " + minuteFormat.format(time);
 
             case ClockFaceOptions.STYLE_VERTICAL:
             default:
                 SimpleDateFormat hourFormat = (is24(context, appWidgetId) ? hourFormat24 : hourFormat12);
-                return hourFormat.format(now.getTime()) + "\n" + minuteFormat.format(now.getTime());
+                hourFormat.setTimeZone(tz);
+                minuteFormat.setTimeZone(tz);
+                return hourFormat.format(time) + "\n" + minuteFormat.format(time);
         }
     }
 

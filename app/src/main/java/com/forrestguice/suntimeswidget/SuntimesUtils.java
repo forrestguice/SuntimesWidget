@@ -620,7 +620,7 @@ public class SuntimesUtils
      * An opportunity to directly modify the Date before its formatted/displayed; apply special
      * timezone rules here.
      */
-    protected void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
+    public static void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
     {
         String tzID = timezone.getID();
         if (tzID.equals(WidgetTimezones.SiderealTime.TZID_GMST) || tzID.equals(WidgetTimezones.SiderealTime.TZID_LMST)) {
