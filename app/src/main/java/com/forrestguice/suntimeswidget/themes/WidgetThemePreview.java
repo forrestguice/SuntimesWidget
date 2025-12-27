@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -67,6 +68,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -580,10 +582,12 @@ public class WidgetThemePreview
             previewTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 
-            Calendar now = Calendar.getInstance();
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+            SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+            data.calculate(context);
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, data.now(), false, timeFormat);
             String nowString = nowText.getValue();
+
             CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
             previewTime.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR));
@@ -612,8 +616,9 @@ public class WidgetThemePreview
                 case CLOCK3: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1; break;
             }
 
-            Calendar now = Calendar.getInstance();
-            String nowString = ClockLayout_1x1_1.getNowString(context, appWidgetId, now, options);
+            SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+            data.calculate(context);
+            String nowString = ClockLayout_1x1_1.getNowString(context, appWidgetId, data.now(), options);
 
             int w, h;
             switch (options.style)

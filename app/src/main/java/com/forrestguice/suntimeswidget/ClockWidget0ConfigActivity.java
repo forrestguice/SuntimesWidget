@@ -21,10 +21,9 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 
 /**
  * Clock widget config activity.
@@ -168,10 +166,13 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initWidgetMode1x1(Context context)
     {
         if (spinner_1x1mode != null) {
-            spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            adapter_1x1mode = createAdapter_widgetMode1x1();
+            spinner_1x1mode.setAdapter(adapter_1x1mode);
             addOnItemSelectedListener(spinner_1x1mode, null);
         }
     }
+    private WidgetModeAdapter adapter_1x1mode;
+
     @Override
     protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
@@ -215,6 +216,21 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected boolean supportsPreview() {
         return true;
+    }
+
+    @Override
+    protected void updatePreview(final Context context)
+    {
+        super.updatePreview(context);
+        if (spinner_1x1mode != null)
+        {
+            spinner_1x1mode.setOnItemSelectedListener(null);
+            updateWidgetModeAdapter(spinner_1x1mode, null);
+            addOnItemSelectedListener(spinner_1x1mode, null);
+        }
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "ClockWidgetConfig: updatePreview");
+        }
     }
 
     @Override

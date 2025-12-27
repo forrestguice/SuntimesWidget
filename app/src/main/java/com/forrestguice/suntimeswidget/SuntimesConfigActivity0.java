@@ -1330,7 +1330,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return;
         }
 
-        final int previewWidgetID = Integer.MIN_VALUE + 1;
+        final int previewWidgetID = appWidgetId_preview();
         saveSettings(context, previewWidgetID);
 
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
@@ -1376,9 +1376,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                             @Override
                             public void run() {
                                 updatePreviewArea(context, previewArea, view, widgetSizePx);
-                                long bench_end = System.nanoTime();
-                                Log.d("DEBUG", "updatePreview took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
-                                Toast.makeText(context, ((bench_end - bench_start) / 1000000.0) + " ms", Toast.LENGTH_SHORT).show();
+                                if (BuildConfig.DEBUG) {
+                                    long bench_end = System.nanoTime();
+                                    Log.d("BENCH", "updatePreview took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                                    //Toast.makeText(context, ((bench_end - bench_start) / 1000000.0) + " ms", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -1389,6 +1391,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     private View t_widgetPreview = null;
     protected boolean freezePreview = false;
+
+    public static int appWidgetId_preview() {
+        return Integer.MIN_VALUE + 1;
+    }
 
     protected void updatePreviewArea(final Context context, @NonNull FrameLayout previewArea, @NonNull View view, int[] widgetSizePx)
     {
@@ -3471,16 +3477,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private void updateWidgetModeAdapter(@Nullable Spinner spinner, ContentValues themeValues)
+    protected void updateWidgetModeAdapter(@Nullable Spinner spinner, @Nullable ContentValues themeValues)
     {
         if (spinner != null) {
             try {
                 WidgetModeAdapter adapter = (WidgetModeAdapter) spinner.getAdapter();
                 if (adapter != null) {
                     WidgetSettings.WidgetModeDisplay selected = (WidgetSettings.WidgetModeDisplay) spinner.getSelectedItem();
-                    adapter.setThemeValues(themeValues);
+                    if (themeValues != null) {
+                        adapter.setThemeValues(themeValues);
+                    }
                     spinner.setAdapter(adapter);
-                    spinner.setSelection(adapter.getPosition(selected));
+                    spinner.setSelection(adapter.getPosition(selected), false);
                 }
             } catch (ClassCastException e) {
                 Log.w("updateWidgetMode", "Failed to update adapter! " + e);
@@ -3620,7 +3628,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     public static class WidgetModeAdapter extends ArrayAdapter<WidgetSettings.WidgetModeDisplay>
     {
         protected int resourceID, dropDownResourceID;
-        protected WidgetSettings.WidgetModeDisplay[] objects;
+        protected List<WidgetSettings.WidgetModeDisplay> objects = new ArrayList<WidgetSettings.WidgetModeDisplay>();
         protected WidgetThemePreview preview;
         protected ContentValues themeValues = null;
 
@@ -3630,19 +3638,37 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         public WidgetModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.WidgetModeDisplay[] objects) {
-            super(context, resource, objects);
+            super(context, resource);
+            this.objects.addAll(Arrays.asList(objects));
+            addAll(objects);
             init(context, resource);
         }
 
         public WidgetModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.WidgetModeDisplay> objects) {
-            super(context, resource, objects);
+            super(context, resource);
+            this.objects = objects;
+            addAll(objects);
             init(context, resource);
         }
 
         private void init(@NonNull Context context, int resource) {
             resourceID = dropDownResourceID = resource;
-            preview = new WidgetThemePreview(context, 0);
+            initPreview(context);
+        }
+
+        protected void initPreview(Context context) {
+            preview = new WidgetThemePreview(context, appWidgetId_preview());
             preview.setShowTitle(false);
+        }
+
+        public void updateAdapter(Context context)
+        {
+            clear();
+            initPreview(context);
+            objects = new ArrayList<WidgetSettings.WidgetModeDisplay>(objects);
+            addAll(objects);
+            notifyDataSetChanged();
+            Log.d("DEBUG", "WidgetLayoutAdapter: updateAdapter");
         }
 
         public void setThemeValues(ContentValues values) {
