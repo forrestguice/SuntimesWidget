@@ -178,9 +178,9 @@ public class WorldMapWidgetSettings
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1),
-        MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
-        VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Van der Grinten", PROJ4_VANDG),
-        SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Sinuisoidal", PROJ4_SINU),
+        MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_3, false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
+        VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_4, false, 0, 0, "Van der Grinten", PROJ4_VANDG),
+        SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x3_5, false, 0, 0, "Sinuisoidal", PROJ4_SINU),
         ;
 
         private final int layoutID;

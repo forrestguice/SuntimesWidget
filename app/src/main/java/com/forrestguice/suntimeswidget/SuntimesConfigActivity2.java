@@ -208,8 +208,6 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         modes.add(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE);
-        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.SINUSOIDAL_SIMPLE);
 
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]))
@@ -288,6 +286,8 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE);
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
