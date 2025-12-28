@@ -69,7 +69,7 @@ public class MoonWidget0ConfigActivity_3x1 extends MoonWidget0ConfigActivity
     @Override
     protected int[] minWidgetSize( Context context )
     {
-        int minSize[] = new int[2];
+        int[] minSize = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;

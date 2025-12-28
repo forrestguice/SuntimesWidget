@@ -2792,7 +2792,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected int[] minWidgetSize(Context context)
     {
-        int minSize[] = new int[2];
+        int[] minSize = new int[2];
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
@@ -2828,7 +2828,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         locationConfig.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

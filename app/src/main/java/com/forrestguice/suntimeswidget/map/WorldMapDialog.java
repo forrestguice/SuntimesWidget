@@ -255,7 +255,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
-    public static final int RESET_THRESHOLD[] = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
+    public static final int[] RESET_THRESHOLD = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
     private final Runnable updateTask = new Runnable()
     {
         @Override

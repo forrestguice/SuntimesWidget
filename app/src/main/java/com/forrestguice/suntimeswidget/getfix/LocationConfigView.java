@@ -985,7 +985,7 @@ public class LocationConfigView extends LinearLayout
      * @param permissions the requested permissions
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

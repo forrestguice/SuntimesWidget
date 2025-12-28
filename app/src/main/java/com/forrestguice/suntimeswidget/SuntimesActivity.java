@@ -856,7 +856,7 @@ public class SuntimesActivity extends AppCompatActivity
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
