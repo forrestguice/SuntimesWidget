@@ -609,7 +609,7 @@ public class BedtimeDialog extends DialogFragment
         dialog.show(fragments, DIALOG_SLEEP_CYCLES);
     }
 
-    private final DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
+    private DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {
@@ -1119,7 +1119,7 @@ public class BedtimeDialog extends DialogFragment
         dialog.show(fragments, DIALOG_ADD_BEDTIME);
     }
 
-    private final DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
+    private DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {

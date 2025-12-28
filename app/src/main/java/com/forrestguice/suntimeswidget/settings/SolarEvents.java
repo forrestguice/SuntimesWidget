@@ -94,7 +94,7 @@ public enum SolarEvents
     public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
     public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 
-    public static final int[] types() {
+    public static int[] types() {
         return new int[] { TYPE_SUN, TYPE_MOON, TYPE_MOONPHASE, TYPE_SEASON };
     }
     public static CharSequence getTypeLabel(Context context, @Nullable Integer type)

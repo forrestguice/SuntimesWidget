@@ -1045,7 +1045,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return seekCustomEvent(context, getCustomEventID(context, menuItemID, (dawn ? SEEK_CUSTOM_DAWN_ITEM_ID : SEEK_CUSTOM_DUSK_ITEM_ID)), dawn);
     }
 
-    private final PopupMenu.OnMenuItemClickListener onSeekEventMenuClick()
+    private PopupMenu.OnMenuItemClickListener onSeekEventMenuClick()
     {
         return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -1623,7 +1623,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onSeekAltitudeMenuClick(final EditText edit)
+    private PopupMenu.OnMenuItemClickListener onSeekAltitudeMenuClick(final EditText edit)
     {
         return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -2144,7 +2144,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return true;
     }
 
-    private final PopupMenu.OnMenuItemClickListener onSeekShadowMenuClick(final EditText edit)
+    private PopupMenu.OnMenuItemClickListener onSeekShadowMenuClick(final EditText edit)
     {
         return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -2189,7 +2189,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return true;
     }
 
-    private final PopupMenu.OnMenuItemClickListener onShadowLengthMenuClick()
+    private PopupMenu.OnMenuItemClickListener onShadowLengthMenuClick()
     {
         return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {

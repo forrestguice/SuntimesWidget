@@ -468,7 +468,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     public static final String ACTION_SUNTIMES_LISTWIDGETS = "suntimes.action.LIST_WIDGETS";
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String KEY_WIDGET_INFO_PROVIDER = "WidgetInfoProvider";
-    public static final String REQUIRED_PERMISSION() {
+    public static String REQUIRED_PERMISSION() {
         return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
     }
 

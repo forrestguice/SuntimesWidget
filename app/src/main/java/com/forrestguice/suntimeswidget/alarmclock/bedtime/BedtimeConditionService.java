@@ -39,7 +39,7 @@ public class BedtimeConditionService extends ConditionProviderService
 {
     public static final String ACTION_BEDTIME_UPDATE = "suntimeswidget.alarm.update_bedtime";
     public static final String ACTION_BEDTIME_STOP = "suntimeswidget.alarm.stop_bedtime";
-    protected static final String REQUIRED_PERMISSION() {
+    protected static String REQUIRED_PERMISSION() {
         return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
     }
 

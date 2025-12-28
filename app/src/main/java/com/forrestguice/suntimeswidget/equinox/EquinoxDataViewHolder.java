@@ -182,7 +182,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         text_label.setLayoutParams(layoutParams);
     }
 
-    public static final int suggestedLayoutResID() {
+    public static int suggestedLayoutResID() {
         return R.layout.info_time_solsticequinox2;
     }
 

@@ -40,7 +40,7 @@ import java.util.List;
 @SuppressWarnings("Convert2Diamond")
 public class MenuAddon
 {
-    public static final String REQUIRED_PERMISSION() {
+    public static String REQUIRED_PERMISSION() {
       return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
     }
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
