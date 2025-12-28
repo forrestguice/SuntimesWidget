@@ -378,7 +378,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
         }
-    };
+    }
 
     /**
      * this method calls areNotificationsPaused (api29+) via reflection

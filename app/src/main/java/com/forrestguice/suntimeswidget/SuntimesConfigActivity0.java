@@ -1190,7 +1190,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 updatePreview(SuntimesConfigActivity0.this);
             }
         };
-    };
+    }
 
 
     protected void initToolbar(final Context context)

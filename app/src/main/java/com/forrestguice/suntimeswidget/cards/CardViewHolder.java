@@ -994,7 +994,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         protected LinearLayout.LayoutParams initLayoutParams(int marginLeft, int marginTop, int marginRight, int marginBottom)
         {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);;
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(marginLeft, marginTop, marginRight, marginBottom);
             params.gravity = Gravity.CENTER_VERTICAL;
             return params;

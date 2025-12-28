@@ -937,7 +937,7 @@ public class AlarmListDialog extends DialogFragment
 
         public static abstract class AlarmListTaskListener
         {
-            public void onLoadFinished(List<AlarmClockItem> result) {};
+            public void onLoadFinished(List<AlarmClockItem> result) {}
         }
     }
 

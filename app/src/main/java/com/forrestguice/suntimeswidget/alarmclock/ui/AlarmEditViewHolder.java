@@ -211,7 +211,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         res_icSoundOn = a.getResourceId(2, R.drawable.ic_action_soundenabled);
         res_icSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
         res_colorEnabled = a.getResourceId(4, R.color.alarm_enabled_dark);
-        res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);;
+        res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);
         res_icNotification1 = a.getResourceId(6, R.drawable.ic_action_notification1);
         res_icNotification2 = a.getResourceId(7, R.drawable.ic_action_notification2);
         res_icHome = a.getResourceId(8, R.drawable.ic_action_home);
