@@ -1739,7 +1739,7 @@ public class PlacesListFragment extends Fragment
                 if (sortMode == SORT_BY_PROXIMITY)
                 {
                     Location location0 = WidgetSettings.loadLocationPref(context, 0);
-                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                    LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                     double d = item.location.distanceTo(location0);
                     distance.setText(context != null ? SuntimesUtils.formatAsDistance(context, d, units, 2, true).toString() : "");
                 }

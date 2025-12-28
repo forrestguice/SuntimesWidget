@@ -28,8 +28,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
 
 public class SunSymbolBitmap
 {

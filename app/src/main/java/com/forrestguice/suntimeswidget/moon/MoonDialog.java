@@ -45,6 +45,7 @@ import android.text.TextUtils;
 import android.text.style.ImageSpan;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -729,7 +730,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected void showSeekTimeDialog(Context context)
     {
         TimeDialog dialog = new TimeDialog();
-        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == TimeFormatMode.MODE_24HR);
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.setInitialTime("12", "0");    // TODO: from prefs
         dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));

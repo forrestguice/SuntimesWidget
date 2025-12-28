@@ -34,9 +34,11 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -92,8 +94,8 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         switch (options.style)
         {
             case ClockFaceOptions.STYLE_DIGITAL0:
-                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-                SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+                TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+                TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
                 return nowText.getValue();
 
             case ClockFaceOptions.STYLE_DIGITAL1:
@@ -141,7 +143,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
     public static boolean is24(Context context, int appWidgetId)
     {
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         switch (timeFormat)
         {
             case MODE_SUNTIMES: return SuntimesUtils.is24();

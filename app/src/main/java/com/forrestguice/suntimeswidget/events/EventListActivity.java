@@ -36,6 +36,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
@@ -145,12 +146,12 @@ public class EventListActivity extends AppCompatActivity
             public void run()
             {
                 if (extra_addEventWithAngle != -1) {
-                    list.showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, extra_addEventWithAngle, null, null);
+                    list.showAddEventDialog(EventType.SUN_ELEVATION, extra_addEventWithAngle, null, null);
 
                 } else if (extra_addEventWithShadowLength != -1 || extra_addEventWithObjectHeight != -1) {
                     Double shadowLength = ((extra_addEventWithShadowLength != -1) ? extra_addEventWithShadowLength : null);
                     Double objHeight = ((extra_addEventWithObjectHeight != -1) ? extra_addEventWithObjectHeight : null);
-                    list.showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, shadowLength, objHeight);
+                    list.showAddEventDialog(EventType.SHADOWLENGTH, null, shadowLength, objHeight);
                 }
             }
         });
@@ -224,7 +225,7 @@ public class EventListActivity extends AppCompatActivity
         {
             String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
             if (eventID != null) {
-                EventSettings.setShown(context, eventID, true);
+                EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, true);
                 adapterModified = true;
             }
         }

@@ -784,7 +784,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         protected void drawVerticalLine(Calendar calendar0,  SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
         {
-            Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(null, data.location()));
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(data.location()));
             calendar.setTimeInMillis(calendar0.getTimeInMillis());
             double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
             int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());

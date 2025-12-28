@@ -62,6 +62,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
@@ -809,7 +810,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         TimeDateDialog dialog = new TimeDateDialog();
         dialog.loadSettings(getActivity());
-        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == WidgetSettings.TimeFormatMode.MODE_24HR);
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == TimeFormatMode.MODE_24HR);
         dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
