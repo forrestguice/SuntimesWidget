@@ -19,7 +19,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="?attr/text_size_small" android:textAlignment="center"
             android:minEms="5" android:maxLines="1"
-            android:inputType="numberDecimal" android:hint="6.0" />
+            android:inputType="numberDecimal" android:hint="@string/editevent_dialog_height_hint" />
 
         <TextView android:id="@+id/suffix_height" android:labelFor="@+id/edit_height"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
