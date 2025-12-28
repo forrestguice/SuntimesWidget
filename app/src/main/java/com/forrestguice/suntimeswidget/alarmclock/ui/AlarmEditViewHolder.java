@@ -22,12 +22,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -44,10 +42,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventIcons;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -421,7 +420,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         CharSequence alarmDesc;
         SuntimesUtils utils = new SuntimesUtils();
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
         if (SuntimesUtils.is24()) {
             alarmDesc = timeText.getValue();
 
@@ -464,7 +463,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         alarmTime.setTimeInMillis(item.timestamp + (withOffset ? item.offset : 0));
 
         CharSequence alarmDesc;
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
+        TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
         if (SuntimesUtils.is24()) {
             alarmDesc = timeText.getValue();
 

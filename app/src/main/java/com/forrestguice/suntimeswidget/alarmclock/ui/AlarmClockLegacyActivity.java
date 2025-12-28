@@ -57,6 +57,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -80,10 +81,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -335,7 +337,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
@@ -480,7 +482,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         if (t_selectedLocation != null) {
-            outState.putParcelable(KEY_SELECTED_LOCATION, t_selectedLocation);
+            outState.putSerializable(KEY_SELECTED_LOCATION, t_selectedLocation);
         }
     }
 
@@ -505,7 +507,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             }
         }
 
-        t_selectedLocation = savedState.getParcelable(KEY_SELECTED_LOCATION);
+        t_selectedLocation = (Location) savedState.getSerializable(KEY_SELECTED_LOCATION);
     }
 
     /**
@@ -1047,7 +1049,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             AlarmClockItem item = adapter.findItem(t_selectedItem);
             t_selectedItem = null;
@@ -1778,7 +1780,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     private LocationConfigDialog.LocationConfigDialogListener onLocationChanged1 = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);

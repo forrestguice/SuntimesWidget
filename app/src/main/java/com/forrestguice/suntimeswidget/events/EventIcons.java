@@ -30,14 +30,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 @SuppressWarnings("Convert2Diamond")
@@ -91,15 +90,15 @@ public class EventIcons
             } else if (tag.startsWith(TAG_ALIAS)) {
                 String suffix = null;
                 String eventID = tag.substring(TAG_ALIAS.length());
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING))
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING))
                 {
                     suffix = eventID.substring(eventID.length()-1);
                     //Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     return (suffix == null ? R.drawable.svg_season
-                            : (AlarmEventProvider.ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
+                            : (ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
                 } else {
                     return getResID(context, R.attr.icActionExtension, R.drawable.ic_action_extension);
                 }
@@ -151,10 +150,10 @@ public class EventIcons
         {
             if (tag.startsWith(TAG_ALIAS)) {
                 String eventID = tag.substring(TAG_ALIAS.length());
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                return ((context != null && EventSettings.hasEvent(context, eventID)) ? EventSettings.getColor(context, eventID) : null);
+                return ((context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) ? EventSettings.getColor(AndroidEventSettings.wrap(context), eventID) : null);
             }
         }
         return null;
@@ -270,11 +269,11 @@ public class EventIcons
             String eventID = uri.getLastPathSegment();
             if (eventID != null)
             {
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                     suffix = eventID.substring(eventID.length()-1);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     tag = EventIcons.TAG_ALIAS + eventID + suffix;
                 } else tag = null;
             } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;

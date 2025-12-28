@@ -170,6 +170,51 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_event_percent"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView android:labelFor="@+id/edit_event_percent" android:textSize="?attr/text_size_small"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                    android:text="@string/editevent_dialog_percent" />
+
+                <EditText android:id="@+id/edit_event_percent"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:minWidth="50dp"
+                    android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+                    android:hint="@string/editevent_dialog_percent_hint" android:inputType="numberSigned|numberDecimal"
+                    android:paddingLeft="5dp" android:paddingRight="5dp"
+                    android:gravity="end|right"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_percent_suffix" />
+
+                <RadioGroup android:id="@+id/radiogroup_event_percent"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp">
+
+                    <RadioButton
+                        android:id="@+id/radiobutton_event_percent_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/editevent_dialog_percent_ofday" />
+
+                    <RadioButton
+                        android:id="@+id/radiobutton_event_percent_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/editevent_dialog_percent_ofnight" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

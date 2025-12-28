@@ -18,10 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
-import android.content.Context;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.Calendar;
@@ -50,17 +47,11 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(Location locationSetting, String timezone)
     {
-        init(locationSetting, TimeZone.getTimeZone(timezone), null);
+        init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
     public void init(Location location, TimeZone timezone)
-    {
-        init(location, timezone, null);
-    }
-
-    @Override
-    public void init(Location location, TimeZone timezone, Context context)
     {
         this.location = location;
         this.timezone = timezone;
@@ -289,12 +280,6 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         if (riseset == null)
             return null;
         else return riseset[1];
-    }
-
-    public static SuntimesCalculatorDescriptor getDescriptor()
-    {
-        return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
-                R.string.calculator_displayString_caarmensunrisesunset, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
     @Override

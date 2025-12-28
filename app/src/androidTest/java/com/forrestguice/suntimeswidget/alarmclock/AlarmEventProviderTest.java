@@ -27,7 +27,9 @@ import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.events.EventType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -78,11 +80,11 @@ public class AlarmEventProviderTest
         }
         cursor.close();
 
-        for (AlarmEventProvider.EventType type : AlarmEventProvider.EventType.values())
+        for (EventType type : EventType.values())
         {
-            if (type == AlarmEventProvider.EventType.SOLAREVENT) {
+            if (type == EventType.SOLAREVENT) {
                 for (int t : SolarEvents.types()) {
-                    String k = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(t + "");
+                    String k = EventType.SOLAREVENT.getSubtypeID(t + "");
                     assertTrue("eventTypes is missing " + k, types.containsKey(k));
                 }
             } else {
@@ -121,7 +123,7 @@ public class AlarmEventProviderTest
 
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SUN)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
             assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
             assertEquals("true", requiresLocation.get(event.name()));
@@ -129,7 +131,7 @@ public class AlarmEventProviderTest
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOON)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
             assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
             assertEquals("true", requiresLocation.get(event.name()));
@@ -137,7 +139,7 @@ public class AlarmEventProviderTest
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SEASON)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
             assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
             assertEquals("true", requiresLocation.get(event.name()));
@@ -145,7 +147,7 @@ public class AlarmEventProviderTest
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOONPHASE)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
             assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
             assertEquals("false", requiresLocation.get(event.name()));
@@ -157,11 +159,11 @@ public class AlarmEventProviderTest
     public void test_EventType_resolveEventType()
     {
         String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
-        AlarmEventProvider.EventType[] expected = new AlarmEventProvider.EventType[] {
-                AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH, AlarmEventProvider.EventType.DATE, AlarmEventProvider.EventType.SOLAREVENT };
+        EventType[] expected = new EventType[] {
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.EventType.resolveEventType(context, events[i]));
+            assertEquals(expected[i], EventType.resolveEventType(AndroidEventSettings.wrap(context), events[i]));
         }
     }
 

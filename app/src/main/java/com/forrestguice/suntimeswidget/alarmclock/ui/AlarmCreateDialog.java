@@ -55,11 +55,12 @@ import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.TimeDateDialog;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -69,11 +70,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,14 +152,14 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         Bundle args = getArguments();
         if (getLocation() == null) {
-            args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+            args.putSerializable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         }
 
         Context context = getActivity();
         if (context != null)
         {
             SuntimesUtils.initDisplayStrings(context);
-            SolarEvents.initDisplayStrings(context);
+            SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
             AlarmClockItem.AlarmType.initDisplayStrings(context);
             AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
         }
@@ -222,7 +224,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 }
                 getArguments().putString(EXTRA_EVENT, dialog.getChoice());
                 Log.d("DEBUG", "AlarmCreateDialog: onChanged: " + dialog.getChoice());
-                getArguments().putParcelable(EXTRA_LOCATION, dialog.getLocation());
+                getArguments().putSerializable(EXTRA_LOCATION, dialog.getLocation());
                 updateViews(getActivity());
             }
 
@@ -294,7 +296,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             FragmentManager fragments = getChildFragmentManager();
             LocationConfigDialog dialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
@@ -1015,7 +1017,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
     public Location getLocation()
     {
-        Location location = getArguments().getParcelable(EXTRA_LOCATION);
+        Location location = (Location) getArguments().getSerializable(EXTRA_LOCATION);
         return (location != null ? location
                                  : isAdded() ? WidgetSettings.loadLocationPref(getActivity(), 0)
                                              : WidgetSettings.loadLocationDefault());
@@ -1024,7 +1026,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         Bundle args = getArguments();
         args.putString(EXTRA_EVENT, event);
-        args.putParcelable(EXTRA_LOCATION, location);
+        args.putSerializable(EXTRA_LOCATION, location);
 
         if (isAdded())
         {
@@ -1189,7 +1191,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.hour = dialog.getHour();
             item.minute = dialog.getMinute();
             item.timezone = dialog.getTimeZone();
-            item.setEvent(dialog.getDate() != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(dialog.getDate())) : null);
+            item.setEvent(dialog.getDate() != -1L ? EventUri.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(dialog.getDate())) : null);
         }
     }
 

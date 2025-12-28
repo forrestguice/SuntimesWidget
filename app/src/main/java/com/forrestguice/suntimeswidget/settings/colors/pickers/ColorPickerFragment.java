@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.colors.ColorUtils;
 
 import java.util.Locale;
 

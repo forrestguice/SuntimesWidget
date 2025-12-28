@@ -42,6 +42,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
@@ -239,8 +240,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     @Override
     public void onSaveInstanceState(@NonNull Bundle out)
     {
-        out.putParcelable("colorValues", colorValues);
-        out.putParcelable("defaultValues", defaultValues);
+        out.putSerializable("colorValues", colorValues);
+        out.putSerializable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
         out.putString("editLabel", editLabel.getText().toString());
@@ -248,8 +249,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
     {
-        colorValues = savedState.getParcelable("colorValues");
-        defaultValues = savedState.getParcelable("defaultValues");
+        colorValues = (ColorValues) savedState.getSerializable("colorValues");
+        defaultValues = (ColorValues) savedState.getSerializable("defaultValues");
         String[] filter = savedState.getStringArray("filterValues");
         if (filter != null) {
             filterValues  = new TreeSet<>(Arrays.asList(filter));
@@ -447,16 +448,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void importColors(final Context context, String jsonInput)
     {
-        ColorValues values = new ColorValues(jsonInput) {
-            @Override
-            public String[] getColorKeys() {
-                return new String[0];
-            }
-        };
-        if (values != null)
-        {
-
-        }
         // TODO
     }
 

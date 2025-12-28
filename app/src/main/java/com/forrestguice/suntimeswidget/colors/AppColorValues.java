@@ -19,12 +19,11 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Parcel;
 
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.equinox.EquinoxColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
@@ -33,7 +32,9 @@ import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
+import com.forrestguice.util.Resources;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -43,8 +44,10 @@ import java.util.function.ToIntFunction;
 /**
  * ColorValues
  */
-public class AppColorValues extends ResourceColorValues
+public class AppColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_APPCOLORS = "appcolors";
 
     private static final ResourceColorValues[] RESOURCE_VALUES = new ResourceColorValues[] {
@@ -197,23 +200,17 @@ public class AppColorValues extends ResourceColorValues
     public AppColorValues(ColorValues other) {
         super(other);
     }
-    public AppColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    protected AppColorValues(Parcel in) {
+    /*protected AppColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public AppColorValues() {
         super();
     }
-    public AppColorValues(Context context, boolean darkTheme) {
+    public AppColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public AppColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<AppColorValues> CREATOR = new Creator<AppColorValues>()
+    /*public static final Creator<AppColorValues> CREATOR = new Creator<AppColorValues>()
     {
         public AppColorValues createFromParcel(Parcel in) {
             return new AppColorValues(in);
@@ -221,9 +218,14 @@ public class AppColorValues extends ResourceColorValues
         public AppColorValues[] newArray(int size) {
             return new AppColorValues[size];
         }
-    };
+    };*/
 
-    public static AppColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
+    public static AppColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AppColorValues(new AppColorValues().getDefaultValues(context, darkTheme));
     }
 

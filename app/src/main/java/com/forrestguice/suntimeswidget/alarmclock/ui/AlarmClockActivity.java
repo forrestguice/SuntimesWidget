@@ -75,10 +75,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -590,7 +591,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected static Location locationFromIntentExtras(Context context, Intent intent)
     {
         Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
-        Location location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
+        Location location = ((locationBundle != null) ? (Location) locationBundle.getSerializable(AlarmClockActivity.EXTRA_LOCATION) : null);
         if (location != null) {
             return location;
         }
@@ -617,7 +618,7 @@ public class AlarmClockActivity extends AppCompatActivity
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
@@ -1305,7 +1306,7 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
 
         Bundle locationBundle = new Bundle();
-        locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
+        locationBundle.putSerializable(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
         try {

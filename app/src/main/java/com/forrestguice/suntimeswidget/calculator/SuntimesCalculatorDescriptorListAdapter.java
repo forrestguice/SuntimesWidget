@@ -132,9 +132,12 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
     @SuppressLint("ResourceType")
     public void initDisplayStrings(Context context)
     {
-        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values(context))
+        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values())
         {
-            value.initDisplayStrings(context);
+            int resID = value.getDisplayStringResID();
+            if (resID != -1 ){
+                value.setDisplayString(context.getString(resID));
+            }
         }
 
         defaultTag = context.getString(R.string.configLabel_tagDefault);

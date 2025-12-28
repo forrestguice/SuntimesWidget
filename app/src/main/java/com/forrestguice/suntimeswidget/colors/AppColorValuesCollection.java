@@ -20,21 +20,25 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.prefs.PrefTypeInfo;
+import com.forrestguice.util.android.AndroidResources;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * ColorValuesCollection
  */
-public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
+public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValues> implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String PREFS_APP_COLORS = "prefs_app_colors";
 
     private static final String PREFS_PREFIX = "app_";
@@ -46,9 +50,9 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
     public AppColorValuesCollection(Context context) {
         super(context);
     }
-    protected AppColorValuesCollection(Parcel in) {
+    /*protected AppColorValuesCollection(Parcel in) {
         super(in);
-    }
+    }*/
 
     @Override
     @NonNull
@@ -74,10 +78,10 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new AppColorValues(context,  true);
+        return new AppColorValues(AndroidResources.wrap(context),  true);
     }
 
-    public static final Creator<AppColorValuesCollection> CREATOR = new Creator<AppColorValuesCollection>()
+    /*public static final Creator<AppColorValuesCollection> CREATOR = new Creator<AppColorValuesCollection>()
     {
         public AppColorValuesCollection createFromParcel(Parcel in) {
             return new AppColorValuesCollection<ColorValues>(in);
@@ -85,7 +89,7 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
         public AppColorValuesCollection<ColorValues>[] newArray(int size) {
             return new AppColorValuesCollection[size];
         }
-    };
+    };*/
 
     @Nullable
     public static AppColorValues initSelectedColors(@Nullable Context context)

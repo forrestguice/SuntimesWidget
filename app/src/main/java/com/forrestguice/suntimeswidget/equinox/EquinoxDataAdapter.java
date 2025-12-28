@@ -29,7 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -49,7 +50,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     protected final WeakReference<Context> contextRef;
     protected final EquinoxViewOptions options;
 
-    public EquinoxDataAdapter(Context context, WidgetSettings.SolsticeEquinoxMode[] modes, EquinoxViewOptions options)
+    public EquinoxDataAdapter(Context context, SolsticeEquinoxMode[] modes, EquinoxViewOptions options)
     {
         this.contextRef = new WeakReference<>(context);
         this.modes = modes;
@@ -145,8 +146,8 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return MAX_POSITIONS;
     }
 
-    protected WidgetSettings.SolsticeEquinoxMode[] modes = WidgetSettings.SolsticeEquinoxMode.values();
-    public void setModes(WidgetSettings.SolsticeEquinoxMode[] modes) {
+    protected SolsticeEquinoxMode[] modes = SolsticeEquinoxMode.values();
+    public void setModes(SolsticeEquinoxMode[] modes) {
         this.modes = modes;
     }
 
@@ -191,14 +192,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     public boolean hasSelection() {
         return (selected_position != null);
     }
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
-    protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+    protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {
         selected_position = position;
@@ -206,7 +207,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
     protected Integer selected_position = null;
 
-    private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+    private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,14 +240,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return options.highlightPosition;
     }
 
-    public static int findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestNote(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;

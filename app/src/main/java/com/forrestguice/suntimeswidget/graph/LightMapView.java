@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -632,7 +633,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 {
                     //if (colors.option_lmt)
                     //{
-                        TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                        TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                         Calendar nowLmt = Calendar.getInstance(lmt);
                         nowLmt.setTimeInMillis(now.getTimeInMillis());
                         now = nowLmt;
@@ -802,7 +803,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
             //if (options.option_lmt)
             //{
-                TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                 if (riseTime != null)
                 {
                     Calendar riseTimeLmt = Calendar.getInstance(lmt);
@@ -958,15 +959,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         public void initDefaultDark(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(context, true));
+            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), true));      // TODO: Resources
         }
 
         public void initDefaultLight(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(context, false));
+            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), false));       // TODO: Resources
         }
 
         public void init(Context context) {
-            values = new LightMapColorValues(context);
+            values = new LightMapColorValues(AndroidResources.wrap(context));
         }
 
         public void acquireDrawLock()

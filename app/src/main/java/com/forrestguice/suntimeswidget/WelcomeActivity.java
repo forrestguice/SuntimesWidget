@@ -53,6 +53,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -894,9 +895,9 @@ public class WelcomeActivity extends AppCompatActivity
             timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
             if (timeFormatSpinner != null)
             {
-                final WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-                final ArrayAdapter<WidgetSettings.TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
-                        new WidgetSettings.TimeFormatMode[] {WidgetSettings.TimeFormatMode.MODE_SYSTEM, WidgetSettings.TimeFormatMode.MODE_12HR, WidgetSettings.TimeFormatMode.MODE_24HR});
+                final TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+                final ArrayAdapter<TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
+                        new TimeFormatMode[] {TimeFormatMode.MODE_SYSTEM, TimeFormatMode.MODE_12HR, TimeFormatMode.MODE_24HR});
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 timeFormatSpinner.setAdapter(adapter);
                 timeFormatSpinner.setOnItemSelectedListener(onTimeFormatSelected);
@@ -967,7 +968,7 @@ public class WelcomeActivity extends AppCompatActivity
                 Activity context = getActivity();
                 TimeZoneDialog tzConfig = getTimeZoneDialog();
                 if (tzConfig != null && context != null) {
-                    tzConfig.setTimeFormatMode((WidgetSettings.TimeFormatMode) parent.getAdapter().getItem(position));
+                    tzConfig.setTimeFormatMode((TimeFormatMode) parent.getAdapter().getItem(position));
                 }
             }
             @Override
@@ -996,7 +997,7 @@ public class WelcomeActivity extends AppCompatActivity
                     tzConfig.saveSettings(context);
                 }
 
-                WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
+                TimeFormatMode timeFormat = (TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
                 //Log.d("DEBUG", "saveSettings: timezone");
                 return true;

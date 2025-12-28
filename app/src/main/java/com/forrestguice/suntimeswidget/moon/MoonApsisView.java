@@ -33,7 +33,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,12 +49,13 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
@@ -443,7 +446,7 @@ public class MoonApsisView extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            colors = new MoonApsisColorValues(context);
+            colors = new MoonApsisColorValues(AndroidResources.wrap(context));
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
@@ -568,7 +571,7 @@ public class MoonApsisView extends LinearLayout
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             if (data != null && data.isCalculated())
             {
@@ -606,7 +609,7 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, WidgetSettings.LengthUnit units)
+        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
         {
             if (apsis != null)
             {

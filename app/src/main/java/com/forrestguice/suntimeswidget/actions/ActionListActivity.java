@@ -37,6 +37,8 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
@@ -126,12 +128,12 @@ public class ActionListActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
-        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        data.setCompareMode(CompareMode.TOMORROW);
+        data.setTimeMode(TimeMode.OFFICIAL);
         data.calculate(context);
 
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data.linkData(noonData);
     }

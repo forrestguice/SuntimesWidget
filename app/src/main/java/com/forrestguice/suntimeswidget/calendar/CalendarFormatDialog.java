@@ -41,9 +41,8 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.util.Calendar;
 
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN;
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_FORMATPATTERN;
-import static com.forrestguice.suntimeswidget.calendar.CalendarSettings.PREF_KEY_CALENDAR_MODE;
+import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_FORMATPATTERN;
+import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_MODE;
 
 public class CalendarFormatDialog extends DialogFragment
 {
@@ -52,7 +51,7 @@ public class CalendarFormatDialog extends DialogFragment
         super();
         Bundle defaultArgs = new Bundle();
         defaultArgs.putString(PREF_KEY_CALENDAR_MODE, CalendarMode.GREGORIAN.name());
-        defaultArgs.putString(PREF_KEY_CALENDAR_FORMATPATTERN, PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN);
+        defaultArgs.putString(PREF_KEY_CALENDAR_FORMATPATTERN, CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN);
         setArguments(defaultArgs);
     }
 
@@ -143,7 +142,7 @@ public class CalendarFormatDialog extends DialogFragment
         //Log.d("DEBUG", "updateCustomCalendarFormat");
         CalendarMode mode = getCalendarMode();
         CalendarFormat.CUSTOM.setPattern(pattern);
-        CalendarFormat.CUSTOM.initDisplayString(getActivity(), mode, Calendar.getInstance());
+        CalendarFormat.CUSTOM.initDisplayString(mode, Calendar.getInstance());
         notifyDataSetChanged_calendarFormatAdapter();
     }
 
@@ -250,7 +249,7 @@ public class CalendarFormatDialog extends DialogFragment
             return CalendarMode.valueOf(getArguments().getString(PREF_KEY_CALENDAR_MODE));
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getCalendarMode: " + e);
-            return CalendarSettings.PREF_DEF_CALENDAR_MODE;
+            return CalendarSettingsInterface.PREF_DEF_CALENDAR_MODE;
         }
     }
 

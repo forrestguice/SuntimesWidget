@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -76,10 +77,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.List;
@@ -321,7 +323,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         initColors(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
 
         icon_note = (ImageView) dialogContent.findViewById(R.id.appwidget_schedalarm_note_icon);
         icon_note.setVisibility(View.GONE);
@@ -579,7 +581,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getEventInfoUri(reference, name)))
+            if (AlarmAddon.checkUriPermission(context, EventUri.getEventInfoUri(reference, name)))
             {
                 AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
                 if (item.isResolved())

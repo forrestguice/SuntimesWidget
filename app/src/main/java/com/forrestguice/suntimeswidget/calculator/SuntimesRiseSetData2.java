@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -38,12 +36,12 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
     private Calendar[] sunset = {null, null, null};
     private Calendar[] daylength = {null, null, null};
 
-    public SuntimesRiseSetData2(Context context, int appWidgetId)
+    public SuntimesRiseSetData2(Object context, int appWidgetId)
     {
         super(context, appWidgetId);
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData2(Context context, int appWidgetId, String calculatorName)
+    public SuntimesRiseSetData2(Object context, int appWidgetId, String calculatorName)
     {
         super(context, appWidgetId, calculatorName);
         initFromSettings(context, appWidgetId, calculatorName);
@@ -61,7 +59,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
     protected int indexOfOther()
     {
-        return (compareMode == WidgetSettings.CompareMode.TOMORROW ? 2 : 0);
+        return (compareMode == CompareMode.TOMORROW ? 2 : 0);
     }
 
     /**
@@ -152,6 +150,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.fraction = other.fraction;
         this.offset = other.offset;
 
         this.dayLengthToday = other.dayLengthToday();
@@ -185,7 +184,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -195,8 +194,8 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator(context);
-        initTimezone(context);
+        initCalculator();
+        initTimezone(getDataSettings(context));
 
         for (int i=0; i<calendar.length; i++)
         {
@@ -217,13 +216,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
+                dayDeltaPrefix = R.string.delta_day_yesterday;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
+                dayDeltaPrefix = R.string.delta_day_tomorrow;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
@@ -295,6 +294,9 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
                     sunrise[i] = calculator.getOfficialSunriseCalendarForDate(calendar[i]);
                     sunset[i] = calculator.getOfficialSunsetCalendarForDate(calendar[i]);
                     break;
+            }
+            if (fraction != null && sunrise[i] != null && sunset[i] != null) {
+                applyFraction(sunrise[i], sunset[i], fraction);
             }
             if (offset != 0) {
                 if (sunrise[i] != null) {

@@ -24,6 +24,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightGraphDialogTest;
@@ -81,7 +82,7 @@ public class IssuesTest extends SuntimesActivityTestBase
         // open the location dialog, and set test location
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(context)
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .clickLocationEditButton()
                 .inputLocationEditValues("TestAppCrash74", latitude, longitude)
                 .assertLocationEditCoordinates(latitude, longitude)
@@ -108,7 +109,7 @@ public class IssuesTest extends SuntimesActivityTestBase
     public void test_issue408_refreshLocation()
     {
         config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        WidgetSettings.saveLocationModePref(getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         SuntimesActivity activity = activityRule.getActivity();
 
@@ -119,7 +120,7 @@ public class IssuesTest extends SuntimesActivityTestBase
         activity.finish();
 
         config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        WidgetSettings.saveLocationModePref(getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
 
         new SuntimesActivityTest.MainActivityAutomator()
@@ -163,7 +164,7 @@ public class IssuesTest extends SuntimesActivityTestBase
     protected void init_issue862()
     {
         config(getContext()).edit().putString(AppSettings.PREF_KEY_GETFIX_MAXAGE, "0");
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        WidgetSettings.saveLocationModePref(getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         SuntimesActivity activity = activityRule.getActivity();
         new SuntimesActivityTest.MainActivityRobot()

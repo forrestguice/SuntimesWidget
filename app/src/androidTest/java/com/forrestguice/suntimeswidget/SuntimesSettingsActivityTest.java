@@ -27,6 +27,7 @@ import android.preference.Preference;
 import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.events.EventListActivityTest;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivityTest;
 
@@ -511,7 +512,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             DataInteractionHelper.DataInteractionInterface formatPref = preferenceWithKey("appwidget_0_appearance_timeformatmode");
             formatPref.get().check(assertEnabled);
 
-            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
             String modeSummary = String.format(GeneralPrefsFragment.timeFormatPrefSummary(mode, context), mode.getDisplayString());
             DataInteractionHelper.DataInteractionInterface formatPref_text = DataInteractionHelper.wrap(formatPref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(modeSummary))));
             formatPref_text.get().check(assertShown);

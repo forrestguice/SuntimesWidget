@@ -30,7 +30,13 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
@@ -381,9 +387,9 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_OPTION_TIME_IS24:
-                            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || mode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
-                                    : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
+                            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+                            boolean is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+                                    : (mode == TimeFormatMode.MODE_24HR);
                             row[i] = (is24 ? 1 : 0);
                             break;
 
@@ -678,18 +684,18 @@ public class CalculatorProvider extends ContentProvider
             positionSuffix = _POSITION_DEC;
         }
 
-        if (AlarmEventProvider.EventType.resolveEventType(context, column) == AlarmEventProvider.EventType.EVENTALIAS)
+        if (EventType.resolveEventType(AndroidEventSettings.wrap(context), column) == EventType.EVENTALIAS)
         {
             String aliasID = eventID;   // e.g. CUSTOM0
             String aliasSuffix = "";    // e.g. r, s
-            if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                 aliasID = aliasID.substring(0, eventID.length() - 1);
                 aliasSuffix = eventID.substring(eventID.length() - 1);
             }
 
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, aliasID);
-            AlarmEventProvider.EventType aliasType = alias.getType();
-            if (aliasType == AlarmEventProvider.EventType.SUN_ELEVATION || aliasType == AlarmEventProvider.EventType.SHADOWLENGTH)
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), aliasID);
+            EventType aliasType = alias.getType();
+            if (aliasType == EventType.SUN_ELEVATION || aliasType == EventType.SHADOWLENGTH || aliasType == EventType.DAYPERCENT)
             {
                 Calendar now = Calendar.getInstance();
                 now.setTimeInMillis(day.getTimeInMillis());
@@ -698,7 +704,7 @@ public class CalculatorProvider extends ContentProvider
                 now.set(Calendar.SECOND, 0);
                 now.set(Calendar.MILLISECOND, 0);
 
-                boolean isRising = (aliasSuffix.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
+                boolean isRising = (aliasSuffix.endsWith(ElevationEvent.SUFFIX_RISING));
                 Object[] aliasValues = AlarmEventProvider.createRow(context, alias, isRising, new String[] { AlarmEventContract.COLUMN_EVENT_TIMEMILLIS },
                         AlarmEventContract.EXTRA_ALARM_NOW + "=?", new String[] { Long.toString(now.getTimeInMillis()) });
 
@@ -1298,7 +1304,7 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculatorDescriptor descriptor = null;
         String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
         if (calculator != null) {
-            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
+            descriptor = SuntimesCalculatorDescriptor.valueOf(calculator);
         }
 
         if (location == null && timezone == null && descriptor == null) {
@@ -1317,7 +1323,7 @@ public class CalculatorProvider extends ContentProvider
                 descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
                         : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
             }
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             //Log.d("CalculatorProvider", "initCalculator: " + location.getLabel() + " :: " + location.toString());
             return factory.createCalculator(location, timezone);
         }
@@ -1333,7 +1339,7 @@ public class CalculatorProvider extends ContentProvider
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
             //Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
         } //else Log.d("CalculatorProvider", "initSunCalculator: using pre-existing calculator");
@@ -1353,7 +1359,7 @@ public class CalculatorProvider extends ContentProvider
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
             //Log.d("CalculatorProvider", "initMoonCalculator: " + location.getLabel() + " :: " + location.toString());
         } //else Log.d("CalculatorProvider", "initMoonCalculator: using pre-existing calculator");

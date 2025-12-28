@@ -70,9 +70,15 @@ import android.widget.ImageView;
 
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
@@ -149,7 +155,7 @@ public class SuntimesUtils
     {
         //long bench_start = System.nanoTime();
 
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
 
@@ -198,7 +204,9 @@ public class SuntimesUtils
         strDateTimeShortFormatSec = dateTimeFormatShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
-        CardinalDirection.initDisplayStrings(context);
+        //CardinalDirection.initDisplayStrings(context);
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
 
         initialized = true;
         ///initCount++;
@@ -230,243 +238,6 @@ public class SuntimesUtils
     public static boolean is24()
     {
         return is24;
-    }
-
-    /**
-     * CardinalDirection
-     */
-    public static enum CardinalDirection
-    {
-        NORTH(1,      "N",   "North"              , 0.0),
-        NORTH_NE(2,   "NNE", "North North East"   , 22.5),
-        NORTH_E(3,    "NE",  "North East"         , 45.0),
-
-        EAST_NE(4,    "ENE", "East North East"    , 67.5),
-        EAST(5,       "E",   "East"               , 90.0),
-        EAST_SE(6,    "ESE", "East South East"    , 112.5),
-
-        SOUTH_E(7,    "SE",  "South East"         , 135.0),
-        SOUTH_SE(8,   "SSE", "South South East"   , 157.5),
-        SOUTH(9,      "S",   "South"              , 180.0),
-        SOUTH_SW(10,  "SSW", "South South West"   , 202.5),
-        SOUTH_W(11,   "SW",  "South West"         , 225.0),
-
-        WEST_SW(12,   "WSW", "West South West"    , 247.5),
-        WEST(13,      "W",   "West"               , 270.0),
-        WEST_NW(14,   "WNW", "West North West"    , 292.5),
-
-        NORTH_W(15,   "NW",  "North West"         , 315.0),
-        NORTH_NW(16,  "NNW", "North North West"   , 337.5),
-        NORTH2(1,     "N",   "North"              , 360.0);
-
-        private int pointNum;
-        private String shortDisplayString;
-        private String longDisplayString;
-        private double degrees;
-
-        private CardinalDirection(int pointNum, String shortDisplayString, String longDisplayString, double degrees)
-        {
-            this.pointNum = pointNum;
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-            this.degrees = degrees;
-        }
-
-        public static CardinalDirection getDirection(double degrees)
-        {
-            if (degrees > 360)
-                degrees = degrees % 360;
-
-            while (degrees < 0)
-                degrees += 360;
-
-            CardinalDirection result = NORTH;
-            double least = Double.MAX_VALUE;
-            for (CardinalDirection direction : values())
-            {
-                double directionDegrees = direction.getDegress();
-                double diff = Math.abs(directionDegrees - degrees);
-                if (diff < least)
-                {
-                    least = diff;
-                    result = direction;
-                }
-            }
-            return result;
-        }
-
-        public String toString()
-        {
-            return shortDisplayString;
-        }
-
-        public double getDegress()
-        {
-            return degrees;
-        }
-
-        public int getPoint()
-        {
-            return pointNum;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            Resources res = context.getResources();
-            String[] modes_short = res.getStringArray(R.array.directions_short);
-            String[] modes_long = res.getStringArray(R.array.directions_long);
-            if (modes_long.length != modes_short.length)
-            {
-                Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
-                return;
-            }
-
-            CardinalDirection[] values = values();
-            if (modes_long.length != values.length)
-            {
-                Log.e("initDisplayStrings", "The size of directions_long and SolarEvents DOES NOT MATCH!");
-                return;
-            }
-
-            for (int i = 0; i < values.length; i++)
-            {
-                values[i].setDisplayStrings(modes_short[i], modes_long[i]);
-            }
-        }
-    }
-
-    /**
-     * TimeDisplayText : class
-     */
-    public static class TimeDisplayText
-    {
-        private long rawValue = 0;
-        private String value;
-        private String units;
-        private String suffix;
-
-        public TimeDisplayText()
-        {
-            this.value = "";
-            this.units = "";
-            this.suffix = "";
-        }
-
-        public TimeDisplayText(String value)
-        {
-            this.value = value;
-            this.units = "";
-            this.suffix = "";
-        }
-
-        public TimeDisplayText(String value, String units, String suffix)
-        {
-            this.value = value;
-            this.units = units;
-            this.suffix = suffix;
-        }
-
-        public void setRawValue(long value)
-        {
-            rawValue = value;
-        }
-
-        public long getRawValue()
-        {
-            return rawValue;
-        }
-
-        public String getValue()
-        {
-            return value;
-        }
-
-        public String getUnits()
-        {
-            return units;
-        }
-
-        public String getSuffix()
-        {
-            return suffix;
-        }
-
-        public void setSuffix(String suffix)
-        {
-            this.suffix = suffix;
-        }
-
-        public String toString()
-        {
-            StringBuilder s = new StringBuilder();
-            s.append(value);
-
-            boolean valueNotEmpty = !value.isEmpty();
-            boolean unitsNotEmpty = !units.isEmpty();
-
-            if (unitsNotEmpty)
-            {
-                if (valueNotEmpty)
-                    s.append(" ");
-                s.append(units);
-            }
-
-            if (!suffix.isEmpty())
-            {
-                if (valueNotEmpty || unitsNotEmpty)
-                    s.append(" ");
-                s.append(suffix);
-            }
-
-            return s.toString();
-        }
-
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (obj == null || !TimeDisplayText.class.isAssignableFrom(obj.getClass()))
-                return false;
-
-            final TimeDisplayText other = (TimeDisplayText) obj;
-
-            if (!value.equals(other.getValue()))
-                return false;
-
-            if (!units.equals(other.getUnits()))
-                return false;
-
-            //noinspection RedundantIfStatement
-            if (!suffix.equals(other.getSuffix()))
-                return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = this.value.hashCode();
-            hash = hash * 37 + units.hashCode();
-            hash = hash * 37 + suffix.hashCode();
-            return hash;
-        }
     }
 
     public static Locale getLocale()
@@ -715,6 +486,7 @@ public class SuntimesUtils
      * @param abbreviate true abbreviate name, false full name
      * @return day name e.g. Monday (or Mon abbreviated)
      */
+    @Deprecated
     public TimeDisplayText calendarDayDisplayString(Context context, Calendar calendar, boolean abbreviate)
     {
         if (calendar == null || context == null)
@@ -915,15 +687,18 @@ public class SuntimesUtils
      * @param timeSpan2 second event
      * @return a display string that describes difference between the two spans
      */
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2)
     {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, false);
     }
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds)
     {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, showSeconds);
     }
 
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
     {
         TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
@@ -932,6 +707,7 @@ public class SuntimesUtils
     }
 
     @SuppressWarnings("ConstantConditions")
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
     }
@@ -1061,10 +837,12 @@ public class SuntimesUtils
      * @param value
      * @return
      */
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDegrees(double value)
     {
         return String.format(strDegreesFormat, NumberFormat.getNumberInstance().format(value));
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDegrees(double value, int places)
     {
         NumberFormat formatter = NumberFormat.getInstance();
@@ -1072,16 +850,19 @@ public class SuntimesUtils
         formatter.setMaximumFractionDigits(places);
         return String.format(strDegreesFormat, formatter.format(value));
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDirection(double degreeValue, int places)
     {
         String degreeString = formatAsDegrees(degreeValue, places);
         CardinalDirection direction = CardinalDirection.getDirection(degreeValue);
         return formatAsDirection(degreeString, direction.getShortDisplayString());
     }
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDirection(String degreeString, String directionString)
     {
         return String.format(strDirectionFormat, degreeString, directionString);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsDirection2(double degreeValue, int places, boolean longSuffix)
     {
         String degreeString = formatAsDegrees(degreeValue, places);
@@ -1089,41 +870,48 @@ public class SuntimesUtils
         return new TimeDisplayText(degreeString, "", (longSuffix ? direction.getLongDisplayString() : direction.getShortDisplayString()));
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsElevation(String degreeString, String altitudeSymbol)
     {
         return String.format(strElevationFormat, degreeString, altitudeSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsElevation(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsRightAscension(String degreeString, String raSymbol)
     {
         return String.format(strRaFormat, degreeString, raSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsRightAscension(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strRaSymbol);
     }
 
+    @Deprecated    // use AngleDisplay instead
     public String formatAsDeclination(String degreeString, String decSymbol)
     {
         return String.format(strDeclinationFormat, degreeString, decSymbol);
     }
+    @Deprecated    // use AngleDisplay instead
     public TimeDisplayText formatAsDeclination(double degreeValue, int places)
     {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
-    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
+    @Deprecated    // use LengthUnitDisplay instead
+    public static String formatAsHeight(Context context, double value, LengthUnit units, boolean convert, int places)
     {
         int stringID;
         switch (units)
         {
             case IMPERIAL:
                 if (convert) {
-                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                    value = LengthUnit.metersToFeet(value);
                 }
                 stringID = R.plurals.units_feet_long;
                 break;
@@ -1149,7 +937,8 @@ public class SuntimesUtils
         }
     }
 
-    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    @Deprecated    // use LengthUnitDisplay instead
+    public static TimeDisplayText formatAsHeight(Context context, double meters, LengthUnit units, int places, boolean shortForm)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
@@ -1161,7 +950,7 @@ public class SuntimesUtils
         switch (units)
         {
             case IMPERIAL:
-                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                value = LengthUnit.metersToFeet(meters);
                 formatted = formatter.format(value);
                 unitsString = (shortForm ? context.getString(R.string.units_feet_short)
                                          : context.getResources().getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
@@ -1178,14 +967,15 @@ public class SuntimesUtils
         return new TimeDisplayText(formatted, unitsString, "");
     }
 
-    public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    @Deprecated    // use LengthUnitDisplay instead
+    public static TimeDisplayText formatAsDistance(Context context, double kilometers, LengthUnit units, int places, boolean shortForm)
     {
         double value;
         String unitsString;
         switch (units)
         {
             case IMPERIAL:
-                value = WidgetSettings.LengthUnit.kilometersToMiles(kilometers);
+                value = LengthUnit.kilometersToMiles(kilometers);
                 unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
                 break;
 

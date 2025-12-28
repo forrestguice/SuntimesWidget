@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.moon.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class MoonRiseSetColorValues extends ResourceColorValues implements Parcelable
+public class MoonRiseSetColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_RISING_MOON = AppColorKeys.COLOR_RISING_MOON;
     public static final String COLOR_RISING_MOON_TEXT = AppColorKeys.COLOR_RISING_MOON_TEXT;
 
@@ -87,26 +87,20 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
     public MoonRiseSetColorValues(ColorValues other) {
         super(other);
     }
-    public MoonRiseSetColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private MoonRiseSetColorValues(Parcel in) {
+    /*private MoonRiseSetColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public MoonRiseSetColorValues() {
         super();
     }
-    public MoonRiseSetColorValues(Context context) {
+    public MoonRiseSetColorValues(Resources context) {
         this(context, true);
     }
-    public MoonRiseSetColorValues(Context context, boolean darkTheme) {
+    public MoonRiseSetColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonRiseSetColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
+    /*public static final Creator<MoonRiseSetColorValues> CREATOR = new Creator<MoonRiseSetColorValues>()
     {
         public MoonRiseSetColorValues createFromParcel(Parcel in) {
             return new MoonRiseSetColorValues(in);
@@ -114,9 +108,14 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Parce
         public MoonRiseSetColorValues[] newArray(int size) {
             return new MoonRiseSetColorValues[size];
         }
-    };
+    };*/
 
-    public static MoonRiseSetColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
+    public static MoonRiseSetColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonRiseSetColorValues(new MoonRiseSetColorValues().getDefaultValues(context, darkTheme));
     }
 }

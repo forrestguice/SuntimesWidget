@@ -45,13 +45,16 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesJSON;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -208,9 +211,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
-            List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
-            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventSettings.EventAlias[0]), out);
+            List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOON_ELEVATION));
+            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }
 
@@ -281,6 +287,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
      */
     public static void writeColorsJSONArray(Context context, ColorValuesCollection<ColorValues> collection, BufferedOutputStream out) throws IOException
     {
+        ColorValuesJSON json = new ColorValuesJSON();
         out.write("[".getBytes());
 
         int c = 0;
@@ -292,7 +299,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             ColorValues colors = collection.getColors(context, colorsID);
             if (colors != null) {
-                out.write(colors.toJSON().getBytes());
+                out.write(json.toJSON(colors).getBytes());
                 c++;
             }
         }

@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -705,9 +706,9 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         public LightMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
             return assertShowsDate(date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
-        public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
-            SimpleDateFormat[] formats = (withMode == WidgetSettings.TimeFormatMode.MODE_12HR)
+            SimpleDateFormat[] formats = (withMode == TimeFormatMode.MODE_12HR)
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                     : (withSeconds ? timeDateFormats24s : timeDateFormats24);
             long tolerance = (withSeconds

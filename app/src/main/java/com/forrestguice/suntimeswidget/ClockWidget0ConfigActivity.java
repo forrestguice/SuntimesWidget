@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
@@ -101,7 +102,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators()
     {
-        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
     private static int[] requiredFeatures = new int[] {};
 
@@ -120,9 +121,9 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
+    protected TimezoneMode getDefaultTimezoneMode()
     {
-        return WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+        return TimezoneMode.CURRENT_TIMEZONE;
     }
 
     @Override

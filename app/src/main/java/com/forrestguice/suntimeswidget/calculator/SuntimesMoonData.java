@@ -18,10 +18,11 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
+import com.forrestguice.util.Resources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,10 +32,10 @@ public class SuntimesMoonData extends SuntimesMoonData0
 {
     private SuntimesCalculator.MoonTimes[] riseSet = new SuntimesCalculator.MoonTimes[3];  // [0] yesterday, [1] today, and [2] tomorrow
 
-    public SuntimesMoonData(Context context, int appWidgetId) {
+    public SuntimesMoonData(Object context, int appWidgetId) {
         super(context, appWidgetId);
     }
-    public SuntimesMoonData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesMoonData(Object context, int appWidgetId, String calculatorName) {
         super(context, appWidgetId, calculatorName);
     }
     public SuntimesMoonData(SuntimesMoonData other) {
@@ -209,7 +210,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         super.calculate(context);
 
@@ -414,7 +415,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    public static MoonPhaseDisplay findCurrentPhaseOf(Context context, Calendar calendar, SuntimesMoonData data)
+    public static MoonPhaseDisplay findCurrentPhaseOf(SuntimesDataSettings context, Calendar calendar, SuntimesMoonData data)
     {
         SuntimesMoonData data1 = new SuntimesMoonData(data);
         data1.setTodayIs(calendar);
@@ -426,8 +427,8 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsNow ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase) {
-        return getMoonPhaseLabel(context, majorPhase, moonPhaseCalendar(majorPhase));
+    public CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator.MoonPhase majorPhase) {
+        return MoonPhaseDisplay.getMoonPhaseLabel(context, calculator, majorPhase, moonPhaseCalendar(majorPhase));
     }
 
 }

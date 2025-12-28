@@ -47,7 +47,7 @@ import java.util.Set;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -58,6 +58,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -364,7 +365,7 @@ public class WidgetThemes
         }
 
         private Calendar riseTime, setTime, noonTime;
-        private SuntimesUtils.TimeDisplayText riseText, setText, noonText;
+        private TimeDisplayText riseText, setText, noonText;
         public void setRiseSet(Calendar rise, Calendar set, Calendar noon)
         {
             riseTime = rise;

@@ -27,6 +27,9 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 
 import java.security.InvalidParameterException;
 
@@ -54,7 +57,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
 
         if (key.endsWith(AppSettings.PREF_KEY_PLUGINS_ENABLESCAN))
         {
-            SuntimesCalculatorDescriptor.reinitCalculators(context);
+            SuntimesCalculatorDescriptor.reinitCalculators();
             rebuildActivity();
             return;
         }
@@ -72,7 +75,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(context, calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(context, 0, descriptor);
                 CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
@@ -89,7 +92,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
                 // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
                 // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
                 String calcName = sharedPreferences.getString(key, null);
-                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(context, calcName);
+                SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(calcName);
                 WidgetSettings.saveCalculatorModePref(context, 0, "moon", descriptor);
                 CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
@@ -113,7 +116,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveTimeFormatModePref(context, 0, WidgetSettings.TimeFormatMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_APPEARANCE_TIMEFORMATMODE.name())));
+            WidgetSettings.saveTimeFormatModePref(context, 0, TimeFormatMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_APPEARANCE_TIMEFORMATMODE.name())));
             updateLocale();
             return;
         }
@@ -122,7 +125,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
+            WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
 	        return;
         }
 
@@ -170,7 +173,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
-            WidgetSettings.CompareMode mode = WidgetSettings.CompareMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE.name()));
+            CompareMode mode = CompareMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE.name()));
             WidgetSettings.saveCompareModePref(context, 0, mode);
             return;
         }

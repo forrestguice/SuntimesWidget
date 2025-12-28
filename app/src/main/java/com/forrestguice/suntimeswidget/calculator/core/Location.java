@@ -18,13 +18,10 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.Log;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -36,8 +33,10 @@ import static java.lang.Math.sin;
 /**
  * Location
  */
-public class Location implements Parcelable
+public class Location implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static String pattern_latLon = "#.#####";
 
     private String label;
@@ -95,24 +94,6 @@ public class Location implements Parcelable
         } else {
             this.altitude = altitude;
         }
-    }
-
-    /**
-     * @param label display name
-     * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
-     */
-    public Location(String label, @NonNull android.location.Location location)
-    {
-        double rawLatitude = location.getLatitude();
-        double rawLongitude = location.getLongitude();
-        double rawAltitude = location.getAltitude();
-
-        DecimalFormat formatter = decimalDegreesFormatter();
-
-        this.label = label;
-        this.latitude = formatter.format(rawLatitude);
-        this.longitude = formatter.format(rawLongitude);
-        this.altitude = rawAltitude + "";
     }
 
     /**
@@ -214,16 +195,13 @@ public class Location implements Parcelable
         return useAltitude;
     }
 
-    /**
-     * @return a "geo" URI describing this Location
-     */
-    public Uri getUri()
+    public String getUri()
     {
         String uriString = "geo:" + latitude + "," + longitude;
         if (altitude != null && !altitude.isEmpty()) {
             uriString += "," + altitude;
         }
-        return Uri.parse(uriString);
+        return uriString;
     }
 
     public double distanceTo(Location other) {
@@ -289,46 +267,5 @@ public class Location implements Parcelable
             throw new IllegalArgumentException("longitude out of range; [-180, 180]: " + longitude);
         }
     }
-
-    /**
-     * @param in Parcel
-     */
-    public Location( Parcel in )
-    {
-        this.label = in.readString();
-        this.latitude = in.readString();
-        this.longitude = in.readString();
-        this.altitude = in.readString();
-        this.useAltitude = (in.readInt() == 1);
-    }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(label);
-        dest.writeString(latitude);
-        dest.writeString(longitude);
-        dest.writeString(altitude);
-        dest.writeInt(useAltitude ? 1 : 0);
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public Location createFromParcel(Parcel in)
-        {
-            return new Location(in);
-        }
-
-        public Location[] newArray(int size)
-        {
-            return new Location[size];
-        }
-    };
 
 }

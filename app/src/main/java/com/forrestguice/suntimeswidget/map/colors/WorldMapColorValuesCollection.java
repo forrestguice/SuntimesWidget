@@ -20,22 +20,25 @@
 package com.forrestguice.suntimeswidget.map.colors;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
-import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.prefs.PrefTypeInfo;
+import com.forrestguice.util.android.AndroidResources;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * ColorValuesCollection
  */
-public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<ColorValues>
+public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<ColorValues> implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String PREFS_WORLDMAP_COLORS = "prefs_worldmap_colors";
 
     private static final String PREFS_PREFIX = "map_";
@@ -47,9 +50,9 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
     public WorldMapColorValuesCollection(Context context) {
         super(context);
     }
-    protected WorldMapColorValuesCollection(Parcel in) {
+    /*protected WorldMapColorValuesCollection(Parcel in) {
         super(in);
-    }
+    }*/
 
     @Override
     @NonNull
@@ -76,10 +79,10 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
 
     @Override
     public ColorValues getDefaultColors(Context context) {
-        return new WorldMapColorValues(context,  true);
+        return new WorldMapColorValues(AndroidResources.wrap(context),  true);
     }
 
-    public static final Creator<WorldMapColorValuesCollection> CREATOR = new Creator<WorldMapColorValuesCollection>()
+    /*public static final Creator<WorldMapColorValuesCollection> CREATOR = new Creator<WorldMapColorValuesCollection>()
     {
         public WorldMapColorValuesCollection createFromParcel(Parcel in) {
             return new WorldMapColorValuesCollection<ColorValues>(in);
@@ -87,7 +90,7 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
         public WorldMapColorValuesCollection<ColorValues>[] newArray(int size) {
             return new WorldMapColorValuesCollection[size];
         }
-    };
+    };*/
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

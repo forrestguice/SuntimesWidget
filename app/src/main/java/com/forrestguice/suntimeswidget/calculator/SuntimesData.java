@@ -18,14 +18,18 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -124,8 +128,8 @@ public class SuntimesData
     /**
      * Property: location mode
      */
-    protected WidgetSettings.LocationMode locationMode;
-    public WidgetSettings.LocationMode locationMode()
+    protected LocationMode locationMode;
+    public LocationMode locationMode()
     {
         return locationMode;
     }
@@ -133,11 +137,11 @@ public class SuntimesData
     /**
      * Property: timezone mode
      */
-    protected WidgetSettings.TimezoneMode timezoneMode;
-    public WidgetSettings.TimezoneMode timezoneMode() {
+    protected TimezoneMode timezoneMode;
+    public TimezoneMode timezoneMode() {
         return timezoneMode;
     }
-    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+    public void setTimeZoneMode(TimezoneMode value) {
         timezoneMode = value;
     }
 
@@ -154,7 +158,7 @@ public class SuntimesData
      * perform calculation on the data
      * @param context
      */
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         this.calculated = true;
     }
@@ -192,33 +196,34 @@ public class SuntimesData
      * @param context a context used to access shared prefs
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
-    protected void initFromSettings(Context context, int appWidgetId)
+    protected void initFromSettings(Object context, int appWidgetId)
     {
         initFromSettings(context, appWidgetId, "");
     }
-    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    protected void initFromSettings(final Object context, int appWidgetId, String calculatorName)
     {
         this.appWidgetID = appWidgetId;
         calculated = false;
 
         // from general settings
-        calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId, calculatorName);
+        SuntimesDataSettings settings = getDataSettings(context);
+        calculatorMode = settings.loadCalculatorModePref(appWidgetId, calculatorName);
 
         // from location settings
-        location = WidgetSettings.loadLocationPref(context, appWidgetId);
-        locationMode = WidgetSettings.loadLocationModePref(context, appWidgetId);
+        location = settings.loadLocationPref(appWidgetId);
+        locationMode = settings.loadLocationModePref(appWidgetId);
 
         // from timezone settings
-        timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetId));
-        timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        initTimezone(context);
+        timezone = TimeZone.getTimeZone(settings.loadTimezonePref(appWidgetId));
+        timezoneMode = settings.loadTimezoneModePref(appWidgetId);
+        initTimezone(settings);
 
         // from date settings
-        WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        if (dateMode == WidgetSettings.DateMode.CUSTOM_DATE)
+        DateMode dateMode = settings.loadDateModePref(appWidgetId);
+        if (dateMode == DateMode.CUSTOM_DATE)
         {
             Calendar customDate = Calendar.getInstance(timezone);
-            WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
+            DateInfo dateInfo = settings.loadDatePref(appWidgetId);
             if (dateInfo.isSet())
             {
                 customDate.set(dateInfo.getYear(), dateInfo.getMonth(), dateInfo.getDay());
@@ -232,14 +237,14 @@ public class SuntimesData
         }
     }
 
-    public void initTimezone(Context context)
+    public void initTimezone(SuntimesDataSettings settings)
     {
         int widgetID = appWidgetID;
-        if (appWidgetID != 0 && WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetID))
+        if (appWidgetID != 0 && settings.loadTimeZoneFromAppPref(appWidgetID))
         {
             widgetID = 0;
-            timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
-            timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
+            timezone = TimeZone.getTimeZone(settings.loadTimezonePref(0));
+            timezoneMode = settings.loadTimezoneModePref(0);
         }
 
         switch (timezoneMode)
@@ -253,19 +258,19 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, widgetID);
+                SolarTimeMode solarMode = settings.loadSolarTimeModePref(widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
-                        timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
+                        timezone = TimeZones.apparentSolarTime(location, calculator);
                         break;
 
                     case GMST:
-                        timezone = WidgetTimezones.siderealTime(context);
+                        timezone = TimeZones.siderealTime();
                         break;
 
                     case LMST:
-                        timezone = WidgetTimezones.siderealTime(context, location);
+                        timezone = TimeZones.siderealTime(location);
                         break;
 
                     case UTC:
@@ -274,10 +279,25 @@ public class SuntimesData
 
                     case LOCAL_MEAN_TIME:
                     default:
-                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        timezone = TimeZones.localMeanTime(location);
                         break;
                 }
                 break;
+        }
+    }
+
+    protected static SuntimesDataSettingsFactory settingsFactory;
+    public static void initDataSettingsFactory(SuntimesDataSettingsFactory value) {
+        settingsFactory = value;
+    }
+
+    public SuntimesDataSettings getDataSettings(Object object)
+    {
+        if (settingsFactory != null) {
+            return settingsFactory.getDataSettings(object);
+        } else {
+            Log.e("getDataSettings", "SuntimesDataSettings is uninitialized!! `initDataSettingsFactory` must be called on application start.");
+            return null;
         }
     }
 
@@ -287,12 +307,12 @@ public class SuntimesData
         this.calculatorMode = descriptor;
     }
 
-    public void initCalculator(Context context)
+    public void initCalculator()
     {
         if (this.calculator != null)
             return;
 
-        final SuntimesCalculatorFactory calculatorFactory = initFactory(context);
+        final SuntimesCalculatorFactory calculatorFactory = initFactory();
         calculatorFactory.setFactoryListener(new SuntimesCalculatorFactory.FactoryListener()
         {
             @Override
@@ -309,9 +329,9 @@ public class SuntimesData
         this.calculator = calculatorFactory.createCalculator(location, timezone);
     }
 
-    public SuntimesCalculatorFactory initFactory(Context context)
+    public SuntimesCalculatorFactory initFactory()
     {
-        return new SuntimesCalculatorFactory(context, calculatorMode);
+        return new SuntimesCalculatorFactory(calculatorMode);
     }
 
     /**

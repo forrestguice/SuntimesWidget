@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.moon.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class MoonApsisColorValues extends ResourceColorValues implements Parcelable
+public class MoonApsisColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_MOON_APOGEE_TEXT = AppColorKeys.COLOR_MOON_APOGEE_TEXT;
     public static final String COLOR_MOON_PERIGEE_TEXT = AppColorKeys.COLOR_MOON_PERIGEE_TEXT;
 
@@ -77,26 +77,20 @@ public class MoonApsisColorValues extends ResourceColorValues implements Parcela
     public MoonApsisColorValues(ColorValues other) {
         super(other);
     }
-    public MoonApsisColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private MoonApsisColorValues(Parcel in) {
+    /*private MoonApsisColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public MoonApsisColorValues() {
         super();
     }
-    public MoonApsisColorValues(Context context) {
+    public MoonApsisColorValues(Resources context) {
         this(context, true);
     }
-    public MoonApsisColorValues(Context context, boolean darkTheme) {
+    public MoonApsisColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonApsisColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<MoonApsisColorValues> CREATOR = new Creator<MoonApsisColorValues>()
+    /*public static final Creator<MoonApsisColorValues> CREATOR = new Creator<MoonApsisColorValues>()
     {
         public MoonApsisColorValues createFromParcel(Parcel in) {
             return new MoonApsisColorValues(in);
@@ -104,9 +98,14 @@ public class MoonApsisColorValues extends ResourceColorValues implements Parcela
         public MoonApsisColorValues[] newArray(int size) {
             return new MoonApsisColorValues[size];
         }
-    };
+    };*/
 
-    public static MoonApsisColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
+    public static MoonApsisColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonApsisColorValues(new MoonApsisColorValues().getDefaultValues(context, darkTheme));
     }
 }

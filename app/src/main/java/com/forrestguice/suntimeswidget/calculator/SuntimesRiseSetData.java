@@ -18,23 +18,34 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.UriUtils;
 
 import java.util.Calendar;
 
 public class SuntimesRiseSetData extends SuntimesData
 {
-    public SuntimesRiseSetData(Context context, int appWidgetId) {
+    public SuntimesRiseSetData(Object context, int appWidgetId) {
         initFromSettings(context, appWidgetId);
     }
-    public SuntimesRiseSetData(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesRiseSetData(Object context, int appWidgetId, String calculatorName) {
         initFromSettings(context, appWidgetId, calculatorName);
     }
     public SuntimesRiseSetData(SuntimesRiseSetData other) {
@@ -60,37 +71,50 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: time mode
      */
-    protected WidgetSettings.TimeMode timeMode;
-    public WidgetSettings.TimeMode timeMode()
+    protected TimeMode timeMode;
+    public TimeMode timeMode()
     {
         return timeMode;
     }
-    public void setTimeMode( WidgetSettings.TimeMode mode )
+    public void setTimeMode( TimeMode mode )
     {
         timeMode = mode;
         angle = null;
     }
 
-    protected WidgetSettings.RiseSetDataMode dataMode;
-    public void setDataMode(WidgetSettings.RiseSetDataMode value)
+    protected RiseSetDataMode dataMode;
+    public void setDataMode(RiseSetDataMode value)
     {
         dataMode = value;
-        if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
+        if (dataMode instanceof EventAliasTimeMode)
         {
-            EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
-            AlarmEventProvider.ElevationEvent event;
-            switch (alias.getType()) {
-                case SUN_ELEVATION: event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
-                case SHADOWLENGTH: event = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment()); break;
+            EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
+            ElevationEvent event;
+            switch (alias.getType())
+            {
+                case SUN_ELEVATION:
+                    event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case SHADOWLENGTH:
+                    event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case DAYPERCENT:
+                    DayPercentEvent dayPercentEvent = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.fraction = (dayPercentEvent != null ? dayPercentEvent.getPercentValue() / 100d : null);
+                    event = dayPercentEvent;
+                    break;
                 default: event = null; break;
             }
-            this.angle = (event == null ? null : event.getAngle());
             this.offset = (event == null ? 0 : event.getOffset());
         }
-        WidgetSettings.TimeMode mode = dataMode.getTimeMode();
+        TimeMode mode = dataMode.getTimeMode();
         this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
     }
-    public WidgetSettings.RiseSetDataMode dataMode() {
+    public RiseSetDataMode dataMode() {
         return dataMode;
     }
 
@@ -103,6 +127,17 @@ public class SuntimesRiseSetData extends SuntimesData
     }
     public void setAngle( double value ) {
         angle = value;
+    }
+
+    /**
+     * Property: fraction (used with time mode)
+     */
+    protected Double fraction = null;
+    public Double fraction() {
+        return fraction;
+    }
+    public void setFraction( double value ) {
+        fraction = value;
     }
 
     /**
@@ -119,12 +154,12 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: compare mode
      */
-    protected WidgetSettings.CompareMode compareMode;
-    public WidgetSettings.CompareMode compareMode()
+    protected CompareMode compareMode;
+    public CompareMode compareMode()
     {
         return compareMode;
     }
-    public void setCompareMode( WidgetSettings.CompareMode mode )
+    public void setCompareMode( CompareMode mode )
     {
         compareMode = mode;
     }
@@ -212,8 +247,8 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: day delta prefix
      */
-    protected String dayDeltaPrefix;
-    public String dayDeltaPrefix()
+    protected int dayDeltaPrefix;
+    public int dayDeltaPrefix()
     {
         return dayDeltaPrefix;
     }
@@ -261,6 +296,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.fraction = other.fraction;
         this.offset = other.offset;
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
@@ -277,11 +313,12 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param appWidgetId the widgetID to load settings from (0 for app)
      */
     @Override
-    protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
+    protected void initFromSettings(Object context, int appWidgetId, String calculatorName)
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
-        setDataMode(WidgetSettings.loadTimeModePref(context, appWidgetId));
-        this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
+        SuntimesDataSettings settings = getDataSettings(context);
+        setDataMode(settings.loadTimeModePref(appWidgetId));
+        this.compareMode = settings.loadCompareModePref(appWidgetId);
     }
 
     public boolean isDay()
@@ -304,7 +341,7 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
         //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
@@ -314,8 +351,8 @@ public class SuntimesRiseSetData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
-        initCalculator(context);
-        initTimezone(context);
+        initCalculator();
+        initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
@@ -329,13 +366,13 @@ public class SuntimesRiseSetData extends SuntimesData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = context.getString(R.string.delta_day_yesterday);
+                dayDeltaPrefix = R.string.delta_day_yesterday;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = context.getString(R.string.delta_day_tomorrow);
+                dayDeltaPrefix = R.string.delta_day_tomorrow;
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
@@ -343,8 +380,7 @@ public class SuntimesRiseSetData extends SuntimesData
         date = todaysCalendar.getTime();
         dateOther = otherCalendar.getTime();
 
-        if (angle != null)
-        {
+        if (angle != null) {
             sunriseCalendarToday = calculator.getSunriseCalendarForDate(todaysCalendar, angle);
             sunsetCalendarToday = calculator.getSunsetCalendarForDate(todaysCalendar, angle);
             sunriseCalendarOther = calculator.getSunriseCalendarForDate(otherCalendar, angle);
@@ -415,6 +451,15 @@ public class SuntimesRiseSetData extends SuntimesData
             }
         }
 
+        if (fraction != null) {
+            if (sunriseCalendarToday != null && sunsetCalendarToday != null) {
+                applyFraction(sunriseCalendarToday, sunsetCalendarToday, fraction);
+            }
+            if (sunriseCalendarOther != null && sunsetCalendarOther != null) {
+                applyFraction(sunriseCalendarOther, sunsetCalendarOther, fraction);
+            }
+        }
+
         if (offset != 0) {
             if (sunriseCalendarToday != null) {
                 sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
@@ -434,6 +479,26 @@ public class SuntimesRiseSetData extends SuntimesData
         dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
 
         super.calculate(context);
+    }
+
+    protected void applyFraction(Calendar rising, Calendar setting, double fraction)
+    {
+        if (rising != null && setting != null)
+        {
+            if (fraction >= 0) {
+                long duration = (setting.getTimeInMillis() - rising.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() + (fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() - (fraction * duration)));
+
+            } else {
+                if (rising.getTimeInMillis() < setting.getTimeInMillis()) {
+                    rising.add(Calendar.MILLISECOND, 24 * 60 * 60 * 1000);
+                }
+                long duration = (rising.getTimeInMillis() - setting.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() - (-fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() + (-fraction * duration)));
+            }
+        }
     }
 
     /**

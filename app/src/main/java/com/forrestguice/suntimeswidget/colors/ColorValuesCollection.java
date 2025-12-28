@@ -21,47 +21,29 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
+import android.preference.PreferenceManager;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class ColorValuesCollection<T extends ColorValues> implements Parcelable
+public abstract class ColorValuesCollection<T extends ColorValues> implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String KEY_COLLECTION = "colorValuesCollection";
     public static final String KEY_SELECTED = "selectedColors";
 
     public ColorValuesCollection() {}
     public ColorValuesCollection(Context context) {
         loadCollection(getCollectionSharedPreferences(context));
-    }
-    protected ColorValuesCollection(Parcel in)
-    {
-        collection = new TreeSet<>();
-        List<String> items = new ArrayList<>();
-        in.readStringList(items);
-        collection.addAll(items);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        List<String> items = new ArrayList<>(collection);
-        dest.writeStringList(items);
-    }
-
-    @Override
-    public int describeContents(){
-        return 0;
     }
 
     protected Set<String> collection = new TreeSet<String>();
@@ -87,21 +69,21 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getDefaultColors(context, colorsID);
         if (!isDefaultColorID(colorsID)) {
-            values.loadColorValues(prefs, prefix);
+            ColorValuesStorage.loadColorValues(values, prefs, prefix);
         }
         return values;
     }
     protected void saveColors(SharedPreferences prefs, String colorsID, ColorValues values)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-        values.putColorsInto(prefs, prefix);
+        ColorValuesStorage.putColorsInto(values, prefs, prefix);
     }
     protected void removeColors(Context context, SharedPreferences prefs, String colorsID)
     {
         String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
         ColorValues values = getColors(context, prefix);
         if (values != null) {
-            values.removeColorsFrom(prefs, prefix);
+            ColorValuesStorage.removeColorsFrom(values, prefs, prefix);
         }
     }
 
@@ -261,7 +243,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
             } else {
                 SharedPreferences prefs = getCollectionSharedPreferences(context);
                 String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-                return ColorValues.loadColorValuesLabel(prefs, prefix);
+                return ColorValuesStorage.loadColorValuesLabel(prefs, prefix);
             }
         } else return null;
     }
@@ -288,7 +270,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Pa
             } else {
                 SharedPreferences prefs = getCollectionSharedPreferences(context);
                 String prefix = getCollectionSharedPrefsPrefix() + colorsID + "_";
-                return ColorValues.loadColorValuesColors(prefs, prefix, defaultValue, keys);
+                return ColorValuesStorage.loadColorValuesColors(prefs, prefix, defaultValue, keys);
             }
 
         } else return new int[] { defaultValue };

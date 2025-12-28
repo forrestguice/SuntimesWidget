@@ -29,18 +29,24 @@ import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,7 +74,7 @@ public class SuntimesNotes
 
     public SuntimesNotes(Context context)
     {
-        colors = new CardColorValues(context);
+        colors = new CardColorValues(AndroidResources.wrap(context));
         changedListener = new NoteChangedListener()
         {
             @Override
@@ -188,9 +194,9 @@ public class SuntimesNotes
             notesList.add(note);
         }
 
-        for (String eventID : EventSettings.loadVisibleEvents(context)) {
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING));
-            notesList.add(createNote(eventID + "_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING));
+        for (String eventID : EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context))) {
+            notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_RISING));
+            notesList.add(createNote(eventID + "_" + ElevationEvent.SUFFIX_SETTING));
         }
 
         updateNotes(dataset.now());
@@ -544,16 +550,17 @@ public class SuntimesNotes
             }
 
         } else {
-            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
+            boolean isRising = eventID.endsWith(ElevationEvent.SUFFIX_RISING);
             String eventID0 = new String(eventID);
-            if (eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
-                eventID0.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            if (eventID0.endsWith("_" + ElevationEvent.SUFFIX_RISING) ||
+                eventID0.endsWith("_" + ElevationEvent.SUFFIX_SETTING)) {
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));
             }
 
-            if (EventSettings.hasEvent(context, eventID0))
+            EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
+            if (EventSettings.hasEvent(contextInterface, eventID0))
             {
-                EventSettings.EventAlias event = EventSettings.loadEvent(context, eventID0);
+                EventAlias event = EventSettings.loadEvent(contextInterface, eventID0);
                 if (event != null)
                 {
                     int[] iconAttr = { R.attr.sunriseIconLarge, R.attr.sunsetIconLarge };
@@ -563,12 +570,15 @@ public class SuntimesNotes
 
                     iconStroke = strokeWidthSetting;
                     noteString = event.getLabel();
-                    iconColor = iconColor2 = textColor = event.getColor();
+                    iconColor = iconColor2 = textColor = colors.getColor(isRising
+                            ? CardColorValues.COLOR_RISING_SUN_TEXT
+                            : CardColorValues.COLOR_SETTING_SUN_TEXT);  // event.getColor();  // may lack required contrast
+                    Log.d("DEBUG", "note: " + eventID + "; " + eventID0 + "::" + noteString);
                 }
             }
         }
 
-        SuntimesUtils.TimeDisplayText timeString = new SuntimesUtils.TimeDisplayText();
+        TimeDisplayText timeString = new TimeDisplayText();
         return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
     }
 
@@ -651,7 +661,7 @@ public class SuntimesNotes
                 case SUNRISE: case MORNING_GOLDEN: case NOON: case MIDNIGHT: case EVENING_GOLDEN:
                 case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
-                    WidgetSettings.TimeMode mode = SolarEvents.toTimeMode(event);
+                    TimeMode mode = SolarEvents.toTimeMode(event);
                     if (mode != null)
                     {
                         SuntimesRiseSetData d = dataset.getData(mode.name());
@@ -665,9 +675,9 @@ public class SuntimesNotes
 
         } else {
             String eventID = note.noteMode;
-            boolean isRising = eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING);
-            if (eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_RISING) ||
-                    eventID.endsWith("_" + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+            boolean isRising = eventID.endsWith(ElevationEvent.SUFFIX_RISING);
+            if (eventID.endsWith("_" + ElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + ElevationEvent.SUFFIX_SETTING)) {
                 eventID = eventID.substring(0, eventID.lastIndexOf("_"));
             }
 

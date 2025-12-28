@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -352,7 +353,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     AlarmNotifications.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
-                    SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+                    TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
 
                     if (text_label != null)
                     {

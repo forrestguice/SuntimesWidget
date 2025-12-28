@@ -38,10 +38,11 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -1194,7 +1195,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         private Calendar lmt(Location location)
         {
             if (lmt == null) {
-                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(null, location));
+                lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(location));
             }
             return lmt;
         }
@@ -1388,8 +1389,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         }
 
         public boolean is24 = false;
-        public void setTimeFormat(Context context, WidgetSettings.TimeFormatMode timeFormat) {
-            is24 = ((timeFormat == WidgetSettings.TimeFormatMode.MODE_24HR) || (timeFormat == WidgetSettings.TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
+        public void setTimeFormat(Context context, TimeFormatMode timeFormat) {
+            is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
         }
 
         public Location location = null;
@@ -1412,7 +1413,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
 
         public void init(Context context)
         {
-            colors = new LineGraphColorValues(context);
+            colors = new LineGraphColorValues(AndroidResources.wrap(context));
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1425,13 +1426,13 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
         public void initDefaultDark(Context context)
         {
             init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
+            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), true));  // TODO: Resources
         }
 
         public void initDefaultLight(Context context)
         {
             init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
+            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), false));  // TODO: Resources
         }
 
         public void acquireDrawLock()

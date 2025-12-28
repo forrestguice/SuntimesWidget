@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -158,7 +157,7 @@ public class EventListFragment extends Fragment
         inflater.inflate(R.menu.eventlist, menu);
     }
 
-    public void showAddEventDialog(AlarmEventProvider.EventType type, Double angle, Double shadowLength, Double objectHeight) {
+    public void showAddEventDialog(EventType type, Double angle, Double shadowLength, Double objectHeight) {
         helper.addEvent(type, angle, shadowLength, objectHeight);
     }
 
@@ -172,11 +171,23 @@ public class EventListFragment extends Fragment
             //    return true;
 
             case R.id.addEvent_sunEvent:
-                showAddEventDialog(AlarmEventProvider.EventType.SUN_ELEVATION, null, null, null);
+                helper.addEvent(EventType.SUN_ELEVATION);
                 return true;
 
             case R.id.addEvent_shadowEvent:
-                showAddEventDialog(AlarmEventProvider.EventType.SHADOWLENGTH, null, null, null);
+                helper.addEvent(EventType.SHADOWLENGTH);
+                return true;
+
+            case R.id.addEvent_dayPercentEvent:
+                helper.addEvent(EventType.DAYPERCENT);
+                return true;
+
+            case R.id.addEvent_moonIllumEvent:
+                helper.addEvent(EventType.MOONILLUM);
+                return true;
+
+            case R.id.addEvent_moonEvent:
+                helper.addEvent(EventType.MOON_ELEVATION);
                 return true;
 
             case R.id.clearEvents:
@@ -240,10 +251,10 @@ public class EventListFragment extends Fragment
     }
 
     public void setLocation(Location value) {
-        getArgs().putParcelable(EXTRA_LOCATION, value);
+        getArguments().putSerializable(EXTRA_LOCATION, value);
     }
     public Location getLocation() {
-        return getArgs().getParcelable(EXTRA_LOCATION);
+        return (Location) getArguments().getSerializable(EXTRA_LOCATION);
     }
 
     private String[] typeFilter = null;

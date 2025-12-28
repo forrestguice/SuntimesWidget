@@ -30,7 +30,6 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -264,12 +264,12 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        outState.putParcelable("colorCollection", colorCollection);
+        outState.putSerializable("colorCollection", colorCollection);
         colorSheet.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
     protected void onRestoreInstanceState( Bundle savedState ) {
-        colorCollection = savedState.getParcelable("colorCollection");
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable("colorCollection");
     }
 
     @Override
