@@ -1,5 +1,36 @@
 ### ~
 
+### DEVELOP
+
+* adds additional digital clock widgets (fancy typeface).
+* adds map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
+* adds `widget preview` (and `share` action) to the widget configuration activity (#TODO).
+
+* adds `map location` picker to the location dialog; pick coordinates from the world map.
+* adds option to show/hide the location coordinates in the action bar.
+* adds option `label (alternate)` that displays alternate labels "dawn" and "dusk" in the main table.
+
+* adds `seek time` action to the sun, moon, and world map dialogs (#TODO).
+* adds `seek bar` to the sun dialog; tapping or dragging the lightmap or graph areas seeks to that time (#TODO).
+* adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek the time of twilight or events.
+* adds `seek altitude` and `seek shadow length` menus to the sun dialog; seek or add/manage custom events.
+* adds `10min`, `15min`, and `7d` step sizes to the sun dialog.
+* adds `7d` step size to the world map dialog.
+* adds `solar noon` option to the sun dialog; draw a line at solar noon.
+* adds `symbol` option to the sun dialog; display a "circle", "cross", "dot", or "line".
+
+* adds `sort places` action to the places activity; sort by label (ascending), label (descending), or nearest (to app location).
+* improves the `search places` action; adds descriptive tags/icons to the default world places.
+* enhances the places activity dialog; adds `gps menu`, `gps status` views, `reload agps`, and `average location` actions (#TODO).
+* adds permission `android.permission.ACCESS_LOCATION_EXTRA_COMMANDS`; required to reload agps data [PERMISSION].
+* adds `last update` location debug information to place settings; time of last update, location provider, accuracy, time elapsed, and number of satellites (#TODO).
+* fixes bug where location accuracy is potentially affected by stale providers (#TODO).
+
+* adds `snooze` chip to the alarm edit dialog that allows setting the snooze length per alarm.
+* adds `snooze limit` chip to the alarm edit dialog that allows setting the snooze limit per alarm.
+
+* build; adds `fdroid` and `nightly` build flavors.
+
 ### v0.16.11 (2025-10-12)
 * fixes bug where "show map" and "share place" actions don't include the full list of supporting apps.
 * fixes bug where content provider reports incorrect version information.
