@@ -1,0 +1,1 @@
+- fixes bug where US English strings are displayed for other English locales. (#902)
