@@ -570,12 +570,12 @@ public class SuntimesNotes
 
                     iconStroke = strokeWidthSetting;
                     noteString = event.getLabel();
-                    iconColor = iconColor2 = textColor = event.getColor();
+                    iconColor = iconColor2 = textColor = colors.getColor(isRising
+                            ? CardColorValues.COLOR_RISING_SUN_TEXT
+                            : CardColorValues.COLOR_SETTING_SUN_TEXT);  // event.getColor();  // may lack required contrast
+                    Log.d("DEBUG", "note: " + eventID + "; " + eventID0 + "::" + noteString);
                 }
             }
-        }
-        if (noteString == null) {
-            Log.w("DEBUG", "SuntimesNotes.noteString is null! " + eventID0 + ", hasEvent? " + EventSettings.hasEvent(contextInterface, eventID0));
         }
 
         TimeDisplayText timeString = new TimeDisplayText();
