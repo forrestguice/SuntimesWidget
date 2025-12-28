@@ -36,12 +36,16 @@ public class PlaceTags
 
     public static final String[] DEFAULT_TAGS = new String[] { TAG_DEFAULT, TAG_CAPITAL, TAG_MISC, TAG_GPS, TAG_SUMMIT };
 
-    public static final int[] ALL_TAG_ARRAYS = new int[] { R.array.place_tags,
-            R.array.place_tags_AR, R.array.place_tags_AU, R.array.place_tags_BO, R.array.place_tags_BR,
-            R.array.place_tags_CA, R.array.place_tags_CN, R.array.place_tags_CO, R.array.place_tags_CL,
-            R.array.place_tags_EC, R.array.place_tags_ES, R.array.place_tags_FR, R.array.place_tags_GB,
-            R.array.place_tags_IN, R.array.place_tags_MX, R.array.place_tags_PE, R.array.place_tags_RU,
-            R.array.place_tags_US, R.array.place_tags_VE } ;
+    public static final int[] ALL_TAG_ARRAYS = new int[] {
+            R.array.place_tags, R.array.place_tags_AR, R.array.place_tags_AU,
+            R.array.place_tags_BE, R.array.place_tags_BO, R.array.place_tags_BR,
+            R.array.place_tags_CA, R.array.place_tags_CL, R.array.place_tags_CN, R.array.place_tags_CO,
+            R.array.place_tags_DE, R.array.place_tags_EC, R.array.place_tags_ES,
+            R.array.place_tags_FI, R.array.place_tags_FR, R.array.place_tags_GB, R.array.place_tags_GR,
+            R.array.place_tags_IN, R.array.place_tags_IT, R.array.place_tags_NL, R.array.place_tags_NO,
+            R.array.place_tags_MX, R.array.place_tags_PE, R.array.place_tags_PL, R.array.place_tags_PT,
+            R.array.place_tags_RU, R.array.place_tags_US, R.array.place_tags_VE
+    };
 
     public static HashMap<String, String> loadTagMap(Context context) {
         return loadTagMap(context, null, ALL_TAG_ARRAYS);
