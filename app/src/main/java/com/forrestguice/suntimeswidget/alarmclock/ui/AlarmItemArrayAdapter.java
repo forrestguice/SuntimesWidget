@@ -94,7 +94,6 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     public AlarmItemArrayAdapter(Context context)
     {
         super(context, R.layout.layout_listitem_alarmclock);
-        this.resource = resource;
         initAdapter(context);
         this.items = new ArrayList<>();
     }
