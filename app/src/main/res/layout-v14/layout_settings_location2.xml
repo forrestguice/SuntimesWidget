@@ -67,14 +67,14 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:layout_gravity="center_vertical">
 
-                <ImageButton android:id="@+id/appwidget_location_list"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_list"
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionPlace"
                     android:contentDescription="@string/configAction_selectPlace"
                     android:nextFocusUp="@+id/appwidget_location_mode" />
 
-                <ImageButton android:id="@+id/appwidget_location_cancel"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_cancel"
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionBack"
@@ -83,7 +83,7 @@
                 <FrameLayout android:id="@+id/appwidget_location_auto_layout"
                     android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-                    <ImageButton android:id="@+id/appwidget_location_auto"
+                    <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_auto"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         style="@android:style/Widget.ActionButton"
                         android:src="?attr/icActionGPS"
@@ -131,20 +131,20 @@
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:orientation="horizontal" android:layout_gravity="center_vertical">
 
-                <ImageButton android:id="@+id/appwidget_location_add"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_add"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     style="@android:style/Widget.ActionButton"
                     android:src="?attr/icActionNew"
                     android:contentDescription="@string/configAction_addPlace" />
 
-                <ImageButton android:id="@+id/appwidget_location_edit"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
                              android:src="?attr/icActionEdit"
                              android:contentDescription="@string/configAction_editPlace"
                              android:nextFocusUp="@+id/appwidget_location_mode" />
 
-                <ImageButton android:id="@+id/appwidget_location_save"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_save"
                              style="@android:style/Widget.ActionButton"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:src="?attr/icActionSave"
@@ -255,13 +255,13 @@
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:orientation="vertical" android:layout_gravity="center">
 
-                            <ImageButton android:id="@+id/appwidget_location_getfix"
+                            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_getfix"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:src="?attr/icActionGPS_searching"
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/configAction_getFix" />
 
-                            <ImageButton android:id="@+id/appwidget_location_mapview"
+                            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_mapview"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:src="?attr/icActionWorldMap"
                                 android:layout_gravity="center"

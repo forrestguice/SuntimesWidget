@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
-        <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:src="?attr/icActionBack"
             android:contentDescription="@string/dialog_cancel" />
@@ -39,7 +39,7 @@
 
         </LinearLayout>
 
-        <ImageButton android:id="@+id/dialog_button_accept"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_accept"
             style="@style/ActionButton" android:contentDescription="@string/timedate_dialog_ok"
             android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
             android:src="?attr/icActionAccept"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:minHeight="50dp" />
 
-        <ImageButton android:id="@+id/info_time_worldmap_marker"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/info_time_worldmap_marker"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="16dp" android:layout_height="16dp"
             android:padding="0dp" android:layout_margin="0dp"

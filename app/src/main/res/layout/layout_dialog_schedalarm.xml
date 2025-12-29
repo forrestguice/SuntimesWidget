@@ -60,7 +60,7 @@
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <ImageButton android:id="@+id/appwidget_schedalarm_more"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_schedalarm_more"
                     style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/configAction_options"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" />
 

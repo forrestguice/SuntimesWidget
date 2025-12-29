@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/info_time_worldmap_layout"
         app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/map_modemenu"
         android:layout_width="0dp" android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"

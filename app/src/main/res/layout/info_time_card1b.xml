@@ -56,7 +56,7 @@
                     android:orientation="horizontal" android:layout_gravity="end|bottom"
                     android:padding="3dp">
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_prevbtn"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -65,7 +65,7 @@
                         android:padding="4dp"
                         android:contentDescription="@string/prevDay" />
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_nextbtn"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"

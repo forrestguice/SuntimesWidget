@@ -73,7 +73,7 @@
             android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
             android:text="@string/worldmap_dialog_speed_15m" android:gravity="center" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/map_modemenu"
             android:layout_width="48dp" android:layout_height="48dp"
             android:background="?attr/selectableItemBackground"
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:gravity="center_vertical" android:orientation="horizontal">
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/media_prev_map"
                     android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                     android:paddingTop="8dp" android:paddingBottom="8dp"
@@ -144,7 +144,7 @@
                     android:minLines="2" android:maxLines="3"
                     tools:text="30m\nfrom now" android:gravity="center_horizontal" />
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/media_next_map"
                     android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                     android:paddingTop="8dp" android:paddingBottom="8dp"
@@ -164,7 +164,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/media_reset_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:paddingTop="8dp" android:paddingBottom="8dp"
@@ -174,7 +174,7 @@
                 android:contentDescription="@string/worldmap_dialog_action_reset"
                 android:src="?attr/icActionTimeReset" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/media_play_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
@@ -184,7 +184,7 @@
                 android:contentDescription="@string/worldmap_dialog_action_play"
                 android:src="?attr/icActionPlay" />
 
-            <ImageButton android:visibility="gone"
+            <com.forrestguice.support.widget.ImageButton android:visibility="gone"
                 android:id="@+id/media_pause_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
@@ -194,7 +194,7 @@
                 android:contentDescription="@string/worldmap_dialog_action_pause"
                 android:src="?attr/icActionPause" />
 
-            <ImageButton android:visibility="gone"
+            <com.forrestguice.support.widget.ImageButton android:visibility="gone"
                 android:id="@+id/media_record_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
@@ -208,7 +208,7 @@
                 android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="1dp" android:background="@color/transparent" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/map_menu"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"

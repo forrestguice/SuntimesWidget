@@ -35,7 +35,7 @@
             android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
             tools:listitem="@layout/layout_listitem_alarmtype" />
 
-        <ImageButton android:id="@+id/dialog_button_accept"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_accept"
             style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/schedalarm_dialog_ok"
             android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
             android:src="?attr/icActionAccept"
@@ -73,7 +73,7 @@
         <include layout="@layout/layout_listitem_alarmtime"
             android:layout_marginTop="8dp" android:layout_height="wrap_content" android:layout_width="match_parent" />
 
-        <ImageButton android:id="@+id/dialog_button_alarms"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_alarms"
             style="?attr/actionOverflowButtonStyle"
             android:contentDescription="@string/app_name_alarmclock"
             android:layout_width="wrap_content" android:layout_height="wrap_content"

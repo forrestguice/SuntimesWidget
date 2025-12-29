@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/text_date_equinox_vernal_label"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton android:visibility="gone"
+    <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/info_time_prevbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         android:contentDescription="@string/prevYear" />
 
-    <ImageButton android:visibility="gone"
+    <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/info_time_nextbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -117,7 +117,7 @@
                 android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
-        <ImageButton android:visibility="gone"
+        <com.forrestguice.support.widget.ImageButton android:visibility="gone"
             android:id="@+id/menu_equinox_vernal"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
@@ -179,7 +179,7 @@
                 android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/menu_solstice_summer"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
@@ -243,7 +243,7 @@
                 android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
-        <ImageButton android:visibility="gone"
+        <com.forrestguice.support.widget.ImageButton android:visibility="gone"
             android:id="@+id/menu_equinox_autumnal"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
@@ -305,7 +305,7 @@
                 android:textSize="?attr/text_size_small" android:antialias="true"
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
-        <ImageButton android:visibility="gone"
+        <com.forrestguice.support.widget.ImageButton android:visibility="gone"
             android:id="@+id/menu_solstice_winter"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"

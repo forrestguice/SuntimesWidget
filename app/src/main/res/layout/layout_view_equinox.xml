@@ -39,7 +39,7 @@
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_prevbtn1"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
@@ -55,7 +55,7 @@
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_nextbtn1"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
@@ -101,7 +101,7 @@
 
                 </LinearLayout>
 
-                <ImageButton android:id="@+id/menu_button"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
                     android:layout_width="48dp" android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"

@@ -38,7 +38,7 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical">
 
-                <ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionBack"
                     android:contentDescription="@string/dialog_cancel" />
@@ -68,7 +68,7 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical">
 
-                <ImageButton android:id="@+id/save_button" style="@style/ActionButton"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/save_button" style="@style/ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionSave"
                     android:contentDescription="@string/configAction_saveEvent" />
