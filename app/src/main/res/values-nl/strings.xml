@@ -154,7 +154,7 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since"></string>
+    <string name="since" />
     <string name="until">tot</string>
     <string name="until_end">tot einde</string>
 
