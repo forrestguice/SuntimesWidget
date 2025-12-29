@@ -23,7 +23,7 @@
     android:orientation="vertical" android:id="@+id/root_layout"
     android:animateLayoutChanges="true">
 
-    <android.support.design.widget.AppBarLayout
+    <com.forrestguice.support.widget.AppBarLayout
         android:id="@+id/layout_app_menubar"
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -32,7 +32,7 @@
             app:navigationIcon="?attr/icActionWidgets"
             app:title="" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.forrestguice.support.widget.AppBarLayout>
 
     <com.forrestguice.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"

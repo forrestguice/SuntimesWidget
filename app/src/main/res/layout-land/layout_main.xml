@@ -27,7 +27,7 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                   android:orientation="vertical" >
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -35,7 +35,7 @@
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <com.forrestguice.support.constraint.ConstraintLayout
             android:layout_width="match_parent" android:layout_height="match_parent"

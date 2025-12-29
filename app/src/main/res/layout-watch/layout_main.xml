@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <!-- Action Bar -->
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -26,7 +26,7 @@
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"

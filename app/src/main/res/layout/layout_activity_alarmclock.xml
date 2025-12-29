@@ -25,7 +25,7 @@
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<android.support.design.widget.AppBarLayout
+		<com.forrestguice.support.widget.AppBarLayout
 			android:id="@+id/layout_app_menubar"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
             	app:layout_constraintEnd_toEndOf="parent"
             	app:layout_constraintTop_toTopOf="parent" />
 
-		</android.support.design.widget.AppBarLayout>
+		</com.forrestguice.support.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="0dp"

@@ -29,7 +29,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -37,7 +37,7 @@
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/configLabel_widgetThemeListSelect" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <GridView android:id="@+id/themegrid"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"

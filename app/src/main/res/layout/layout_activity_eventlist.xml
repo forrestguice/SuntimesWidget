@@ -23,7 +23,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -32,7 +32,7 @@
                 app:title="@string/eventlist_dialog_title"
                 app:popupTheme="?attr/actionBarPopupTheme" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragmentContainer"
