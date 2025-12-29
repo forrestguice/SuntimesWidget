@@ -74,7 +74,6 @@ import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

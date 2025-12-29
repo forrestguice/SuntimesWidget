@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
@@ -43,9 +41,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class AboutActivity extends AppCompatActivity
 {

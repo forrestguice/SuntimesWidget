@@ -28,7 +28,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.location.Location;
@@ -92,7 +91,6 @@ import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
-import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 

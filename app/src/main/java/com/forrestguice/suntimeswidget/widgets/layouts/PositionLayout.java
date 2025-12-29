@@ -24,8 +24,6 @@ import android.text.SpannableString;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
-import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.util.text.TimeDisplayText;
 

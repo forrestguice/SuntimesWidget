@@ -37,12 +37,10 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;

@@ -19,18 +19,6 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.forrestguice.suntimeswidget.ExportTask;
-
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * This task writes one or more (worldmap) bitmaps to zip file.

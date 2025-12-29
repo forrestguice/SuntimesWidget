@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;

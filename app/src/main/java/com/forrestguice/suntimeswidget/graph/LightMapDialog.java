@@ -73,12 +73,10 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
-import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
@@ -98,7 +96,6 @@ import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
-import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -115,8 +112,6 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
-
-import net.time4j.calendar.astro.SolarTime;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

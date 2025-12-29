@@ -7,7 +7,6 @@ import org.junit.experimental.categories.Category;
 import android.support.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;

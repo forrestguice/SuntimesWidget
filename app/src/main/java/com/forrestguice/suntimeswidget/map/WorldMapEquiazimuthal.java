@@ -25,12 +25,9 @@ import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 

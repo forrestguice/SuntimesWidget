@@ -52,7 +52,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
-import static org.hamcrest.CoreMatchers.not;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.TimeZone;

@@ -70,7 +70,6 @@ import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.timepicker.TimeDateDialog;
 import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
-import com.forrestguice.suntimeswidget.timepicker.TimeDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 

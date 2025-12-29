@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;

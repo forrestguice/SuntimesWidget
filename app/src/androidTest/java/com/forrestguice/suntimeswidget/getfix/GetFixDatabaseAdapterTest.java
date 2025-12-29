@@ -24,14 +24,12 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import org.junit.Before;
 import org.junit.Test;

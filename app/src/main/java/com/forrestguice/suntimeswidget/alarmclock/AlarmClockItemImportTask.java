@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;

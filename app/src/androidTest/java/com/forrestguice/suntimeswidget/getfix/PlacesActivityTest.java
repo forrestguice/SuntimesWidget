@@ -67,7 +67,6 @@ import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatch
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest

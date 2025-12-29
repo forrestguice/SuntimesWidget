@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;

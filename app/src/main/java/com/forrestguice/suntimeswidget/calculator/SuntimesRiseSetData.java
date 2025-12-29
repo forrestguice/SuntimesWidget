@@ -18,10 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;

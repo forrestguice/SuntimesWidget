@@ -24,11 +24,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;

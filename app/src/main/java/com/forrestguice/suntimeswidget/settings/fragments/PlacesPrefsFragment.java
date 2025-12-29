@@ -56,7 +56,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.GetFixTask;
-import com.forrestguice.suntimeswidget.getfix.LocationHelper;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;

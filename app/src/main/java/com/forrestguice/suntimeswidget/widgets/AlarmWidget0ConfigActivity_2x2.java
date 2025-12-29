@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 

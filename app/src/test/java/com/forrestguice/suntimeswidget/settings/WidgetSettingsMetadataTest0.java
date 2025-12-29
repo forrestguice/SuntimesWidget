@@ -18,9 +18,6 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.content.ContentValues;
-import android.support.annotation.NonNull;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

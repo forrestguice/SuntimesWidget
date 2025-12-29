@@ -72,7 +72,6 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertNotChecked;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withIndex;
-import static junit.framework.Assert.assertTrue;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;

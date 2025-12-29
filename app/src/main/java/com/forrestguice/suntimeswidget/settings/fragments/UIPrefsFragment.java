@@ -56,7 +56,6 @@ import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
-import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;

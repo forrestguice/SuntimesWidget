@@ -23,7 +23,6 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
 
 /**
  *  Alarm widget 2x2

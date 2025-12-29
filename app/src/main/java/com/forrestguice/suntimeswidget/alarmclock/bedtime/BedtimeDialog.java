@@ -58,8 +58,6 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
-import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
