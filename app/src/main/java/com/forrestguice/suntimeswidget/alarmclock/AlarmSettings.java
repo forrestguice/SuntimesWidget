@@ -984,7 +984,7 @@ public class AlarmSettings
                 prefs.getBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, false));
     }
     public static void savePrefLastBootCompleted(Context context, BootCompletedInfo info) {
-        savePrefLastBootCompleted(context, new BootCompletedInfo(info.getTimeMillis(), info.getAtElapsedMillis(), info.getDurationMillis(), info.getResult()));
+        savePrefLastBootCompleted(context, info.getTimeMillis(), info.getAtElapsedMillis(), info.getDurationMillis());
     }
     public static void savePrefLastBootCompleted(Context context, long timeMillis, long atElapsedMillis, long durationMillis) {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
