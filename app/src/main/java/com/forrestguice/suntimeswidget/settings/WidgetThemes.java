@@ -190,7 +190,7 @@ public class WidgetThemes
 
     public static ThemeDescriptor[] values()
     {
-        return themes.values().toArray(new ThemeDescriptor[themes.values().size()]);
+        return themes.values().toArray(new ThemeDescriptor[0]);
     }
 
     public static List<ThemeDescriptor> getValues()
@@ -201,7 +201,7 @@ public class WidgetThemes
     public static ThemeDescriptor[] sortedValues(boolean defaultsFirst)
     {
         List<SuntimesTheme.ThemeDescriptor> themeDefs = getSortedValues(defaultsFirst);
-        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[themeDefs.size()]);
+        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[0]);
     }
 
     public static List<ThemeDescriptor> getSortedValues(final boolean defaultsFirst)
