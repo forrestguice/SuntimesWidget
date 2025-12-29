@@ -77,7 +77,6 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirec
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 

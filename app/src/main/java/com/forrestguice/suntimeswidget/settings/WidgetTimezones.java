@@ -48,9 +48,7 @@ import android.graphics.drawable.GradientDrawable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -174,7 +172,7 @@ public class WidgetTimezones
     public static TimeZone localMeanTime(Location location) {
         return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), TimeZones.LocalMeanTime.TIMEZONEID);
     }
-    
+
     ///////////////////////////////////////
     ///////////////////////////////////////
 

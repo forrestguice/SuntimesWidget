@@ -33,7 +33,6 @@ import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import org.junit.Before;
 
