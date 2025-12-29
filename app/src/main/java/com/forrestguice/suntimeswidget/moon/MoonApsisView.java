@@ -35,6 +35,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -616,7 +617,7 @@ public class MoonApsisView extends LinearLayout
                 labelView.setText(context.getString(isRising ? R.string.label_apogee : R.string.label_perigee));
                 timeView.setText(utils.calendarDateTimeDisplayString(context, apsis.first, showTime, showSeconds).getValue());
                 noteView.setText(createApsisNote(context, apsis.first, showWeeks, showHours, timeColor));
-                positionView.setText(SuntimesUtils.formatAsDistance(context, SuntimesUtils.formatAsDistance(context, apsis.second.distance, units, 2, true)));
+                positionView.setText(SuntimesUtils.formatAsDistance(context, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), apsis.second.distance, units, 2, true)));
 
                 timeView.setVisibility(View.VISIBLE);
                 noteView.setVisibility(View.VISIBLE);

@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.SimpleDateFormat;
@@ -95,7 +96,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         {
             case ClockFaceOptions.STYLE_DIGITAL0:
                 TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-                TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+                TimeDisplayText nowText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false, timeFormat);
                 return nowText.getValue();
 
             case ClockFaceOptions.STYLE_DIGITAL1:

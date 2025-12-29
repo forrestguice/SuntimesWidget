@@ -103,6 +103,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -3758,8 +3759,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     public static class TimeModeAdapter extends ModeAdapterBase<RiseSetDataMode>
     {
-        private final SuntimesUtils utils = new SuntimesUtils();
-        private WeakReference<Context> contextRef;
+        private final AngleDisplay utils = new AngleDisplay();
+        private final WeakReference<Context> contextRef;
 
         public TimeModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);

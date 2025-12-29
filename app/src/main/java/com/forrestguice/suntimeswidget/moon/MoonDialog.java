@@ -46,6 +46,7 @@ import android.text.style.ImageSpan;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -595,7 +596,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ColorValues colors = moonapsis.getColors();
                 int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
                 int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
-                TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
+                TimeDisplayText distance = LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), position.distance, units, 2, true);
                 moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))

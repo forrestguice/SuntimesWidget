@@ -78,6 +78,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;
@@ -3046,6 +3048,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
      */
     public static class LightMapKeyInfo
     {
+        private static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
+
         public LightMapKeyInfo(long duration, long delta)
         {
             this.duration = duration;

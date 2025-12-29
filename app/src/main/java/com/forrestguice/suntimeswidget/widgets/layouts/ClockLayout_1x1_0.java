@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -80,7 +81,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     protected void updateTimeViews(Context context, int appWidgetId, RemoteViews views, Calendar now)
     {
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+        TimeDisplayText nowText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false, timeFormat);
         String nowString = nowText.getValue();
 
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
@@ -179,7 +180,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             if (offset != null)
             {
-                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+                TimeDisplayText offsetText = time_utils1.timeDeltaLongDisplayString(0L, offset, false, false, true);
                 String offsetString = (offsetText.getRawValue() < 0 ? "-" : "+") + offsetText.getValue();
                 String extrasString = context.getString(stringResID, offsetString);
                 SpannableString boldedExtrasSpan = SuntimesUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);

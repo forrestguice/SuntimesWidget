@@ -60,6 +60,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -70,6 +71,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.File;
@@ -1741,7 +1743,7 @@ public class PlacesListFragment extends Fragment
                     Location location0 = WidgetSettings.loadLocationPref(context, 0);
                     LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                     double d = item.location.distanceTo(location0);
-                    distance.setText(context != null ? SuntimesUtils.formatAsDistance(context, d, units, 2, true).toString() : "");
+                    distance.setText(context != null ? LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), d, units, 2, true).toString() : "");
                 }
                 distance.setVisibility(sortMode == SORT_BY_PROXIMITY ? View.VISIBLE : View.GONE);
             }
