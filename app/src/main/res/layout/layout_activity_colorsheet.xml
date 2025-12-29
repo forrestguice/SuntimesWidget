@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <android.support.design.widget.CoordinatorLayout android:id="@+id/layout_background"
+    <com.forrestguice.support.widget.CoordinatorLayout android:id="@+id/layout_background"
         android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
 
         <LinearLayout
@@ -26,5 +26,5 @@
 
         </LinearLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </com.forrestguice.support.widget.CoordinatorLayout>
 </merge>

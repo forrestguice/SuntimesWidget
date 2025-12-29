@@ -21,7 +21,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:openDrawer="start">
 
-<android.support.design.widget.CoordinatorLayout
+<com.forrestguice.support.widget.CoordinatorLayout
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout
@@ -155,7 +155,7 @@
         </LinearLayout>
 
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.widget.CoordinatorLayout>
 
 <include layout="@layout/nav_main" />
 </android.support.v4.widget.DrawerLayout>
