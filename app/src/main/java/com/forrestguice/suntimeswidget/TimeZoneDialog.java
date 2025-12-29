@@ -1010,7 +1010,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);

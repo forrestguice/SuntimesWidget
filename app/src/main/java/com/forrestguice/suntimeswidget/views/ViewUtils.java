@@ -122,7 +122,7 @@ public class ViewUtils
             FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
             if (layout != null)
             {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
                 View divider1 = bottomSheet.findViewById(bottomViewResId);
                 if (divider1 != null)
                 {

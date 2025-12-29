@@ -152,7 +152,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private FloatingActionButton addButton;
     private FloatingActionButton deselectButton;
-    private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehavior<?> sheetBehavior;
     private SuntimesNavigation navigation;
 
     private SuntimesWarningCollection warnings;

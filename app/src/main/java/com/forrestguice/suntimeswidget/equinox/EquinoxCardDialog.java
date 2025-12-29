@@ -220,7 +220,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
             if (bottomSheet != null) {
                 bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
@@ -229,14 +229,14 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
             if (bottomSheet != null) {
                 bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         }
     }
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    private BottomSheetBehavior<?> initSheet(DialogInterface dialog)
     {
         if (dialog != null)
         {
@@ -244,7 +244,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
             if (layout != null)
             {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
                 ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);

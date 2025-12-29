@@ -212,7 +212,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private void expandSheet(DialogInterface dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
             if (bottomSheet != null) {
                 bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
@@ -221,7 +221,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     private void collapseSheet(Dialog dialog)
     {
         if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
             if (bottomSheet != null) {
                 bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
@@ -229,7 +229,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
     public boolean isCollapsed()
     {
-        BottomSheetBehavior bottomSheet = initSheet(getDialog());
+        BottomSheetBehavior<?> bottomSheet = initSheet(getDialog());
         if (bottomSheet != null) {
             return (bottomSheet.getState() == BottomSheetBehavior.STATE_COLLAPSED);
         }
@@ -237,7 +237,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    private BottomSheetBehavior<?> initSheet(DialogInterface dialog)
     {
         if (dialog != null)
         {
@@ -245,7 +245,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
             if (layout != null)
             {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
                 return behavior;
@@ -264,7 +264,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
             ViewGroup dialogLayout = (LinearLayout) bottomSheet.findViewById(R.id.moondialog_layout);
             View divider1 = bottomSheet.findViewById(R.id.divider1);
             if (dialogLayout != null && divider1 != null)

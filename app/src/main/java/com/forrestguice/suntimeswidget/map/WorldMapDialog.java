@@ -208,7 +208,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
@@ -226,7 +226,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(false);
             behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));

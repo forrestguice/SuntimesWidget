@@ -203,7 +203,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
             FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
             if (layout != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(false);
                 behavior.setPeekHeight(200);

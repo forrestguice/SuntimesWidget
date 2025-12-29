@@ -756,7 +756,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
             if (layout != null)
             {
-                final BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                final BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
                 behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
                 layout.postDelayed(new Runnable() {
                     @Override
