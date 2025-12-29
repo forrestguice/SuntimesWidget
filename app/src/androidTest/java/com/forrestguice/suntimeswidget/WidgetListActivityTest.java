@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivityTest;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivityTest;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;

@@ -14,6 +14,6 @@
 
     android:updatePeriodMillis="@integer/widget_updateInterval"
     android:widgetFeatures="reconfigurable"
-    android:configure="com.forrestguice.suntimeswidget.MoonWidget0ConfigActivity_2x1">
+    android:configure="com.forrestguice.suntimeswidget.widgets.MoonWidget0ConfigActivity_2x1">
 
 </appwidget-provider>

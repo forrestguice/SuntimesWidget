@@ -206,7 +206,7 @@
 
         <!-- Widget List Activity -->
         <activity
-            android:name=".SuntimesWidgetListActivity"
+            android:name=".widgets.SuntimesWidgetListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
             android:permission="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
@@ -492,7 +492,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0"
+        <receiver android:name=".widgets.SuntimesWidget0"
                   android:exported="true"
                   android:label="@string/app_name_widget0"
                   android:icon="@mipmap/ic_launcher">
@@ -510,7 +510,7 @@
         </receiver>
         
         <activity
-            android:name=".SuntimesConfigActivity0"
+            android:name=".widgets.SuntimesConfigActivity0"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -520,7 +520,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_2x1: Resizable (falls back to static 2x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0_2x1"
+        <receiver android:name=".widgets.SuntimesWidget0_2x1"
                   android:exported="true"
                   android:label="@string/app_name_widget0"
                   android:icon="@mipmap/ic_launcher">
@@ -538,7 +538,7 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_2x1"
+            android:name=".widgets.SuntimesConfigActivity0_2x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -548,7 +548,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_3x1: Resizable (falls back to static 3x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0_3x1"
+        <receiver android:name=".widgets.SuntimesWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_widget0"
             android:icon="@mipmap/ic_launcher">
@@ -566,7 +566,7 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_3x1"
+            android:name=".widgets.SuntimesConfigActivity0_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -577,7 +577,7 @@
         <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver
-            android:name=".SuntimesWidget1"
+            android:name=".widgets.SuntimesWidget1"
             android:exported="true"
             android:enabled="@bool/api_post_14"
             android:label="@string/app_name_widget1"
@@ -597,13 +597,13 @@
 
         <!-- Widget 1 Service: Flippable widget [requires api 14+] -->
         <service
-            android:name=".SuntimesWidget1Service"
+            android:name=".widgets.SuntimesWidget1Service"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:enabled="@bool/api_post_14" />
 
         <!-- Widget 1 Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity1"
+            android:name=".widgets.SuntimesConfigActivity1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -613,7 +613,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (1x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2"
+        <receiver android:name=".widgets.SuntimesWidget2"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_noon_large">
@@ -632,7 +632,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2"
+            android:name=".widgets.SuntimesConfigActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -642,7 +642,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x1"
+        <receiver android:name=".widgets.SuntimesWidget2_3x1"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_noon_large">
@@ -661,7 +661,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x1"
+            android:name=".widgets.SuntimesConfigActivity2_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -671,7 +671,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x2) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x2"
+        <receiver android:name=".widgets.SuntimesWidget2_3x2"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_action_map">    <!-- TODO: theme neutral icon -->
@@ -690,7 +690,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x2"
+            android:name=".widgets.SuntimesConfigActivity2_3x2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -700,7 +700,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x3) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x3"
+        <receiver android:name=".widgets.SuntimesWidget2_3x3"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_action_map">    <!-- TODO: theme neutral icon -->
@@ -719,7 +719,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x3"
+            android:name=".widgets.SuntimesConfigActivity2_3x3"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -729,7 +729,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Solstice / Equinox widget (resizable (falls back to static 1x1 for api less than 16)) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SolsticeWidget0"
+        <receiver android:name=".widgets.SolsticeWidget0"
                   android:exported="true"
                   android:label="@string/app_name_solsticewidget0"
                   android:icon="@drawable/ic_launcher_foreground">
@@ -748,7 +748,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SolsticeWidget0ConfigActivity"
+            android:name=".widgets.SolsticeWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -758,7 +758,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 1x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0"
+        <receiver android:name=".widgets.MoonWidget0"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -776,7 +776,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity"
+            android:name=".widgets.MoonWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -786,7 +786,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 2x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0_2x1"
+        <receiver android:name=".widgets.MoonWidget0_2x1"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -804,7 +804,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_2x1"
+            android:name=".widgets.MoonWidget0ConfigActivity_2x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -814,7 +814,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 3x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0_3x1"
+        <receiver android:name=".widgets.MoonWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -832,7 +832,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_3x1"
+            android:name=".widgets.MoonWidget0ConfigActivity_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -976,7 +976,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Clock (1x1)                                                               -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".ClockWidget0"
+        <receiver android:name=".widgets.ClockWidget0"
             android:exported="true"
             android:label="@string/app_name_clockwidget0"
             android:icon="@mipmap/ic_launcher_alarms">
@@ -994,7 +994,7 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity"
+            android:name=".widgets.ClockWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -1004,7 +1004,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Clock (3x1)                                                               -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".ClockWidget0_3x1"
+        <receiver android:name=".widgets.ClockWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_clockwidget0"
             android:icon="@mipmap/ic_launcher_alarms">
@@ -1022,7 +1022,7 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity_3x1"
+            android:name=".widgets.ClockWidget0ConfigActivity_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

@@ -48,23 +48,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.ClockWidget0;
-import com.forrestguice.suntimeswidget.ClockWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0;
-import com.forrestguice.suntimeswidget.MoonWidget0_2x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x2;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SolsticeWidget0;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_2x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x3;
 
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;

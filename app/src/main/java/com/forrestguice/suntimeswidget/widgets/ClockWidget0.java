@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget.widgets;
 
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,75 +27,78 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout_1x1_0;
 
 import java.util.Calendar;
 
 /**
- *  Date widget
+ *  Clock widget
  */
-public class DateWidget0 extends SuntimesWidget0
+public class ClockWidget0 extends SuntimesWidget0
 {
-    public static final String DATE_WIDGET_UPDATE = "suntimes.DATE_WIDGET_UPDATE";
+    public static final String CLOCK_WIDGET_UPDATE = "suntimes.CLOCK_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass() {
-        return DateWidget0ConfigActivity.class;
+    protected Class getConfigClass()
+    {
+        return ClockWidget0ConfigActivity.class;
     }
 
     @Override
-    protected String getUpdateIntentFilter() {
-        return DateWidget0.DATE_WIDGET_UPDATE;
+    protected String getUpdateIntentFilter()
+    {
+        return ClockWidget0.CLOCK_WIDGET_UPDATE;
     }
 
     @Override
-    protected long getUpdateInterval() {
-        return 1000 * 60 * 60;  // every hour   // TODO: schedule
+    protected long getUpdateInterval()
+    {
+        return 1000 * 60;  // every minute
     }
 
     @Override
-    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        DateWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, getMinSize(context));
+    protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        ClockWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, getMinSize(context));
     }
 
     protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
-        DateLayout layout = DateWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
-        DateWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
+        ClockLayout layout = ClockWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
+        ClockWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, DateLayout layout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, ClockLayout layout)
     {
-        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);  // TODO: data
+        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate(context);
-        layout.prepareForUpdate(context, appWidgetId, data);
+        layout.prepareForUpdate(context, appWidgetId, data, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
         RemoteViews views = layout.getViews(context);
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, DateWidget0.class));
+        views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, ClockWidget0.class));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(context, appWidgetId, views);
 
         Calendar nextUpdate = Calendar.getInstance();
         nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());
-        nextUpdate.add(Calendar.HOUR, 1);   // up to an hour from now    // TODO: schedule
+        nextUpdate.add(Calendar.MINUTE, 1);   // up to a minute from now
         nextUpdate.set(Calendar.SECOND, 1);
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate.getTimeInMillis());
     }
 
     @Override
     protected SuntimesData getData(Context context, int appWidgetId) {
-        return new SuntimesClockData(context, appWidgetId);   // TODO: data
+        return new SuntimesClockData(context, appWidgetId);
     }
 
-    protected static DateLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
+    protected static ClockLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
-        DateLayout layout = new DateLayout_1x1_0();
+        ClockLayout layout = ClockWidgetSettings.loadClock1x1ModePref_asLayout(context, appWidgetId);
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
         layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;

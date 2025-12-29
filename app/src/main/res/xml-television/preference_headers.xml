@@ -51,7 +51,7 @@
         android:summary="">
 
         <intent android:targetPackage="@string/packageName"
-            android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity" />
 
     </header>
 

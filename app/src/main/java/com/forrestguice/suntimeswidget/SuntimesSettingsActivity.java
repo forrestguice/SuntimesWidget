@@ -39,7 +39,6 @@ import android.util.TypedValue;
 
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.colors.ColorValues;
-import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -58,7 +57,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.events.EventListActivity;
-import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
@@ -66,6 +64,9 @@ import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.List;

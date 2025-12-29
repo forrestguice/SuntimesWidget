@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.ClockWidget0ConfigActivity;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;

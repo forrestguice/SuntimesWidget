@@ -608,7 +608,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    protected static void updateTimeZoneSortMenu(Context context, PopupMenu popup)
+    public static void updateTimeZoneSortMenu(Context context, PopupMenu popup)
     {
         Menu menu = popup.getMenu();
         MenuItem sortByOffset = menu.findItem(R.id.sortByOffset);
