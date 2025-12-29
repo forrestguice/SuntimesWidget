@@ -363,9 +363,6 @@ public class BedtimeDialog extends DialogFragment
                 switch (item.getItemType())
                 {
                     case WAKEUP_ALARM:
-                        //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
-                        break;
-
                     case BEDTIME:
                         //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
                         break;
