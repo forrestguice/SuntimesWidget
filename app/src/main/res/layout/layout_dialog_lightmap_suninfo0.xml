@@ -8,4 +8,4 @@
 
     <include layout="@layout/layout_dialog_lightmap_suninfo" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

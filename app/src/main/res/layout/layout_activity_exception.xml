@@ -60,4 +60,4 @@
         android:textIsSelectable="true"
         android:text="@string/crash_dialog_message1" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

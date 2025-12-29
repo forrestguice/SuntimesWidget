@@ -61,7 +61,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="@string/configAction_preview" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
     <FrameLayout android:id="@+id/previewArea" android:visibility="gone"
         android:layout_width="match_parent" android:layout_height="wrap_content"
