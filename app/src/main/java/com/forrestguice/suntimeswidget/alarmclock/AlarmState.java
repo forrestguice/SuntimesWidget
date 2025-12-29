@@ -152,8 +152,6 @@ public class AlarmState implements Parcelable
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED || nextState == STATE_DISMISSED);
 
             case STATE_DISMISSED:
-                return (nextState == STATE_NONE || nextState == STATE_DISABLED);
-
             case STATE_DISABLED:
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED);
 
