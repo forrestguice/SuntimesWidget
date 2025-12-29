@@ -20,7 +20,7 @@
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            <android.support.v7.widget.SwitchCompat
+            <com.forrestguice.support.widget.Switch
                 android:id="@+id/switch_enabled"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
