@@ -258,7 +258,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
             {
                 themeActions.setTheme(this, themeDesc);
                 actionMode = startSupportActionMode(themeActions);
-                actionMode.setTitle(themeDesc.displayString());
+                if (actionMode != null) {
+                    actionMode.setTitle(themeDesc.displayString());
+                }
             }
             return true;
 

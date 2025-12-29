@@ -732,7 +732,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         } else {
             // LEGACY; ActionMode for pre HONEYCOMB
             AppCompatActivity activity = (AppCompatActivity)getActivity();
-            android.support.v7.view.ActionMode actionMode = activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            android.support.v7.view.ActionMode actionMode = ((activity != null) ? activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -757,7 +757,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                     super.onDestroyActionMode(mode);
                     TimeZoneDialog.this.actionMode = null;
                 }
-            });
+            }) : null);
             if (actionMode != null)
             {
                 this.actionMode = actionMode;

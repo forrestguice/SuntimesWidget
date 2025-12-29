@@ -74,14 +74,16 @@ public class PlacesActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        Intent intent = getIntent();
         FragmentManager fragments = getSupportFragmentManager();
         list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
-        list.setDialogThemOverride(AppSettings.loadTheme(this));
-        list.setFragmentListener(listFragmentListener);
-
-        Intent intent = getIntent();
-        list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
-        list.setSelectedRowID(intent.getLongExtra(EXTRA_SELECTED, -1));
+        if (list != null)
+        {
+            list.setDialogThemOverride(AppSettings.loadTheme(this));
+            list.setFragmentListener(listFragmentListener);
+            list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
+            list.setSelectedRowID(intent.getLongExtra(EXTRA_SELECTED, -1));
+        }
     }
 
     protected void initLocale()
@@ -158,7 +160,10 @@ public class PlacesActivity extends AppCompatActivity
 
         @Override
         public void onLiftAppBar(boolean value) {
-            getSupportActionBar().setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
+            }
         }
     };
 

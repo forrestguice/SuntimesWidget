@@ -122,7 +122,9 @@ public class AlarmTileBase extends SuntimesTileBase
 
         AlarmClockItem alarm = initAlarmItem(context);
         Drawable d = ContextCompat.getDrawable(context, ((alarm != null) ? alarm.getIcon() : R.drawable.ic_action_alarms));
-        d.setTint(ContextCompat.getColor(contextWrapper, color));
+        if (d != null) {
+            d.setTint(ContextCompat.getColor(contextWrapper, color));
+        }
         return d;
     }
 

@@ -657,7 +657,7 @@ public class AlarmEditDialog extends DialogFragment
                 if (isChecked && !item.vibrate)
                 {
                     Context context = getActivity();
-                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    Vibrator vibrate = ((context != null) ? (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) : null);
                     if (vibrate != null) {
                         vibrate.vibrate(500);
                     }

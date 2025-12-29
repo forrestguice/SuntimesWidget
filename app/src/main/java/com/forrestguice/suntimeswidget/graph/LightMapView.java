@@ -649,8 +649,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 Bitmap b0 = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
                 Canvas c0 = new Canvas(b0);
 
-                long zoneOffsetMs = data.timezone().getOffset(now.getTimeInMillis());
-                long lonOffsetMs = Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+                long zoneOffsetMs = ((data != null) ? data.timezone().getOffset(now.getTimeInMillis()) : 0);
+                long lonOffsetMs = ((data != null) ? Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d) : 0);
                 long offsetMs = zoneOffsetMs - lonOffsetMs;
 
                 float left = (float)(offsetMs * ONE_DIVIDED_MILLIS_IN_DAY * w);

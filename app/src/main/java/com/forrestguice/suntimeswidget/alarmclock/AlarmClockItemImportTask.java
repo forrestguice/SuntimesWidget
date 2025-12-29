@@ -114,13 +114,14 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
-        for (AlarmClockItem item : items)
-        {
-            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
-            {
-                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
-                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+        if (items != null) {
+            for (AlarmClockItem item : items) {
+                if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
+                {
+                    // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+                    item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                    item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                }
             }
         }
 

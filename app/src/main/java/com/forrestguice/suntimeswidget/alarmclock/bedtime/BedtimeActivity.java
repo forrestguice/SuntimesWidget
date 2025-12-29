@@ -362,7 +362,9 @@ public class BedtimeActivity extends AppCompatActivity
         menubar.setBackgroundColor(menubarColor);
 
         list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        list.setDialogListener(dialogListener(menubarColor));
+        if (list != null) {
+            list.setDialogListener(dialogListener(menubarColor));
+        }
     }
 
     private BedtimeDialog.DialogListener dialogListener(final int initialColor)

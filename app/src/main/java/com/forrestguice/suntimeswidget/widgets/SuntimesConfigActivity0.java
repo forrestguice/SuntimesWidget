@@ -1943,7 +1943,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (actionMode == null)
         {
             actionMode = startSupportActionMode(spinner_timezone_actionMode);
-            actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            if (actionMode != null) {
+                actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
+            }
             return true;
         }
         return false;

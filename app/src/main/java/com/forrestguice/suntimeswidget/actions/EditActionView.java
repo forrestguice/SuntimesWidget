@@ -252,11 +252,11 @@ public class EditActionView extends LinearLayout
                 convertView = LayoutInflater.from(getContext()).inflate(layoutResID, parent, false);
             }
             TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
-            if (text1 != null) {
+            if (text1 != null && suggestion != null) {
                 text1.setText(suggestion.label);
             }
             TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
-            if (text2 != null) {
+            if (text2 != null && suggestion != null) {
                 text2.setText(suggestion.packageName);
             }
             return convertView;

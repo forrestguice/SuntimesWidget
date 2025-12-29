@@ -325,7 +325,7 @@ public class PlacesListFragment extends Fragment
             if (items[0] != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = activity.startSupportActionMode(actions);
+                actionMode = ((activity != null) ? activity.startSupportActionMode(actions) : null);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), items);
                 }
@@ -692,11 +692,14 @@ public class PlacesListFragment extends Fragment
     protected void scrollToSelection()
     {
         LinearLayoutManager layout = (LinearLayoutManager) listView.getLayoutManager();
-        int selected = adapter.getSelectedPosition();
-        int start = layout.findFirstVisibleItemPosition();
-        int end = layout.findLastVisibleItemPosition();
-        if (selected != -1 && (selected <= start || selected >= end)) {
-            listView.smoothScrollToPosition(selected);
+        if (layout != null)
+        {
+            int selected = adapter.getSelectedPosition();
+            int start = layout.findFirstVisibleItemPosition();
+            int end = layout.findLastVisibleItemPosition();
+            if (selected != -1 && (selected <= start || selected >= end)) {
+                listView.smoothScrollToPosition(selected);
+            }
         }
     }
 
@@ -1740,7 +1743,7 @@ public class PlacesListFragment extends Fragment
                 {
                     Location location0 = WidgetSettings.loadLocationPref(context, 0);
                     LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-                    double d = item.location.distanceTo(location0);
+                    double d = ((item != null) ? item.location.distanceTo(location0) : 0);
                     distance.setText(context != null ? LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), d, units, 2, true).toString() : "");
                 }
                 distance.setVisibility(sortMode == SORT_BY_PROXIMITY ? View.VISIBLE : View.GONE);
@@ -1766,20 +1769,28 @@ public class PlacesListFragment extends Fragment
                 }
 
                 if (latLonDisplay != null && tagDisplay != null) {
-                    summary.setText(latLonDisplay + "\n" + tagDisplay);
-                    summary.setVisibility(View.VISIBLE);
+                    if (summary != null) {
+                        summary.setText(latLonDisplay + "\n" + tagDisplay);
+                        summary.setVisibility(View.VISIBLE);
+                    }
 
                 } else if (latLonDisplay != null) {
-                    summary.setText(latLonDisplay);
-                    summary.setVisibility(View.VISIBLE);
+                    if (summary != null) {
+                        summary.setText(latLonDisplay);
+                        summary.setVisibility(View.VISIBLE);
+                    }
 
                 } else if (tagDisplay != null) {
-                    summary.setText(tagDisplay);
-                    summary.setVisibility(View.VISIBLE);
+                    if (summary != null) {
+                        summary.setText(tagDisplay);
+                        summary.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
-                    summary.setText("");
-                    summary.setVisibility(View.GONE);
+                    if (summary != null) {
+                        summary.setText("");
+                        summary.setVisibility(View.GONE);
+                    }
                 }
             }
             if (context != null && item != null && icon != null) {

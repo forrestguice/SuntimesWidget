@@ -112,7 +112,9 @@ public class BedtimeDialog extends DialogFragment
 
 
         SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
-        animator.setChangeDuration(0);
+        if (animator != null) {
+            animator.setChangeDuration(0);
+        }
 
         if (savedState != null) {
             loadSettings(savedState);

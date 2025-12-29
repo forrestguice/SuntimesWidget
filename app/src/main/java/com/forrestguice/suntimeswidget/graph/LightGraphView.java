@@ -1609,8 +1609,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             int i = 0;
             while (i < data.length)
             {
-                SuntimesRiseSetData d = data[i].getData(mode.name());
-                Calendar risingEvent = d.sunriseCalendarToday();
+                SuntimesRiseSetData d = ((data[i] != null) ? data[i].getData(mode.name()) : null);
+                Calendar risingEvent = ((d != null) ? d.sunriseCalendarToday() : null);
                 if (risingEvent != null)
                 {
                     double lmtRisingHour = lmtHour(risingEvent, result.longitude);

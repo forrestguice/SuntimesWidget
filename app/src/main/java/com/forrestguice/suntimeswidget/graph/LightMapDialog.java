@@ -929,9 +929,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             graphOption_sunSymbol_line.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
 
-        MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
-        if (selectedSymbol != null) {
-            selectedSymbol.setChecked(true);
+        if (sunSymbol != null) {
+            MenuItem selectedSymbol = getMenuItemForSymbol(menu, sunSymbol);
+            if (selectedSymbol != null) {
+                selectedSymbol.setChecked(true);
+            }
         }
 
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);

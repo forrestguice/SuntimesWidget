@@ -248,9 +248,13 @@ public class WidgetThemePreview
 
         } else if (ClockWidgetSettings.WidgetModeClock1x1.supportsLayout(layoutID)) {
             ClockWidgetSettings.WidgetModeClock1x1 mode = ClockWidgetSettings.WidgetModeClock1x1.findMode(layoutID);
-            switch (mode) {
-                case CLOCK0: updatePreview_clock(previewLayout, values); break;
-                default: updatePreview_clock1(previewLayout, mode, values); break;
+            if (mode != null) {
+                switch (mode) {
+                    case CLOCK0: updatePreview_clock(previewLayout, values); break;
+                    default: updatePreview_clock1(previewLayout, mode, values); break;
+                }
+            } else {
+                updatePreview_clock1(previewLayout, null, values);
             }
 
         } else {

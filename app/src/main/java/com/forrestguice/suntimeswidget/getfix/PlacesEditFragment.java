@@ -1031,7 +1031,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             if (item != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = activity.startSupportActionMode(actions);
+                actionMode = ((activity != null) ? activity.startSupportActionMode(actions) : null);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), item);
                 }

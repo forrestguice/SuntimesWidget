@@ -263,17 +263,21 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         SuntimesUtils.initDisplayStrings(context);
 
         editor = (AlarmEditDialog) getSupportFragmentManager().findFragmentById(R.id.editFragment);
-        editor.setOnAcceptedListener(onEditorAccepted);
-        editor.setAlarmClockAdapterListener(this);
-        editor.setShowDialogFrame(false);
-        editor.setShowOverflow(false);
+        if (editor != null) {
+            editor.setOnAcceptedListener(onEditorAccepted);
+            editor.setAlarmClockAdapterListener(this);
+            editor.setShowDialogFrame(false);
+            editor.setShowOverflow(false);
+        }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
             isNew = extras.getBoolean(EXTRA_ISNEW, false);
-            editor.initFromItem(item, isNew);
+            if (editor != null) {
+                editor.initFromItem(item, isNew);
+            }
         }
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
@@ -283,7 +287,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            AlarmClockItem item = editor.getItem();
+            AlarmClockItem item = ((editor != null) ? editor.getItem() : null);
             actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
