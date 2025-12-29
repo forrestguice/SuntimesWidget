@@ -7,7 +7,7 @@
     android:layout_marginTop="0dp"
     app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap">
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_reset"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="?attr/icActionTimeReset" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_play"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
@@ -31,7 +31,7 @@
         android:contentDescription="@string/worldmap_dialog_action_play"
         android:src="?attr/icActionPlay" />
 
-    <ImageButton android:visibility="gone"
+    <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/media_pause"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
@@ -43,7 +43,7 @@
         android:contentDescription="@string/worldmap_dialog_action_pause"
         android:src="?attr/icActionPause" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_prev"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
@@ -62,7 +62,7 @@
         android:minLines="2" android:maxLines="2"
         tools:text="30m\nfrom now" android:gravity="center_horizontal" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_next"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toStartOf="@+id/media_menu"
         tools:text="@string/worldmap_dialog_speed_5m" android:gravity="center" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_menu"
         android:layout_width="0dp" android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"

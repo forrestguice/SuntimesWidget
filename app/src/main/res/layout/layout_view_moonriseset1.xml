@@ -13,7 +13,7 @@
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_gravity="end|bottom"
             android:padding="3dp">
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/info_time_prevbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:scaleX="0.9" android:scaleY="0.9"
@@ -23,7 +23,7 @@
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/info_time_nextbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:scaleX="0.9" android:scaleY="0.9"

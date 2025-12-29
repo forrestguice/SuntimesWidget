@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <ImageButton android:id="@+id/backButton"
+    <com.forrestguice.support.widget.ImageButton android:id="@+id/backButton"
         android:src="?attr/icActionBack" style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:tooltipText="@string/dialog_cancel" tools:ignore="UnusedAttribute"
@@ -18,19 +18,19 @@
         android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
         tools:listitem="@android:layout/simple_list_item_1" />
 
-    <ImageButton android:id="@+id/editButton"
+    <com.forrestguice.support.widget.ImageButton android:id="@+id/editButton"
         android:src="?attr/icActionEdit" style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:tooltipText="@string/configAction_editColors"  tools:ignore="UnusedAttribute"
         android:contentDescription="@string/configAction_editColors" />
 
-    <ImageButton android:id="@+id/addButton"
+    <com.forrestguice.support.widget.ImageButton android:id="@+id/addButton"
         android:src="?attr/icActionNew" style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:tooltipText="@string/configAction_addColors" tools:ignore="UnusedAttribute"
         android:contentDescription="@string/configAction_addColors" />
 
-    <ImageButton android:id="@+id/menuButton" android:visibility="gone"
+    <com.forrestguice.support.widget.ImageButton android:id="@+id/menuButton" android:visibility="gone"
         style="@style/Widget.AppCompat.ActionButton.Overflow"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:contentDescription="@string/configAction_overflow" />

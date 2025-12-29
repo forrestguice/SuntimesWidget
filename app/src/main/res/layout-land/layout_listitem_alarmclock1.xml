@@ -31,7 +31,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/type_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:src="?attr/icActionAlarm"
@@ -47,7 +47,7 @@
                 android:inputType="text"
                 android:hint="@string/alarmlabel_hint" tools:text="label" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:contentDescription="@string/configAction_alarmMenu"

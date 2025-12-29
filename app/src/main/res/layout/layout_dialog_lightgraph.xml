@@ -58,20 +58,20 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible">
 
-            <ImageButton android:id="@+id/media_reset" android:visibility="gone"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/media_reset" android:visibility="gone"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:padding="12dp" android:background="?attr/selectableItemBackground"
                 android:contentDescription="@string/worldmap_dialog_action_reset"
                 android:src="?attr/icActionTimeReset" android:scaleType="fitXY" />
 
-            <ImageButton android:id="@+id/sunposition_button"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/sunposition_button"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:src="?attr/icActionSun"
                 style="?attr/actionOverflowButtonStyle"
                 android:contentDescription="@string/configAction_sunDialog" />
 
-            <ImageButton android:id="@+id/menu_button"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 style="?attr/actionOverflowButtonStyle"

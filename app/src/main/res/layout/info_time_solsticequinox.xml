@@ -34,7 +34,7 @@
             app:layout_constraintBottom_toTopOf="@+id/text_date_equinox_vernal_label"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_prevbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -45,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
             android:contentDescription="@string/prevYear" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_nextbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end"

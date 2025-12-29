@@ -53,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent" android:animateLayoutChanges="true"
                 android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/type_menu"
                     android:layout_width="32dp" android:layout_height="32dp"
                     android:src="?attr/icActionAlarm"
@@ -257,13 +257,13 @@
 
                 <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
 
-                <ImageButton android:id="@+id/button_delete"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/button_delete"
                     android:layout_width="48dp" android:layout_height="48dp"
                     android:contentDescription="@string/configAction_deleteAlarm"
                     style="@style/ActionButton"
                     android:src="?attr/icActionDelete" />
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/overflow_menu" android:visibility="gone"
                     android:layout_width="48dp" android:layout_height="48dp"
                     android:contentDescription="@string/configAction_alarmMenu"
