@@ -8,7 +8,7 @@
     android:padding="8dp"
     app:layout_constraintTop_toBottomOf="@+id/media_actions">
 
-    <android.support.constraint.Guideline
+    <com.forrestguice.support.constraint.Guideline
         android:id="@+id/durationGuide"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintGuide_percent="0.55" android:orientation="vertical" />

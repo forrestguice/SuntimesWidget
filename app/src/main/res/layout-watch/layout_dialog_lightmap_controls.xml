@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/media_actions"
     android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -90,4 +90,4 @@
         android:contentDescription="@string/lightmap_dialog_action_menu"
         style="?attr/actionOverflowButtonStyle" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

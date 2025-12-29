@@ -19,7 +19,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <!-- Background -->
@@ -67,6 +67,6 @@
             app:layout_constraintStart_toEndOf="@+id/editLabel_padding"
             app:layout_constraintTop_toBottomOf="@+id/editSpin_background" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

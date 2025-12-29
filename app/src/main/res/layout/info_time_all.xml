@@ -20,7 +20,7 @@
        xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/table" style="@style/SunsetTimeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -770,6 +770,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_time_label_moon"
             app:layout_constraintBottom_toBottomOf="@+id/moonphase_view" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

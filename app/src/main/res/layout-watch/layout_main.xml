@@ -32,7 +32,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <com.forrestguice.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 tools:ignore="UnusedAttribute"
@@ -101,7 +101,7 @@
 
                 </FrameLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </com.forrestguice.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/info_time_flipper1"
