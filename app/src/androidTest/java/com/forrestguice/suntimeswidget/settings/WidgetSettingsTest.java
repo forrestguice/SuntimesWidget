@@ -45,14 +45,17 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarDefaults;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.ContextInterface;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -268,45 +271,51 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_calendarShowDate()
     {
-        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, false);
-        boolean value2 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        ContextInterface contextIntf = AndroidCalendarSettings.wrap(context);
+
+        CalendarSettings.saveCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, false);
+        boolean value2 = CalendarSettings.loadCalendarFlag(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
         assertFalse("flag should be false but was " + value2, value2);
 
-        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, true);
-        boolean value1 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        CalendarSettings.saveCalendarFlag(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, true);
+        boolean value1 = CalendarSettings.loadCalendarFlag(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
         assertTrue("flag should be true but was " + value1, value1);
 
-        CalendarSettings.deleteCalendarPref(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE);
-        boolean value0 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
-        assertTrue("flag should be " + CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE + " but was " + value0, value0 == CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        CalendarSettings.deleteCalendarPref(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE);
+        boolean value0 = CalendarSettings.loadCalendarFlag(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
+        assertTrue("flag should be " + CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE + " but was " + value0, value0 == CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
     }
 
     @Test
     public void test_calendarModePref()
     {
-        CalendarSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.GREGORIAN);
-        CalendarMode mode2 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        ContextInterface contextIntf = AndroidCalendarSettings.wrap(context);
+
+        CalendarSettings.saveCalendarModePref(contextIntf, appWidgetId, CalendarMode.GREGORIAN);
+        CalendarMode mode2 = CalendarSettings.loadCalendarModePref(contextIntf, appWidgetId);
         assertTrue("mode should be GREGORIAN but was " + mode2, mode2 == CalendarMode.GREGORIAN);
 
-        CalendarSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.PERSIAN);
-        CalendarMode mode1 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        CalendarSettings.saveCalendarModePref(contextIntf, appWidgetId, CalendarMode.PERSIAN);
+        CalendarMode mode1 = CalendarSettings.loadCalendarModePref(contextIntf, appWidgetId);
         assertTrue("mode should be PERSIAN but was " + mode1, mode1 == CalendarMode.PERSIAN);
 
-        CalendarSettings.deleteCalendarPref(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_MODE);
-        CalendarMode mode0 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
-        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == CalendarSettings.PREF_DEF_CALENDAR_MODE && mode0 == CalendarMode.GREGORIAN);
+        CalendarSettings.deleteCalendarPref(contextIntf, appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_MODE);
+        CalendarMode mode0 = CalendarSettings.loadCalendarModePref(contextIntf, appWidgetId);
+        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == CalendarSettingsInterface.PREF_DEF_CALENDAR_MODE && mode0 == CalendarMode.GREGORIAN);
     }
 
     @Test
     public void test_calendarFormatPref()
     {
+        ContextInterface contextIntf = AndroidCalendarSettings.wrap(context);
+
         String tag = "TEST";
-        CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, tag, "YYYY");
-        String format2 = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
+        CalendarSettings.saveCalendarFormatPatternPref(contextIntf, appWidgetId, tag, "YYYY");
+        String format2 = CalendarSettings.loadCalendarFormatPatternPref(contextIntf, appWidgetId, tag);
         assertTrue("mode should be YYYY but was " + format2, "YYYY".equals(format2));
 
-        CalendarSettings.deleteCalendarFormatPatternPref(context, appWidgetId, tag);
-        String format0 = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
+        CalendarSettings.deleteCalendarFormatPatternPref(contextIntf, appWidgetId, tag);
+        String format0 = CalendarSettings.loadCalendarFormatPatternPref(contextIntf, appWidgetId, tag);
         assertTrue("mode should be default but was " + format0, CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN.equals(format0));
     }
 

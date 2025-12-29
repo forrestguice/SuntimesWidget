@@ -27,6 +27,8 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,13 +74,14 @@ public class DataSubstitutionsTest
     @Test
     public void test_displayStringForTitlePattern0()
     {
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
         String pattern0 = getPatternString(patterns) + getPatternAtString(DataSubstitutions.ALL_PATTERNS_AT, DataSubstitutions.ALL_AT_SUFFIXES);
-        String result0 = DataSubstitutions.displayStringForTitlePattern0(context, pattern0, (SuntimesData) null);
+        String result0 = DataSubstitutions.displayStringForTitlePattern0(contextIntf, pattern0, (SuntimesData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesRiseSetData data1 = new SuntimesRiseSetData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern0(context, pattern0 + "%M%o%m", data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern0(contextIntf, pattern0 + "%M%o%m", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }
@@ -101,7 +104,8 @@ public class DataSubstitutionsTest
             String pattern = patterns_em.get(event);
 
             long bench_start = System.nanoTime();
-            String result = DataSubstitutions.displayStringForTitlePattern0(context, pattern, data);
+            SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
+            String result = DataSubstitutions.displayStringForTitlePattern0(contextIntf, pattern, data);
             long bench_end = System.nanoTime();
             Log.d("DEBUG", "displayStringForTitlePattern0: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             assertFalse("result should not contain patterns " + pattern, result.contains(pattern));
@@ -138,7 +142,8 @@ public class DataSubstitutionsTest
         data.calculate(context);
 
         long bench_start = System.nanoTime();
-        String result1 = DataSubstitutions.displayStringForTitlePattern0(context, pattern, data);
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
+        String result1 = DataSubstitutions.displayStringForTitlePattern0(contextIntf, pattern, data);
         long bench_end = System.nanoTime();
         Log.d("DEBUG", "displayStringForTitlePattern0: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         assertFalse("result should not contain patterns", result1.contains("%eT@sn"));
@@ -161,7 +166,8 @@ public class DataSubstitutionsTest
         data.setTodayIs(calendar);
         data.calculate(context);
 
-        String result = DataSubstitutions.displayStringForTitlePattern0(context, "%eT@sn", data);
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
+        String result = DataSubstitutions.displayStringForTitlePattern0(contextIntf, "%eT@sn", data);
         assertFalse("result should not contain patterns", result.contains("%eT@sn"));
         assertFalse("result should not be empty", result.isEmpty());
 
@@ -175,25 +181,27 @@ public class DataSubstitutionsTest
     public void test_displayStringForTitlePattern_data()
     {
         String pattern0 = getPatternString(patterns);
-        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) null);
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
+        String result0 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0, (SuntimesData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesClockData data1 = new SuntimesClockData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0, (SuntimesData) data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0, (SuntimesData) data1);
         assertFalse("result should not be empty", result1.isEmpty());
     }
 
     @Test
     public void test_displayStringForTitlePattern_clockData()
     {
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
         String pattern0 = getPatternString(patterns);
-        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", (SuntimesClockData) null);
+        String result0 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%m%M", (SuntimesClockData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesClockData data1 = new SuntimesClockData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%m%M", data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%m%M", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m"));
     }
@@ -201,13 +209,14 @@ public class DataSubstitutionsTest
     @Test
     public void test_displayStringForTitlePattern_sunData()
     {
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
         String pattern0 = getPatternString(patterns);
-        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesRiseSetData) null);
+        String result0 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m", (SuntimesRiseSetData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesRiseSetData data1 = new SuntimesRiseSetData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }
@@ -215,13 +224,14 @@ public class DataSubstitutionsTest
     @Test
     public void test_displayStringForTitlePattern_moonData()
     {
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
         String pattern0 = getPatternString(patterns);
-        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m%i", (SuntimesMoonData) null);
+        String result0 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m%i", (SuntimesMoonData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesMoonData data1 = new SuntimesMoonData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m%i", data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m%i", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o") || result1.contains("%i"));
     }
@@ -229,13 +239,14 @@ public class DataSubstitutionsTest
     @Test
     public void test_displayStringForTitlePattern_equinoxData()
     {
+        SuntimesDataSettings contextIntf = new AndroidSuntimesDataSettings(context);
         String pattern0 = getPatternString(patterns);
-        String result0 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", (SuntimesEquinoxSolsticeData) null);
+        String result0 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m", (SuntimesEquinoxSolsticeData) null);
         assertTrue("result should be empty", result0.isEmpty());   // null data; all patterns should have been replaced with ""
 
         SuntimesEquinoxSolsticeData data1 = new SuntimesEquinoxSolsticeData(context, 0);
         data1.calculate(context);
-        String result1 = DataSubstitutions.displayStringForTitlePattern(context, pattern0 + "%M%o%m", data1);
+        String result1 = DataSubstitutions.displayStringForTitlePattern(contextIntf, pattern0 + "%M%o%m", data1);
         assertFalse("result should not be empty", result1.isEmpty());
         assertFalse("result should not contain patterns", result1.contains("%M") || result1.contains("%m") || result1.contains("%o"));
     }

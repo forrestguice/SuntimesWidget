@@ -29,6 +29,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.util.ContextInterface;
+
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -150,7 +153,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
                 .assertClearDialogShown()
                 .clickConfirmClear();
 
-        Set<String> events = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> events = EventSettings.loadEventList(contextIntf);
         assertTrue(events.isEmpty());
         robot.assertEmptyListShown(activity)
                 .assertListHasItems(activity, 0);
@@ -188,7 +192,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         String angle = "15";
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)
@@ -230,7 +235,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
     {
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)
