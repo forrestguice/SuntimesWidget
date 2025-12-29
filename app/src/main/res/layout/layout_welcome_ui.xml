@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:orientation="vertical" android:gravity="center"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingBottom="48dp" android:background="?attr/dialogBackgroundAlt">
@@ -112,5 +112,5 @@
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 </ScrollView>

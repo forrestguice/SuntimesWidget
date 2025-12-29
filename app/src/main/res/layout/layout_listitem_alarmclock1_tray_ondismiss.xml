@@ -12,7 +12,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingLeft="4dp" android:paddingRight="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:ignore="MissingConstraints">
 
@@ -86,6 +86,6 @@
 
             </FrameLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
     </LinearLayout>
 </merge>
