@@ -52,6 +52,7 @@ import java.util.TreeSet;
 public class ColorValuesSheetDialog extends BottomSheetDialogBase
 {
     public static final String DIALOG_SHEET = "ColorValuesSheet";
+    public static final String ARG_COLLECTION = "colorCollection";
 
     public ColorValuesSheetDialog() {
         setArguments(new Bundle());
@@ -264,12 +265,13 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        outState.putSerializable("colorCollection", colorCollection);
+        outState.putSerializable(ARG_COLLECTION, colorCollection);
         colorSheet.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
     protected void onRestoreInstanceState( Bundle savedState ) {
-        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable("colorCollection");
+        //noinspection unchecked
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
     }
 
     @Override

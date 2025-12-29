@@ -41,6 +41,8 @@ import java.util.Locale;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
+    public static final String ARG_COLLECTION = "colorCollection";
+
     public static final String ARG_HIDE_AFTER_SAVE = "hideAfterSave";    // sheet is hidden/dismissed after saving from edit dialog
     public static final boolean DEF_HIDE_AFTER_SAVE = true;
 
@@ -170,13 +172,14 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
-        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable("colorCollection");
+        //noinspection unchecked
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("mode", mode);
-        outState.putSerializable("colorCollection", colorCollection);
+        outState.putSerializable(ARG_COLLECTION, colorCollection);
         super.onSaveInstanceState(outState);
     }
 

@@ -93,7 +93,8 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet = new ColorValuesSheetFragment();
             colorSheet.setAppWidgetID(intent.getIntExtra(EXTRA_APPWIDGET_ID, 0));
             colorSheet.setColorTag(intent.getStringExtra(EXTRA_COLORTAG));
-            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getParcelableExtra(EXTRA_COLLECTION));
+            //noinspection unchecked
+            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getSerializableExtra(EXTRA_COLLECTION));
             colorSheet.setPreviewKeys(intent.getStringArrayExtra(EXTRA_PREVIEW_KEYS));
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
             colorSheet.setShowBack(false);
