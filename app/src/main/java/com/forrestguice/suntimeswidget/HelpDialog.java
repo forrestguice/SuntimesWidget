@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
 
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
