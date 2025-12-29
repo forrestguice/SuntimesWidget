@@ -28,7 +28,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 public class SuntimesWidget2_3x2 extends SuntimesWidget2
 {
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return SuntimesConfigActivity2_3x2.class;
     }

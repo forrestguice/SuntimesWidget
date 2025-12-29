@@ -44,7 +44,7 @@ public class MoonWidget0 extends SuntimesWidget0
     public static final String WIDGET_UPDATE = "suntimes.MOON_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return MoonWidget0ConfigActivity.class;
     }
@@ -62,13 +62,13 @@ public class MoonWidget0 extends SuntimesWidget0
         MoonWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, MoonWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, MoonLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class<?> widgetClass, int[] defSize, MoonLayout defLayout)
     {
         MoonLayout layout = MoonWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         MoonWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, MoonLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, MoonLayout layout, Class<?> widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);

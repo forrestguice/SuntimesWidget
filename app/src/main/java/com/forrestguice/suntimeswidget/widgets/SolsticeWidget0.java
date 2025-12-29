@@ -47,7 +47,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
     public static final String SOLSTICE_WIDGET_UPDATE = "suntimes.SOLSTICE_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return SolsticeWidget0ConfigActivity.class;
     }

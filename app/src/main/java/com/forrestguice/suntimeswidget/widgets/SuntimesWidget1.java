@@ -42,7 +42,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
     public static final String SUNTIMES_WIDGET_UPDATE1 = "suntimes.SUNTIMES_WIDGET_UPDATE1";
 
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return SuntimesConfigActivity1.class;
     }

@@ -30,7 +30,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
 public class SuntimesWidget0_3x1 extends SuntimesWidget0_2x1
 {
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return SuntimesConfigActivity0_3x1.class;
     }
 

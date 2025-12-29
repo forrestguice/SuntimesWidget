@@ -41,7 +41,7 @@ public class ClockWidget0 extends SuntimesWidget0
     public static final String CLOCK_WIDGET_UPDATE = "suntimes.CLOCK_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return ClockWidget0ConfigActivity.class;
     }

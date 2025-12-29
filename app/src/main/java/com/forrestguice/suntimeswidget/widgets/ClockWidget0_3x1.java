@@ -26,7 +26,7 @@ import com.forrestguice.suntimeswidget.R;
 public class ClockWidget0_3x1 extends ClockWidget0
 {
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return ClockWidget0ConfigActivity_3x1.class;
     }

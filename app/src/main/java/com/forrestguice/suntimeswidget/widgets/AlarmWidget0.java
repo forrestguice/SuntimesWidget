@@ -46,7 +46,7 @@ public class AlarmWidget0 extends SuntimesWidget0
     public static final String ALARM_WIDGET_UPDATE = "suntimes.ALARM_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return AlarmWidget0ConfigActivity.class;
     }
 
@@ -72,13 +72,13 @@ public class AlarmWidget0 extends SuntimesWidget0
         AlarmWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, AlarmWidget0.class, getMinSize(context), defLayout);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, AlarmLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class<?> widgetClass, int[] defSize, AlarmLayout defLayout)
     {
         AlarmLayout layout = AlarmWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, AlarmLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, AlarmLayout layout, Class<?> widgetClass)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
         data.calculate(context);

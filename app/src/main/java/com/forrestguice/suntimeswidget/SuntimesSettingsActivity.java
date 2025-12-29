@@ -527,7 +527,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         AppSettings.initLocale(this);
 
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             SuntimesWidget0.triggerWidgetUpdate(this, widgetClass);
         }
     }

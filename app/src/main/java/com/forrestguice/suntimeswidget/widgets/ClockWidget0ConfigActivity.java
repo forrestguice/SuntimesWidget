@@ -45,7 +45,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return ClockWidget0.class;
     }
 

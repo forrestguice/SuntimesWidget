@@ -58,7 +58,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return DateWidget0.class;
     }
 

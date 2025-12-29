@@ -89,7 +89,7 @@ public class SuntimesCalculatorFactory
         SuntimesCalculator calculator;
         try {
             //Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
-            Class calculatorClass = Class.forName(current.getReference());  // may fail if using proguard without exempting key classes
+            Class<?> calculatorClass = Class.forName(current.getReference());  // may fail if using proguard without exempting key classes
             //Log.d("createCalculator", "found class " + calculatorClass.getName());
             calculator = (SuntimesCalculator)calculatorClass.newInstance();
             //Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);

@@ -33,7 +33,7 @@ public class ClockWidget0ConfigActivity_3x1 extends ClockWidget0ConfigActivity
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return ClockWidget0_3x1.class;
     }
 

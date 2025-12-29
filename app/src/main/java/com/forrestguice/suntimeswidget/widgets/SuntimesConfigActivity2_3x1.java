@@ -38,7 +38,7 @@ public class SuntimesConfigActivity2_3x1 extends SuntimesConfigActivity2
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return SuntimesWidget2_3x1.class;
     }
 

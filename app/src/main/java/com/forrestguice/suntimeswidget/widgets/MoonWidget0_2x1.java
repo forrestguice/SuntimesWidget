@@ -27,7 +27,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
 public class MoonWidget0_2x1 extends MoonWidget0
 {
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return MoonWidget0ConfigActivity_2x1.class;
     }

@@ -37,7 +37,7 @@ public class AlarmWidget0ConfigActivity_3x2 extends AlarmWidget0ConfigActivity
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return AlarmWidget0_3x2.class;
     }
 

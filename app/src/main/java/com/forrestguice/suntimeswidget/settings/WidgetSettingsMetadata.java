@@ -116,7 +116,7 @@ public class WidgetSettingsMetadata
         }
         return types;
     }
-    private static void putType(Map<String,Class> map, Class type, String... keys) {
+    private static void putType(Map<String,Class> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }

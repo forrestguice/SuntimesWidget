@@ -170,7 +170,7 @@ public class WidgetSettingsExportTask extends ExportTask
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS)
         {
             Bundle bundle = new Bundle();
             bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());

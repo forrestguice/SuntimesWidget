@@ -328,7 +328,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     /**
      * @return the activity (class) to be used when configuring this widget
      */
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return SuntimesConfigActivity0.class;
     }
@@ -588,7 +588,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetManager widget manager
      * @param appWidgetId id of widget to be updated
      */
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class<?> widgetClass, int[] defSize, SunLayout defLayout)
     {
         SunLayout layout = getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
@@ -661,7 +661,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param appWidgetId id of the widget to be updated
      * @param layout a SuntimesLayout managing the views to be updated
      */
-    protected static void updateAppWidget(Context context, WidgetManagerInterface updater, int appWidgetId, SunLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface updater, int appWidgetId, SunLayout layout, Class<?> widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);
@@ -733,7 +733,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param context the context
      * @param widgetClass the widget class (SuntimesWidget.class, SuntimesWidget1.class)
      */
-    public static void triggerWidgetUpdate(Context context, Class widgetClass)
+    public static void triggerWidgetUpdate(Context context, Class<?> widgetClass)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
@@ -880,7 +880,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param widgetClass the widget class (e.g. SuntimesWidget.class, SuntimesWidget1.class)
      * @return a PendingIntent for the widget (to be triggered when widget is clicked)
      */
-    public static PendingIntent clickActionIntent(Context context, int appWidgetId, Class widgetClass)
+    public static PendingIntent clickActionIntent(Context context, int appWidgetId, Class<?> widgetClass)
     {
         WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);
         Intent actionIntent = new Intent(context, widgetClass);

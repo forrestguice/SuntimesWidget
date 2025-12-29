@@ -37,7 +37,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
     public static final String SUNTIMES_WIDGET_UPDATE2 = "suntimes.SUNTIMES_WIDGET_UPDATE2";
 
     @Override
-    protected Class getConfigClass()
+    protected Class<?> getConfigClass()
     {
         return SuntimesConfigActivity2.class;
     }
@@ -76,13 +76,13 @@ public class SuntimesWidget2 extends SuntimesWidget0
         SuntimesWidget2.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, SuntimesWidget2.class, getMinSize(context), deflayout);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class widgetClass, int[] defSize, SunPosLayout defLayout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, Class<?> widgetClass, int[] defSize, SunPosLayout defLayout)
     {
         SunPosLayout layout = SuntimesWidget2.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize, defLayout);
         SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, layout, widgetClass);
     }
 
-    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, SunPosLayout layout, Class<?> widgetClass)
     {
         if (isCurrentLocationMode(context, appWidgetId)) {
             updateLocationToLastKnown(context, appWidgetId);

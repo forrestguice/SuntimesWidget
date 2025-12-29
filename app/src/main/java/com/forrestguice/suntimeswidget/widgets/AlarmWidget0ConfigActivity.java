@@ -62,7 +62,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return AlarmWidget0.class;
     }
 

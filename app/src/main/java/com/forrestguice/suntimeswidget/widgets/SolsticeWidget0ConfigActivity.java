@@ -59,7 +59,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return SolsticeWidget0.class;
     }
 

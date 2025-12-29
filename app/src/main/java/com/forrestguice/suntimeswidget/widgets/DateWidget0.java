@@ -42,7 +42,7 @@ public class DateWidget0 extends SuntimesWidget0
     public static final String DATE_WIDGET_UPDATE = "suntimes.DATE_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return DateWidget0ConfigActivity.class;
     }
 

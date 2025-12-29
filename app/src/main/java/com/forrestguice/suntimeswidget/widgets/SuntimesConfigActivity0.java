@@ -2791,7 +2791,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return SuntimesWidget0.class;
     }
 

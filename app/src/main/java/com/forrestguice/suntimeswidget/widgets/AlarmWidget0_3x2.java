@@ -30,7 +30,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 public class AlarmWidget0_3x2 extends AlarmWidget0
 {
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return AlarmWidget0ConfigActivity_3x2.class;
     }
 

@@ -504,7 +504,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return result;
     }
 
-    public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
+    public static boolean importValue(SharedPreferences.Editor prefs, Class<?> type, String key, Object value)
     {
         boolean retValue = true;
         if (type.equals(String.class)) {
@@ -580,8 +580,8 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
             if (prefTypes.containsKey(k0))
             {
-                Class expectedType = prefTypes.get(k0);
-                Class valueType = value.getClass();
+                Class<?> expectedType = prefTypes.get(k0);
+                Class<?> valueType = value.getClass();
                 if (valueType.equals(expectedType)) {
                     importValue(prefs, expectedType, k, value);    // types match (direct cast)
 
