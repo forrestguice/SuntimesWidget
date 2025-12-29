@@ -92,7 +92,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public static final int MAX_POSITIONS = 400000;    // +-550 years (400000 / 365 / 2)
     public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
+    private final HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
 
     @Override
     public int getItemCount() {

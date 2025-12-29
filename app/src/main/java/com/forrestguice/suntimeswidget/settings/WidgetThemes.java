@@ -573,7 +573,7 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int layoutId, dropDownLayoutId;
+        private final int layoutId, dropDownLayoutId;
 
         public ThemeListAdapter(Context context, int layoutId, int dropDownLayoutId, SuntimesTheme.ThemeDescriptor[] themes)
         {

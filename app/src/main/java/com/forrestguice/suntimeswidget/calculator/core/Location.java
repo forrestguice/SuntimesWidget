@@ -39,9 +39,9 @@ public class Location implements Serializable
 
     public static String pattern_latLon = "#.#####";
 
-    private String label;
-    private String latitude;   // decimal degrees (DD)
-    private String longitude;  // decimal degrees (DD)
+    private final String label;
+    private final String latitude;   // decimal degrees (DD)
+    private final String longitude;  // decimal degrees (DD)
     private String altitude;   // meters above the WGS 84 reference ellipsoid
     private boolean useAltitude = true;
 

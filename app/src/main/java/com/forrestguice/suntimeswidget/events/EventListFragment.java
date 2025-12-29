@@ -258,7 +258,6 @@ public class EventListFragment extends DialogBase
         return (Location) getArgs().getSerializable(EXTRA_LOCATION);
     }
 
-    private String[] typeFilter = null;
     public void setTypeFilter(@Nullable String[] filter) {
         getArgs().putStringArray(EXTRA_TYPEFILTER, filter);
     }

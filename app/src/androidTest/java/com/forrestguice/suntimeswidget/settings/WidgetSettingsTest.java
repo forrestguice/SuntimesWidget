@@ -162,7 +162,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     private Context context;
-    private int appWidgetId = Integer.MAX_VALUE;
+    private final int appWidgetId = Integer.MAX_VALUE;
 
     @Before
     public void init()
