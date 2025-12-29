@@ -137,13 +137,8 @@ public class LocationConfigView extends LinearLayout
         }
 
         try {
-            @SuppressWarnings("UnusedAssignment")
             BigDecimal lat = new BigDecimal(latitude);
-
-            @SuppressWarnings("UnusedAssignment")
             BigDecimal lon = new BigDecimal(longitude);
-
-            @SuppressWarnings("UnusedAssignment")
             BigDecimal alt = new BigDecimal(altitude);
 
         } catch (NumberFormatException e) {

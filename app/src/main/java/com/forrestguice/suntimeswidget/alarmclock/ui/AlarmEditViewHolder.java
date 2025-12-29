@@ -51,7 +51,6 @@ import com.forrestguice.util.text.TimeDisplayText;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-@SuppressWarnings("Convert2Diamond")
 public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 {
     public static SuntimesUtils utils = new SuntimesUtils();

@@ -69,7 +69,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class BedtimeDialog extends DialogFragment
 {
     public static final int REQUEST_EDIT_WAKEUP = 10;

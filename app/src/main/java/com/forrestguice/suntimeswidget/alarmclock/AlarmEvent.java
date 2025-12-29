@@ -52,7 +52,6 @@ import java.util.concurrent.Callable;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
 
-@SuppressWarnings("Convert2Diamond")
 public class AlarmEvent
 {
     public static int supportsRepeating(@NonNull SolarEvents event) {

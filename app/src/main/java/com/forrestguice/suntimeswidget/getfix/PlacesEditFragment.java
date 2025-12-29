@@ -670,7 +670,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
      * @param savedInstanceState a Bundle containing previously saved dialog state
      * @return an AlertDialog ready for display
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

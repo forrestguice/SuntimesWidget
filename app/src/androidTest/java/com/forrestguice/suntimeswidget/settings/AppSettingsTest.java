@@ -34,7 +34,6 @@ import org.junit.runner.RunWith;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
 @RunWith(AndroidJUnit4.class)
 public class AppSettingsTest extends SuntimesActivityTestBase
 {

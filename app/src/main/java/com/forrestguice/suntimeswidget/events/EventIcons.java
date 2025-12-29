@@ -39,7 +39,6 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
-@SuppressWarnings("Convert2Diamond")
 public class EventIcons
 {
     @SuppressLint("ResourceType")

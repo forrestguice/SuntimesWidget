@@ -37,7 +37,6 @@ import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
 /**
  * Clock widget config activity.
  */
-@SuppressWarnings("Convert2Diamond")
 public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
 {
     public ClockWidget0ConfigActivity()

@@ -63,7 +63,6 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonApsisView extends LinearLayout
 {
     private static SuntimesUtils utils = new SuntimesUtils();

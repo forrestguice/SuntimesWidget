@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-@SuppressWarnings("Convert2Diamond")
 public class LocationHelperSettings
 {
     public static final String PREF_KEY_LOCATION_MIN_ELAPSED = "getFix_minElapsed";    // total elapsed time

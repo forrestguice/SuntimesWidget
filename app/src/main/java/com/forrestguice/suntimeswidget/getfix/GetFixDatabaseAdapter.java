@@ -276,7 +276,6 @@ public class GetFixDatabaseAdapter
     {
         String quote = "\"";
         String separator = ", ";
-        //noinspection UnnecessaryLocalVariable
         String line = quote + place.getAsString(KEY_PLACE_NAME) + quote + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +

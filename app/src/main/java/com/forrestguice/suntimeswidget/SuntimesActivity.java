@@ -134,7 +134,6 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 import android.os.Handler;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String ACTION_ADD_ALARM = "suntimes.action.ALARM";

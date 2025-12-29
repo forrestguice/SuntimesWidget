@@ -51,7 +51,6 @@ import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PRE
 /**
  * Solstice / Equinox widget config activity.
  */
-@SuppressWarnings("Convert2Diamond")
 public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 {
     public SolsticeWidget0ConfigActivity()

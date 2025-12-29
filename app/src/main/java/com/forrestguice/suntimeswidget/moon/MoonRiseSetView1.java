@@ -68,7 +68,6 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonRiseSetView1 extends LinearLayout
 {
     private SuntimesUtils utils = new SuntimesUtils();

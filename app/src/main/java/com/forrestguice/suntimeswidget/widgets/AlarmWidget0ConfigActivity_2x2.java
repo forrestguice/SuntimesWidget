@@ -31,7 +31,6 @@ import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 /**
  * Alarm widget config activity.
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmWidget0ConfigActivity_2x2 extends AlarmWidget0ConfigActivity
 {
     public AlarmWidget0ConfigActivity_2x2() {

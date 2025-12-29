@@ -135,7 +135,7 @@ public class AlarmTimeDialog extends DialogFragment
         getArguments().putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, value);
     }
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return super.onCreateDialog(savedInstanceState);

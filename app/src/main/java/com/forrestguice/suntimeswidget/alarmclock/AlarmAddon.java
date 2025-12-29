@@ -55,7 +55,6 @@ import java.util.concurrent.TimeoutException;
  *
  * @see AlarmEventContract
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmAddon
 {
     public static final String CATEGORY_SUNTIMES_ALARM = "suntimes.SUNTIMES_ALARM";

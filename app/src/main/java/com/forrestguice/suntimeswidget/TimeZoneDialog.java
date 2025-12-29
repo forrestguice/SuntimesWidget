@@ -253,7 +253,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     }
 
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState)
     {

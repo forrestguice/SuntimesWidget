@@ -42,7 +42,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 
-@SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
 public class AlarmSettingsTest extends SuntimesActivityTestBase
 {

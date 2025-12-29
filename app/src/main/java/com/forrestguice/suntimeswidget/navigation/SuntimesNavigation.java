@@ -44,7 +44,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesNavigation
 {
     private static int anim_in = R.anim.transition_swap_in;

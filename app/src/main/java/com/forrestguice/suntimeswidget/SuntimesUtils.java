@@ -706,7 +706,6 @@ public class SuntimesUtils
         return text;
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);

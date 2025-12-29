@@ -57,7 +57,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class AlarmEditDialog extends DialogFragment
 {
     public static final String EXTRA_SHOW_FRAME = "show_frame";
@@ -213,7 +212,7 @@ public class AlarmEditDialog extends DialogFragment
         }
     }
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

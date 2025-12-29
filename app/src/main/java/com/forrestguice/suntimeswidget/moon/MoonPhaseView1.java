@@ -23,7 +23,6 @@ import android.util.AttributeSet;
 
 import com.forrestguice.suntimeswidget.R;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView1 extends MoonPhaseView
 {
     public MoonPhaseView1(Context context) {

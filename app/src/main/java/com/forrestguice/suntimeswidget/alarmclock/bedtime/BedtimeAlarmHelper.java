@@ -40,7 +40,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class BedtimeAlarmHelper
 {
     public static void pauseBedtimeEvent(final Context context) {

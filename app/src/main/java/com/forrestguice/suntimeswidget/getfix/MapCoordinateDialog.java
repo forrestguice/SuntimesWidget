@@ -57,7 +57,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Locale;
 
-@SuppressWarnings("Convert2Diamond")
 public class MapCoordinateDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_DIALOG_TITLE = "dialog_title";
@@ -255,7 +254,7 @@ public class MapCoordinateDialog extends BottomSheetDialogFragment
         return dialogContent;
     }
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

@@ -48,7 +48,6 @@ import com.forrestguice.util.android.AndroidResources;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
 {
     protected SuntimesUtils utils = new SuntimesUtils();

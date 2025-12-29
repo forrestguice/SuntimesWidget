@@ -48,7 +48,6 @@ import com.forrestguice.util.text.TimeDisplayText;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonRiseSetView extends LinearLayout
 {
     private SuntimesUtils utils = new SuntimesUtils();

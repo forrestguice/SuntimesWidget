@@ -287,7 +287,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

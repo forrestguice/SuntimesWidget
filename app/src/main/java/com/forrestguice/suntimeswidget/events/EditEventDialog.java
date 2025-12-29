@@ -321,7 +321,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     /**
      * onCreateDialog
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)

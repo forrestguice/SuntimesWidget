@@ -51,7 +51,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
-@SuppressWarnings("Convert2Diamond")
 public class EquinoxCardView extends LinearLayout
 {
     protected EquinoxViewOptions options = new EquinoxViewOptions();

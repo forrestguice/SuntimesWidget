@@ -18,7 +18,6 @@ import com.forrestguice.suntimeswidget.R;
  * this file contains a modified copy of `com.flask.colorpicker.slider.LightnessSlider`
  */
 
-@SuppressWarnings("Convert2Diamond")
 public class LightnessSlider extends com.flask.colorpicker.slider.LightnessSlider
 {
     private boolean inVerticalOrientation;

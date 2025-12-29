@@ -36,7 +36,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
-@SuppressWarnings("ConstantConditions")
 public class AlarmScheduleTest0
 {
     public SuntimesUtils utils = new SuntimesUtils();

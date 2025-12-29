@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 @Deprecated
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhasesView extends LinearLayout
 {
     private SuntimesUtils utils = new SuntimesUtils();

@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
-@SuppressWarnings("Convert2Diamond")
 public class ColorChooserView extends LinearLayout
 {
     private ImageButton button;

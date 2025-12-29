@@ -48,7 +48,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-@SuppressWarnings("Convert2Diamond")
 public class TimeDateDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
@@ -143,7 +142,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a bundle containing previously saved dialog state
      * @return a dialog instance ready to be shown
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

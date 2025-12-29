@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-@SuppressWarnings("Convert2Diamond")
 public interface LocationHelper
 {
     void saveSettings( Bundle bundle );

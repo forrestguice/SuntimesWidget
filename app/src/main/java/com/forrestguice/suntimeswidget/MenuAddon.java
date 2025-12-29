@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class MenuAddon
 {
     public static String REQUIRED_PERMISSION() {

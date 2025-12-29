@@ -25,7 +25,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
  * ClockWidget0ConfigActivity3x1 .. the 3x1 version of the widget. The only difference between
  * the 3x1 widget and a resized 1x1 widget is the suggested defaults.
  */
-@SuppressWarnings("Convert2Diamond")
 public class ClockWidget0ConfigActivity_3x1 extends ClockWidget0ConfigActivity
 {
     public ClockWidget0ConfigActivity_3x1()

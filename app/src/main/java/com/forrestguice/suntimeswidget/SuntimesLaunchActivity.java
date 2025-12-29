@@ -27,7 +27,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesLaunchActivity extends AppCompatActivity
 {
     @Override

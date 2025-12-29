@@ -45,7 +45,6 @@ import static junit.framework.Assert.assertTrue;
 /**
  * non-instrumented tests moved from androidTest/settings/WidgetTimezonesTest
  */
-@SuppressWarnings("ConstantConditions")
 @Category(UnlistedTest.class)
 public class TimeZonesTest0
 {

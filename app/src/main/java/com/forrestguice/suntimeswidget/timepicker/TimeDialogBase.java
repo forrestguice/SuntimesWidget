@@ -43,7 +43,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public abstract class TimeDialogBase extends BottomSheetDialogFragment
 {
     public static final String KEY_DIALOG_TITLE = "dialog_title";
@@ -118,7 +117,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
         getArgs().putCharSequence(KEY_DIALOG_NEUTRAL_LABEL, value);
     }
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

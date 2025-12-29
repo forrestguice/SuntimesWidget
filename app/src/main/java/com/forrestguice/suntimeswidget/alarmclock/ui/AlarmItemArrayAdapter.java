@@ -75,7 +75,6 @@ import java.util.Calendar;
 /**
  * AlarmClockAdapter
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 {
     private static final SuntimesUtils utils = new SuntimesUtils();
