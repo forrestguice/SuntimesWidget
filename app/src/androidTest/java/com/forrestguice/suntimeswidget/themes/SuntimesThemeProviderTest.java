@@ -127,11 +127,11 @@ public class SuntimesThemeProviderTest
     {
         List<String> columns0 = new ArrayList<>();
         Collections.addAll(columns0, QUERY_THEME_PROJECTION);
-        test_projectionHasUniqueColumns(columns0.toArray(new String[columns0.size()]));
+        test_projectionHasUniqueColumns(columns0.toArray(new String[0]));
 
         List<String> columns1 = new ArrayList<>();
         Collections.addAll(columns1, QUERY_THEMES_PROJECTION);
-        test_projectionHasUniqueColumns(columns1.toArray(new String[columns1.size()]));
+        test_projectionHasUniqueColumns(columns1.toArray(new String[0]));
 
         test_query_theme_projection();
         test_query_themes_projection();

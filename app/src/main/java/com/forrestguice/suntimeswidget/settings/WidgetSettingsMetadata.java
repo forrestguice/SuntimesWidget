@@ -133,8 +133,8 @@ public class WidgetSettingsMetadata
         private String className = null;
         private int versionCode = -1;
         private int category = -1;
-        private int[] minDimens = new int[] {-1, -1};
-        private int[] maxDimens = new int[] {-1, -1};
+        private final int[] minDimens = new int[] {-1, -1};
+        private final int[] maxDimens = new int[] {-1, -1};
 
         public WidgetMetadata(WidgetMetadata other)
         {

@@ -152,7 +152,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "TimeDateDialog onSaveInstanceState");
         saveSettings(outState);

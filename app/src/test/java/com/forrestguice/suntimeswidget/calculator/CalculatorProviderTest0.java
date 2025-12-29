@@ -143,7 +143,7 @@ public class CalculatorProviderTest0
         Collections.addAll(columns, QUERY_MOON_PROJECTION);
         Collections.addAll(columns, QUERY_MOONPOS_PROJECTION);
         Collections.addAll(columns, QUERY_MOONPHASE_PROJECTION);
-        test_projectionHasUniqueColumns(columns.toArray(new String[columns.size()]));
+        test_projectionHasUniqueColumns(columns.toArray(new String[0]));
 
         test_query_config_projection();
         test_query_seasons_projection();
