@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_K
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_SORTORDER;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES;
 
-public class AlarmWidget0ConfigFragment extends DialogFragment
+public class AlarmWidget0ConfigFragment extends DialogBase
 {
     public AlarmWidget0ConfigFragment()
     {
@@ -306,19 +307,19 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
      * setAlarmWidgetValue
      */
     public void setAlarmWidgetValue(String key, String value) {
-        getArguments().putString(key, value);
+        getArgs().putString(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, boolean value) {
-        getArguments().putBoolean(key, value);
+        getArgs().putBoolean(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, int value) {
-        getArguments().putInt(key, value);
+        getArgs().putInt(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, String[] value) {
-        getArguments().putStringArray(key, value);
+        getArgs().putStringArray(key, value);
         updateViews(getActivity());
     }
 
@@ -326,16 +327,16 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
      * getAlarmWidgetValue
      */
     public String getAlarmWidgetString(String key, String defaultValue) {
-        return getArguments().getString(key, defaultValue);
+        return getArgs().getString(key, defaultValue);
     }
     public int getAlarmWidgetInt(String key, int defaultValue) {
-        return getArguments().getInt(key, defaultValue);
+        return getArgs().getInt(key, defaultValue);
     }
     public boolean getAlarmWidgetBool(String key, boolean defaultValue) {
-        return getArguments().getBoolean(key, defaultValue);
+        return getArgs().getBoolean(key, defaultValue);
     }
     public String[] getAlarmWidgetStringSet(String key, String[] defaultValue) {
-        String[] value = getArguments().getStringArray(key);
+        String[] value = getArgs().getStringArray(key);
         return (value != null ? value : defaultValue);
     }
 

@@ -29,9 +29,10 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
 @TargetApi(11)
-public class IntegerPickerDialog extends DialogFragment
+public class IntegerPickerDialog extends DialogBase
 {
     public IntegerPickerDialog() {
         setArguments(new Bundle());
@@ -88,8 +89,8 @@ public class IntegerPickerDialog extends DialogFragment
 
     public void setRange(int minValue, int maxValue)
     {
-        getArguments().putInt("min", minValue);
-        getArguments().putInt("max", maxValue);
+        getArgs().putInt("min", minValue);
+        getArgs().putInt("max", maxValue);
         helper.setRange(minValue, maxValue);
     }
     public int getMin() {
@@ -100,7 +101,7 @@ public class IntegerPickerDialog extends DialogFragment
     }
 
     public void setWrapping(boolean value) {
-        getArguments().putBoolean("wrapping", value);
+        getArgs().putBoolean("wrapping", value);
         helper.setWrapping(value);
     }
     public boolean isWrapping() {
@@ -109,7 +110,7 @@ public class IntegerPickerDialog extends DialogFragment
 
     public void setValue(int value)
     {
-        getArguments().putInt("value", value);
+        getArgs().putInt("value", value);
         helper.setValue(value);
     }
     public int getValue() {
@@ -118,28 +119,28 @@ public class IntegerPickerDialog extends DialogFragment
 
     public void setParamZeroText(String text)
     {
-        getArguments().putString("zerotext", text);
+        getArgs().putString("zerotext", text);
         helper.setParamZeroText(text);
     }
     public void setParamMinMax(int min, int max) {
-        getArguments().putInt("param_min", min);
-        getArguments().putInt("param_max", max);
+        getArgs().putInt("param_min", min);
+        getArgs().putInt("param_max", max);
         helper.setParamMinMax(min, max);
     }
 
     public void setDialogTitle(String title) {
-        getArguments().putString("title", title);
+        getArgs().putString("title", title);
     }
     public String getDialogTitle() {
-        return getArguments().getString("title", null);
+        return getArgs().getString("title", null);
     }
 
     public void initHelper()
     {
-        Bundle args = getArguments();
+        Bundle args = getArgs();
         helper.setParamZeroText(args.getString("zerotext"));
-        helper.setRange(args.getInt("min", helper.getMin()), getArguments().getInt("max", helper.getMax()));
-        helper.setParamMinMax(args.getInt("param_min", helper.getParamMin()), getArguments().getInt("param_max", helper.getParamMax()));
+        helper.setRange(args.getInt("min", helper.getMin()), getArgs().getInt("max", helper.getMax()));
+        helper.setParamMinMax(args.getInt("param_min", helper.getParamMin()), getArgs().getInt("param_max", helper.getParamMax()));
         helper.setValue(args.getInt("value", helper.getValue()));
         helper.setWrapping(args.getBoolean("wrapping", helper.isWrapping()));
     }

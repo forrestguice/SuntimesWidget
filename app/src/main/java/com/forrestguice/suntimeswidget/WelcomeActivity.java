@@ -54,6 +54,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -392,7 +393,7 @@ public class WelcomeActivity extends AppCompatActivity
     /**
      * WelcomeFragment
      */
-    public static class WelcomeFragment extends Fragment
+    public static class WelcomeFragment extends DialogBase
     {
         public static final String ARG_LAYOUT_RESID = "layoutResID";
 
@@ -488,7 +489,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         public int getLayoutResID() {
-            return getArguments().getInt(ARG_LAYOUT_RESID);
+            return getArgs().getInt(ARG_LAYOUT_RESID);
         }
 
         public int getPreferredIndex() {
@@ -825,7 +826,7 @@ public class WelcomeActivity extends AppCompatActivity
         public static WelcomeTimeZoneFragment newInstance(Context context)
         {
             WelcomeTimeZoneFragment fragment = new WelcomeTimeZoneFragment();
-            Bundle args = fragment.getArguments();
+            Bundle args = fragment.getArgs();
             args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_timezone);
             fragment.setArguments(args);
 
@@ -836,17 +837,17 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         public double getLongitude() {
-            return getArguments().getDouble(TimeZoneDialog.KEY_LONGITUDE);
+            return getArgs().getDouble(TimeZoneDialog.KEY_LONGITUDE);
         }
         public void setLongitude(double value) {
-            getArguments().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
+            getArgs().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
         }
 
         public String getLongitudeLabel() {
-            return getArguments().getString(LocationConfigView.KEY_LOCATION_LABEL);
+            return getArgs().getString(LocationConfigView.KEY_LOCATION_LABEL);
         }
         public void setLongitudeLabel( String value ) {
-            getArguments().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
+            getArgs().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
         }
 
         public void toggleWarning(boolean visible)

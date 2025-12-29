@@ -40,8 +40,9 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
-public class BedtimeSleepDialog extends DialogFragment
+public class BedtimeSleepDialog extends DialogBase
 {
     protected static final String DIALOGTAG_HELP = "sleepcyclehelp";
 
@@ -55,29 +56,29 @@ public class BedtimeSleepDialog extends DialogFragment
     }
 
     public void setShowHelp(boolean showHelp, CharSequence helpContent, String helpUrl, String helpTag) {
-        getArguments().putBoolean("showHelp", showHelp);
-        getArguments().putCharSequence("helpContent", helpContent);
-        getArguments().putString("helpUrl", helpUrl);
-        getArguments().putString("helpTag", helpTag);
+        getArgs().putBoolean("showHelp", showHelp);
+        getArgs().putCharSequence("helpContent", helpContent);
+        getArgs().putString("helpUrl", helpUrl);
+        getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArguments().getCharSequence("helpContent");
+        return getArgs().getCharSequence("helpContent");
     }
     public String helpUrl() {
-        return getArguments().getString("helpUrl");
+        return getArgs().getString("helpUrl");
     }
     public String helpTag() {
-        return getArguments().getString("helpTag");
+        return getArgs().getString("helpTag");
     }
     public boolean showHelp() {
-        return getArguments().getBoolean("showHelp", false);
+        return getArgs().getBoolean("showHelp", false);
     }
 
     public void setDialogTitle(String value) {
-        getArguments().putString("dialogTitle", value);
+        getArgs().putString("dialogTitle", value);
     }
     public String getDialogTitle(Context context) {
-        String title = getArguments().getString("dialogTitle");
+        String title = getArgs().getString("dialogTitle");
         return (title != null ? title : context.getString(R.string.configLabel_sleepCycles));
     }
 
@@ -234,11 +235,11 @@ public class BedtimeSleepDialog extends DialogFragment
 
     public void setNumCycles(float value)
     {
-        getArguments().putFloat("numCycles", value);
+        getArgs().putFloat("numCycles", value);
         updateViews(getContext());
     }
     public float getNumCycles() {
-        return getArguments().getFloat("numCycles", BedtimeSettings.PREF_DEF_SLEEPCYCLE_COUNT);
+        return getArgs().getFloat("numCycles", BedtimeSettings.PREF_DEF_SLEEPCYCLE_COUNT);
     }
 
     protected void loadSettings(Bundle bundle) {

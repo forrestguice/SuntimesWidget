@@ -43,12 +43,13 @@ import android.widget.ToggleButton;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
-public class AlarmRepeatDialog extends DialogFragment
+public class AlarmRepeatDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_REPEAT = "alarmrepeat_repeat";
     public static final boolean PREF_DEF_ALARM_REPEAT = false;

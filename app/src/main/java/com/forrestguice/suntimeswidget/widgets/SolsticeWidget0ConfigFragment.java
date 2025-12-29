@@ -29,11 +29,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
 import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER;
 import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER;
 
-public class SolsticeWidget0ConfigFragment extends DialogFragment
+public class SolsticeWidget0ConfigFragment extends DialogBase
 {
     protected CheckBox check_crossquarter;
 
@@ -99,19 +100,19 @@ public class SolsticeWidget0ConfigFragment extends DialogFragment
      * setWidgetValue
      */
     public void setWidgetValue(String key, String value) {
-        getArguments().putString(key, value);
+        getArgs().putString(key, value);
         updateViews(getActivity());
     }
     public void setWidgetValue(String key, boolean value) {
-        getArguments().putBoolean(key, value);
+        getArgs().putBoolean(key, value);
         updateViews(getActivity());
     }
     public void setWidgetValue(String key, int value) {
-        getArguments().putInt(key, value);
+        getArgs().putInt(key, value);
         updateViews(getActivity());
     }
     public void setWidgetValue(String key, String[] value) {
-        getArguments().putStringArray(key, value);
+        getArgs().putStringArray(key, value);
         updateViews(getActivity());
     }
 
@@ -119,16 +120,16 @@ public class SolsticeWidget0ConfigFragment extends DialogFragment
      * getWidgetValue
      */
     public String getWidgetString(String key, String defaultValue) {
-        return getArguments().getString(key, defaultValue);
+        return getArgs().getString(key, defaultValue);
     }
     public int getWidgetInt(String key, int defaultValue) {
-        return getArguments().getInt(key, defaultValue);
+        return getArgs().getInt(key, defaultValue);
     }
     public boolean getWidgetBool(String key, boolean defaultValue) {
-        return getArguments().getBoolean(key, defaultValue);
+        return getArgs().getBoolean(key, defaultValue);
     }
     public String[] getWidgetStringSet(String key, String[] defaultValue) {
-        String[] value = getArguments().getStringArray(key);
+        String[] value = getArgs().getStringArray(key);
         return (value != null ? value : defaultValue);
     }
 

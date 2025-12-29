@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -42,7 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.io.File;
 
-public class EventListFragment extends Fragment
+public class EventListFragment extends DialogBase
 {
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String EXTRA_SELECTED = "selected";
@@ -87,6 +88,7 @@ public class EventListFragment extends Fragment
         return v;
     }
 
+    @Override
     @NonNull
     public Bundle getArgs()
     {
@@ -251,10 +253,10 @@ public class EventListFragment extends Fragment
     }
 
     public void setLocation(Location value) {
-        getArguments().putSerializable(EXTRA_LOCATION, value);
+        getArgs().putSerializable(EXTRA_LOCATION, value);
     }
     public Location getLocation() {
-        return (Location) getArguments().getSerializable(EXTRA_LOCATION);
+        return (Location) getArgs().getSerializable(EXTRA_LOCATION);
     }
 
     private String[] typeFilter = null;

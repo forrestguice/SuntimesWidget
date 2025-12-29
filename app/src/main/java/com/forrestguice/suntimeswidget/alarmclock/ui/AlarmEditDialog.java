@@ -51,13 +51,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
-public class AlarmEditDialog extends DialogFragment
+public class AlarmEditDialog extends DialogBase
 {
     public static final String EXTRA_SHOW_FRAME = "show_frame";
     public static final String EXTRA_SHOW_OVERFLOW = "show_overflow";
@@ -130,7 +131,7 @@ public class AlarmEditDialog extends DialogFragment
         {
             detachClickListeners(itemView);
             itemView.bindDataToPosition(getActivity(), item, options, 0);
-            itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
+            itemView.menu_overflow.setVisibility(getArgs().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
@@ -193,20 +194,20 @@ public class AlarmEditDialog extends DialogFragment
         }
 
         dialogFrame = dialogContent.findViewById(R.id.dialog_frame);
-        setShowDialogFrame(getArguments().getBoolean(EXTRA_SHOW_FRAME, true));
+        setShowDialogFrame(getArgs().getBoolean(EXTRA_SHOW_FRAME, true));
 
         bindItemToHolder(item);
     }
 
     public void setShowOverflow(boolean value)
     {
-        getArguments().putBoolean(EXTRA_SHOW_OVERFLOW, value);
+        getArgs().putBoolean(EXTRA_SHOW_OVERFLOW, value);
         bindItemToHolder(getItem());
     }
 
     public void setShowDialogFrame(boolean value)
     {
-        getArguments().putBoolean(EXTRA_SHOW_FRAME, value);
+        getArgs().putBoolean(EXTRA_SHOW_FRAME, value);
         if (dialogFrame != null) {
             dialogFrame.setVisibility(value ? View.VISIBLE : View.GONE);
         }

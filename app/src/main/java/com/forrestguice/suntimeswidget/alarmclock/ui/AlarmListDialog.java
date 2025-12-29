@@ -70,6 +70,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -107,7 +108,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmListDialog extends DialogFragment
+public class AlarmListDialog extends DialogBase
 {
     public static final String EXTRA_SELECTED_ROWID = "selectedRowID";
 

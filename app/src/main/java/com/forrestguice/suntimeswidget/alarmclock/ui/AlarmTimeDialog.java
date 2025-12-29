@@ -41,12 +41,13 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
-public class AlarmTimeDialog extends DialogFragment
+public class AlarmTimeDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_TIME_24HR = "is24";
     public static final boolean PREF_DEF_ALARM_TIME_24HR = true;
@@ -97,7 +98,7 @@ public class AlarmTimeDialog extends DialogFragment
     @Override
     public void onCreate(Bundle savedState)
     {
-        Bundle args = getArguments();
+        Bundle args = getArgs();
         if (getLocation() == null) {
             args.putSerializable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         }
@@ -105,29 +106,29 @@ public class AlarmTimeDialog extends DialogFragment
     }
 
     public void setDate(long datetime) {
-        getArguments().putLong(PREF_KEY_ALARM_TIME_DATE, datetime);
+        getArgs().putLong(PREF_KEY_ALARM_TIME_DATE, datetime);
     }
     public void setTime(int hour, int minute) {
-        getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
-        getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+        getArgs().putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
+        getArgs().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
         updateDate();
     }
     public void set24Hour(boolean value) {
-        getArguments().putBoolean(PREF_KEY_ALARM_TIME_24HR, value);
+        getArgs().putBoolean(PREF_KEY_ALARM_TIME_24HR, value);
     }
     public void setTimeZone(String value) {
-        getArguments().putString(PREF_KEY_ALARM_TIME_MODE, value);
+        getArgs().putString(PREF_KEY_ALARM_TIME_MODE, value);
         updateDate();
     }
     public void setLocation(Location location) {
-        getArguments().putSerializable(PREF_KEY_ALARM_LOCATION, location);
+        getArgs().putSerializable(PREF_KEY_ALARM_LOCATION, location);
         updateDate();
     }
     public void setShowDateButton(boolean value) {
-        getArguments().putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, value);
+        getArgs().putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, value);
     }
     public void setShowTimeZoneSelect(boolean value) {
-        getArguments().putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, value);
+        getArgs().putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, value);
     }
 
     @SuppressWarnings({"RestrictedApi"})
@@ -205,8 +206,8 @@ public class AlarmTimeDialog extends DialogFragment
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute)
         {
-            getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hourOfDay);
-            getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+            getArgs().putInt(PREF_KEY_ALARM_TIME_HOUR, hourOfDay);
+            getArgs().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
             updateDate();
 
             if (listener != null) {
@@ -224,7 +225,7 @@ public class AlarmTimeDialog extends DialogFragment
             calendar.set(Calendar.HOUR_OF_DAY, getHour());
             calendar.set(Calendar.MINUTE, getMinute());
             calendar.set(Calendar.SECOND, 0);
-            getArguments().putLong(PREF_KEY_ALARM_TIME_DATE, calendar.getTimeInMillis());
+            getArgs().putLong(PREF_KEY_ALARM_TIME_DATE, calendar.getTimeInMillis());
         }
     }
 
@@ -266,7 +267,7 @@ public class AlarmTimeDialog extends DialogFragment
         clearTimeChangedListener();
 
         if (modePicker != null && modeAdapter != null) {
-            AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArguments().getString(PREF_KEY_ALARM_TIME_MODE));
+            AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArgs().getString(PREF_KEY_ALARM_TIME_MODE));
             modePicker.setSelection(modeAdapter.getPosition(mode));
             modePicker.setVisibility(getShowTimeZoneSelect() ? View.VISIBLE : View.GONE);
         }
@@ -278,14 +279,14 @@ public class AlarmTimeDialog extends DialogFragment
 
         if (timePicker != null)
         {
-            timePicker.setIs24HourView(getArguments().getBoolean(PREF_KEY_ALARM_TIME_24HR));
-            timePicker.setCurrentHour(getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR));
-            timePicker.setCurrentMinute(getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE));
+            timePicker.setIs24HourView(getArgs().getBoolean(PREF_KEY_ALARM_TIME_24HR));
+            timePicker.setCurrentHour(getArgs().getInt(PREF_KEY_ALARM_TIME_HOUR));
+            timePicker.setCurrentMinute(getArgs().getInt(PREF_KEY_ALARM_TIME_MINUTE));
         }
 
         if (locationPicker != null) {
             locationPicker.setText(displayLocation(getActivity(), getLocation()));
-            locationPicker.setVisibility(getArguments().getString(PREF_KEY_ALARM_TIME_MODE) == null ? View.GONE : View.VISIBLE);
+            locationPicker.setVisibility(getArgs().getString(PREF_KEY_ALARM_TIME_MODE) == null ? View.GONE : View.VISIBLE);
         }
 
         setTimeChangedListener();
@@ -316,31 +317,31 @@ public class AlarmTimeDialog extends DialogFragment
     }
 
     public long getDate() {
-        return getArguments().getLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
+        return getArgs().getLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
     }
 
     public int getHour() {
-        return getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
+        return getArgs().getInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
     }
 
     public int getMinute() {
-        return getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
+        return getArgs().getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
     }
 
     public String getTimeZone() {
-        return getArguments().getString(PREF_KEY_ALARM_TIME_MODE);
+        return getArgs().getString(PREF_KEY_ALARM_TIME_MODE);
     }
 
     public Location getLocation() {
-        return (Location)getArguments().getSerializable(PREF_KEY_ALARM_LOCATION);
+        return (Location)getArgs().getSerializable(PREF_KEY_ALARM_LOCATION);
     }
 
     public boolean getShowDateButton() {
-        return getArguments().getBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
+        return getArgs().getBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
     }
 
     public boolean getShowTimeZoneSelect() {
-        return getArguments().getBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
+        return getArgs().getBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
     }
 
     public interface DialogListener

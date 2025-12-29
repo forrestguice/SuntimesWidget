@@ -59,6 +59,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -81,7 +82,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class PlacesListFragment extends Fragment
+public class PlacesListFragment extends DialogBase
 {
     public static final String KEY_DIALOGTHEME = "dialogtheme";
 
@@ -133,13 +134,13 @@ public class PlacesListFragment extends Fragment
     public void setDialogThemOverride(@Nullable Integer resID)
     {
         if (resID != null) {
-            getArguments().putInt(KEY_DIALOGTHEME, resID);
-        } else getArguments().remove(KEY_DIALOGTHEME);
+            getArgs().putInt(KEY_DIALOGTHEME, resID);
+        } else getArgs().remove(KEY_DIALOGTHEME);
     }
     @Nullable
     protected Integer getDialogThemeOverride()
     {
-        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        int resID = getArgs().getInt(KEY_DIALOGTHEME, -1);
         return (resID >= 0 ? resID : null);
     }
 
@@ -554,13 +555,13 @@ public class PlacesListFragment extends Fragment
         @Override
         public void onFilterChanged(String filterText, Long[] filterExceptions)
         {
-            getArguments().putString(KEY_FILTER_TEXT, filterText);
+            getArgs().putString(KEY_FILTER_TEXT, filterText);
 
             long[] array = new long[filterExceptions.length];
             for (int i=0; i<array.length; i++) {
                 array[i] = filterExceptions[i];
             }
-            getArguments().putLongArray(KEY_FILTER_EXCEPTIONS, array);
+            getArgs().putLongArray(KEY_FILTER_EXCEPTIONS, array);
         }
     };
 
@@ -1230,31 +1231,31 @@ public class PlacesListFragment extends Fragment
     }
 
     public void setFilterText( String value ) {
-        getArguments().putString(KEY_FILTER_TEXT, value);
+        getArgs().putString(KEY_FILTER_TEXT, value);
         if (adapter != null) {
             adapter.setFilterText(value);
         }
     }
     public String getFilterText() {
-        String value = getArguments().getString(KEY_FILTER_TEXT);
+        String value = getArgs().getString(KEY_FILTER_TEXT);
         return (value != null ? value : "");
     }
     public long[] getFilterExceptions() {
-        return getArguments().getLongArray(KEY_FILTER_EXCEPTIONS);
+        return getArgs().getLongArray(KEY_FILTER_EXCEPTIONS);
     }
 
     public void setAllowPick(boolean value) {
-        getArguments().putBoolean(KEY_ALLOW_PICK, value);
+        getArgs().putBoolean(KEY_ALLOW_PICK, value);
     }
     public boolean allowPick() {
-        return getArguments().getBoolean(KEY_ALLOW_PICK, false);
+        return getArgs().getBoolean(KEY_ALLOW_PICK, false);
     }
 
     public boolean isModified() {
-        return getArguments().getBoolean(KEY_MODIFIED, false);
+        return getArgs().getBoolean(KEY_MODIFIED, false);
     }
     protected void setModified(boolean value) {
-        getArguments().putBoolean(KEY_MODIFIED, value);
+        getArgs().putBoolean(KEY_MODIFIED, value);
     }
 
     public void setFragmentListener(FragmentListener value) {

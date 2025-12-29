@@ -41,6 +41,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class AboutActivity extends AppCompatActivity
@@ -153,7 +154,7 @@ public class AboutActivity extends AppCompatActivity
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class AboutAppFragment extends Fragment
+    public static class AboutAppFragment extends DialogBase
     {
         public static final String ARG_LAYOUT_NUMBER = "layoutNumber";
 
@@ -179,8 +180,7 @@ public class AboutActivity extends AppCompatActivity
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view;
-            Bundle args = getArguments();
-            int layoutID = ((args != null) ? args.getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP) : LAYOUT_APP);
+            int layoutID = getArgs().getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP);
             switch (layoutID)
             {
                 case LAYOUT_PRIVACY:

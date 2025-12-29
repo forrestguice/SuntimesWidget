@@ -45,8 +45,9 @@ import android.widget.EditText;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
-public class AlarmLabelDialog extends DialogFragment
+public class AlarmLabelDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_LABEL = "alarmlabel";
     public static final String PREF_DEF_ALARM_LABEL = "";
@@ -63,37 +64,37 @@ public class AlarmLabelDialog extends DialogFragment
     }
 
     public void setShowHelp(boolean showHelp, CharSequence helpContent, String helpUrl, String helpTag) {
-        getArguments().putBoolean("showHelp", showHelp);
-        getArguments().putCharSequence("helpContent", helpContent);
-        getArguments().putString("helpUrl", helpUrl);
-        getArguments().putString("helpTag", helpTag);
+        getArgs().putBoolean("showHelp", showHelp);
+        getArgs().putCharSequence("helpContent", helpContent);
+        getArgs().putString("helpUrl", helpUrl);
+        getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArguments().getCharSequence("helpContent");
+        return getArgs().getCharSequence("helpContent");
     }
     public String helpUrl() {
-        return getArguments().getString("helpUrl");
+        return getArgs().getString("helpUrl");
     }
     public String helpTag() {
-        return getArguments().getString("helpTag");
+        return getArgs().getString("helpTag");
     }
     public boolean showHelp() {
-        return getArguments().getBoolean("showHelp", false);
+        return getArgs().getBoolean("showHelp", false);
     }
 
     public void setDialogTitle(String value) {
-        getArguments().putString("dialogTitle", value);
+        getArgs().putString("dialogTitle", value);
     }
     public String getDialogTitle(Context context) {
-        String title = getArguments().getString("dialogTitle");
+        String title = getArgs().getString("dialogTitle");
         return (title != null ? title : context.getString(R.string.alarmlabel_dialog_title));
     }
 
     public void setMultiLine(boolean value) {
-        getArguments().putBoolean("multiLine", value);
+        getArgs().putBoolean("multiLine", value);
     }
     public boolean isMultiLine() {
-        return getArguments().getBoolean("multiLine", false);
+        return getArgs().getBoolean("multiLine", false);
     }
 
     /**

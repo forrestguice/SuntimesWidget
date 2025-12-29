@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -67,7 +68,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.List;
 
-public class BedtimeDialog extends DialogFragment
+public class BedtimeDialog extends DialogBase
 {
     public static final int REQUEST_EDIT_WAKEUP = 10;
     public static final int REQUEST_ADD_WAKEUP = 20;

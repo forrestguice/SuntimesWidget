@@ -46,6 +46,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.lang.ref.WeakReference;
@@ -455,7 +456,7 @@ public class GetFixHelper implements LocationHelper
     /**
      * Keep trying dialog fragment; "No fix found. Keep searching? yes, no"
      */
-    public static class KeepTryingDialog extends DialogFragment
+    public static class KeepTryingDialog extends DialogBase
     {
         private LocationHelper helper;
         public LocationHelper getHelper() { return helper; }
@@ -503,7 +504,7 @@ public class GetFixHelper implements LocationHelper
     /**
      * Enable location alert dialog fragment; "Enable Location? yes, no"
      */
-    public static class EnableGPSDialog extends DialogFragment
+    public static class EnableGPSDialog extends DialogBase
     {
         public EnableGPSDialog() {}
 

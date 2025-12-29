@@ -38,13 +38,14 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
 import java.util.Calendar;
 
 import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_FORMATPATTERN;
 import static com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface.PREF_KEY_CALENDAR_MODE;
 
-public class CalendarFormatDialog extends DialogFragment
+public class CalendarFormatDialog extends DialogBase
 {
     public CalendarFormatDialog()
     {
@@ -170,7 +171,7 @@ public class CalendarFormatDialog extends DialogFragment
             text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
             button_calendarFormatEdit.setVisibility(item == CalendarFormat.CUSTOM ? View.GONE : View.VISIBLE);
             text_calendarFormatPattern.setText(item.getPattern());
-            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, item.getPattern());
+            getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, item.getPattern());
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -181,7 +182,7 @@ public class CalendarFormatDialog extends DialogFragment
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
         {
             String pattern = v.getText().toString();
-            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
 
             switch (actionId) {
                 case EditorInfo.IME_ACTION_DONE: case EditorInfo.IME_ACTION_NEXT: case EditorInfo.IME_ACTION_PREVIOUS:
@@ -197,7 +198,7 @@ public class CalendarFormatDialog extends DialogFragment
         public void onFocusChange(View v, boolean hasFocus)
         {
             String pattern = text_calendarFormatPattern.getText().toString();
-            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
 
             if (!hasFocus && v.isEnabled()) {
                 updateCustomCalendarFormat(pattern);
@@ -210,7 +211,7 @@ public class CalendarFormatDialog extends DialogFragment
         if (text_calendarFormatPattern.hasFocus())
         {
             String pattern = text_calendarFormatPattern.getText().toString();
-            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
             return true;
         } else return false;
     }
@@ -220,7 +221,7 @@ public class CalendarFormatDialog extends DialogFragment
         public void onClick(View v) {
             setCalendarFormat(CalendarFormat.CUSTOM);
             String pattern = text_calendarFormatPattern.getText().toString();
-            getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
+            getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, pattern);
             updateCustomCalendarFormat(pattern);
             if (listener != null) {
                 listener.onEditClick(CalendarFormatDialog.this);
@@ -241,12 +242,12 @@ public class CalendarFormatDialog extends DialogFragment
      * setCalendarMode
      */
     public void setCalendarMode(CalendarMode mode) {
-        getArguments().putString(PREF_KEY_CALENDAR_MODE, mode.name());
+        getArgs().putString(PREF_KEY_CALENDAR_MODE, mode.name());
         updateViews(getActivity());
     }
     public CalendarMode getCalendarMode() {
         try {
-            return CalendarMode.valueOf(getArguments().getString(PREF_KEY_CALENDAR_MODE));
+            return CalendarMode.valueOf(getArgs().getString(PREF_KEY_CALENDAR_MODE));
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getCalendarMode: " + e);
             return CalendarSettingsInterface.PREF_DEF_CALENDAR_MODE;
@@ -257,11 +258,11 @@ public class CalendarFormatDialog extends DialogFragment
      * setFormatPattern
      */
     public void setFormatPattern(String value) {
-        getArguments().putString(PREF_KEY_CALENDAR_FORMATPATTERN, value);
+        getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, value);
         updateViews(getActivity());
     }
     public String getFormatPattern() {
-        return getArguments().getString(PREF_KEY_CALENDAR_FORMATPATTERN);
+        return getArgs().getString(PREF_KEY_CALENDAR_FORMATPATTERN);
     }
 
     /**

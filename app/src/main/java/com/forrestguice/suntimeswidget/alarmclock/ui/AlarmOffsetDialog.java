@@ -35,9 +35,10 @@ import android.widget.NumberPicker;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 
 @TargetApi(11)
-public class AlarmOffsetDialog extends DialogFragment
+public class AlarmOffsetDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_TIME_OFFSET = "alarmoffset";
     public static final long PREF_DEF_ALARM_TIME_OFFSET = 0L;

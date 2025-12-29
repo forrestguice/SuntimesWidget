@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.colors.ColorUtils;
 
@@ -42,7 +43,7 @@ import java.util.Locale;
 /**
  * ColorPickerFragment
  */
-public class ColorPickerFragment extends Fragment
+public class ColorPickerFragment extends DialogBase
 {
     protected ColorPickerModel colorViewModel;
 
