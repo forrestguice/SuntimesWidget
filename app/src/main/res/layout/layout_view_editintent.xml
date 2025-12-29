@@ -67,7 +67,7 @@
             android:inputType="textMultiLine|textNoSuggestions"
             android:hint="@string/configHint_action_launch_title" />
 
-        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_load"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_load"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Widget.AppCompat.ActionButton"
@@ -75,7 +75,7 @@
             android:src="?attr/icActionExtension"
             android:contentDescription="@string/configAction_loadAction" />
 
-        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_menu"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="?attr/actionOverflowButtonStyle"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
@@ -156,14 +156,14 @@
 
             <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_clear"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_package_clear"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
                 android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
                 android:contentDescription="@string/dialog_cancel" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_package_suggest"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_package_suggest"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
@@ -191,14 +191,14 @@
 
             <View android:layout_height="48dp" android:layout_width="1dp" android:background="@null" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_clear"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_action_clear"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionCancel"
                 android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:scaleX="0.8" android:scaleY="0.8"
                 android:contentDescription="@string/dialog_cancel" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_action_suggest"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_action_launch_action_suggest"
                 style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionExpand"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:layout_gravity="bottom"
