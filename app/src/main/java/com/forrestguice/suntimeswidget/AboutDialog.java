@@ -156,8 +156,11 @@ public class AboutDialog extends BottomSheetDialogFragment
         return getString(R.string.app_version, versionString);
     }
 
-    public static void openLink(Context context, String url)
+    public static void openLink(@Nullable Context context, @Nullable String url)
     {
+        if (context == null || url == null) {
+            return;
+        }
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         } catch (ActivityNotFoundException e) {
@@ -256,8 +259,12 @@ public class AboutDialog extends BottomSheetDialogFragment
         return initCredits(activity, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
     }
 
-    public static String initTranslationCredits(Activity activity)
+    public static String initTranslationCredits(@Nullable Activity activity)
     {
+        if (activity == null) {
+            return "";
+        }
+
         final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
         final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
         final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);

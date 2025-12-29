@@ -843,7 +843,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (context != null && text_locationAlt != null)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             switch (units)
             {
                 case IMPERIAL:

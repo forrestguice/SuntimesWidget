@@ -1304,7 +1304,7 @@ public class WelcomeActivity extends AppCompatActivity
             spinner = (Spinner) view.findViewById(R.id.spin_theme);
             if (spinner != null)
             {
-                final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(getActivity(), R.layout.layout_listitem_welcome);
+                final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(context, R.layout.layout_listitem_welcome);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerAdapter);
                 int initialPosition = spinnerAdapter.getPosition(themeID1 != null ? themeInfo1 : themeInfo);

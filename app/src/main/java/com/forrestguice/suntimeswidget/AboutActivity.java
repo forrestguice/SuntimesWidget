@@ -179,7 +179,9 @@ public class AboutActivity extends AppCompatActivity
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view;
-            switch (getArguments().getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP))
+            Bundle args = getArguments();
+            int layoutID = ((args != null) ? args.getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP) : LAYOUT_APP);
+            switch (layoutID)
             {
                 case LAYOUT_PRIVACY:
                     view = inflater.inflate(R.layout.layout_about_privacy, container, false);
@@ -209,8 +211,12 @@ public class AboutActivity extends AppCompatActivity
                 //nameView.setText(getString(param_appName));   // TODO
                 nameView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        AboutDialog.openLink(getActivity(), getString(R.string.help_app_url));
+                    public void onClick(View v)
+                    {
+                        Context context = getActivity();
+                        if (context != null) {
+                            AboutDialog.openLink(context, getString(R.string.help_app_url));
+                        }
                     }
                 });
             }

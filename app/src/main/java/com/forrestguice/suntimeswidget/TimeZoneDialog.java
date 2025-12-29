@@ -487,7 +487,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (item != null && item.getID().equals(SolarTimeMode.APPARENT_SOLAR_TIME.getID()))
             {
                 int eot = TimeZones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
-                updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
+                updateExtrasLabel(context, R.string.timezoneExtraApparentSolar, eot);
             } else updateExtrasLabel(null);
 
         } else {

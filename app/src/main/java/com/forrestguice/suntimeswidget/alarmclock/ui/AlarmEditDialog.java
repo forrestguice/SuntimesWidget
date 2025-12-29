@@ -257,7 +257,7 @@ public class AlarmEditDialog extends DialogFragment
         super.onResume();
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
@@ -265,7 +265,7 @@ public class AlarmEditDialog extends DialogFragment
         }
     };
 
-    private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -274,7 +274,7 @@ public class AlarmEditDialog extends DialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Dialog dialog = getDialog();
@@ -292,16 +292,20 @@ public class AlarmEditDialog extends DialogFragment
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
+            Context context = getContext();
+            if (context != null)
+            {
+                saveSettings(context);
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
+                dismiss();
             }
-            dismiss();
         }
     };
 

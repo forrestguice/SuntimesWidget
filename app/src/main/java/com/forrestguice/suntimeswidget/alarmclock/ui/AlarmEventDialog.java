@@ -446,11 +446,16 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMoreButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+    private final View.OnClickListener onMoreButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
+    {
         @Override
         public void onClick(View v)
         {
             Context context = getActivity();
+            if (context == null) {
+                return;
+            }
+
             PopupMenu popup = new PopupMenu(context, v);
             Menu menu = popup.getMenu();
 
@@ -779,7 +784,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
@@ -787,7 +792,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -802,18 +807,22 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            dismiss();
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
-            }
-            if (listener != null) {
-                listener.onAccepted(AlarmEventDialog.this);
+            Context context = getContext();
+            if (context != null)
+            {
+                saveSettings(context);
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
+                if (listener != null) {
+                    listener.onAccepted(AlarmEventDialog.this);
+                }
             }
         }
     };

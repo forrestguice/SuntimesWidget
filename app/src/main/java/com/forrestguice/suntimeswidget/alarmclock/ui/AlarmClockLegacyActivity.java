@@ -676,7 +676,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmEventDialog dialog = (AlarmEventDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm(type, "", dialog.getChoice(), -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        String choice = ((dialog != null) ? dialog.getChoice() : null);
+        addAlarm(type, "", choice, -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
@@ -927,9 +928,11 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, false, true);
             task.setTaskListener(onUpdateItem);
 
-            ContentValues values = itemDialog.getOriginal().asContentValues(true);
-            itemDialog.getOriginal().fromContentValues(AlarmClockLegacyActivity.this, values);
-            task.execute(itemDialog.getItem());
+            if (itemDialog != null) {
+                ContentValues values = itemDialog.getOriginal().asContentValues(true);
+                itemDialog.getOriginal().fromContentValues(AlarmClockLegacyActivity.this, values);
+                task.execute(itemDialog.getItem());
+            }
         }
     };
 

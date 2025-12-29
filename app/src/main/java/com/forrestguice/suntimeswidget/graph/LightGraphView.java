@@ -1624,7 +1624,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     }
                 }
 
-                Calendar settingEvent = d.sunsetCalendarToday();
+                Calendar settingEvent = ((d != null) ? d.sunsetCalendarToday() : null);
                 if (settingEvent != null)
                 {
                     double lmtSettingHour = lmtHour(settingEvent, result.longitude);

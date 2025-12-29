@@ -145,7 +145,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
                         return result;
                     }
                 }, MAX_WAIT_MS);
-                addAll(items);
+                if (items != null) {
+                    addAll(items);
+                }
             }
             executor.shutdownNow();
 

@@ -305,7 +305,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         public void onDeleteClicked(@Nullable String colorsID)
         {
             Context context = getActivity();
-            if (context != null && !colorCollection.isDefaultColorID(colorsID))
+            if (context != null && colorsID != null && !colorCollection.isDefaultColorID(colorsID))
             {
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);

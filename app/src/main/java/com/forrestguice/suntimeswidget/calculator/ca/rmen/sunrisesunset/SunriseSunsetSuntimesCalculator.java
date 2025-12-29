@@ -317,12 +317,14 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
 
     @Override
     public Calendar getSunriseCalendarForDate( Calendar date, double angle ) {
-        return SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle)[0];
+        Calendar[] result = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle);
+        return ((result != null) ? result[0] : null);
     }
 
     @Override
     public Calendar getSunsetCalendarForDate( Calendar date, double angle ) {
-        return SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle)[1];
+        Calendar[] result = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle);
+        return ((result != null) ? result[1] : null);
     }
 
 }

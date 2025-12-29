@@ -69,12 +69,12 @@ public class SaveActionDialog extends EditActionDialog
             edit_intentID.setText(intentID);
         }
     }
-    public String suggestedIntentID(Context context)
+    public String suggestedIntentID(@Nullable Context context)
     {
         suggested_c = 0;
         String suggested;
         do {
-            suggested = context.getString(R.string.addaction_custname, Integer.toString(suggested_c));
+            suggested = ((context != null) ? context.getString(R.string.addaction_custname, Integer.toString(suggested_c)) : suggested_c + "");
             suggested_c++;
         } while (intentIDs != null && intentIDs.contains(suggested));
         return suggested;
