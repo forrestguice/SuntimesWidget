@@ -1226,6 +1226,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (Build.VERSION.SDK_INT >= 26) {
             builder = new NotificationCompat.Builder(context, createNotificationChannel(context, channelID));
         } else {
+            //noinspection deprecation
             builder = new NotificationCompat.Builder(context);
         }
         return builder;

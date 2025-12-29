@@ -903,6 +903,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         } else {
             try {
+                //noinspection deprecation
                 initWallpaperLegacy(animate);
             } catch (Exception e) {
                 Log.e("initWallpaper", "failed to init wallpaper; " + e);
