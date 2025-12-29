@@ -681,7 +681,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         protected AlarmDatabaseAdapter db;
 
         public AlarmItemTask(Context context)
@@ -745,7 +745,7 @@ public class AlarmDatabaseAdapter
             }
         }
 
-        private List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
+        private final List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
         public void addAlarmItemTaskListener(AlarmItemTaskListener listener )
         {
             this.taskListeners.add(listener);
@@ -1075,7 +1075,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmListObserver
     {
-        private HashMap<Long, Boolean> items;
+        private final HashMap<Long, Boolean> items;
 
         @SuppressLint("UseSparseArrays")
         public AlarmListObserver(Long[] alarmList, AlarmListObserverListener listener)
@@ -1108,7 +1108,7 @@ public class AlarmDatabaseAdapter
             return retValue;
         }
 
-        private AlarmListObserverListener observerListener;
+        private final AlarmListObserverListener observerListener;
         public static abstract class AlarmListObserverListener
         {
             public void onObservedItem( Long id ) {}

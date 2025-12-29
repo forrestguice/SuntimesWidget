@@ -1347,8 +1347,8 @@ public class SuntimesUtils
      */
     public static class ImageSpanTag
     {
-        private String tag;       // the tag, e.g. [w]
-        private ImageSpan span;   // an ImageSpan that should be substituted for the tag
+        private final String tag;       // the tag, e.g. [w]
+        private final ImageSpan span;   // an ImageSpan that should be substituted for the tag
         private String blank;     // a "blank" string the same length as the tag
 
         public ImageSpanTag(String tag, ImageSpan span)

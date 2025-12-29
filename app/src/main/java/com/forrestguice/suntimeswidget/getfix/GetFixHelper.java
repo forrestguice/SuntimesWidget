@@ -74,8 +74,8 @@ public class GetFixHelper implements LocationHelper
     public boolean wasGettingFix = false;
     public boolean gotFix = false;
 
-    private FragmentActivity myParent;
-    private ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
+    private final FragmentActivity myParent;
+    private final ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
     public GetFixHelper(FragmentActivity parent, GetFixUI ui)
@@ -375,7 +375,7 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
-    private ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
+    private final ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
     public void addGetFixTaskListener( GetFixTaskListener listener )
     {
         if (!listeners.contains(listener))

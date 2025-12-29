@@ -63,7 +63,7 @@ public class LoadActionDialog extends EditActionDialog
     }
 
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             btn_accept.performClick();

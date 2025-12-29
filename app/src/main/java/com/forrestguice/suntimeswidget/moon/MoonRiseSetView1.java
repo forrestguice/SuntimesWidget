@@ -70,7 +70,7 @@ import java.util.HashMap;
 
 public class MoonRiseSetView1 extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
 

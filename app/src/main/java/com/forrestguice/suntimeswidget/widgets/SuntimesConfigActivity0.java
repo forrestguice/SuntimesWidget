@@ -1750,7 +1750,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionTrackingMode(false);
     }
 
-    private View.OnClickListener onTimeModeMenuButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onTimeModeMenuButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showTimeModeMenu(SuntimesConfigActivity0.this, v);
@@ -2457,7 +2457,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * OnEditLaunchIntentExpanded
      */
-    private CompoundButton.OnCheckedChangeListener onEditLaunchIntentExpanded = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onEditLaunchIntentExpanded = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

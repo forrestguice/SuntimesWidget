@@ -96,7 +96,7 @@ public class WidgetThemePreview
         initData(context, appWidgetId);
     }
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     private int appWidgetId = 0;
     public int getAppWidgetId() {

@@ -59,7 +59,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
+    private final HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
 
     @NonNull
     @Override

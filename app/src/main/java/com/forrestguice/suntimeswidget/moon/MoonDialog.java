@@ -109,7 +109,7 @@ public class MoonDialog extends BottomSheetDialogBase
 
     public static final String MAPTAG_MOON = "_moon";
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     public MoonDialog()
     {
@@ -280,7 +280,7 @@ public class MoonDialog extends BottomSheetDialogBase
         }
     }
 
-    private Runnable initPeekHeight = new Runnable() {
+    private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
             initPeekHeight(getDialog());
@@ -904,7 +904,7 @@ public class MoonDialog extends BottomSheetDialogBase
             resetItem.setEnabled(isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow()));
         }
     }
-    private PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem item)

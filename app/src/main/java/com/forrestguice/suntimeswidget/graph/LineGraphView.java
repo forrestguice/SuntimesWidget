@@ -373,7 +373,7 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         private LineGraphOptions options;
 
         private SuntimesRiseSetDataset t_data = null;
@@ -791,8 +791,8 @@ public class LineGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        private ArrayList<Path> sun_paths = new ArrayList<>(), moon_paths = new ArrayList<>();
-        private HashMap<Path, Double> sun_elevations = new HashMap<>(), moon_elevations = new HashMap<>();
+        private final ArrayList<Path> sun_paths = new ArrayList<>(), moon_paths = new ArrayList<>();
+        private final HashMap<Path, Double> sun_elevations = new HashMap<>(), moon_elevations = new HashMap<>();
 
         protected void drawMoonPath(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
         {

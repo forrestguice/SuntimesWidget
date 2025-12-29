@@ -130,9 +130,9 @@ public class MillisecondPickerPreference extends DialogPreference
         return dialogView;
     }
 
-    private static int SECOND_TO_MS = 1000;
-    private static int MINUTE_TO_MS = 1000 * 60;
-    private static int HOUR_TO_MS = 1000 * 60 * 60;
+    private static final int SECOND_TO_MS = 1000;
+    private static final int MINUTE_TO_MS = 1000 * 60;
+    private static final int HOUR_TO_MS = 1000 * 60 * 60;
 
     @Override
     protected void onBindDialogView(View v)

@@ -62,10 +62,10 @@ import java.util.TimeZone;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
-    private WeakReference<Context> contextRef;
-    private CardAdapterOptions options = new CardAdapterOptions();
+    private final WeakReference<Context> contextRef;
+    private final CardAdapterOptions options = new CardAdapterOptions();
 
     public CardAdapter(Context context)
     {
@@ -559,7 +559,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      */
     public static class CardViewDecorator extends RecyclerView.ItemDecoration
     {
-        private int marginPx;
+        private final int marginPx;
 
         public CardViewDecorator( Context context ) {
             marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);

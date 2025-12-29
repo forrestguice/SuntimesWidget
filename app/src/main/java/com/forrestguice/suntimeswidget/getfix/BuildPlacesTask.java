@@ -58,8 +58,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private GetFixDatabaseAdapter db;
-    private WeakReference<Context> contextRef;
+    private final GetFixDatabaseAdapter db;
+    private final WeakReference<Context> contextRef;
 
     private boolean isPaused = false;
     public void pauseTask()

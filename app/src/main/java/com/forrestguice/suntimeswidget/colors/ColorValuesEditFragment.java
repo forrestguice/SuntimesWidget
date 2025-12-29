@@ -185,7 +185,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return true;
     }
 
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onSaveColorValues();
@@ -208,7 +208,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return false;
     }
 
-    private View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onCancelled();
@@ -220,7 +220,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    private View.OnClickListener onOverflowButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onOverflowButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getActivity(), v);

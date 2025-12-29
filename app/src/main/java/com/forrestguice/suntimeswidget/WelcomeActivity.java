@@ -161,7 +161,7 @@ public class WelcomeActivity extends AppCompatActivity
         onPrevPressed.onClick(prevButton);
     }
 
-    private View.OnClickListener onPrevPressed = new View.OnClickListener() {
+    private final View.OnClickListener onPrevPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -173,7 +173,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
     };
 
-    private View.OnClickListener onNextPressed = new View.OnClickListener()
+    private final View.OnClickListener onNextPressed = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
@@ -185,7 +185,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
     };
 
-    private ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener()
+    private final ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener()
     {
         private int previousPosition = 0;
 
@@ -952,7 +952,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        private TimeZoneDialog.TimeZoneDialogListener timeZoneDialogListener = new TimeZoneDialog.TimeZoneDialogListener()
+        private final TimeZoneDialog.TimeZoneDialogListener timeZoneDialogListener = new TimeZoneDialog.TimeZoneDialogListener()
         {
             @Override
             public void onSelectionChanged( TimeZone tz ) {
@@ -961,7 +961,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         };
 
-        private AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
+        private final AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)

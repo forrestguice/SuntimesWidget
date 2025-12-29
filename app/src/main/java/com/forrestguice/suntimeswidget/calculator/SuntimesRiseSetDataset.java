@@ -48,7 +48,7 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetData dataBlue8;
     public SuntimesRiseSetData dataBlue4;
 
-    private HashMap<String, SuntimesRiseSetData> dataset = new HashMap<>();
+    private final HashMap<String, SuntimesRiseSetData> dataset = new HashMap<>();
     public SuntimesRiseSetData getData(String id) {
         return dataset.get(id);
     }
@@ -178,9 +178,9 @@ public class SuntimesRiseSetDataset
 
     public static class SearchResult
     {
-        private Calendar calendar;
-        private boolean isRising;
-        private RiseSetDataMode mode;
+        private final Calendar calendar;
+        private final boolean isRising;
+        private final RiseSetDataMode mode;
 
         public SearchResult(RiseSetDataMode mode, Calendar calendar, boolean isRising)
         {

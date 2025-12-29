@@ -429,7 +429,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         private LightMapColors colors;
 
         private SuntimesRiseSetDataset t_data = null;

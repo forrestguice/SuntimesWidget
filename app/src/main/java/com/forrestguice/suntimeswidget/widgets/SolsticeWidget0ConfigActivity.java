@@ -197,7 +197,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
+    private static final int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_SOLSTICE };
 
     @Override
     protected void loadTimeMode(Context context)

@@ -100,7 +100,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     }
 
     private final WeakReference<Context> contextRef;
-    private ArrayList<WidgetListItem> widgets;
+    private final ArrayList<WidgetListItem> widgets;
 
     public WidgetListAdapter(Context context)
     {

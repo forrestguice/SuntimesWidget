@@ -237,7 +237,7 @@ public class WidgetTimezones
         private TimeZoneSort sortBy = null;
         private String line1, line2;
         private List<TimeZoneItem> items;
-        private int resID;
+        private final int resID;
 
         public TimeZoneItemAdapter(Context context)
         {
@@ -628,7 +628,7 @@ public class WidgetTimezones
     @SuppressWarnings("Convert2Diamond")
     public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
 
         public TimeZonesLoadTask(Context context)
         {

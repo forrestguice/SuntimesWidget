@@ -932,9 +932,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      */
     public static class OnRingtoneResultTask extends AsyncTask<AlarmClockItem, Void, Boolean>
     {
-        private WeakReference<Context> contextRef;
-        private boolean isAudioFile;
-        private Uri uri;
+        private final WeakReference<Context> contextRef;
+        private final boolean isAudioFile;
+        private final Uri uri;
 
         public OnRingtoneResultTask(Context context, Uri uri, boolean isAudioFile)
         {
@@ -1042,7 +1042,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setLabel(item.label);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LABEL);
     }
-    private DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
     {
         @Override
         public void onClick(DialogInterface d, int which)
@@ -1072,7 +1072,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setOnAcceptedListener(onNoteChanged);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_NOTE);
     }
-    private DialogInterface.OnClickListener onNoteChanged = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onNoteChanged = new DialogInterface.OnClickListener()
     {
         @Override
         public void onClick(DialogInterface d, int which)
@@ -1106,7 +1106,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
     }
 
-    private DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
@@ -1142,7 +1142,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setOnCanceledListener(onPickEventCanceled);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
-    private DialogInterface.OnClickListener onPickEventAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onPickEventAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
@@ -1162,7 +1162,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }
     };
-    private DialogInterface.OnClickListener onPickEventCanceled = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onPickEventCanceled = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
@@ -1278,7 +1278,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         repeatDialog.setOnAcceptedListener(onRepetitionChanged);
         repeatDialog.show(getSupportFragmentManager(), DIALOGTAG_REPEAT + 1);
     }
-    private DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {

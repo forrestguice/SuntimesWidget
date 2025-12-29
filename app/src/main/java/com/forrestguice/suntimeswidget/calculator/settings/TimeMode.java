@@ -70,7 +70,7 @@ public enum TimeMode implements RiseSetDataMode
         this.longDisplayString = longDisplayString;
     }
 
-    private Double angle;
+    private final Double angle;
     @Nullable
     public Double angle() {
         return angle;

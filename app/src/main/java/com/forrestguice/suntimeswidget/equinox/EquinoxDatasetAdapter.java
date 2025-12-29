@@ -50,10 +50,10 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public static final int MAX_POSITIONS = 200;
     public static final int CENTER_POSITION = 100;
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
+    private final HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
-    private WeakReference<Context> contextRef;
-    private EquinoxViewOptions options;
+    private final WeakReference<Context> contextRef;
+    private final EquinoxViewOptions options;
 
     public EquinoxDatasetAdapter(Context context, EquinoxViewOptions options)
     {

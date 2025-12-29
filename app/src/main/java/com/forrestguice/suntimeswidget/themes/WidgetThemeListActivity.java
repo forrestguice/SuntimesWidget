@@ -456,7 +456,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    private ImportThemesTask.TaskListener importThemesListener = new ImportThemesTask.TaskListener()
+    private final ImportThemesTask.TaskListener importThemesListener = new ImportThemesTask.TaskListener()
     {
         public void onStarted()
         {
@@ -521,7 +521,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     };
 
-    private ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
+    private final ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
     {
         public void onStarted()
         {

@@ -1007,7 +1007,7 @@ public class WidgetSettings
         BOTTOM_RIGHT("bottom-right", 9);
 
         private String displayString;
-        private int position;
+        private final int position;
 
         private WidgetGravity(String displayString, int position)
         {

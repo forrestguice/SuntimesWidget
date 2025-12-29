@@ -1106,8 +1106,8 @@ public class SuntimesTheme
     {
         private final String name;
         private String displayString;
-        private String backgroundName;
-        private int backgroundColor;
+        private final String backgroundName;
+        private final int backgroundColor;
         private final int version;
         private final boolean isDefault;
 
@@ -1234,7 +1234,7 @@ public class SuntimesTheme
         LIGHT(R.drawable.bg_widget, "Light", false),
         TRANSPARENT(android.R.color.transparent, "Transparent", false);
 
-        private int resID;
+        private final int resID;
         private String displayString;
         private boolean customColors = false;
 

@@ -197,7 +197,7 @@ public class ColorDialog extends BottomSheetDialogBase
         }
     };
 
-    private DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
+    private final DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
     {
         @Override
         public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
@@ -384,7 +384,7 @@ public class ColorDialog extends BottomSheetDialogBase
         }
     }
 
-    private ArrayList<Integer> recentColors_list = new ArrayList<>();
+    private final ArrayList<Integer> recentColors_list = new ArrayList<>();
     public void setRecentColors(ArrayList<Integer> colors)
     {
         recentColors_list.clear();

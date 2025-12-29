@@ -31,10 +31,10 @@ import java.util.Calendar;
  */
 public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 {
-    private Calendar[] calendar = {null, null, null};
-    private Calendar[] sunrise = {null, null, null};
-    private Calendar[] sunset = {null, null, null};
-    private Calendar[] daylength = {null, null, null};
+    private final Calendar[] calendar = {null, null, null};
+    private final Calendar[] sunrise = {null, null, null};
+    private final Calendar[] sunset = {null, null, null};
+    private final Calendar[] daylength = {null, null, null};
 
     public SuntimesRiseSetData2(Object context, int appWidgetId)
     {

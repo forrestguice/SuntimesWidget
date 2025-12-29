@@ -1329,7 +1329,7 @@ public class CalculatorProvider extends ContentProvider
         }
     }
 
-    private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
+    private static final SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
@@ -1349,7 +1349,7 @@ public class CalculatorProvider extends ContentProvider
         return initCalculator(context, selection, null);
     }
 
-    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
+    private static final SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
     private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = moonSource.get(appWidgetID);

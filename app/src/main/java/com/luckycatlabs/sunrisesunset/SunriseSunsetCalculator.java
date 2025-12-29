@@ -27,9 +27,9 @@ import com.luckycatlabs.sunrisesunset.dto.Location;
  */
 public class SunriseSunsetCalculator {
 
-    private Location location;
+    private final Location location;
 
-    private SolarEventCalculator calculator;
+    private final SolarEventCalculator calculator;
 
     /**
      * Constructs a new <code>SunriseSunsetCalculator</code> with the given <code>Location</code>

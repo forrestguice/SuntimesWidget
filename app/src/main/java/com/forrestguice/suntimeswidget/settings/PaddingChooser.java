@@ -33,8 +33,8 @@ public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
     private final EditText edit;
 
     private boolean isRunning = false, isRemoving = false;
-    private char[] brackets = {'[',']'};
-    private char separator = ',';
+    private final char[] brackets = {'[',']'};
+    private final char separator = ',';
 
     public PaddingChooser(EditText editField )
     {

@@ -81,7 +81,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
     private Context context;
     private long selectedItem;
-    private ArrayList<AlarmClockItem> items;
+    private final ArrayList<AlarmClockItem> items;
     private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled, iconAction;
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;

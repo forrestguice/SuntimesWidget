@@ -42,7 +42,7 @@ public class SunPositionTest
         date.setTimeInMillis(TEST_DATE);
         solarTime = SolarTime.ofLocation(TEST_LATITUDE, TEST_LONGITUDE, TEST_ALTITUDE, TEST_CALCULATOR);
     }
-    private Calendar date = Calendar.getInstance();
+    private final Calendar date = Calendar.getInstance();
     private SolarTime solarTime;
 
     @Test

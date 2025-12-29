@@ -305,7 +305,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         private final File exportFile;
         public File getExportFile() { return exportFile; }
 
-        private String mimeType;
+        private final String mimeType;
         public String getMimeType() {
             return mimeType;
         }

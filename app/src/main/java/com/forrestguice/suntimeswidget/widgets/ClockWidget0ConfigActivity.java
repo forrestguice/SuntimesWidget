@@ -103,7 +103,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] {};
+    private static final int[] requiredFeatures = new int[] {};
 
     public static final boolean DEF_SHOWTITLE = true;
     public static final String DEF_TITLETEXT = "%t";

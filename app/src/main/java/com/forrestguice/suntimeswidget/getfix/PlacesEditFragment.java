@@ -894,14 +894,14 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         return item;
     }
 
-    private View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             onCancel(getDialog());
         }
     };
 
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             savePlace();

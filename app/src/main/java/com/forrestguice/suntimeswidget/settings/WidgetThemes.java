@@ -141,7 +141,7 @@ public class WidgetThemes
         return added;
     }
 
-    private static HashMap<String, ThemeDescriptor> themes = new HashMap<>();
+    private static final HashMap<String, ThemeDescriptor> themes = new HashMap<>();
 
     public static boolean hasValue( ThemeDescriptor theme )
     {

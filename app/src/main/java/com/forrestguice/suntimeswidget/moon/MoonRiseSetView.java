@@ -50,7 +50,7 @@ import java.util.Calendar;
 
 public class MoonRiseSetView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
     //private boolean isRtl = false;
     //private boolean centered = false;
     private boolean showPosition = false;
@@ -58,7 +58,7 @@ public class MoonRiseSetView extends LinearLayout
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
     private MoonRiseSetField risingTextField1, settingTextField1;
-    private ArrayList<MoonRiseSetField> f = new ArrayList<>();
+    private final ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
 
     protected MoonRiseSetColorValues colors;

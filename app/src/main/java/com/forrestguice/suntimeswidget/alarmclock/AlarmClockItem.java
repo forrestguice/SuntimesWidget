@@ -729,7 +729,7 @@ public class AlarmClockItem implements Parcelable
         SYSTEM_TIME("System Time Zone", null);
 
         private String displayString;
-        private String tzID;
+        private final String tzID;
 
         private AlarmTimeZone(String displayString, String tzID)
         {

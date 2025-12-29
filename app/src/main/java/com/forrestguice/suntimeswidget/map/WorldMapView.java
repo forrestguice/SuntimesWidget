@@ -443,7 +443,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    private WorldMapTask.WorldMapTaskListener drawListener = new WorldMapTask.WorldMapTaskListener()
+    private final WorldMapTask.WorldMapTaskListener drawListener = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
         public void onStarted()
@@ -575,7 +575,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         } else Log.w(LOGTAG, "shareBitmap: null!");
     }
 
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override
         public void onStarted()

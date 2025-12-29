@@ -429,8 +429,8 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
     }
 
-    private static double r_tropics = (23.439444 / 90d);
-    private static double r_polar = (66.560833 / 90d);
+    private static final double r_tropics = (23.439444 / 90d);
+    private static final double r_polar = (66.560833 / 90d);
 
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)

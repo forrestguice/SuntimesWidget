@@ -69,7 +69,7 @@ public class EquinoxView extends LinearLayout
     public static final String KEY_UI_CARDPOSITION = "equinoxCardPosition";
     public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
 
     private TextView empty, text_title, text_year_length;
@@ -164,7 +164,7 @@ public class EquinoxView extends LinearLayout
         themeViews(context);
     }
 
-    private EquinoxViewOptions options = new EquinoxViewOptions();
+    private final EquinoxViewOptions options = new EquinoxViewOptions();
 
     @SuppressLint("ResourceType")
     private void themeViews(Context context) {
@@ -329,7 +329,7 @@ public class EquinoxView extends LinearLayout
         onLongClickListener = listener;
     }
 
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
@@ -351,7 +351,7 @@ public class EquinoxView extends LinearLayout
         }
     };
 
-    private EquinoxViewListener cardListener = new EquinoxViewListener()
+    private final EquinoxViewListener cardListener = new EquinoxViewListener()
     {
         @Override
         public void onClick( int position ) {
@@ -415,7 +415,7 @@ public class EquinoxView extends LinearLayout
         return p;
     }
 
-    private OnClickListener onTitleClicked = new OnClickListener() {
+    private final OnClickListener onTitleClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onTitleClicked(currentCardPosition());
@@ -436,7 +436,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onNextClicked = new OnClickListener() {
+    private final OnClickListener onNextClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onNextClicked(currentCardPosition());
@@ -448,7 +448,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onPrevClicked = new OnClickListener() {
+    private final OnClickListener onPrevClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onPrevClicked(currentCardPosition());
@@ -460,7 +460,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onMenuClicked = new OnClickListener() {
+    private final OnClickListener onMenuClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if (viewListener != null) {
@@ -551,7 +551,7 @@ public class EquinoxView extends LinearLayout
         protected Calendar time;
         protected boolean highlighted;
         protected int pageIndex;
-        private EquinoxViewOptions options;
+        private final EquinoxViewOptions options;
         protected View focusView, noteLayout;
 
         public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, ImageButton contextMenu, View focusView, View noteLayout, int pageIndex, EquinoxViewOptions options)
@@ -718,10 +718,10 @@ public class EquinoxView extends LinearLayout
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
         @SuppressLint("UseSparseArrays")
-        private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
+        private final HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
-        private WeakReference<Context> contextRef;
-        private EquinoxViewOptions options;
+        private final WeakReference<Context> contextRef;
+        private final EquinoxViewOptions options;
 
         public EquinoxViewAdapter(Context context, EquinoxViewOptions options)
         {

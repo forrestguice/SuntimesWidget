@@ -45,7 +45,7 @@ public class SolarEventsAdapter extends ArrayAdapter<SolarEvents>
 {
     private final Context context;
     private final ArrayList<SolarEvents> choices;
-    private boolean northward;
+    private final boolean northward;
 
     public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices, boolean northward)
     {

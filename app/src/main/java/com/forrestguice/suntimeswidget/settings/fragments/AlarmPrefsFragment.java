@@ -79,7 +79,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmPrefsFragment extends PreferenceFragment
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -342,7 +342,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
+    private static final ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
     public static class BrightColorsPreviewIntent implements ColorValuesSheetActivity.PreviewColorsIntentBuilder
     {
         public BrightColorsPreviewIntent() {}

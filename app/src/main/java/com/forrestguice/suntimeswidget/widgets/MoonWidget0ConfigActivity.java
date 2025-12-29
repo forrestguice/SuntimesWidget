@@ -170,7 +170,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_MOON };
+    private static final int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_MOON };
 
     public static final boolean DEF_SHOWTITLE = false;
     public static final String DEF_TITLETEXT = "";

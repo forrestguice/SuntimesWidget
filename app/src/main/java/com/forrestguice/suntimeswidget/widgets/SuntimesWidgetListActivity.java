@@ -275,7 +275,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     /**
      * onEmptyViewClick
      */
-    private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
+    private final View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showHelp();

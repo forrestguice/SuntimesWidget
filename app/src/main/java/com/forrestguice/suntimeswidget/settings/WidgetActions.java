@@ -816,8 +816,8 @@ public class WidgetActions
         ;
 
         private String title, desc;
-        private String[] tags;
-        private boolean listed;
+        private final String[] tags;
+        private final boolean listed;
 
         private SuntimesAction(String title, String desc, String[] tags, boolean listed)
         {

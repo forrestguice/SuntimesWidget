@@ -177,7 +177,7 @@ public class SaveActionDialog extends EditActionDialog
         super.initViews(context, dialogContent, savedState);
     }
 
-    private TextWatcher titleWatcher = new TextWatcher() {
+    private final TextWatcher titleWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         @Override
@@ -189,7 +189,7 @@ public class SaveActionDialog extends EditActionDialog
         }
     };
 
-    private TextWatcher idWatcher = new TextWatcher()
+    private final TextWatcher idWatcher = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

@@ -168,7 +168,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
     };
 
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
     private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
     /**

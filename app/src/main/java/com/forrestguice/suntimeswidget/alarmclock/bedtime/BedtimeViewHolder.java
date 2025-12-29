@@ -483,7 +483,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return R.layout.layout_listitem_bedtime_notify;
         }
 
-        private CompoundButton.OnCheckedChangeListener onDndCheckChanged = new CompoundButton.OnCheckedChangeListener() {
+        private final CompoundButton.OnCheckedChangeListener onDndCheckChanged = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 check_dnd.setChecked(!isChecked);

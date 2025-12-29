@@ -137,7 +137,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     public static final String ARG_DATETIME = "datetime";
 
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     private TextView dialogTitle;
     private View sunLayout;
@@ -680,7 +680,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             showSpeedMenu(getContext(), v);
         }
     });
-    private View.OnClickListener nextClickListener = new View.OnClickListener()
+    private final View.OnClickListener nextClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -695,7 +695,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             }
         }
     };
-    private View.OnClickListener prevClickListener = new View.OnClickListener()
+    private final View.OnClickListener prevClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

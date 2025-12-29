@@ -64,7 +64,7 @@ import java.util.HashMap;
 
 public class MoonPhasesView1 extends LinearLayout
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
     private int numColumns = 4;
@@ -243,7 +243,7 @@ public class MoonPhasesView1 extends LinearLayout
         showEmptyView( !hasSupport );
     }
 
-    private PhaseAdapterListener card_listener = new PhaseAdapterListener()
+    private final PhaseAdapterListener card_listener = new PhaseAdapterListener()
     {
         @Override
         public void onClick(View v, PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase)
@@ -254,7 +254,7 @@ public class MoonPhasesView1 extends LinearLayout
         }
     };
 
-    private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
@@ -277,14 +277,14 @@ public class MoonPhasesView1 extends LinearLayout
         }
     };
 
-    private OnClickListener onResetClick0 = new OnClickListener() {
+    private final OnClickListener onResetClick0 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // back to position; scrolling from right-to-left
             card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
             card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
-    private OnClickListener onResetClick1 = new OnClickListener() {
+    private final OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
             card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + (numColumns-1));
@@ -340,9 +340,9 @@ public class MoonPhasesView1 extends LinearLayout
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
 
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         @SuppressLint("UseSparseArrays")
-        private HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
+        private final HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
         private MoonPhasesColorValues colors;

@@ -71,7 +71,7 @@ public enum SolarEvents
 
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
-    private int iconResource;
+    private final int iconResource;
     private String shortDisplayString, longDisplayString;
     public int type;
     public boolean rising;

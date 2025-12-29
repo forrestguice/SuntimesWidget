@@ -68,7 +68,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     public static final String KEY_REFERENCE = "CalculatorReference";
     public static final String KEY_FEATURES = "CalculatorFeatures";*/
 
-    private static ArrayList<Object> calculators = new ArrayList<Object>();
+    private static final ArrayList<Object> calculators = new ArrayList<Object>();
 
     //public static final String LOGTAG = "CalculatorDescriptor";
 

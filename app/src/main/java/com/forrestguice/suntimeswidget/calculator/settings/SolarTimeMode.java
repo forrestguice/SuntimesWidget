@@ -28,7 +28,7 @@ public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename
     GMST(TimeZones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
     UTC(TimeZones.TZID_UTC, "Coordinated Universal Time");
 
-    private String id;
+    private final String id;
     private String displayString;
 
     private SolarTimeMode(String id, String displayString)

@@ -905,7 +905,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    private Runnable recreateRunnable = new Runnable()
+    private final Runnable recreateRunnable = new Runnable()
     {
         @Override
         public void run()
@@ -1813,7 +1813,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    private DialogInterface.OnClickListener onScheduleAlarm = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onScheduleAlarm = new DialogInterface.OnClickListener()
     {
         @Override
         public void onClick(DialogInterface d, int which)
@@ -1848,7 +1848,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    private DialogInterface.OnClickListener onManageAlarms = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onManageAlarms = new DialogInterface.OnClickListener()
     {
         @Override
         public void onClick(DialogInterface d, int which)
@@ -2082,7 +2082,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Update the clock ui at regular intervals to reflect current time (and note).
      */
-    private Runnable updateTimeTask = new Runnable()
+    private final Runnable updateTimeTask = new Runnable()
     {
         @Override
         public void run()
@@ -2116,7 +2116,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
+    private final CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
     {
         @Override
         public void onDateClick(CardAdapter adapter, int position) {
@@ -2462,7 +2462,7 @@ public class SuntimesActivity extends AppCompatActivity
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
         return worldMapDialog;
     }
-    private WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
+    private final WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
     {
         @Override
         public void onShowPosition(long suggested) {

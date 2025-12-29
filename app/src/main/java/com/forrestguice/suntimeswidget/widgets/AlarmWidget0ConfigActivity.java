@@ -341,7 +341,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected SuntimesCalculatorDescriptor[] supportingCalculators() {
         return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] {};
+    private static final int[] requiredFeatures = new int[] {};
 
     @Override
     protected boolean getDefaultScaleText() {

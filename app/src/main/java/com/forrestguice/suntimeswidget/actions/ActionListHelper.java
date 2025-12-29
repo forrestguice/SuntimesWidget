@@ -68,7 +68,7 @@ public class ActionListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
     private android.support.v4.app.FragmentManager fragmentManager;
 
     private ActionDisplay selectedItem;

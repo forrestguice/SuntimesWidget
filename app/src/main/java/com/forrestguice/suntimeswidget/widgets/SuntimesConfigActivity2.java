@@ -92,7 +92,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
+    private static final int[] requiredFeatures = new int[] { SuntimesCalculator.FEATURE_POSITION };
 
     @Override
     protected void updateWidgets(Context context, int[] appWidgetIds)

@@ -40,7 +40,7 @@ public enum CalendarMode
     VIETNAMESE("Vietnamese", CalendarDefaults.PREF_DEF_CALENDAR_FORMATPATTERN_VIETNAMESE);
 
     private String displayString;
-    private String defaultPattern;
+    private final String defaultPattern;
 
     private CalendarMode(String displayString, String defaultPattern) {
         this.displayString = displayString;

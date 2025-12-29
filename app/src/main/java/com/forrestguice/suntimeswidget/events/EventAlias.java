@@ -70,7 +70,7 @@ public final class EventAlias
     }
     private final String uri;
 
-    private boolean shown;
+    private final boolean shown;
     public boolean isShown() {
         return shown;
     }

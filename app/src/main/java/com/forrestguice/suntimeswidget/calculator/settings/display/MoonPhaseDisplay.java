@@ -39,7 +39,7 @@ public enum MoonPhaseDisplay
     THIRD_QUARTER("Third Quarter", "Third Quarter", R.drawable.ic_moon_waning_quarter, R.id.icon_info_moonphase_waning_quarter),
     WANING_CRESCENT("Waning Crescent", "Waning Crescent", R.drawable.ic_moon_waning_crescent, R.id.icon_info_moonphase_waning_crescent);
 
-    private int iconResource, viewResource;
+    private final int iconResource, viewResource;
     private String shortDisplayString, longDisplayString;
 
     private MoonPhaseDisplay(String shortDisplayString, String longDisplayString, int iconResource, int viewResource)

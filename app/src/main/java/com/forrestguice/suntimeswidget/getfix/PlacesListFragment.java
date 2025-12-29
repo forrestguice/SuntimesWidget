@@ -703,7 +703,7 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener()
+    private final PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener()
     {
         @Override
         public void onCanceled(PlaceItem item) {
@@ -727,7 +727,7 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private SearchView.OnQueryTextListener onItemSearch = new SearchView.OnQueryTextListener() {
+    private final SearchView.OnQueryTextListener onItemSearch = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
             return false;
@@ -740,7 +740,7 @@ public class PlacesListFragment extends DialogBase
         }
     };
 
-    private MenuItemCompat.OnActionExpandListener onItemSearchExpand = new MenuItemCompat.OnActionExpandListener()
+    private final MenuItemCompat.OnActionExpandListener onItemSearchExpand = new MenuItemCompat.OnActionExpandListener()
     {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
@@ -868,7 +868,7 @@ public class PlacesListFragment extends DialogBase
 
         confirm.show();
     }
-    private BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
+    private final BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -988,7 +988,7 @@ public class PlacesListFragment extends DialogBase
         task.execute();
     }
 
-    private ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
+    private final ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
     {
         @Override
         public void onStarted()

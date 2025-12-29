@@ -126,7 +126,7 @@ public class PlacesActivity extends AppCompatActivity
         }
     }
 
-    private PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
+    private final PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
     {
         @Override
         public boolean onItemEdit(PlaceItem item) {

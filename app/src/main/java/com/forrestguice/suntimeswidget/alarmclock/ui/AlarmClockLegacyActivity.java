@@ -201,7 +201,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         warnings.add(notificationWarning);
         restoreWarnings(savedState);
     }
-    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+    private final SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
         @Override
         public void onShowNextWarning() {
             showWarnings();
@@ -600,7 +600,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         emptyView.setOnClickListener(onEmptyViewClick);
     }
 
-    private AdapterView.OnItemClickListener onAlarmItemClick = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener onAlarmItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
@@ -622,7 +622,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         } else Log.d(TAG, "setSelectedItem: adapter is null");
     }
 
-    private View.OnClickListener onAddAlarmButtonClick = new View.OnClickListener() {
+    private final View.OnClickListener onAddAlarmButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -630,7 +630,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             collapseFabMenu();
         }
     };
-    private View.OnClickListener onAddNotificationButtonClick = new View.OnClickListener() {
+    private final View.OnClickListener onAddNotificationButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -639,14 +639,14 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     };
 
-    private DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
             //Log.d("DEBUG", "onAddAlarmAccepted");
             addAlarm(AlarmClockItem.AlarmType.ALARM);
         }
     };
-    private DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
             //Log.d("DEBUG", "onAddNotificationAccepted");
@@ -732,7 +732,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onSolarEventChanged
      */
-    private DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
@@ -758,7 +758,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onEmptyViewClick
      */
-    private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
+    private final View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showHelp();
@@ -769,7 +769,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      * onUpdateFinished
      * The update task completed creating the adapter; set a listener on the completed adapter.
      */
-    private AlarmClockListTask.AlarmClockListTaskListener onUpdateFinished = new AlarmClockListTask.AlarmClockListTaskListener()
+    private final AlarmClockListTask.AlarmClockListTaskListener onUpdateFinished = new AlarmClockListTask.AlarmClockListTaskListener()
     {
         @Override
         public void onFinished(AlarmItemArrayAdapter result)
@@ -789,7 +789,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      * onAdapterAction
      * An action was performed on an AlarmItem managed by the adapter; respond to it.
      */
-    private AlarmItemAdapterListener onAdapterAction = new AlarmItemAdapterListener()
+    private final AlarmItemAdapterListener onAdapterAction = new AlarmItemAdapterListener()
     {
         @Override
         public void onTypeChanged(AlarmClockItem forItem) {}
@@ -882,7 +882,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onUpdateItem
      */
-    private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
+    private final AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
         public void onFinished(Boolean result, AlarmClockItem item)
@@ -919,7 +919,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         dialog.setOnAcceptedListener(onItemDialogAccepted);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_ITEM);
     }
-    private DialogInterface.OnClickListener onItemDialogAccepted = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onItemDialogAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
@@ -936,7 +936,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     };
 
-    private AlarmItemAdapterListener alarmItemDialogListener = new AlarmItemAdapterListener()
+    private final AlarmItemAdapterListener alarmItemDialogListener = new AlarmItemAdapterListener()
     {
         @Override
         public void onTypeChanged(AlarmClockItem forItem) {}
@@ -1049,7 +1049,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION);
     }
 
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, LocationMode locationMode, Location location)
@@ -1107,7 +1107,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     }
 
-    private AlarmTimeDialog.DialogListener onTimeChanged = new AlarmTimeDialog.DialogListener()
+    private final AlarmTimeDialog.DialogListener onTimeChanged = new AlarmTimeDialog.DialogListener()
     {
         @Override
         public void onAccepted(AlarmTimeDialog dialog)
@@ -1173,7 +1173,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onOffsetChanged
      */
-    private DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
@@ -1214,7 +1214,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onRepetitionChanged
      */
-    private DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {
@@ -1256,7 +1256,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     /**
      * onLabelChanged
      */
-    private DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
     {
         @Override
         public void onClick(DialogInterface d, int which)
@@ -1459,7 +1459,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     }
 
-    private Runnable recreateRunnable = new Runnable()
+    private final Runnable recreateRunnable = new Runnable()
     {
         @Override
         public void run()
@@ -1547,10 +1547,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
      */
     public static class AlarmClockListTask extends AsyncTask<String, AlarmClockItem, AlarmItemArrayAdapter>
     {
-        private AlarmDatabaseAdapter db;
-        private WeakReference<Context> contextRef;
-        private WeakReference<ListView> alarmListRef;
-        private WeakReference<View> emptyViewRef;
+        private final AlarmDatabaseAdapter db;
+        private final WeakReference<Context> contextRef;
+        private final WeakReference<ListView> alarmListRef;
+        private final WeakReference<View> emptyViewRef;
 
         public AlarmClockListTask(Context context, ListView list, View emptyView)
         {
@@ -1723,7 +1723,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         else expandFabMenu();
     }
 
-    private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
+    private final View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             toggleFabMenu();
@@ -1753,7 +1753,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     }
 
-    private DialogInterface.OnClickListener onOffsetChanged1 = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener onOffsetChanged1 = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
@@ -1780,7 +1780,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         dialog.setDialogListener(onLocationChanged1);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION + 1);
     }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged1 = new LocationConfigDialog.LocationConfigDialogListener()
+    private final LocationConfigDialog.LocationConfigDialogListener onLocationChanged1 = new LocationConfigDialog.LocationConfigDialogListener()
     {
         @Override
         public boolean saveSettings(Context context, LocationMode locationMode, Location location)
@@ -1806,7 +1806,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         repeatDialog.setOnAcceptedListener(onRepetitionChanged1);
         repeatDialog.show(getSupportFragmentManager(), DIALOGTAG_REPEAT + 1);
     }
-    private DialogInterface.OnClickListener onRepetitionChanged1 = new DialogInterface.OnClickListener()
+    private final DialogInterface.OnClickListener onRepetitionChanged1 = new DialogInterface.OnClickListener()
     {
         public void onClick(DialogInterface dialog, int whichButton)
         {

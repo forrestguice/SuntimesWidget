@@ -195,19 +195,19 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private ContentValues[] items;
+        private final ContentValues[] items;
         public ContentValues[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -217,7 +217,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;

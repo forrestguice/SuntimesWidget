@@ -127,7 +127,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     private int color_warning = Color.RED;
     private int color_sun = Color.RED;
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     public WorldMapDialog()
     {
@@ -696,7 +696,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         offsetTime.setText(displayString);
     }
 
-    private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
@@ -1492,7 +1492,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     });
 
-    private View.OnClickListener nextClickListener = new View.OnClickListener()
+    private final View.OnClickListener nextClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -1505,7 +1505,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     };
 
-    private View.OnClickListener prevClickListener = new View.OnClickListener()
+    private final View.OnClickListener prevClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -1519,7 +1519,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     };
 
     private int t_prevProgress = -1;
-    private SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
+    private final SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
     {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
@@ -1548,7 +1548,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     };
 
-    private WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
+    private final WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
         public void onFrame(Bitmap result, long offsetMinutes)

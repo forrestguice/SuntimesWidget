@@ -84,7 +84,7 @@ public class GravitySnapHelper extends LinearSnapHelper {
     private OrientationHelper horizontalHelper;
     private GravitySnapHelper.SnapListener listener;
     private RecyclerView recyclerView;
-    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);

@@ -214,7 +214,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
 
-    private ArrayList<Integer> recentColors = new ArrayList<>();
+    private final ArrayList<Integer> recentColors = new ArrayList<>();
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
@@ -236,7 +236,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ViewFlipper preview;
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     public WidgetThemeConfigActivity()
     {
@@ -545,7 +545,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    private CompoundButton.OnCheckedChangeListener onCheckChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onCheckChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -1889,7 +1889,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     private class ThemeNameChooser implements TextWatcher, View.OnFocusChangeListener
     {
-        private EditText edit;
+        private final EditText edit;
         private String themeName;
 
         public ThemeNameChooser( EditText editField )

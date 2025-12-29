@@ -61,8 +61,8 @@ public class SuntimesWidget1Service extends RemoteViewsService
 @TargetApi(14)
 class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 {
-    private Context context;
-    private int appWidgetId;
+    private final Context context;
+    private final int appWidgetId;
     private int viewCount = 0;
 
     private ArrayList<SuntimesRiseSetData> dataset = new ArrayList<SuntimesRiseSetData>();

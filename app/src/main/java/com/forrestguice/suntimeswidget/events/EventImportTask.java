@@ -48,7 +48,7 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -151,19 +151,19 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private EventAlias[] items;
+        private final EventAlias[] items;
         public EventAlias[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -173,7 +173,7 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;

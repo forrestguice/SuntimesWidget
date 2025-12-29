@@ -48,7 +48,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -162,19 +162,19 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private AlarmClockItem[] items;
+        private final AlarmClockItem[] items;
         public AlarmClockItem[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -184,7 +184,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;

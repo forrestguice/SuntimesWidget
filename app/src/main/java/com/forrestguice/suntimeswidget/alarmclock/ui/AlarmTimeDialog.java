@@ -77,7 +77,7 @@ public class AlarmTimeDialog extends DialogBase
     private TextView datePicker;
 
     private AlarmTimeModeAdapter modeAdapter;
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmTimeDialog()
     {
@@ -200,7 +200,7 @@ public class AlarmTimeDialog extends DialogBase
         }
     }
 
-    private TimePicker.OnTimeChangedListener onTimeChanged = new TimePicker.OnTimeChangedListener()
+    private final TimePicker.OnTimeChangedListener onTimeChanged = new TimePicker.OnTimeChangedListener()
     {
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute)
@@ -228,7 +228,7 @@ public class AlarmTimeDialog extends DialogBase
         }
     }
 
-    private AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -362,7 +362,7 @@ public class AlarmTimeDialog extends DialogBase
      */
     public static class AlarmTimeModeAdapter extends ArrayAdapter<AlarmClockItem.AlarmTimeZone>
     {
-        private int layout;
+        private final int layout;
         public AlarmTimeModeAdapter(@NonNull Context context, int resource, @NonNull AlarmClockItem.AlarmTimeZone[] objects)
         {
             super(context, resource, objects);

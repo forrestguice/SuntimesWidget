@@ -42,11 +42,11 @@ import java.lang.ref.WeakReference;
  */
 public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<SuntimesCalculatorDescriptor>
 {
-    private int layoutID, dropDownLayoutID;
+    private final int layoutID, dropDownLayoutID;
     private String pluginTag = "[plugin]", defaultTag = "[default]";
     private int pluginColor = Color.WHITE, defaultColor = Color.WHITE;
     private String defaultValue = null;
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     @SuppressLint("ResourceType")
     public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, @LayoutRes int resource, @LayoutRes int dropDownResource, @NonNull SuntimesCalculatorDescriptor[] entries)

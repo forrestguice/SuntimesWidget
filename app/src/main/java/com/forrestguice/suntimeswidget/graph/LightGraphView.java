@@ -830,8 +830,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        private ArrayList<Path> sun_paths = new ArrayList<>();
-        private HashMap<Path, Double> sun_hours = new HashMap<>();
+        private final ArrayList<Path> sun_paths = new ArrayList<>();
+        private final HashMap<Path, Double> sun_hours = new HashMap<>();
 
 
         protected void drawPath(Calendar now, SuntimesRiseSetDataset[] data, TimeMode mode, boolean rising, Canvas c, Paint p, LightGraphOptions options)

@@ -102,7 +102,7 @@ public class ActionListActivity extends AppCompatActivity
         }
     }
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
@@ -142,7 +142,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onBackPressed() {
         onCancelled.onClick(null);
     }
-    private View.OnClickListener onCancelled = new View.OnClickListener() {
+    private final View.OnClickListener onCancelled = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();

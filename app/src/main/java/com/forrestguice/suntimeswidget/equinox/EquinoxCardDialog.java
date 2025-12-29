@@ -890,7 +890,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         return true;
     }
 
-    private EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
+    private final EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
     {
         @Override
         public void onClick( int position ) {
@@ -919,7 +919,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     };
 
     public static class CardViewDecorator extends RecyclerView.ItemDecoration {
-        private int marginPx;
+        private final int marginPx;
         public CardViewDecorator( Context context ) {
             marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
         }

@@ -203,7 +203,7 @@ public class AlarmOffsetDialog extends DialogBase
         pickerOffsetDays.setOnValueChangedListener(onOffsetChanged);
     }
 
-    private NumberPicker.OnValueChangeListener onOffsetChanged = new NumberPicker.OnValueChangeListener() {
+    private final NumberPicker.OnValueChangeListener onOffsetChanged = new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
             offset = determineOffset();

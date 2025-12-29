@@ -120,7 +120,7 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogBase
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

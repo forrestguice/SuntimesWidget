@@ -81,8 +81,8 @@ public class EditActionView extends LinearLayout
     protected static final String HELPTAG_LAUNCH = "action_launch";
 
     private static HashMap<String,PackageSuggestion> PACKAGE_SUGGESTIONS = null;
-    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
-    private static String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
+    private static final String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
+    private static final String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
 
     protected View layout_label;
     protected TextView text_label, text_desc;
@@ -898,7 +898,7 @@ public class EditActionView extends LinearLayout
     /**
      * HelpDialog onShow (launch App)
      */
-    private View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
+    private final View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

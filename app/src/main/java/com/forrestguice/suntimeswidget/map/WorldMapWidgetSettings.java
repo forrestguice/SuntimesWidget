@@ -185,11 +185,11 @@ public class WorldMapWidgetSettings
 
         private final int layoutID;
         private String displayString;
-        private String tag;
-        private boolean supportsCenter;
-        private double[] center;
+        private final String tag;
+        private final boolean supportsCenter;
+        private final double[] center;
         private String projectionTitle;
-        private String proj4String;
+        private final String proj4String;
 
         private WorldMapWidgetMode(String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
         {

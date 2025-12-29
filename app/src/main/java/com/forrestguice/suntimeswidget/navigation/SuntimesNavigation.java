@@ -46,8 +46,8 @@ import java.lang.ref.WeakReference;
 
 public class SuntimesNavigation
 {
-    private static int anim_in = R.anim.transition_swap_in;
-    private static int anim_out = R.anim.transition_swap_out;
+    private static final int anim_in = R.anim.transition_swap_in;
+    private static final int anim_out = R.anim.transition_swap_out;
 
     private WeakReference<Activity> activityRef;
 

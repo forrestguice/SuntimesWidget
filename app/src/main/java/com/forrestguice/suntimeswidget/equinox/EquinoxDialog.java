@@ -161,7 +161,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
         return null;
     }
 
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialogInterface) {
             Context context = getContext();
@@ -361,7 +361,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
         }
     }
 
-    private PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
+    private final PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
         @Override
         public void onDismiss(PopupMenu menu) {
             equinoxView.post(new Runnable() {

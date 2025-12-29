@@ -1389,8 +1389,8 @@ public class LocationConfigView extends LinearLayout
     @SuppressWarnings("Convert2Diamond")
     private class LocationModeAdapter extends ArrayAdapter<LocationMode>
     {
-        private Context context;
-        private ArrayList<LocationMode> modes;
+        private final Context context;
+        private final ArrayList<LocationMode> modes;
 
         public LocationModeAdapter(Context context, ArrayList<LocationMode> modes)
         {

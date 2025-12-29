@@ -856,8 +856,8 @@ public class AlarmListDialog extends DialogBase
      */
     public static class AlarmListTask extends AsyncTask<Long, AlarmClockItem, List<AlarmClockItem>>
     {
-        private AlarmDatabaseAdapter db;
-        private WeakReference<Context> contextRef;
+        private final AlarmDatabaseAdapter db;
+        private final WeakReference<Context> contextRef;
 
         private boolean option_includeState = true;
         public void setOption_includeState(boolean value) {

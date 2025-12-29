@@ -241,7 +241,7 @@ public class EquinoxCardView extends LinearLayout
         return card_layout.findFirstVisibleItemPosition();
     }
 
-    private EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
+    private final EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
     {
         @Override
         public void onClick( int position ) {
