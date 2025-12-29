@@ -1290,7 +1290,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    /**@Override
+    /*@Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);

@@ -87,7 +87,7 @@ public class SuntimesMoonData0 extends SuntimesData
 
     /**
      * calculate
-     * @param context
+     * @param context context
      */
     @Override
     public void calculate(Object context)

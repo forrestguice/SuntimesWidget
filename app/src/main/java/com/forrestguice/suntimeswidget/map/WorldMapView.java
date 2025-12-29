@@ -319,7 +319,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
-     * @param context
+     * @param context context
      * @return available screen height int pixels
      */
     private int getScreenHeight(Context context)

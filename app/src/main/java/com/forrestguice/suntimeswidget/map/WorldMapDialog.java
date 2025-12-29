@@ -718,7 +718,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    /**private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
+    /*private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

@@ -72,9 +72,9 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
 
     /**
      * Initialize data at position (returns cached data if it already exists).
-     * @param context
-     * @param position
-     * @return
+     * @param context context
+     * @param position position
+     * @return data
      */
     public SuntimesEquinoxSolsticeData initData(Context context, int position)
     {

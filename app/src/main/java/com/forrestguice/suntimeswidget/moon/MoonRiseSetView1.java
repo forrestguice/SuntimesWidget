@@ -636,7 +636,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         /**
          * setAdapterListener
-         * @param listener
+         * @param listener listener
          */
         public void setAdapterListener( @NonNull MoonRiseSetAdapterListener listener ) {
             adapterListener = listener;

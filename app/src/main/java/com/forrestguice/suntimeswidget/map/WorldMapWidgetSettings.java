@@ -466,7 +466,7 @@ public class WorldMapWidgetSettings
     }
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context )
     {
@@ -475,8 +475,8 @@ public class WorldMapWidgetSettings
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId appWidgetId
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {

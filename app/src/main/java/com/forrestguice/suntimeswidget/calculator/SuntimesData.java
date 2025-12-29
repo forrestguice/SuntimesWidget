@@ -156,7 +156,7 @@ public class SuntimesData
 
     /**
      * perform calculation on the data
-     * @param context
+     * @param context context
      */
     public void calculate(Object context)
     {
@@ -351,7 +351,7 @@ public class SuntimesData
     }
 
     /**
-     * @return
+     * @return Calendar
      */
     public Calendar now()
     {
@@ -359,8 +359,8 @@ public class SuntimesData
     }
 
     /**
-     * @param date
-     * @return
+     * @param date date
+     * @return date + current time
      */
     public Calendar nowThen(Calendar date) {
         return nowThen(now(), date);

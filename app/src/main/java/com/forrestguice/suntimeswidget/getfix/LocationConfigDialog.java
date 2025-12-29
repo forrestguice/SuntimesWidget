@@ -130,7 +130,6 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     /**
      * setLocation
-     * @param location
      */
     private Location presetLocation = null;
     public void setLocation(Context context, Location location)

@@ -334,7 +334,7 @@ public class SuntimesRiseSetData extends SuntimesData
 
     /**
      * Calculate
-     * @param context
+     * @param context context
      */
     @Override
     public void calculate(Object context)
@@ -498,9 +498,9 @@ public class SuntimesRiseSetData extends SuntimesData
     }
 
     /**
-     * @param sunrise
-     * @param sunset
-     * @return
+     * @param sunrise sunrise
+     * @param sunset sunset
+     * @return day length millis
      */
     protected long determineDayLength(Calendar sunrise, Calendar sunset)
     {

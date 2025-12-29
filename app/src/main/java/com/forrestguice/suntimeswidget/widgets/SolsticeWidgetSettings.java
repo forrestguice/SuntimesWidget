@@ -132,15 +132,15 @@ public class SolsticeWidgetSettings
     //////////////////////////////////////////////////
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context ) {
         /* EMPTY */
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId appWidgetId
      */
     public static void deletePrefs(Context context, int appWidgetId) {
         deleteWidgetValue(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER);

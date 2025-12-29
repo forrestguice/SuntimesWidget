@@ -817,9 +817,9 @@ public class EquinoxView extends LinearLayout
 
         /**
          * Initialize data at position (returns cached data if it already exists).
-         * @param context
-         * @param position
-         * @return
+         * @param context context
+         * @param position position
+         * @return data
          */
         public SuntimesEquinoxSolsticeDataset initData(Context context, int position)
         {

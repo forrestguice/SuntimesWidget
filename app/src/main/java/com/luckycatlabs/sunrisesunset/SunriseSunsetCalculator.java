@@ -240,16 +240,11 @@ public class SunriseSunsetCalculator {
     /**
      * Computes the sunrise for an arbitrary declination.
      * 
-     * @param latitude
-     * @param longitude
-     *            Coordinates for the location to compute the sunrise/sunset for.
-     * @param timeZone
-     *            timezone to compute the sunrise/sunset times in.
-     * @param date
-     *            <code>Calendar</code> object containing the date to compute the official sunset for.
-     * @param degrees
-     *            Angle under the horizon for which to compute sunrise. For example, "civil sunrise"
-     *            corresponds to 6 degrees.
+     * @param latitude latitude
+     * @param longitude Coordinates for the location to compute the sunrise/sunset for.
+     * @param timeZone timezone to compute the sunrise/sunset times in.
+     * @param date <code>Calendar</code> object containing the date to compute the official sunset for.
+     * @param degrees Angle under the horizon for which to compute sunrise. For example, "civil sunrise" corresponds to 6 degrees.
      * @return the requested sunset time as a <code>Calendar</code> object.
      */
 
@@ -261,16 +256,11 @@ public class SunriseSunsetCalculator {
     /**
      * Computes the sunset for an arbitrary declination.
      * 
-     * @param latitude
-     * @param longitude
-     *            Coordinates for the location to compute the sunrise/sunset for.
-     * @param timeZone
-     *            timezone to compute the sunrise/sunset times in.
-     * @param date
-     *            <code>Calendar</code> object containing the date to compute the official sunset for.
-     * @param degrees
-     *            Angle under the horizon for which to compute sunrise. For example, "civil sunset"
-     *            corresponds to 6 degrees.
+     * @param latitude latitude
+     * @param longitude Coordinates for the location to compute the sunrise/sunset for.
+     * @param timeZone timezone to compute the sunrise/sunset times in.
+     * @param date <code>Calendar</code> object containing the date to compute the official sunset for.
+     * @param degrees Angle under the horizon for which to compute sunrise. For example, "civil sunset" corresponds to 6 degrees.
      * @return the requested sunset time as a <code>Calendar</code> object.
      */
 

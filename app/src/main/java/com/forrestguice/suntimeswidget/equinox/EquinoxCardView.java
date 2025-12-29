@@ -335,7 +335,7 @@ public class EquinoxCardView extends LinearLayout
 
     /**
      * setShowDate
-     * @param value 
+     * @param value true shown, false hidden
      */
     public void setShowDate(boolean value) {
         options.showDate = value;

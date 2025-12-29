@@ -327,7 +327,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     /**
      * launchActionList
-     * @param context
+     * @param context context
      */
     protected void launchActionList(Context context)
     {

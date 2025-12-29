@@ -833,8 +833,8 @@ public class SuntimesUtils
     }
 
     /**
-     * @param value
-     * @return
+     * @param value angle
+     * @return display string
      */
     @Deprecated    // use AngleDisplay instead
     public String formatAsDegrees(double value)

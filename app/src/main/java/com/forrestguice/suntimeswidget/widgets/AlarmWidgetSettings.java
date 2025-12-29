@@ -419,7 +419,7 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context )
     {
@@ -429,8 +429,8 @@ public class AlarmWidgetSettings
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId widget id
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {

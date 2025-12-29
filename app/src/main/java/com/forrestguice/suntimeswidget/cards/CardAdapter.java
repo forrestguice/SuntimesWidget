@@ -205,7 +205,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onViewRecycled
-     * @param holder
+     * @param holder CardViewHolder
      */
     @Override
     public void onViewRecycled(@NonNull CardViewHolder holder)
@@ -219,9 +219,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onCreateViewHolder
-     * @param parent
-     * @param viewType
-     * @return
+     * @param parent ViewGroup
+     * @param viewType type
+     * @return CardViewHolder
      */
     @NonNull
     @Override
@@ -234,8 +234,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onBindViewHolder
-     * @param holder
-     * @param position
+     * @param holder CardViewHolder
+     * @param position position
      */
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position)
@@ -337,7 +337,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * setCardAdapterListener
-     * @param listener
+     * @param listener CardAdapterListener
      */
     public void setCardAdapterListener( @NonNull CardAdapterListener listener ) {
         adapterListener = listener;

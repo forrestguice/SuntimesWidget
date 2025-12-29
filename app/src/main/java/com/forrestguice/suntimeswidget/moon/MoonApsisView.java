@@ -511,7 +511,7 @@ public class MoonApsisView extends LinearLayout
 
         /**
          * setAdapterListener
-         * @param listener
+         * @param listener listener
          */
         public void setAdapterListener( @NonNull MoonApsisAdapterListener listener ) {
             adapterListener = listener;

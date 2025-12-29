@@ -274,7 +274,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     /**
      * onSaveInstanceState
-     * @param outState
+     * @param outState Bundle
      */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState)
@@ -286,8 +286,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     /**
      * initViews
-     * @param context
-     * @param dialogContent
+     * @param context context
+     * @param dialogContent view
      */
     protected void initViews( Context context, View dialogContent )
     {

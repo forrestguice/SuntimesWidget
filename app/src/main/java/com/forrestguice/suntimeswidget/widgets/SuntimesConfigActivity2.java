@@ -75,7 +75,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         WorldMapWidgetSettings.initDisplayStrings(context);
     }
 
-    /**@Override
+    /*@Override
     protected void loadAppearanceSettings(Context context)
     {
         super.loadAppearanceSettings(context);

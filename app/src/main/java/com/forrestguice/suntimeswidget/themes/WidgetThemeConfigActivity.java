@@ -1298,7 +1298,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    /**@Override
+    /*@Override
     public void onDestroy()
     {
         super.onDestroy();

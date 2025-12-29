@@ -296,7 +296,7 @@ public class SolarEventCalculator {
     /**
      * Returns the local rise/set time in the form HH:MM.
      *
-     * @param localTime
+     * @param localTimeParam
      *            <code>BigDecimal</code> representation of the local rise/set time.
      * @return <code>String</code> representation of the local rise/set time in HH:MM format.
      */

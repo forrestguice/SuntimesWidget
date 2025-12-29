@@ -555,7 +555,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         /**
          * setAdapterListener
-         * @param listener
+         * @param listener listener
          */
         public void setAdapterListener( @NonNull PhaseAdapterListener listener ) {
             adapterListener = listener;

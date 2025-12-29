@@ -1471,7 +1471,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     /**
      * @param context a context used to access shared prefs
-     * @param appWidgetId
+     * @param appWidgetId appWidgetId
      */
     protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {

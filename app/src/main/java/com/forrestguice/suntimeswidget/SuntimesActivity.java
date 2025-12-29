@@ -622,7 +622,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context context
      */
     protected void registerReceivers(Context context)
     {
@@ -648,7 +648,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context context
      */
     protected void setUpdateAlarms( Context context )
     {
@@ -691,7 +691,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
+     * @param context context
      */
     protected void unsetUpdateAlarms( Context context )
     {
@@ -704,8 +704,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * @param context
-     * @return
+     * @param context context
+     * @return PendingIntent
      */
     protected PendingIntent getFullUpdateIntent(Context context)
     {
@@ -730,8 +730,8 @@ public class SuntimesActivity extends AppCompatActivity
     };
 
     /**
-     * @param context
-     * @return
+     * @param context context
+     * @return PendingIntent
      */
     protected PendingIntent getPartialUpdateIntent(Context context)
     {
@@ -2339,7 +2339,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     /**
      * Show the lightgraph dialog.
-     * @return
+     * @return dialog
      */
     protected LightGraphDialog showLightGraphDialog()
     {

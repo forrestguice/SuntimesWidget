@@ -545,7 +545,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     /**
      * https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
-     * @param context
+     * @param context Context
      */
     public static void openNotificationSettings(@NonNull Context context)
     {

@@ -261,7 +261,7 @@ public class GetFixHelper implements LocationHelper
     }
 
     /**
-     * @param activity
+     * @param activity FragmentActivity
      * @param requestID used to identify the permission request
      * @return true already has location permissions, false has no permissions (triggers a request)
      */
