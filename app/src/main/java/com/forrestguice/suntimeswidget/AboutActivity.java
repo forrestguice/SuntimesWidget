@@ -121,7 +121,7 @@ public class AboutActivity extends AppCompatActivity
     /**
      * AboutPagerAdapter
      */
-    public class AboutPagerAdapter extends FragmentPagerAdapter
+    public static class AboutPagerAdapter extends FragmentPagerAdapter
     {
         public AboutPagerAdapter(FragmentManager fragments)
         {
@@ -137,8 +137,6 @@ public class AboutActivity extends AppCompatActivity
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_CONTRIBUTIONS );
                 case 2:
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_PRIVACY );
-                //case 3:
-                //    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_BUSKING );
                 case 0:
                 default:
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_APP );
