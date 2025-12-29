@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget;
+package com.forrestguice.suntimeswidget.cards;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -29,14 +29,14 @@ import android.widget.ScrollView;
  * A custom ScrollView that passes its touch events to its parent when unable to scroll (child view is
  * smaller than parent), or when flag allowScroll is set to false.
  */
-public class SuntimesCardScroll extends ScrollView
+public class CardScroll extends ScrollView
 {
-    public SuntimesCardScroll(Context context)
+    public CardScroll(Context context)
     {
         super(context);
     }
 
-    public SuntimesCardScroll(Context context, AttributeSet attrs)
+    public CardScroll(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }

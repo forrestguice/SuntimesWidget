@@ -6,7 +6,8 @@
     android:layout_height="wrap_content">
 
     <!-- card scroller -->
-    <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
+    <com.forrestguice.suntimeswidget.cards.CardScroll
+        android:id="@+id/cardContent"
                                                         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout
@@ -102,6 +103,6 @@
 
         </LinearLayout>
 
-    </com.forrestguice.suntimeswidget.SuntimesCardScroll>
+    </com.forrestguice.suntimeswidget.cards.CardScroll>
 
 </FrameLayout>
