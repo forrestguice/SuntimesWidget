@@ -605,6 +605,7 @@ public class AlarmNotificationsTest
         AlarmNotifications.ForegroundNotifications.t_hasCalledStopSelf = false;
         serviceRule.startService(intent);
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + withinMs)) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }
@@ -833,6 +834,7 @@ public class AlarmNotificationsTest
         assertEquals(item.vibrate, AlarmNotifications.isVibrating);
 
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + 250)) { /* empty */ }
         assertEquals((item.ringtoneURI != null), AlarmNotifications.isPlaying(channel));
         assertEquals(0, AlarmNotifications.t_player_error);
@@ -899,6 +901,7 @@ public class AlarmNotificationsTest
         }
 
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + 1000)) {
             /* give it a second; mediaPlayer.start is async */
         }
@@ -946,6 +949,7 @@ public class AlarmNotificationsTest
         }
 
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + 500)) {
             /* give it a second; the call to mediaPlayer.start is async */
         }
@@ -956,6 +960,7 @@ public class AlarmNotificationsTest
         assertFalse(AlarmNotifications.isFadingIn);
 
         now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + 5000)) {
             /* give it a few seconds for the sound to finish */
         }
@@ -986,6 +991,7 @@ public class AlarmNotificationsTest
             Assert.fail("failed to startAlert: uri: " + uri + ", " + e);
         }
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + 500)) {
             /* give it a second; mediaPlayer.start is async */
         }

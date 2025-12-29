@@ -101,6 +101,7 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
 
         long t0 = SystemClock.elapsedRealtime();
         long t1 = t0 + 3000;
+        //noinspection StatementWithEmptyBody
         while (SystemClock.elapsedRealtime() < t1) {
             // busy wait
         }

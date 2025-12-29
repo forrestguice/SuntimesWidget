@@ -403,6 +403,7 @@ public class AlarmScheduleTest
         final Handler onStartHandler = new Handler(Looper.getMainLooper());
         onStartHandler.post(runnable);
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + withinMs) && AlarmNotifications.t_updateAlarmTime_runningLoop) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }

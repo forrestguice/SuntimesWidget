@@ -122,6 +122,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
         for (int i = 0; i<3; i++) {
             long t = System.currentTimeMillis();
+            //noinspection StatementWithEmptyBody
             while (System.currentTimeMillis() - t < waitTime) { /* busy */ }
         }
         captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-main0-" + theme);

@@ -120,6 +120,7 @@ public class AlarmSoundFadeTest
             Log.i("TEST", "startAlert: playing " + uri);
 
             long t0 = System.currentTimeMillis();
+            //noinspection StatementWithEmptyBody
             while (System.currentTimeMillis() - t0 <= volumeShaperConfig.getDuration()) {
                 //Log.i("TEST", "startAlert: still playing " + uri);
             }

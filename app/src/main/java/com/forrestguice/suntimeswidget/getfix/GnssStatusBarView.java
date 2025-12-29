@@ -292,6 +292,7 @@ public class GnssStatusBarView extends GnssStatusView
             }
         }
         protected void removeStaleItems() {
+            //noinspection StatementWithEmptyBody
             while ((removeFirstStaleItem()) >= 0) {
                 /* EMPTY */
             }
