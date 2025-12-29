@@ -24,6 +24,7 @@ import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -52,8 +53,8 @@ public class ClockTileService extends SuntimesTileService
 
         TimeZone timezone = base.timezone(context);
         String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
-        boolean isSolarTime = WidgetTimezones.LocalMeanTime.TIMEZONEID.equals(timezone.getID()) ||
-                WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
+        boolean isSolarTime = TimeZones.LocalMeanTime.TIMEZONEID.equals(timezone.getID()) ||
+                TimeZones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
 
         TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, base.appWidgetId());
         String timeDisplay = utils.calendarTimeShortDisplayString(context, base.now(context), false, formatMode).toString() + " " + tzDisplay;

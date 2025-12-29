@@ -31,6 +31,7 @@ import android.graphics.Rect;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -294,7 +295,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 break drawData;
             }
 
-            long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+            long gmtMillis = now.getTimeInMillis() + (long)(TimeZones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
             double gmtArc = gmtHours * 15d;
 

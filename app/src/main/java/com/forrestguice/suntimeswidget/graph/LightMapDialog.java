@@ -1226,7 +1226,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     protected boolean showTimeZoneMenu(Context context, View view)
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID));
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID));
         menu.show();
         return true;
     }
@@ -2639,7 +2639,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     protected String getSelectedTZID(Context context) {
-        return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID);
     }
     protected TimeZone getSelectedTZ(Context context, @Nullable SuntimesRiseSetDataset data)
     {

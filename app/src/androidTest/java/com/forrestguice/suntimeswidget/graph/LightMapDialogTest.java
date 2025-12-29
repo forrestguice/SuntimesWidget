@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
@@ -724,7 +725,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         @Override
         public Calendar now(Context context)
         {
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId)
                     ? appTimeZone(context)
                     : WidgetTimezones.getTimeZone(tzId, appLocation(context).getLongitudeAsDouble(), appCalculator(context));

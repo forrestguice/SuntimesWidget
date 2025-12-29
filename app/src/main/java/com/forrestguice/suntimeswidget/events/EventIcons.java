@@ -33,6 +33,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 import com.forrestguice.colors.ColorValues;
@@ -79,7 +80,7 @@ public class EventIcons
             if (tag.startsWith(TAG_TZ))
             {
                 tag = tag.substring(TAG_TZ.length());
-                if (tag.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || tag.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID)) {
+                if (tag.equals(TimeZones.ApparentSolarTime.TIMEZONEID) || tag.equals(TimeZones.LocalMeanTime.TIMEZONEID)) {
                     return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
 
                 } else {
@@ -185,7 +186,7 @@ public class EventIcons
     }
     public static int getIconDrawableInset(Context context, String tag)
     {
-        if (tag != null && (tag.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || tag.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID))) {
+        if (tag != null && (tag.equals(TimeZones.ApparentSolarTime.TIMEZONEID) || tag.equals(TimeZones.LocalMeanTime.TIMEZONEID))) {
             return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
         } else {
             return 0;

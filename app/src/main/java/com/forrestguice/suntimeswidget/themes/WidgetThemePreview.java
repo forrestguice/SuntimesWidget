@@ -31,6 +31,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
@@ -495,7 +496,7 @@ public class WidgetThemePreview
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
 
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
             options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
                     : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
 

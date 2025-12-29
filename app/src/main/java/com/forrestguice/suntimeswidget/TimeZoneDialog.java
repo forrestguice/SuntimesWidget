@@ -59,6 +59,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -485,7 +486,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         {
             if (item != null && item.getID().equals(SolarTimeMode.APPARENT_SOLAR_TIME.getID()))
             {
-                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
+                int eot = TimeZones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
                 updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
             } else updateExtrasLabel(null);
 

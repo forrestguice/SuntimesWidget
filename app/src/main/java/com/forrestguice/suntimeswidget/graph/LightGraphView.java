@@ -42,6 +42,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -232,7 +233,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 Location location = ((data0 != null) ? data0.location() : null);
                 double longitude = ((location != null) ? location.getLongitudeAsDouble() : 0);
 
-                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
                 TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);

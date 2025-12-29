@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -430,7 +431,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
         String suffix = "";
         boolean nowIsAfter = false;
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
         TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
                 : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
         Calendar mapTime = Calendar.getInstance(tz);
@@ -481,7 +482,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             double second = (int)((minute - (int) minute) * 60d);
             double millisecond = (int)((second - (int) second) * 1000d);
 
-            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
             calendar.set(Calendar.YEAR, data[0].calendar().get(Calendar.YEAR));
             calendar.set(Calendar.DAY_OF_YEAR, day);
             calendar.set(Calendar.HOUR_OF_DAY, (int) hour);
@@ -489,7 +490,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
             calendar.set(Calendar.SECOND, (int) second);
             calendar.set(Calendar.MILLISECOND, (int) millisecond);
 
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
                     WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
             Calendar c = Calendar.getInstance(timezone);
@@ -535,7 +536,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
 
             if (data != null)
             {
-                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
                 options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
                         : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
             }
@@ -838,7 +839,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     protected boolean showTimeZoneMenu(Context context, View view)
     {
         PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID));
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID));
         menu.show();
         return true;
     }
@@ -1000,6 +1001,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
                         clipboard.setPrimaryClip(ClipData.newPlainText(label, itemDisplay));
                     }
                 } else {
+                    @SuppressWarnings("deprecation")
                     android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                     if (clipboard != null) {
                         clipboard.setText(itemDisplay);

@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -724,8 +725,8 @@ public class AlarmClockItem implements Parcelable
      */
     public static enum AlarmTimeZone
     {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
+        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, TimeZones.ApparentSolarTime.TIMEZONEID),
+        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, TimeZones.LocalMeanTime.TIMEZONEID),
         SYSTEM_TIME("System Time Zone", null);
 
         private String displayString;
@@ -789,10 +790,10 @@ public class AlarmClockItem implements Parcelable
                 return TimeZone.getDefault();
 
             } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
+                return new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
 
             } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
+                return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
 
             } else {
                 return TimeZone.getTimeZone(tzID);

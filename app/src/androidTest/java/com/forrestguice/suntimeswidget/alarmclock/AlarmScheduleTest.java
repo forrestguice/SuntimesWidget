@@ -29,6 +29,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -170,13 +171,13 @@ public class AlarmScheduleTest
 
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.timezone = TimeZones.ApparentSolarTime.TIMEZONEID;
         alarm.hour = hour;
         alarm.minute = minute;
 
         int c = 0, n = 7;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
         Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)

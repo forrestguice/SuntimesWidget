@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -330,8 +331,8 @@ public abstract class SuntimesTileBase
     }
 
     public static boolean isLocalTime(String tzID) {
-        return WidgetTimezones.LocalMeanTime.TIMEZONEID.equals(tzID) || WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(tzID)
-                || WidgetTimezones.SiderealTime.TZID_LMST.equalsIgnoreCase(tzID);
+        return TimeZones.LocalMeanTime.TIMEZONEID.equals(tzID) || TimeZones.ApparentSolarTime.TIMEZONEID.equals(tzID)
+                || TimeZones.SiderealTime.TZID_LMST.equalsIgnoreCase(tzID);
     }
 
     protected Location location(Context context) {

@@ -35,6 +35,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
@@ -612,10 +613,10 @@ public abstract class SuntimesActivityTestBase
             return TimeZone.getTimeZone("UTC");
         }
         public static TimeZone timeZone_ApparentSolar(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+            return WidgetTimezones.getTimeZone(TimeZones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
         }
         public static TimeZone timeZone_LocalMean(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+            return WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
         }
         public static TimeZone timeZone_Suntimes(Context context) {
             return appTimeZone(context);

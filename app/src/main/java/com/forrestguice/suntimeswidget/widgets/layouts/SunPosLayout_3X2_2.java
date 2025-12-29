@@ -29,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -111,7 +112,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
         options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? dataset.timezone()
                 : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
 

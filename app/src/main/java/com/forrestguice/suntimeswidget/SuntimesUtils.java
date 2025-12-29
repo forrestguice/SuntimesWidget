@@ -70,6 +70,7 @@ import android.widget.ImageView;
 
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
@@ -394,8 +395,8 @@ public class SuntimesUtils
     public static void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
     {
         String tzID = timezone.getID();
-        if (tzID.equals(WidgetTimezones.SiderealTime.TZID_GMST) || tzID.equals(WidgetTimezones.SiderealTime.TZID_LMST)) {
-            time.setTime(WidgetTimezones.SiderealTime.gmstOffset(time.getTime()) + time.getTime());   // these already extend LocalMeanTime (so apply gmst offset only)
+        if (tzID.equals(TimeZones.SiderealTime.TZID_GMST) || tzID.equals(TimeZones.SiderealTime.TZID_LMST)) {
+            time.setTime(TimeZones.SiderealTime.gmstOffset(time.getTime()) + time.getTime());   // these already extend LocalMeanTime (so apply gmst offset only)
         }
     }
 
