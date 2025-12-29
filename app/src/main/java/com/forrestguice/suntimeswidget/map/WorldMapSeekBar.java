@@ -152,7 +152,7 @@ public class WorldMapSeekBar extends AppCompatSeekBar
             float tickSpacing = (getWidth() - getPaddingLeft() - getPaddingRight()) / (float) intervals;
 
             int saveCount = canvas.save();
-            canvas.translate(getPaddingLeft(), getHeight() / 2);
+            canvas.translate(getPaddingLeft(), getHeight() / 2f);
             for (int i = 0; i <= intervals; i++)
             {
                 if (i == intervals / 2) {
