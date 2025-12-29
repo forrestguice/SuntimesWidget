@@ -66,7 +66,7 @@ public class GetFixTaskTest
         assertTrue(helper.getFix());
         assertTrue("gettingFix should return true", helper.gettingFix());
         assertTrue(waitForTask);
-        //noinspection ConstantConditions,StatementWithEmptyBody
+        //noinspection ConstantConditions,StatementWithEmptyBody,WhileLoopSpinsOnField
         while (waitForTask) {
             /* busy wait for completion */
         }
@@ -144,8 +144,8 @@ public class GetFixTaskTest
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled) {
-            Log.d("TEST", "UI: onResult: " + result + " (was cancelled? " + wasCancelled + ")");
+        public void onResult(LocationResult result) {
+            Log.d("TEST", "UI: onResult: " + result);
         }
     };
 }
