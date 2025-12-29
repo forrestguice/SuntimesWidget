@@ -95,7 +95,8 @@
                 android:layout_gravity="top|end"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
@@ -104,7 +105,8 @@
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/configAction_setBedtime" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"

@@ -30,7 +30,8 @@
 	<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_gravity="bottom|start" android:animateLayoutChanges="true">
 
-		<android.support.design.widget.FloatingActionButton android:id="@+id/btn_deselect" android:visibility="visible"
+		<com.forrestguice.support.widget.FloatingActionButton
+			android:id="@+id/btn_deselect" android:visibility="visible"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_gravity="bottom|start" android:layout_margin="8dp"
 			android:src="?attr/icActionDeselect" android:scaleType="center"
@@ -44,7 +45,8 @@
 
 	</FrameLayout>
 
-	<android.support.design.widget.FloatingActionButton android:id="@+id/btn_add"
+	<com.forrestguice.support.widget.FloatingActionButton
+		android:id="@+id/btn_add"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_gravity="bottom|end" android:layout_margin="16dp"
 		android:src="?attr/icActionNew" android:scaleType="center"

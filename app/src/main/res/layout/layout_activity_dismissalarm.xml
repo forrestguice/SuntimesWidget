@@ -194,7 +194,7 @@
 			android:animateLayoutChanges="true"
 			android:id="@+id/layout_back">
 
-			<android.support.design.widget.FloatingActionButton
+			<com.forrestguice.support.widget.FloatingActionButton
 				android:id="@+id/btn_back" android:visibility="visible"
 				android:layout_width="match_parent" android:layout_height="match_parent"
 				android:layout_gravity="bottom|start" android:layout_margin="8dp"
