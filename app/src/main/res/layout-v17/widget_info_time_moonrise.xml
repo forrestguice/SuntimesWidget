@@ -35,7 +35,7 @@
             android:textColor="@color/moonIcon_color_rising_dark"
             tools:text="11:00" />
 
-        <ImageView
+        <com.forrestguice.support.widget.ImageView
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_moonrise" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:scaleType="fitCenter"

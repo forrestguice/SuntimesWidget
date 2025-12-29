@@ -16,7 +16,7 @@
             android:gravity="center" android:orientation="vertical" android:layout_gravity="center"
             android:layout_margin="24dp">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/txt_about_icon"
                 android:layout_width="96dp" android:layout_height="96dp"
                 android:scaleType="fitCenter"

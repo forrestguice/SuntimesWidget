@@ -19,7 +19,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
+    <com.forrestguice.support.widget.ImageView
         android:id="@+id/themegrid_background"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:src="?android:windowBackground" android:scaleType="centerCrop" android:alpha="0"
@@ -54,7 +54,7 @@
             <LinearLayout android:id="@+id/themegrid_bottom"
                 android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center"
                 android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center" android:src="?attr/icActionDst"
                     android:layout_margin="4dp"

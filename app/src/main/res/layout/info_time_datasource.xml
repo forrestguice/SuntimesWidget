@@ -49,7 +49,7 @@
                 android:button="?attr/checkAltitude"
                 tools:ignore="SmallSp" />
 
-            <ImageView android:visibility="gone"
+            <com.forrestguice.support.widget.ImageView android:visibility="gone"
                 android:id="@+id/icon_altitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

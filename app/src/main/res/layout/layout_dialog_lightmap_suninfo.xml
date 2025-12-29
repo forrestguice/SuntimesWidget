@@ -6,7 +6,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <!-- icons and dividers -->
-        <ImageView android:id="@+id/sundialog_riseicon"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/sundialog_riseicon"
             android:layout_width="24dp" android:layout_height="8dp" android:layout_marginBottom="2dp"
             app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_rising"
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_rising"
@@ -14,7 +14,7 @@
             android:labelFor="@+id/info_sun_azimuth_rising"
             android:background="?attr/sunriseIconSmall" android:contentDescription="@string/sunrise" />
 
-        <ImageView android:id="@+id/sundialog_seticon" android:layout_marginBottom="2dp"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/sundialog_seticon" android:layout_marginBottom="2dp"
             android:layout_width="24dp" android:layout_height="8dp"
             app:layout_constraintStart_toStartOf="@+id/info_sun_azimuth_setting"
             app:layout_constraintEnd_toEndOf="@+id/info_sun_azimuth_setting"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/info_sun_elevation_current_label"
             tools:text="00.00°∠" />
 
-        <ImageView android:id="@+id/info_sun_elevation_current_highlight"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/info_sun_elevation_current_highlight"
             android:layout_width="64dp" android:layout_height="2dp"
             android:layout_marginTop="2dp" android:layout_marginStart="2dp" android:layout_marginLeft="2dp"
             android:scaleType="fitXY" android:background="@drawable/ic_colortab"
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center" tools:text="6 m" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/info_shadow_icon"
                 android:src="?attr/icActionShadow" android:contentDescription="@string/configLabel_general_observerheight"
                 android:tint="?attr/text_accentColor"

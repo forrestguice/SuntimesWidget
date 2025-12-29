@@ -23,7 +23,7 @@
     android:orientation="vertical" android:gravity="center"
     android:background="?attr/settingsCardBackground">
 
-    <ImageView
+    <com.forrestguice.support.widget.ImageView
         android:id="@+id/addButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:background="?attr/icActionNew"

@@ -15,7 +15,7 @@
         android:orientation="vertical" android:gravity="center" android:layout_gravity="center"
         android:layout_marginBottom="4dp">
 
-        <ImageView android:id="@+id/image_time"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/image_time"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
             android:scaleType="fitCenter"
             android:contentDescription="@string/app_name_clockwidget0"

@@ -90,7 +90,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
             android:transitionName="transition_alarmitem" />
 
-        <ImageView
+        <com.forrestguice.support.widget.ImageView
             android:id="@android:id/icon1"
             android:layout_width="24dp"
             android:layout_height="12dp"

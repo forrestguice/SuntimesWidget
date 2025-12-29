@@ -74,21 +74,21 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_alarm_label"
 			app:layout_constraintBottom_toTopOf="@+id/btn_dismiss">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_sounding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_huge"
                 tools:ignore="ContentDescription" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_snooze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_snooze_huge"
                 tools:ignore="ContentDescription" />
 
-			<ImageView
+			<com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_timeout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

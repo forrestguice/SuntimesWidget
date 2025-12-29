@@ -87,7 +87,7 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunrise"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
@@ -126,7 +126,7 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunset"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"

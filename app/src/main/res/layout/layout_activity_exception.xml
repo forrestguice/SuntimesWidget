@@ -10,7 +10,7 @@
         android:textSize="?attr/text_size_xlarge" android:textStyle="bold"
         android:text="@string/crash_dialog_title" />
 
-    <ImageView android:id="@+id/icon"
+    <com.forrestguice.support.widget.ImageView android:id="@+id/icon"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_action_suntimes"

@@ -24,7 +24,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/content_layout"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon"
                     android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size" android:layout_margin="8dp"
                     android:scaleType="fitCenter"

@@ -46,14 +46,14 @@
                             android:maxEms="9" android:maxLines="2" android:ellipsize="end"
                             android:textSize="?attr/text_size_small" tools:text="Pixie Dust" />
 
-                        <ImageView android:id="@+id/status_silent"
+                        <com.forrestguice.support.widget.ImageView android:id="@+id/status_silent"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                             android:src="?attr/icActionSoundDisabled"
                             android:contentDescription="@string/alarmOption_ringtone_none" />
 
-                        <ImageView android:id="@+id/status_vibrate"
+                        <com.forrestguice.support.widget.ImageView android:id="@+id/status_vibrate"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"

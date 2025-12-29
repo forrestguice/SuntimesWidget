@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:padding="8dp" android:layout_margin="16dp">
 
-        <ImageView android:id="@+id/thumb_icon"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/thumb_icon"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="?attr/icActionCancel" tools:ignore="ContentDescription" />

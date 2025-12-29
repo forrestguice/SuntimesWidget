@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="title" />
 
-        <ImageView android:id="@+id/icon_isdefault"
+        <com.forrestguice.support.widget.ImageView android:id="@+id/icon_isdefault"
             android:layout_width="16dp" android:layout_height="16dp"
             android:background="?attr/icActionSettings"
             app:layout_constraintTop_toTopOf="@+id/text_title"
@@ -84,7 +84,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <com.forrestguice.support.widget.ImageView
                         android:id="@+id/icon_season_spring"
                         android:layout_width="12dp"
                         android:layout_height="4dp"
@@ -93,7 +93,7 @@
                         android:contentDescription="@string/configLabel_themeColorSpring"
                         android:background="@drawable/ic_colortab" />
 
-                    <ImageView
+                    <com.forrestguice.support.widget.ImageView
                         android:id="@+id/icon_season_summer"
                         android:layout_width="12dp"
                         android:layout_height="4dp"
@@ -102,7 +102,7 @@
                         android:contentDescription="@string/configLabel_themeColorSummer"
                         android:background="@drawable/ic_colortab" />
 
-                    <ImageView
+                    <com.forrestguice.support.widget.ImageView
                         android:id="@+id/icon_season_fall"
                         android:layout_width="12dp"
                         android:layout_height="4dp"
@@ -111,7 +111,7 @@
                         android:contentDescription="@string/configLabel_themeColorFall"
                         android:background="@drawable/ic_colortab" />
 
-                    <ImageView
+                    <com.forrestguice.support.widget.ImageView
                         android:id="@+id/icon_season_winter"
                         android:layout_width="12dp"
                         android:layout_height="4dp"
@@ -134,7 +134,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_time_moonrise"
                 style="@style/SunsetTimeImageView"
                 android:layout_marginEnd="4dp"
@@ -144,7 +144,7 @@
                 android:contentDescription="@string/moonrise"
                 android:scaleType="fitStart" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_time_moonset"
                 style="@style/SunsetTimeImageView"
                 android:layout_marginEnd="4dp"
@@ -154,7 +154,7 @@
                 android:contentDescription="@string/moonset"
                 android:scaleType="fitEnd" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_info_moonphase_new"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -165,7 +165,7 @@
                 android:contentDescription="@string/timeMode_moon_new"
                 android:src="@drawable/ic_moon_new" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_info_moonphase_waxing_quarter"
                 android:layout_width="8dp"
                 android:layout_height="16dp"
@@ -175,7 +175,7 @@
                 android:scaleType="fitStart"
                 android:src="@drawable/ic_moon_waxing_quarter" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_info_moonphase_full"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -184,7 +184,7 @@
                 android:contentDescription="@string/timeMode_moon_full"
                 android:src="@drawable/ic_moon_full" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon_info_moonphase_waning_quarter"
                 android:layout_width="8dp"
                 android:layout_height="16dp"

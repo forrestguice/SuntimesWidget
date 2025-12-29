@@ -26,13 +26,13 @@
     <FrameLayout
         android:layout_width="32dp" android:layout_height="32dp" android:layout_gravity="center">
 
-        <ImageView
+        <com.forrestguice.support.widget.ImageView
             android:id="@+id/icon1" android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:src="?attr/icActionPlace" tools:ignore="ContentDescription"
             android:layout_gravity="center_vertical" />
 
-        <ImageView
+        <com.forrestguice.support.widget.ImageView
             android:id="@+id/icon2"
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:src="?attr/icActionLocale" tools:ignore="ContentDescription"
