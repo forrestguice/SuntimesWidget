@@ -58,7 +58,7 @@
 		android:nextFocusUp="@+id/listFragment"
 		android:nextFocusLeft="@+id/btn_deselect" />
 
-	<android.support.v7.widget.LinearLayoutCompat
+	<com.forrestguice.support.widget.LinearLayoutCompat
 		android:id="@+id/app_bottomsheet"
 		android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
 		app:layout_insetEdge="bottom" app:behavior_hideable="true" app:behavior_peekHeight="0dp"
@@ -72,7 +72,7 @@
 			android:id="@+id/createAlarmFragment"
 			android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-	</android.support.v7.widget.LinearLayoutCompat>
+	</com.forrestguice.support.widget.LinearLayoutCompat>
 
 </android.support.design.widget.CoordinatorLayout>
 
