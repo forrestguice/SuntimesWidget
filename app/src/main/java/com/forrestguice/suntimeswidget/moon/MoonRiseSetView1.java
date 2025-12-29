@@ -678,11 +678,24 @@ public class MoonRiseSetView1 extends LinearLayout
         protected void initDrawables(Context context)
         {
             TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonnoonIcon, R.attr.moonnightIcon });
-            icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise)).mutate();
-            icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set)).mutate();
-            icon_noon = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.ic_moon_noon)).mutate();
-            icon_midnight = ContextCompat.getDrawable(context, a.getResourceId(4, R.drawable.ic_moon_night)).mutate();
+            icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise));
+            icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set));
+            icon_noon = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.ic_moon_noon));
+            icon_midnight = ContextCompat.getDrawable(context, a.getResourceId(4, R.drawable.ic_moon_night));
             a.recycle();
+
+            if (icon_rising != null) {
+                icon_rising = icon_rising.mutate();
+            }
+            if (icon_setting != null) {
+                icon_setting = icon_setting.mutate();
+            }
+            if (icon_noon != null) {
+                icon_noon = icon_noon.mutate();
+            }
+            if (icon_midnight != null) {
+                icon_midnight = icon_midnight.mutate();
+            }
         }
 
         protected Drawable getIconForEvent(@Nullable MoonRiseSetEvent event)

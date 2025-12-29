@@ -259,7 +259,11 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
             if (item.offset != 0)
             {
-                Drawable offsetIcon = ContextCompat.getDrawable(context, res_icOffset).mutate();
+                Drawable offsetIcon = ContextCompat.getDrawable(context, res_icOffset);
+                if (offsetIcon != null) {
+                    offsetIcon = offsetIcon.mutate();
+                }
+
                 offsetIcon = new InsetDrawable(offsetIcon, iconMargin, iconMargin, iconMargin, iconMargin);
                 offsetIcon.setBounds(0, 0, (int)iconSize, (int)iconSize);
                 text_offset.setCompoundDrawablePadding(iconMargin);

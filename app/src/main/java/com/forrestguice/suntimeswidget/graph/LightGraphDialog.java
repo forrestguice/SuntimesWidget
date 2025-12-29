@@ -266,7 +266,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
-            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
             colorDialog.setColorCollection(colors);

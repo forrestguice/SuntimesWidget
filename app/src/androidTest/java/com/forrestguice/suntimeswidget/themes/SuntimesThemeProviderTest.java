@@ -310,6 +310,7 @@ public class SuntimesThemeProviderTest
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_THEMES);
         String[] projection = QUERY_THEMES_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
+        assertNotNull(cursor);
         test_cursorHasColumns("QUERY_THEMES", cursor, projection);
         test_theme(cursor);
 

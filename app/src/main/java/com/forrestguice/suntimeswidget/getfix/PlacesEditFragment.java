@@ -950,7 +950,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         if (name.trim().isEmpty())
         {
             isValid = false;
-            text_locationName.setError(myParent.getString(R.string.location_dialog_error_name));
+            text_locationName.setError(getString(R.string.location_dialog_error_name));
         }
 
         String latitude = text_locationLat.getText().toString();
@@ -959,12 +959,12 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             if (lat.doubleValue() < -90d || lat.doubleValue() > 90d)
             {
                 isValid = false;
-                text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
+                text_locationLat.setError(getString(R.string.location_dialog_error_lat));
             }
 
         } catch (NumberFormatException e1) {
             isValid = false;
-            text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
+            text_locationLat.setError(getString(R.string.location_dialog_error_lat));
         }
 
         String longitude = text_locationLon.getText().toString();
@@ -973,12 +973,12 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             if (lon.doubleValue() < -180d || lon.doubleValue() > 180d)
             {
                 isValid = false;
-                text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
+                text_locationLon.setError(getString(R.string.location_dialog_error_lon));
             }
 
         } catch (NumberFormatException e2) {
             isValid = false;
-            text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
+            text_locationLon.setError(getString(R.string.location_dialog_error_lon));
         }
 
         String altitude = text_locationAlt.getText().toString();
@@ -989,7 +989,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
             } catch (NumberFormatException e3) {
                 isValid = false;
-                text_locationAlt.setError(myParent.getString(R.string.location_dialog_error_alt));
+                text_locationAlt.setError(getString(R.string.location_dialog_error_alt));
             }
         }
 

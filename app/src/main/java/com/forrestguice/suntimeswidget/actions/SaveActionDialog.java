@@ -121,12 +121,12 @@ public class SaveActionDialog extends EditActionDialog
         String title = edit.getIntentTitle();
 
         if (id.trim().isEmpty() || id.contains(" ")) {
-            edit_intentID.setError(getContext().getString(R.string.addaction_error_id));
+            edit_intentID.setError(getString(R.string.addaction_error_id));
             return false;
         } else edit_intentID.setError(null);
 
         if (title.trim().isEmpty()) {
-            edit.edit_label.setError(getContext().getString(R.string.addaction_error_title));
+            edit.edit_label.setError(getString(R.string.addaction_error_title));
             return false;
         } else edit.text_label.setError(null);
 

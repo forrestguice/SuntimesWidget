@@ -1620,7 +1620,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
-            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
             colorDialog.setColorCollection(colors);

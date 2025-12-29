@@ -201,7 +201,11 @@ public class EventIcons
     }
     public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
     {
-        Drawable eventIcon = ContextCompat.getDrawable(context, resID).mutate();
+        Drawable eventIcon = ContextCompat.getDrawable(context, resID);
+        if (eventIcon != null) {
+            eventIcon = eventIcon.mutate();
+        }
+
         if (tint != null) {
             tintDrawable(eventIcon, tint);
         }
