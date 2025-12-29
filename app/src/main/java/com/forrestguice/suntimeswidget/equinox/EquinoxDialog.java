@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -62,7 +63,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Deprecated
-public class EquinoxDialog extends BottomSheetDialogFragment
+public class EquinoxDialog extends BottomSheetDialogBase
 {
     public static final String DIALOGTAG_HELP = "equinox_help";
 

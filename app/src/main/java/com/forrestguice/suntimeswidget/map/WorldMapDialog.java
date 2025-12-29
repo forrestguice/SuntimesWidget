@@ -65,6 +65,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
@@ -95,7 +96,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class WorldMapDialog extends BottomSheetDialogFragment
+public class WorldMapDialog extends BottomSheetDialogBase
 {
     public static final String LOGTAG = "WorldMapDialog";
     public static final String ARG_DATETIME = "datetime";
@@ -143,7 +144,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public void showPositionAt(@Nullable Long datetime) {
-        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        getArgs().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded()) {
             updateViews();
         }
@@ -562,10 +563,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;
 
-            long now = getArguments().getLong(ARG_DATETIME);
+            long now = getArgs().getLong(ARG_DATETIME);
             if (now != -1L)
             {
-                getArguments().putLong(ARG_DATETIME, -1L);
+                getArgs().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);

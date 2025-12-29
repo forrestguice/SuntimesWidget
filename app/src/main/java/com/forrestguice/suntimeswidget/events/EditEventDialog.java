@@ -103,18 +103,18 @@ public class EditEventDialog extends EditBottomSheetDialog
     public static final int DIALOG_MODE_EDIT = 1;
 
     public int dialogMode() {
-        return getArguments().getInt(ARG_DIALOGMODE);
+        return getArgs().getInt(ARG_DIALOGMODE);
     }
     public void setDialogMode(int mode) {
-        getArguments().putInt(ARG_DIALOGMODE, mode);
+        getArgs().putInt(ARG_DIALOGMODE, mode);
     }
 
     /* isModified */
     public boolean isModified() {
-        return getArguments().getBoolean(ARG_MODIFIED);
+        return getArgs().getBoolean(ARG_MODIFIED);
     }
     public void setIsModified(boolean modified) {
-        getArguments().putBoolean(ARG_MODIFIED, modified);
+        getArgs().putBoolean(ARG_MODIFIED, modified);
     }
 
     /* EventType */
@@ -184,10 +184,10 @@ public class EditEventDialog extends EditBottomSheetDialog
 
     /* Event Offset */
     protected void setOffset(int millis) {
-        getArguments().putInt("offset", millis);
+        getArgs().putInt("offset", millis);
     }
     protected int getOffset() {
-        return getArguments().getInt("offset", 0);
+        return getArgs().getInt("offset", 0);
     }
 
     /* isShown */

@@ -64,6 +64,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -78,7 +79,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
-public class TimeZoneDialog extends BottomSheetDialogFragment
+public class TimeZoneDialog extends BottomSheetDialogBase
 {
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
     public static final String KEY_TIMEZONE_ID = "timezoneID";
@@ -137,26 +138,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     public void setLongitude( String label, double longitude )
     {
-        getArguments().putDouble(KEY_LONGITUDE, longitude);
-        getArguments().putString(KEY_LONGITUDE_LABEL, label);
+        getArgs().putDouble(KEY_LONGITUDE, longitude);
+        getArgs().putString(KEY_LONGITUDE_LABEL, label);
         updatePreview(getActivity());
         onSelectionChanged();
     }
     public double getLongitude() {
-        return getArguments().getDouble(KEY_LONGITUDE, 0);
+        return getArgs().getDouble(KEY_LONGITUDE, 0);
     }
     public String getLongitudeLabel() {
-        return getArguments().getString(KEY_LONGITUDE_LABEL);
+        return getArgs().getString(KEY_LONGITUDE_LABEL);
     }
 
     public void setTimeFormatMode(TimeFormatMode mode) {
-        getArguments().putString(KEY_TIMEFORMAT_MODE, mode.name());
+        getArgs().putString(KEY_TIMEFORMAT_MODE, mode.name());
         updatePreview(getActivity());
     }
     public TimeFormatMode getTimeFormatMode()
     {
         try {
-            String mode = getArguments().getString(KEY_TIMEFORMAT_MODE);
+            String mode = getArgs().getString(KEY_TIMEFORMAT_MODE);
             return ((mode != null) ? TimeFormatMode.valueOf(mode) : TimeFormatMode.MODE_SYSTEM);
         } catch (IllegalArgumentException e) {
             Log.e(getClass().getSimpleName(), "getTimeFormatMode: " + e);

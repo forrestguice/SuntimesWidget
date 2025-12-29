@@ -47,6 +47,7 @@ import android.text.style.ImageSpan;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -95,7 +96,7 @@ import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class MoonDialog extends BottomSheetDialogFragment
+public class MoonDialog extends BottomSheetDialogBase
 {
     public static final String ARG_DATETIME = "datetime";
     public static final String ARG_PLAYING = "playing";
@@ -134,13 +135,13 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
     public void showPositionAt(@Nullable Long datetime, boolean updateViews)
     {
-        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        getArgs().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded() && updateViews) {
             updateViews();
         }
     }
     protected long arg_dateTime() {
-        return getArguments().getLong(ARG_DATETIME, -1);
+        return getArgs().getLong(ARG_DATETIME, -1);
     }
 
     private TextView text_dialogTitle;
@@ -1309,20 +1310,20 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     public boolean isPlaying() {
-        return getArguments().getBoolean(ARG_PLAYING);
+        return getArgs().getBoolean(ARG_PLAYING);
     }
     public int getOffsetMinutes() {
-        return getArguments().getInt(ARG_PLAY_OFFSET);
+        return getArgs().getInt(ARG_PLAY_OFFSET);
     }
     public void setOffsetMinutes(int value) {
-        getArguments().putInt(ARG_PLAY_OFFSET, value);
+        getArgs().putInt(ARG_PLAY_OFFSET, value);
         updateViews();
     }
 
     public void playMap()
     {
         stopUpdateTask();
-        getArguments().putBoolean(ARG_PLAYING, true);
+        getArgs().putBoolean(ARG_PLAYING, true);
         updateMediaButtons();
         startUpdateTask();    // TODO: 'play' update task
     }
@@ -1339,9 +1340,9 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void stopMap(boolean reset)
     {
         stopUpdateTask();
-        getArguments().putBoolean(ARG_PLAYING, false);
+        getArgs().putBoolean(ARG_PLAYING, false);
         if (reset) {
-            getArguments().putInt(ARG_PLAY_OFFSET, 0);
+            getArgs().putInt(ARG_PLAY_OFFSET, 0);
         }
         updateMediaButtons();
         updateViews(false);

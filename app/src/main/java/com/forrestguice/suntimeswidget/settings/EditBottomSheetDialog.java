@@ -34,9 +34,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
-public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
+public abstract class EditBottomSheetDialog extends BottomSheetDialogBase
 {
     protected abstract int getLayoutID();
 

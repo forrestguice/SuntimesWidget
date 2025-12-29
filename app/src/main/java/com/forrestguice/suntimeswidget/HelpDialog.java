@@ -36,10 +36,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
-public class HelpDialog extends BottomSheetDialogFragment
+public class HelpDialog extends BottomSheetDialogBase
 {
     public static final String KEY_HELPTEXT = "helpText";
     public static final String KEY_NEUTRALTEXT = "neutralText";

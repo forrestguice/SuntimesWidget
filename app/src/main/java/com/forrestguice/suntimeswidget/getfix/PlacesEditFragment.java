@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -72,7 +73,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class PlacesEditFragment extends BottomSheetDialogFragment
+public class PlacesEditFragment extends BottomSheetDialogBase
 {
     public static final String KEY_DIALOGTHEME = "dialogtheme";
 
@@ -336,13 +337,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     public void setDialogThemOverride(@Nullable Integer resID)
     {
         if (resID != null) {
-            getArguments().putInt(KEY_DIALOGTHEME, resID);
-        } else getArguments().remove(KEY_DIALOGTHEME);
+            getArgs().putInt(KEY_DIALOGTHEME, resID);
+        } else getArgs().remove(KEY_DIALOGTHEME);
     }
     @Nullable
     protected Integer getDialogThemeOverride()
     {
-        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        int resID = getArgs().getInt(KEY_DIALOGTHEME, -1);
         return (resID >= 0 ? resID : null);
     }
 

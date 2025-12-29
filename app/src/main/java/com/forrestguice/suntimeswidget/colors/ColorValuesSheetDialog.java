@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -49,7 +50,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ColorValuesSheetDialog extends BottomSheetDialogFragment
+public class ColorValuesSheetDialog extends BottomSheetDialogBase
 {
     public static final String DIALOG_SHEET = "ColorValuesSheet";
 
@@ -58,41 +59,41 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     }
 
     public void setAppWidgetID(int id) {
-        getArguments().putInt("appWidgetID", id);
+        getArgs().putInt("appWidgetID", id);
         if (colorSheet != null) {
             colorSheet.setAppWidgetID(id);
         }
     }
     public int getAppWidgetID() {
-        return getArguments().getInt("appWidgetID", 0);
+        return getArgs().getInt("appWidgetID", 0);
     }
 
     public void setColorTag(String tag) {
-        getArguments().putString("colorTag", tag);
+        getArgs().putString("colorTag", tag);
         if (colorSheet != null) {
             colorSheet.setColorTag(tag);
         }
     }
     @Nullable
     public String getColorTag() {
-        return getArguments().getString("colorTag", null);
+        return getArgs().getString("colorTag", null);
     }
 
     public void setShowAlpha(boolean value) {
-        getArguments().putBoolean("showAlpha", value);
+        getArgs().putBoolean("showAlpha", value);
     }
     public boolean getShowAlpha() {
-        return getArguments().getBoolean("showAlpha", true);
+        return getArgs().getBoolean("showAlpha", true);
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (colorSheet != null) {
             colorSheet.setApplyFilter(value);
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (getFilter() != null && getFilter().length > 0);
@@ -108,16 +109,16 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         }
 
         String[] filter = filterSet.toArray(new String[0]);
-        getArguments().putStringArray("filterValues", filter);
+        getArgs().putStringArray("filterValues", filter);
         if (colorSheet != null) {
             colorSheet.setFilter(filter);
         }
     }
     public String[] getFilter() {
-        return getArguments().getStringArray("filterValues");
+        return getArgs().getStringArray("filterValues");
     }
     public void clearFilter() {
-        getArguments().remove("filterValues");
+        getArgs().remove("filterValues");
         if (colorSheet != null) {
             colorSheet.clearFilter();
         }
@@ -125,14 +126,14 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 
     public void setDialogTitle(String title)
     {
-        getArguments().putString("dialogTitle", title);
+        getArgs().putString("dialogTitle", title);
         if (isAdded()) {
             updateViews();
         }
     }
     @Nullable
     public String getDialogTitle() {
-        return getArguments().getString("dialogTitle", null);
+        return getArgs().getString("dialogTitle", null);
     }
 
     protected ColorValuesCollection<ColorValues> colorCollection = null;

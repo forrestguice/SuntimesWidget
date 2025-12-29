@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;
@@ -126,7 +127,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL;
 
-public class LightMapDialog extends BottomSheetDialogFragment
+public class LightMapDialog extends BottomSheetDialogBase
 {
     public static final String DIALOGTAG_COLORS = "lightmap_colors";
     public static final String DIALOGTAG_DATE = "lightmap_date";
@@ -177,7 +178,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     public void showPositionAt(@Nullable Long datetime)
     {
-        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        getArgs().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded()) {
             updateViews();
         }
@@ -527,7 +528,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onFrame(Bitmap frame, long offsetMinutes)
                 {
-                    //getArguments().putLong(EXTRA_DATETIME, lightmap.getNow());
+                    //getArgs().putLong(EXTRA_DATETIME, lightmap.getNow());
                     updateTimeText(data);
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
@@ -1317,10 +1318,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 seekbar1.setOptions(options);
             }
 
-            long now = getArguments().getLong(ARG_DATETIME);
+            long now = getArgs().getLong(ARG_DATETIME);
             if (now != -1L)
             {
-                getArguments().putLong(ARG_DATETIME, -1L);
+                getArgs().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);

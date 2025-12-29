@@ -44,6 +44,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -55,7 +56,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Locale;
 
-public class MapCoordinateDialog extends BottomSheetDialogFragment
+public class MapCoordinateDialog extends BottomSheetDialogBase
 {
     public static final String KEY_DIALOG_TITLE = "dialog_title";
     public static final String KEY_DIALOG_LATITUDE_SELECTED = "selected_latitude";
@@ -64,7 +65,7 @@ public class MapCoordinateDialog extends BottomSheetDialogFragment
     public static final String KEY_DIALOG_LONGITUDE_INITIAL = "dialog_longitude";
 
     public MapCoordinateDialog() {
-        setArguments(new Bundle());
+        super();
     }
 
     protected int getLayoutResID() {
@@ -439,13 +440,4 @@ public class MapCoordinateDialog extends BottomSheetDialogFragment
         getArgs().putDouble(KEY_DIALOG_LONGITUDE_SELECTED, longitude);
     }
 
-    @NonNull
-    protected Bundle getArgs()
-    {
-        Bundle bundle = getArguments();
-        if (bundle == null) {
-            setArguments(bundle = new Bundle());
-        }
-        return bundle;
-    }
 }

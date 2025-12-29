@@ -60,6 +60,7 @@ import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
@@ -102,7 +103,7 @@ import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAP
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWTWILIGHT;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID;
 
-public class LightGraphDialog extends BottomSheetDialogFragment
+public class LightGraphDialog extends BottomSheetDialogBase
 {
     public static final String MAPTAG_LIGHTGRAPH = "_lightgraph";
 

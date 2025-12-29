@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -48,7 +49,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class TimeDateDialog extends BottomSheetDialogFragment
+public class TimeDateDialog extends BottomSheetDialogBase
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
     public static final String KEY_DIALOG_TITLE = "dialog_title";
@@ -92,11 +93,11 @@ public class TimeDateDialog extends BottomSheetDialogFragment
 
         if (Build.VERSION.SDK_INT >= 11)
         {
-            if (getArguments().containsKey(KEY_MIN_DATETIME)) {
-                picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
+            if (getArgs().containsKey(KEY_MIN_DATETIME)) {
+                picker.setMinDate(getArgs().getLong(KEY_MIN_DATETIME));
             }
-            if (getArguments().containsKey(KEY_MAX_DATETIME)) {
-                picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+            if (getArgs().containsKey(KEY_MAX_DATETIME)) {
+                picker.setMaxDate(getArgs().getLong(KEY_MAX_DATETIME));
             }
         }
 
@@ -164,8 +165,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @param bundle state loaded from this Bundle
      */
     protected void loadSettings(Bundle bundle) {
-        //getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
-        //getArguments().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
+        //getArgs().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
+        //getArgs().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
     }
 
     /**
@@ -208,18 +209,18 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @return the appWidgetID used by this dialog when saving/loading prefs (use 0 for main app)
      */
     public int getAppWidgetId() {
-        return getArguments().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        return getArgs().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
     public void setAppWidgetId(int value) {
-        getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, value);
+        getArgs().putInt(KEY_TIMEDATE_APPWIDGETID, value);
     }
 
     @Nullable
     public String getDialogTitle() {
-        return getArguments().getString(KEY_DIALOG_TITLE);
+        return getArgs().getString(KEY_DIALOG_TITLE);
     }
     public void setDialogTitle(@Nullable String title) {
-        getArguments().putString(KEY_DIALOG_TITLE, title);
+        getArgs().putString(KEY_DIALOG_TITLE, title);
     }
 
     /**
@@ -339,22 +340,22 @@ public class TimeDateDialog extends BottomSheetDialogFragment
 
     public static final String KEY_MIN_DATETIME = "min_datetime";
     public void setMinDate(long datetime) {
-        getArguments().putLong(KEY_MIN_DATETIME, datetime);
+        getArgs().putLong(KEY_MIN_DATETIME, datetime);
     }
 
     public static final String KEY_MAX_DATETIME = "max_datetime";
     public void setMaxDate(long datetime) {
-        getArguments().putLong(KEY_MAX_DATETIME, datetime);
+        getArgs().putLong(KEY_MAX_DATETIME, datetime);
     }
 
     public static final String KEY_INITIAL_DATETIME = "initial_datetime";
     public void setInitialDateTime(long datetime) {
-        getArguments().putLong(KEY_INITIAL_DATETIME, datetime);
+        getArgs().putLong(KEY_INITIAL_DATETIME, datetime);
     }
     public Calendar getInitialDateTime()
     {
         Calendar calendar = Calendar.getInstance(timezone);
-        long datetime = getArguments().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
+        long datetime = getArgs().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
         calendar.setTimeInMillis(datetime);
         return calendar;
     }

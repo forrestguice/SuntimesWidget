@@ -43,13 +43,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AboutDialog extends BottomSheetDialogFragment
+public class AboutDialog extends BottomSheetDialogBase
 {
     public static final String KEY_ICONID = "paramIconID";
     public static final String KEY_APPNAME = "paramAppName";

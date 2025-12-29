@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -86,7 +87,7 @@ import com.forrestguice.util.android.AndroidResources;
 import java.util.Calendar;
 import java.util.List;
 
-public class AlarmEventDialog extends BottomSheetDialogFragment
+public class AlarmEventDialog extends BottomSheetDialogBase
 {
     public static final int REQUEST_ADDON_ALARMPICKER = 3000;
     public static final int REQUEST_EVENTALIAS = 4000;

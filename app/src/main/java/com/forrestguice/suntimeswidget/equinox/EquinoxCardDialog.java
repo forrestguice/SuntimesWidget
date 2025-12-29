@@ -64,6 +64,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -85,7 +86,7 @@ import com.forrestguice.util.android.AndroidResources;
 import java.util.Calendar;
 import java.util.List;
 
-public class EquinoxCardDialog extends BottomSheetDialogFragment
+public class EquinoxCardDialog extends BottomSheetDialogBase
 {
     public static final String DIALOGTAG_COLORS= "equinox_colors";
 
@@ -101,10 +102,10 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
     protected EquinoxViewOptions options = new EquinoxViewOptions();
 
     protected void setUserSwappedCard(boolean value) {
-        getArguments().putBoolean("userSwappedCard", value);
+        getArgs().putBoolean("userSwappedCard", value);
     }
     public boolean userSwappedCard() {
-        return getArguments().getBoolean("userSwappedCard", false);
+        return getArgs().getBoolean("userSwappedCard", false);
     }
 
     public EquinoxCardDialog() {

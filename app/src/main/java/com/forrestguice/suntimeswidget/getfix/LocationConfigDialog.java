@@ -43,11 +43,12 @@ import android.widget.ImageButton;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
-public class LocationConfigDialog extends BottomSheetDialogFragment
+public class LocationConfigDialog extends BottomSheetDialogBase
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";

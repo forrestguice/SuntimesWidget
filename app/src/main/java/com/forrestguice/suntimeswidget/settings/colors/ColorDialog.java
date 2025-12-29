@@ -49,6 +49,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
@@ -56,7 +57,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.ArrayList;
 
-public class ColorDialog extends BottomSheetDialogFragment
+public class ColorDialog extends BottomSheetDialogBase
 {
     public static final String PREFS_COLORDIALOG = "ColorDialog";
     public static final String KEY_COLORPICKER = "colorPicker";
@@ -145,10 +146,10 @@ public class ColorDialog extends BottomSheetDialogFragment
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
         viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerFragment.ColorPickerModel.class);
-        viewModel.setColor(getArguments().getInt(KEY_COLOR));
-        viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
-        viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
-        viewModel.setPreviewMode(getArguments().getInt(KEY_PREVIEW_MODE));
+        viewModel.setColor(getArgs().getInt(KEY_COLOR));
+        viewModel.setColorUnder(getArgs().getInt(KEY_COLOR_UNDER));
+        viewModel.setColorOver(getArgs().getInt(KEY_COLOR_OVER));
+        viewModel.setPreviewMode(getArgs().getInt(KEY_PREVIEW_MODE));
         viewModel.setShowAlpha(showAlpha());
 
         if (savedState != null)
