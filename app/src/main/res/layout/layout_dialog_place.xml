@@ -153,7 +153,7 @@
             android:textSize="?attr/text_size_tiny" android:textStyle="bold"
             android:text="@string/configLabel_getFix_gnss" />
 
-        <android.support.v4.widget.NestedScrollView android:id="@+id/scroll_debug_log"
+        <com.forrestguice.support.widget.NestedScrollView android:id="@+id/scroll_debug_log"
             android:layout_width="match_parent" android:layout_height="100dp"
             android:background="?attr/dialogBackground">
 
@@ -168,7 +168,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </com.forrestguice.support.widget.NestedScrollView>
 
     </LinearLayout>
 
