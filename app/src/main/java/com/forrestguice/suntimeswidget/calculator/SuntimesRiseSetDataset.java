@@ -520,7 +520,8 @@ public class SuntimesRiseSetDataset
         {
             try {
                 SolarEvents event = SolarEvents.valueOf(eventID);
-                d = getData(SolarEvents.toTimeMode(eventID).name());
+                TimeMode mode = SolarEvents.toTimeMode(eventID);
+                d = ((mode != null) ? getData(mode.name()) : null);
                 if (d != null) {
                     return d.getEvents(event.isRising());
                 } else return new Calendar[] { null, null };

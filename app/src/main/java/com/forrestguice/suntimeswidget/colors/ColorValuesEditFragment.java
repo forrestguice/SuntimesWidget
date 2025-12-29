@@ -305,7 +305,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (isAdded())
         {
             if (adapter != null) {
@@ -315,7 +315,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (!filterValues.isEmpty());

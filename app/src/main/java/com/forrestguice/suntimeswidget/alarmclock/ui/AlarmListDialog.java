@@ -738,7 +738,7 @@ public class AlarmListDialog extends DialogBase
                 {
                     @Override
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
-                        if (isAdded()) {
+                        if (isAdded() && items != null) {
                             offerUndoImport(getActivity(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
                         }
                     }

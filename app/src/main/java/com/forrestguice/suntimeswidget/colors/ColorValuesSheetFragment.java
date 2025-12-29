@@ -208,10 +208,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
 
     public void setPreviewKeys(String... keys) {
-        getArguments().putStringArray("previewKeys", keys);
+        getArgs().putStringArray("previewKeys", keys);
     }
     public String[] previewKeys() {
-        return getArguments().getStringArray("previewKeys");
+        return getArgs().getStringArray("previewKeys");
     }
 
     protected String suggestColorValuesID(Context context)
@@ -450,31 +450,31 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
 
     public boolean persistSelection() {
-        return getArguments().getBoolean(ARG_PERSIST_SELECTION, DEF_PERSIST_SELECTION);
+        return getArgs().getBoolean(ARG_PERSIST_SELECTION, DEF_PERSIST_SELECTION);
     }
     public void setPersistSelection(boolean value) {
-        getArguments().putBoolean(ARG_PERSIST_SELECTION, value);
+        getArgs().putBoolean(ARG_PERSIST_SELECTION, value);
     }
 
     public void setHideAfterSave(boolean showBack) {
-        getArguments().putBoolean(ARG_HIDE_AFTER_SAVE, showBack);
+        getArgs().putBoolean(ARG_HIDE_AFTER_SAVE, showBack);
     }
     public boolean getHideAfterSave() {
-        return getArguments().getBoolean(ARG_HIDE_AFTER_SAVE, DEF_HIDE_AFTER_SAVE);
+        return getArgs().getBoolean(ARG_HIDE_AFTER_SAVE, DEF_HIDE_AFTER_SAVE);
     }
 
     public void setShowBack(boolean showBack) {
-        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
+        getArgs().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
     }
     public boolean getShowBack() {
-        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
+        return getArgs().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
     }
 
     public void setShowMenu(boolean showMenu) {
-        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, showMenu);
+        getArgs().putBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, showMenu);
     }
     public boolean getShowMenu() {
-        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
+        return getArgs().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
     }
 
     public String getSelectedID() {
@@ -483,52 +483,52 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     public void setAppWidgetID(int id)
     {
-        getArguments().putInt("appWidgetID", id);
+        getArgs().putInt("appWidgetID", id);
         if (listDialog != null) {
             listDialog.setAppWidgetID(id);
         }
     }
     public int getAppWidgetID() {
-        return getArguments().getInt("appWidgetID", 0);
+        return getArgs().getInt("appWidgetID", 0);
     }
 
     public void setColorTag(@Nullable String tag)
     {
-        getArguments().putString("colorTag", tag);
+        getArgs().putString("colorTag", tag);
         if (listDialog != null) {
             listDialog.setColorTag(tag);
         }
     }
     @Nullable
     public String getColorTag() {
-        return getArguments().getString("colorTag", null);
+        return getArgs().getString("colorTag", null);
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (editDialog != null) {
             editDialog.setApplyFilter(value);
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (getFilter() != null && getFilter().length > 0);
     }
 
     public void setFilter(String[] keys) {
-        getArguments().putStringArray("filterValues", keys);
+        getArgs().putStringArray("filterValues", keys);
         if (editDialog != null) {
             editDialog.setFilter(keys);
         }
     }
     @Nullable
     public String[] getFilter() {
-        return getArguments().getStringArray("filterValues");
+        return getArgs().getStringArray("filterValues");
     }
     public void clearFilter() {
-        getArguments().remove("filterValues");
+        getArgs().remove("filterValues");
         if (editDialog != null) {
             editDialog.clearFilter();
         }

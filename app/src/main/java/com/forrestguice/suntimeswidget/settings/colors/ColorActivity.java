@@ -136,15 +136,15 @@ public class ColorActivity extends AppCompatActivity
         }
 
         if (intent.hasExtra(ColorDialog.KEY_COLOR_UNDER)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_UNDER,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_COLOR_UNDER,
                     intent.getIntExtra(ColorDialog.KEY_COLOR_UNDER, color));
         }
         if (intent.hasExtra(ColorDialog.KEY_COLOR_OVER)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_OVER,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_COLOR_OVER,
                     intent.getIntExtra(ColorDialog.KEY_COLOR_OVER, color));
         }
         if (intent.hasExtra(ColorDialog.KEY_PREVIEW_MODE)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_PREVIEW_MODE,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_PREVIEW_MODE,
                     intent.getIntExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_TEXT));
         }
 

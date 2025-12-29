@@ -1392,7 +1392,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooser.setColor(savedState);
         }
 
-        choosePadding.setPadding(savedState.getIntArray(THEME_PADDING));   // TODO: might be null (check)
+        int[] p = savedState.getIntArray(THEME_PADDING);
+        if (p != null) {
+            choosePadding.setPadding(p);
+        }
     }
 
     protected void flipToPreview( int previewID )

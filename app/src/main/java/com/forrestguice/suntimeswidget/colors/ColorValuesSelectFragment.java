@@ -167,8 +167,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     protected void onColorValuesSelected(int position)
     {
         ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(position);
-        getArguments().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
-        getArguments().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
+        getArgs().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
+        getArgs().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
         if (listener != null) {
             listener.onItemSelected(item);
         }
@@ -321,10 +321,10 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     }
 
     public void setPreviewKeys(String... keys) {
-        getArguments().putStringArray("previewKeys", keys);
+        getArgs().putStringArray("previewKeys", keys);
     }
     public String[] previewKeys() {
-        return getArguments().getStringArray("previewKeys");
+        return getArgs().getStringArray("previewKeys");
     }
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) { /* EMPTY */ }
@@ -342,8 +342,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             {
                 int selectedIndex = 0;
                 String selectedColorsID0 = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
-                boolean defaultIsSelected = getArguments().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
-                String selectedColorsID = getArguments().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
+                boolean defaultIsSelected = getArgs().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
+                String selectedColorsID = getArgs().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
 
                 for (int i=0; i<selector.getCount(); i++)
                 {
@@ -451,29 +451,21 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     public void setAppWidgetID(int appWidgetID)
     {
-        Bundle args = getArguments();
-        if (args != null) {
-            args.putInt(ARG_APPWIDGETID, appWidgetID);
-            updateViews();
-        }
+        getArgs().putInt(ARG_APPWIDGETID, appWidgetID);
+        updateViews();
     }
     public int getAppWidgetID() {
-        Bundle args = getArguments();
-        return args != null ? args.getInt(ARG_APPWIDGETID, DEF_APPWIDGETID) : DEF_APPWIDGETID;
+        return getArgs().getInt(ARG_APPWIDGETID, DEF_APPWIDGETID);
     }
 
     public void setColorTag(@Nullable String tag)
     {
-        Bundle args = getArguments();
-        if (args != null) {
-            args.putString(ARG_COLOR_TAG, tag);
-            updateViews();
-        }
+        getArgs().putString(ARG_COLOR_TAG, tag);
+        updateViews();
     }
     @Nullable
     public String getColorTag() {
-        Bundle args = getArguments();
-        return args != null ? args.getString(ARG_COLOR_TAG, DEF_COLOR_TAG) : DEF_COLOR_TAG;
+        return getArgs().getString(ARG_COLOR_TAG, DEF_COLOR_TAG);
     }
 
     /**

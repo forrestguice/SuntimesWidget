@@ -753,7 +753,9 @@ public class PlacesListFragment extends DialogBase
         public boolean onMenuItemActionCollapse(MenuItem item) {
             item.setVisible(true);
             if (Build.VERSION.SDK_INT >= 11) {
-                getActivity().invalidateOptionsMenu();
+                if (getActivity() != null) {
+                    getActivity().invalidateOptionsMenu();
+                }
             }
             return true;
         }
@@ -1084,7 +1086,9 @@ public class PlacesListFragment extends DialogBase
     public void sortList(Context context, int sortMode)
     {
         savePrefPlacesListSortMode(context, sortMode);
-        getActivity().invalidateOptionsMenu();
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
         if (adapter != null) {
             adapter.sortItems(context);
         }
