@@ -256,7 +256,7 @@ public class MoonPhasesView1 extends LinearLayout
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             int position = card_layout.findFirstVisibleItemPosition();
@@ -363,6 +363,7 @@ public class MoonPhasesView1 extends LinearLayout
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
         public PhaseField onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -372,7 +373,7 @@ public class MoonPhasesView1 extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(PhaseField holder, int position)
+        public void onBindViewHolder(@NonNull PhaseField holder, int position)
         {
             Context context = contextRef.get();
             if (context == null) {
@@ -405,7 +406,7 @@ public class MoonPhasesView1 extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(PhaseField holder)
+        public void onViewRecycled(@NonNull PhaseField holder)
         {
             detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {

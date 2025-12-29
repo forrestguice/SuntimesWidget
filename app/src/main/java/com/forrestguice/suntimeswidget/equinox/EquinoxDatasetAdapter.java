@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +61,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         this.options = options;
     }
 
+    @NonNull
     @Override
     public EquinoxDatasetViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -69,7 +71,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     }
 
     @Override
-    public void onBindViewHolder(EquinoxDatasetViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull EquinoxDatasetViewHolder holder, int position)
     {
         Context context = (contextRef != null ? contextRef.get() : null);
         if (context == null) {
@@ -103,7 +105,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     }
 
     @Override
-    public void onViewRecycled(EquinoxDatasetViewHolder holder)
+    public void onViewRecycled(@NonNull EquinoxDatasetViewHolder holder)
     {
         detachListeners(holder);
 

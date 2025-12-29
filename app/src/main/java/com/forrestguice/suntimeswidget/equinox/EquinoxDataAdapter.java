@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     @SuppressLint("UseSparseArrays")
     private HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
 
+    @NonNull
     @Override
     public EquinoxDataViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -107,7 +109,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @Override
-    public void onViewRecycled(EquinoxDataViewHolder holder)
+    public void onViewRecycled(@NonNull EquinoxDataViewHolder holder)
     {
         detachListeners(holder);
         if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
@@ -118,7 +120,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @Override
-    public void onBindViewHolder(EquinoxDataViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull EquinoxDataViewHolder holder, int position)
     {
         Context context = contextRef.get();
         if (context == null) {

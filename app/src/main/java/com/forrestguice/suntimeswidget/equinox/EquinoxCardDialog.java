@@ -924,7 +924,7 @@ public class EquinoxCardDialog extends BottomSheetDialogFragment
             marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
         }
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             outRect.left = outRect.right = marginPx;
             outRect.top = outRect.bottom = 0;
         }

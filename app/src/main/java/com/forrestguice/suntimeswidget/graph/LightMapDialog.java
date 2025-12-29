@@ -1376,7 +1376,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle state ) {
+    public void onSaveInstanceState( @NonNull Bundle state ) {
         lightmap.saveSettings(state);
         seekbar.saveSettings(state);
         seekbar1.saveSettings(state);

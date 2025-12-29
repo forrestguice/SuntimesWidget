@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -177,7 +178,7 @@ public class AboutActivity extends AppCompatActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view;
             switch (getArguments().getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP))

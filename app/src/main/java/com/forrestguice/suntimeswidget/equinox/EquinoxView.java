@@ -332,7 +332,7 @@ public class EquinoxView extends LinearLayout
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             int position = currentCardPosition();
             if (position >= 0) {
@@ -342,7 +342,7 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -729,6 +729,7 @@ public class EquinoxView extends LinearLayout
             this.options = options;
         }
 
+        @NonNull
         @Override
         public EquinoxViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -738,7 +739,7 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(EquinoxViewHolder holder, int position)
+        public void onBindViewHolder(@NonNull EquinoxViewHolder holder, int position)
         {
             Context context = (contextRef != null ? contextRef.get() : null);
             if (context == null) {
@@ -772,7 +773,7 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(EquinoxViewHolder holder)
+        public void onViewRecycled(@NonNull EquinoxViewHolder holder)
         {
             detachListeners(holder);
 

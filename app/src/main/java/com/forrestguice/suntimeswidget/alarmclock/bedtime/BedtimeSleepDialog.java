@@ -178,7 +178,7 @@ public class BedtimeSleepDialog extends DialogFragment
     };
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);

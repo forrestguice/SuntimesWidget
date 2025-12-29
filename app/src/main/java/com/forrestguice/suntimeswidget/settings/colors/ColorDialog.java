@@ -215,7 +215,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     };
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_COLOR, getColor());

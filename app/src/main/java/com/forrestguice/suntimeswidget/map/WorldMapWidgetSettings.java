@@ -230,7 +230,7 @@ public class WorldMapWidgetSettings
         }
 
         public String getProj4() {
-            return String.format(proj4String, center);
+            return getProj4(center);
         }
         public String getProj4(double[] center) {
             return String.format(proj4String, center[0], center[1]);

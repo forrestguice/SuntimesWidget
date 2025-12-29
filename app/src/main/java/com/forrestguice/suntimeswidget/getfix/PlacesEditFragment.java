@@ -347,7 +347,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
         Integer appTheme = getDialogThemeOverride();
         View view = ((appTheme != null) ? inflater.cloneInContext(new ContextThemeWrapper(getActivity(), appTheme)).inflate(R.layout.layout_dialog_place, parent, false)

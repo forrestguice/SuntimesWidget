@@ -277,7 +277,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
      * @param outState
      */
     @Override
-    public void onSaveInstanceState(Bundle outState)
+    public void onSaveInstanceState(@NonNull Bundle outState)
     {
         //Log.d("DEBUG", "TimeZoneDialog onSaveInstanceState");
         saveSettings(outState);

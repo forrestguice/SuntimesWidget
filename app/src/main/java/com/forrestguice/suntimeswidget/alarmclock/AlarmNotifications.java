@@ -901,7 +901,6 @@ public class AlarmNotifications extends BroadcastReceiver
         };
     }
 
-    @NonNull
     private static void startFadeIn(Context context, @Nullable MediaPlayer player, final long duration)
     {
         if (player != null)

@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
@@ -288,7 +289,7 @@ public class EquinoxCardView extends LinearLayout
     private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             int current = currentCardPosition();
             if (current >= 0) {
@@ -298,7 +299,7 @@ public class EquinoxCardView extends LinearLayout
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -327,7 +328,7 @@ public class EquinoxCardView extends LinearLayout
         public CardViewDecorator( Context context ) {
         }
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             outRect.left = outRect.right = outRect.top = outRect.bottom = 0;
         }
     }

@@ -204,7 +204,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         equinoxView.saveState(outState);
         outState.putInt("overrideColumnWidthPx", overrideColumnWidthPx);

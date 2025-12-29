@@ -178,7 +178,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle state )
+    public void onSaveInstanceState( @NonNull Bundle state )
     {
         worldmap.saveSettings(state);
     }

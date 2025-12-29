@@ -130,7 +130,7 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -279,12 +279,12 @@ public class BedtimeDialog extends DialogFragment
         private int lastCompletelyVisibleItemPosition;
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
         }
 
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             if (listener != null)
             {

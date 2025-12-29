@@ -1486,6 +1486,7 @@ public class PlacesListFragment extends Fragment
             return indexOf(selectedRowID[0]);
         }
 
+        @NonNull
         @Override
         public PlacesListViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -1504,7 +1505,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public void onViewRecycled(PlacesListViewHolder holder)
+        public void onViewRecycled(@NonNull PlacesListViewHolder holder)
         {
             detachClickListeners(holder);
             holder.unbindViewHolder();

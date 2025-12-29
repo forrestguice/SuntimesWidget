@@ -208,7 +208,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      * @param holder
      */
     @Override
-    public void onViewRecycled(CardViewHolder holder)
+    public void onViewRecycled(@NonNull CardViewHolder holder)
     {
         detachClickListeners(holder);
         if (holder.position >= 0 && (holder.position < TODAY_POSITION - 1 || holder.position > TODAY_POSITION + 2)) {
@@ -223,6 +223,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      * @param viewType
      * @return
      */
+    @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -237,7 +238,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      * @param position
      */
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull CardViewHolder holder, int position)
     {
         Context context = (contextRef != null ? contextRef.get() : null);
         if (context == null) {
@@ -253,14 +254,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     @Override
-    public void onViewAttachedToWindow(CardViewHolder holder)
+    public void onViewAttachedToWindow(@NonNull CardViewHolder holder)
     {
         super.onViewAttachedToWindow(holder);
         holder.startUpdateTask();
     }
 
     @Override
-    public void onViewDetachedFromWindow(CardViewHolder holder)
+    public void onViewDetachedFromWindow(@NonNull CardViewHolder holder)
     {
         super.onViewDetachedFromWindow(holder);
         holder.stopUpdateTask();
@@ -565,7 +566,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state)
         {
             outRect.left = outRect.right = marginPx;
             outRect.top = outRect.bottom = 0;

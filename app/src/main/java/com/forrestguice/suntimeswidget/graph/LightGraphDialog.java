@@ -620,7 +620,7 @@ public class LightGraphDialog extends BottomSheetDialogFragment
     private boolean updateTask_isRunning = false;
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //outState.putInt("currentCardPosition", currentCardPosition());
         super.onSaveInstanceState(outState);

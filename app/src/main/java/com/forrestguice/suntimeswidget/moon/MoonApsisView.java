@@ -159,7 +159,7 @@ public class MoonApsisView extends LinearLayout
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             int position = card_layout.findFirstVisibleItemPosition();
@@ -317,6 +317,7 @@ public class MoonApsisView extends LinearLayout
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
         public MoonApsisField onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -326,7 +327,7 @@ public class MoonApsisView extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(MoonApsisField holder)
+        public void onViewRecycled(@NonNull MoonApsisField holder)
         {
             detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
@@ -336,7 +337,7 @@ public class MoonApsisView extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(MoonApsisField holder, int position)
+        public void onBindViewHolder(@NonNull MoonApsisField holder, int position)
         {
             Context context = contextRef.get();
             if (context == null) {

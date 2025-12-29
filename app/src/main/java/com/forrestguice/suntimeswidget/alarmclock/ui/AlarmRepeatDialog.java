@@ -141,7 +141,7 @@ public class AlarmRepeatDialog extends DialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
         saveSettings(outState);
