@@ -581,7 +581,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         }
 
         ArrayList<Integer> widgetIds = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             widgetIds.addAll(SuntimesBackupTask.getAllWidgetIds(context, widgetClass));
         }
         widgetIds.add(0);

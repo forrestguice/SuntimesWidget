@@ -450,7 +450,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     protected static ArrayList<Integer> getAllWidgetIds(Context context)
     {
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             ids.addAll(getAllWidgetIds(context, widgetClass));
         }
         ids.add(0);                                                    // include app config and quick settings tiles
@@ -459,7 +459,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ids.add(AlarmTileService.ALARMTILE_APPWIDGET_ID);
         return ids;
     }
-    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
+    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class<?> widgetClass)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();

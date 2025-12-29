@@ -431,7 +431,7 @@ public class WidgetSettings
         }
         return types;
     }
-    public static void putType(Map<String,Class> map, Class type, String... keys) {
+    public static void putType(Map<String,Class> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
