@@ -69,7 +69,10 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         super.initFromOther(other);
         this.timeMode = other.timeMode();
-        this.localizeHemisphere = other.localizeHemisphere;
+        this.localizeHemisphere = other.localizeHemisphere();
+        this.eventCalendarThisYear = other.eventCalendarThisYear();
+        this.eventCalendarLastYear = other.eventCalendarLastYear();
+        this.eventCalendarNextYear = other.eventCalendarNextYear();
     }
 
     /**

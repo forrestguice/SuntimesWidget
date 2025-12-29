@@ -287,9 +287,11 @@ public class SuntimesRiseSetData extends SuntimesData
     protected void initFromOther( SuntimesRiseSetData other, int layoutID )
     {
         initFromOther(other);
+        this.linked = null;
 
         this.layoutID = layoutID;
         this.compareMode = other.compareMode();
+        this.dataMode = other.dataMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
         this.fraction = other.fraction;

@@ -77,6 +77,7 @@ public class AlarmState implements Parcelable
     {
         this.rowID = other.rowID;
         this.state = other.state;
+        this.modified = false;
     }
 
     public AlarmState(ContentValues values)

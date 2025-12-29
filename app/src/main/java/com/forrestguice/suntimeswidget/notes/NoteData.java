@@ -61,6 +61,8 @@ public class NoteData
         this.iconColor2 = other.iconColor2;
         this.noteIconStroke = other.noteIconStroke;
         this.squareIcon = other.squareIcon;
+        this.time = other.time;
+        this.tomorrow = other.tomorrow;
     }
 
     @Override

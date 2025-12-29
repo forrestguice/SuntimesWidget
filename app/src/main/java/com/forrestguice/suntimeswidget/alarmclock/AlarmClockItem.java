@@ -104,6 +104,7 @@ public class AlarmClockItem implements Parcelable
 
         this.location = ((other.location != null) ? new Location(other.location) : null);
         this.event = other.event;
+        this.eventItem = null;
         this.timezone = other.timezone;
 
         this.vibrate = other.vibrate;
