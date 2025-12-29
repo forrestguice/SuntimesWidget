@@ -363,7 +363,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             {
                 public int compare(File file1, File file2)
                 {
-                    return Long.valueOf(file1.lastModified()).compareTo(file2.lastModified());
+                    return Long.compare(file1.lastModified(), file2.lastModified());
                 }
             });
 
