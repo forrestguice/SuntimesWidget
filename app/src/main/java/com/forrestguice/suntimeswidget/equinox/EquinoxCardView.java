@@ -346,7 +346,7 @@ public class EquinoxCardView extends LinearLayout
 
     /**
      * setTrackingMode
-     * @param mode
+     * @param mode mode
      */
     public void setTrackingMode(TrackingMode mode) {
         options.trackingMode = mode;
@@ -369,7 +369,7 @@ public class EquinoxCardView extends LinearLayout
 
     /**
      * setMinimized
-     * @param value
+     * @param value true minimized
      */
     public void setMinimized( boolean value ) {
         options.minimized = value;

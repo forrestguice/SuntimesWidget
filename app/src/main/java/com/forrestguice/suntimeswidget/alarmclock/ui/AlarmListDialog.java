@@ -522,7 +522,6 @@ public class AlarmListDialog extends DialogFragment
     /**
      * Add AlarmClockItem(s) to the alarms database.
      * @param items an array of one or more AlarmClockItem
-     * @return an array of added items (rowID updated)
      */
     public void addAlarm(final Context context, AlarmClockItem... items) {
         addAlarm(context, null, items);

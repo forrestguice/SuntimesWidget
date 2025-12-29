@@ -316,7 +316,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             //noinspection IfCanBeSwitch
             if (action.equals(ACTION_PREFS_GENERAL))
             {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
 
@@ -325,17 +324,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 initPref_alarms();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_locale);
                 initPref_locale();
 
             } else if (action.equals(ACTION_PREFS_UI)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_userinterface);
                 initPref_ui();
 
             } else if (action.equals(ACTION_PREFS_PLACES)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_places);
                 initPref_places();
 
@@ -350,7 +346,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             }
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
     }
@@ -566,7 +561,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         GeneralPrefsFragment.initPref_altitude(this, altitudePref);
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
-        //noinspection deprecation
         SummaryListPreference sunCalculatorPref = (SummaryListPreference)findPreference(key_sunCalc);
         if (sunCalculatorPref != null)
         {
@@ -575,7 +569,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
 
         String key_moonCalc = WidgetSettings.keyCalculatorModePref(0, "moon");
-        //noinspection deprecation
         SummaryListPreference moonCalculatorPref = (SummaryListPreference)findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
@@ -599,13 +592,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_places()
     {
-        //noinspection deprecation
         Preference managePlacesPref = findPreference("places_manage");
-        //noinspection deprecation
         Preference buildPlacesPref = findPreference("places_build");
-        //noinspection deprecation
         Preference clearPlacesPref = findPreference("places_clear");
-        //noinspection deprecation
         Preference exportPlacesPref = findPreference("places_export");
         placesPrefBase = new PlacesPrefsFragment.PlacesPrefsBase(this, managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
