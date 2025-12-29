@@ -323,7 +323,7 @@ public class SolarEventCalculator {
         }
 
         String minuteString = minutes.intValue() < 10 ? "0" + minutes.toPlainString() : minutes.toPlainString();
-        String hourString = (hour < 10) ? "0" + String.valueOf(hour) : String.valueOf(hour);
+        String hourString = (hour < 10) ? "0" + hour : String.valueOf(hour);
         return hourString + ":" + minuteString;
     }
 

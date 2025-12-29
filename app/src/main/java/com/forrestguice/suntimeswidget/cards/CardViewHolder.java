@@ -570,7 +570,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
      */
     private Pair<String,String> getCardLabel(Context context, int i, CardAdapter.CardAdapterOptions options)
     {
-        String dayOffset = ((i < 0) ? "-" : "+") + Integer.toString(Math.abs(i));
+        String dayOffset = ((i < 0) ? "-" : "+") + Math.abs(i);
         String label = context.getString(R.string.today);
         if (i == 1) {
             return new Pair<>(context.getString(R.string.tomorrow), null);
