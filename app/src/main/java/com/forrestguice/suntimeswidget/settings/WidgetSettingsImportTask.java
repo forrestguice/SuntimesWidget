@@ -150,6 +150,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            //noinspection CharsetObjectCanBeUsed
             JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
             reader.setLenient(true);
             try {
