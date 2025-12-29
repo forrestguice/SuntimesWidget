@@ -411,7 +411,7 @@ public class AlarmClockItem implements Parcelable
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
-            case ACTIONID_RESERVED: actionID2 = value; break;
+            case ACTIONID_RESERVED: actionID3 = value; break;
             case ACTIONID_REMINDER: actionID2 = value; break;
             case ACTIONID_DISMISS: actionID1 = value; break;
             case ACTIONID_MAIN: default: actionID0 = value; break;
