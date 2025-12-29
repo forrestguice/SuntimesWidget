@@ -53,15 +53,15 @@ public class TimeZonesTest0
     @Test
     public void test_timezone_apparentSolarTime_nullCalculator()
     {
-        TimeZone tz0 = new TimeZones.ApparentSolarTime(-112, "Apparent Solar Time (Test: no args)");
+        TimeZones.ApparentSolarTime tz0 = new TimeZones.ApparentSolarTime(-112, "Apparent Solar Time (Test: no args)");
         test_timezone(tz0, 16, 20, 0);
-        assertNull(((TimeZones.ApparentSolarTime) tz0).getCalculator());
+        assertNull(tz0.getCalculator());
         assertTrue(tz0.useDaylightTime());
         assertTrue(tz0.inDaylightTime(new Date()));
 
-        TimeZone tz1 = new TimeZones.ApparentSolarTime(-112, "Apparent Solar Time (Test: null calculator)", null);
+        TimeZones.ApparentSolarTime tz1 = new TimeZones.ApparentSolarTime(-112, "Apparent Solar Time (Test: null calculator)", null);
         test_timezone(tz1, 7, 30, 15);
-        assertNull(((TimeZones.ApparentSolarTime) tz1).getCalculator());
+        assertNull(tz1.getCalculator());
         assertTrue(tz1.useDaylightTime());
         assertTrue(tz1.inDaylightTime(new Date()));
     }
@@ -95,9 +95,9 @@ public class TimeZonesTest0
     {
         SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
         SuntimesCalculator calculator = factory.createCalculator(location, TimeZone.getDefault());
-        TimeZone timezone = new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), "Apparent Solar Time (Test: " + descriptor.getName() + ")", calculator);
+        TimeZones.ApparentSolarTime timezone = new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), "Apparent Solar Time (Test: " + descriptor.getName() + ")", calculator);
 
-        assertNotNull(((TimeZones.ApparentSolarTime) timezone).getCalculator());
+        assertNotNull(timezone.getCalculator());
         assertTrue(timezone.useDaylightTime());
         assertTrue(timezone.inDaylightTime(new Date()));
         test_timezone(timezone, hour, minute, second);

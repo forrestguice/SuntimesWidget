@@ -551,7 +551,7 @@ public class SuntimesNotes
 
         } else {
             boolean isRising = eventID.endsWith(ElevationEvent.SUFFIX_RISING);
-            String eventID0 = new String(eventID);
+            String eventID0 = eventID;
             if (eventID0.endsWith("_" + ElevationEvent.SUFFIX_RISING) ||
                 eventID0.endsWith("_" + ElevationEvent.SUFFIX_SETTING)) {
                 eventID0 = eventID0.substring(0, eventID0.lastIndexOf("_"));

@@ -66,7 +66,7 @@ public class GetFixTaskTest
         assertTrue(helper.getFix());
         assertTrue("gettingFix should return true", helper.gettingFix());
         assertTrue(waitForTask);
-        //noinspection ConstantConditions
+        //noinspection ConstantConditions,StatementWithEmptyBody
         while (waitForTask) {
             /* busy wait for completion */
         }

@@ -52,9 +52,9 @@ public final class SunElevationEvent extends ElevationEvent
         AngleDisplay utils = new AngleDisplay();
         String angle = utils.formatAsElevation(getAngle(), 1).toString();
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle.toString());
+            return offsetDisplay(context.getResources()) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle);
         } else {
-            return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.sunevent_title), angle.toString());
+            return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.sunevent_title), angle);
         }
     }
 
