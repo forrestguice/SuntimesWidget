@@ -26,7 +26,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
@@ -40,6 +39,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.support.app.AlertDialog;
 
 import org.json.JSONObject;
 

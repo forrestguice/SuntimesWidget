@@ -29,7 +29,6 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -40,6 +39,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -505,7 +505,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
                 });
 
-        final AlertDialog d = confirm.create();
+        final android.support.v7.app.AlertDialog d = confirm.create();
         d.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override

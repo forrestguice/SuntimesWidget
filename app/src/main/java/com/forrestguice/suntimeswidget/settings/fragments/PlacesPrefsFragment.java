@@ -39,7 +39,6 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.widget.HorizontalScrollView;
@@ -47,6 +46,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;

@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.support.app.AlertDialog;
 
 @TargetApi(11)
 public class AlarmOffsetDialog extends DialogBase
@@ -69,7 +69,7 @@ public class AlarmOffsetDialog extends DialogBase
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(myParent.getString(R.string.alarmoffset_dialog_title));
 
-        final AlertDialog dialog = builder.create();
+        final android.support.v7.app.AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),

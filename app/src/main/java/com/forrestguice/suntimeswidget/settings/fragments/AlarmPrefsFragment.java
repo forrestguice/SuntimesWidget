@@ -46,8 +46,9 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
+
+import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;

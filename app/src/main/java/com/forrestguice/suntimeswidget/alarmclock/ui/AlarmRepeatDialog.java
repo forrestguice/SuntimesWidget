@@ -26,7 +26,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.app.AlertDialog;
 
 import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
@@ -44,6 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -100,7 +100,7 @@ public class AlarmRepeatDialog extends DialogBase
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        android.support.v7.app.AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),

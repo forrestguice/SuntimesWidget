@@ -25,8 +25,9 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;

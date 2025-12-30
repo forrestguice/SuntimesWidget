@@ -21,13 +21,13 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.support.app.AlertDialog;
 
 public class ColorValuesFragment extends DialogBase
 {

@@ -22,13 +22,13 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.support.app.AlertDialog;
 
 @TargetApi(11)
 public class IntegerPickerDialog extends DialogBase
@@ -80,7 +80,7 @@ public class IntegerPickerDialog extends DialogBase
         dialog.setView(dialogView);
         helper.onBindDialogView(dialogView);
 
-        AlertDialog d = dialog.create();
+        android.support.v7.app.AlertDialog d = dialog.create();
         d.setCancelable(false);
         d.setCanceledOnTouchOutside(false);
         return d;
