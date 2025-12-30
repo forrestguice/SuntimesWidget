@@ -47,33 +47,33 @@
 
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
+        <com.forrestguice.support.widget.TabLayout
             android:id="@+id/color_pager_tabs" android:visibility="visible"
             android:layout_width="wrap_content" android:layout_height="match_parent"
             app:tabIndicatorHeight="2dp" app:tabGravity="center" app:tabPaddingEnd="10dp" app:tabPaddingStart="10dp"
             android:layout_gravity="end">
 
-            <android.support.design.widget.TabItem
+            <com.forrestguice.support.widget.TabItem
                 android:id="@+id/tabItem"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab1" />
 
-            <android.support.design.widget.TabItem
+            <com.forrestguice.support.widget.TabItem
                 android:id="@+id/tabItem2"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab2" />
 
-            <android.support.design.widget.TabItem
+            <com.forrestguice.support.widget.TabItem
                 android:id="@+id/tabItem3"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab3" />
 
-            <android.support.design.widget.TabItem
+            <com.forrestguice.support.widget.TabItem
                 android:id="@+id/tabItem4"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:text="@string/color_dialog_tab4" />
 
-        </android.support.design.widget.TabLayout>
+        </com.forrestguice.support.widget.TabLayout>
 
     </LinearLayout>
 
