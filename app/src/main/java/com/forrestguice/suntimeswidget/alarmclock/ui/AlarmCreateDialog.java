@@ -29,8 +29,6 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -747,24 +745,16 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         }
     }
 
+    protected int getPeekHeight() {
+        return (int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek);
+    }
+
     private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog)
         {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null)
-            {
-                final BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-                behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
-                layout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    }
-                }, AUTO_EXPAND_DELAY);
-            }
+            expandSheet(getDialog(), AUTO_EXPAND_DELAY);
 
             if (AppSettings.isTelevision(getActivity()))
             {

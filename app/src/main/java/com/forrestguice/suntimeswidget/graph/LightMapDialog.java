@@ -37,8 +37,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
@@ -270,29 +268,8 @@ public class LightMapDialog extends BottomSheetDialogBase
         updateViews();
     }
 
-    private void initPeekHeight(DialogInterface dialog)
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null)
-            {
-                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-                ViewGroup dialogLayout = (ViewGroup) bottomSheet.findViewById(R.id.dialog_lightmap_layout);
-                int resID = getResources().getBoolean(R.bool.is_watch) ? R.id.sundialog_gutter2 : R.id.media_actions;
-                View divider1 = bottomSheet.findViewById(resID);
-                if (dialogLayout != null && divider1 != null)
-                {
-                    Rect headerBounds = new Rect();
-                    divider1.getDrawingRect(headerBounds);
-                    dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
-
-                } else {
-                    behavior.setPeekHeight(-1);
-                }
-            }
-        }
+    protected int getPeekViewId() {
+        return getResources().getBoolean(R.bool.is_watch) ? R.id.sundialog_gutter2 : R.id.media_actions;
     }
 
     private final DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
@@ -304,7 +281,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             dialogTitle.post(new Runnable() {
                 @Override
                 public void run() {
-                    initPeekHeight(getDialog());
+                    ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
                 }
             });
 
@@ -725,7 +702,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                     graphView.post(new Runnable() {
                         @Override
                         public void run() {
-                            initPeekHeight(getDialog());
+                            ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
                         }
                     });
                     updateViews();

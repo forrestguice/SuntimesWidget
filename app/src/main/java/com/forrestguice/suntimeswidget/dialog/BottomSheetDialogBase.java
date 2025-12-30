@@ -18,14 +18,18 @@
 package com.forrestguice.suntimeswidget.dialog;
 
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
@@ -68,6 +72,28 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
             if (bottomSheet != null) {
                 bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
+        }
+    }
+
+    protected void expandSheet(final DialogInterface dialog, long afterDelay)
+    {
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(getSheetFrameId());
+        if (layout != null)
+        {
+            final BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
+            if (getPeekViewId() != 0) {
+                ViewUtils.initPeekHeight(dialog, getPeekViewId());
+            } else if (getPeekHeight() >= 0) {
+                behavior.setPeekHeight(getPeekHeight());
+            }
+
+            layout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    expandSheet(dialog);
+                }
+            }, afterDelay);
         }
     }
 
