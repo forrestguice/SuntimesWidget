@@ -43,7 +43,7 @@
         </com.forrestguice.support.widget.TabLayout>
     </com.forrestguice.support.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.forrestguice.support.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
