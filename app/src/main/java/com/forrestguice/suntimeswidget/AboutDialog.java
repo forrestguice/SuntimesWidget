@@ -29,7 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -43,7 +42,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -71,9 +69,9 @@ public class AboutDialog extends BottomSheetDialogBase
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
-                BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
-                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
+            public void onShow(DialogInterface dialog)
+            {
+                FrameLayout layout = getBottomSheetFrameLayout(dialog);
                 if (layout != null)
                 {
                     layout.post(new Runnable() {
