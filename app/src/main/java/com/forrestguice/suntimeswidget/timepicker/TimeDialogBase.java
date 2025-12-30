@@ -24,26 +24,23 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
-public abstract class TimeDialogBase extends BottomSheetDialogFragment
+public abstract class TimeDialogBase extends BottomSheetDialogBase
 {
     public static final String KEY_DIALOG_TITLE = "dialog_title";
     public static final String KEY_DIALOG_IS24 = "dialog_is24";
@@ -52,7 +49,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
     protected ImageButton acceptButton;
 
     public TimeDialogBase() {
-        setArguments(new Bundle());
+        super();
     }
 
     protected abstract int getDialogLayoutResID();
@@ -171,7 +168,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, getPeekViewID());
+            ViewUtils.initPeekHeight(dialog, getPeekViewId());
             if (onShowListener != null) {
                 onShowListener.onShow(dialog);
             }
@@ -226,35 +223,9 @@ public abstract class TimeDialogBase extends BottomSheetDialogFragment
         }
     }
 
-    protected int getPeekViewID() {
+    @Override
+    protected int getPeekViewId() {
         return R.id.dialog_footer;
-    }
-    protected void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
-    @NonNull
-    public Bundle getArgs()
-    {
-        Bundle args = getArguments();
-        Bundle retValue = args;
-        if (args == null) {
-            setArguments(retValue = new Bundle());
-        }
-        return retValue;
     }
 
     public void setTimeIs24(boolean is24) {
