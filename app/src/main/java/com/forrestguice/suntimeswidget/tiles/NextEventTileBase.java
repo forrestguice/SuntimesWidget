@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
@@ -172,7 +171,7 @@ public class NextEventTileBase extends SuntimesTileBase
             TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
             int colorId = a.getResourceId(nextEvent.isRising() ? 0 : 1, R.color.text_primary);
             a.recycle();
-            DrawableCompat.setTint(d, ContextCompat.getColor(context, colorId));
+            ContextCompat.setTint(d, ContextCompat.getColor(context, colorId));
         }
         return d;
     }

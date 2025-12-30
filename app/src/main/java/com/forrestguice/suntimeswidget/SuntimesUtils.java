@@ -35,7 +35,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -1549,9 +1548,9 @@ public class SuntimesUtils
     {
         if (d != null)
         {
-            Drawable tinted = DrawableCompat.wrap(d.mutate());
-            DrawableCompat.setTint(tinted, color);
-            DrawableCompat.setTintMode(tinted, PorterDuff.Mode.SRC_IN);
+            Drawable tinted = ContextCompat.wrap(d.mutate());
+            ContextCompat.setTint(tinted, color);
+            ContextCompat.setTintMode(tinted, PorterDuff.Mode.SRC_IN);
             return tinted;
         } else return null;
     }

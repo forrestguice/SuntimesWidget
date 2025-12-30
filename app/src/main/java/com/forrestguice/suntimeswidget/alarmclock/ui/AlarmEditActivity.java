@@ -34,7 +34,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -554,7 +553,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item, Calendar.getInstance(), false));
             if (Build.VERSION.SDK_INT >= 21) {
-                DrawableCompat.setTint(enableItem.getIcon().mutate(), colorAlarmEnabled);
+                ContextCompat.setTint(enableItem.getIcon().mutate(), colorAlarmEnabled);
             } else {
                 enableItem.getIcon().mutate().setColorFilter(colorAlarmEnabled, PorterDuff.Mode.SRC_IN);
             }
@@ -564,7 +563,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
         if (saveItem != null) {
             if (Build.VERSION.SDK_INT >= 21) {
-                DrawableCompat.setTint(saveItem.getIcon().mutate(), (alarmEnabled) ? colorAlarmEnabled : colorEnabled);
+                ContextCompat.setTint(saveItem.getIcon().mutate(), (alarmEnabled) ? colorAlarmEnabled : colorEnabled);
             } else {
                 saveItem.getIcon().mutate().setColorFilter((alarmEnabled) ? colorAlarmEnabled : colorEnabled, PorterDuff.Mode.SRC_IN);
             }

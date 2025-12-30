@@ -30,7 +30,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -358,8 +357,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
-                        DrawableCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
+                        Drawable d = ContextCompat.wrap(getCompoundDrawableStart(context, text_label));
+                        ContextCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
                     }
                     if (text_time != null) {
                         text_time.setText(timeText.getValue());
@@ -401,8 +400,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     setCardBackground(context, cardBgOff);
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
-                        DrawableCompat.setTint(d, colorOff);
+                        Drawable d = ContextCompat.wrap(getCompoundDrawableStart(context, text_label));
+                        ContextCompat.setTint(d, colorOff);
                     }
                     if (text_time_layout != null) {
                         text_time_layout.setVisibility(View.GONE);

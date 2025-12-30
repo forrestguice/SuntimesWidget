@@ -27,7 +27,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -250,8 +249,8 @@ public class EventIcons
     public static void tintDrawable(Drawable d, int color)
     {
         if (Build.VERSION.SDK_INT >= 21) {
-            DrawableCompat.setTint(d, color);
-            DrawableCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
+            ContextCompat.setTint(d, color);
+            ContextCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
         } else {
             d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
