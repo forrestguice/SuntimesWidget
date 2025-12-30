@@ -18,18 +18,14 @@
 package com.forrestguice.suntimeswidget.dialog;
 
 import android.content.DialogInterface;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment

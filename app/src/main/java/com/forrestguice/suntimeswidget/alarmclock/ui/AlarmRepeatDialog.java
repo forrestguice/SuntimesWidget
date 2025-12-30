@@ -30,7 +30,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
-import com.forrestguice.support.widget.Switch;
 
 import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
