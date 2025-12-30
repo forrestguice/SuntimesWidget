@@ -24,7 +24,7 @@
 
         <android.support.v7.widget.RecyclerView android:id="@+id/moonphases_card"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:layoutManager="@string/layoutManager_LinearLayoutManager"
             tools:itemCount="4" tools:orientation="horizontal"
             tools:listitem="@layout/info_time_moonphase" />
 
