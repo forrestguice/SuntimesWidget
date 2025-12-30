@@ -32,10 +32,11 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.SeekBar;
 
 import java.util.Calendar;
 
-public class LightMapSeekbar extends android.support.v7.widget.AppCompatSeekBar
+public class LightMapSeekbar extends SeekBar
 {
     public static final String TAG = LightMapSeekbar.class.getSimpleName();
 

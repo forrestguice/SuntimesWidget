@@ -28,15 +28,15 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.widget.SeekBar;
 
-public class WorldMapSeekBar extends AppCompatSeekBar
+public class WorldMapSeekBar extends SeekBar
 {
     private Drawable majorTick, minorTick, centerTick;
 
