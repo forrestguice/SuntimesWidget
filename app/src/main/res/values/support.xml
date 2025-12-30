@@ -2,6 +2,10 @@
 <resources>
     <string name="layoutManager_LinearLayoutManager">android.support.v7.widget.LinearLayoutManager</string>
     <string name="layoutManager_GridLayoutManager">android.support.v7.widget.GridLayoutManager</string>
+
     <string name="layoutBehavior_BottomSheetBehavior">android.support.design.widget.BottomSheetBehavior</string>
+
     <string name="actionViewClass_SearchView">android.support.v7.widget.SearchView</string>
+    <string name="supportClass_UiAutomator">android.support.test.uiautomator.v18</string>
+
 </resources>
