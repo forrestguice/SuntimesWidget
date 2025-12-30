@@ -21,11 +21,11 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.AppCompatActivity;
 
 public class SuntimesLaunchActivity extends AppCompatActivity
 {

@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -59,6 +58,7 @@ import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.HashMap;

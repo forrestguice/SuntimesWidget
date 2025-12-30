@@ -24,13 +24,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
+import com.forrestguice.support.app.AppCompatActivity;
 
 /**
  * This activity can be used to pick a color:

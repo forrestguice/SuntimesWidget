@@ -22,11 +22,11 @@ import android.app.Dialog;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.AppCompatActivity;
 
 /**
  * SuntimesTileActivity; displays a "tile dialog" over the lock screen.

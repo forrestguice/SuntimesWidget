@@ -73,7 +73,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
 import com.forrestguice.annotation.NonNull;
@@ -139,6 +138,7 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
+import com.forrestguice.support.app.AppCompatActivity;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

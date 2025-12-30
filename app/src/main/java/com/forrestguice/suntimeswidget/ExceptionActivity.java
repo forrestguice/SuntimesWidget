@@ -22,13 +22,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.app.AppCompatActivity;
 
 public class ExceptionActivity extends AppCompatActivity
 {
