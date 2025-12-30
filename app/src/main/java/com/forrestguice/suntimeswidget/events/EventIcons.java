@@ -26,7 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.forrestguice.annotation.NonNull;

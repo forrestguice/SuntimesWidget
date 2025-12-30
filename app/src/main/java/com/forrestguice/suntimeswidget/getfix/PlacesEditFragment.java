@@ -32,7 +32,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;

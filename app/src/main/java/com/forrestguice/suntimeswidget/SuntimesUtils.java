@@ -34,7 +34,7 @@ import android.graphics.drawable.InsetDrawable;
 
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;

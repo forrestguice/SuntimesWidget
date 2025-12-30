@@ -19,7 +19,7 @@
 package com.forrestguice.util.android;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.util.res.TypedArray;
 

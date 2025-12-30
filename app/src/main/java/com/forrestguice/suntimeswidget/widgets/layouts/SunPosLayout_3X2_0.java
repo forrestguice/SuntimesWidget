@@ -24,7 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
