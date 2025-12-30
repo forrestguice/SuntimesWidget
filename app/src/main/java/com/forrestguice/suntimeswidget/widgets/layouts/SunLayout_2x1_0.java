@@ -23,7 +23,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -35,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 public class SunLayout_2x1_0 extends SunLayout
@@ -133,15 +133,15 @@ public class SunLayout_2x1_0 extends SunLayout
             //views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
             //views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
 
-            Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseColor);
+            Drawable d1 = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseColor);
             views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-            Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
+            Drawable d2 = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
             views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
             int noonIconSizeDp = (int)(adjustedSizeSp[2] * 0.85);
             if (noonIconSizeDp > 24) {
-                Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+                Drawable d3 = ContextCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
                 views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, noonIconSizeDp, noonIconSizeDp, false));
             }
         }
@@ -242,7 +242,7 @@ public class SunLayout_2x1_0 extends SunLayout
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
         Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));   // doesn't call mutate (themes other Drawable instances)
-        Drawable noonDrawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);    // specify 24x24 icon (intrinsic height used by layerDrawableToBitmap is wrong)
+        Drawable noonDrawable = ContextCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);    // specify 24x24 icon (intrinsic height used by layerDrawableToBitmap is wrong)
         views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, noonDrawable, 24, 24, false));
 
         Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));

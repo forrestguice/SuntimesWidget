@@ -27,7 +27,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 
 import com.forrestguice.annotation.Nullable;
@@ -763,7 +762,7 @@ public class WidgetThemePreview
         ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
         if (previewNoonIcon != null) {
             Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels);   // doesn't call mutate (themes other Drawable instances)
-            Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+            Drawable d = ContextCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
             previewNoonIcon.setImageDrawable(d);
         }
     }

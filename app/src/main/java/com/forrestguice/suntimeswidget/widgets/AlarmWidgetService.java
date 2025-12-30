@@ -26,7 +26,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -45,6 +44,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -196,7 +196,7 @@ public class AlarmWidgetService extends RemoteViewsService
             view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SuntimesUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
 
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
-            Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
+            Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
             view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));

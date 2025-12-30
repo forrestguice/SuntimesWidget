@@ -22,7 +22,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -38,6 +37,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.util.Calendar;
 
@@ -96,7 +96,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     protected void updateIconView(Context context, RemoteViews views, int appWidgetId, AlarmClockItem item)
     {
         boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
-        Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
+        Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
         views.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)timeSizeSp, (int)timeSizeSp, false));
         views.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
         views.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));

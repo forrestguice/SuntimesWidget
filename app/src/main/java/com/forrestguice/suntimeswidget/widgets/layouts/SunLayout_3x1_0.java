@@ -20,13 +20,13 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.support.content.ContextCompat;
 
 public class SunLayout_3x1_0 extends SunLayout_2x1_0
 {
@@ -72,7 +72,7 @@ public class SunLayout_3x1_0 extends SunLayout_2x1_0
     public void scaleViews(Context context, int appWidgetId, RemoteViews views, float[] adjustedSizeSp)
     {
         super.scaleViews(context, appWidgetId, views, adjustedSizeSp);
-        Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+        Drawable d = ContextCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
         views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2], false));
         //Log.d("DEBUG", "scaleViews: " + adjustedSizeSp[2]);
     }

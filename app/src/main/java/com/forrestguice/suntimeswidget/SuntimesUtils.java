@@ -35,7 +35,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.text.Spannable;
@@ -1432,7 +1431,7 @@ public class SuntimesUtils
 
     public static Bitmap drawableToBitmap(Context context, int resourceID, int w, int h, boolean pxValues)
     {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        Drawable drawable = ContextCompat.getDrawable(context.getResources(), resourceID, null);
         return drawableToBitmap(context, drawable, w, h, pxValues);
     }
 
@@ -1446,7 +1445,7 @@ public class SuntimesUtils
      */
     public static Bitmap gradientDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        Drawable drawable = ContextCompat.getDrawable(context.getResources(), resourceID, null);
         GradientDrawable gradient = (GradientDrawable)drawable;
 
         int w = 1, h = 1;
@@ -1472,7 +1471,7 @@ public class SuntimesUtils
     @Deprecated
     public static Bitmap insetDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        Drawable drawable = ContextCompat.getDrawable(context.getResources(), resourceID, null);
         InsetDrawable inset = (InsetDrawable)drawable;
 
         int w = 1, h = 1;
@@ -1506,7 +1505,7 @@ public class SuntimesUtils
      */
     public static Bitmap layerDrawableToBitmap(Context context, int resourceID, int fillColor, int strokeColor, int strokePx)
     {
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), resourceID, null);
+        Drawable drawable = ContextCompat.getDrawable(context.getResources(), resourceID, null);
         LayerDrawable layers = (LayerDrawable)drawable;
 
         int w = 1, h = 1;

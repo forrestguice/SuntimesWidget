@@ -22,7 +22,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.View;
@@ -37,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.text.NumberFormat;
@@ -132,10 +132,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
 
                     views.setViewPadding(R.id.text_info_moonillum, (int)scaledPadding/2, 0, (int)scaledPadding, 0);
 
-                    Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
+                    Drawable d1 = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
                     views.setImageViewBitmap(R.id.icon_time_moonrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
+                    Drawable d2 = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
                     views.setImageViewBitmap(R.id.icon_time_moonset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
                     // TODO: scale moonphase icon
