@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -169,8 +168,7 @@ public class BedtimeDialog extends DialogBase
 
     protected void restoreDialogs(Context context)
     {
-        FragmentManager fragments = getChildFragmentManager();
-        AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
+        AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(DIALOG_ADD_ALARM);
         if (addAlarmDialog != null)
         {
             int position = adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM);
@@ -178,17 +176,17 @@ public class BedtimeDialog extends DialogBase
             addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
         }
 
-        TimeOffsetPickerDialog sleepOffsetDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_OFFSET);
+        TimeOffsetPickerDialog sleepOffsetDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_OFFSET);
         if (sleepOffsetDialog != null) {
             sleepOffsetDialog.setDialogListener(onSleepOffsetDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
 
-        TimeOffsetPickerDialog sleepCycleDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLE);
+        TimeOffsetPickerDialog sleepCycleDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLE);
         if (sleepCycleDialog != null) {
             sleepCycleDialog.setDialogListener(onSleepCycleDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
 
-        BedtimeSleepDialog sleepDialog = (BedtimeSleepDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLES);
+        BedtimeSleepDialog sleepDialog = (BedtimeSleepDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLES);
         if (sleepDialog != null) {
             sleepDialog.setOnAcceptedListener(onSleepCyclesDialogAccepted(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
@@ -560,8 +558,6 @@ public class BedtimeDialog extends DialogBase
     private static final String DIALOG_SLEEP_CYCLE = "dialog_sleep_cycle";
     protected void showConfigureSleepCycleDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
-
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
         dialog.setRange(getResources().getInteger(R.integer.minSleepCycleMillis),
@@ -570,7 +566,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setDialogListener(onSleepCycleDialogListener(item));
         dialog.setDialogTitle(getString(R.string.configLabel_sleepCycle));
         dialog.setRestoreDefault(getString(R.string.configAction_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
-        dialog.show(fragments, DIALOG_SLEEP_CYCLE);
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLE);
     }
 
     private TimeOffsetPickerDialog.DialogListener onSleepCycleDialogListener(final BedtimeItem item)
@@ -597,12 +593,11 @@ public class BedtimeDialog extends DialogBase
     private static final String DIALOG_SLEEP_CYCLES = "dialog_sleep_cycles";
     protected void showConfigureSleepCyclesDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
         final BedtimeSleepDialog dialog = new BedtimeSleepDialog();
         dialog.setNumCycles(BedtimeSettings.loadPrefSleepCycleCount(context));
         dialog.setDialogTitle(getString(R.string.configLabel_sleepCycles));
         dialog.setOnAcceptedListener(onSleepCyclesDialogAccepted(item));
-        dialog.show(fragments, DIALOG_SLEEP_CYCLES);
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLES);
     }
 
     private DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
@@ -612,8 +607,7 @@ public class BedtimeDialog extends DialogBase
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                final BedtimeSleepDialog dialog = (BedtimeSleepDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLES);
+                final BedtimeSleepDialog dialog = (BedtimeSleepDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLES);
                 if (dialog != null)
                 {
                     BedtimeSettings.savePrefSleepCycleCount(getActivity(), dialog.getNumCycles());
@@ -636,7 +630,6 @@ public class BedtimeDialog extends DialogBase
 
     protected void showConfigureSleepOffsetDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
         dialog.setRange(getResources().getInteger(R.integer.minFallAsleepMillis),
@@ -645,7 +638,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setDialogListener(onSleepOffsetDialogListener(item));
         dialog.setDialogTitle(getString(R.string.configLabel_sleepOffset));
         dialog.setZeroText(getString(R.string.cycleNone));
-        dialog.show(fragments, DIALOG_SLEEP_OFFSET);
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_OFFSET);
     }
 
     private TimeOffsetPickerDialog.DialogListener onSleepOffsetDialogListener(final BedtimeItem item)
@@ -1099,7 +1092,6 @@ public class BedtimeDialog extends DialogBase
     protected void showAddBedtimeDialog(final Context context, View v, BedtimeItem item)
     {
         AlarmCreateDialog dialog = new AlarmCreateDialog();
-        FragmentManager fragments = getChildFragmentManager();
 
         dialog.setAlarmTime(22, 30, null);    // TODO: default bedtime
         dialog.setShowTabs(false);            // hide solar events tab
@@ -1112,7 +1104,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setAlarmType(AlarmClockItem.AlarmType.NOTIFICATION1);    // restrict type to notification
 
         dialog.setOnAcceptedListener(onAddBedtimeDialogAccept(DIALOG_ADD_BEDTIME, BedtimeSettings.SLOT_BEDTIME_NOTIFY, item));
-        dialog.show(fragments, DIALOG_ADD_BEDTIME);
+        dialog.show(getChildFragmentManager(), DIALOG_ADD_BEDTIME);
     }
 
     private DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
@@ -1122,8 +1114,7 @@ public class BedtimeDialog extends DialogBase
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
+                AlarmCreateDialog dialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(dialogTag);
                 if (dialog != null && getActivity() != null)
                 {
                     //AlarmClockItem alarmItem = BedtimeAlarmHelper.createBedtimeEventItem(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
@@ -1190,7 +1181,6 @@ public class BedtimeDialog extends DialogBase
     protected void showAddAlarmDialog(final Context context, BedtimeItem item)
     {
         AlarmCreateDialog dialog = new AlarmCreateDialog();
-        FragmentManager fragments = getChildFragmentManager();
 
         dialog.setShowTimePreview(false);           // hide time preview
         dialog.setShowDateSelectButton(false);      // hide date selection
@@ -1202,7 +1192,7 @@ public class BedtimeDialog extends DialogBase
         // TODO: locked/disabled events
 
         dialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
-        dialog.show(fragments, DIALOG_ADD_ALARM);
+        dialog.show(getChildFragmentManager(), DIALOG_ADD_ALARM);
     }
 
     private DialogInterface.OnClickListener onAddAlarmDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
@@ -1212,8 +1202,7 @@ public class BedtimeDialog extends DialogBase
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                final AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
+                final AlarmCreateDialog dialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(dialogTag);
                 if (dialog != null) {
                     onAddAlarmDialogAccept(dialog, slot, item, null);
                 }

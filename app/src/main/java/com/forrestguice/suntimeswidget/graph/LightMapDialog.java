@@ -34,7 +34,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
@@ -227,8 +226,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         expandSheet(getDialog());
 
         Context context = getActivity();
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null && context != null)
         {
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
@@ -238,17 +236,17 @@ public class LightMapDialog extends BottomSheetDialogBase
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        DateDialog dateDialog = (DateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        DateDialog dateDialog = (DateDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null) {
             dateDialog.setOnAcceptedListener(onSeekDateDialogAccepted(dateDialog));
         }
 
-        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        TimeDialog timeDialog = (TimeDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
         if (timeDialog != null) {
             timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }

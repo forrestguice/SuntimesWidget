@@ -26,7 +26,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.PopupMenu;
@@ -914,8 +913,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }

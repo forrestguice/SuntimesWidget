@@ -34,7 +34,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 
@@ -1590,8 +1589,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         super.onResume();
 
         Context context = getActivity();
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
             boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
@@ -1601,7 +1599,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        TimeDateDialog timeDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        TimeDateDialog timeDialog = (TimeDateDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
         if (timeDialog != null) {
             timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }

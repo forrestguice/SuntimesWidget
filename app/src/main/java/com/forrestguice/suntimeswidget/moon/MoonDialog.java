@@ -29,7 +29,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
@@ -183,8 +182,7 @@ public class MoonDialog extends BottomSheetDialogBase
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
             boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
@@ -194,12 +192,12 @@ public class MoonDialog extends BottomSheetDialogBase
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        TimeDialog timeDialog = (TimeDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
         if (timeDialog != null) {
             timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
         }

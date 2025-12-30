@@ -33,7 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -123,8 +122,7 @@ public class PlacesListFragment extends DialogBase
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment editDialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment editDialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
@@ -717,8 +715,7 @@ public class PlacesListFragment extends DialogBase
 
     protected void dismissEditPlaceDialog()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        PlacesEditFragment dialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        PlacesEditFragment dialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
         if (dialog != null) {
             dialog.dismiss();
         }

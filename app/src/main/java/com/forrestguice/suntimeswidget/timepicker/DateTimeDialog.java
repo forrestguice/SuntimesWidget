@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget.timepicker;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.forrestguice.annotation.Nullable;
@@ -50,8 +49,7 @@ public class DateTimeDialog extends DateDialog
     public void onResume()
     {
         super.onResume();
-        FragmentManager fragments = getChildFragmentManager();
-        TimeDialog timeDialog = (TimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
+        TimeDialog timeDialog = (TimeDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
         if (timeDialog != null) {
             timeDialog.setOnAcceptedListener(onTimeDialogAccepted(timeDialog));
         }

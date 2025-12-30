@@ -23,7 +23,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -229,8 +228,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
         editViewModel.setShowAlpha(getShowAlpha());
 
-        FragmentManager fragments = getChildFragmentManager();
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getChildFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
@@ -241,10 +239,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = fragments.beginTransaction();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
             transaction.commit();
-            fragments.executePendingTransactions();
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 

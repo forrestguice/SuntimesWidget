@@ -31,7 +31,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.annotation.NonNull;
@@ -319,8 +318,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     public void onResume()
     {
         super.onResume();
-        FragmentManager fragments = getChildFragmentManager();
-        MapCoordinateDialog mapDialog = (MapCoordinateDialog) fragments.findFragmentByTag(DIALOGTAG_MAP);
+        MapCoordinateDialog mapDialog = (MapCoordinateDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_MAP);
         if (mapDialog != null) {
             mapDialog.setColorCollection(new WorldMapColorValuesCollection<>(getActivity()));
             mapDialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(mapDialog));

@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -648,8 +647,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void onDialogAccepted(long value)
         {
-            FragmentManager fragments = getChildFragmentManager();
-            TimeOffsetPickerDialog offsetDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            TimeOffsetPickerDialog offsetDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
             if (offsetDialog != null)
             {
                 int offset = (int) value;

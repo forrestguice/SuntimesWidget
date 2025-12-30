@@ -23,7 +23,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -246,40 +245,29 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
-        {
-            FragmentTransaction transaction = fragments.beginTransaction();
-            SolsticeWidget0ConfigFragment fragment = new SolsticeWidget0ConfigFragment();
-            fragment.setDialogListener(moreGeneralSettingsListener);
-            loadMoreGeneralSettings(context, fragment);
-            transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
-            transaction.commit();
-        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        SolsticeWidget0ConfigFragment fragment = new SolsticeWidget0ConfigFragment();
+        fragment.setDialogListener(moreGeneralSettingsListener);
+        loadMoreGeneralSettings(context, fragment);
+        transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
+        transaction.commit();
     }
 
     @Override
     protected void saveMoreGeneralSettings(final Context context, int appWidgetId)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
+        SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+        if (fragment != null)
         {
-            SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
-            if (fragment != null)
-            {
-                boolean showCrossQuarter = fragment.getWidgetBool(PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);
-                SolsticeWidgetSettings.saveWidgetValue(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, showCrossQuarter);
-            }
+            boolean showCrossQuarter = fragment.getWidgetBool(PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER);
+            SolsticeWidgetSettings.saveWidgetValue(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER, showCrossQuarter);
         }
     }
 
     @Override
     protected void loadMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            loadMoreGeneralSettings(context, (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
-        }
+        loadMoreGeneralSettings(context, (SolsticeWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
     }
 
     protected void loadMoreGeneralSettings(final Context context, @Nullable SolsticeWidget0ConfigFragment fragment)
@@ -308,12 +296,9 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         super.onResume();
 
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
-            if (fragment != null) {
-                fragment.setDialogListener(moreGeneralSettingsListener);
-            }
+        SolsticeWidget0ConfigFragment fragment = (SolsticeWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+        if (fragment != null) {
+            fragment.setDialogListener(moreGeneralSettingsListener);
         }
     }
 
