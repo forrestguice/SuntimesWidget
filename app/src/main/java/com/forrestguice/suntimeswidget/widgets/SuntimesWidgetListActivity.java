@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
@@ -41,6 +40,7 @@ import android.widget.ListView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
@@ -160,8 +160,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         super.onResume();
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesWidgetListActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }

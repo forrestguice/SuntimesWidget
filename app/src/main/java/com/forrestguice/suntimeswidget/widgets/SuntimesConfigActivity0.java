@@ -43,7 +43,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import android.support.design.widget.Snackbar;
-import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -76,6 +75,7 @@ import android.support.v7.view.ActionMode;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;

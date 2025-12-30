@@ -29,10 +29,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.Preference;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
+
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
