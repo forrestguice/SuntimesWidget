@@ -29,10 +29,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.FileProvider;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
