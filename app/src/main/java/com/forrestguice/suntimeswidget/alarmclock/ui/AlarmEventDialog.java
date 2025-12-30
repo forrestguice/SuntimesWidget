@@ -784,6 +784,15 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         expandSheet(getDialog());
     }
 
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return true;
+    }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return true;
+    }
+
     private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
@@ -826,22 +835,5 @@ public class AlarmEventDialog extends BottomSheetDialogBase
             }
         }
     };
-
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
 
 }

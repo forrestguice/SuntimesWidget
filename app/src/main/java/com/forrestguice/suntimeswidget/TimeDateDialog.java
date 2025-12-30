@@ -320,23 +320,6 @@ public class TimeDateDialog extends BottomSheetDialogBase
         }
     };
 
-    protected void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
     public static final String KEY_MIN_DATETIME = "min_datetime";
     public void setMinDate(long datetime) {
         getArgs().putLong(KEY_MIN_DATETIME, datetime);

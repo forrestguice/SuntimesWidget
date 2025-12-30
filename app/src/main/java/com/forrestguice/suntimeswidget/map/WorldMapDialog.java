@@ -198,40 +198,17 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     };
 
-    private void expandSheet(Dialog dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return true;
     }
-
-    private void collapseSheet(Dialog dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(false);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return false;
+    }
+    @Override
+    protected int getPeekHeight() {
+        return (int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin));
     }
 
     private void startUpdateTask()
