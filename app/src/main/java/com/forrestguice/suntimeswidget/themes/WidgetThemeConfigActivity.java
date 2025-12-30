@@ -1564,7 +1564,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
     {
         int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
-        spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
+        spinBackground.setSelection(Math.max(backgroundPos, 0));
     }
 
     /**

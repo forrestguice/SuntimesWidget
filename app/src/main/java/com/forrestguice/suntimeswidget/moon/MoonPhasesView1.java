@@ -202,10 +202,8 @@ public class MoonPhasesView1 extends LinearLayout
     {
         if (value < 2) {
             numColumns = 2;
-        } else if (value > 4) {
-            numColumns = 4;
         } else {
-            numColumns = value;
+            numColumns = Math.min(value, 4);
         }
     }
 

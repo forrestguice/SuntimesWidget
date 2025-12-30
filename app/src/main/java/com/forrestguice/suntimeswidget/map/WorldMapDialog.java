@@ -326,7 +326,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
         mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0, WorldMapWidgetSettings.MAPTAG_DEF);
         int modePosition = mapAdapter.getPosition(mapMode);
-        mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
+        mapSelector.setSelection(Math.max(modePosition, 0));
 
         updateOptions(getContext());
         worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());

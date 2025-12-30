@@ -1023,25 +1023,25 @@ public class SuntimesTheme
     public float getTitleSizeSp()
     {
         return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
-                (themeTitleSize > THEME_TITLESIZE_MAX) ? THEME_TITLESIZE_MAX : themeTitleSize;
+                Math.min(themeTitleSize, THEME_TITLESIZE_MAX);
     }
 
     public float getTextSizeSp()
     {
         return (themeTextSize < THEME_TEXTSIZE_MIN) ? THEME_TEXTSIZE_DEF :
-                (themeTextSize > THEME_TEXTSIZE_MAX) ? THEME_TEXTSIZE_MAX : themeTextSize;
+                Math.min(themeTextSize, THEME_TEXTSIZE_MAX);
     }
 
     public float getTimeSizeSp()
     {
         return (themeTimeSize < THEME_TIMESIZE_MIN) ? THEME_TIMESIZE_DEF :
-                (themeTimeSize > THEME_TIMESIZE_MAX) ? THEME_TIMESIZE_MAX : themeTimeSize;
+                Math.min(themeTimeSize, THEME_TIMESIZE_MAX);
     }
 
     public float getTimeSuffixSizeSp()
     {
         return (themeTimeSuffixSize < THEME_TIMESUFFIXSIZE_MIN) ? THEME_TIMESUFFIXSIZE_DEF :
-                (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
+                Math.min(themeTimeSuffixSize, THEME_TIMESUFFIXSIZE_MAX);
     }
 
     public ThemeBackground getBackground()
