@@ -60,6 +60,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -245,7 +246,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private TextView txt_datasource;
     private View layout_datasource;
-    private AppCompatCheckBox check_altitude;
+    private CheckBox check_altitude;
     private TextView txt_altitude;
     private View layout_altitude;
 
@@ -1078,7 +1079,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         txt_altitude = (TextView) findViewById(R.id.txt_altitude);
-        check_altitude = (AppCompatCheckBox) findViewById(R.id.check_altitude);
+        check_altitude = (CheckBox) findViewById(R.id.check_altitude);
 
         layout_altitude = findViewById(R.id.layout_altitude);
         if (layout_altitude != null)
