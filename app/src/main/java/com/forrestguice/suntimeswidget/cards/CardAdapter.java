@@ -23,8 +23,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
+
+import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
