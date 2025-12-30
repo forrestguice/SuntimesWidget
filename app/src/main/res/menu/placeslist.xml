@@ -3,6 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <!--suppress AndroidDomInspection -->
         <item android:id="@+id/searchPlaces"
             android:icon="?attr/icActionSearch"
             android:title="@string/configAction_searchPlace"
