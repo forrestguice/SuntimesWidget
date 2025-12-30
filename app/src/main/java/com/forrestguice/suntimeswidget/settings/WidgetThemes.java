@@ -320,8 +320,8 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
-        private int nonselectedResourceID = R.color.transparent;
+        private final int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
+        private final int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
         {

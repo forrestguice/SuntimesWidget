@@ -67,7 +67,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     private long lastUpdate = 0;
     private boolean resizable = true;
     private int mapW = 0, mapH = 0;
-    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private final int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
     private boolean animated = false;
 
     public WorldMapView(Context context)

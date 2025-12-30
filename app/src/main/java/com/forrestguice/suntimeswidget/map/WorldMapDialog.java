@@ -1370,8 +1370,8 @@ public class WorldMapDialog extends BottomSheetDialogBase
     public static final int SEEK_TOTALMINUTES_15m = 12 * 2 * 60;   // +- 12 hours
     public static final int SEEK_TOTALMINUTES_1d = 364 * 24 * 60;  // +- 182 days
 
-    private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
-    private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
+    private final int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
+    private final int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
     private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
