@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -116,9 +115,9 @@ public class EventListActivity extends AppCompatActivity
             }
         }
         
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, list, "EventList");
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, "EventList")
+                .commit();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);

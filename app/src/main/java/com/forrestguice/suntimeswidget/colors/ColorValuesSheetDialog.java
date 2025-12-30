@@ -23,7 +23,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -239,9 +238,9 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
-            transaction.commit();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET)
+                    .commit();
             getChildFragmentManager().executePendingTransactions();
         }
     }

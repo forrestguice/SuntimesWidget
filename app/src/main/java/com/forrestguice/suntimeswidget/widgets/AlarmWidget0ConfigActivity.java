@@ -22,7 +22,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -113,11 +112,12 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initMoreGeneralSettings(final Context context)
     {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AlarmWidget0ConfigFragment fragment = new AlarmWidget0ConfigFragment();
         loadMoreGeneralSettings(context, fragment);
-        transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
-        transaction.commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS)
+                .commit();
     }
 
     @Override
