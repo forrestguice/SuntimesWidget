@@ -25,12 +25,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 import java.util.ArrayList;

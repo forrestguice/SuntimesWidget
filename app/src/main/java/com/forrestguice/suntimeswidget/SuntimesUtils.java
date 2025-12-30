@@ -34,7 +34,6 @@ import android.graphics.drawable.InsetDrawable;
 
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import com.forrestguice.support.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -68,6 +67,7 @@ import java.text.DateFormat;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;

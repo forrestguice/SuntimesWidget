@@ -37,13 +37,13 @@ import android.os.Bundle;
 
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
-import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -63,6 +63,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;

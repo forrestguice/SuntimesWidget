@@ -25,13 +25,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import com.forrestguice.support.content.ContextCompat;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.regex.Pattern;

@@ -32,7 +32,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.support.annotation.StringRes;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -678,7 +677,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     @TargetApi(14)
     @Override
-    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, @StringRes int titleRes, @StringRes int shortTitleRes)
+    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, int titleRes, int shortTitleRes)
     {
         Intent intent = onBuildStartFragmentIntent(fragmentName, args, titleRes, shortTitleRes);
         if (resultTo != null) {
