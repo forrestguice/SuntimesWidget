@@ -56,7 +56,7 @@
 
         </com.forrestguice.support.constraint.ConstraintLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <com.forrestguice.support.widget.RecyclerView
             android:id="@+id/info_equinoxsolstice_flipper1"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/equinoxList_topMargin"

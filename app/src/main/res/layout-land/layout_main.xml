@@ -141,7 +141,7 @@
                 <LinearLayout android:orientation="vertical"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.RecyclerView
+                    <com.forrestguice.support.widget.RecyclerView
                         android:id="@+id/info_time_flipper1"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:elevation="5dp" />
