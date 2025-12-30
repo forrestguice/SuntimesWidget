@@ -80,7 +80,7 @@ public class MillisecondPickerDialog extends DialogBase
         dialog.setView(dialogView);
         helper.onBindDialogView(dialogView);
 
-        android.support.v7.app.AlertDialog d = dialog.create();
+        Dialog d = dialog.create();
         d.setCancelable(false);
         d.setCanceledOnTouchOutside(false);
         return d;

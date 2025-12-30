@@ -100,10 +100,10 @@ public class AlarmRepeatDialog extends DialogBase
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        android.support.v7.app.AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -117,7 +117,7 @@ public class AlarmRepeatDialog extends DialogBase
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override

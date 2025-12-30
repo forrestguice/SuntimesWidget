@@ -69,10 +69,10 @@ public class AlarmOffsetDialog extends DialogBase
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(myParent.getString(R.string.alarmoffset_dialog_title));
 
-        final android.support.v7.app.AlertDialog dialog = builder.create();
+        final Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -86,7 +86,7 @@ public class AlarmOffsetDialog extends DialogBase
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmoffset_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmoffset_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -100,7 +100,7 @@ public class AlarmOffsetDialog extends DialogBase
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
         });
@@ -109,7 +109,7 @@ public class AlarmOffsetDialog extends DialogBase
             @Override
             public void onShow(DialogInterface d)
             {
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener()
+                AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v) {

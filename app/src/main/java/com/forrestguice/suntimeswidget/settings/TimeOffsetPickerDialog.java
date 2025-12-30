@@ -106,7 +106,7 @@ public class TimeOffsetPickerDialog extends DialogBase
         }
 
         dialog.setView(dialogView);
-        android.support.v7.app.AlertDialog d = dialog.create();
+        Dialog d = dialog.create();
         d.setCancelable(false);
         d.setCanceledOnTouchOutside(false);
         return d;

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -505,7 +506,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
                 });
 
-        final android.support.v7.app.AlertDialog d = confirm.create();
+        final Dialog d = confirm.create();
         d.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
