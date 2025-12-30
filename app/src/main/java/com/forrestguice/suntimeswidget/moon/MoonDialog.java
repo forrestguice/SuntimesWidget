@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -32,8 +31,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
@@ -54,7 +51,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -209,36 +205,14 @@ public class MoonDialog extends BottomSheetDialogBase
         }
     }
 
-    private void initPeekHeight(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-            ViewGroup dialogLayout = (LinearLayout) bottomSheet.findViewById(R.id.moondialog_layout);
-            View divider1 = bottomSheet.findViewById(R.id.divider1);
-            if (dialogLayout != null && divider1 != null)
-            {
-                Rect headerBounds = new Rect();
-                divider1.getDrawingRect(headerBounds);
-                dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                behavior.setPeekHeight(headerBounds.top);
-
-            } else {
-                behavior.setPeekHeight(-1);
-            }
-        }
+    protected int getPeekViewId() {
+        return R.id.divider1;
     }
 
     private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
-            initPeekHeight(getDialog());
+            ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
         }
     };
 
