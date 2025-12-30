@@ -22,7 +22,6 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -90,14 +89,14 @@ public class ListPreference extends android.preference.ListPreference
         protected int layoutID;
         protected int index;
 
-        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, int i)
+        public ListPrefAdapter(@NonNull Context context, int resource, @NonNull CharSequence[] entries, int i)
         {
             super(context, resource, entries);
             this.layoutID = resource;
             this.index = i;
         }
 
-        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, @NonNull CharSequence[] summaries, int i)
+        public ListPrefAdapter(@NonNull Context context, int resource, @NonNull CharSequence[] entries, @NonNull CharSequence[] summaries, int i)
         {
             super(context, resource, entries);
             this.summaries = summaries;
