@@ -30,7 +30,6 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -60,6 +59,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AlertDialog;
@@ -590,17 +590,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     {
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-
             if (report != null) {
-                snackbar.setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report));
+                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                        .setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report))
+                        .show();
 
             } else if (result && shareUri != null) {
-                snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
+                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                        .setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri))
+                        .show();
             }
-
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.show();
         }
     }
 

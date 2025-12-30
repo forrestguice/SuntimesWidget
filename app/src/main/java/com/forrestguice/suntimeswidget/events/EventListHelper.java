@@ -30,9 +30,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
@@ -709,8 +709,9 @@ public class EventListHelper
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.eventPlural, items.size(), items.size());
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importevents_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.make(context, view, context.getString(R.string.importevents_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -728,10 +729,7 @@ public class EventListHelper
                         adapterModified = true;
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_IMPORT_MILLIS).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 8000;

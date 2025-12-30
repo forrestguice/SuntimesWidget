@@ -24,9 +24,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -1010,16 +1010,14 @@ public class BedtimeDialog extends DialogBase
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
-        Snackbar snackbar = Snackbar.make(getList(), message, 7000);
-        snackbar.setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
+        SnackbarUtils.make(context, getList(), message, 7000)
+                .setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)), false);
             }
-        });
-        ViewUtils.themeSnackbar(context, snackbar, null);
-        snackbar.show();
+        }).show();
     }
 
     protected void offerModifyWakeupFromBedtime(final Context context)
@@ -1033,16 +1031,14 @@ public class BedtimeDialog extends DialogBase
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
-        Snackbar snackbar = Snackbar.make(getList(), message, 7000);
-        snackbar.setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()
+        SnackbarUtils.make(context, getList(), message, 7000)
+                .setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)), false);
             }
-        });
-        ViewUtils.themeSnackbar(context, snackbar, null);
-        snackbar.show();
+        }).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

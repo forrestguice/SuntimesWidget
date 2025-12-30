@@ -42,7 +42,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +73,7 @@ import android.support.v7.view.ActionMode;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.AboutDialog;
@@ -2712,17 +2712,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (context != null && view != null)
         {
             CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
-            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            SnackbarUtils.make(context, view, message, SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v) {
                     importSettings(context, previous, false);
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_IMPORT_MILLIS).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 12000;

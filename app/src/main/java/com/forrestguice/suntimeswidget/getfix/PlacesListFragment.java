@@ -32,7 +32,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -58,6 +57,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -65,7 +65,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -822,8 +821,9 @@ public class PlacesListFragment extends DialogBase
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.make(context, view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -835,10 +835,7 @@ public class PlacesListFragment extends DialogBase
                         addOrUpdatePlace(deletedItems);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_DELETE_MILLIS).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -896,8 +893,9 @@ public class PlacesListFragment extends DialogBase
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.make(context, view, context.getString(R.string.locationcleared_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
@@ -925,10 +923,7 @@ public class PlacesListFragment extends DialogBase
                         setSelectedRowID(-1);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_DELETE_MILLIS).show();
         }
     }
 
