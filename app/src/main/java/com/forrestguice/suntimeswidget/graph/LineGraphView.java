@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
@@ -55,7 +56,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * LineGraphView
  */
-public class LineGraphView extends android.support.v7.widget.AppCompatImageView
+public class LineGraphView extends ImageView
 {
     public static final int MINUTES_IN_DAY = 24 * 60;
     public static final double MINUTES_IN_DAY_RATIO = 1d / (24 * 60);

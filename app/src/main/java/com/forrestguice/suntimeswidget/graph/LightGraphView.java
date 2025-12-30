@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues
 /**
  * LightGraphView
  */
-public class LightGraphView extends android.support.v7.widget.AppCompatImageView
+public class LightGraphView extends ImageView
 {
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;

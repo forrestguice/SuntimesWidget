@@ -48,13 +48,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class WorldMapView extends android.support.v7.widget.AppCompatImageView
+public class WorldMapView extends ImageView
 {
     public static final String LOGTAG = "WorldMap";
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
