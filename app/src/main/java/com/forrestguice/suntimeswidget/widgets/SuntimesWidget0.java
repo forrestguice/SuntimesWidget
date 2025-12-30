@@ -26,8 +26,6 @@ import android.content.Intent;
 import android.os.Build;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -35,6 +33,8 @@ import android.widget.RemoteViews;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;

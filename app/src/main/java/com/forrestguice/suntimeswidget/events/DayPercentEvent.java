@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget.events;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;

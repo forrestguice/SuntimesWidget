@@ -37,8 +37,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
@@ -47,6 +45,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
@@ -469,7 +469,8 @@ public class AppSettings
         }
     }
 
-    private static @NonNull Locale localeForLanguageTag(@NonNull String languageTag)
+    private static @NonNull
+    Locale localeForLanguageTag(@NonNull String languageTag)
     {
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)

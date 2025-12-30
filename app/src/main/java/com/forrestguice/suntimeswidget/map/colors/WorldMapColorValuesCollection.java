@@ -20,9 +20,9 @@
 package com.forrestguice.suntimeswidget.map.colors;
 
 import android.content.Context;
+
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.util.prefs.PrefTypeInfo;

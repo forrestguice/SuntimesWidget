@@ -25,8 +25,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +38,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -82,7 +82,8 @@ public class AlarmRepeatDialog extends DialogBase
      * @return an Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

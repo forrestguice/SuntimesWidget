@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget.timepicker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 import java.util.Calendar;

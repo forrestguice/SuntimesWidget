@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.Nullable;
 
 public enum TimeMode implements RiseSetDataMode
 {

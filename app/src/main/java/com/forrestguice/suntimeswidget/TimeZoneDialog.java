@@ -26,7 +26,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -34,8 +33,6 @@ import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-
-import android.support.annotation.NonNull;
 
 import android.util.AttributeSet;
 import android.util.Log;
@@ -55,6 +52,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;

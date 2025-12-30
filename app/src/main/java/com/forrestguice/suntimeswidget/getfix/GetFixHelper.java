@@ -31,8 +31,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,6 +42,8 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -461,7 +461,8 @@ public class GetFixHelper implements LocationHelper
         public LocationHelper getHelper() { return helper; }
         public void setHelper( LocationHelper helper ) { this.helper = helper; }
 
-        @NonNull @Override
+        @NonNull
+        @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
             final Activity context = getActivity();

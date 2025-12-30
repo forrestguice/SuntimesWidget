@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.util.TypedValue;
@@ -36,6 +35,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -86,7 +86,8 @@ public class BedtimeSleepDialog extends DialogBase
      * @return a Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

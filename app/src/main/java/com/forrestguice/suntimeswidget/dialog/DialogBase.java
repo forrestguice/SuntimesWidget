@@ -18,8 +18,9 @@
 package com.forrestguice.suntimeswidget.dialog;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+
+import com.forrestguice.annotation.NonNull;
 
 public abstract class DialogBase extends DialogFragment
 {

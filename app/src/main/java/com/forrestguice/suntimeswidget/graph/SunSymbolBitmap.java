@@ -26,8 +26,8 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
 

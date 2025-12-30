@@ -21,8 +21,9 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.annotation.Nullable;
 
 /**
  * AlarmState

@@ -19,11 +19,12 @@
 package com.forrestguice.suntimeswidget.cards;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
+
+import com.forrestguice.annotation.NonNull;
 
 /**
  * A custom ScrollView that passes its touch events to its parent when unable to scroll (child view is

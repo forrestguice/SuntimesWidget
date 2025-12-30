@@ -19,13 +19,14 @@
 package com.forrestguice.suntimeswidget.views;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+
+import com.forrestguice.annotation.Nullable;
 
 import java.lang.reflect.Method;
 

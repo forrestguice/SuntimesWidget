@@ -29,10 +29,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;

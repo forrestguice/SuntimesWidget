@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 
 import java.util.ArrayList;

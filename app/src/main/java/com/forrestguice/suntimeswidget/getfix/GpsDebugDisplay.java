@@ -22,8 +22,9 @@ import android.annotation.TargetApi;
 import android.location.GnssStatus;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;

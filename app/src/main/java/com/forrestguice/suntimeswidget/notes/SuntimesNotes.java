@@ -22,11 +22,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;

@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.events;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 

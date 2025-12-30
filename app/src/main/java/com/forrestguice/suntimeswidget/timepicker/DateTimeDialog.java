@@ -19,10 +19,10 @@ package com.forrestguice.suntimeswidget.timepicker;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 /**

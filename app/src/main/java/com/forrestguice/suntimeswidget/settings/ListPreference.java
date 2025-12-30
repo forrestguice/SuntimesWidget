@@ -23,7 +23,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,6 +33,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 
 /**

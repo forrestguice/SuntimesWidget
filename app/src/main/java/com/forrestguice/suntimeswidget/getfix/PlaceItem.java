@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
