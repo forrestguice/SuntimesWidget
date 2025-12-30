@@ -753,6 +753,7 @@
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
     <string name="addaction_error_title">Display string must not be empty.</string>
     <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string>
+    <string name="hint_actionid">ID</string>
 
     <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>
     <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>

@@ -58,6 +58,7 @@
             <AutoCompleteTextView android:id="@+id/edit_intent_id"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:gravity="center_vertical" android:layout_gravity="center_vertical"
+                android:hint="@string/hint_actionid"
                 tools:text="custom1" />
 
             <com.forrestguice.support.widget.ImageButton android:id="@+id/edit_intent_reset"
