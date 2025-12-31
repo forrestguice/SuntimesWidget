@@ -292,7 +292,7 @@ public class BedtimeDialog extends DialogBase
                 int position = layout.findLastCompletelyVisibleItemPosition();
                 if (position != lastCompletelyVisibleItemPosition) {
                     lastCompletelyVisibleItemPosition = position;
-                    listener.onScrolled(recyclerView, lastCompletelyVisibleItemPosition);
+                    listener.onScrolled(lastCompletelyVisibleItemPosition);
                 }
             }
             super.onScrolled(recyclerView, dx, dy);
@@ -447,7 +447,7 @@ public class BedtimeDialog extends DialogBase
 
     public interface DialogListener extends BedtimeItemAdapter.AdapterListener
     {
-        void onScrolled(RecyclerView recyclerView, int firstCompletelyVisibleItemPosition);
+        void onScrolled(int firstCompletelyVisibleItemPosition);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

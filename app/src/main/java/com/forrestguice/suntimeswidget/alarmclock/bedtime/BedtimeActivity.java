@@ -31,8 +31,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -374,7 +372,7 @@ public class BedtimeActivity extends AppCompatActivity
             private int backgroundColor = initialColor;
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int lastCompletelyVisibleItemPosition)
+            public void onScrolled(int lastCompletelyVisibleItemPosition)
             {
                 if (menubar != null)
                 {
