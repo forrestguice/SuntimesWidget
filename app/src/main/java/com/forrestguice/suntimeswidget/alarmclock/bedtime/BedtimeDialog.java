@@ -26,10 +26,10 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 
@@ -900,8 +900,8 @@ public class BedtimeDialog extends DialogBase
             String transitionName = "transition_" + item.rowID;
             ViewCompat.setTransitionName(sharedView, transitionName);
             if (getActivity() != null) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-                startActivityForResult(intent, requestCode, options.toBundle());
+                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName).toBundle();
+                startActivityForResult(intent, requestCode, options);
             }
 
         } else {
