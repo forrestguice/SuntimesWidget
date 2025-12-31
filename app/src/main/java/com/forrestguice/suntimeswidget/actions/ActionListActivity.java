@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.widget.Toolbar;
 
 public class ActionListActivity extends AppCompatActivity
@@ -81,7 +82,7 @@ public class ActionListActivity extends AppCompatActivity
 
         initData(this);
 
-        helper = new ActionListHelper(this, getSupportFragmentManager());
+        helper = new ActionListHelper(this, FragmentManagerCompat.from(this));
         helper.setData(data);
         helper.initViews(this, findViewById(android.R.id.content), icicle);
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
@@ -116,7 +117,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getSupportFragmentManager());
+        helper.setFragmentManager(FragmentManagerCompat.from(this));
         helper.setData(data);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.onResume();

@@ -22,15 +22,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import com.forrestguice.support.app.FragmentCompat;
 
 public interface LocationHelper
 {
     void saveSettings( Bundle bundle );
     void loadSettings( Bundle bundle );
 
-    void setFragment(Fragment f);
-    Fragment getFragment();
+    void setFragment(FragmentCompat f);
+    FragmentCompat getFragment();
     void onResume();
 
     GetFixUI getUI();

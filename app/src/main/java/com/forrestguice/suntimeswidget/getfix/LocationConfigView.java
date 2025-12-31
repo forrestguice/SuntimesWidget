@@ -31,8 +31,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
-
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +61,7 @@ import android.widget.ViewFlipper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentCompat;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -116,12 +115,12 @@ public class LocationConfigView extends LinearLayout
 
     public boolean isInitialized() { return isInitialized; }
 
-    public void setFragment(Fragment f) {
+    public void setFragment(FragmentCompat f) {
         if (getFixHelper != null) {
             getFixHelper.setFragment(f);
         }
     }
-    public Fragment getFragment() {
+    public FragmentCompat getFragment() {
         return getFixHelper != null ? getFixHelper.getFragment() : null;
     }
 
@@ -676,7 +675,10 @@ public class LocationConfigView extends LinearLayout
         dialog.setColorCollection(new WorldMapColorValuesCollection<>(getContext()));
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
-        dialog.show(getFragment().getChildFragmentManager(), DIALOGTAG_MAP);
+
+        if (getFragment() != null) {
+            dialog.show(getFragment().getFragment().getChildFragmentManager(), DIALOGTAG_MAP);
+        }
     }
 
     private DialogInterface.OnClickListener onMapCoordinateDialogAccepted(final MapCoordinateDialog dialog)

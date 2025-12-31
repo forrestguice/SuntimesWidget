@@ -31,13 +31,16 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import com.forrestguice.support.content.ContextCompat;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
+
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -459,7 +462,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
         getFixHelper = createLocationHelper();
         if (getFixHelper != null) {
-            getFixHelper.setFragment(this);
+            getFixHelper.setFragment(FragmentCompat.from(this));
         }
         updateGPSButtonIcons();
     }

@@ -45,13 +45,12 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
-
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
@@ -70,7 +69,7 @@ public class ActionListHelper
     public static final String DIALOGTAG_EDIT = "edit";
 
     private final WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManagerCompat fragmentManager;
 
     private ActionDisplay selectedItem;
     private ListView list;
@@ -83,7 +82,7 @@ public class ActionListHelper
         return adapterModified;
     }
 
-    public ActionListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public ActionListHelper(@NonNull Context context, @NonNull FragmentManagerCompat fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -99,7 +98,7 @@ public class ActionListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerCompat fragments) {
         fragmentManager = fragments;
     }
 
@@ -316,7 +315,7 @@ public class ActionListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
     }
 
     protected void editAction()
@@ -336,7 +335,7 @@ public class ActionListHelper
             });
 
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
         }
     }
 

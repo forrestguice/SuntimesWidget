@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentCompat;
 
 public class LocationConfigDialog extends BottomSheetDialogBase
 {
@@ -283,7 +284,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
         dialogContent.init(myParent, false);
-        dialogContent.setFragment(this);
+        dialogContent.setFragment(FragmentCompat.from(this));
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override

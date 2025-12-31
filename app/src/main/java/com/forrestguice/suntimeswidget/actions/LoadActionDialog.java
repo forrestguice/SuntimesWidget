@@ -26,6 +26,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 /**
  * LoadActionDialog
@@ -45,7 +46,7 @@ public class LoadActionDialog extends EditActionDialog
     public void onResume()
     {
         super.onResume();
-        listHelper.setFragmentManager(getFragmentManager());
+        listHelper.setFragmentManager(FragmentManagerCompat.from(this));
         listHelper.setData(data);
         listHelper.setOnItemAcceptedListener(onItemAccepted);
         listHelper.setOnUpdateViews(new View.OnClickListener() {
@@ -91,7 +92,7 @@ public class LoadActionDialog extends EditActionDialog
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         super.initViews(context, dialogContent, savedState);
-        listHelper = new ActionListHelper(context, getFragmentManager());
+        listHelper = new ActionListHelper(context, FragmentManagerCompat.from(this));
         listHelper.initViews(context, dialogContent, savedState);
         listHelper.setDisallowSelect(true);
     }
