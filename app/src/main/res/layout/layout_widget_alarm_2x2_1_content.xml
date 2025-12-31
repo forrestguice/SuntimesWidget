@@ -30,7 +30,7 @@
                 android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                 android:layout_gravity="center_vertical">
 
-                <com.forrestguice.support.widget.ImageView android:id="@android:id/icon1"
+                <ImageView android:id="@android:id/icon1"
                     android:layout_width="24dp" android:layout_height="24dp"
                     android:src="@drawable/ic_action_alarms"
                     tools:ignore="contentDescription" />

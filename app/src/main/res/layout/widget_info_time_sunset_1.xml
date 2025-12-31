@@ -38,7 +38,7 @@
 
         </LinearLayout>
 
-        <com.forrestguice.support.widget.ImageView android:id="@+id/icon_time_sunset" style="@style/SunsetTimeImageView2"
+        <ImageView android:id="@+id/icon_time_sunset" style="@style/SunsetTimeImageView2"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:src="@drawable/svg_sunset2"
             android:scaleType="fitStart"
