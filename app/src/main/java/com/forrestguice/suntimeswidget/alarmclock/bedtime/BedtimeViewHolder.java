@@ -26,11 +26,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import com.forrestguice.annotation.NonNull;
-import com.forrestguice.annotation.Nullable;
-import com.forrestguice.support.widget.FloatingActionButton;
-import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +46,13 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.widget.FloatingActionButton;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;

@@ -23,7 +23,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +33,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
 {
