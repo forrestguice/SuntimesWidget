@@ -31,7 +31,6 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -110,11 +109,7 @@ public class BedtimeDialog extends DialogBase
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
-
-        SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
-        if (animator != null) {
-            animator.setChangeDuration(0);
-        }
+        com.forrestguice.support.widget.RecyclerView.setChangeDuration(list, 0);
 
         if (savedState != null) {
             loadSettings(savedState);

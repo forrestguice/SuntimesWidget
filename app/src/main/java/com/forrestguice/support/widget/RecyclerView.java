@@ -3,6 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView
@@ -17,5 +18,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
 
     public RecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public static void setChangeDuration(android.support.v7.widget.RecyclerView recyclerView, long duration)
+    {
+        SimpleItemAnimator animator = (SimpleItemAnimator) recyclerView.getItemAnimator();
+        if (animator != null) {
+            animator.setChangeDuration(duration);
+        }
     }
 }
