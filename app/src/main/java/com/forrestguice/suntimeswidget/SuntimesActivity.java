@@ -39,9 +39,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 
 import android.text.SpannableString;
@@ -121,6 +119,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.PagerSnapHelper;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.reflect.Method;
@@ -1324,8 +1323,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new PagerSnapHelper().attachToRecyclerView(card_view);
         card_view.setOnScrollListener(onCardScrollListener);
     }
 

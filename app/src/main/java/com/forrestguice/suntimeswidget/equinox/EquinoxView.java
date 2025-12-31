@@ -25,9 +25,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -54,6 +52,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.PagerSnapHelper;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.ref.WeakReference;
@@ -149,8 +148,7 @@ public class EquinoxView extends LinearLayout
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new PagerSnapHelper().attachToRecyclerView(card_view);
 
         boolean minimized = isMinimized();
         if (!minimized) {

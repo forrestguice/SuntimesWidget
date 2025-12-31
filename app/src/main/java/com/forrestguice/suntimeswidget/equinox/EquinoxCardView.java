@@ -23,9 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,6 +49,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.PagerSnapHelper;
 
 public class EquinoxCardView extends LinearLayout
 {
@@ -145,8 +144,7 @@ public class EquinoxCardView extends LinearLayout
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new PagerSnapHelper().attachToRecyclerView(card_view);
 
         initAdapter(context);
     }
