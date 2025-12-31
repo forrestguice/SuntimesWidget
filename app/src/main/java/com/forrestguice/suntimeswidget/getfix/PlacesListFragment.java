@@ -34,7 +34,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 
 import android.text.TextUtils;
@@ -66,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
@@ -101,7 +101,7 @@ public class PlacesListFragment extends DialogBase
     protected RecyclerView listView;
     protected View emptyView;
     protected View progressView;
-    protected ActionMode actionMode = null;
+    protected ActionModeCompat actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
 
     public PlacesListFragment()
@@ -323,8 +323,7 @@ public class PlacesListFragment extends DialogBase
         {
             if (items[0] != null)
             {
-                AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = ((activity != null) ? activity.startSupportActionMode(actions) : null);
+                actionMode = AppCompatActivity.startSupportActionMode(getActivity(), actions);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), items);
                 }
@@ -377,7 +376,7 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    private class PlacesListActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class PlacesListActionCompat extends ActionModeCompat.Callback
     {
         private PlaceItem[] items = null;
         public void setItems(PlaceItem[] values) {
@@ -385,7 +384,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placescontext, menu);
@@ -393,7 +392,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeCompat mode, Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -416,7 +415,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        public boolean onActionItemClicked(ActionModeCompat mode, MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
@@ -449,7 +448,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode)
+        public void onDestroyActionMode(ActionModeCompat mode)
         {
             actionMode = null;
             adapter.setSelectedRowID(-1);
@@ -457,6 +456,7 @@ public class PlacesListFragment extends DialogBase
             if (listener != null) {
                 listener.onActionModeFinished();
             }
+
         }
     }
 

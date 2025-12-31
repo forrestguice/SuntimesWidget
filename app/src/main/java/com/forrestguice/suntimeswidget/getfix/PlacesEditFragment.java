@@ -32,13 +32,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.NestedScrollView;
 
 import android.view.ContextThemeWrapper;
@@ -102,7 +101,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     private ImageButton button_map;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeCompat actionMode = null;
     protected PlacesEditActionCompat actions = new PlacesEditActionCompat();
 
     public PlacesEditFragment()
@@ -1011,8 +1010,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         {
             if (item != null)
             {
-                AppCompatActivity activity = (AppCompatActivity) getActivity();
-                actionMode = ((activity != null) ? activity.startSupportActionMode(actions) : null);
+                actionMode = AppCompatActivity.startSupportActionMode(getActivity(), actions);
                 if (actionMode != null) {
                     updateActionMode(getActivity(), item);
                 }
@@ -1035,10 +1033,10 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     /**
      * PlacesEditActionCompat
      */
-    private class PlacesEditActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class PlacesEditActionCompat extends ActionModeCompat.Callback
     {
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placesedit, menu);
@@ -1046,12 +1044,12 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionModeCompat mode, Menu menu) {
             return false;
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        public boolean onActionItemClicked(ActionModeCompat mode, MenuItem menuItem)
         {
             switch (menuItem.getItemId())
             {
@@ -1063,8 +1061,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
+        public void onDestroyActionMode(ActionModeCompat mode) {
             actionMode = null;
+            super.onDestroyActionMode(mode);
         }
     }
 
