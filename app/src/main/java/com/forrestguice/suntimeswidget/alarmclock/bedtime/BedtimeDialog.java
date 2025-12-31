@@ -29,7 +29,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
@@ -62,6 +61,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.ViewCompat;
 
 import java.util.Calendar;
 import java.util.List;

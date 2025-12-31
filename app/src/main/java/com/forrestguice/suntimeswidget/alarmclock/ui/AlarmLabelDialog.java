@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -44,6 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.widget.ViewCompat;
 
 public class AlarmLabelDialog extends DialogBase
 {

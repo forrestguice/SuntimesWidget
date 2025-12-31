@@ -44,7 +44,6 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 
 import android.text.style.ImageSpan;
@@ -96,6 +95,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.SwitchCompat;
+import com.forrestguice.support.widget.ViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;
