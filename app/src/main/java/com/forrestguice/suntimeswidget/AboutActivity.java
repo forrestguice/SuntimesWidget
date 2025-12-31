@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -43,6 +42,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ViewPager;
 import com.forrestguice.support.widget.TabLayout;
+import com.forrestguice.support.widget.Toolbar;
 
 public class AboutActivity extends AppCompatActivity
 {

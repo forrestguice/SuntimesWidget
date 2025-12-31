@@ -28,7 +28,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -37,8 +36,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -47,12 +46,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.view.WindowManager;
 import android.widget.AdapterView;
-
 import android.widget.GridView;
-
 import android.widget.ImageView;
 
 import com.forrestguice.annotation.NonNull;
@@ -74,6 +70,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.Toolbar;
 
 import java.io.File;
 
