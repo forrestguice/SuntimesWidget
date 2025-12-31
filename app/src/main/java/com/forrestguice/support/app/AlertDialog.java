@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class AlertDialog extends android.support.v7.app.AlertDialog
 {
@@ -30,6 +31,13 @@ public class AlertDialog extends android.support.v7.app.AlertDialog
     public static Button getButton(DialogInterface dialog, int button) {
         if (dialog instanceof android.support.v7.app.AlertDialog) {
             return ((android.support.v7.app.AlertDialog) dialog).getButton(button);
+        } else return null;
+    }
+
+    @Nullable
+    public static ListView getListView(DialogInterface dialog) {
+        if (dialog instanceof android.support.v7.app.AlertDialog) {
+            return ((android.support.v7.app.AlertDialog) dialog).getListView();
         } else return null;
     }
 }

@@ -158,7 +158,7 @@ public class AlarmLabelDialog extends DialogBase
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                    Button button = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
                     button.setOnClickListener(onHelpButtonClicked);
                 }
             });

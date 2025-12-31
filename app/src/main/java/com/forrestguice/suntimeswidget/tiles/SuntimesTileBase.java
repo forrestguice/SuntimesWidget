@@ -154,12 +154,12 @@ public abstract class SuntimesTileBase
             {
                 startUpdateTask(context, d);
 
-                Button settingsButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                Button settingsButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
                 if (settingsButton != null) {
                     settingsButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, configIntent));
                 }
 
-                Button launchButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                Button launchButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_POSITIVE);
                 if (launchButton != null) {
                     launchButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, launchIntent));
                 }

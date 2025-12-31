@@ -2649,7 +2649,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
                         if ((p >= 0 && p < matchingValues.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
                             importSettings(context, matchingValues[p]);
@@ -2671,7 +2671,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
                         if ((p >= 0 && p < values.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
                             importSettings(context, values[p]);

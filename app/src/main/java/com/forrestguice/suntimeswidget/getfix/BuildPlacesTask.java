@@ -510,15 +510,14 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         d.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
-            public void onShow(DialogInterface dialog)
+            public void onShow(final DialogInterface dialog)
             {
-                final AlertDialog d = (AlertDialog) dialog;
                 final View.OnClickListener toggleListener = new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        ListView list = d.getListView();
+                        ListView list = AlertDialog.getListView(dialog);
                         for (int i=0; i<list.getCount(); i++)
                         {
                             list.setItemChecked(i, true);
@@ -526,7 +525,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                         }
                     }
                 };
-                d.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
+                AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
             }
         });
         d.show();

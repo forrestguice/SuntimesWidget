@@ -663,7 +663,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })

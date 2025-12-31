@@ -719,7 +719,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })
