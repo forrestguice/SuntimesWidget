@@ -32,9 +32,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
+import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
