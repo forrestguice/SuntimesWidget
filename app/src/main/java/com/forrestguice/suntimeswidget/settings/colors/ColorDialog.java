@@ -27,8 +27,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,6 +46,7 @@ import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragme
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
 import com.forrestguice.support.view.ViewPager;
 import com.forrestguice.support.widget.LinearSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.TabLayout;
 
 import java.util.ArrayList;

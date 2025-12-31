@@ -21,8 +21,6 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -36,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -25,7 +25,6 @@ import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

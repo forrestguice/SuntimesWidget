@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,6 +47,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.widget.GridLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;

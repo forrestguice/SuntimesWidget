@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
