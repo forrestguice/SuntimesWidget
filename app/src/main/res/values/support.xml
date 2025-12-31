@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="layoutManager_GridLayoutManager">android.support.v7.widget.GridLayoutManager</string>
     <string name="layoutManager_LinearLayoutManager">com.forrestguice.support.widget.LinearLayoutManager</string>
+    <string name="layoutManager_GridLayoutManager">com.forrestguice.support.widget.GridLayoutManager</string>
 
     <string name="layoutBehavior_BottomSheetBehavior">android.support.design.widget.BottomSheetBehavior</string>
 

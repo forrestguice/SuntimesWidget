@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.preference.DialogPreference;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -35,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.widget.GridLayoutManager;
 
 import java.util.ArrayList;
 
