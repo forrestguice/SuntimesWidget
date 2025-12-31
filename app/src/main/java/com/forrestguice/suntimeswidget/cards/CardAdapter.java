@@ -22,12 +22,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Rect;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
@@ -54,6 +51,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.LinearSmoothScroller;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -553,25 +552,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public void onNextClick(CardAdapter adapter, int position) {}
         public void onPrevClick(CardAdapter adapter, int position) {}
         public void onCenterClick(CardAdapter adapter, int position) {}
-    }
-
-    /**
-     * CardViewDecorator
-     */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
-    {
-        private final int marginPx;
-
-        public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
-        }
     }
 
     /**
