@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,6 +33,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -414,9 +415,8 @@ public class ColorChooser implements View.OnFocusChangeListener
         onColorChanged(getColor());
     }
 
-    private FragmentManager fragmentManager = null;
-    public void setFragmentManager( FragmentManager manager )
-    {
+    private FragmentManagerCompat fragmentManager = null;
+    public void setFragmentManager( FragmentManagerCompat manager ) {
         fragmentManager = manager;
     }
 
@@ -427,9 +427,8 @@ public class ColorChooser implements View.OnFocusChangeListener
         colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
         colorDialog.setColorDialogListener(colorDialogListener);
-        if (fragmentManager != null)
-        {
-            colorDialog.show(fragmentManager, DIALOGTAG_COLOR + "_" + chooserID);
+        if (fragmentManager != null) {
+            colorDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_COLOR + "_" + chooserID);
         } else {
             Log.w("showColorPicker", "fragmentManager is null; showing fallback ...");
             Dialog dialog = colorDialog.getDialog();

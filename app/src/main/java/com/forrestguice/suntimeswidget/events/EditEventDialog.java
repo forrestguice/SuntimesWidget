@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -370,7 +371,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
         } else choose_color = new ColorChooser(context, null, null, null, "event");
 
-        choose_color.setFragmentManager(getChildFragmentManager());
+        choose_color.setFragmentManager(FragmentManagerCompat.from(this, true));
         choose_color.setCollapsed(true);
         choose_color.setColorChangeListener(onColorChanged);
 

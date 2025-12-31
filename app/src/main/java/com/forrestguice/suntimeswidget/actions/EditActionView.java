@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,7 +33,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,19 +45,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
-import android.widget.ToggleButton;
-
 import com.forrestguice.suntimeswidget.HelpDialog;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.FragmentManagerCompat;
+
+import com.forrestguice.suntimeswidget.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -413,7 +412,7 @@ public class EditActionView extends LinearLayout
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
                 helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+                helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
             }
         }
     };
@@ -576,7 +575,7 @@ public class EditActionView extends LinearLayout
             }
         });
         saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
+        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_SAVE);
     }
 
     public void loadIntent()
@@ -585,7 +584,7 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
-        loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+        loadDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_LOAD);
     }
 
     private DialogInterface.OnClickListener onSaveDialogAccepted(final Context context, final SaveActionDialog saveDialog)
@@ -706,8 +705,8 @@ public class EditActionView extends LinearLayout
     /**
      * setFragmentManager
      */
-    protected FragmentManager fragmentManager = null;
-    public void setFragmentManager( FragmentManager fragmentManager ) {
+    protected FragmentManagerCompat fragmentManager = null;
+    public void setFragmentManager( FragmentManagerCompat fragmentManager ) {
         this.fragmentManager = fragmentManager;
     }
 
@@ -856,7 +855,7 @@ public class EditActionView extends LinearLayout
     /**
      * onResume()
      */
-    public void onResume( FragmentManager fragments, @Nullable SuntimesData data )
+    public void onResume(FragmentManagerCompat fragments, @Nullable SuntimesData data )
     {
         setFragmentManager(fragments);
         setData(data);

@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
 import android.text.Editable;
@@ -698,7 +699,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         for (ColorChooser chooser : colorChoosers)
         {
-            chooser.setFragmentManager(getSupportFragmentManager());
+            chooser.setFragmentManager(FragmentManagerCompat.from(this));
             chooser.setCollapsed(true);
         }
     }
