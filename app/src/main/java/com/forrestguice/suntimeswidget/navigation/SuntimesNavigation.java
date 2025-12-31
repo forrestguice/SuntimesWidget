@@ -24,11 +24,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -41,6 +36,11 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.ActionBarDrawerToggle;
+import com.forrestguice.support.view.GravityCompat;
+import com.forrestguice.support.widget.DrawerLayout;
+import com.forrestguice.support.widget.NavigationView;
+import com.forrestguice.support.widget.Toolbar;
 
 import java.lang.ref.WeakReference;
 
