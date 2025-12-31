@@ -33,7 +33,6 @@ import android.os.Handler;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -59,6 +58,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.List;

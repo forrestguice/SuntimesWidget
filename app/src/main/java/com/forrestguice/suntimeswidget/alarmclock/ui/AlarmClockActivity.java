@@ -48,7 +48,6 @@ import com.forrestguice.support.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,6 +79,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;

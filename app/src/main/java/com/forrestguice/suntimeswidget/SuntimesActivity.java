@@ -40,7 +40,6 @@ import android.preference.PreferenceActivity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -121,6 +120,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.reflect.Method;
