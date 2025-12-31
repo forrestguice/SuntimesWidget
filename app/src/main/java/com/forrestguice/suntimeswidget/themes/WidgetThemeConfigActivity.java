@@ -36,7 +36,6 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
@@ -206,7 +205,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private int param_previewID = 0;
     private boolean param_wallpaper = true;
 
-    private ActionBar actionBar;
     private EditText editDisplay;
     private SizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
     private SizeChooser chooseIconStroke, chooseNoonIconStroke;
@@ -312,11 +310,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesTheme.ThemeBackground.values());
@@ -527,7 +524,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         switch (mode)
         {
             case EDIT_THEME:
-                actionBar.setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                }
                 labelName.setEnabled(false);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 editName.setEnabled(false);
@@ -536,7 +535,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             case ADD_THEME:
             default:
-                actionBar.setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                }
                 labelName.setEnabled(true);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 editName.setEnabled(true);

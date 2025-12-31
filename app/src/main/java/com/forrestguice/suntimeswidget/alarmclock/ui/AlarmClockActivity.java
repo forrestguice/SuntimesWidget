@@ -37,7 +37,6 @@ import android.os.SystemClock;
 import android.provider.AlarmClock;
 
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v7.app.ActionBar;
 
 import android.util.Log;
 import android.view.Menu;
@@ -671,14 +670,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
             if (!showBack) {
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
             }
         }
 

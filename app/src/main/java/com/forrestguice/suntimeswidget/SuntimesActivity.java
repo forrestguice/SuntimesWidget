@@ -38,7 +38,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 
 import android.text.SpannableString;
@@ -201,7 +200,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
-    private ActionBar actionBar;
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
@@ -1035,12 +1033,11 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
             boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
-            actionBar.setHomeButtonEnabled(sideNavigation);
-            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
+            getSupportActionBar().setHomeButtonEnabled(sideNavigation);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(sideNavigation);
         }
         
         navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
@@ -1119,7 +1116,7 @@ public class SuntimesActivity extends AppCompatActivity
                 if (locations[0] != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
-                    actionBar.setSubtitle(location.toString());
+                    getSupportActionBar().setSubtitle(location.toString());
                 }
             }
 
@@ -1129,7 +1126,7 @@ public class SuntimesActivity extends AppCompatActivity
                 if (progress[0] != null && progress[0].getResult() != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
-                    actionBar.setSubtitle(location.toString());
+                    getSupportActionBar().setSubtitle(location.toString());
                 }
             }
 
@@ -1147,8 +1144,8 @@ public class SuntimesActivity extends AppCompatActivity
                 refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
                 if (refreshItem != null)
                 {
-                    actionBar.setTitle(getString(R.string.gps_lastfix_title_searching));
-                    actionBar.setSubtitle("");
+                    getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
+                    getSupportActionBar().setSubtitle("");
                     refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
                 }
             }
@@ -1937,10 +1934,10 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setTitle(locationTitle);
-            actionBar.setSubtitle(locationSubtitle);
+            getSupportActionBar().setTitle(locationTitle);
+            getSupportActionBar().setSubtitle(locationSubtitle);
         }
 
         //

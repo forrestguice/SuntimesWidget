@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -109,17 +108,16 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             CharSequence title = intent.getCharSequenceExtra(EXTRA_TITLE);
             if (title != null) {
-                actionBar.setTitle(title);
+                getSupportActionBar().setTitle(title);
             }
-            actionBar.setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
+            getSupportActionBar().setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
         }
     }
 

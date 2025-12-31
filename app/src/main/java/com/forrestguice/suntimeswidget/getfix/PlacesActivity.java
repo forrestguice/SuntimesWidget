@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,12 +64,10 @@ public class PlacesActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Intent intent = getIntent();
@@ -158,9 +155,8 @@ public class PlacesActivity extends AppCompatActivity
 
         @Override
         public void onLiftAppBar(boolean value) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
             }
         }
     };

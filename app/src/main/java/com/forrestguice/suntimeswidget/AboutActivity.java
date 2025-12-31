@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -77,11 +76,10 @@ public class AboutActivity extends AppCompatActivity
             icon = intent.getIntExtra(EXTRA_ICONID, icon);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(icon);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(icon);
         }
 
         pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());

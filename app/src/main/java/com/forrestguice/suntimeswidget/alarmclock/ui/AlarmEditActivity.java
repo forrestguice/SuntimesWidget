@@ -35,7 +35,6 @@ import android.os.Bundle;
 
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -280,17 +279,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = ((editor != null) ? editor.getItem() : null);
-            actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
+            getSupportActionBar().setTitle(item != null ? item.type.getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
             if (actionBarBackground != null) {
-                actionBar.setBackgroundDrawable(actionBarBackground);
+                getSupportActionBar().setBackgroundDrawable(actionBarBackground);
             }
         }
     }
@@ -1313,9 +1311,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public void onTypeChanged(AlarmClockItem forItem)
     {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(forItem != null ? forItem.type.getDisplayString() : "");
         }
         invalidateOptionsMenu();
     }
