@@ -598,7 +598,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 }
             };
 
-            PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null).show();
+            PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener).show();
         }
 
         @Override

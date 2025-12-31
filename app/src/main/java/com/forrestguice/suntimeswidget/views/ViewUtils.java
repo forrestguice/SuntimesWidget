@@ -232,7 +232,7 @@ public class ViewUtils
     /**
      * ThrottledPopupMenuListener
      */
-    public static class ThrottledPopupMenuListener implements PopupMenuCompat.PopupMenuListener
+    public static class ThrottledPopupMenuListener extends PopupMenuCompat.PopupMenuListener
     {
         protected long delayMs;
         protected Long previousClickAt;

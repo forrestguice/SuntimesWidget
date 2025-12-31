@@ -724,7 +724,7 @@ public class MoonDialog extends BottomSheetDialogBase
      */
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null).show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick).show();
         return true;
     }
     private void updateOverflowMenu(Context context, Menu menu)
@@ -812,7 +812,7 @@ public class MoonDialog extends BottomSheetDialogBase
      */
     protected boolean showMediaMenu(final Context context, View view)
     {
-        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null).show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick).show();
         return true;
     }
     private void updateMediaMenu(Context context, Menu menu)

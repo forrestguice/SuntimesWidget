@@ -489,7 +489,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener, null).show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener).show();
     }
 
     protected void toggleConfigureBedtimeAlarmOff(Context context, BedtimeItem item)
@@ -1077,7 +1077,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener, null).show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener).show();
     }
 
     protected void updateAddBedtimeMenu(final Context context, final View v, final Menu menu)
@@ -1163,7 +1163,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener, null).show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener).show();
     }
     protected void updateAddAlarmMenu(final Context context, final View v, final Menu menu)
     {
@@ -1314,7 +1314,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener, null).show();
+        PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener).show();
     }
 
     public static void confirmClearAlarms(@Nullable final Context context, DialogInterface.OnClickListener onDeleteConfirmed)

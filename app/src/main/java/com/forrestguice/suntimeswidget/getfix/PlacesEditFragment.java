@@ -468,7 +468,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
      * GetFix Menu
      */
     protected void showGetFixMenu(Context context, View v) {
-        PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null).show();
+        PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked).show();
     }
     private final PopupMenuCompat.PopupMenuListener onGetFixMenuItemClicked = new PopupMenuCompat.PopupMenuListener()
     {

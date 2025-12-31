@@ -56,39 +56,48 @@ public class PopupMenuCompat
         return menu;
     }
 
-    public interface PopupMenuListener {
-        void onUpdateMenu(Context context, Menu menu);
-        boolean onMenuItemClick(MenuItem menuItem);
+    public static abstract class PopupMenuListener
+    {
+        public abstract void onUpdateMenu(Context context, Menu menu);
+        public abstract boolean onMenuItemClick(MenuItem menuItem);
+        public void onDismiss() {}
+        public boolean hasOnDismissListener() {
+            return false;
+        }
     }
 
     public static PopupMenu createMenu(Context context, View view, PopupMenuListener listener) {
         return createMenu(context, view, null, listener);
     }
-    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuId, PopupMenuListener listener) {
-        return createMenu(context, view, menuId, listener, null);
+    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, @Nullable PopupMenuListener listener) {
+        return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, listener);
     }
-    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, @Nullable PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
-        return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
-    }
-    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, int gravity, @Nullable final PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
+    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, int gravity, @Nullable final PopupMenuListener listener)
     {
         PopupMenu menu = new PopupMenu(context, view, gravity);
         if (menuResID != null) {
             MenuInflater inflater = menu.getMenuInflater();
             inflater.inflate(menuResID, menu.getMenu());
         }
-        if (onDismissListener != null) {
-            menu.setOnDismissListener(onDismissListener);
-        }
-        if (onClickListener != null)
+        if (listener != null)
         {
+            if (listener.hasOnDismissListener())
+            {
+                menu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu popupMenu) {
+                        listener.onDismiss();
+                    }
+                });
+            }
+
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    return onClickListener.onMenuItemClick(menuItem);
+                    return listener.onMenuItemClick(menuItem);
                 }
             });
-            onClickListener.onUpdateMenu(context, menu.getMenu());
+            listener.onUpdateMenu(context, menu.getMenu());
         }
         forceActionBarIcons(menu.getMenu());
         return menu;
