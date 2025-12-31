@@ -25,7 +25,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -54,6 +53,7 @@ import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.ref.WeakReference;

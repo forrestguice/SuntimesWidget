@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -37,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;

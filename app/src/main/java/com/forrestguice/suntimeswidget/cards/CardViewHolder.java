@@ -27,7 +27,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -75,6 +74,7 @@ import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.DateFormat;

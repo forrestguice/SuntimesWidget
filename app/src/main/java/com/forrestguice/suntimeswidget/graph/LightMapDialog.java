@@ -35,7 +35,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -105,6 +104,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 

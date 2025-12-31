@@ -28,7 +28,6 @@ import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -56,6 +55,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
