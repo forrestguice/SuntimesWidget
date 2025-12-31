@@ -54,6 +54,7 @@ android
             dimension "version"
             applicationIdSuffix ".nightly"
             versionNameSuffix "-nightly"
+            resValue "string", "packageName", "com.forrestguice.suntimeswidget.nightly"   // TODO: cleaner way to set this resValue without duplication
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
             def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
