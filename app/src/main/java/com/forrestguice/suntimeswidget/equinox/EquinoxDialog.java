@@ -27,13 +27,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -283,26 +281,16 @@ public class EquinoxDialog extends BottomSheetDialogBase
 
     protected boolean showContextMenu(final Context context, View view, final SolsticeEquinoxMode mode, final long datetime)
     {
-        PopupMenu menu = new PopupMenu(context, view, Gravity.START);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-        menu.setOnDismissListener(onContextMenuDismissed);
-        updateContextMenu(context, menu, mode, datetime);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-
-        equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.equinoxcontext, Gravity.START, onContextMenuClick(mode, datetime)).show();
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, final SolsticeEquinoxMode mode, final long datetime)
+    private void updateContextMenu(Context context, Menu m, final SolsticeEquinoxMode mode, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
         data.putExtra("mode", mode.name());
 
-        Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
@@ -325,78 +313,91 @@ public class EquinoxDialog extends BottomSheetDialogBase
         }
     }
 
-    private final PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
-        @Override
-        public void onDismiss(PopupMenu menu) {
-            equinoxView.post(new Runnable() {
-                @Override
-                public void run() {                      // a submenu may be shown after the popup is dismissed
-                    equinoxView.unlockScrolling();           // so defer unlockScrolling until after it is shown
-                }
-            });
-        }
-    };
-
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onContextMenuClick(final SolsticeEquinoxMode mode, final long datetime)
     {
-        @Override
-        public boolean onMenuItemClick(MenuItem item)
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            Context context = getContext();
-            if (context == null) {
-                return false;
+            @Override
+            public boolean hasOnDismissListener() {
+                return true;
             }
 
-            Intent itemData = item.getIntent();
-            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-            SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+            @Override
+            public void onDismiss() {
+                equinoxView.post(new Runnable() {
+                    @Override
+                    public void run() {                      // a submenu may be shown after the popup is dismissed
+                        equinoxView.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                    }
+                });
+            }
 
-            switch (item.getItemId())
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
             {
-                case R.id.action_alarm:
-                    if (dialogListener != null) {
-                        dialogListener.onSetAlarm(itemMode);
-                        //collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(itemTime);
-                        //collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_moon:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMoonInfo(itemTime);
-                        //collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_worldmap:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMap(itemTime);
-                        //collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(itemTime);
-                    }
-                    collapseSheet(getDialog());
-                    return true;
-
-                case R.id.action_share:
-                    shareItem(getContext(), itemData);
-                    return true;
-
-                default:
-                    return false;
+                updateContextMenu(context, menu, mode, datetime);
+                equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
             }
-        }
-    });
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                Intent itemData = item.getIntent();
+                long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
+                SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+
+                switch (item.getItemId())
+                {
+                    case R.id.action_alarm:
+                        if (dialogListener != null) {
+                            dialogListener.onSetAlarm(itemMode);
+                            //collapseSheet(getDialog());
+                        }
+                        return true;
+
+                    case R.id.action_sunposition:
+                        if (dialogListener != null) {
+                            dialogListener.onShowPosition(itemTime);
+                            //collapseSheet(getDialog());
+                        }
+                        return true;
+
+                    case R.id.action_moon:
+                        if (dialogListener != null) {
+                            dialogListener.onShowMoonInfo(itemTime);
+                            //collapseSheet(getDialog());
+                        }
+                        return true;
+
+                    case R.id.action_worldmap:
+                        if (dialogListener != null) {
+                            dialogListener.onShowMap(itemTime);
+                            //collapseSheet(getDialog());
+                        }
+                        return true;
+
+                    case R.id.action_date:
+                        if (dialogListener != null) {
+                            dialogListener.onShowDate(itemTime);
+                        }
+                        collapseSheet(getDialog());
+                        return true;
+
+                    case R.id.action_share:
+                        shareItem(getContext(), itemData);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
 
     protected void shareItem(Context context, Intent itemData)  // TODO: refactor to use ViewUtils after v0.15.0 branches are merged
     {
