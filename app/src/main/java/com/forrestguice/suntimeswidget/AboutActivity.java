@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.os.Build;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import android.os.Bundle;
@@ -82,7 +81,7 @@ public class AboutActivity extends AppCompatActivity
             getSupportActionBar().setHomeAsUpIndicator(icon);
         }
 
-        pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new AboutPagerAdapter(this);
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
@@ -123,9 +122,9 @@ public class AboutActivity extends AppCompatActivity
      */
     public static class AboutPagerAdapter extends FragmentPagerAdapter
     {
-        public AboutPagerAdapter(FragmentManager fragments)
+        public AboutPagerAdapter(AppCompatActivity activity)
         {
-            super(fragments);
+            super(activity.getSupportFragmentManager());
         }
 
         @Override

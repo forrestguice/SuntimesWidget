@@ -26,9 +26,10 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -113,7 +114,7 @@ public class WelcomeActivity extends AppCompatActivity
             intent.removeExtra(EXTRA_PAGE);
         }
 
-        pagerAdapter = new WelcomeFragmentAdapter(this, getSupportFragmentManager());
+        pagerAdapter = new WelcomeFragmentAdapter(this, this);
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
@@ -192,9 +193,9 @@ public class WelcomeActivity extends AppCompatActivity
         public void onPageSelected(int position)
         {
             //Log.d("DEBUG", "onPageSelected: " + position);
-            if (saveSettings(getSupportFragmentManager(), previousPosition))
+            if (saveSettings(WelcomeActivity.this, previousPosition))
             {
-                updateViews(getSupportFragmentManager(), position);
+                updateViews(WelcomeActivity.this, position);
                 setIndicator(position);
                 prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
                 nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
@@ -254,7 +255,7 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void onDone()
     {
-        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
+        saveSettings(this, pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
         setResult(RESULT_OK, getResultData());
         finish();
@@ -262,14 +263,13 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void saveSettings()
     {
-        FragmentManager fragments = getSupportFragmentManager();
         for (int i=0; i<pagerAdapter.getCount(); i++) {
-            saveSettings(fragments, i);
+            saveSettings(this, i);
         }
     }
-    private boolean saveSettings(FragmentManager fragments, int position)
+    private boolean saveSettings(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             if (page.validateInput(WelcomeActivity.this)) {
                 return page.saveSettings(WelcomeActivity.this);
@@ -277,25 +277,25 @@ public class WelcomeActivity extends AppCompatActivity
         }
         return false;
     }
-    private boolean validateInput(FragmentManager fragments, int position)
+    private boolean validateInput(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             return page.validateInput(WelcomeActivity.this);
         }
         return true;
     }
-    private void updateViews(FragmentManager fragments, int position)
+    private void updateViews(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             page.updateViews(WelcomeActivity.this);
         }
     }
 
-    public static WelcomeFragment getPageFragment(FragmentManager fragments, ViewPager pager, int position) {
+    public static WelcomeFragment getPageFragment(AppCompatActivity activity, ViewPager pager, int position) {
         // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
-        return (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
+        return (WelcomeFragment) activity.getSupportFragmentManager().findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
     }
 
     public void showAbout( View v )
@@ -326,9 +326,9 @@ public class WelcomeActivity extends AppCompatActivity
     {
         protected ArrayList<WelcomeFragmentPage> pages = new ArrayList<>();
 
-        public WelcomeFragmentAdapter(Context context, FragmentManager fragments)
+        public WelcomeFragmentAdapter(Context context, AppCompatActivity activity)
         {
-            super(fragments);
+            super(activity.getSupportFragmentManager());
             pages.add(new WelcomeFragmentPage() {    // 0; first page
                 public WelcomeFragment newInstance() {
                     return WelcomeFirstPageFragment.newInstance();
@@ -758,9 +758,8 @@ public class WelcomeActivity extends AppCompatActivity
         private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
-                FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null) {
-                    return (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
+                if (getChildFragmentManager() != null) {
+                    return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
                 }
             }
             return null;
@@ -863,8 +862,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected TimeZoneDialog getTimeZoneDialog() {
-            FragmentManager fragments = getChildFragmentManager();
-            return fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog") : null;
+            return ((getChildFragmentManager() != null) ? (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog") : null);
         }
 
         @Override

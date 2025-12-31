@@ -31,12 +31,12 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.Html;
 import android.text.Spanned;
@@ -75,11 +75,11 @@ public class GetFixHelper implements LocationHelper
     public boolean wasGettingFix = false;
     public boolean gotFix = false;
 
-    private final FragmentActivity myParent;
+    private final AppCompatActivity myParent;
     private final ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
-    public GetFixHelper(FragmentActivity parent, GetFixUI ui)
+    public GetFixHelper(AppCompatActivity parent, GetFixUI ui)
     {
         myParent = parent;
         addUI(ui);
@@ -256,9 +256,9 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
-    public boolean hasLocationPermission(Activity activity) {
-        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                || (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    public boolean hasLocationPermission(Context context) {
+        return (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
     /**
@@ -266,7 +266,7 @@ public class GetFixHelper implements LocationHelper
      * @param requestID used to identify the permission request
      * @return true already has location permissions, false has no permissions (triggers a request)
      */
-    public boolean checkGPSPermissions(final FragmentActivity activity, final int requestID)
+    public boolean checkGPSPermissions(final AppCompatActivity activity, final int requestID)
     {
         boolean hasPermission = hasLocationPermission(activity);
         //Log.d("checkGPSPermissions", "" + hasPermission);
@@ -432,15 +432,13 @@ public class GetFixHelper implements LocationHelper
     public void onResume()
     {
         //Log.d("DEBUG", "GetFixHelper onResume");
-        FragmentManager fragments = myParent.getSupportFragmentManager();
-
-        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) fragments.findFragmentByTag(DIALOGTAG_KEEPTRYING);
+        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) myParent.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_KEEPTRYING);
         if (keepTryingDialog != null)
         {
             keepTryingDialog.setHelper(this);
         }
 
-        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) fragments.findFragmentByTag(DIALOGTAG_ENABLEGPS);
+        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) myParent.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ENABLEGPS);
         if (enableGPSDialog != null)
         {
             enableGPSDialog.setHelper(this);
@@ -543,7 +541,7 @@ public class GetFixHelper implements LocationHelper
     public boolean isLocationEnabled(Context context)
     {
         boolean allowPassive = LocationHelperSettings.loadPrefGpsPassiveMode(context);
-        return isNetProviderEnabled(myParent) || isGPSProviderEnabled(myParent) || (allowPassive && isPassiveProviderEnabled(myParent));
+        return isNetProviderEnabled(context) || isGPSProviderEnabled(context) || (allowPassive && isPassiveProviderEnabled(context));
     }
 
     @Override

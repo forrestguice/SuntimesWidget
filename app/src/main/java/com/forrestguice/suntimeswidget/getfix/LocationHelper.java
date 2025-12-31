@@ -50,7 +50,7 @@ public interface LocationHelper
     void addGetFixTaskListener( GetFixTaskListener listener );
     void removeGetFixTaskListener( GetFixTaskListener listener );
 
-    boolean hasLocationPermission(Activity activity);
+    boolean hasLocationPermission(Context context);
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 
     void reloadAGPS(Activity context, boolean coldStart);

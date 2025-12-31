@@ -33,8 +33,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.content.ContextCompat;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
@@ -69,6 +67,8 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.android.AndroidResources;
 

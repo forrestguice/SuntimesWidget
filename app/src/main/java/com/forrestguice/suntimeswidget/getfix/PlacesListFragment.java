@@ -32,10 +32,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
@@ -603,7 +605,7 @@ public class PlacesListFragment extends DialogBase
     {
         @Nullable
         protected LocationHelper createLocationHelper() {
-            return new GetFixHelper(getActivity(), getFixUI());
+            return new GetFixHelper((AppCompatActivity) getActivity(), getFixUI());
         }
     }
 

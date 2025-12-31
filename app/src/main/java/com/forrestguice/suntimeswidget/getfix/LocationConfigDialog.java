@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
@@ -43,6 +42,7 @@ import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AppCompatActivity;
 
 public class LocationConfigDialog extends BottomSheetDialogBase
 {
@@ -275,7 +275,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final FragmentActivity myParent = getActivity();
+        final AppCompatActivity myParent = (AppCompatActivity) getActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);

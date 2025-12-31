@@ -30,8 +30,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,6 +62,7 @@ import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.support.app.AppCompatActivity;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -80,7 +82,7 @@ public class LocationConfigView extends LinearLayout
     public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
 
-    private FragmentActivity myParent;
+    private AppCompatActivity myParent;
     private boolean isInitialized = false;
 
     public LocationConfigView(Context context)
@@ -93,7 +95,7 @@ public class LocationConfigView extends LinearLayout
         super(context, attribs);
     }
 
-    public void init(FragmentActivity context, boolean asDialog)
+    public void init(AppCompatActivity context, boolean asDialog)
     {
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
@@ -106,7 +108,7 @@ public class LocationConfigView extends LinearLayout
         isInitialized = true;
     }
 
-    public void init(FragmentActivity context, boolean asDialog, int appWidgetId)
+    public void init(AppCompatActivity context, boolean asDialog, int appWidgetId)
     {
         this.appWidgetId = appWidgetId;
         init(context, asDialog);
