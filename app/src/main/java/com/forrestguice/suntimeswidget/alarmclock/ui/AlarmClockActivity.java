@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import android.content.ActivityNotFoundException;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -37,17 +35,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
-import android.support.design.widget.BottomSheetBehavior;
 
-import com.forrestguice.annotation.NonNull;
-import com.forrestguice.annotation.Nullable;
-import com.forrestguice.support.app.ActivityOptionsCompat;
-import com.forrestguice.support.app.AppCompatActivity;
-import com.forrestguice.support.app.NotificationManagerCompat;
-import com.forrestguice.support.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import com.forrestguice.support.content.ContextCompat;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,8 +69,16 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
-import com.forrestguice.support.view.ViewCompat;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
@@ -820,8 +819,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Context context = AlarmClockActivity.this;
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
             if (dialog != null)
             {
                 AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
@@ -911,8 +909,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         list.clearSelection();
 
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
             if (type != null) {
@@ -934,8 +931,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void restoreDialogs()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
         if (alarmCreateDialog != null) {
             alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
             alarmCreateDialog.setOnCanceledListener(onAddAlarmCanceled);
