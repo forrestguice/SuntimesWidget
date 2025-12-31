@@ -33,10 +33,8 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -77,6 +75,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.LinearSnapHelper;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
@@ -743,8 +742,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
 
-        SnapHelper snapHelper = new LinearSnapHelper(); //new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new LinearSnapHelper().attachToRecyclerView(card_view);
 
         initAdapter(context);
     }
