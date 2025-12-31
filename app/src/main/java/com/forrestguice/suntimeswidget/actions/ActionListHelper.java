@@ -26,9 +26,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -53,6 +50,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -250,13 +250,7 @@ public class ActionListHelper
 
     protected void showOverflowMenu(Context context, View parent)
     {
-        PopupMenu menu = new PopupMenu(context, parent);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.editintent1, menu.getMenu());
-        menu.setOnMenuItemClickListener(onMenuItemClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        prepareOverflowMenu(context, menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, parent, R.menu.editintent1, onMenuItemClicked).show();
     }
 
     protected void prepareOverflowMenu(Context context, Menu menu)
@@ -277,8 +271,13 @@ public class ActionListHelper
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenuCompat.PopupMenuListener onMenuItemClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            prepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {

@@ -46,7 +46,6 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.SwitchCompat;
@@ -1421,11 +1420,12 @@ public class AlarmListDialog extends DialogBase
 
         protected void showOverflowMenu(final Context context, final long rowId, final View buttonView)
         {
-            PopupMenu menu = new PopupMenu(context, buttonView);
-            MenuInflater inflater = menu.getMenuInflater();
-            inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
-            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext1, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu) {
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
@@ -1442,20 +1442,17 @@ public class AlarmListDialog extends DialogBase
                             return false;
                     }
                 }
-            }));
-
-            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-            menu.show();
+            })).show();
         }
 
         protected void showAlarmTypeMenu(final Context context, final long rowId, final View buttonView)
         {
-            PopupMenu menu = new PopupMenu(context, buttonView);
-            MenuInflater inflater = menu.getMenuInflater();
-            inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu) {
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
@@ -1475,10 +1472,7 @@ public class AlarmListDialog extends DialogBase
                             return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
                     }
                 }
-            }));
-
-            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-            menu.show();
+            })).show();
         }
 
         protected boolean changeAlarmType(Context context, final long rowId, AlarmClockItem.AlarmType type)

@@ -840,12 +840,12 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     public void showAlarmSoundPopup(View v, @NonNull final AlarmClockItem item)
     {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.alarmsound, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(this, v, R.menu.alarmsound, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -865,9 +865,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 }
                 return false;
             }
-        }));
-        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
-        popup.show();
+        })).show();
     }
 
     /**
@@ -1174,23 +1172,23 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     public void showAlarmLocationPopup(View v, @NonNull final AlarmClockItem item)
     {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
-
-        boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
-        MenuItem menuItem_fromApp = popup.getMenu().findItem(R.id.action_location_fromApp);
-        if (menuItem_fromApp != null) {
-            menuItem_fromApp.setChecked(useAppLocation);
-        }
-
-        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
-        if (menuItem_location != null) {
-            menuItem_location.setEnabled(!useAppLocation);
-        }
-
-        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(this, v, R.menu.alarmlocation, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                boolean useAppLocation = item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
+                MenuItem menuItem_fromApp = menu.findItem(R.id.action_location_fromApp);
+                if (menuItem_fromApp != null) {
+                    menuItem_fromApp.setChecked(useAppLocation);
+                }
+
+                MenuItem menuItem_location = menu.findItem(R.id.action_location_set);
+                if (menuItem_location != null) {
+                    menuItem_location.setEnabled(!useAppLocation);
+                }
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -1206,9 +1204,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 }
                 return false;
             }
-        }));
-        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
-        popup.show();
+        })).show();
     }
 
     protected void toggleLocationFromApp(@NonNull AlarmClockItem item)

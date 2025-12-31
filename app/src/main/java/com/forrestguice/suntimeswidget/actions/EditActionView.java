@@ -28,12 +28,12 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 
-import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -521,26 +521,24 @@ public class EditActionView extends LinearLayout
 
     protected void showOverflowMenu(Context context, View parent)
     {
-        PopupMenu menu = new PopupMenu(context, parent);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.editintent, menu.getMenu());
-        menu.setOnMenuItemClickListener(onMenuItemClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.createMenu(context, parent, R.menu.editintent, onMenuItemClicked).show();
+    }
 
-        MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
-        for (MenuItem item : restrictedItems)
+    protected PopupMenuCompat.PopupMenuListener onMenuItemClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
+    {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu)
         {
-            if (item != null) {
-                item.setEnabled(allowSaveLoad);
-                item.setVisible(allowSaveLoad);
+            MenuItem[] restrictedItems = new MenuItem[] { menu.findItem(R.id.saveIntent), menu.findItem(R.id.loadIntent) };
+            for (MenuItem item : restrictedItems)
+            {
+                if (item != null) {
+                    item.setEnabled(allowSaveLoad);
+                    item.setVisible(allowSaveLoad);
+                }
             }
         }
 
-        menu.show();
-    }
-
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-    {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {

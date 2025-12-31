@@ -34,13 +34,13 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.widget.PopupMenu;
 
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -799,35 +799,35 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void showOverflowMenu(final AlarmClockItem item, final View buttonView, final View itemView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmcontext, menu.getMenu());
-
-        MenuItem[] restrictedMenuItems = new MenuItem[] {     // only permitted when alarm not already enabled
-                menu.getMenu().findItem(R.id.setAlarmType),
-                menu.getMenu().findItem(R.id.setAlarmTime),
-                menu.getMenu().findItem(R.id.setAlarmOffset),
-                menu.getMenu().findItem(R.id.setAlarmEvent),
-                menu.getMenu().findItem(R.id.setAlarmLocation),
-                menu.getMenu().findItem(R.id.setAlarmRepeat)
-        };
-        for (MenuItem menuItem : restrictedMenuItems) {
-            menuItem.setEnabled(!item.enabled);
-        }
-
-        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
-                    menu.getMenu().findItem(R.id.setAlarmTime),
-                    menu.getMenu().findItem(R.id.setAlarmOffset)
-            };
-            for (MenuItem menuItem : notSupportedMenuItems) {
-                menuItem.setEnabled(false);
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                MenuItem[] restrictedMenuItems = new MenuItem[] {     // only permitted when alarm not already enabled
+                        menu.findItem(R.id.setAlarmType),
+                        menu.findItem(R.id.setAlarmTime),
+                        menu.findItem(R.id.setAlarmOffset),
+                        menu.findItem(R.id.setAlarmEvent),
+                        menu.findItem(R.id.setAlarmLocation),
+                        menu.findItem(R.id.setAlarmRepeat)
+                };
+                for (MenuItem menuItem : restrictedMenuItems) {
+                    menuItem.setEnabled(!item.enabled);
+                }
+
+                if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+                {
+                    MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                            menu.findItem(R.id.setAlarmTime),
+                            menu.findItem(R.id.setAlarmOffset)
+                    };
+                    for (MenuItem menuItem : notSupportedMenuItems) {
+                        menuItem.setEnabled(false);
+                    }
+                }
             }
-        }
 
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -899,10 +899,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         return false;
                 }
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     /**
@@ -913,12 +910,12 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void showAlarmTypeMenu(final AlarmClockItem item, final View buttonView, final View itemView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -938,10 +935,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
                 }
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     protected boolean changeAlarmType(AlarmClockItem item, AlarmClockItem.AlarmType type)

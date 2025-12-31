@@ -29,7 +29,6 @@ import android.os.Bundle;
 
 import android.support.design.widget.TabLayout;
 
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -239,22 +238,21 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
 
     protected void showLocationMenu(final Context context, View v)
     {
-        PopupMenu popup = new PopupMenu(context, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.alarmlocation, popup.getMenu());
-
-        Menu menu = popup.getMenu();
-        MenuItem menuItem_locationFromApp = menu.findItem(R.id.action_location_fromApp);
-        if (menuItem_locationFromApp != null) {
-            menuItem_locationFromApp.setChecked(useAppLocation());
-        }
-        MenuItem menuItem_location = popup.getMenu().findItem(R.id.action_location_set);
-        if (menuItem_location != null) {
-            menuItem_location.setEnabled(!useAppLocation());
-        }
-
-        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(context, v, R.menu.alarmlocation, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                MenuItem menuItem_locationFromApp = menu.findItem(R.id.action_location_fromApp);
+                if (menuItem_locationFromApp != null) {
+                    menuItem_locationFromApp.setChecked(useAppLocation());
+                }
+                MenuItem menuItem_location = menu.findItem(R.id.action_location_set);
+                if (menuItem_location != null) {
+                    menuItem_location.setEnabled(!useAppLocation());
+                }
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -271,9 +269,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
                 }
                 return false;
             }
-        }));
-        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
-        popup.show();
+        })).show();
     }
 
     protected void showLocationDialog(Context context)

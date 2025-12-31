@@ -27,11 +27,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.PopupMenu;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -334,12 +334,12 @@ public class AlarmEditDialog extends DialogBase
 
     protected void showAlarmTypeMenu(Context context, final AlarmClockItem item, final View buttonView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -360,31 +360,28 @@ public class AlarmEditDialog extends DialogBase
                 notifyItemChanged();
                 return true;
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     protected void showOverflowMenu(final Context context, final AlarmClockItem item, final View buttonView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
-
-        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext1, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
-                    menu.getMenu().findItem(R.id.setAlarmTime),
-                    menu.getMenu().findItem(R.id.setAlarmOffset)
-            };
-            for (MenuItem menuItem : notSupportedMenuItems) {
-                menuItem.setEnabled(false);
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+                {
+                    MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                            menu.findItem(R.id.setAlarmTime),
+                            menu.findItem(R.id.setAlarmOffset)
+                    };
+                    for (MenuItem menuItem : notSupportedMenuItems) {
+                        menuItem.setEnabled(false);
+                    }
+                }
             }
-        }
 
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -398,10 +395,7 @@ public class AlarmEditDialog extends DialogBase
                         return false;
                 }
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     public static void confirmDeleteAlarm(@Nullable final Context context, @Nullable final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
