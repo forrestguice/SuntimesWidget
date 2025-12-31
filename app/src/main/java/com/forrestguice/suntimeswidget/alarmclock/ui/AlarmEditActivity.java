@@ -36,7 +36,6 @@ import android.os.Bundle;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -776,41 +775,44 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         showDismissChallengePopup(editor.itemView.chip_dismissChallenge, item);
     }
 
-    public void showDismissChallengePopup(View v, @NonNull final AlarmClockItem item)
+    public void showDismissChallengePopup(final View v, @NonNull final AlarmClockItem item)
     {
-        int[] attrs = { R.attr.icActionExtension, R.attr.icActionDismiss };
-        TypedArray a = obtainStyledAttributes(attrs);
-        int icExtensionResId = a.getResourceId(0, R.drawable.ic_action_extension);
-        @SuppressLint("ResourceType") int icDismissResId = a.getResourceId(1, R.drawable.ic_action_cancel);
-        a.recycle();
-
-        PopupMenu popup = new PopupMenu(this, v);
-        Menu menu = popup.getMenu();
-
-        AlarmSettings.DismissChallenge selectedChallenge = item.getDismissChallenge(this, true);
-        ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
-        challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
-        final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
-
-        for (int i=0; i<challenges.length; i++) {
-            MenuItem menuItem = menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
-            menuItem.setIcon(icDismissResId);
-            menuItem.setCheckable(true);
-            menuItem.setChecked((selectedChallenge.getID() == challenges[i].getID()));
-        }
-
-        int c = challenges.length + 1;
-        List<AlarmAddon.DismissChallengeInfo> addons = AlarmAddon.queryAlarmDismissChallenges(v.getContext(), null);
-        for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
-            MenuItem menuItem = menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
-            menuItem.setIcon(icExtensionResId);
-            menuItem.setCheckable(true);
-            menuItem.setChecked((selectedChallenge.getID() == addonInfo.getDismissChallengeID()));
-            c++;
-        }
-
-        popup.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(this, v, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                int[] attrs = { R.attr.icActionExtension, R.attr.icActionDismiss };
+                TypedArray a = obtainStyledAttributes(attrs);
+                int icExtensionResId = a.getResourceId(0, R.drawable.ic_action_extension);
+                @SuppressLint("ResourceType") int icDismissResId = a.getResourceId(1, R.drawable.ic_action_cancel);
+                a.recycle();
+
+                AlarmSettings.DismissChallenge selectedChallenge = item.getDismissChallenge(context, true);
+                ArrayList<AlarmSettings.DismissChallenge> challenges0 = new ArrayList<AlarmSettings.DismissChallenge>(Arrays.asList(AlarmSettings.DismissChallenge.values()));
+                challenges0.remove(AlarmSettings.DismissChallenge.ADDON);
+                final AlarmSettings.DismissChallenge[] challenges = challenges0.toArray(new AlarmSettings.DismissChallenge[0]);
+
+                for (int i=0; i<challenges.length; i++) {
+                    MenuItem menuItem = menu.add(Menu.NONE, i, i, challenges[i].getDisplayString());
+                    menuItem.setIcon(icDismissResId);
+                    menuItem.setCheckable(true);
+                    menuItem.setChecked((selectedChallenge.getID() == challenges[i].getID()));
+                }
+
+                int c = challenges.length + 1;
+                List<AlarmAddon.DismissChallengeInfo> addons = AlarmAddon.queryAlarmDismissChallenges(v.getContext(), null);
+                for (AlarmAddon.DismissChallengeInfo addonInfo : addons) {
+                    MenuItem menuItem = menu.add(Menu.NONE, (int)addonInfo.getDismissChallengeID(), c, addonInfo.getTitle());
+                    menuItem.setIcon(icExtensionResId);
+                    menuItem.setCheckable(true);
+                    menuItem.setChecked((selectedChallenge.getID() == addonInfo.getDismissChallengeID()));
+                    c++;
+                }
+
+                menu.setGroupCheckable(0, true, true);
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -818,11 +820,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 onDismissChallengeResult(itemID);
                 return true;
             }
-        }));
-
-        menu.setGroupCheckable(0, true, true);
-        PopupMenuCompat.forceActionBarIcons(popup.getMenu());
-        popup.show();
+        })).show();
     }
 
     protected void onDismissChallengeResult(long dismissChallengeID)

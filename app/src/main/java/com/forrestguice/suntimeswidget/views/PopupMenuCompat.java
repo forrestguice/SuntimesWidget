@@ -61,19 +61,22 @@ public class PopupMenuCompat
         boolean onMenuItemClick(MenuItem menuItem);
     }
 
-    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenuListener listener) {
+    public static PopupMenu createMenu(Context context, View view, PopupMenuListener listener) {
+        return createMenu(context, view, null, listener);
+    }
+    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuId, PopupMenuListener listener) {
         return createMenu(context, view, menuId, listener, null);
     }
-    public static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
+    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, @Nullable PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
         return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
     }
-    public static PopupMenu createMenu(Context context, View view, int menuResID, int gravity, @Nullable final PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
+    public static PopupMenu createMenu(Context context, View view, @Nullable Integer menuResID, int gravity, @Nullable final PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
     {
         PopupMenu menu = new PopupMenu(context, view, gravity);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(menuResID, menu.getMenu());
-        forceActionBarIcons(menu.getMenu());
-
+        if (menuResID != null) {
+            MenuInflater inflater = menu.getMenuInflater();
+            inflater.inflate(menuResID, menu.getMenu());
+        }
         if (onDismissListener != null) {
             menu.setOnDismissListener(onDismissListener);
         }
@@ -87,6 +90,7 @@ public class PopupMenuCompat
             });
             onClickListener.onUpdateMenu(context, menu.getMenu());
         }
+        forceActionBarIcons(menu.getMenu());
         return menu;
     }
 

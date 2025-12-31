@@ -32,8 +32,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.support.v7.widget.PopupMenu;
-
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -453,10 +451,16 @@ public class AlarmEventDialog extends BottomSheetDialogBase
             if (context == null) {
                 return;
             }
+            PopupMenuCompat.createMenu(context, v, onMoreMenuClick).show();
+        }
+    });
+    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
-            PopupMenu popup = new PopupMenu(context, v);
-            Menu menu = popup.getMenu();
-
+    private final PopupMenuCompat.PopupMenuListener onMoreMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
+    {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu)
+        {
             if (alarmPickers == null) {
                 alarmPickers = AlarmAddon.queryEventPickers(context);
             }
@@ -476,16 +480,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
 
             MenuItem item0 = menu.add(0, -1, 0, context.getString(R.string.configAction_manageEvents));
             item0.setIcon(icon1);
-
-            PopupMenuCompat.forceActionBarIcons(menu);
-            popup.setOnMenuItemClickListener(onMoreMenuClick);
-            popup.show();
         }
-    });
-    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
-    private final PopupMenu.OnMenuItemClickListener onMoreMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-    {
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {

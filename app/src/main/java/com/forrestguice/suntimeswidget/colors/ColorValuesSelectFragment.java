@@ -22,7 +22,6 @@ package com.forrestguice.suntimeswidget.colors;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,12 +32,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -246,12 +246,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected void showOverflowMenu(Context context, View v)
     {
-        PopupMenu popup = new PopupMenu(context, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_colorlist, popup.getMenu());
-        onPrepareOverflowMenu(context, popup.getMenu());
-        popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.menu_colorlist, onOverflowMenuItemSelected).show();
     }
     protected void onPrepareOverflowMenu(Context context, Menu menu)
     {
@@ -260,8 +255,13 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             deleteItem.setEnabled(!colorCollection.isDefaultColorID(getSelectedID()));
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuItemSelected = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            onPrepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {

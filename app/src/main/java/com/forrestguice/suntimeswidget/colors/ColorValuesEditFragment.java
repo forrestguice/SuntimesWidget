@@ -36,7 +36,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -45,6 +44,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.widget.GridLayoutManager;
@@ -486,12 +486,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public void showOverflowMenu(Context context, View v)
     {
-        PopupMenu popup = new PopupMenu(context, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_coloredit, popup.getMenu());
-        onPrepareOverflowMenu(context, popup.getMenu());
-        popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.menu_coloredit, onOverflowMenuItemSelected).show();
     }
 
     protected void onPrepareOverflowMenu(Context context, Menu menu)
@@ -502,8 +497,13 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuItemSelected = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            onPrepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
