@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -49,6 +48,7 @@ import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
+import com.forrestguice.support.view.ViewPager;
 
 import java.util.ArrayList;
 

@@ -30,7 +30,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -73,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;

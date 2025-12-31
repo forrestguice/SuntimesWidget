@@ -28,7 +28,6 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -43,6 +42,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ViewPager;
 
 public class AboutActivity extends AppCompatActivity
 {
