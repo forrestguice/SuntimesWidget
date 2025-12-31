@@ -35,7 +35,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -46,7 +45,6 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -672,8 +670,13 @@ public class LightMapDialog extends BottomSheetDialogBase
 
 
 
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onContextMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateContextMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -835,10 +838,8 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     });
 
-    private void updateContextMenu(Context context, PopupMenu popupMenu)
+    private void updateContextMenu(Context context, Menu menu)
     {
-        Menu menu = popupMenu.getMenu();
-
         MenuItem showGraphItem = menu.findItem(R.id.action_showgraph);
         if (showGraphItem != null) {
             showGraphItem.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH));
@@ -918,45 +919,25 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-        updateContextMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu, onContextMenuClick).show();
         return true;
     }
 
     protected boolean showSeekNoonMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_noon, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_seek_noon, onSeekEventMenuClick(null));
         return true;
     }
 
     protected boolean showSeekDawnMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_dawn, menu.getMenu());
-        addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DAWN_ITEM_ID);
-        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_seek_dawn, onSeekEventMenuClick(SEEK_CUSTOM_DAWN_ITEM_ID)).show();
         return true;
     }
 
     protected boolean showSeekDuskMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_dusk, menu.getMenu());
-        addCustomEventsToMenu(context, menu.getMenu(), SEEK_CUSTOM_DUSK_ITEM_ID);
-        menu.setOnMenuItemClickListener(onSeekEventMenuClick());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_seek_dusk, onSeekEventMenuClick(SEEK_CUSTOM_DUSK_ITEM_ID)).show();
         return true;
     }
 
@@ -1011,10 +992,17 @@ public class LightMapDialog extends BottomSheetDialogBase
         return seekCustomEvent(context, getCustomEventID(context, menuItemID, (dawn ? SEEK_CUSTOM_DAWN_ITEM_ID : SEEK_CUSTOM_DUSK_ITEM_ID)), dawn);
     }
 
-    private PopupMenu.OnMenuItemClickListener onSeekEventMenuClick()
+    private PopupMenuCompat.PopupMenuListener onSeekEventMenuClick(final Integer seekItemID)
     {
-        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                if (seekItemID != null) {
+                    addCustomEventsToMenu(context, menu, seekItemID);
+                }
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
@@ -1098,18 +1086,12 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_speed, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSpeedMenuClick);
-        updateSpeedMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_speed, onSpeedMenuClick).show();
         return true;
     }
 
-    private void updateSpeedMenu(Context context, PopupMenu menu)
+    private void updateSpeedMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
         MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP);
         //Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
 
@@ -1136,8 +1118,13 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onSpeedMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateSpeedMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -1186,13 +1173,16 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID));
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick).show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            WidgetTimezones.updateTimeZoneMenu(menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID));
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -1581,18 +1571,17 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showSeekAltitudeMenu(final Context context, final EditText edit)
     {
-        PopupMenu menu = new PopupMenu(context, edit);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_altitude, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSeekAltitudeMenuClick(edit));
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_altitude, onSeekAltitudeMenuClick(edit)).show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onSeekAltitudeMenuClick(final EditText edit)
+    private PopupMenuCompat.PopupMenuListener onSeekAltitudeMenuClick(final EditText edit)
     {
-        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
@@ -1955,18 +1944,17 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showObjectHeightMenu(final Context context, final EditText edit)
     {
-        PopupMenu menu = new PopupMenu(context, edit);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_objheight, menu.getMenu());
-        menu.setOnMenuItemClickListener(onObjectHeightMenuClick(edit));
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_objheight, onObjectHeightMenuClick(edit)).show();
         return true;
     }
-    private PopupMenu.OnMenuItemClickListener onObjectHeightMenuClick(final EditText edit)
+    private PopupMenuCompat.PopupMenuListener onObjectHeightMenuClick(final EditText edit)
     {
-        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
@@ -2101,19 +2089,18 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showShadowSeekMenu(final Context context, EditText edit)
     {
-        PopupMenu menu = new PopupMenu(context, edit);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_seek_shadowlength, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSeekShadowMenuClick(edit));
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_shadowlength, onSeekShadowMenuClick(edit)).show();
         return true;
     }
 
-    private PopupMenu.OnMenuItemClickListener onSeekShadowMenuClick(final EditText edit)
+    private PopupMenuCompat.PopupMenuListener onSeekShadowMenuClick(final EditText edit)
     {
-        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
@@ -2146,19 +2133,18 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showShadowLengthMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightmapmenu_shadowlength, menu.getMenu());
-        menu.setOnMenuItemClickListener(onShadowLengthMenuClick());
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_shadowlength, onShadowLengthMenuClick()).show();
         return true;
     }
 
-    private PopupMenu.OnMenuItemClickListener onShadowLengthMenuClick()
+    private PopupMenuCompat.PopupMenuListener onShadowLengthMenuClick()
     {
-        return new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {

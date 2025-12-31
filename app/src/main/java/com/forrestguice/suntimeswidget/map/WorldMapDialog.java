@@ -38,7 +38,6 @@ import android.os.Bundle;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -748,13 +747,16 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick).show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            WidgetTimezones.updateTimeZoneMenu(menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -824,22 +826,23 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     protected boolean showMapModeMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
-        updateMapModeMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick).show();
         return true;
     }
-    private void updateMapModeMenu(Context context, PopupMenu menu)
+    private void updateMapModeMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
         MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
         if (option_mapmode != null) {
             option_mapmode.setChecked(true);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onMapModeMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateMapModeMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -870,15 +873,12 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
-        updateSpeedMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick).show();
         return true;
     }
 
-    private void updateSpeedMenu(Context context, PopupMenu menu)
+    private void updateSpeedMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
         MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
 
         MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
@@ -897,8 +897,13 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onSpeedMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateSpeedMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -935,16 +940,12 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
-        updateContextMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick).show();
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu)
+    private void updateContextMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
         WorldMapTask.WorldMapOptions options = worldmap.getOptions();
 
         MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
@@ -1226,8 +1227,13 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onContextMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateContextMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {

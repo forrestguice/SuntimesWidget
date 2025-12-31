@@ -724,14 +724,11 @@ public class MoonDialog extends BottomSheetDialogBase
      */
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
-        updateOverflowMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null).show();
         return true;
     }
-    private void updateOverflowMenu(Context context, PopupMenu popup)
+    private void updateOverflowMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem lunarNoonItem = menu.findItem(R.id.action_lunarnoon_show);
         if (lunarNoonItem != null) {
             lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
@@ -753,8 +750,13 @@ public class MoonDialog extends BottomSheetDialogBase
             columnItem.setChecked(true);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -810,14 +812,11 @@ public class MoonDialog extends BottomSheetDialogBase
      */
     protected boolean showMediaMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null);
-        updateMediaMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null).show();
         return true;
     }
-    private void updateMediaMenu(Context context, PopupMenu popup)
+    private void updateMediaMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem playItem = menu.findItem(R.id.action_play);
         if (playItem != null) {
             playItem.setVisible( !isPlaying() );
@@ -831,8 +830,13 @@ public class MoonDialog extends BottomSheetDialogBase
             resetItem.setEnabled(isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow()));
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onMediaMenuClick = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateMediaMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {

@@ -38,7 +38,6 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.PopupMenu;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -469,20 +468,20 @@ public class PlacesEditFragment extends BottomSheetDialogBase
      * GetFix Menu
      */
     protected void showGetFixMenu(Context context, View v) {
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null);
-        Menu menu = popup.getMenu();
-
-        MenuItem logItem = menu.findItem(R.id.action_location_togglelog);
-        if (logItem != null) {
-            logItem.setVisible(LocationHelperSettings.keepLastLocationLog(context));
-            logItem.setChecked(loadLogViewState());
+        PopupMenuCompat.createMenu(context, v, R.menu.placesgps, onGetFixMenuItemClicked, null).show();
+    }
+    private final PopupMenuCompat.PopupMenuListener onGetFixMenuItemClicked = new PopupMenuCompat.PopupMenuListener()
+    {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu)
+        {
+            MenuItem logItem = menu.findItem(R.id.action_location_togglelog);
+            if (logItem != null) {
+                logItem.setVisible(LocationHelperSettings.keepLastLocationLog(context));
+                logItem.setChecked(loadLogViewState());
+            }
         }
 
-        PopupMenuCompat.forceActionBarIcons(menu);
-        popup.show();
-    }
-    private final PopupMenu.OnMenuItemClickListener onGetFixMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
-    {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {

@@ -37,6 +37,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -212,6 +213,46 @@ public class ViewUtils
                 throw new NullPointerException("OnMenuItemClickListener is null!");
             }
         }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onMenuItemClick(item);
+            }
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "onMenuItemClick: throttled: " + Math.abs(currentClickAt - previousClickAt));
+            }
+            return true;
+        }
+    }
+
+    /**
+     * ThrottledPopupMenuListener
+     */
+    public static class ThrottledPopupMenuListener implements PopupMenuCompat.PopupMenuListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected PopupMenuCompat.PopupMenuListener listener;
+
+        public ThrottledPopupMenuListener(@NonNull PopupMenuCompat.PopupMenuListener listener) {
+            this(listener, 750);
+        }
+
+        public ThrottledPopupMenuListener(@NonNull PopupMenuCompat.PopupMenuListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnMenuItemClickListener is null!");
+            }
+        }
+
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {}
 
         @Override
         public boolean onMenuItemClick(MenuItem item)

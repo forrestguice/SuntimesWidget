@@ -28,7 +28,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
-import android.support.v7.widget.PopupMenu;
+//import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -599,14 +599,11 @@ public class TimeZoneDialog extends BottomSheetDialogBase
      */
     protected boolean showTimeZoneSortMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick);
-        updateTimeZoneSortMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick).show();
         return true;
     }
-    public static void updateTimeZoneSortMenu(Context context, PopupMenu popup)
+    public static void updateTimeZoneSortMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem sortByOffset = menu.findItem(R.id.sortByOffset);
         MenuItem sortById = menu.findItem(R.id.sortById);
 
@@ -625,8 +622,13 @@ public class TimeZoneDialog extends BottomSheetDialogBase
             item.setChecked(value);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneSortMenuClick = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateTimeZoneSortMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId())
@@ -668,7 +670,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
             sortActionBase.init(context, spinner_timezone);
             return sortActionBase.onActionItemClicked(item.getItemId());
         }
-    });
+    };
 
     /**
      * trigger the time zone ActionMode

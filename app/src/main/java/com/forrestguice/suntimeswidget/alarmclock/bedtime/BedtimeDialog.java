@@ -31,7 +31,6 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
@@ -455,8 +454,14 @@ public class BedtimeDialog extends DialogBase
 
     protected void configureSleepTime(final Context context, View v, @Nullable final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                MenuItem item_enabled = menu.findItem(R.id.action_bedtime_sleep_autooff);
+                item_enabled.setChecked(BedtimeSettings.loadPrefBedtimeAutoOff(context));
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -483,13 +488,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-
-        MenuItem item_enabled = menu.findItem(R.id.action_bedtime_sleep_autooff);
-        item_enabled.setChecked(BedtimeSettings.loadPrefBedtimeAutoOff(context));
-
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener, null).show();
     }
 
     protected void toggleConfigureBedtimeAlarmOff(Context context, BedtimeItem item)
@@ -1048,8 +1047,13 @@ public class BedtimeDialog extends DialogBase
 
     protected void showAddBedtimeMenu(final Context context, final View v, final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateAddBedtimeMenu(context, v, menu);
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -1072,10 +1076,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-        updateAddBedtimeMenu(context, v, menu);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener, null).show();
     }
 
     protected void updateAddBedtimeMenu(final Context context, final View v, final Menu menu)
@@ -1137,8 +1138,12 @@ public class BedtimeDialog extends DialogBase
 
     protected void showAddAlarmMenu(final Context context, final View v, final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -1157,8 +1162,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener, null);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener, null).show();
     }
     protected void updateAddAlarmMenu(final Context context, final View v, final Menu menu)
     {
@@ -1243,8 +1247,15 @@ public class BedtimeDialog extends DialogBase
     }
     protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateAddBedtimeMenu(context, v, menu);
+                updateAddAlarmMenu(context, v, menu);
+                updateEditAlarmMenu(context, v, menu);
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
@@ -1302,12 +1313,7 @@ public class BedtimeDialog extends DialogBase
                 }
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-        updateAddBedtimeMenu(context, v, menu);
-        updateAddAlarmMenu(context, v, menu);
-        updateEditAlarmMenu(context, v, menu);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener, null).show();
     }
 
     public static void confirmClearAlarms(@Nullable final Context context, DialogInterface.OnClickListener onDeleteConfirmed)

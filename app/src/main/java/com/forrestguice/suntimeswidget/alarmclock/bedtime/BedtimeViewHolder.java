@@ -30,7 +30,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.Menu;
@@ -533,8 +532,42 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         protected void showDndMenu(final Context context, View view)
         {
-            PopupMenu.OnMenuItemClickListener menuClickListener = new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.PopupMenuListener menuClickListener = new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu)
+                {
+                    boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+                    //boolean dnd = BedtimeSettings.isAutomaticZenRuleEnabled(context);  //BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+
+                    if (dnd)
+                    {
+                        int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
+                        switch (filter)
+                        {
+                            case BedtimeSettings.DND_FILTER_ALARMS:
+                                MenuItem dndAlarmsItem = menu.findItem(R.id.action_dnd_alarms);
+                                if (dndAlarmsItem != null) {
+                                    dndAlarmsItem.setChecked(true);
+                                }
+                                break;
+
+                            case BedtimeSettings.DND_FILTER_PRIORITY:
+                                MenuItem dndPriorityItem = menu.findItem(R.id.action_dnd_priority);
+                                if (dndPriorityItem != null) {
+                                    dndPriorityItem.setChecked(true);
+                                }
+                                break;
+                        }
+
+                    } else {
+                        MenuItem dndDisabledItem = menu.findItem(R.id.action_dnd_disable);
+                        if (dndDisabledItem != null) {
+                            dndDisabledItem.setChecked(true);
+                        }
+                    }
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem item)
                 {
@@ -564,38 +597,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 }
             };
 
-            PopupMenu popupMenu = PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null);
-            Menu menu = popupMenu.getMenu();
-            boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
-            //boolean dnd = BedtimeSettings.isAutomaticZenRuleEnabled(context);  //BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
-
-            if (dnd)
-            {
-                int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
-                switch (filter)
-                {
-                    case BedtimeSettings.DND_FILTER_ALARMS:
-                        MenuItem dndAlarmsItem = menu.findItem(R.id.action_dnd_alarms);
-                        if (dndAlarmsItem != null) {
-                            dndAlarmsItem.setChecked(true);
-                        }
-                        break;
-
-                    case BedtimeSettings.DND_FILTER_PRIORITY:
-                        MenuItem dndPriorityItem = menu.findItem(R.id.action_dnd_priority);
-                        if (dndPriorityItem != null) {
-                            dndPriorityItem.setChecked(true);
-                        }
-                        break;
-                }
-
-            } else {
-                MenuItem dndDisabledItem = menu.findItem(R.id.action_dnd_disable);
-                if (dndDisabledItem != null) {
-                    dndDisabledItem.setChecked(true);
-                }
-            }
-            popupMenu.show();
+            PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null).show();
         }
 
         @Override

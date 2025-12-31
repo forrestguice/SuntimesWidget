@@ -30,7 +30,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -616,20 +615,12 @@ public class LightGraphDialog extends BottomSheetDialogBase
 
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightgraphmenu, menu.getMenu());
-        menu.setOnMenuItemClickListener(onOverflowMenuClick);
-        updateOverflowMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu, onOverflowMenuClick).show();
         return true;
     }
 
-    private void updateOverflowMenu(Context context, PopupMenu popup)
+    private void updateOverflowMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
-
         MenuItem graphOption_showCrosshair = menu.findItem(R.id.graphOption_showCrosshair);
         if (graphOption_showCrosshair != null) {
             graphOption_showCrosshair.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR));
@@ -674,8 +665,13 @@ public class LightGraphDialog extends BottomSheetDialogBase
 
     }
 
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -801,13 +797,16 @@ public class LightGraphDialog extends BottomSheetDialogBase
     });
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID));
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick).show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            WidgetTimezones.updateTimeZoneMenu(menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID));
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -834,23 +833,15 @@ public class LightGraphDialog extends BottomSheetDialogBase
         };
     }
 
-    protected void showContextMenu(Context context, View v, final String label, final long datetime)
-    {
-        PopupMenu menu = new PopupMenu(context, v);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.lightgraphmenu_context, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClicked);
-        updateContextMenu(context, menu, label, datetime);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+    protected void showContextMenu(Context context, View v, final String label, final long datetime) {
+        PopupMenuCompat.createMenu(context, v, R.menu.lightgraphmenu_context, onContextMenuClicked(label, datetime)).show();
     }
-    private void updateContextMenu(Context context, PopupMenu menu, final String label, final long datetime)
+    private void updateContextMenu(Context context, Menu m, final String label, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
         data.putExtra("label", label);
 
-        Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
@@ -872,65 +863,73 @@ public class LightGraphDialog extends BottomSheetDialogBase
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onContextMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenuCompat.PopupMenuListener onContextMenuClicked(final String label, final long datetime)
     {
-        @Override
-        public boolean onMenuItemClick(MenuItem item)
+        return new PopupMenuCompat.PopupMenuListener()
         {
-            Context context = getContext();
-            if (context == null) {
-                return false;
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateContextMenu(context, menu, label, datetime);
             }
 
-            Intent itemData = item.getIntent();
-            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-
-            switch (item.getItemId())
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
             {
-                //case R.id.action_alarm:
-                //    if (dialogListener != null) {
-                //        dialogListener.onSetAlarm(itemMode);
-                //    }
-                //    return true;
-
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(itemTime);
-                    }
-                    return true;
-
-                case R.id.action_moon:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMoonInfo(itemTime);
-                    }
-                    return true;
-
-                case R.id.action_worldmap:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMap(itemTime);
-                    }
-                    return true;
-
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(itemTime);
-                    }
-                    collapseSheet(getDialog());
-                    return true;
-
-                case R.id.action_calendar:
-                    openCalendar(context, itemTime);
-                    return true;
-
-                case R.id.action_share:
-                    shareItem(getActivity(), itemData);
-                    return true;
-
-                default:
+                Context context = getContext();
+                if (context == null) {
                     return false;
+                }
+
+                Intent itemData = item.getIntent();
+                long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
+
+                switch (item.getItemId())
+                {
+                    //case R.id.action_alarm:
+                    //    if (dialogListener != null) {
+                    //        dialogListener.onSetAlarm(itemMode);
+                    //    }
+                    //    return true;
+
+                    case R.id.action_sunposition:
+                        if (dialogListener != null) {
+                            dialogListener.onShowPosition(itemTime);
+                        }
+                        return true;
+
+                    case R.id.action_moon:
+                        if (dialogListener != null) {
+                            dialogListener.onShowMoonInfo(itemTime);
+                        }
+                        return true;
+
+                    case R.id.action_worldmap:
+                        if (dialogListener != null) {
+                            dialogListener.onShowMap(itemTime);
+                        }
+                        return true;
+
+                    case R.id.action_date:
+                        if (dialogListener != null) {
+                            dialogListener.onShowDate(itemTime);
+                        }
+                        collapseSheet(getDialog());
+                        return true;
+
+                    case R.id.action_calendar:
+                        openCalendar(context, itemTime);
+                        return true;
+
+                    case R.id.action_share:
+                        shareItem(getActivity(), itemData);
+                        return true;
+
+                    default:
+                        return false;
+                }
             }
-        }
-    };
+        };
+    }
 
     protected void openCalendar(Context context, long itemMillis)
     {

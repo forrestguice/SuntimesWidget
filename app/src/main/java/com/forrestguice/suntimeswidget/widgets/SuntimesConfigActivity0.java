@@ -43,7 +43,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -1755,22 +1754,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
-    protected void showTimeModeMenu(Context context, View v)
-    {
-        PopupMenu menu = new PopupMenu(context, v);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.timemode_overflow, menu.getMenu());
-        menu.setOnMenuItemClickListener(onTimeModeMenuClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        prepareTimeModeMenu(context, menu.getMenu());
-        menu.show();
+    protected void showTimeModeMenu(Context context, View v) {
+        PopupMenuCompat.createMenu(context, v, R.menu.timemode_overflow, onTimeModeMenuClicked).show();
     }
 
     protected void prepareTimeModeMenu(Context context, Menu menu) {
     }
 
-    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenuCompat.PopupMenuListener onTimeModeMenuClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            prepareTimeModeMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
@@ -1951,13 +1948,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected boolean showTimeZoneSortMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick);
-        TimeZoneDialog.updateTimeZoneSortMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick).show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            TimeZoneDialog.updateTimeZoneSortMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {

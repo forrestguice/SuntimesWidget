@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.annotation.Nullable;
@@ -36,10 +37,6 @@ import java.lang.reflect.Method;
 
 public class PopupMenuCompat
 {
-    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener) {
-        return createMenu(context, view, menuId, listener, null);
-    }
-
     public static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
         return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
     }
@@ -56,6 +53,40 @@ public class PopupMenuCompat
             menu.setOnMenuItemClickListener(onClickListener);
         }
         forceActionBarIcons(menu.getMenu());
+        return menu;
+    }
+
+    public interface PopupMenuListener {
+        void onUpdateMenu(Context context, Menu menu);
+        boolean onMenuItemClick(MenuItem menuItem);
+    }
+
+    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenuListener listener) {
+        return createMenu(context, view, menuId, listener, null);
+    }
+    public static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
+        return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
+    }
+    public static PopupMenu createMenu(Context context, View view, int menuResID, int gravity, @Nullable final PopupMenuListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
+    {
+        PopupMenu menu = new PopupMenu(context, view, gravity);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(menuResID, menu.getMenu());
+        forceActionBarIcons(menu.getMenu());
+
+        if (onDismissListener != null) {
+            menu.setOnDismissListener(onDismissListener);
+        }
+        if (onClickListener != null)
+        {
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    return onClickListener.onMenuItemClick(menuItem);
+                }
+            });
+            onClickListener.onUpdateMenu(context, menu.getMenu());
+        }
         return menu;
     }
 
@@ -79,4 +110,5 @@ public class PopupMenuCompat
             }
         }
     }
+
 }
