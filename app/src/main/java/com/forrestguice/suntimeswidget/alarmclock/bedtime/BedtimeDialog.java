@@ -59,9 +59,8 @@ import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.LinearLayoutManager;
-import com.forrestguice.support.widget.ViewCompat;
+import com.forrestguice.support.view.ViewCompat;
 
 import java.util.Calendar;
 import java.util.List;

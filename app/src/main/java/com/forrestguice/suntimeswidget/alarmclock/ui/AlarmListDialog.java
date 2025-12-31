@@ -95,7 +95,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.SwitchCompat;
-import com.forrestguice.support.widget.ViewCompat;
+import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;

@@ -79,7 +79,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
-import com.forrestguice.support.widget.ViewCompat;
+import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;

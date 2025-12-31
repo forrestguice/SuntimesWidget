@@ -43,7 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.dialog.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.widget.ViewCompat;
+import com.forrestguice.support.view.ViewCompat;
 
 public class AlarmLabelDialog extends DialogBase
 {
