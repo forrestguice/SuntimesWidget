@@ -252,7 +252,9 @@ public class ViewUtils
         }
 
         @Override
-        public void onUpdateMenu(Context context, Menu menu) {}
+        public void onUpdateMenu(Context context, Menu menu) {
+            listener.onUpdateMenu(context, menu);
+        }
 
         @Override
         public boolean onMenuItemClick(MenuItem item)

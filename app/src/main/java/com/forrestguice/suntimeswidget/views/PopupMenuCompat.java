@@ -37,10 +37,12 @@ import java.lang.reflect.Method;
 
 public class PopupMenuCompat
 {
+    @Deprecated
     public static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
         return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
     }
 
+    @Deprecated
     public static PopupMenu createMenu(Context context, View view, int menuResID, int gravity, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener)
     {
         PopupMenu menu = new PopupMenu(context, view, gravity);
@@ -106,6 +108,7 @@ public class PopupMenuCompat
     /**
      * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
      */
+    @Deprecated
     public static void forceActionBarIcons(Menu menu)    // TODO: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
     {
         if (menu != null)
