@@ -31,9 +31,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import com.forrestguice.support.content.ContextCompat;
 
 import android.support.v7.widget.PopupMenu;
+
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
