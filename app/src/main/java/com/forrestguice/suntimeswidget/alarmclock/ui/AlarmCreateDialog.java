@@ -155,7 +155,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
         }
 
-        //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        //setStyle(DialogBase.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
     }
 

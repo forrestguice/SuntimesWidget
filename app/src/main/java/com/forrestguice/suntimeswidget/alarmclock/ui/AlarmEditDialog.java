@@ -26,13 +26,11 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,7 +141,7 @@ public class AlarmEditDialog extends DialogBase
     public void onCreate(Bundle savedState)
     {
         super.onCreate(savedState);
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        setStyle(DialogBase.STYLE_NO_FRAME, R.style.AppTheme);
         initOptions(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
