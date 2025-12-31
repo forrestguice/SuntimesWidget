@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
@@ -93,7 +94,7 @@ public class SuntimesWarning
         return wasDismissed;
     }
 
-    private int duration = Snackbar.LENGTH_INDEFINITE;
+    private int duration = SnackbarUtils.LENGTH_INDEFINITE;
     public int getDuration() {
          return duration;
     }
@@ -155,13 +156,13 @@ public class SuntimesWarning
         snackbarView.setBackgroundColor(backgroundColor);
         snackbarWarning.setActionTextColor(accentColor);
 
-        TextView snackbarText = (TextView)snackbarView.findViewById(ViewUtils.getSnackbarTextResourceID());
+        TextView snackbarText = (TextView)snackbarView.findViewById(SnackbarUtils.getSnackbarTextResourceID());
         if (snackbarText != null) {
             snackbarText.setTextColor(textColor);
             snackbarText.setMaxLines(5);
         }
 
-        View snackbarAction = snackbarView.findViewById(ViewUtils.getSnackbarActionResourceID());
+        View snackbarAction = snackbarView.findViewById(SnackbarUtils.getSnackbarActionResourceID());
         if (snackbarAction != null) {
             if (Build.VERSION.SDK_INT >= 16) {
                 snackbarAction.setBackground(buttonDrawable);
@@ -234,7 +235,7 @@ public class SuntimesWarning
     {
         this.contentDescription = value;
         if (snackbar != null) {
-            TextView snackText = (TextView) snackbar.getView().findViewById(ViewUtils.getSnackbarTextResourceID());
+            TextView snackText = (TextView) snackbar.getView().findViewById(SnackbarUtils.getSnackbarTextResourceID());
             if (snackText != null) {
                 snackText.setContentDescription(contentDescription);
             }

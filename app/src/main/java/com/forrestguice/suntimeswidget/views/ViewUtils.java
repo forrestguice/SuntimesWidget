@@ -148,60 +148,9 @@ public class ViewUtils
         }
     }
 
-    @SuppressLint("ResourceType")
-    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
-    {
-        Integer[] colors = new Integer[] {null, null, null};
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
-        TypedArray a = context.obtainStyledAttributes(colorAttrs);
-        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
-        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
-        a.recycle();
-
-        if (colorOverrides != null && colorOverrides.length == colors.length) {
-            for (int i=0; i<colors.length; i++) {
-                if (colorOverrides[i] != null) {
-                    colors[i] = colorOverrides[i];
-                }
-            }
-        }
-
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(colors[2]);
-        snackbar.setActionTextColor(colors[1]);
-
-        TextView snackbarText = (TextView)snackbarView.findViewById(getSnackbarTextResourceID());
-        if (snackbarText != null) {
-            snackbarText.setTextColor(colors[0]);
-            snackbarText.setMaxLines(3);
-        }
-
-        View snackbarAction = snackbarView.findViewById(getSnackbarActionResourceID());
-        if (snackbarAction != null) {
-            if (Build.VERSION.SDK_INT >= 16)
-            {
-                snackbarAction.setBackground(buttonDrawable);
-                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
-            }
-        }
-    }
-
     public static int getTouchOutsideResourceID() {
         return android.support.design.R.id.touch_outside;    // support libraries
         //return com.google.android.material.R.id.touch_outside;   // androidx
-    }
-
-    public static int getSnackbarTextResourceID() {
-        return android.support.design.R.id.snackbar_text;    // support libraries
-        //return com.google.android.material.R.id.snackbar_text;   // androidx
-    }
-
-    public static int getSnackbarActionResourceID() {
-        return android.support.design.R.id.snackbar_action;    // support libraries
-        //return com.google.android.material.R.id.snackbar_action;   // androidx
     }
 
     public static int getBottomSheetResourceID() {

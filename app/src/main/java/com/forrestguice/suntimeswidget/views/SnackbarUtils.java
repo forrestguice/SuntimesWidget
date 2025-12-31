@@ -38,6 +38,16 @@ public class SnackbarUtils
     public static final int LENGTH_SHORT = Snackbar.LENGTH_SHORT;
     public static final int LENGTH_LONG = Snackbar.LENGTH_LONG;
 
+    public static int getSnackbarTextResourceID() {
+        return android.support.design.R.id.snackbar_text;    // support libraries
+        //return com.google.android.material.R.id.snackbar_text;   // androidx
+    }
+
+    public static int getSnackbarActionResourceID() {
+        return android.support.design.R.id.snackbar_action;    // support libraries
+        //return com.google.android.material.R.id.snackbar_action;   // androidx
+    }
+
     public static Snackbar make(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration)
     {
         Snackbar snackbar = Snackbar.make(view, text, duration);
@@ -84,16 +94,6 @@ public class SnackbarUtils
                 snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
             }
         }
-    }
-
-    public static int getSnackbarTextResourceID() {
-        return android.support.design.R.id.snackbar_text;    // support libraries
-        //return com.google.android.material.R.id.snackbar_text;   // androidx
-    }
-
-    public static int getSnackbarActionResourceID() {
-        return android.support.design.R.id.snackbar_action;    // support libraries
-        //return com.google.android.material.R.id.snackbar_action;   // androidx
     }
 
 }

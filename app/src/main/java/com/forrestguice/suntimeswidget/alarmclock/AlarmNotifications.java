@@ -54,6 +54,8 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
+
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.support.v4.app.NotificationCompat;
 import android.text.SpannableString;
@@ -264,11 +266,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (view != null)
             {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
+                Snackbar snackbar = SnackbarUtils.make(context, view, alarmDisplay, duration);
                 if (actionText != null && actionListener != null) {
                     snackbar.setAction(actionText, actionListener);
                 }
-                ViewUtils.themeSnackbar(context, snackbar, null);
                 snackbar.show();
                 return snackbar;
 
