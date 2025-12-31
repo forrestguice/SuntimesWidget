@@ -21,10 +21,10 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.support.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
 

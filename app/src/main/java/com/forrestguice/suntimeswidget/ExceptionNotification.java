@@ -25,9 +25,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.NotificationCompat;
 
 public abstract class ExceptionNotification
 {
