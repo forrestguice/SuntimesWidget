@@ -44,7 +44,6 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -669,16 +668,27 @@ public class AlarmListDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public interface ImportFragment
+    {
+        void startActivityForResult(Intent intent, int request);
+    }
+
     public void importAlarms(final Context context)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             return;
         }
-        importAlarms(AlarmListDialog.this, context, getLayoutInflater(), REQUEST_IMPORT_URI);
+        ImportFragment fragment = new ImportFragment() {
+            @Override
+            public void startActivityForResult(Intent intent, int request) {
+                AlarmListDialog.this.startActivityForResult(intent, request);
+            }
+        };
+        importAlarms(fragment, context, getLayoutInflater(), REQUEST_IMPORT_URI);
     }
 
-    public static void importAlarms(final Fragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
+    public static void importAlarms(final ImportFragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
     {
         DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
         {

@@ -1156,7 +1156,13 @@ public class WelcomeActivity extends AppCompatActivity
                 if (importTask != null) {
                     Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
                 }
-                AlarmListDialog.importAlarms(WelcomeAlarmsFragment.this, getContext(), getLayoutInflater(), IMPORT_REQUEST);
+                AlarmListDialog.ImportFragment fragment = new AlarmListDialog.ImportFragment() {
+                    @Override
+                    public void startActivityForResult(Intent intent, int request) {
+                        WelcomeAlarmsFragment.this.startActivityForResult(intent, request);
+                    }
+                };
+                AlarmListDialog.importAlarms(fragment, getContext(), getLayoutInflater(), IMPORT_REQUEST);
             }
         };
 
