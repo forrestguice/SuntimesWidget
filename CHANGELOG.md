@@ -30,7 +30,8 @@
 * adds `snooze` chip to the alarm edit dialog that allows setting the snooze length per alarm.
 * adds `snooze limit` chip to the alarm edit dialog that allows setting the snooze limit per alarm.
 
-* refactor; decouples the core data classes from Android api.
+* refactor; decouples core data classes from the Android api.
+* refactor; decouples UI classes from the Android Support Library.
 * build; adds `fdroid` and `nightly` build flavors (#892).
 
 ### v0.16.12 (2025-12-28)
