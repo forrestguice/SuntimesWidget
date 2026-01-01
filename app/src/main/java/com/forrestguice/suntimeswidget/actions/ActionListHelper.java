@@ -706,7 +706,7 @@ public class ActionListHelper
 
     }
 
-    private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
+    /*private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
     {
         public ActionDisplayActionMode() {
             super();
@@ -728,7 +728,7 @@ public class ActionListHelper
             mode.finish();
             return onActionItemClicked(item);
         }
-    }
+    }*/
 
     @TargetApi(11)
     private class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback

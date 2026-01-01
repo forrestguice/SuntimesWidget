@@ -1033,7 +1033,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     /**
      * PlacesEditActionCompat
      */
-    private class PlacesEditActionCompat extends ActionModeCompat.Callback
+    private class PlacesEditActionCompat extends ActionModeCompat.CallbackBase implements ActionModeCompat.Callback
     {
         @Override
         public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)

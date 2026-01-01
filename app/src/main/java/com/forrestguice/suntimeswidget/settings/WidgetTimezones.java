@@ -44,6 +44,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.view.ActionModeCompat;
+
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.ref.WeakReference;
@@ -586,15 +588,17 @@ public class WidgetTimezones
     /**
      * ActionMode for sorting time zone spinners (support mode version).
      */
-    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements android.support.v7.view.ActionMode.Callback
+    public static class TimeZoneSpinnerSortActionCompat extends TimeZoneSpinnerSortActionBase implements ActionModeCompat.Callback
     {
+        private ActionModeCompat mode;
+
         public TimeZoneSpinnerSortActionCompat(Context context, Spinner spinner)
         {
             init(context, spinner);
         }
 
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
         {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.timezonesort, menu);
@@ -602,20 +606,31 @@ public class WidgetTimezones
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeCompat mode, Menu menu)
         {
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {}
+        public void onDestroyActionMode(ActionModeCompat actionMode) {}
 
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public void setActionMode(ActionModeCompat value) {
+            mode = value;
+        }
+        @Override
+        public ActionModeCompat getActionMode() {
+            return mode;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionModeCompat mode, MenuItem item)
         {
             if (onActionItemClicked(item.getItemId()))
             {
-                mode.finish();
+                if (mode != null) {
+                    mode.finish();
+                }
                 return true;
             }
             return false;

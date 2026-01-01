@@ -26,8 +26,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v7.app.AppCompatActivity;
-
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -64,6 +62,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.Normalizer;
@@ -727,8 +727,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
         } else {
             // LEGACY; ActionMode for pre HONEYCOMB
-            AppCompatActivity activity = (AppCompatActivity)getActivity();
-            android.support.v7.view.ActionMode actionMode = ((activity != null) ? activity.startSupportActionMode(new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
+            ActionModeCompat actionMode = AppCompatActivity.startSupportActionMode(getActivity(), new WidgetTimezones.TimeZoneSpinnerSortActionCompat(getContext(), spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -748,12 +747,12 @@ public class TimeZoneDialog extends BottomSheetDialogBase
                 }
 
                 @Override
-                public void onDestroyActionMode(android.support.v7.view.ActionMode mode)
+                public void onDestroyActionMode(ActionModeCompat mode)
                 {
                     super.onDestroyActionMode(mode);
                     TimeZoneDialog.this.actionMode = null;
                 }
-            }) : null);
+            });
             if (actionMode != null)
             {
                 this.actionMode = actionMode;

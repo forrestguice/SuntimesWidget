@@ -66,8 +66,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import android.support.v7.view.ActionMode;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
@@ -136,6 +134,7 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.Toolbar;
 
 import java.io.File;
@@ -247,10 +246,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_solartime_help;
 
     protected String customTimezoneID;
-    protected ActionMode.Callback spinner_timezone_actionMode;
+    protected ActionModeCompat.Callback spinner_timezone_actionMode;
     protected WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
 
-    protected ActionMode actionMode = null;
+    protected ActionModeCompat actionMode = null;
 
     public SuntimesConfigActivity0()
     {
@@ -857,7 +856,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }
 
             @Override
-            public void onDestroyActionMode(ActionMode mode)
+            public void onDestroyActionMode(ActionModeCompat mode)
             {
                 super.onDestroyActionMode(mode);
                 actionMode = null;
@@ -1935,7 +1934,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (actionMode == null)
         {
-            actionMode = startSupportActionMode(spinner_timezone_actionMode);
+            actionMode = AppCompatActivity.startSupportActionMode(this, spinner_timezone_actionMode);
             if (actionMode != null) {
                 actionMode.setTitle(getString(R.string.timezone_sort_contextAction));
             }

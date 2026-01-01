@@ -376,7 +376,7 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    private class PlacesListActionCompat extends ActionModeCompat.Callback
+    private class PlacesListActionCompat  extends ActionModeCompat.CallbackBase implements ActionModeCompat.Callback
     {
         private PlaceItem[] items = null;
         public void setItems(PlaceItem[] values) {

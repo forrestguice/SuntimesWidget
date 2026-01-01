@@ -628,7 +628,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * WidgetThemeActionCompat
      */
-    private class WidgetThemeActionCompat extends ActionModeCompat.Callback
+    private class WidgetThemeActionCompat  extends ActionModeCompat.CallbackBase implements ActionModeCompat.Callback
     {
         private SuntimesTheme theme = null;
 

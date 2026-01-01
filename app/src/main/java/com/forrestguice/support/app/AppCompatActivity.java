@@ -2,6 +2,7 @@ package com.forrestguice.support.app;
 
 import android.app.Activity;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -17,6 +18,9 @@ public class AppCompatActivity extends android.support.v7.app.AppCompatActivity
             ActionModeCompat result = new ActionModeCompat(actionMode);
             callback.setActionMode(result);
             return result;
-        } else return null;
+        } else {
+            Log.e("AppCompatActivity", "startSupportActionMode failed! supplied activity is not an instance of android.support.v7.app.AppCompatActivity");
+            return null;
+        }
     }
 }

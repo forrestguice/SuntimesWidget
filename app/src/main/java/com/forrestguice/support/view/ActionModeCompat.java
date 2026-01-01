@@ -1,5 +1,6 @@
 package com.forrestguice.support.view;
 
+import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,21 +76,30 @@ public class ActionModeCompat
         return actionMode.getMenuInflater();
     }
 
-    public static abstract class Callback
+    public interface Callback
     {
-        public abstract boolean onCreateActionMode(ActionModeCompat actionMode, Menu menu);
-        public abstract boolean onPrepareActionMode(ActionModeCompat actionMode, Menu menu);
-        public abstract boolean onActionItemClicked(ActionModeCompat actionMode, MenuItem menuItem);
-        public void onDestroyActionMode(ActionModeCompat actionMode) {
-            mode = null;
-        }
+        boolean onCreateActionMode(ActionModeCompat actionMode, Menu menu);
+        boolean onPrepareActionMode(ActionModeCompat actionMode, Menu menu);
+        boolean onActionItemClicked(ActionModeCompat actionMode, MenuItem menuItem);
+        void onDestroyActionMode(ActionModeCompat actionMode);
+        void setActionMode(ActionModeCompat value);
+        ActionModeCompat getActionMode();
+    }
 
+    public static abstract class CallbackBase implements Callback
+    {
         private ActionModeCompat mode = null;
+        @Override
         public void setActionMode(ActionModeCompat value) {
             mode = value;
         }
+        @Override
         public ActionModeCompat getActionMode() {
             return mode;
+        }
+        @Override
+        public void onDestroyActionMode(ActionModeCompat actionMode) {
+            mode = null;
         }
     }
 
