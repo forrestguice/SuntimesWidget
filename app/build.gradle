@@ -24,8 +24,8 @@ android
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 28
-        versionCode 125
-        versionName "0.16.11"
+        versionCode 126
+        versionName "0.16.12"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
         buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""

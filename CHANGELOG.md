@@ -33,6 +33,10 @@
 * refactor; decouples the core data classes from Android api.
 * build; adds `fdroid` and `nightly` build flavors (#892).
 
+### v0.16.12 (2025-12-28)
+* fixes bug where US English strings are displayed for other English locales. (#902)
+* improves language resolution for Portuguese locales (#147).
+
 ### v0.16.11 (2025-10-12)
 * fixes bug where "show map" and "share place" actions don't include the full list of supporting apps.
 * fixes bug where content provider reports incorrect version information.
