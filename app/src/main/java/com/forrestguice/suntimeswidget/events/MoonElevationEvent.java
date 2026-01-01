@@ -115,7 +115,7 @@ public final class MoonElevationEvent extends ElevationEvent
         } else return null;
     }
 
-    @android.support.annotation.Nullable
+    @Nullable
     public static Calendar updateAlarmTime(Context context, @NonNull MoonElevationEvent event, @NonNull SuntimesMoonData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         Calendar alarmTime = Calendar.getInstance();

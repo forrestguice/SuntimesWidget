@@ -56,7 +56,7 @@ public enum EventType
         return displayString;
     }
 
-    public String getSubtypeID(@android.support.annotation.Nullable String subtype) {
+    public String getSubtypeID(@Nullable String subtype) {
         return (subtype != null) ? name() + "_" + subtype
                 : name();
     }

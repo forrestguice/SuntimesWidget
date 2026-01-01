@@ -194,7 +194,7 @@ public final class DayPercentEvent extends ElevationEvent
         return eventTime;
     }
 
-    @android.support.annotation.Nullable
+    @Nullable
     public static Calendar getDayPercentEventCalendar(@NonNull Calendar day, @NonNull DayPercentEvent event, @NonNull SuntimesCalculator calculator)
     {
         double percent = event.getPercentValue() / 100d;
