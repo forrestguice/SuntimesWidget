@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimes.support.widget;
+package com.forrestguice.support.widget;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
