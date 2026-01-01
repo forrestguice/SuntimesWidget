@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.views;
+package com.forrestguice.suntimes.support.widget;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
@@ -107,9 +107,10 @@ public class PopupMenuCompat
 
     /**
      * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
+     * note: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
      */
     @Deprecated
-    public static void forceActionBarIcons(Menu menu)    // TODO: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
+    public static void forceActionBarIcons(Menu menu)
     {
         if (menu != null)
         {
@@ -121,7 +122,7 @@ public class PopupMenuCompat
                     m.invoke(menu, true);
 
                 } catch (Exception e) {
-                    Log.e("SuntimesActivity", "failed to set show overflow icons", e);
+                    Log.e("ActionBarIcons", "failed to set show overflow icons", e);
                 }
             }
         }

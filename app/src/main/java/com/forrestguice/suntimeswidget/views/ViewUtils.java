@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.BuildConfig;
 
 public class ViewUtils

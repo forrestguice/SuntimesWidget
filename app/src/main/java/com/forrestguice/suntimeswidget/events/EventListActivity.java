@@ -33,7 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.Toolbar;
 
