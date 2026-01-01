@@ -30,7 +30,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -43,8 +42,6 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
-
-import android.support.v7.widget.RecyclerView;
 
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -94,6 +91,7 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.android.AndroidResources;
@@ -160,7 +158,7 @@ public class AlarmListDialog extends DialogBase
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.addItemDecoration(itemDecoration);
+        list.addItemDecoration(new RecyclerView.LastItemBottomMarginDecorator(contextWrapper, adapter, R.dimen.lastitem_margin));
         list.setAdapter(adapter);
 
         if (savedState != null) {
@@ -2225,20 +2223,6 @@ public class AlarmListDialog extends DialogBase
             animated.start();
         }
     }
-
-    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
-    {
-        @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            int position = parent.getChildAdapterPosition(view);
-            if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
-                outRect.bottom = 400;
-            } else {
-                super.getItemOffsets(outRect, view, parent, state);
-            }
-        }
-    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

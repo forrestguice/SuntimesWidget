@@ -100,4 +100,30 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         }
     }
 
+    /**
+     * LastItemBottomMarginDecorator : ItemDecoration
+     */
+    public static class LastItemBottomMarginDecorator extends android.support.v7.widget.RecyclerView.ItemDecoration
+    {
+        private final android.support.v7.widget.RecyclerView.Adapter<?> adapter;
+        private final int marginPx;
+
+        public LastItemBottomMarginDecorator(Context context, android.support.v7.widget.RecyclerView.Adapter<?> adapter, int dimenResId)
+        {
+            this.adapter = adapter;
+            this.marginPx = ((dimenResId != 0) ? (int) context.getResources().getDimension(dimenResId) : 0);
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, android.support.v7.widget.RecyclerView parent, @NonNull android.support.v7.widget.RecyclerView.State state)
+        {
+            int position = parent.getChildAdapterPosition(view);
+            if (position == adapter.getItemCount() - 1) {
+                outRect.bottom = marginPx;
+            } else {
+                super.getItemOffsets(outRect, view, parent, state);
+            }
+        }
+    }
+
 }
