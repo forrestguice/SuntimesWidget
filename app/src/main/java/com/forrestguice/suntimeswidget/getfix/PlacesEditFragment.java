@@ -34,6 +34,7 @@ import android.os.Bundle;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.content.ContextCompat;
@@ -995,7 +996,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         {
             Window window = getDialog().getWindow();
             if (window != null) {
-                View decorView = window.getDecorView().findViewById(ViewUtils.getTouchOutsideResourceID());
+                View decorView = window.getDecorView().findViewById(DialogBase.getTouchOutsideResourceID());
                 decorView.setOnClickListener(null);
             }
         }

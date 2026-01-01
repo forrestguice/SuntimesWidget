@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -271,7 +272,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     /**

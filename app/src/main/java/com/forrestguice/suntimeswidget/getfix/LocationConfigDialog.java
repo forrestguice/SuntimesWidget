@@ -35,6 +35,7 @@ import android.widget.ImageButton;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
@@ -459,7 +460,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     @Override

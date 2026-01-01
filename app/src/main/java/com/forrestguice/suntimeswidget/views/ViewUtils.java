@@ -20,20 +20,17 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.preference.Preference;
 
-import com.forrestguice.annotation.NonNull;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.BuildConfig;
 
 public class ViewUtils
@@ -105,20 +102,6 @@ public class ViewUtils
         }
     }
 
-    public static void disableTouchOutsideBehavior(Dialog dialog)
-    {
-        Window window = (dialog != null ? dialog.getWindow() : null);
-        if (window != null) {
-            View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
-            decorView.setOnClickListener(null);
-        }
-    }
-
-    public static int getTouchOutsideResourceID() {
-        return android.support.design.R.id.touch_outside;    // support libraries
-        //return com.google.android.material.R.id.touch_outside;   // androidx
-    }
-
     /**
      * ThrottledClickListener
      */
@@ -155,7 +138,7 @@ public class ViewUtils
     /**
      * ThrottledMenuItemClickListener
      */
-    public static class ThrottledMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
+    /*public static class ThrottledMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
     {
         protected long delayMs;
         protected Long previousClickAt;
@@ -187,7 +170,7 @@ public class ViewUtils
             }
             return true;
         }
-    }
+    }*/
 
     /**
      * ThrottledPopupMenuListener

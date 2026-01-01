@@ -17,8 +17,11 @@
 */
 package com.forrestguice.suntimes.support.app;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
+import android.view.Window;
 
 import com.forrestguice.annotation.NonNull;
 
@@ -37,5 +40,19 @@ public abstract class DialogBase extends DialogFragment
             setArguments(retValue = new Bundle());
         }
         return retValue;
+    }
+
+    public static int getTouchOutsideResourceID() {
+        return android.support.design.R.id.touch_outside;    // support libraries
+        //return com.google.android.material.R.id.touch_outside;   // androidx
+    }
+
+    public static void disableTouchOutsideBehavior(Dialog dialog)
+    {
+        Window window = (dialog != null ? dialog.getWindow() : null);
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
+            decorView.setOnClickListener(null);
+        }
     }
 }

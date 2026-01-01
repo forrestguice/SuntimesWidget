@@ -50,6 +50,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
@@ -1005,7 +1006,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     public String timeZoneRecommendation(String label, double longitude)
