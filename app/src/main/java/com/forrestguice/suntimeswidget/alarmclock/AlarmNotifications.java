@@ -52,12 +52,10 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationManagerCompat;
 
-import com.forrestguice.suntimeswidget.views.SnackbarUtils;
-import com.forrestguice.support.content.ContextCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.NotificationCompat;
+
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
@@ -72,9 +70,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.events.EventUri;
-import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -91,7 +87,9 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.IOException;
@@ -237,7 +235,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
         showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
     }
-    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
@@ -266,21 +264,23 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (view != null)
             {
-                Snackbar snackbar = SnackbarUtils.make(context, view, alarmDisplay, duration);
                 if (actionText != null && actionListener != null) {
-                    snackbar.setAction(actionText, actionListener);
+                    SnackbarUtils.make(context, view, alarmDisplay, duration)
+                            .setAction(actionText, actionListener)
+                            .show();
+                } else {
+                    SnackbarUtils.make(context, view, alarmDisplay, duration).show();
                 }
-                snackbar.show();
-                return snackbar;
+                return;
 
             } else {
                 Toast.makeText(context, alarmDisplay, duration).show();
-                return null;
+                return;
             }
 
         }
         Log.e(TAG, "showTimeUntilToast: context is null!");
-        return null;
+        return;
     }
 
     /**
