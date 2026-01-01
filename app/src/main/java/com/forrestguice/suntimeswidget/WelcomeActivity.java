@@ -27,9 +27,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -74,7 +71,6 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.view.ViewPager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -318,69 +314,6 @@ public class WelcomeActivity extends AppCompatActivity
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * WelcomeFragmentAdapter
-     */
-    private class WelcomeFragmentAdapter extends FragmentPagerAdapter
-    {
-        protected ArrayList<WelcomeFragmentPage> pages = new ArrayList<>();
-
-        public WelcomeFragmentAdapter(Context context, AppCompatActivity activity)
-        {
-            super(activity.getSupportFragmentManager());
-            pages.add(new WelcomeFragmentPage() {    // 0; first page
-                public WelcomeFragment newInstance() {
-                    return WelcomeFirstPageFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 1; appearance
-                public WelcomeFragment newInstance() {
-                    return WelcomeAppearanceFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 2; ui
-                public WelcomeFragment newInstance() {
-                    return WelcomeUserInterfaceFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 3; location
-                public WelcomeFragment newInstance() {
-                    return WelcomeLocationFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 4; time zone
-                public WelcomeFragment newInstance() {
-                    return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
-                }
-            });
-            if (AlarmSettings.hasAlarmSupport(context)) {    // 5; alarms
-                pages.add(new WelcomeFragmentPage() {
-                    public WelcomeFragment newInstance() {
-                        return WelcomeAlarmsFragment.newInstance();
-                    }
-                });
-            }
-            pages.add(new WelcomeFragmentPage() {
-                public WelcomeFragment newInstance() {    // last page
-                    return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
-                }
-            });
-        }
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            if (position >= 0 && position < getCount()) {
-                return pages.get(position).newInstance();
-            } else return WelcomeFirstPageFragment.newInstance();
-        }
-
-        @Override
-        public int getCount() {
-            return pages.size();
-        }
-    }
 
     /**
      * WelcomeFragmentPage
