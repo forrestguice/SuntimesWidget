@@ -57,7 +57,6 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.cards.CardViewDecorator;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
@@ -1315,7 +1314,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout = new CardLayoutManager(this));
-        card_view.addItemDecoration(new CardViewDecorator(this));
+        card_view.addItemDecoration(new RecyclerView.MarginDecorator(context, R.dimen.activity_margin, 0, R.dimen.activity_margin, 0));
 
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);

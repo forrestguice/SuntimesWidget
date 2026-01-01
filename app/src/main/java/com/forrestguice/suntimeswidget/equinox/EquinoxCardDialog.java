@@ -25,13 +25,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -46,17 +46,16 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
@@ -74,6 +73,7 @@ import com.forrestguice.support.widget.GridLayoutManager;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.LinearSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
@@ -738,7 +738,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         card_view = (RecyclerView)v.findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
-        card_view.addItemDecoration(new CardViewDecorator(context));
+        card_view.addItemDecoration(new RecyclerView.MarginDecorator(context, R.dimen.dialog_margin1, 0, R.dimen.dialog_margin1, 0));
 
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
@@ -774,7 +774,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         //card_view.setLayoutParams(params);
     }
 
-    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
@@ -878,18 +878,6 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
             showContextMenu(getContext(), view, mode, datetime);
         }
     };
-
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration {
-        private final int marginPx;
-        public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.dialog_margin1);
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
-        }
-    }
 
     public SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();

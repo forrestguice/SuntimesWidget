@@ -20,10 +20,7 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.os.Bundle;
-import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +32,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
@@ -42,14 +40,15 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 
 public class EquinoxCardView extends LinearLayout
 {
@@ -139,7 +138,7 @@ public class EquinoxCardView extends LinearLayout
         card_view = (RecyclerView)findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
-        card_view.addItemDecoration(new CardViewDecorator(context));
+        card_view.addItemDecoration(new RecyclerView.MarginDecorator(0));
 
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.setLayoutFrozen(false);
@@ -284,7 +283,7 @@ public class EquinoxCardView extends LinearLayout
         }
     }
 
-    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
@@ -316,19 +315,6 @@ public class EquinoxCardView extends LinearLayout
     {
         options.columnWidthPx = columnWidthPx;
         card_adapter.notifyDataSetChanged();
-    }
-
-    /**
-     * CardViewDecorator
-     */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
-    {
-        public CardViewDecorator( Context context ) {
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            outRect.left = outRect.right = outRect.top = outRect.bottom = 0;
-        }
     }
 
     /**

@@ -1,10 +1,12 @@
 package com.forrestguice.support.widget;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
+import android.view.View;
 
 public class RecyclerView extends android.support.v7.widget.RecyclerView
 {
@@ -59,4 +61,43 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {}
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {}
     }
+
+    /**
+     * MarginDecorator : ItemDecoration
+     */
+    public static class MarginDecorator extends android.support.v7.widget.RecyclerView.ItemDecoration
+    {
+        private final int[] marginPx = new int[4];
+
+        public MarginDecorator(int px) {
+            this(px, px, px, px);
+        }
+        public MarginDecorator(int leftPx, int topPx, int rightPx, int bottomPx )
+        {
+            marginPx[0] = leftPx;
+            marginPx[1] = topPx;
+            marginPx[2] = rightPx;
+            marginPx[3] = bottomPx;
+        }
+        public MarginDecorator( Context context, int dimenResId ) {
+            this(context, dimenResId, dimenResId, dimenResId, dimenResId);
+        }
+        public MarginDecorator( Context context, int dimenResId_left, int dimenResId_top, int dimenResId_right, int dimenResId_bottom )
+        {
+            marginPx[0] = (context != null && dimenResId_left != 0 ? (int) context.getResources().getDimension(dimenResId_left) : 0);
+            marginPx[1] = (context != null && dimenResId_top != 0 ? (int) context.getResources().getDimension(dimenResId_top) : 0);
+            marginPx[2] = (context != null && dimenResId_right != 0 ? (int) context.getResources().getDimension(dimenResId_right) : 0);
+            marginPx[3] = (context != null && dimenResId_bottom != 0 ? (int) context.getResources().getDimension(dimenResId_bottom) : 0);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull android.support.v7.widget.RecyclerView parent, @NonNull android.support.v7.widget.RecyclerView.State state)
+        {
+            outRect.left = marginPx[0];
+            outRect.top = marginPx[1];
+            outRect.right = marginPx[2];
+            outRect.bottom = marginPx[3];
+        }
+    }
+
 }
