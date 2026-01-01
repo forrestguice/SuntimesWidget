@@ -403,7 +403,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            BottomSheetDialogBase.initPeekHeight(dialog, R.id.dialog_footer);
 
             if (AppSettings.isTelevision(getActivity())) {
                 btn_accept.requestFocus();

@@ -275,7 +275,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             dialogTitle.post(new Runnable() {
                 @Override
                 public void run() {
-                    ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
+                    BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
                 }
             });
 
@@ -701,7 +701,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                     graphView.post(new Runnable() {
                         @Override
                         public void run() {
-                            ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
+                            BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
                         }
                     });
                     updateViews();

@@ -134,7 +134,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
                 equinoxView.post(new Runnable() {
                     @Override
                     public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        BottomSheetDialogBase.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");

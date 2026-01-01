@@ -294,7 +294,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                     text_title.post(new Runnable() {
                         @Override
                         public void run() {
-                            ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
+                            BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
                         }
                     });
                 }

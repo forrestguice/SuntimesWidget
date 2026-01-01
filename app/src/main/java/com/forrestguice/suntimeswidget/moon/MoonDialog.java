@@ -215,7 +215,7 @@ public class MoonDialog extends BottomSheetDialogBase
     private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
-            ViewUtils.initPeekHeight(getDialog(), getPeekViewId());
+            BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
         }
     };
 

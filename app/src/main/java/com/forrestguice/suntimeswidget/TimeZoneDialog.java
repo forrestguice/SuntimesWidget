@@ -951,7 +951,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialog) {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            BottomSheetDialogBase.initPeekHeight(dialog, R.id.dialog_footer);
         }
     };
 

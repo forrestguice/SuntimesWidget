@@ -19,20 +19,49 @@ package com.forrestguice.suntimeswidget.dialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
 {
+    public static int getBottomSheetResourceID() {
+        return android.support.design.R.id.design_bottom_sheet;    // support libraries
+        //return com.google.android.material.R.id.design_bottom_sheet;   // androidx
+    }
+
     public BottomSheetDialogBase() {
         setArguments(new Bundle());
+    }
+
+    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(getBottomSheetResourceID());
+            if (layout != null)
+            {
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
+                View divider1 = bottomSheet.findViewById(bottomViewResId);
+                if (divider1 != null)
+                {
+                    Rect headerBounds = new Rect();
+                    divider1.getDrawingRect(headerBounds);
+                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
+                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
+
+                } else {
+                    behavior.setPeekHeight(-1);
+                }
+            }
+        }
     }
 
     @NonNull
@@ -64,7 +93,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
         return -1;
     }
     protected int getSheetFrameId() {
-        return ViewUtils.getBottomSheetResourceID();
+        return getBottomSheetResourceID();
     }
 
     protected void expandSheet(DialogInterface dialog)
@@ -85,7 +114,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
         {
             final BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
             if (getPeekViewId() != 0) {
-                ViewUtils.initPeekHeight(dialog, getPeekViewId());
+                initPeekHeight(dialog, getPeekViewId());
             } else if (getPeekHeight() >= 0) {
                 behavior.setPeekHeight(getPeekHeight());
             }
@@ -132,7 +161,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
                 behavior.setSkipCollapsed(getBottomSheetBehavior_skipCollapsed());
 
                 if (getPeekViewId() != 0) {
-                    ViewUtils.initPeekHeight(dialog, getPeekViewId());
+                    initPeekHeight(dialog, getPeekViewId());
 
                 } else if (getPeekHeight() >= 0) {
                     behavior.setPeekHeight(getPeekHeight());

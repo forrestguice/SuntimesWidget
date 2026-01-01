@@ -227,7 +227,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
                 text_title.post(new Runnable() {
                     @Override
                     public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        BottomSheetDialogBase.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
 

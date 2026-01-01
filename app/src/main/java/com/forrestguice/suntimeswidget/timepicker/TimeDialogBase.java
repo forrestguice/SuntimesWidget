@@ -36,7 +36,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
@@ -168,7 +167,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogBase
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, getPeekViewId());
+            BottomSheetDialogBase.initPeekHeight(dialog, getPeekViewId());
             if (onShowListener != null) {
                 onShowListener.onShow(dialog);
             }

@@ -20,33 +20,21 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.TypedArray;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.Preference;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.support.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.R;
 
 public class ViewUtils
 {
@@ -117,29 +105,6 @@ public class ViewUtils
         }
     }
 
-    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null)
-            {
-                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(layout);
-                View divider1 = bottomSheet.findViewById(bottomViewResId);
-                if (divider1 != null)
-                {
-                    Rect headerBounds = new Rect();
-                    divider1.getDrawingRect(headerBounds);
-                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
-
-                } else {
-                    behavior.setPeekHeight(-1);
-                }
-            }
-        }
-    }
-
     public static void disableTouchOutsideBehavior(Dialog dialog)
     {
         Window window = (dialog != null ? dialog.getWindow() : null);
@@ -152,11 +117,6 @@ public class ViewUtils
     public static int getTouchOutsideResourceID() {
         return android.support.design.R.id.touch_outside;    // support libraries
         //return com.google.android.material.R.id.touch_outside;   // androidx
-    }
-
-    public static int getBottomSheetResourceID() {
-        return android.support.design.R.id.design_bottom_sheet;    // support libraries
-        //return com.google.android.material.R.id.design_bottom_sheet;   // androidx
     }
 
     /**
