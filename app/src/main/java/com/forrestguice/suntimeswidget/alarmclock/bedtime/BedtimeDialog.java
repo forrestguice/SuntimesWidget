@@ -52,15 +52,15 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
-import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.view.ViewCompat;
 
 import java.util.Calendar;
 import java.util.List;

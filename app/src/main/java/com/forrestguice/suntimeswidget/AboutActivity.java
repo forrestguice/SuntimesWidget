@@ -33,7 +33,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimes.support.app.DialogBase;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ViewPager;

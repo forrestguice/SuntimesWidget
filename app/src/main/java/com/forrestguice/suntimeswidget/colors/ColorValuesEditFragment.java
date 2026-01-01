@@ -42,10 +42,10 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.widget.GridLayoutManager;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.ArrayList;

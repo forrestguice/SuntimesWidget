@@ -48,11 +48,12 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
 
 import java.util.Calendar;
 

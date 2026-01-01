@@ -33,8 +33,8 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.colors.ColorUtils;
 
 import java.util.Locale;

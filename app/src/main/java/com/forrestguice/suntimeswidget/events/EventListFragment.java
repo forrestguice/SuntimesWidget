@@ -34,11 +34,10 @@ import android.view.ViewGroup;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.FragmentManagerCompat;
 

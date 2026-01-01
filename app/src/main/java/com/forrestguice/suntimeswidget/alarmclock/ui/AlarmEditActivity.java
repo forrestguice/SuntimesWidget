@@ -48,7 +48,7 @@ import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;

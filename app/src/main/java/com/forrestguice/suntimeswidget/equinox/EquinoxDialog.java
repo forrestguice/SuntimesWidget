@@ -44,14 +44,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
-import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import com.forrestguice.support.widget.BottomSheetDialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
 
 import java.util.Calendar;
 import java.util.List;

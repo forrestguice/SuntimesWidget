@@ -33,8 +33,8 @@ import android.widget.NumberPicker;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
 
 @TargetApi(11)
 public class AlarmOffsetDialog extends DialogBase

@@ -32,8 +32,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.Toolbar;
 
 public class PlacesActivity extends AppCompatActivity

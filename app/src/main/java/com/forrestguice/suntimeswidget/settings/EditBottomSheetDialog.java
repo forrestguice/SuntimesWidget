@@ -30,7 +30,7 @@ import android.widget.Button;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 
 public abstract class EditBottomSheetDialog extends BottomSheetDialogBase
 {

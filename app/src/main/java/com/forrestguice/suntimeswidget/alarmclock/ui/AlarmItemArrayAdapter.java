@@ -53,7 +53,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;

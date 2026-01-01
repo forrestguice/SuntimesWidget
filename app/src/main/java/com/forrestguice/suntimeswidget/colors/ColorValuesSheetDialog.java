@@ -35,10 +35,10 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 
 import java.util.Arrays;
 import java.util.Set;

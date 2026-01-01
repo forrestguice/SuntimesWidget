@@ -39,11 +39,11 @@ import android.view.LayoutInflater;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.content.ContextCompat;
 
