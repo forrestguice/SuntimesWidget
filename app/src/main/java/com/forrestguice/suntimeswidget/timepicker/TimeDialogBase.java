@@ -33,9 +33,9 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 
 import java.util.Calendar;
 

@@ -37,7 +37,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimes.support.app.DialogBase;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 

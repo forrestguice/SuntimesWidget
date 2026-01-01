@@ -84,7 +84,7 @@ import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;

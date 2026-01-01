@@ -28,7 +28,7 @@ import android.widget.CompoundButton;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.support.app.DialogBase;
+import com.forrestguice.support.app.DialogBase;
 
 import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_DEF_SOLSTICEWIDGET_SHOWCROSSQUARTER;
 import static com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings.PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER;

@@ -52,7 +52,7 @@ import android.widget.ImageView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;

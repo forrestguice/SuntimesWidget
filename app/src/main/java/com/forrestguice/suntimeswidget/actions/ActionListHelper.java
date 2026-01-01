@@ -43,7 +43,6 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimes.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -51,6 +50,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 
 import java.lang.ref.WeakReference;

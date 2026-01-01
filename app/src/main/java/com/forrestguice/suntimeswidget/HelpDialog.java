@@ -31,7 +31,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class HelpDialog extends BottomSheetDialogBase
