@@ -31,8 +31,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
-
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -69,6 +67,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ContextInterface;
 
@@ -91,7 +91,7 @@ public class EventListHelper
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private final WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManagerCompat fragmentManager;
 
     private int selectedChild = -1;
     private EventAlias selectedItem;
@@ -109,7 +109,7 @@ public class EventListHelper
         return adapterModified;
     }
 
-    public EventListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public EventListHelper(@NonNull Context context, @NonNull FragmentManagerCompat fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -125,7 +125,7 @@ public class EventListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerCompat fragments) {
         fragmentManager = fragments;
     }
 
@@ -472,7 +472,7 @@ public class EventListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
         return saveDialog;
     }
 
@@ -495,7 +495,7 @@ public class EventListHelper
             });
 
             saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
         }
     }
 
@@ -524,7 +524,7 @@ public class EventListHelper
      */
     protected EventExportTask exportTask = null;
 
-    public boolean exportEvents(Fragment fragment)
+    public boolean exportEvents(FragmentCompat fragment)
     {
         if (exportTask != null && importTask != null) {
             Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
@@ -543,7 +543,9 @@ public class EventListHelper
                     String filename = exportTarget + EventExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, EventExportTask.MIMETYPE);
                     try {
-                        fragment.startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        if (fragment.getFragment() != null) {
+                            fragment.getFragment().startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        }
                         return true;
 
                     } catch (ActivityNotFoundException e) {
@@ -628,14 +630,16 @@ public class EventListHelper
      */
     protected EventImportTask importTask = null;
 
-    public void importEvents(Fragment fragment)
+    public void importEvents(FragmentCompat fragment)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportEvents", "Already busy importing/exporting! ignoring request");
             return;
         }
         Intent intent = ExportTask.getOpenFileIntent(EventExportTask.MIMETYPE);
-        fragment.startActivityForResult(intent, REQUEST_IMPORT_URI);
+        if (fragment.getFragment() != null) {
+            fragment.getFragment().startActivityForResult(intent, REQUEST_IMPORT_URI);
+        }
     }
 
     protected void importEvents(Context context, @NonNull Uri uri)
@@ -829,7 +833,7 @@ public class EventListHelper
             helpDialog.setContent(helpSpan);
             helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
-            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+            helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
         }
     }
 

@@ -39,6 +39,8 @@ import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 import java.io.File;
 
@@ -71,7 +73,7 @@ public class EventListFragment extends DialogBase
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(v.getContext(), getChildFragmentManager());
+        helper = new EventListHelper(v.getContext(), FragmentManagerCompat.from(this, true));
         helper.setLocation(getLocation());
         helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
@@ -112,7 +114,7 @@ public class EventListFragment extends DialogBase
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getChildFragmentManager());
+        helper.setFragmentManager(FragmentManagerCompat.from(this, true));
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
         helper.setImportTaskListener(importListener);
@@ -196,11 +198,11 @@ public class EventListFragment extends DialogBase
                 return true;
 
             case R.id.exportEvents:
-                helper.exportEvents(EventListFragment.this);
+                helper.exportEvents(FragmentCompat.from(EventListFragment.this));
                 return true;
 
             case R.id.importEvents:
-                helper.importEvents(EventListFragment.this);
+                helper.importEvents(FragmentCompat.from(EventListFragment.this));
                 return true;
 
             case R.id.helpEvents:
