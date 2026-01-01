@@ -24,8 +24,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -51,8 +49,10 @@ import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.ref.WeakReference;
@@ -327,7 +327,7 @@ public class EquinoxView extends LinearLayout
         onLongClickListener = listener;
     }
 
-    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)

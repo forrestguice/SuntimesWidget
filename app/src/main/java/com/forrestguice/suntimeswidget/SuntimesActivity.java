@@ -38,8 +38,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -119,6 +117,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -2668,7 +2667,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_view.scrollToPosition(position);
         }
     }
-    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)

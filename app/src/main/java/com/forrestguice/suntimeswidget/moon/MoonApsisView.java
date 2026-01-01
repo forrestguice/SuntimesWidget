@@ -27,7 +27,6 @@ import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -37,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -158,7 +158,7 @@ public class MoonApsisView extends LinearLayout
         }
     };
 
-    private final RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListenerCompat onScrollChanged = new RecyclerView.OnScrollListenerCompat() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {

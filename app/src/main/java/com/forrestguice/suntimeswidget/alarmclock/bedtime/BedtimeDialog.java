@@ -30,8 +30,6 @@ import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -62,6 +60,7 @@ import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.Calendar;
 import java.util.List;
@@ -270,7 +269,7 @@ public class BedtimeDialog extends DialogBase
     /**
      * OnScrollListener
      */
-    private final RecyclerView.OnScrollListener onListScrolled = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onListScrolled = new RecyclerView.OnScrollListenerCompat()
     {
         private int lastCompletelyVisibleItemPosition;
 
