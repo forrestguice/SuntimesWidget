@@ -69,7 +69,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
-import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
+import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.suntimeswidget.timepicker.DateTimeDialog;

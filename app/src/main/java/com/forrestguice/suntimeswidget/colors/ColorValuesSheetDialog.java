@@ -37,9 +37,8 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.dialog.BottomSheetDialogBase;
+import com.forrestguice.suntimes.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Set;

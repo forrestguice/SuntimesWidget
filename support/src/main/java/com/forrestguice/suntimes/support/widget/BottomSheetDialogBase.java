@@ -15,17 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.dialog;
+package com.forrestguice.suntimes.support.widget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
