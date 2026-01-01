@@ -22,9 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -115,38 +112,6 @@ public class AboutActivity extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
-    }
-
-    /**
-     * AboutPagerAdapter
-     */
-    public static class AboutPagerAdapter extends FragmentPagerAdapter
-    {
-        public AboutPagerAdapter(AppCompatActivity activity)
-        {
-            super(activity.getSupportFragmentManager());
-        }
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            switch (position)
-            {
-                case 1:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_CONTRIBUTIONS );
-                case 2:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_PRIVACY );
-                case 0:
-                default:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_APP );
-            }
-        }
-
-        @Override
-        public int getCount()
-        {
-            return 3;
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
