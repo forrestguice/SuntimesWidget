@@ -23,7 +23,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -33,7 +32,6 @@ import android.os.Build;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -61,7 +59,7 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
-import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
@@ -311,7 +309,7 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     };
 
-    private final RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListenerCompat onScrollChanged = new RecyclerView.OnScrollListenerCompat() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
@@ -933,87 +931,4 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
 
-    /**
-     * MoonRiseSetDivider
-     */
-    public static class MoonRiseSetDivider extends RecyclerView.ItemDecoration
-    {
-        protected Drawable divider;
-        protected int centerPosition;
-        protected int itemsPerDay;
-        private final Rect bounds = new Rect();
-
-        public MoonRiseSetDivider(Context context, int centerPosition, int itemsPerDay)
-        {
-            this.centerPosition = centerPosition;
-            this.itemsPerDay = itemsPerDay;
-            initDrawables(context);
-        }
-
-        protected void initDrawables(Context context)
-        {
-            TypedArray a = context.obtainStyledAttributes(new int[] { android.R.attr.listDivider });
-            divider = a.getDrawable(0);
-            a.recycle();
-        }
-
-        @Override
-        public void onDraw(@NonNull Canvas c, RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            if (parent.getLayoutManager() == null) {
-                return;
-            }
-
-            c.save();
-            int top, bottom;
-            if (parent.getClipToPadding())
-            {
-                top = parent.getPaddingTop();
-                bottom = parent.getHeight() - parent.getPaddingBottom();
-                c.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(), bottom);
-            } else {
-                top = 0;
-                bottom = parent.getHeight();
-            }
-
-            int n = parent.getChildCount();
-            for (int i=0; i<n; i++)
-            {
-                View child = parent.getChildAt(i);
-                int position = parent.getChildAdapterPosition(child);
-                parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
-
-                int offset = (position - centerPosition) % itemsPerDay;
-                if (offset < 0) {
-                    offset += itemsPerDay;
-                }
-
-                if (offset == 0) {
-                    int left = bounds.left + Math.round(ViewCompat.getTranslationX(child));
-                    drawHeader(c, position, left, top);
-                    drawFooter(c, position, left, bottom);
-
-                } else if (offset == (itemsPerDay - 1)) {
-                    int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
-                    int left = right - divider.getIntrinsicWidth();
-                    divider.setBounds(left, top, right, bottom);
-                    divider.draw(c);
-                }
-            }
-            c.restore();
-        }
-
-        protected void drawFooter(Canvas c, int position, float x, float y) {
-            /* EMPTY */
-        }
-
-        protected void drawHeader(Canvas c, int position, float x, float y) {
-            /* EMPTY */
-        }
-
-        @Override
-        public void getItemOffsets(Rect rect, @NonNull View v, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            rect.set(0, 0, divider.getIntrinsicWidth(), 0);
-        }
-    }
 }

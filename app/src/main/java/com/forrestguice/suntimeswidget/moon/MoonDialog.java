@@ -30,8 +30,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v7.widget.RecyclerView;
-
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
@@ -86,6 +84,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
 
+import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.util.Pair;
