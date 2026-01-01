@@ -36,8 +36,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
 
-import android.support.design.widget.BottomSheetBehavior;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -75,6 +73,7 @@ import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.BottomSheetBehaviorCompat;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.support.view.ViewCompat;
@@ -151,7 +150,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private FloatingActionButton addButton;
     private FloatingActionButton deselectButton;
-    private BottomSheetBehavior<?> sheetBehavior;
+    private BottomSheetBehaviorCompat sheetBehavior;
     private SuntimesNavigation navigation;
 
     private SuntimesWarningCollection warnings;
@@ -647,12 +646,12 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedState);
         warnings.restoreWarnings(savedState);
 
-        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehavior.STATE_HIDDEN);
+        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehaviorCompat.STATE_HIDDEN);
         sheetBehavior.setState(sheetState);
 
         if (Build.VERSION.SDK_INT >= 14)
         {
-            if (sheetState != BottomSheetBehavior.STATE_HIDDEN)
+            if (sheetState != BottomSheetBehaviorCompat.STATE_HIDDEN)
             {
                 addButton.setScaleX(0);
                 addButton.setScaleY(0);
@@ -708,9 +707,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         View bottomSheet = findViewById(R.id.app_bottomsheet);
-        sheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
+        sheetBehavior = BottomSheetBehaviorCompat.from(bottomSheet);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehaviorCompat.BottomSheetCallback()
         {
             @Override
             public void onStateChanged(@NonNull View view, int newState)
@@ -734,7 +733,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     private boolean isAddDialogShowing() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
+        return sheetBehavior.getState() == BottomSheetBehaviorCompat.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehaviorCompat.STATE_COLLAPSED;
     }
 
     private final AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
@@ -917,11 +916,11 @@ public class AlarmClockActivity extends AppCompatActivity
             dialog.setOnCanceledListener(onAddAlarmCanceled);
             dialog.setOnNeutralListener(onAddAlarmNeutral);
         }
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
     }
 
     protected void dismissAddDialog() {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
     }
 
     protected void updateViews(Context context) {
@@ -1119,7 +1118,7 @@ public class AlarmClockActivity extends AppCompatActivity
             navigation.closeNavigationDrawer();
 
         } else if (isAddDialogShowing()) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
 
         } else if (list.getSelectedRowID() != -1) {
             list.clearSelection();
