@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
 
 public class ColorValuesFragment extends DialogBase

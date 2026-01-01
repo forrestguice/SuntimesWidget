@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.dialog;
+package com.forrestguice.suntimes.support.app;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

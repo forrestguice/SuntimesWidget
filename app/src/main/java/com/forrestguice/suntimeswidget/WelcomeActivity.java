@@ -50,7 +50,7 @@ import android.widget.ToggleButton;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
-import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;

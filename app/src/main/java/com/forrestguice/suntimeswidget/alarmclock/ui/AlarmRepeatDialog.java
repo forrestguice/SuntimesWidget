@@ -42,7 +42,7 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
 
 import java.util.ArrayList;

@@ -30,7 +30,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.dialog.DialogBase;
+import com.forrestguice.suntimes.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
 
 @TargetApi(11)
