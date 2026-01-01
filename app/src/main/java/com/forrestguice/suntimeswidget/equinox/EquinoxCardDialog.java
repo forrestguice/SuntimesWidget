@@ -30,8 +30,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.design.widget.BottomSheetDialog;
-
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -109,20 +107,21 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                if (hasSelection())
-                {
-                    setSelection((Integer) null);
-                    if (AppSettings.isTelevision(getActivity())) {
-                        btn_menu.requestFocus();
-                    }
-                } else super.onBackPressed();
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowListener);
         return dialog;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (hasSelection())
+        {
+            setSelection((Integer) null);
+            if (AppSettings.isTelevision(getActivity())) {
+                btn_menu.requestFocus();
+            }
+            return true;
+        } else return false;
     }
 
     public void initLocale(Context context)

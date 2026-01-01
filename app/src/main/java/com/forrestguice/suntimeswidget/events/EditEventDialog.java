@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -323,14 +322,15 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        Dialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                confirmDiscardChanges(getActivity());
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onDialogShow);
         return dialog;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        confirmDiscardChanges(getActivity());
+        return true;
     }
 
     @Override

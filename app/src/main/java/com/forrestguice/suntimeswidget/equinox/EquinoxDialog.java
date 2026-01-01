@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -67,16 +66,17 @@ public class EquinoxDialog extends BottomSheetDialogBase
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                if (equinoxView.hasSelection()) {
-                    equinoxView.setSelection(null);
-                } else super.onBackPressed();
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowListener);
         return dialog;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (equinoxView.hasSelection()) {
+            equinoxView.setSelection(null);
+            return true;
+        } else return false;
     }
 
     @Override

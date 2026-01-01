@@ -29,12 +29,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,12 +146,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                super.onBackPressed();
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }

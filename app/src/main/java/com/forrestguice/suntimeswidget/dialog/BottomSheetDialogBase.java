@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.dialog;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -140,6 +141,27 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
             }
         }
         return null;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        return new BottomSheetDialog(getContext(), getTheme()) {
+            @Override
+            public void onBackPressed() {
+                if (!BottomSheetDialogBase.this.onBackPressed()) {
+                    super.onBackPressed();
+                }
+            }
+        };
+    }
+
+    /**
+     * @return true handled, false should call to super
+     */
+    protected boolean onBackPressed() {
+        return false;
     }
 
 }
