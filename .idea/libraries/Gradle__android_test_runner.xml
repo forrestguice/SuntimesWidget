@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: android.test.runner">
-    <CLASSES>
-      <root url="jar://D:/AndroidSdk/platforms/android-28/optional/android.test.runner.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
