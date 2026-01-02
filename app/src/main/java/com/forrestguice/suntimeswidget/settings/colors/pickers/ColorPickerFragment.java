@@ -53,7 +53,6 @@ public class ColorPickerFragment extends DialogBase
         setArguments(new Bundle());
     }
 
-    @CallSuper
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -61,8 +60,7 @@ public class ColorPickerFragment extends DialogBase
         colorViewModel.color.observe(getActivity(), onViewModelColorChanged);
         return null;
     }
-
-    @CallSuper
+    
     protected void initViews(Context context, View view)
     {
         preview = view.findViewById(R.id.preview_color);
