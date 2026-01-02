@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -38,6 +37,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 
 import java.util.Arrays;

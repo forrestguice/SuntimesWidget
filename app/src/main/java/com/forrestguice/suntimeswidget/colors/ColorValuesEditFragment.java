@@ -20,7 +20,6 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 import com.forrestguice.support.widget.GridLayoutManager;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;

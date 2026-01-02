@@ -19,7 +19,6 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 
 import java.util.Locale;
 

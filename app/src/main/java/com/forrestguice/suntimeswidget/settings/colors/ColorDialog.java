@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
 import com.forrestguice.support.lifecycle.Observer;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.support.view.ViewPager;
 import com.forrestguice.support.widget.LinearSnapHelper;
