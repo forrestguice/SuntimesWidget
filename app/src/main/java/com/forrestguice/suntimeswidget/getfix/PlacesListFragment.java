@@ -33,8 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import android.support.v4.view.MenuItemCompat;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -229,7 +227,7 @@ public class PlacesListFragment extends DialogBase
         {
             if (Build.VERSION.SDK_INT >= 11)
             {
-                MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
+                searchItem.setOnActionExpandListener(onItemSearchExpand);
                 SearchView searchView = (SearchView) searchItem.getActionView();
                 if (searchView != null)
                 {
@@ -738,7 +736,7 @@ public class PlacesListFragment extends DialogBase
         }
     };
 
-    private final MenuItemCompat.OnActionExpandListener onItemSearchExpand = new MenuItemCompat.OnActionExpandListener()
+    private final MenuItem.OnActionExpandListener onItemSearchExpand = new MenuItem.OnActionExpandListener()
     {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
