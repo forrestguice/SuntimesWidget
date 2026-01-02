@@ -34,8 +34,6 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
-import android.support.v4.widget.CompoundButtonCompat;
-
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -53,6 +51,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -575,7 +574,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
             } else {
                 view.check_enabled.setChecked(item.enabled);
-                CompoundButtonCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+                ViewCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
             }
         }
 
@@ -706,8 +705,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             view.check_vibrate.setChecked(item.vibrate);
             view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
             if (item.enabled)
-                CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
-            else CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
+                ViewCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
+            else ViewCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
         }
 
         // repeating

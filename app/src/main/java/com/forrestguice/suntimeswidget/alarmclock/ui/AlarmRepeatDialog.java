@@ -26,8 +26,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.widget.CompoundButtonCompat;
-
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -44,6 +42,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.support.widget.SwitchCompat;
 
 import java.util.ArrayList;
@@ -182,7 +181,7 @@ public class AlarmRepeatDialog extends DialogBase
             checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat);
             if (checkRepeat != null) {
                 checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
-                CompoundButtonCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
+                ViewCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
             }
         }
 
