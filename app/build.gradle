@@ -29,7 +29,7 @@ android
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 28
-        missingDimensionStrategy 'support_version', 'supportlib'
+        missingDimensionStrategy 'support_version', 'androidx'
         missingDimensionStrategy 'api', 'api28'
 
         versionCode 126
