@@ -25,10 +25,9 @@ android
     {
         applicationId "com.forrestguice.suntimeswidget"
         resValue "string", "packageName", applicationId
-        //noinspection MinSdkTooLow
+
         minSdkVersion 14
-        //noinspection ExpiredTargetSdkVersion,OldTargetApi
-        targetSdkVersion 28
+        targetSdkVersion targetVersion
         missingDimensionStrategy 'support_version', 'androidx'
         missingDimensionStrategy 'api', 'api28'
 
@@ -60,6 +59,7 @@ android
         }
         legacy {
             dimension "version"
+            targetSdkVersion 28
             missingDimensionStrategy 'support_version', 'supportlib'
             missingDimensionStrategy 'api', 'api28'
             applicationIdSuffix ".legacy"
