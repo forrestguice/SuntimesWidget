@@ -34,7 +34,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,6 +67,7 @@ import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.view.ActionModeCompat;
+import com.forrestguice.support.widget.SearchView;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 

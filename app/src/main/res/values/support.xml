@@ -5,7 +5,7 @@
 
     <string name="layoutBehavior_BottomSheetBehavior">android.support.design.widget.BottomSheetBehavior</string>
 
-    <string name="actionViewClass_SearchView">android.support.v7.widget.SearchView</string>
+    <string name="actionViewClass_SearchView">com.forrestguice.support.widget.SearchView</string>
     <string name="supportClass_UiAutomator">android.support.test.uiautomator.v18</string>
 
 </resources>
