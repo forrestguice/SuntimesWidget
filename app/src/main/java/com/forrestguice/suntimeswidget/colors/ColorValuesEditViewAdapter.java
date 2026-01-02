@@ -27,6 +27,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.colors.ColorValues;
+
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Set;

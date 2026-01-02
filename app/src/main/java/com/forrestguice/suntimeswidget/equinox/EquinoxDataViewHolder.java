@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -78,7 +79,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 Calendar now = Calendar.getInstance();
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
+                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
                 text_datetime.setVisibility(options.showDate ? View.VISIBLE : View.GONE);
                 text_label.setText(data.timeMode().getLongDisplayString());

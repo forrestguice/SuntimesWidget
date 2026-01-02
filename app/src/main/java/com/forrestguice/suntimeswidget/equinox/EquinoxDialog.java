@@ -48,6 +48,8 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -102,7 +104,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 showOverflowMenu(getContext(), v);
             }
             @Override
-            public void onMenuClick(View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+            public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime) {
                 showContextMenu(getContext(), v, mode, datetime);
             }
         });
@@ -258,7 +260,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         }
     }
 
-    private void updateTrackingMenu(SubMenu trackingMenu, WidgetSettings.TrackingMode trackingMode)
+    private void updateTrackingMenu(SubMenu trackingMenu, TrackingMode trackingMode)
     {
         if (trackingMenu != null)
         {
@@ -276,11 +278,11 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     private void onTrackingModeChanged(Context context, int id)
     {
-        WidgetSettings.TrackingMode mode = null;
+        TrackingMode mode = null;
         switch (id) {
-            case R.id.trackRecent: mode = WidgetSettings.TrackingMode.RECENT; break;
-            case R.id.trackClosest: mode = WidgetSettings.TrackingMode.CLOSEST; break;
-            case R.id.trackUpcoming: mode = WidgetSettings.TrackingMode.SOONEST; break;
+            case R.id.trackRecent: mode = TrackingMode.RECENT; break;
+            case R.id.trackClosest: mode = TrackingMode.CLOSEST; break;
+            case R.id.trackUpcoming: mode = TrackingMode.SOONEST; break;
         }
         if (mode != null) {
             WidgetSettings.saveTrackingModePref(context, 0, mode);
@@ -315,7 +317,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
+    protected boolean showContextMenu(final Context context, View view, final SolsticeEquinoxMode mode, final long datetime)
     {
         PopupMenu menu = new PopupMenu(context, view, Gravity.START);
         MenuInflater inflater = menu.getMenuInflater();
@@ -330,7 +332,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, final WidgetSettings.SolsticeEquinoxMode mode, final long datetime)
+    private void updateContextMenu(Context context, PopupMenu menu, final SolsticeEquinoxMode mode, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
@@ -383,7 +385,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+            SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
 
             switch (item.getItemId())
             {
@@ -434,7 +436,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     protected void shareItem(Context context, Intent itemData)  // TODO: refactor to use ViewUtils after v0.15.0 branches are merged
     {
-        WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+        SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMode != null && itemMillis != -1L)
         {
@@ -476,7 +478,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
      */
     public static class EquinoxDialogListener
     {
-        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
+        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}

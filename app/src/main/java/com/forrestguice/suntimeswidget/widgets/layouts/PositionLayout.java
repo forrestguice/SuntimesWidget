@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
 
 public abstract class PositionLayout extends SuntimesLayout
 {
@@ -45,7 +46,7 @@ public abstract class PositionLayout extends SuntimesLayout
         suffixColor = theme.getTimeSuffixColor();
     }
 
-    public static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
+    public static SpannableString styleAzimuthText(TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
     {
         String azimuthSymbol = azimuthDisplay.getSuffix();
         String azimuthString = azimuthDisplay.getValue() + azimuthSymbol;
@@ -58,7 +59,7 @@ public abstract class PositionLayout extends SuntimesLayout
 
     public static SpannableString styleElevationText(double value, int valueColor, int suffixColor, boolean boldValue)
     {
-        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
+        TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
         String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
         SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, valueColor, boldValue);

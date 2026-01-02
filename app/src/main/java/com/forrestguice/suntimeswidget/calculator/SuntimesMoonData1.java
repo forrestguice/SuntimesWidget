@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
@@ -30,10 +28,10 @@ import java.util.HashMap;
  */
 public class SuntimesMoonData1 extends SuntimesMoonData0
 {
-    public SuntimesMoonData1(Context context, int appWidgetId) {
+    public SuntimesMoonData1(Object context, int appWidgetId) {
         super(context, appWidgetId);
     }
-    public SuntimesMoonData1(Context context, int appWidgetId, String calculatorName) {
+    public SuntimesMoonData1(Object context, int appWidgetId, String calculatorName) {
         super(context, appWidgetId, calculatorName);
     }
     public SuntimesMoonData1(SuntimesMoonData1 other) {
@@ -64,7 +62,7 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
      * @param context
      */
     @Override
-    public void calculate(Context context)
+    public void calculate(Object context)
     {
         super.calculate(context);
 

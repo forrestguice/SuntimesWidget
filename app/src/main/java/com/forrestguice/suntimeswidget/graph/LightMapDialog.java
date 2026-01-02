@@ -44,7 +44,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -72,9 +71,11 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
@@ -95,6 +96,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -170,7 +173,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         this.data_timezone = values.timezone();
         this.data = new SuntimesRiseSetDataset(values);
         this.data.invalidateCalculation();
-        this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
+        this.data.setTimeZone(TimeZones.localMeanTime(values.location()));
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
         this.data.calculateData(context);
     }
@@ -191,7 +194,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         initColors(contextWrapper);
 
         SuntimesUtils.initDisplayStrings(getActivity());
-        WidgetSettings.SolarTimeMode.initDisplayStrings(getActivity());
+        WidgetSettings.initDisplayStrings_SolarTimeMode(getActivity());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
             //Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
@@ -1546,7 +1549,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
     {
-        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
+        TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
         String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
@@ -1557,13 +1560,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
-        SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
+        TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
         view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private CharSequence styleElevationText(double elevation, @Nullable Integer color, int places)
     {
-        SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
+        TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
         String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
         //noinspection ConstantConditions
@@ -1574,7 +1577,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return (span != null ? span : elevationString);
     }
 
-    private CharSequence styleLengthText(@NonNull Context context, double meters, WidgetSettings.LengthUnit units)
+    private CharSequence styleLengthText(@NonNull Context context, double meters, LengthUnit units)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
@@ -1688,7 +1691,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
         if (sunTime != null)
         {
             TimeZone timezone = mapTime.getTimeZone();
@@ -1720,7 +1723,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (offsetTime != null)
         {
             if (isOffset) {
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
                 offsetText.setSuffix("");
                 String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
                 offsetTime.setText(displayString);
@@ -1817,7 +1820,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 double objectHeight = WidgetSettings.loadObserverHeightPref(context, 0);
                 if (objectHeight > 0)
                 {
-                    WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                    LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
                     if (sunShadowObj != null) {
                         sunShadowObj.setText(styleLengthText(context, objectHeight, units));
@@ -1875,7 +1878,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
 
-        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
         String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, true, 2);
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
@@ -2170,7 +2173,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new AppColorValues(getActivity(), true);
+            return new AppColorValues(AndroidResources.wrap(getActivity()), true);
         }
     };
 
