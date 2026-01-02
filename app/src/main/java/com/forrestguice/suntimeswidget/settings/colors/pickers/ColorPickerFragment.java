@@ -108,7 +108,6 @@ public class ColorPickerFragment extends DialogBase
         }
     };
 
-    @CallSuper
     public void updateViews(Context context) {
         updatePreview(context);
     }
