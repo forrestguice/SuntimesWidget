@@ -30,6 +30,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>       <!-- needed by Actions to launch user-defined intents -->
+
     <permission
         android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
