@@ -53,9 +53,6 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
 
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat;
-
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
@@ -88,6 +85,8 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.NotificationCompat;
+import com.forrestguice.support.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.text.TimeDisplayText;
