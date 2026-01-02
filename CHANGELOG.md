@@ -15,8 +15,7 @@
 * adds `seek bar` to the sun dialog; tapping or dragging the lightmap or graph areas seeks to that time (#826).
 * adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek the time of twilight or events.
 * adds `seek altitude` and `seek shadow length` menus to the sun dialog; seek or add/manage custom events.
-* adds `10min`, `15min`, and `7d` step sizes to the sun dialog.
-* adds `7d` step size to the world map dialog.
+* adds `10min`, `15min`, and `7d` step sizes to the sun dialog, and `7d` step size to the world map dialog.
 * adds `solar noon` option to the sun dialog; draw a line at solar noon.
 * adds `symbol` option to the sun dialog; display a "circle", "cross", "dot", or "line".
 
@@ -32,11 +31,10 @@
 
 * adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
+* adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by Actions to launch user-defined intents) [permission].
 * refactor; decouples core data classes from the Android api; decouples UI classes from the Android Support Library.
 * build; updates targetSdkVersion (28 -> 30) and migrates to AndroidX; the `legacy` build uses the older Android Support Library.
 * build; adds `production`, `nightly`, and `legacy` build flavors (#892).
-
-
 
 ### v0.16.12 (2025-12-28)
 * fixes bug where US English strings are displayed for other English locales. (#902)
