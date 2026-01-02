@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.support.app.AppCompatActivity;

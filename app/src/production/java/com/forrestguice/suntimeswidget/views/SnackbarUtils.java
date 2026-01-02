@@ -25,7 +25,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.widget.SnackbarCompat;
 
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class SnackbarUtils extends SnackbarCompat
 {
