@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.settings.colors.pickers;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
