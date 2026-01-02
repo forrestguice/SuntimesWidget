@@ -3,10 +3,17 @@ plugins {
 }
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
+    def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+    if (targetVersion == null) {
+        targetVersion = 28;
+    }
 
     defaultConfig {
+        if (targetVersion >= 33) {
+            compileSdk 33
+        }
+
         minSdkVersion 11
         targetSdkVersion 28
         versionCode 1
@@ -22,6 +29,120 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    if (targetVersion >= 33) {
+        namespace "com.forrestguice.support"
+        buildFeatures {
+            buildConfig = true
+        }
+        flavorDimensions = ["version", "api"]
+
+    } else {
+        //noinspection GrDeprecatedAPIUsage
+        compileSdkVersion targetVersion
+        //noinspection GrDeprecatedAPIUsage
+        flavorDimensions "version", "api"
+    }
+
+    productFlavors {
+        supportlib {
+            dimension "version"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 28
+            versionNameSuffix "-supportlib"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+        androidx {
+            dimension "version"
+            //noinspection GradleDependency
+            if (targetVersion >= 33) {
+                compileSdk 33
+            }
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 30
+            versionNameSuffix "-androidx"
+            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        }
+
+        api28 {
+            dimension "api"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 28
+            versionNameSuffix "-api28"
+        }
+        api30 {
+            dimension "api"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 30
+            versionNameSuffix "-api30"
+        }
+        api33 {
+            dimension "api"
+            if (targetVersion >= 33) {
+                compileSdk 33
+            }
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 33
+            versionNameSuffix "-api33"
+        }
+        api34 {
+            dimension "api"
+            if (targetVersion >= 34) {
+                compileSdk 34
+            }
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 34
+            versionNameSuffix "-api34"
+        }
+    }
+
+    configurations {
+        supportlibApi28Implementation {}
+        androidxApi28Implementation {}
+        androidxApi30Implementation {}
+        androidxApi33Implementation {}
+        androidxApi34Implementation {}
+    }
+
+    if (targetVersion >= 34)
+    {
+        androidComponents {
+            beforeVariants(selector().all(), { variant ->
+                if (useAndroidX) {
+                    if (variant.name.contains("supportlib")) {
+                        variant.enable = false
+
+                    } else if (targetVersion != null) {
+                        if ((variant.name.contains("Api28") && targetVersion != 28) || (variant.name.contains("Api30") && targetVersion != 30)
+                                || (variant.name.contains("Api33") && targetVersion != 33) || (variant.name.contains("Api34") && targetVersion != 34)) {
+                            variant.enable = false
+                        }
+                    }
+                } else if (!useAndroidX && (variant.name.contains("androidx") || variant.name.contains("Api30") || variant.name.contains("Api33") || variant.name.contains("Api34"))) {
+                    variant.enable = false
+                }
+            })
+        }
+    } else {
+        //noinspection GrDeprecatedAPIUsage
+        variantFilter { variant ->
+            def names = variant.flavors*.name
+            if (useAndroidX) {
+                if (names.contains("supportlib")) {
+                    setIgnore(true)
+
+                } else if (targetVersion != null) {
+                    if ((names.contains("api28") && targetVersion != 28) || (names.contains("api30") && targetVersion != 30)
+                            || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
+                        setIgnore(true)
+                    }
+                }
+            } else if (!useAndroidX && (names.contains("androidx") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+                setIgnore(true)
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,18 +152,49 @@ android {
 dependencies {
     implementation project(path: ":util")
 
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    supportlibImplementation 'com.android.support:design:28.0.0'
+    supportlibImplementation 'com.android.support:appcompat-v7:28.0.0'
+    supportlibImplementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    supportlibImplementation 'com.android.support:recyclerview-v7:28.0.0'
+    supportlibImplementation 'com.android.support:cardview-v7:28.0.0'
+    supportlibImplementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    androidxApi28Implementation 'com.google.android.material:material:1.0.0'
+    androidxApi28Implementation 'androidx.appcompat:appcompat:1.0.0'
+    androidxApi28Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    androidxApi30Implementation 'com.google.android.material:material:1.4.0'
+    androidxApi30Implementation 'androidx.appcompat:appcompat:1.3.1'
+    androidxApi30Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    androidxApi33Implementation 'com.google.android.material:material:1.6.0'
+    androidxApi33Implementation 'androidx.appcompat:appcompat:1.6.1'
+    androidxApi33Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    androidxApi34Implementation 'com.google.android.material:material:1.6.1'
+    androidxApi34Implementation 'androidx.appcompat:appcompat:1.6.1'
+    androidxApi34Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test:rules:0.5'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+
+    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean();
+    def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+
+    if (useAndroidX) {
+        if (targetVersion == null || targetVersion >= 33) {
+            androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+        } else {
+            androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+        }
+    } else {
+        androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test:rules:0.5'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+        androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    }
+
 }

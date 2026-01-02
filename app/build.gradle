@@ -24,6 +24,9 @@ android
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 28
+        missingDimensionStrategy 'version', 'supportlib'
+        missingDimensionStrategy 'api', 'api28'
+
         versionCode 126
         versionName "0.16.12"
 
