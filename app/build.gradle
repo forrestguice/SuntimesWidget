@@ -37,6 +37,10 @@ android
             missingDimensionStrategy 'api', 'api29'
         } else if (targetVersion == 30) {
             missingDimensionStrategy 'api', 'api30'
+        } else if (targetVersion == 31) {
+            missingDimensionStrategy 'api', 'api31'
+        } else if (targetVersion == 32) {
+            missingDimensionStrategy 'api', 'api32'
         } else if (targetVersion == 33) {
             missingDimensionStrategy 'api', 'api33'
         } else if (targetVersion == 34) {
@@ -94,7 +98,6 @@ android
         }
     }
 
-    //noinspection GrDeprecatedAPIUsage
     variantFilter { variant ->
         def names = variant.flavors*.name
         if (useAndroidX) {
@@ -104,13 +107,14 @@ android
             } else if (targetVersion != null) {
                 if ((names.contains("api28") && targetVersion != 28)
                         || (names.contains("api29") && targetVersion != 29) || (names.contains("api30") && targetVersion != 30)
+                        || (names.contains("api31") && targetVersion != 31) || (names.contains("api32") && targetVersion != 32)
                         || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
                     setIgnore(true)
                 }
             }
-        } else if (!useAndroidX && (names.contains("production") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+        } else if (!useAndroidX && (names.contains("production") || names.contains("api29") || names.contains("api30") || names.contains("api31") || names.contains("api32") || names.contains("api33") || names.contains("api34"))) {
             setIgnore(true)
-        } else if (!useAndroidX && (names.contains("nightly") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+        } else if (!useAndroidX && (names.contains("nightly") || names.contains("api29") || names.contains("api30") || names.contains("api31") || names.contains("api32") || names.contains("api33") || names.contains("api34"))) {
             setIgnore(true)
         }
     }

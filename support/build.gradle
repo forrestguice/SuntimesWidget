@@ -82,6 +82,18 @@ android {
             targetSdkVersion 30
             versionNameSuffix "-api30"
         }
+        api31 {
+            dimension "api"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 31
+            versionNameSuffix "-api31"
+        }
+        api32 {
+            dimension "api"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 32
+            versionNameSuffix "-api32"
+        }
         api33 {
             dimension "api"
             if (targetVersion >= 33) {
@@ -107,6 +119,8 @@ android {
         androidxApi28Implementation {}
         androidxApi29Implementation {}
         androidxApi30Implementation {}
+        androidxApi31Implementation {}
+        androidxApi32Implementation {}
         androidxApi33Implementation {}
         androidxApi34Implementation {}
     }
@@ -122,11 +136,14 @@ android {
                     } else if (targetVersion != null) {
                         if ((variant.name.contains("Api28") && targetVersion != 28)
                                 || (variant.name.contains("Api29") && targetVersion != 29)|| (variant.name.contains("Api30") && targetVersion != 30)
+                                || (variant.name.contains("Api31") && targetVersion != 31)|| (variant.name.contains("Api32") && targetVersion != 32)
                                 || (variant.name.contains("Api33") && targetVersion != 33) || (variant.name.contains("Api34") && targetVersion != 34)) {
                             variant.enable = false
                         }
                     }
-                } else if (!useAndroidX && (variant.name.contains("androidx") || variant.name.contains("Api29") || variant.name.contains("Api30") || variant.name.contains("Api33") || variant.name.contains("Api34"))) {
+                } else if (!useAndroidX && (variant.name.contains("androidx") || variant.name.contains("Api29") || variant.name.contains("Api30")
+                        || variant.name.contains("Api31") || variant.name.contains("Api32")
+                        || variant.name.contains("Api33") || variant.name.contains("Api34"))) {
                     variant.enable = false
                 }
             })
@@ -142,11 +159,12 @@ android {
                 } else if (targetVersion != null) {
                     if ((names.contains("api28") && targetVersion != 28)
                             || (names.contains("api29") && targetVersion != 29) || (names.contains("api30") && targetVersion != 30)
+                            || (names.contains("api31") && targetVersion != 31) || (names.contains("api32") && targetVersion != 32)
                             || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
                         setIgnore(true)
                     }
                 }
-            } else if (!useAndroidX && (names.contains("androidx") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+            } else if (!useAndroidX && (names.contains("androidx") || names.contains("api29") || names.contains("api30") || names.contains("api31") || names.contains("api32") || names.contains("api33") || names.contains("api34"))) {
                 setIgnore(true)
             }
         }
@@ -189,6 +207,20 @@ dependencies {
     androidxApi30Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'      // 1.2.0 requires minCompileSdk 31+; 1.3.0 (2025-02-26) requires minapi 21+
     androidxApi30Implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'             // 2.5.0 requires minCompileSdk 31+
     androidxApi30Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'            // 2.5.0 requires minCompileSdk 31+
+
+    androidxApi31Implementation 'com.google.android.material:material:1.4.0'
+    androidxApi31Implementation 'androidx.appcompat:appcompat:1.3.1'
+    androidxApi31Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    androidxApi31Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'      // 1.2.0 requires minCompileSdk 31+; 1.3.0 (2025-02-26) requires minapi 21+
+    androidxApi31Implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'             // 2.5.0 requires minCompileSdk 31+
+    androidxApi31Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'            // 2.5.0 requires minCompileSdk 31+
+
+    androidxApi32Implementation 'com.google.android.material:material:1.4.0'
+    androidxApi32Implementation 'androidx.appcompat:appcompat:1.3.1'
+    androidxApi32Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    androidxApi32Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'      // 1.2.0 requires minCompileSdk 31+; 1.3.0 (2025-02-26) requires minapi 21+
+    androidxApi32Implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'             // 2.5.0 requires minCompileSdk 31+
+    androidxApi32Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'            // 2.5.0 requires minCompileSdk 31+
 
     androidxApi33Implementation 'com.google.android.material:material:1.6.0'
     androidxApi33Implementation 'androidx.appcompat:appcompat:1.6.1'
