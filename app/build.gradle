@@ -95,15 +95,22 @@ dependencies
     implementation project(path: ":util")
     implementation project(path: ":support")
 
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
     implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
+
+    productionImplementation 'com.android.support:design:28.0.0'
+    productionImplementation 'com.android.support:appcompat-v7:28.0.0'
+    productionImplementation 'com.android.support:recyclerview-v7:28.0.0'
+    productionImplementation 'com.android.support:cardview-v7:28.0.0'
+    productionImplementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    productionImplementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    legacyImplementation 'com.android.support:design:28.0.0'
+    legacyImplementation 'com.android.support:appcompat-v7:28.0.0'
+    legacyImplementation 'com.android.support:recyclerview-v7:28.0.0'
+    legacyImplementation 'com.android.support:cardview-v7:28.0.0'
+    legacyImplementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    legacyImplementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:2.2.0'
