@@ -201,7 +201,6 @@ dependencies {
     androidxApi34Implementation 'androidx.appcompat:appcompat:1.6.1'
     androidxApi34Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     androidxApi34Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'      // 1.3.0 (2025-02-26) requires minapi 21+
-    //androidxApi34Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     androidxApi34Implementation 'androidx.lifecycle:lifecycle-livedata:2.7.0'
     androidxApi34Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
 
