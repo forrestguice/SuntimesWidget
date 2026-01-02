@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 
 android
 {
+    def targetVersionDefault = 29
     Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
     if (targetVersion == null) {
-        targetVersion = 28;
+        targetVersion = targetVersionDefault
     }
 
     compileSdkVersion targetVersion
@@ -29,7 +30,20 @@ android
         minSdkVersion 14
         targetSdkVersion targetVersion
         missingDimensionStrategy 'support_version', 'androidx'
-        missingDimensionStrategy 'api', 'api28'
+
+        if (targetVersion == 28) {
+            missingDimensionStrategy 'api', 'api28'
+        } else if (targetVersion == 29) {
+            missingDimensionStrategy 'api', 'api29'
+        } else if (targetVersion == 30) {
+            missingDimensionStrategy 'api', 'api30'
+        } else if (targetVersion == 33) {
+            missingDimensionStrategy 'api', 'api33'
+        } else if (targetVersion == 34) {
+            missingDimensionStrategy 'api', 'api34'
+        } else {
+            missingDimensionStrategy 'api', 'api28'
+        }
 
         versionCode 126
         versionName "0.16.12"
@@ -121,19 +135,17 @@ dependencies
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
     implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
 
-    productionImplementation 'com.google.android.material:material:1.0.0'
-    productionImplementation 'androidx.appcompat:appcompat:1.0.0'
-    productionImplementation 'androidx.recyclerview:recyclerview:1.0.0'
-    productionImplementation 'androidx.cardview:cardview:1.0.0'
+    productionImplementation 'com.google.android.material:material:1.4.0'
+    productionImplementation 'androidx.appcompat:appcompat:1.3.1'
     productionImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    productionImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    productionImplementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    productionImplementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
 
-    nightlyImplementation 'com.google.android.material:material:1.0.0'
-    nightlyImplementation 'androidx.appcompat:appcompat:1.0.0'
-    nightlyImplementation 'androidx.recyclerview:recyclerview:1.0.0'
-    nightlyImplementation 'androidx.cardview:cardview:1.0.0'
+    nightlyImplementation 'com.google.android.material:material:1.4.0'
+    nightlyImplementation 'androidx.appcompat:appcompat:1.3.1'
     nightlyImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    nightlyImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    nightlyImplementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    nightlyImplementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
 
     legacyImplementation 'com.android.support:design:28.0.0'
     legacyImplementation 'com.android.support:appcompat-v7:28.0.0'

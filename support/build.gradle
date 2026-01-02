@@ -70,6 +70,12 @@ android {
             targetSdkVersion 28
             versionNameSuffix "-api28"
         }
+        api29 {
+            dimension "api"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 29
+            versionNameSuffix "-api29"
+        }
         api30 {
             dimension "api"
             //noinspection ExpiredTargetSdkVersion,OldTargetApi
@@ -99,6 +105,7 @@ android {
     configurations {
         supportlibApi28Implementation {}
         androidxApi28Implementation {}
+        androidxApi29Implementation {}
         androidxApi30Implementation {}
         androidxApi33Implementation {}
         androidxApi34Implementation {}
@@ -113,12 +120,13 @@ android {
                         variant.enable = false
 
                     } else if (targetVersion != null) {
-                        if ((variant.name.contains("Api28") && targetVersion != 28) || (variant.name.contains("Api30") && targetVersion != 30)
+                        if ((variant.name.contains("Api28") && targetVersion != 28)
+                                || (variant.name.contains("Api29") && targetVersion != 29)|| (variant.name.contains("Api30") && targetVersion != 30)
                                 || (variant.name.contains("Api33") && targetVersion != 33) || (variant.name.contains("Api34") && targetVersion != 34)) {
                             variant.enable = false
                         }
                     }
-                } else if (!useAndroidX && (variant.name.contains("androidx") || variant.name.contains("Api30") || variant.name.contains("Api33") || variant.name.contains("Api34"))) {
+                } else if (!useAndroidX && (variant.name.contains("androidx") || variant.name.contains("Api29") || variant.name.contains("Api30") || variant.name.contains("Api33") || variant.name.contains("Api34"))) {
                     variant.enable = false
                 }
             })
@@ -132,12 +140,13 @@ android {
                     setIgnore(true)
 
                 } else if (targetVersion != null) {
-                    if ((names.contains("api28") && targetVersion != 28) || (names.contains("api30") && targetVersion != 30)
+                    if ((names.contains("api28") && targetVersion != 28)
+                            || (names.contains("api29") && targetVersion != 29) || (names.contains("api30") && targetVersion != 30)
                             || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
                         setIgnore(true)
                     }
                 }
-            } else if (!useAndroidX && (names.contains("androidx") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+            } else if (!useAndroidX && (names.contains("androidx") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
                 setIgnore(true)
             }
         }
@@ -160,18 +169,24 @@ dependencies {
     supportlibImplementation 'android.arch.lifecycle:extensions:1.1.1'
 
     androidxApi28Implementation 'com.google.android.material:material:1.0.0'
-    androidxApi28Implementation 'androidx.appcompat:appcompat:1.0.0'
+    androidxApi28Implementation 'androidx.appcompat:appcompat:1.3.1'
     androidxApi28Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    androidxApi28Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'      // 1.3.0 (2025-02-26) requires minapi 21+
+    androidxApi28Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
     androidxApi28Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    androidxApi28Implementation 'androidx.lifecycle:lifecycle-livedata:1.0.0'             // 2.7.0+ requires Java 17
-    androidxApi28Implementation 'androidx.lifecycle:lifecycle-viewmodel:1.0.0'            // 2.7.0+ requires Java 17
+    androidxApi28Implementation 'androidx.lifecycle:lifecycle-livedata:1.0.0'
+    androidxApi28Implementation 'androidx.lifecycle:lifecycle-viewmodel:1.0.0'
+
+    androidxApi29Implementation 'com.google.android.material:material:1.4.0'
+    androidxApi29Implementation 'androidx.appcompat:appcompat:1.3.1'
+    androidxApi29Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    androidxApi29Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+    androidxApi29Implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    androidxApi29Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
 
     androidxApi30Implementation 'com.google.android.material:material:1.4.0'
     androidxApi30Implementation 'androidx.appcompat:appcompat:1.3.1'
     androidxApi30Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     androidxApi30Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'      // 1.3.0 (2025-02-26) requires minapi 21+
-    androidxApi30Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     androidxApi30Implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'             // 2.7.0+ requires Java 17
     androidxApi30Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'            // 2.7.0+ requires Java 17
 
@@ -179,7 +194,6 @@ dependencies {
     androidxApi33Implementation 'androidx.appcompat:appcompat:1.6.1'
     androidxApi33Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     androidxApi33Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'      // 1.3.0 (2025-02-26) requires minapi 21+
-    androidxApi33Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     androidxApi33Implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'             // 2.7.0+ requires Java 17
     androidxApi33Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'            // 2.7.0+ requires Java 17
 
@@ -187,9 +201,9 @@ dependencies {
     androidxApi34Implementation 'androidx.appcompat:appcompat:1.6.1'
     androidxApi34Implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     androidxApi34Implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'      // 1.3.0 (2025-02-26) requires minapi 21+
-    androidxApi34Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    androidxApi34Implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'             // 2.7.0+ requires Java 17
-    androidxApi34Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'            // 2.7.0+ requires Java 17
+    //androidxApi34Implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    androidxApi34Implementation 'androidx.lifecycle:lifecycle-livedata:2.7.0'
+    androidxApi34Implementation 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
 
     testImplementation 'junit:junit:4.12'
 
