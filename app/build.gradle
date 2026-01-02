@@ -128,6 +128,13 @@ dependencies
     productionImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     productionImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
+    nightlyImplementation 'com.google.android.material:material:1.0.0'
+    nightlyImplementation 'androidx.appcompat:appcompat:1.0.0'
+    nightlyImplementation 'androidx.recyclerview:recyclerview:1.0.0'
+    nightlyImplementation 'androidx.cardview:cardview:1.0.0'
+    nightlyImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    nightlyImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
     legacyImplementation 'com.android.support:design:28.0.0'
     legacyImplementation 'com.android.support:appcompat-v7:28.0.0'
     legacyImplementation 'com.android.support:recyclerview-v7:28.0.0'
