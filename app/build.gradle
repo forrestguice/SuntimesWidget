@@ -80,6 +80,24 @@ android
         }
     }
 
+    //noinspection GrDeprecatedAPIUsage
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (useAndroidX) {
+            if (names.contains("legacy")) {
+                setIgnore(true)
+
+            } else if (targetVersion != null) {
+                if ((names.contains("api28") && targetVersion != 28) || (names.contains("api30") && targetVersion != 30)
+                        || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
+                    setIgnore(true)
+                }
+            }
+        } else if (!useAndroidX && (names.contains("production") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+            setIgnore(true)
+        }
+    }
+
     lintOptions
     {
         disable 'MissingTranslation','WrongRegion','ObsoleteSdkInt'
