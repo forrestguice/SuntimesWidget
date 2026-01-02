@@ -863,7 +863,11 @@ public class SuntimesWidget0 extends AppWidgetProvider
          * results in stale alarms (that may eventually consume all of the device's memory).
          */
         //return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+        if (Build.VERSION.SDK_INT >= 23) {
+            return PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+        }
     }
 
     /**
@@ -886,7 +890,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
         Intent actionIntent = new Intent(context, widgetClass);
         actionIntent.setAction(actionMode.name());
         actionIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        return PendingIntent.getBroadcast(context, appWidgetId, actionIntent, 0);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            return PendingIntent.getBroadcast(context, appWidgetId, actionIntent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, appWidgetId, actionIntent, 0);
+        }
     }
 
 }

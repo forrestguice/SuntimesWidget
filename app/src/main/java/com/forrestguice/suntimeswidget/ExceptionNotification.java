@@ -75,7 +75,11 @@ public abstract class ExceptionNotification
         }
         builder.setContentText(message);
 
-        PendingIntent intent = PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent intent = PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), flags);
         String actionText = getNotificationActionText(context);
         if (actionText != null) {
             builder.addAction(getNotificationIconResID(), getNotificationActionText(context), intent);

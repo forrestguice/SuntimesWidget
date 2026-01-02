@@ -702,7 +702,11 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected PendingIntent getFullUpdateIntent(Context context)
     {
-        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
+        if (Build.VERSION.SDK_INT >= 23) {
+            return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
+        }
     }
     protected BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
     {
@@ -728,7 +732,11 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected PendingIntent getPartialUpdateIntent(Context context)
     {
-        return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
+        if (Build.VERSION.SDK_INT >= 23) {
+            return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
+        }
     }
     protected BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
     {

@@ -207,8 +207,13 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmJobService.scheduleJobAfterBootCompleted(context);
 
         } else {
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= 23) {
+                flags = flags | PendingIntent.FLAG_IMMUTABLE;
+            }
+
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
-                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), PendingIntent.FLAG_UPDATE_CURRENT);
+                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), flags);
             long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
             addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
         }
@@ -324,7 +329,11 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (Build.VERSION.SDK_INT >= 21)
             {
-                PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
+                int flags = 0;
+                if (Build.VERSION.SDK_INT >= 23) {
+                    flags = flags | PendingIntent.FLAG_IMMUTABLE;
+                }
+                PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), flags);
                 AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
                 //noinspection MissingPermission
                 alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));    // TODO:  android.permission.SCHEDULE_EXACT_ALARM required after targeting api31+
@@ -655,7 +664,11 @@ public class AlarmNotifications extends BroadcastReceiver
     public static PendingIntent getPendingIntent(Context context, String action, Uri data)
     {
         Intent intent = getAlarmIntent(context, action, data);
-        return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, flags);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1267,11 +1280,16 @@ public class AlarmNotifications extends BroadcastReceiver
 
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
 
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingDismissWithChallenge = PendingIntent.getActivity(context, alarm.hashCode(), getFullscreenIntent(context, alarm.getUri()).setAction(ACTION_DISMISS), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), flags);
+        PendingIntent pendingDismissWithChallenge = PendingIntent.getActivity(context, alarm.hashCode(), getFullscreenIntent(context, alarm.getUri()).setAction(ACTION_DISMISS), flags);
+        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), flags);
+        PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), flags);
+        PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), flags);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
@@ -1314,7 +1332,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (reminderIntent != null)
                             {
                                 String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, reminderActionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-                                builder.addAction(R.drawable.ic_action_extension, actionTitle, PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                                builder.addAction(R.drawable.ic_action_extension, actionTitle, PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, flags));
                             }
                         }
                         builder.setContentIntent(pendingView);
@@ -1426,19 +1444,28 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
 
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+
         boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
         builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
-        builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), PendingIntent.FLAG_UPDATE_CURRENT));
+        builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), flags));
 
         if (isPaused) {
-            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), flags);
             builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
         } else {
-            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), flags);
             builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
         }
 
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        int flags0 = 0;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags0 = flags0 | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), flags0);
         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
         return builder.build();
     }
@@ -1468,7 +1495,11 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
 
-        PendingIntent pendingView = PendingIntent.getActivity(context, message.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, message.hashCode(), getAlarmListIntent(context, null), flags);
         builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
         return builder.build();
     }
@@ -1509,7 +1540,11 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setContentText(message);
 
         Intent intent = AlarmSettings.getAutostartSettingsIntent(context);
-        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, flags);
         builder.setContentIntent(pendingView);
 
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
@@ -1532,7 +1567,11 @@ public class AlarmNotifications extends BroadcastReceiver
             intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
         }
 
-        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, flags);
         builder.setContentIntent(pendingView);
         //builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.configLabel_alarms_optWhiteList), pendingView);
 

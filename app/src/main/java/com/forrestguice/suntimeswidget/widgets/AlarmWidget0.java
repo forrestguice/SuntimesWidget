@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -85,8 +86,13 @@ public class AlarmWidget0 extends SuntimesWidget0
         layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+
         Intent intentTemplate = AlarmNotifications.getAlarmListIntent(context, null);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentTemplate, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentTemplate, flags);
         views.setPendingIntentTemplate(R.id.list_alarms, pendingIntent);
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
