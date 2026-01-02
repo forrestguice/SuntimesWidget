@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />      <!-- needed by AlarmClock -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  <!-- needed by AlarmClock; api29+ -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />    <!-- needed by AlarmClock; api31+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>       <!-- needed by AlarmClock; api33+ -->
 
     <uses-permission android:name="org.codeaurora.permission.POWER_OFF_ALARM" />  <!-- needed for hardware dependent 'power off' alarms -->
 
