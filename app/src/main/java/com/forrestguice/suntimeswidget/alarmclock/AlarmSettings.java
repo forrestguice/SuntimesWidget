@@ -801,12 +801,11 @@ public class AlarmSettings
             UsageStatsManager statsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
             if (statsManager != null) {
                 int bucket = statsManager.getAppStandbyBucket();
-                return (bucket == STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
+                return (bucket == AlarmSettingsCompat.STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
             }
         }
         return false;
     }
-    public static final int STANDBY_BUCKET_RESTRICTED = 0x0000002d;    // TODO: replace this with UsageStatsManager.STANDBY_BUCKET_RESTRICTED after targeting api30+
 
     /**
      * https://dontkillmyapp.com/xiomi
@@ -929,11 +928,10 @@ public class AlarmSettings
     @TargetApi(34)
     public static Intent getFullScreenIntentSettingsIntent(Context context)
     {
-        Intent intent = new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        Intent intent = new Intent(AlarmSettingsCompat.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         return intent;
     }
-    public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
 
     public static void openFullScreenIntentSettings(Context context)
     {
