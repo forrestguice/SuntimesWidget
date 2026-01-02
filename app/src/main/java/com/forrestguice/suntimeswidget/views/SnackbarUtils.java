@@ -18,82 +18,35 @@
 
 package com.forrestguice.suntimeswidget.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.View;
-import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.SnackbarCompat;
 
 import android.support.design.widget.Snackbar;
 
-public class SnackbarUtils
+public class SnackbarUtils extends SnackbarCompat
 {
-    public static final int LENGTH_INDEFINITE = Snackbar.LENGTH_INDEFINITE;
-    public static final int LENGTH_SHORT = Snackbar.LENGTH_SHORT;
-    public static final int LENGTH_LONG = Snackbar.LENGTH_LONG;
-
-    public static int getSnackbarTextResourceID() {
-        return android.support.design.R.id.snackbar_text;    // support libraries
-        //return com.google.android.material.R.id.snackbar_text;   // androidx
+    public SnackbarUtils(Snackbar snackbar) {
+        super(snackbar);
     }
 
-    public static int getSnackbarActionResourceID() {
-        return android.support.design.R.id.snackbar_action;    // support libraries
-        //return com.google.android.material.R.id.snackbar_action;   // androidx
+    public static Snackbar make(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration) {
+        return SnackbarCompat.make(context, view, text, duration, new BasicSnackbarTheme());
     }
 
-    public static Snackbar make(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration)
+    public static class BasicSnackbarTheme implements SnackbarTheme
     {
-        Snackbar snackbar = Snackbar.make(view, text, duration);
-        themeSnackbar(context, snackbar, null);
-        return snackbar;
-    }
-
-    @SuppressLint("ResourceType")
-    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
-    {
-        Integer[] colors = new Integer[] {null, null, null};
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
-        TypedArray a = context.obtainStyledAttributes(colorAttrs);
-        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
-        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
-        a.recycle();
-
-        if (colorOverrides != null && colorOverrides.length == colors.length) {
-            for (int i=0; i<colors.length; i++) {
-                if (colorOverrides[i] != null) {
-                    colors[i] = colorOverrides[i];
-                }
-            }
+        public int[] colorAttrs() {
+            return new int[] { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
         }
-
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(colors[2]);
-        snackbar.setActionTextColor(colors[1]);
-
-        TextView snackbarText = (TextView)snackbarView.findViewById(getSnackbarTextResourceID());
-        if (snackbarText != null) {
-            snackbarText.setTextColor(colors[0]);
-            snackbarText.setMaxLines(3);
+        public int[] colorAttrs_defaults() {
+            return new int[] { android.R.color.primary_text_dark, R.color.text_accent_dark, R.color.card_bg_dark, R.drawable.button_fab_dark };
         }
-
-        View snackbarAction = snackbarView.findViewById(getSnackbarActionResourceID());
-        if (snackbarAction != null) {
-            if (Build.VERSION.SDK_INT >= 16)
-            {
-                snackbarAction.setBackground(buttonDrawable);
-                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
-            }
+        public int resId_buttonPadding() {
+            return R.dimen.snackbar_button_padding;
         }
     }
-
 }

@@ -18,13 +18,9 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -32,8 +28,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
-import com.forrestguice.support.content.ContextCompat;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.SnackbarCompat;
 
 import java.util.regex.Pattern;
 
@@ -76,8 +71,8 @@ public class SuntimesWarning
         return parentView;
     }
 
-    private Snackbar snackbar = null;
-    public Snackbar getSnackbar() {
+    private SnackbarCompat snackbar = null;
+    public SnackbarCompat getSnackbar() {
         return snackbar;
     }
 
@@ -130,17 +125,17 @@ public class SuntimesWarning
     {
         parentView = view;
         wasDismissed = false;
-        snackbar = Snackbar.make(parentView, message, duration);
+        snackbar = SnackbarCompat.from(SnackbarUtils.make(context, parentView, message, duration));
         snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
-        themeWarning(context, snackbar);
+        //themeWarning(context, snackbar);
 
         if (actionLabel != null && actionListener != null) {
-            snackbar.setAction(actionLabel, actionListener);
+            snackbar.getSnackbar().setAction(actionLabel, actionListener);
         }
     }
 
-    @SuppressLint("ResourceType")
+    /*@SuppressLint("ResourceType")
     private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
     {
         int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
@@ -169,19 +164,19 @@ public class SuntimesWarning
                 snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
             }
         }
-    }
+    }*/
 
-    private final Snackbar.Callback snackbarListener = new Snackbar.Callback()
+    private final SnackbarCompat.Callback snackbarListener = new SnackbarCompat.Callback()
     {
         @Override
-        public void onDismissed(Snackbar snackbar, int event)
+        public void onDismissed(SnackbarCompat snackbar, int event)
         {
             super.onDismissed(snackbar, event);
             switch (event)
             {
                 case DISMISS_EVENT_SWIPE:
                     wasDismissed = true;
-                    snackbar.getView().post(new Runnable() {
+                    snackbar.getSnackbar().getView().post(new Runnable() {
                         @Override
                         public void run() {
                             showNextWarning();
@@ -201,17 +196,17 @@ public class SuntimesWarning
 
     public boolean isShown()
     {
-        return (snackbar != null && snackbar.isShown());
+        return (snackbar != null && snackbar.getSnackbar().isShown());
     }
 
     public void show()
     {
         if (snackbar != null) {
-            snackbar.show();
-            snackbar.getView().post(new Runnable() {
+            snackbar.getSnackbar().show();
+            snackbar.getSnackbar().getView().post(new Runnable() {
                 @Override
                 public void run() {
-                    snackbar.getView().requestFocus();
+                    snackbar.getSnackbar().getView().requestFocus();
                 }
             });
         }
@@ -221,7 +216,7 @@ public class SuntimesWarning
     public void dismiss()
     {
         if (isShown()) {
-            snackbar.dismiss();
+            snackbar.getSnackbar().dismiss();
         }
     }
 
@@ -235,7 +230,7 @@ public class SuntimesWarning
     {
         this.contentDescription = value;
         if (snackbar != null) {
-            TextView snackText = (TextView) snackbar.getView().findViewById(SnackbarUtils.getSnackbarTextResourceID());
+            TextView snackText = (TextView) snackbar.getSnackbar().getView().findViewById(SnackbarUtils.getSnackbarTextResourceID());
             if (snackText != null) {
                 snackText.setContentDescription(contentDescription);
             }
