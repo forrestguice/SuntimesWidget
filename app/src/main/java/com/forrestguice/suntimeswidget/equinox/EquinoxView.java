@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

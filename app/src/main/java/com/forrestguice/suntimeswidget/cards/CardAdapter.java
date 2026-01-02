@@ -27,7 +27,7 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
