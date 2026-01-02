@@ -95,7 +95,7 @@
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
         android:layout_marginTop="4dp" android:elevation="5dp"
         android:paddingBottom="8dp" android:layout_marginBottom="4dp"
-        android:orientation="horizontal" app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:orientation="horizontal" app:layoutManager="@string/layoutManager_LinearLayoutManager"
         tools:itemCount="16" tools:listitem="@layout/layout_listitem_color" />
 
 
