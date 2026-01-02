@@ -34,7 +34,7 @@ import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-import android.support.annotation.NonNull;
+import com.forrestguice.annotation.NonNull;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;

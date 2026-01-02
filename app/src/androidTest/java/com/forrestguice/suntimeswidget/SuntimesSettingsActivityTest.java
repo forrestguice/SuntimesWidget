@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.preference.Preference;
 
-import android.support.annotation.NonNull;
+import com.forrestguice.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
