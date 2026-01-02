@@ -32,7 +32,9 @@
 
 * refactor; decouples core data classes from the Android api.
 * refactor; decouples UI classes from the Android Support Library.
-* build; adds `fdroid` and `nightly` build flavors (#892).
+* build; adds `production`, `nightly`, and `legacy` build flavors (#892).
+* build; migrates app to AndroidX; the `legacy` build uses the older Android Support Library.
+
 
 ### v0.16.12 (2025-12-28)
 * fixes bug where US English strings are displayed for other English locales. (#902)
