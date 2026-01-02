@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android
 {
-    def targetVersionDefault = 29
+    def targetVersionDefault = 30
     Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
     if (targetVersion == null) {
@@ -102,12 +102,15 @@ android
                 setIgnore(true)
 
             } else if (targetVersion != null) {
-                if ((names.contains("api28") && targetVersion != 28) || (names.contains("api30") && targetVersion != 30)
+                if ((names.contains("api28") && targetVersion != 28)
+                        || (names.contains("api29") && targetVersion != 29) || (names.contains("api30") && targetVersion != 30)
                         || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
                     setIgnore(true)
                 }
             }
-        } else if (!useAndroidX && (names.contains("production") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+        } else if (!useAndroidX && (names.contains("production") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
+            setIgnore(true)
+        } else if (!useAndroidX && (names.contains("nightly") || names.contains("api29") || names.contains("api30") || names.contains("api33") || names.contains("api34"))) {
             setIgnore(true)
         }
     }
