@@ -33,7 +33,6 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -67,6 +66,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatDelegateHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -455,8 +455,8 @@ public class UIPrefsFragment extends PreferenceFragment
         AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(mode);
         String themeName = themeInfo.getThemeName();
         int themeNightMode = themeInfo.getDefaultNightMode();
-        darkPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_YES || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
-        lightPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_NO || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        darkPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_YES || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        lightPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_NO || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
     }
 
     /**

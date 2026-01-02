@@ -37,7 +37,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +52,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatDelegateHelper;
 import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.HashMap;
@@ -825,7 +825,7 @@ public class AppSettings
     {
         int themeResID = AppSettings.themePrefToStyleId(activity, appTheme, null);
         activity.setTheme(themeResID);
-        AppCompatDelegate.setDefaultNightMode(loadThemeInfo(appTheme).getDefaultNightMode());
+        AppCompatDelegateHelper.setDefaultNightMode(loadThemeInfo(appTheme).getDefaultNightMode());
         return themeResID;
     }
 
@@ -870,8 +870,8 @@ public class AppSettings
     public static String getThemeOverride(Context context, AppThemeInfo themeInfo)
     {
         int nightMode = themeInfo.getDefaultNightMode();
-        String override = (nightMode == AppCompatDelegate.MODE_NIGHT_NO) ? AppSettings.loadThemeLightPref(context)
-                : (nightMode == AppCompatDelegate.MODE_NIGHT_YES) ? AppSettings.loadThemeDarkPref(context)
+        String override = (nightMode == AppCompatDelegateHelper.MODE_NIGHT_NO) ? AppSettings.loadThemeLightPref(context)
+                : (nightMode == AppCompatDelegateHelper.MODE_NIGHT_YES) ? AppSettings.loadThemeDarkPref(context)
                 : (systemInNightMode(context) ? AppSettings.loadThemeDarkPref(context) : AppSettings.loadThemeLightPref(context));
         return ((override != null && !override.equals(THEME_DEFAULT)) ? override : null);
     }
@@ -1164,7 +1164,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            return AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1189,7 +1189,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_NO;
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1214,7 +1214,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_YES;
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1239,8 +1239,8 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return (isDay == null) ? AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    : (isDay ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES);
+            return (isDay == null) ? AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM
+                    : (isDay ? AppCompatDelegateHelper.MODE_NIGHT_NO : AppCompatDelegateHelper.MODE_NIGHT_YES);
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1274,7 +1274,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_NO;
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1299,7 +1299,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_YES;
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
@@ -1326,7 +1326,7 @@ public class AppSettings
         }
         @Override
         public int getDefaultNightMode() {
-            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            return AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM;
         }
         @Override
         public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
