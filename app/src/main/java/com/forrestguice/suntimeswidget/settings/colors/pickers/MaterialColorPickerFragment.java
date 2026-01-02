@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -32,6 +31,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorsAdapter;
+import com.forrestguice.support.lifecycle.ViewModel;
 import com.forrestguice.support.widget.GridLayoutManager;
 import com.forrestguice.support.widget.RecyclerView;
 

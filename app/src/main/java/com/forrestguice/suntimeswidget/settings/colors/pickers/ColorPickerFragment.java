@@ -18,9 +18,6 @@
 
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Color;
@@ -36,6 +33,9 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.lifecycle.MutableLiveData;
+import com.forrestguice.support.lifecycle.Observer;
+import com.forrestguice.support.lifecycle.ViewModel;
 
 import java.util.Locale;
 
