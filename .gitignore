@@ -51,3 +51,5 @@ proguard/
 .idea/misc.xml
 .idea/modules.xml
 app/app.iml
+/.idea/modules
+SuntimesWidget.iml
