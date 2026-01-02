@@ -30,10 +30,12 @@
 * adds `snooze` chip to the alarm edit dialog that allows setting the snooze length per alarm.
 * adds `snooze limit` chip to the alarm edit dialog that allows setting the snooze limit per alarm.
 
-* refactor; decouples core data classes from the Android api.
-* refactor; decouples UI classes from the Android Support Library.
+* adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
+* adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
+* refactor; decouples core data classes from the Android api; decouples UI classes from the Android Support Library.
+* build; updates targetSdkVersion (28 -> 30) and migrates to AndroidX; the `legacy` build uses the older Android Support Library.
 * build; adds `production`, `nightly`, and `legacy` build flavors (#892).
-* build; migrates app to AndroidX; the `legacy` build uses the older Android Support Library.
+
 
 
 ### v0.16.12 (2025-12-28)
