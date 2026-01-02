@@ -33,9 +33,9 @@ import android.os.Vibrator;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
+
 import android.support.v4.widget.CompoundButtonCompat;
 
-import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.SwitchCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
