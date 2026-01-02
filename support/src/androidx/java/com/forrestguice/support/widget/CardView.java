@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
-public class CardView extends androidx.appcompat.widget.CardView
+public class CardView extends androidx.cardview.widget.CardView
 {
     public CardView(@NonNull Context context) {
         super(context);

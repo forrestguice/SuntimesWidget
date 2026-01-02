@@ -54,13 +54,13 @@ public class SnackbarCompat
     public static final int LENGTH_LONG = Snackbar.LENGTH_LONG;
 
     public static int getSnackbarTextResourceID() {
-        return android.support.design.R.id.snackbar_text;    // support libraries
-        //return com.google.android.material.R.id.snackbar_text;   // androidx
+        //return android.support.design.R.id.snackbar_text;    // support libraries
+        return com.google.android.material.R.id.snackbar_text;   // androidx
     }
 
     public static int getSnackbarActionResourceID() {
-        return android.support.design.R.id.snackbar_action;    // support libraries
-        //return com.google.android.material.R.id.snackbar_action;   // androidx
+        //return android.support.design.R.id.snackbar_action;    // support libraries
+        return com.google.android.material.R.id.snackbar_action;   // androidx
     }
 
     public static Snackbar make(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration, @Nullable SnackbarTheme theme)

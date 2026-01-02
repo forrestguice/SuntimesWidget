@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class GridLayoutManager extends androidx.appcompat.widget.GridLayoutManager
+public class GridLayoutManager extends androidx.recyclerview.widget.GridLayoutManager
 {
     public GridLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

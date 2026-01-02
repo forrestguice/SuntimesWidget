@@ -34,8 +34,8 @@ import com.forrestguice.annotation.Nullable;
 public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
 {
     public static int getBottomSheetResourceID() {
-        return android.support.design.R.id.design_bottom_sheet;    // support libraries
-        //return com.google.android.material.R.id.design_bottom_sheet;   // androidx
+        //return android.support.design.R.id.design_bottom_sheet;    // support libraries
+        return com.google.android.material.R.id.design_bottom_sheet;   // androidx
     }
 
     public BottomSheetDialogBase() {

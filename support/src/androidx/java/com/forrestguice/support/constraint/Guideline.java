@@ -3,7 +3,7 @@ package com.forrestguice.support.constraint;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class Guideline extends androidx.constraintlayout.Guideline
+public class Guideline extends androidx.constraintlayout.widget.Guideline
 {
     public Guideline(Context context) {
         super(context);

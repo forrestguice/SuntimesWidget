@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class TabLayout extends android.support.design.widget.TabLayout
+public class TabLayout extends com.google.android.material.tabs.TabLayout
 {
     public TabLayout(Context context) {
         super(context);

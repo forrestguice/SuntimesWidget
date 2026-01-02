@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class FloatingActionButton extends android.support.design.widget.FloatingActionButton
+public class FloatingActionButton extends com.google.android.material.floatingactionbutton.FloatingActionButton
 {
     public FloatingActionButton(Context context) {
         super(context);

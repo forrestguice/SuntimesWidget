@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class LinearLayoutManager extends androidx.appcompat.widget.LinearLayoutManager
+public class LinearLayoutManager extends androidx.recyclerview.widget.LinearLayoutManager
 {
     public LinearLayoutManager(Context context) {
         super(context);

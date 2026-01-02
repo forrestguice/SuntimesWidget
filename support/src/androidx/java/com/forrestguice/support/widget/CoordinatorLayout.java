@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
-public class CoordinatorLayout extends android.support.design.widget.CoordinatorLayout
+public class CoordinatorLayout extends androidx.coordinatorlayout.widget.CoordinatorLayout
 {
     public CoordinatorLayout(@NonNull Context context) {
         super(context);

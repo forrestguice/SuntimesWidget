@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class TabItem extends android.support.design.widget.TabItem
+public class TabItem extends com.google.android.material.tabs.TabItem
 {
     public TabItem(Context context) {
         super(context);

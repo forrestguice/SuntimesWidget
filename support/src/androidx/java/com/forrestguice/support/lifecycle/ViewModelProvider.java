@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.annotation.NonNull;
 
-public abstract class ViewModelProvider extends androidx.lifecycle.ViewModelProvider
+public class ViewModelProvider extends androidx.lifecycle.ViewModelProvider
 {
+    public ViewModelProvider(@NonNull ViewModelStoreOwner owner) {
+        super(owner);
+    }
+
     public ViewModelProvider(@NonNull ViewModelStoreOwner owner, @NonNull Factory factory) {
         super(owner, factory);
     }

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
-public class DrawerLayout extends androidx.core.widget.DrawerLayout
+public class DrawerLayout extends androidx.drawerlayout.widget.DrawerLayout
 {
     public DrawerLayout(@NonNull Context context) {
         super(context);

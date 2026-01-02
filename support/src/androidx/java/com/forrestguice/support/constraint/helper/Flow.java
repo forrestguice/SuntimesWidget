@@ -3,7 +3,7 @@ package com.forrestguice.support.constraint.helper;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class Flow extends androidx.constraintlayout.helper.Flow
+public class Flow extends androidx.constraintlayout.helper.widget.Flow
 {
     public Flow(Context context) {
         super(context);

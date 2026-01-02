@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
-public class ConstraintLayout extends androidx.constraintlayout.ConstraintLayout
+public class ConstraintLayout extends androidx.constraintlayout.widget.ConstraintLayout
 {
     public ConstraintLayout(@NonNull Context context) {
         super(context);

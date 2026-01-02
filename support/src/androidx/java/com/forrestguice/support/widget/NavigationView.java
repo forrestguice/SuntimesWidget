@@ -3,7 +3,7 @@ package com.forrestguice.support.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class NavigationView extends android.support.design.widget.NavigationView
+public class NavigationView extends com.google.android.material.navigation.NavigationView
 {
     public NavigationView(Context context) {
         super(context);

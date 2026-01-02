@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class RecyclerView extends androidx.appcompat.widget.RecyclerView
+public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
 {
     public RecyclerView(@NonNull Context context) {
         super(context);
@@ -22,7 +22,7 @@ public class RecyclerView extends androidx.appcompat.widget.RecyclerView
         super(context, attrs, defStyle);
     }
 
-    public static void setChangeDuration(androidx.appcompat.widget.RecyclerView recyclerView, long duration)
+    public static void setChangeDuration(androidx.recyclerview.widget.RecyclerView recyclerView, long duration)
     {
         SimpleItemAnimator animator = (SimpleItemAnimator) recyclerView.getItemAnimator();
         if (animator != null) {
@@ -42,13 +42,13 @@ public class RecyclerView extends androidx.appcompat.widget.RecyclerView
         return new OnScrollListener()
         {
             @Override
-            public void onScrollStateChanged(@NonNull androidx.appcompat.widget.RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull androidx.recyclerview.widget.RecyclerView recyclerView, int newState) {
                 listener.onScrollStateChanged(RecyclerView.this, newState);
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void onScrolled(@NonNull androidx.appcompat.widget.RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
                 listener.onScrolled(RecyclerView.this, dx, dy);
                 super.onScrolled(recyclerView, dx, dy);
             }
@@ -65,7 +65,7 @@ public class RecyclerView extends androidx.appcompat.widget.RecyclerView
     /**
      * MarginDecorator : ItemDecoration
      */
-    public static class MarginDecorator extends androidx.appcompat.widget.RecyclerView.ItemDecoration
+    public static class MarginDecorator extends androidx.recyclerview.widget.RecyclerView.ItemDecoration
     {
         private final int[] marginPx = new int[4];
 
@@ -91,7 +91,7 @@ public class RecyclerView extends androidx.appcompat.widget.RecyclerView
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull androidx.appcompat.widget.RecyclerView parent, @NonNull androidx.appcompat.widget.RecyclerView.State state)
+        public void getItemOffsets(Rect outRect, @NonNull View view, @NonNull androidx.recyclerview.widget.RecyclerView parent, @NonNull androidx.recyclerview.widget.RecyclerView.State state)
         {
             outRect.left = marginPx[0];
             outRect.top = marginPx[1];
@@ -103,19 +103,19 @@ public class RecyclerView extends androidx.appcompat.widget.RecyclerView
     /**
      * LastItemBottomMarginDecorator : ItemDecoration
      */
-    public static class LastItemBottomMarginDecorator extends androidx.appcompat.widget.RecyclerView.ItemDecoration
+    public static class LastItemBottomMarginDecorator extends androidx.recyclerview.widget.RecyclerView.ItemDecoration
     {
-        private final androidx.appcompat.widget.RecyclerView.Adapter<?> adapter;
+        private final androidx.recyclerview.widget.RecyclerView.Adapter<?> adapter;
         private final int marginPx;
 
-        public LastItemBottomMarginDecorator(Context context, androidx.appcompat.widget.RecyclerView.Adapter<?> adapter, int dimenResId)
+        public LastItemBottomMarginDecorator(Context context, androidx.recyclerview.widget.RecyclerView.Adapter<?> adapter, int dimenResId)
         {
             this.adapter = adapter;
             this.marginPx = ((dimenResId != 0) ? (int) context.getResources().getDimension(dimenResId) : 0);
         }
 
         @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, androidx.appcompat.widget.RecyclerView parent, @NonNull androidx.appcompat.widget.RecyclerView.State state)
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, androidx.recyclerview.widget.RecyclerView parent, @NonNull androidx.recyclerview.widget.RecyclerView.State state)
         {
             int position = parent.getChildAdapterPosition(view);
             if (position == adapter.getItemCount() - 1) {

@@ -43,8 +43,8 @@ public abstract class DialogBase extends DialogFragment
     }
 
     public static int getTouchOutsideResourceID() {
-        return android.support.design.R.id.touch_outside;    // support libraries
-        //return com.google.android.material.R.id.touch_outside;   // androidx
+        //return android.support.design.R.id.touch_outside;    // support libraries
+        return com.google.android.material.R.id.touch_outside;   // androidx
     }
 
     public static void disableTouchOutsideBehavior(Dialog dialog)
