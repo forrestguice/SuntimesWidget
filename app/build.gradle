@@ -2,8 +2,13 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
+    def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+    if (targetVersion == null) {
+        targetVersion = 28;
+    }
+
+    compileSdkVersion targetVersion
 
     sourceSets
     {
@@ -24,7 +29,7 @@ android
         minSdkVersion 14
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 28
-        missingDimensionStrategy 'version', 'supportlib'
+        missingDimensionStrategy 'support_version', 'supportlib'
         missingDimensionStrategy 'api', 'api28'
 
         versionCode 126
@@ -50,8 +55,18 @@ android
 
     flavorDimensions "version"
     productFlavors {
-        fdroid {
+        production {
             dimension "version"
+        }
+        legacy {
+            dimension "version"
+            missingDimensionStrategy 'support_version', 'supportlib'
+            missingDimensionStrategy 'api', 'api28'
+            applicationIdSuffix ".legacy"
+            versionNameSuffix "-legacy"
+            resValue "string", "packageName", "com.forrestguice.suntimeswidget.legacy"   // TODO: cleaner way to set this resValue without duplication
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.legacy", suntimesPermissionRoot:"suntimes"]
+            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         }
         nightly {
             dimension "version"
