@@ -60,7 +60,6 @@ import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AlertDialog;
 

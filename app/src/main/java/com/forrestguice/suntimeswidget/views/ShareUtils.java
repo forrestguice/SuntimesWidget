@@ -60,6 +60,7 @@ public class ShareUtils
                 @SuppressWarnings("deprecation")
                 android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (clipboard != null) {
+                    //noinspection deprecation
                     clipboard.setText(itemDisplay);
                 }
             }

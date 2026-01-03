@@ -88,11 +88,6 @@ public class BedtimeDialog extends DialogBase
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
         AlarmSettings.setDefaultRingtoneUris(getActivity());
