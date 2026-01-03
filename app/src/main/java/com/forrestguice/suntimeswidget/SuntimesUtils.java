@@ -1314,7 +1314,7 @@ public class SuntimesUtils
     {
         Drawable drawable = null;
         try {
-            drawable = context.getResources().getDrawable(drawableID);
+            drawable = ContextCompat.getDrawable(context.getResources(), drawableID, null);
         } catch (Exception e) {
             Log.e("createImageSpan", "invalid drawableID " + drawableID + "! ...set to null.");
         }
