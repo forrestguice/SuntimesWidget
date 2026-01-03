@@ -294,12 +294,6 @@ public class WelcomeActivity extends AppCompatActivity
         return (WelcomeFragment) activity.getSupportFragmentManager().findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
     }
 
-    public void showAbout( View v )
-    {
-        startActivity(new Intent(this, AboutActivity.class));
-        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
-    }
-
     public void setNeedsRecreateFlag() {
         //Log.d("DEBUG", "setNeedsRecreateFlag");
         getIntent().putExtra(SettingsActivityInterface.RECREATE_ACTIVITY, true);
@@ -452,6 +446,48 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void initViews(Context context, View view) {
             super.initViews(context, view);
+        }
+    }
+
+    /**
+     * WelcomeLegalFragment
+     */
+    public static class WelcomeLegalFragment extends WelcomeFragment
+    {
+        public WelcomeLegalFragment() {}
+
+        public static WelcomeLegalFragment newInstance()
+        {
+            WelcomeLegalFragment fragment = new WelcomeLegalFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_legal);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+
+            Button aboutButton = (Button) view.findViewById(R.id.button_about);
+            if (aboutButton != null) {
+                aboutButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showAbout(view);
+                    }
+                });
+            }
+        }
+
+        public void showAbout( View view )
+        {
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.startActivity(new Intent(activity, AboutActivity.class));
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            }
         }
     }
 

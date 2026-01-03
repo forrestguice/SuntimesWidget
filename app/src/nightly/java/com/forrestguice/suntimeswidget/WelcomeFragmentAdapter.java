@@ -69,9 +69,11 @@ public class WelcomeFragmentAdapter extends FragmentPagerAdapter
                 }
             });
         }
+
         pages.add(new WelcomeActivity.WelcomeFragmentPage() {
             public WelcomeActivity.WelcomeFragment newInstance() {    // last page
-                return WelcomeActivity.WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                //return WelcomeActivity.WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                return WelcomeActivity.WelcomeLegalFragment.newInstance();
             }
         });
     }
