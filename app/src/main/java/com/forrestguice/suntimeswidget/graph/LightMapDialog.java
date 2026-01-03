@@ -572,6 +572,9 @@ public class LightMapDialog extends BottomSheetDialogBase
     public static final String PREF_KEY_GRAPH_SHOWMOON = "showmoon";
     public static final boolean DEF_KEY_GRAPH_SHOWMOON = false;
 
+    public static final String PREF_KEY_GRAPH_SHOWNOON = "shownoon";
+    public static final boolean DEF_KEY_GRAPH_SHOWNOON = false;
+
     public static final String PREF_KEY_GRAPH_SHOWLABELS = "showlabels";
     public static final boolean DEF_KEY_GRAPH_SHOWLABELS = true;
 
@@ -741,6 +744,13 @@ public class LightMapDialog extends BottomSheetDialogBase
                 updateViews();
                 return true;
 
+            } else if (itemId == R.id.graphOption_showNoon) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWNOON);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
+
             } else if (itemId == R.id.graphOption_sunSymbol_circle) {
                 WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CIRCLE.name());
                 updateViews();
@@ -860,6 +870,10 @@ public class LightMapDialog extends BottomSheetDialogBase
         MenuItem graphOption_showMoon = menu.findItem(R.id.graphOption_showMoon);
         if (graphOption_showMoon != null) {
             graphOption_showMoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON));
+        }
+        MenuItem graphOption_showNoon = menu.findItem(R.id.graphOption_showNoon);
+        if (graphOption_showNoon != null) {
+            graphOption_showNoon.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWNOON));
         }
 
         SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
@@ -1266,6 +1280,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                 //Log.d("DEBUG", "updateOptions: now: " + now);
             }
             options.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
+            options.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWNOON);
             options.anim_lock = anim_lock;
             options.anim_frameOffsetMinutes = getFrameOffsetMinutes(WorldMapWidgetSettings.loadMapSpeed(context, 0, MAPTAG_LIGHTMAP));
 

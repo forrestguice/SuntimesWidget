@@ -940,7 +940,7 @@ public class LightMapView extends ImageView
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
 
-        public boolean option_drawNoon = true;
+        public boolean option_drawNoon = false;
 
         public long offsetMinutes = 0;
         public long now = -1L;

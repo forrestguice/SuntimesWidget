@@ -25,11 +25,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -166,6 +168,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
 
         colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
+        colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
     }
 
 }

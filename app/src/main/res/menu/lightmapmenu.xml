@@ -145,6 +145,11 @@
                     android:checkable="true"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/graphOption_showNoon"
+                    android:title="@string/graph_option_noon"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
             </menu>
         </item>
 

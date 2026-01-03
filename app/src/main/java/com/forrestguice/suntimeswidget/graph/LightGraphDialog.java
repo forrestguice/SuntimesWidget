@@ -95,6 +95,8 @@ import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAP
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWPOINTS;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWSEASONS;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWTWILIGHT;
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID;
 
 public class LightGraphDialog extends BottomSheetDialogBase
@@ -506,6 +508,8 @@ public class LightGraphDialog extends BottomSheetDialogBase
         }
         if (lightmap != null) {
             lightmap.getColors().now = nowMillis;
+            lightmap.getColors().setOption_drawNow(context != null ? SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())) : SunSymbol.CIRCLE);
+            lightmap.getColors().option_drawNoon = (context != null) && WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
             lightmap.updateViews(true);
         }
 

@@ -26,6 +26,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 
@@ -88,6 +91,7 @@ import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAP
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
 import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 
 public class WidgetThemePreview
 {
@@ -287,6 +291,9 @@ public class WidgetThemePreview
             if (values.getAsInteger("option_drawNow_pointSizePx") != null) {
                 colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
             }
+
+            colors.setOption_drawNow(context != null ? SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())) : SunSymbol.CIRCLE);
+            colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()

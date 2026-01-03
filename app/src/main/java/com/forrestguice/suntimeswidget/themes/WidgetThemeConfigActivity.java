@@ -849,6 +849,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
 
             colors.option_drawNow = SunSymbolBitmap.DRAW_SUN1;
+            colors.option_drawNoon = true;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
             int dpWidth = 256;

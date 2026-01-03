@@ -26,6 +26,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
+
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -405,6 +407,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SunSymbol sunSymbol = SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name()));
         int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
         lightmapOptions.option_drawNow = (position == CardAdapter.TODAY_POSITION) ? symbol : SunSymbolBitmap.DRAW_SUN_CIRCLE_DASHED;
+        lightmapOptions.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
         lightmapOptions.option_lmt = true;
         lightmap.setData(options.showLightmap ? sun : null);
