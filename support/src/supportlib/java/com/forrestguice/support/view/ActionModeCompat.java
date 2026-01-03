@@ -77,7 +77,7 @@ public class ActionModeCompat
 
     public interface Callback
     {
-        boolean onCreateActionMode(ActionModeCompat actionMode, Menu menu);
+        boolean onCreateActionMode(MenuInflater inflater, Menu menu);
         boolean onPrepareActionMode(ActionModeCompat actionMode, Menu menu);
         boolean onActionItemClicked(ActionModeCompat actionMode, MenuItem menuItem);
         void onDestroyActionMode(ActionModeCompat actionMode);
@@ -108,7 +108,7 @@ public class ActionModeCompat
         {
             @Override
             public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
-                return callback.onCreateActionMode(callback.getActionMode(), menu);
+                return callback.onCreateActionMode(actionMode.getMenuInflater(), menu);
             }
 
             @Override

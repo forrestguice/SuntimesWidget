@@ -637,9 +637,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
+        public boolean onCreateActionMode(MenuInflater inflater, Menu menu)
         {
-            MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.themecontext, menu);
             return true;
         }

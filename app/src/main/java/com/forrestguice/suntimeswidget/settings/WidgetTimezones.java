@@ -600,9 +600,8 @@ public class WidgetTimezones
         }
 
         @Override
-        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
+        public boolean onCreateActionMode(MenuInflater inflater, Menu menu)
         {
-            MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.timezonesort, menu);
             return true;
         }

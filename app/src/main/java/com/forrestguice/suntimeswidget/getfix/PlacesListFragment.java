@@ -379,9 +379,8 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
+        public boolean onCreateActionMode(MenuInflater inflater, Menu menu)
         {
-            MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placescontext, menu);
             return true;
         }

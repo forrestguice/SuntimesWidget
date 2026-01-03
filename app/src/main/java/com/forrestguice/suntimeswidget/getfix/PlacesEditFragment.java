@@ -1032,9 +1032,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     private class PlacesEditActionCompat extends ActionModeCompat.CallbackBase implements ActionModeCompat.Callback
     {
         @Override
-        public boolean onCreateActionMode(ActionModeCompat mode, Menu menu)
+        public boolean onCreateActionMode(MenuInflater inflater, Menu menu)
         {
-            MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.placesedit, menu);
             return true;
         }
