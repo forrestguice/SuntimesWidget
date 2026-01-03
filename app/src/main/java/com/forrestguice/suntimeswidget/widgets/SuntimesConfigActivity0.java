@@ -1768,19 +1768,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.action_manage_events:
-                    launchEventEditor(SuntimesConfigActivity0.this);
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.action_manage_events) {
+                launchEventEditor(SuntimesConfigActivity0.this);
+                return true;
 
-                case R.id.action_help:
-                    showTimeModeHelp();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_help) {
+                showTimeModeHelp();
+                return true;
             }
+            return false;
         }
     });
 
@@ -3577,41 +3574,38 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_about:
-                showAbout();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case R.id.action_import:
-                importSettings(SuntimesConfigActivity0.this);
-                return true;
+        } else if (itemId == R.id.action_import) {
+            importSettings(SuntimesConfigActivity0.this);
+            return true;
 
-            case R.id.action_export:
-                exportSettings(SuntimesConfigActivity0.this);
-                return true;
+        } else if (itemId == R.id.action_export) {
+            exportSettings(SuntimesConfigActivity0.this);
+            return true;
 
-            case R.id.action_save:
-                addWidget();
-                return true;
+        } else if (itemId == R.id.action_save) {
+            addWidget();
+            return true;
 
-            case R.id.action_share_preview:
-                sharePreview(this);
-                return true;
+        } else if (itemId == R.id.action_share_preview) {
+            sharePreview(this);
+            return true;
 
-            case R.id.action_reset:
-                confirmResetWidget(this);
-                return true;
+        } else if (itemId == R.id.action_reset) {
+            confirmResetWidget(this);
+            return true;
 
-            case android.R.id.home:
-                if (reconfigure) {
-                    onBackPressed();
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            if (reconfigure) {
+                onBackPressed();
+            }
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")

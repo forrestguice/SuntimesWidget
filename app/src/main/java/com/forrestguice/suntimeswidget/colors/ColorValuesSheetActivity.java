@@ -260,39 +260,36 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_colors_preview:
-                previewColors();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_colors_preview) {
+            previewColors();
+            return true;
 
-            case R.id.action_colors_select:
-                selectColorID();
-                return true;
+        } else if (itemId == R.id.action_colors_select) {
+            selectColorID();
+            return true;
 
-            case R.id.action_colors_add:
-                colorSheet.listDialog.onAddItem();
-                return true;
+        } else if (itemId == R.id.action_colors_add) {
+            colorSheet.listDialog.onAddItem();
+            return true;
 
-            case R.id.action_colors_delete:
-                colorSheet.listDialog.onDeleteItem();
-                return true;
+        } else if (itemId == R.id.action_colors_delete) {
+            colorSheet.listDialog.onDeleteItem();
+            return true;
 
-            case R.id.action_colors_share:
-                colorSheet.listDialog.onShareColors();
-                return true;
+        } else if (itemId == R.id.action_colors_share) {
+            colorSheet.listDialog.onShareColors();
+            return true;
 
-            case R.id.action_colors_import:
-                colorSheet.listDialog.onImportColors();
-                return true;
+        } else if (itemId == R.id.action_colors_import) {
+            colorSheet.listDialog.onImportColors();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")

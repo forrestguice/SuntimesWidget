@@ -574,29 +574,25 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 @Override
                 public boolean onMenuItemClick(MenuItem item)
                 {
-                    switch (item.getItemId())
-                    {
-                        case R.id.action_dnd_alarms:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_ALARMS);
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
-                            BedtimeSettings.setAutomaticZenRule(context, true);
-                            updateView_dnd(context);
-                            return true;
-
-                        case R.id.action_dnd_priority:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_PRIORITY);
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
-                            BedtimeSettings.setAutomaticZenRule(context, true);
-                            updateView_dnd(context);
-                            return true;
-
-                        case R.id.action_dnd_disable:
-                        default:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, false);
-                            BedtimeSettings.setAutomaticZenRule(context, false);
-                            updateView_dnd(context);
-                            return true;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.action_dnd_alarms) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_ALARMS);
+                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                        BedtimeSettings.setAutomaticZenRule(context, true);
+                        updateView_dnd(context);
+                        return true;
+                        
+                    } else if (itemId == R.id.action_dnd_priority) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_PRIORITY);
+                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                        BedtimeSettings.setAutomaticZenRule(context, true);
+                        updateView_dnd(context);
+                        return true;
                     }
+                    BedtimeSettings.savePrefBedtimeDoNotDisturb(context, false);
+                    BedtimeSettings.setAutomaticZenRule(context, false);
+                    updateView_dnd(context);
+                    return true;
                 }
             };
 

@@ -254,16 +254,15 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_location_fromApp:
-                        setUseAppLocation(getActivity(), !menuItem.isChecked());
-                        updateViews(getActivity());
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_location_fromApp) {
+                    setUseAppLocation(getActivity(), !menuItem.isChecked());
+                    updateViews(getActivity());
+                    return true;
 
-                    case R.id.action_location_set:
-                        showLocationDialog(getActivity());
-                        return true;
+                } else if (itemId == R.id.action_location_set) {
+                    showLocationDialog(getActivity());
+                    return true;
                 }
                 return false;
             }

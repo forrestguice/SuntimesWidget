@@ -1439,19 +1439,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.saveTheme:
-                onSaveClicked();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.saveTheme) {
+            onSaveClicked();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onSaveClicked()

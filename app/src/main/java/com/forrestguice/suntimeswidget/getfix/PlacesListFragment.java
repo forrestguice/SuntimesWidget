@@ -276,43 +276,40 @@ public class PlacesListFragment extends DialogBase
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.sortByLabelAsc:
-                sortList(getActivity(), SORT_BY_LABEL_ASC);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.sortByLabelAsc) {
+            sortList(getActivity(), SORT_BY_LABEL_ASC);
+            return true;
 
-            case R.id.sortByLabelDesc:
-                sortList(getActivity(), SORT_BY_LABEL_DESC);
-                return true;
+        } else if (itemId == R.id.sortByLabelDesc) {
+            sortList(getActivity(), SORT_BY_LABEL_DESC);
+            return true;
 
-            case R.id.sortByProximity:
-                sortList(getActivity(), SORT_BY_PROXIMITY);
-                return true;
+        } else if (itemId == R.id.sortByProximity) {
+            sortList(getActivity(), SORT_BY_PROXIMITY);
+            return true;
 
-            case R.id.addPlace:
-                addPlace(getActivity());
-                return true;
+        } else if (itemId == R.id.addPlace) {
+            addPlace(getActivity());
+            return true;
 
-            case R.id.clearPlaces:
-                clearPlaces(getActivity());
-                return true;
+        } else if (itemId == R.id.clearPlaces) {
+            clearPlaces(getActivity());
+            return true;
 
-            case R.id.importPlaces:
-                importPlaces(getActivity());
-                return true;
+        } else if (itemId == R.id.importPlaces) {
+            importPlaces(getActivity());
+            return true;
 
-            case R.id.exportPlaces:
-                exportPlaces(getActivity());
-                return true;
+        } else if (itemId == R.id.exportPlaces) {
+            exportPlaces(getActivity());
+            return true;
 
-            case R.id.addWorldPlaces:
-                addWorldPlaces(getActivity());
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.addWorldPlaces) {
+            addWorldPlaces(getActivity());
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void triggerActionMode(PlaceItem... items)
@@ -415,32 +412,31 @@ public class PlacesListFragment extends DialogBase
         @Override
         public boolean onActionItemClicked(ActionModeCompat mode, MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.pickPlace:
-                    pickPlace(items[0]);
-                    finishActionMode();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.pickPlace) {
+                pickPlace(items[0]);
+                finishActionMode();
+                return true;
 
-                case R.id.editPlace:
-                    editPlace(items[0]);
-                    return true;
+            } else if (itemId == R.id.editPlace) {
+                editPlace(items[0]);
+                return true;
 
-                case R.id.copyPlace:
-                    copyPlace(items[0]);
-                    return true;
+            } else if (itemId == R.id.copyPlace) {
+                copyPlace(items[0]);
+                return true;
 
-                case R.id.deletePlace:
-                    deletePlace(getActivity(), items);
-                    return true;
+            } else if (itemId == R.id.deletePlace) {
+                deletePlace(getActivity(), items);
+                return true;
 
-                case R.id.sharePlace:
-                    sharePlace(items[0]);
-                    return true;
+            } else if (itemId == R.id.sharePlace) {
+                sharePlace(items[0]);
+                return true;
 
-                case android.R.id.home:
-                    finishActionMode();
-                    return true;
+            } else if (itemId == android.R.id.home) {
+                finishActionMode();
+                return true;
             }
             return false;
         }

@@ -631,15 +631,11 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId())
-            {
-                case R.id.suggestTz:
-                    setCustomTimeZone(timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
-                    return true;
-
-                default:
-                    return onSortItemClick(item);
+            if (item.getItemId() == R.id.suggestTz) {
+                setCustomTimeZone(timeZoneRecommendation(getLongitudeLabel(), getLongitude()));
+                return true;
             }
+            return onSortItemClick(item);
         }
         private boolean onSortItemClick(MenuItem item)
         {

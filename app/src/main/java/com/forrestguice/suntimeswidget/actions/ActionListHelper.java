@@ -280,27 +280,24 @@ public class ActionListHelper
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.addAction:
-                    addAction();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.addAction) {
+                addAction();
+                return true;
 
-                case R.id.editAction:
-                    editAction();
-                    return true;
+            } else if (itemId == R.id.editAction) {
+                editAction();
+                return true;
 
-                case R.id.clearAction:
-                    clearActions();
-                    return true;
+            } else if (itemId == R.id.clearAction) {
+                clearActions();
+                return true;
 
-                case R.id.deleteAction:
-                    deleteAction();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.deleteAction) {
+                deleteAction();
+                return true;
             }
+            return false;
         }
     });
 
@@ -684,21 +681,20 @@ public class ActionListHelper
         {
             if (action != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectAction:
-                        if (onItemSelected != null) {
-                            onItemSelected.onClick(list);
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectAction) {
+                    if (onItemSelected != null) {
+                        onItemSelected.onClick(list);
+                    }
+                    return true;
 
-                    case R.id.deleteAction:
-                        deleteAction();
-                        return true;
+                } else if (itemId == R.id.deleteAction) {
+                    deleteAction();
+                    return true;
 
-                    case R.id.editAction:
-                        editAction();
-                        return true;
+                } else if (itemId == R.id.editAction) {
+                    editAction();
+                    return true;
                 }
             }
             return false;

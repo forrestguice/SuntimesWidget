@@ -506,23 +506,18 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                //case R.id.action_colors_copytheme:
-                //    importFromTheme(getActivity());
-                //    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors_import) {
+                importColors(getActivity());
+                return true;
 
-                case R.id.action_colors_import:
-                    importColors(getActivity());
-                    return true;
+            } else if (itemId == R.id.action_colors_delete) {
+                deleteColors(getActivity());
+                return true;
 
-                case R.id.action_colors_delete:
-                    deleteColors(getActivity());
-                    return true;
-
-                case R.id.action_colors_share:
-                    shareColors(getActivity());
-                    return true;
+            } else if (itemId == R.id.action_colors_share) {
+                shareColors(getActivity());
+                return true;
             }
             return false;
         }

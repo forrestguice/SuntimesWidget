@@ -594,35 +594,32 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.importThemes:
-                importThemes(this);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.importThemes) {
+            importThemes(this);
+            return true;
 
-            case R.id.addTheme:
-                addTheme();
-                return true;
+        } else if (itemId == R.id.addTheme) {
+            addTheme();
+            return true;
 
-            case R.id.exportThemes:
-                exportThemes(this);
-                return true;
+        } else if (itemId == R.id.exportThemes) {
+            exportThemes(this);
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -685,35 +682,34 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             if (theme != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectTheme:
-                        if (mode != null) {
-                            mode.finish();
-                        }
-                        selectTheme(theme);
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectTheme) {
+                    if (mode != null) {
+                        mode.finish();
+                    }
+                    selectTheme(theme);
+                    return true;
 
-                    case R.id.editTheme:
-                        editTheme(theme);
-                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
-                        return true;
+                } else if (itemId == R.id.editTheme) {
+                    editTheme(theme);
+                    //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
+                    return true;
 
-                    case R.id.copyTheme:
-                        copyTheme(theme);
-                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
-                        return true;
+                } else if (itemId == R.id.copyTheme) {
+                    copyTheme(theme);
+                    //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
+                    return true;
 
-                    case R.id.deleteTheme:
-                        deleteTheme(theme);
-                        if (mode != null) {
-                            mode.finish();
-                        }
-                        return true;
+                } else if (itemId == R.id.deleteTheme) {
+                    deleteTheme(theme);
+                    if (mode != null) {
+                        mode.finish();
+                    }
+                    return true;
 
-                    case R.id.exportTheme:
-                        exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor() );
-                        return true;  // TODO: messages
+                } else if (itemId == R.id.exportTheme) {
+                    exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor());
+                    return true;  // TODO: messages
                 }
             }
             mode.finish();

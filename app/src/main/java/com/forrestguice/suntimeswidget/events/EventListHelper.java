@@ -401,31 +401,27 @@ public class EventListHelper
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                //case R.id.addEvent:
-                //    addEvent();
-                //    return true;
+            int itemId = menuItem.getItemId();
+            //case R.id.addEvent:
+            //    addEvent();
+            //    return true;
+            if (itemId == R.id.editEvent) {
+                editEvent(getEventID());
+                return true;
 
-                case R.id.editEvent:
-                    editEvent(getEventID());
-                    return true;
+            } else if (itemId == R.id.clearEvents) {
+                clearEvents();
+                return true;
 
-                case R.id.clearEvents:
-                    clearEvents();
-                    return true;
+            } else if (itemId == R.id.deleteEvent) {
+                deleteEvent(getEventID());
+                return true;
 
-                case R.id.deleteEvent:
-                    deleteEvent(getEventID());
-                    return true;
-
-                case R.id.helpEvents:
-                    showHelp();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.helpEvents) {
+                showHelp();
+                return true;
             }
+            return false;
         }
     });
 
@@ -1282,21 +1278,20 @@ public class EventListHelper
         {
             if (event != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectEvent:
-                        if (onItemSelected != null) {
-                            onItemSelected.onClick(list);
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectEvent) {
+                    if (onItemSelected != null) {
+                        onItemSelected.onClick(list);
+                    }
+                    return true;
 
-                    case R.id.deleteEvent:
-                        deleteEvent(event.getID());
-                        return true;
+                } else if (itemId == R.id.deleteEvent) {
+                    deleteEvent(event.getID());
+                    return true;
 
-                    case R.id.editEvent:
-                        editEvent(event.getID());
-                        return true;
+                } else if (itemId == R.id.editEvent) {
+                    editEvent(event.getID());
+                    return true;
                 }
             }
             return false;

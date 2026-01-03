@@ -130,16 +130,22 @@ public class WidgetTimezones
     }
     public static String timeZoneForMenuItem(int itemId)
     {
-        switch (itemId) {
-            case R.id.tz_item_apparentsolar:  return TimeZones.ApparentSolarTime.TIMEZONEID;
-            case R.id.tz_item_localmean: return TimeZones.LocalMeanTime.TIMEZONEID;
-            case R.id.tz_item_lmst:  return TimeZones.SiderealTime.TZID_LMST;
-            case R.id.tz_item_gmst:  return TimeZones.SiderealTime.TZID_GMST;
-            case R.id.tz_item_suntimes: return TZID_SUNTIMES;
-            case R.id.tz_item_system: return TZID_SYSTEM;
-            case R.id.tz_item_utc: return TZID_UTC;
-            default: return null;
+        if (itemId == R.id.tz_item_apparentsolar) {
+            return TimeZones.ApparentSolarTime.TIMEZONEID;
+        } else if (itemId == R.id.tz_item_localmean) {
+            return TimeZones.LocalMeanTime.TIMEZONEID;
+        } else if (itemId == R.id.tz_item_lmst) {
+            return TimeZones.SiderealTime.TZID_LMST;
+        } else if (itemId == R.id.tz_item_gmst) {
+            return TimeZones.SiderealTime.TZID_GMST;
+        } else if (itemId == R.id.tz_item_suntimes) {
+            return TZID_SUNTIMES;
+        } else if (itemId == R.id.tz_item_system) {
+            return TZID_SYSTEM;
+        } else if (itemId == R.id.tz_item_utc) {
+            return TZID_UTC;
         }
+        return null;
     }
 
     public static void updateTimeZoneMenu(Menu menu, @Nullable String tzId)
@@ -529,19 +535,15 @@ public class WidgetTimezones
 
         public boolean onActionItemClicked(int action)
         {
-            switch (action)
-            {
-                case R.id.sortById:
-                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_ID);
-                    return true;
-
-                case R.id.sortByOffset:
-                    sortTimeZones(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
-                    return true;
-
-                default:
-                    return false;
+            if (action == R.id.sortById) {
+                sortTimeZones(TimeZoneSort.SORT_BY_ID);
+                return true;
+                
+            } else if (action == R.id.sortByOffset) {
+                sortTimeZones(TimeZoneSort.SORT_BY_OFFSET);
+                return true;
             }
+            return false;
         }
     }
 

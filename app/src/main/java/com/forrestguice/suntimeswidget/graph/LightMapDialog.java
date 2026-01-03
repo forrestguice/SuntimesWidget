@@ -686,155 +686,152 @@ public class LightMapDialog extends BottomSheetDialogBase
             }
 
             boolean toggledValue;
-            switch (item.getItemId())
-            {
-                case R.id.graphOption_colors:
-                    showColorDialog(getActivity());
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.graphOption_colors) {
+                showColorDialog(getActivity());
+                return true;
 
-                case R.id.action_showgraph:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    resizeLightMapView(context, toggledValue);
-                    graphView.setVisibility(toggledValue ? View.VISIBLE : View.GONE);
-                    graphView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
-                        }
-                    });
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_showGrid:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_showLabels:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_showAxis:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_fillPath:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_showMoon:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_sunSymbol_circle:
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CIRCLE.name());
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_sunSymbol_circledot:
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.DOT.name());
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_sunSymbol_cross:
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CROSS.name());
-                    updateViews();
-                    return true;
-
-                case R.id.graphOption_sunSymbol_line:
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.LINE.name());
-                    updateViews();
-                    return true;
-
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
+            } else if (itemId == R.id.action_showgraph) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                resizeLightMapView(context, toggledValue);
+                graphView.setVisibility(toggledValue ? View.VISIBLE : View.GONE);
+                graphView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
                     }
-                    return true;
+                });
+                updateViews();
+                return true;
 
-                case R.id.action_calendar:
-                    openCalendar(context, getMapTime(System.currentTimeMillis()));
-                    return true;
+            } else if (itemId == R.id.graphOption_showGrid) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.action_worldmap:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMap(getMapTime(System.currentTimeMillis()));
-                    }
-                    return true;
+            } else if (itemId == R.id.graphOption_showLabels) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.action_seek_shadowlength:
-                    showShadowSeekPopup(getActivity(), sunShadowObj);
-                    return true;
+            } else if (itemId == R.id.graphOption_showAxis) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.action_seekdate:
-                    showSeekDateDialog(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_fillPath) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.action_seektime:
-                    showSeekTimeDialog(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showMoon) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.action_seekaltitude:
-                    showSeekAltitudePopup(context, sunElevation);
-                    return true;
+            } else if (itemId == R.id.graphOption_sunSymbol_circle) {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CIRCLE.name());
+                updateViews();
+                return true;
 
-                case R.id.action_seekdawn:
-                    showSeekDawnMenu(context, riseIcon);
-                    return true;
+            } else if (itemId == R.id.graphOption_sunSymbol_circledot) {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.DOT.name());
+                updateViews();
+                return true;
 
-                case R.id.action_seekdusk:
-                    showSeekDuskMenu(context, setIcon);
-                    return true;
+            } else if (itemId == R.id.graphOption_sunSymbol_cross) {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.CROSS.name());
+                updateViews();
+                return true;
 
-                case R.id.action_seeknoon:
-                    showSeekNoonMenu(context, sunElevationAtNoon);
-                    return true;
+            } else if (itemId == R.id.graphOption_sunSymbol_line) {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, SunSymbol.LINE.name());
+                updateViews();
+                return true;
 
-                case R.id.action_moon:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMoonInfo(getMapTime(System.currentTimeMillis()));
-                    }
-                    return true;
+            } else if (itemId == R.id.action_date) {
+                if (dialogListener != null) {
+                    dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
+                }
+                return true;
 
-                case R.id.action_observerheight:
-                    showShadowObjHeightPopup(context, sunShadowObj);
-                    return true;
+            } else if (itemId == R.id.action_calendar) {
+                openCalendar(context, getMapTime(System.currentTimeMillis()));
+                return true;
 
-                case R.id.action_shadow:
-                    showShadowLengthMenu(context, sunShadowObj);
-                    return true;
+            } else if (itemId == R.id.action_worldmap) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMap(getMapTime(System.currentTimeMillis()));
+                }
+                return true;
 
-                case R.id.action_timezone:
-                    showTimeZoneMenu(context, sunTime);
-                    return true;
+            } else if (itemId == R.id.action_seek_shadowlength) {
+                showShadowSeekPopup(getActivity(), sunShadowObj);
+                return true;
 
-                case R.id.action_manage_events:
-                    startEventListActivityForResult(null, REQUEST_MANAGE_EVENTS);
-                    return true;
+            } else if (itemId == R.id.action_seekdate) {
+                showSeekDateDialog(context);
+                return true;
 
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
+            } else if (itemId == R.id.action_seektime) {
+                showSeekTimeDialog(context);
+                return true;
 
-                default:
-                    return false;
+            } else if (itemId == R.id.action_seekaltitude) {
+                showSeekAltitudePopup(context, sunElevation);
+                return true;
+
+            } else if (itemId == R.id.action_seekdawn) {
+                showSeekDawnMenu(context, riseIcon);
+                return true;
+
+            } else if (itemId == R.id.action_seekdusk) {
+                showSeekDuskMenu(context, setIcon);
+                return true;
+
+            } else if (itemId == R.id.action_seeknoon) {
+                showSeekNoonMenu(context, sunElevationAtNoon);
+                return true;
+
+            } else if (itemId == R.id.action_moon) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMoonInfo(getMapTime(System.currentTimeMillis()));
+                }
+                return true;
+
+            } else if (itemId == R.id.action_observerheight) {
+                showShadowObjHeightPopup(context, sunShadowObj);
+                return true;
+
+            } else if (itemId == R.id.action_shadow) {
+                showShadowLengthMenu(context, sunShadowObj);
+                return true;
+
+            } else if (itemId == R.id.action_timezone) {
+                showTimeZoneMenu(context, sunTime);
+                return true;
+
+            } else if (itemId == R.id.action_manage_events) {
+                startEventListActivityForResult(null, REQUEST_MANAGE_EVENTS);
+                return true;
+
+            } else if (itemId == R.id.action_help) {
+                showHelp(getContext());
+                return true;
             }
+            return false;
         }
     });
 
@@ -1011,75 +1008,72 @@ public class LightMapDialog extends BottomSheetDialogBase
                     return false;
                 }
 
-                switch (item.getItemId())
-                {
-                    case R.id.seek_moon_rise:
-                        seekLunarRise(getActivity());
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.seek_moon_rise) {
+                    seekLunarRise(getActivity());
+                    return true;
 
-                    case R.id.seek_moon_set:
-                        seekLunarSet(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_moon_set) {
+                    seekLunarSet(getActivity());
+                    return true;
 
-                    case R.id.seek_moon_noon:
-                        seekLunarNoon(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_moon_noon) {
+                    seekLunarNoon(getActivity());
+                    return true;
 
-                    case R.id.seek_moon_midnight:
-                        seekLunarMidnight(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_moon_midnight) {
+                    seekLunarMidnight(getActivity());
+                    return true;
 
-                    case R.id.seek_midnight:
-                        seekMidnight(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_midnight) {
+                    seekMidnight(getActivity());
+                    return true;
 
-                    case R.id.seek_dawn_astronomical:
-                        seekRising(getActivity(), data.dataAstro);
-                        return true;
+                } else if (itemId == R.id.seek_dawn_astronomical) {
+                    seekRising(getActivity(), data.dataAstro);
+                    return true;
 
-                    case R.id.seek_dawn_nautical:
-                        seekRising(getActivity(), data.dataNautical);
-                        return true;
+                } else if (itemId == R.id.seek_dawn_nautical) {
+                    seekRising(getActivity(), data.dataNautical);
+                    return true;
 
-                    case R.id.seek_dawn_civil:
-                        seekRising(getActivity(), data.dataCivil);
-                        return true;
+                } else if (itemId == R.id.seek_dawn_civil) {
+                    seekRising(getActivity(), data.dataCivil);
+                    return true;
 
-                    case R.id.seek_dawn_actual:
-                        seekSunrise(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_dawn_actual) {
+                    seekSunrise(getActivity());
+                    return true;
 
-                    case R.id.seek_noon:
-                        seekNoon(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_noon) {
+                    seekNoon(getActivity());
+                    return true;
 
-                    case R.id.seek_dusk_actual:
-                        seekSunset(getActivity());
-                        return true;
+                } else if (itemId == R.id.seek_dusk_actual) {
+                    seekSunset(getActivity());
+                    return true;
 
-                    case R.id.seek_dusk_civil:
-                        seekSetting(getActivity(), data.dataCivil);
-                        return true;
+                } else if (itemId == R.id.seek_dusk_civil) {
+                    seekSetting(getActivity(), data.dataCivil);
+                    return true;
 
-                    case R.id.seek_dusk_nautical:
-                        seekSetting(getActivity(), data.dataNautical);
-                        return true;
+                } else if (itemId == R.id.seek_dusk_nautical) {
+                    seekSetting(getActivity(), data.dataNautical);
+                    return true;
 
-                    case R.id.seek_dusk_astronomical:
-                        seekSetting(getActivity(), data.dataAstro);
-                        return true;
-
-                    default:
-                        if (item.getItemId() - SEEK_CUSTOM_DAWN_ITEM_ID < SEEK_CUSTOM_MAX) {
-                            seekCustomEvent(getActivity(), item.getItemId(), true);
-                            return true;
-
-                        } else if (item.getItemId() - SEEK_CUSTOM_DUSK_ITEM_ID < SEEK_CUSTOM_MAX) {
-                            seekCustomEvent(getActivity(), item.getItemId(), false);
-                            return true;
-                        }
-                        return false;
+                } else if (itemId == R.id.seek_dusk_astronomical) {
+                    seekSetting(getActivity(), data.dataAstro);
+                    return true;
                 }
+                if (item.getItemId() - SEEK_CUSTOM_DAWN_ITEM_ID < SEEK_CUSTOM_MAX) {
+                    seekCustomEvent(getActivity(), item.getItemId(), true);
+                    return true;
+
+                } else if (item.getItemId() - SEEK_CUSTOM_DUSK_ITEM_ID < SEEK_CUSTOM_MAX) {
+                    seekCustomEvent(getActivity(), item.getItemId(), false);
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -1133,41 +1127,38 @@ public class LightMapDialog extends BottomSheetDialogBase
                 return false;
             }
 
-            switch (item.getItemId())
-            {
-                case R.id.mapSpeed_7d:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_WEEK);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.mapSpeed_7d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_WEEK);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_1d:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_DAY);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapSpeed_1d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.ONE_DAY);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_5m:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIVE_MINUTES);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapSpeed_5m) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIVE_MINUTES);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_10m:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.TEN_MINUTES);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapSpeed_10m) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.TEN_MINUTES);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_15m:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIFTEEN_MINUTES);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.mapSpeed_15m) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, MAPTAG_LIGHTMAP, MapSpeed.FIFTEEN_MINUTES);
+                item.setChecked(true);
+                updateViews();
+                return true;
             }
+            return false;
         }
     });
 
@@ -1590,17 +1581,13 @@ public class LightMapDialog extends BottomSheetDialogBase
                     return false;
                 }
 
-                switch (item.getItemId())
-                {
-                    case R.id.addEvent_sunEvent:
-                        WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, edit.getText().toString());
-                        startEventListActivityForResult(getEventListExtras_addAngle(edit.getText().toString()), REQUEST_ADD_ANGLE_EVENT);
-                        dismissSeekAltitudePopup();
-                        return true;
-
-                    default:
-                        return false;
+                if (item.getItemId() == R.id.addEvent_sunEvent) {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKALTITUDE, MAPTAG_LIGHTMAP, edit.getText().toString());
+                    startEventListActivityForResult(getEventListExtras_addAngle(edit.getText().toString()), REQUEST_ADD_ANGLE_EVENT);
+                    dismissSeekAltitudePopup();
+                    return true;
                 }
+                return false;
             }
         });
     }
@@ -1963,21 +1950,18 @@ public class LightMapDialog extends BottomSheetDialogBase
                     return false;
                 }
 
-                switch (item.getItemId())
-                {
-                    case R.id.action_seek_shadowlength:
-                        showShadowSeekPopup(context, sunShadowObj);
-                        dismissShadowObjHeightPopup();
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_seek_shadowlength) {
+                    showShadowSeekPopup(context, sunShadowObj);
+                    dismissShadowObjHeightPopup();
+                    return true;
 
-                    case R.id.addEvent_shadowEvent:
-                        startEventListActivityForResult(getEventListExtras_addObjectHeight(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
-                        dismissShadowObjHeightPopup();
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.addEvent_shadowEvent) {
+                    startEventListActivityForResult(getEventListExtras_addObjectHeight(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
+                    dismissShadowObjHeightPopup();
+                    return true;
                 }
+                return false;
             }
         });
     }
@@ -2109,22 +2093,19 @@ public class LightMapDialog extends BottomSheetDialogBase
                     return false;
                 }
 
-                switch (item.getItemId())
-                {
-                    case R.id.action_observerheight:
-                        showShadowObjHeightPopup(context, sunShadowObj);
-                        dismissShadowSeekPopup();
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_observerheight) {
+                    showShadowObjHeightPopup(context, sunShadowObj);
+                    dismissShadowSeekPopup();
+                    return true;
 
-                    case R.id.addEvent_shadowEvent:
-                        WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
-                        startEventListActivityForResult(getEventListExtras_addShadowLength(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
-                        dismissShadowSeekPopup();
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.addEvent_shadowEvent) {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
+                    startEventListActivityForResult(getEventListExtras_addShadowLength(edit.getText().toString()), REQUEST_ADD_SHADOW_EVENT);
+                    dismissShadowSeekPopup();
+                    return true;
                 }
+                return false;
             }
         });
     }
@@ -2153,19 +2134,16 @@ public class LightMapDialog extends BottomSheetDialogBase
                     return false;
                 }
 
-                switch (item.getItemId())
-                {
-                    case R.id.action_seek_shadowlength:
-                        showShadowSeekPopup(getActivity(), sunShadowObj);
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_seek_shadowlength) {
+                    showShadowSeekPopup(getActivity(), sunShadowObj);
+                    return true;
 
-                    case R.id.action_observerheight:
-                        showShadowObjHeightPopup(getActivity(), sunShadowObj);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_observerheight) {
+                    showShadowObjHeightPopup(getActivity(), sunShadowObj);
+                    return true;
                 }
+                return false;
             }
         });
     }

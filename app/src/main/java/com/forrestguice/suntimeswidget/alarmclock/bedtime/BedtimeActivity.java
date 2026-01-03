@@ -438,34 +438,31 @@ public class BedtimeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_permission:
-                BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
-                //AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_permission) {
+            BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
+            //AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
+            return true;
 
-            case R.id.action_settings:
-                showSettings();
-                return true;
+        } else if (itemId == R.id.action_settings) {
+            showSettings();
+            return true;
 
-            case R.id.action_help:
-                showHelp(this);
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp(this);
+            return true;
 
-            case R.id.action_about:
-                navigation.showAbout(this);
-                return true;
+        } else if (itemId == R.id.action_about) {
+            navigation.showAbout(this);
+            return true;
 
-            case android.R.id.home:
-                if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
-                    onBackPressed();
-                else onHomePressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
+                onBackPressed();
+            else onHomePressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

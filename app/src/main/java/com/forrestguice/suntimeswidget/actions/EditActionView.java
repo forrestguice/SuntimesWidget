@@ -541,23 +541,20 @@ public class EditActionView extends LinearLayout
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.testIntent:
-                    testIntent();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.testIntent) {
+                testIntent();
+                return true;
 
-                case R.id.saveIntent:
-                    saveIntent();
-                    return true;
+            } else if (itemId == R.id.saveIntent) {
+                saveIntent();
+                return true;
 
-                case R.id.loadIntent:
-                    loadIntent();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.loadIntent) {
+                loadIntent();
+                return true;
             }
+            return false;
         }
     });
 

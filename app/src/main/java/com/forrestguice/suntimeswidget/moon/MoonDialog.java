@@ -765,43 +765,40 @@ public class MoonDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_colors:
-                    showColorDialog(getActivity());
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors) {
+                showColorDialog(getActivity());
+                return true;
 
-                case R.id.action_phase_showdate:
-                    toggleShowPhaseDate(getContext());
-                    return true;
+            } else if (itemId == R.id.action_phase_showdate) {
+                toggleShowPhaseDate(getContext());
+                return true;
 
-                case R.id.action_phase_columns_2:
-                    saveMoonPhaseColumns(2);
-                    return true;
+            } else if (itemId == R.id.action_phase_columns_2) {
+                saveMoonPhaseColumns(2);
+                return true;
 
-                case R.id.action_phase_columns_3:
-                    saveMoonPhaseColumns(3);
-                    return true;
+            } else if (itemId == R.id.action_phase_columns_3) {
+                saveMoonPhaseColumns(3);
+                return true;
 
-                case R.id.action_phase_columns_4:
-                    saveMoonPhaseColumns(4);
-                    return true;
+            } else if (itemId == R.id.action_phase_columns_4) {
+                saveMoonPhaseColumns(4);
+                return true;
 
-                case R.id.action_show_controls:
-                    showMediaPopup(getActivity(), text_dialogTimeOffset);
-                    return true;
+            } else if (itemId == R.id.action_show_controls) {
+                showMediaPopup(getActivity(), text_dialogTimeOffset);
+                return true;
 
-                case R.id.action_lunarnoon_show:
-                    toggleLunarNoon(getContext());
-                    return true;
+            } else if (itemId == R.id.action_lunarnoon_show) {
+                toggleLunarNoon(getContext());
+                return true;
 
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_help) {
+                showHelp(getContext());
+                return true;
             }
+            return false;
         }
     });
 
@@ -845,23 +842,20 @@ public class MoonDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_play:
-                    playMap();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_play) {
+                playMap();
+                return true;
 
-                case R.id.action_pause:
-                    stopMap(false);
-                    return true;
+            } else if (itemId == R.id.action_pause) {
+                stopMap(false);
+                return true;
 
-                case R.id.action_reset:
-                    stopMap(true);
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_reset) {
+                stopMap(true);
+                return true;
             }
+            return false;
         }
     };
 
@@ -1112,54 +1106,51 @@ public class MoonDialog extends BottomSheetDialogBase
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
 
-            switch (item.getItemId())
-            {
-                case R.id.action_alarm:
-                    if (dialogListener != null) {
-                        SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
-                        dialogListener.onSetAlarm(event);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(itemTime);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_moon:
-                    //moonriseset.setViewListener(null);
-                    showPositionAt(itemTime);
-                    //moonriseset.setViewListener(moonriseset_listener);
-                    return true;
-
-                case R.id.action_worldmap:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMap(itemTime);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(itemTime);
-                    }
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_alarm) {
+                if (dialogListener != null) {
+                    SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
+                    dialogListener.onSetAlarm(event);
                     collapseSheet(getDialog());
-                    return true;
+                }
+                return true;
 
-                case R.id.action_calendar:
-                    openCalendar(context, itemTime);
-                    return true;
+            } else if (itemId == R.id.action_sunposition) {
+                if (dialogListener != null) {
+                    dialogListener.onShowPosition(itemTime);
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_share:
-                    shareItem(context, itemData);
-                    return true;
+            } else if (itemId == R.id.action_moon) {
+                //moonriseset.setViewListener(null);
+                showPositionAt(itemTime);
+                //moonriseset.setViewListener(moonriseset_listener);
+                return true;
 
-                default:
-                    return false;
+            } else if (itemId == R.id.action_worldmap) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMap(itemTime);
+                    collapseSheet(getDialog());
+                }
+                return true;
+
+            } else if (itemId == R.id.action_date) {
+                if (dialogListener != null) {
+                    dialogListener.onShowDate(itemTime);
+                }
+                collapseSheet(getDialog());
+                return true;
+
+            } else if (itemId == R.id.action_calendar) {
+                openCalendar(context, itemTime);
+                return true;
+
+            } else if (itemId == R.id.action_share) {
+                shareItem(context, itemData);
+                return true;
             }
+            return false;
         }
     }
 

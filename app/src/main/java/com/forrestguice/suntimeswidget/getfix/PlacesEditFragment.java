@@ -489,27 +489,21 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.action_location_agps_reload:
-                    reloadAGPS();
-                    break;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.action_location_agps_reload) {
+                reloadAGPS();
 
-                case R.id.action_location_agps_delete:
-                    deleteAGPS();
-                    break;
+            } else if (itemId == R.id.action_location_agps_delete) {
+                deleteAGPS();
 
-                case R.id.action_location_togglelog:
-                    toggleLogView();
-                    break;
+            } else if (itemId == R.id.action_location_togglelog) {
+                toggleLogView();
 
-                case R.id.action_location_quickfix:
-                    getFix();
-                    break;
+            } else if (itemId == R.id.action_location_quickfix) {
+                getFix();
 
-                case R.id.action_location_average:
-                    averageFix();
-                    break;
+            } else if (itemId == R.id.action_location_average) {
+                averageFix();
             }
             return false;
         }
@@ -1053,11 +1047,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         @Override
         public boolean onActionItemClicked(ActionModeCompat mode, MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.savePlace:
-                    savePlace();
-                    break;
+            if (menuItem.getItemId() == R.id.savePlace) {
+                savePlace();
             }
             return false;
         }

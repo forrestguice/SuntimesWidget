@@ -236,10 +236,12 @@ public class EquinoxDialog extends BottomSheetDialogBase
     private void onTrackingModeChanged(Context context, int id)
     {
         TrackingMode mode = null;
-        switch (id) {
-            case R.id.trackRecent: mode = TrackingMode.RECENT; break;
-            case R.id.trackClosest: mode = TrackingMode.CLOSEST; break;
-            case R.id.trackUpcoming: mode = TrackingMode.SOONEST; break;
+        if (id == R.id.trackRecent) {
+            mode = TrackingMode.RECENT;
+        } else if (id == R.id.trackClosest) {
+            mode = TrackingMode.CLOSEST;
+        } else if (id == R.id.trackUpcoming) {
+            mode = TrackingMode.SOONEST;
         }
         if (mode != null) {
             WidgetSettings.saveTrackingModePref(context, 0, mode);
@@ -260,19 +262,16 @@ public class EquinoxDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
-                    onTrackingModeChanged(getContext(), item.getItemId());
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.trackRecent || itemId == R.id.trackClosest || itemId == R.id.trackUpcoming) {
+                onTrackingModeChanged(getContext(), item.getItemId());
+                return true;
 
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_help) {
+                showHelp(getContext());
+                return true;
             }
+            return false;
         }
     });
 
@@ -351,50 +350,47 @@ public class EquinoxDialog extends BottomSheetDialogBase
                 long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
                 SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
 
-                switch (item.getItemId())
-                {
-                    case R.id.action_alarm:
-                        if (dialogListener != null) {
-                            dialogListener.onSetAlarm(itemMode);
-                            //collapseSheet(getDialog());
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_alarm) {
+                    if (dialogListener != null) {
+                        dialogListener.onSetAlarm(itemMode);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
 
-                    case R.id.action_sunposition:
-                        if (dialogListener != null) {
-                            dialogListener.onShowPosition(itemTime);
-                            //collapseSheet(getDialog());
-                        }
-                        return true;
+                } else if (itemId == R.id.action_sunposition) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
 
-                    case R.id.action_moon:
-                        if (dialogListener != null) {
-                            dialogListener.onShowMoonInfo(itemTime);
-                            //collapseSheet(getDialog());
-                        }
-                        return true;
+                } else if (itemId == R.id.action_moon) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
 
-                    case R.id.action_worldmap:
-                        if (dialogListener != null) {
-                            dialogListener.onShowMap(itemTime);
-                            //collapseSheet(getDialog());
-                        }
-                        return true;
+                } else if (itemId == R.id.action_worldmap) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
 
-                    case R.id.action_date:
-                        if (dialogListener != null) {
-                            dialogListener.onShowDate(itemTime);
-                        }
-                        collapseSheet(getDialog());
-                        return true;
+                } else if (itemId == R.id.action_date) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(itemTime);
+                    }
+                    collapseSheet(getDialog());
+                    return true;
 
-                    case R.id.action_share:
-                        shareItem(getContext(), itemData);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_share) {
+                    shareItem(getContext(), itemData);
+                    return true;
                 }
+                return false;
             }
         });
     }

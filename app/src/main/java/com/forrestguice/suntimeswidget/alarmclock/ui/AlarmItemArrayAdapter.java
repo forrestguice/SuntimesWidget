@@ -830,73 +830,70 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.setAlarmType:
-                        showAlarmTypeMenu(item, buttonView, itemView);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.setAlarmType) {
+                    showAlarmTypeMenu(item, buttonView, itemView);
+                    return true;
 
-                    case R.id.setAlarmAction:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestAction(item, 0);  // TODO: action1
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmAction) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestAction(item, 0);  // TODO: action1
+                    }
+                    return true;
 
-                    case R.id.setAlarmSound:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRingtone(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmSound) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestRingtone(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmDismissChallenge:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestDismissChallenge(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmDismissChallenge) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestDismissChallenge(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmLabel:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLabel(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmLabel) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestLabel(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmTime:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestTime(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmTime) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestTime(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmEvent:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestSolarEvent(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmEvent) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestSolarEvent(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmOffset:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestOffset(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmOffset) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestOffset(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmLocation:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLocation(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmLocation) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestLocation(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmRepeat:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRepetition(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmRepeat) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestRepetition(item);
+                    }
+                    return true;
 
-                    case R.id.deleteAlarm:
-                        confirmDeleteAlarm(item, itemView);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.deleteAlarm) {
+                    confirmDeleteAlarm(item, itemView);
+                    return true;
                 }
+                return false;
             }
         })).show();
     }
@@ -918,21 +915,17 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.alarmTypeNotification:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.alarmTypeNotification) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
 
-                    case R.id.alarmTypeNotification1:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+                } else if (itemId == R.id.alarmTypeNotification1) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
 
-                    case R.id.alarmTypeNotification2:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
-
-                    case R.id.alarmTypeAlarm:
-                    default:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
+                } else if (itemId == R.id.alarmTypeNotification2) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
                 }
+                return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
             }
         })).show();
     }

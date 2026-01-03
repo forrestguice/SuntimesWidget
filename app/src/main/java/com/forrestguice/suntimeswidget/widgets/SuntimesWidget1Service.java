@@ -144,23 +144,14 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         }
 
         SunLayout layout;
-        switch(layoutID)
-        {
-            case R.layout.layout_widget_1x1_1:
-            case R.layout.layout_widget_1x1_1i:
-                layout = new SunLayout_1x1_1(R.layout.layout_widget_1x1_1i);
-                break;
+        if (layoutID == R.layout.layout_widget_1x1_1 || layoutID == R.layout.layout_widget_1x1_1i) {
+            layout = new SunLayout_1x1_1(R.layout.layout_widget_1x1_1i);
 
-            case R.layout.layout_widget_1x1_4:
-            case R.layout.layout_widget_1x1_4i:
-                layout = new SunLayout_1x1_4(R.layout.layout_widget_1x1_4i);
-                break;
+        } else if (layoutID == R.layout.layout_widget_1x1_4 || layoutID == R.layout.layout_widget_1x1_4i) {
+            layout = new SunLayout_1x1_4(R.layout.layout_widget_1x1_4i);
 
-            case R.layout.layout_widget_1x1_2:
-            case R.layout.layout_widget_1x1_2i:
-            default:
-                layout = new SunLayout_1x1_2(R.layout.layout_widget_1x1_2i);
-                break;
+        } else {
+            layout = new SunLayout_1x1_2(R.layout.layout_widget_1x1_2i);
         }
         RemoteViews views = layout.getViews(context);
 

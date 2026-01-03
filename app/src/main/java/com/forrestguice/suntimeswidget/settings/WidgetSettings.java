@@ -1393,20 +1393,12 @@ public class WidgetSettings
     {
         SunLayout layout;
         WidgetModeSun1x1 mode = loadSun1x1ModePref(context, appWidgetId);
-        switch (mode.getLayoutID())
-        {
-            case R.layout.layout_widget_1x1_1:
-                layout = new SunLayout_1x1_1();
-                break;
-
-            case R.layout.layout_widget_1x1_2:
-                layout = new SunLayout_1x1_2();
-                break;
-
-            case R.layout.layout_widget_1x1_0:
-            default:
-                layout = new SunLayout_1x1_0(mode.getLayoutID());
-                break;
+        if (mode.getLayoutID() == R.layout.layout_widget_1x1_1) {
+            layout = new SunLayout_1x1_1();
+        } else if (mode.getLayoutID() == R.layout.layout_widget_1x1_2) {
+            layout = new SunLayout_1x1_2();
+        } else {
+            layout = new SunLayout_1x1_0(mode.getLayoutID());
         }
         return layout;
     }

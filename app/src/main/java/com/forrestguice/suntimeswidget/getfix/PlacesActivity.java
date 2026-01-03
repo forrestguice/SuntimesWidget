@@ -106,19 +106,16 @@ public class PlacesActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_about:
-                showAbout();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private final PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()

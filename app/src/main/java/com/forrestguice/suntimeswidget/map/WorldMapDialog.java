@@ -851,23 +851,13 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 return false;
             }
 
-            switch (item.getItemId())
-            {
-                case R.id.action_worldmap_simplemercator:
-                case R.id.action_worldmap_simplesinusoidal:
-                case R.id.action_worldmap_simplevandergrinten:
-                case R.id.action_worldmap_simplerectangular:
-                case R.id.action_worldmap_bluemarble:
-                case R.id.action_worldmap_simpleazimuthal:
-                case R.id.action_worldmap_simpleazimuthal_south:
-                case R.id.action_worldmap_simpleazimuthal_location:
-                    item.setChecked(true);
-                    setMapMode(context, mapModeForMenuItem(item));
-                    return true;
-
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_worldmap_simplemercator || itemId == R.id.action_worldmap_simplesinusoidal || itemId == R.id.action_worldmap_simplevandergrinten || itemId == R.id.action_worldmap_simplerectangular || itemId == R.id.action_worldmap_bluemarble || itemId == R.id.action_worldmap_simpleazimuthal || itemId == R.id.action_worldmap_simpleazimuthal_south || itemId == R.id.action_worldmap_simpleazimuthal_location) {
+                item.setChecked(true);
+                setMapMode(context, mapModeForMenuItem(item));
+                return true;
             }
+            return false;
         }
     });
 
@@ -912,29 +902,26 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 return false;
             }
 
-            switch (item.getItemId())
-            {
-                case R.id.mapSpeed_7d:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_WEEK);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.mapSpeed_7d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_WEEK);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_1d:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_DAY);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapSpeed_1d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_DAY);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_15m:
-                    WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.FIFTEEN_MINUTES);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.mapSpeed_15m) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.FIFTEEN_MINUTES);
+                item.setChecked(true);
+                updateViews();
+                return true;
             }
+            return false;
         }
     });
 
@@ -1032,17 +1019,31 @@ public class WorldMapDialog extends BottomSheetDialogBase
             case EQUIRECTANGULAR_SIMPLE: default: return R.id.action_worldmap_simplerectangular;
         }
     }
-    private WorldMapWidgetSettings.WorldMapWidgetMode mapModeForMenuItem(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_worldmap_simplemercator: return WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE;
-            case R.id.action_worldmap_simplevandergrinten: return WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE;
-            case R.id.action_worldmap_simplesinusoidal: return WorldMapWidgetSettings.WorldMapWidgetMode.SINUSOIDAL_SIMPLE;
-            case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
-            case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
-            case R.id.action_worldmap_simpleazimuthal_location: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
-            case R.id.action_worldmap_bluemarble: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
-            case R.id.action_worldmap_simplerectangular: default: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
+    private WorldMapWidgetSettings.WorldMapWidgetMode mapModeForMenuItem(MenuItem item)
+    {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_worldmap_simplemercator) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simplevandergrinten) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simplesinusoidal) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.SINUSOIDAL_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal_south) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal_location) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
+
+        } else if (itemId == R.id.action_worldmap_bluemarble) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
         }
+        return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
     }
 
     private void shareMap()
@@ -1245,124 +1246,121 @@ public class WorldMapDialog extends BottomSheetDialogBase
             WorldMapTask.WorldMapOptions options = worldmap.getOptions();
 
             boolean toggledValue;
-            switch (item.getItemId())
-            {
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_sunposition) {
+                if (dialogListener != null) {
+                    dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_moon:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            } else if (itemId == R.id.action_moon) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            } else if (itemId == R.id.action_date) {
+                if (dialogListener != null) {
+                    dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_calendar:
-                    openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
-                    return true;
+            } else if (itemId == R.id.action_calendar) {
+                openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
+                return true;
 
-                case R.id.action_timezone:
-                    showTimeZoneMenu(context, utcTime);
-                    return true;
+            } else if (itemId == R.id.action_timezone) {
+                showTimeZoneMenu(context, utcTime);
+                return true;
 
-                case R.id.shareMap:
-                    shareMap();
-                    return true;
+            } else if (itemId == R.id.shareMap) {
+                shareMap();
+                return true;
 
-                case R.id.recordMap:
-                    playMap();
-                    shareMap();
-                    return true;
+            } else if (itemId == R.id.recordMap) {
+                playMap();
+                shareMap();
+                return true;
 
-                case R.id.mapOption_center:
-                    setMapCenter(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_center) {
+                setMapCenter(context);
+                return true;
 
-                case R.id.mapOption_center_clear:
-                    clearMapCenter(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_center_clear) {
+                clearMapCenter(context);
+                return true;
 
-                case R.id.mapOption_background:
-                    setMapBackground(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_background) {
+                setMapBackground(context);
+                return true;
 
-                case R.id.mapOption_background_clear:
-                    clearMapBackground(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_background_clear) {
+                clearMapBackground(context);
+                return true;
 
-                case R.id.mapOption_location:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_location) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_tintMap:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
-                    item.setChecked(toggledValue);
-                    updateOptions(context);
-                    worldmap.setMapMode(context, mapMode);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_tintMap) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
+                item.setChecked(toggledValue);
+                updateOptions(context);
+                worldmap.setMapMode(context, mapMode);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_debugLines:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_debugLines) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_majorLatitudes:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_majorLatitudes) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_minorgrid:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_minorgrid) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_sunlight:
-                    toggledValue = !options.showSunShadow;
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    if (!toggledValue && !options.showMoonLight) {
-                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, true);
-                    }
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_sunlight) {
+                toggledValue = !options.showSunShadow;
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                if (!toggledValue && !options.showMoonLight) {
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                }
+                updateViews();
+                return true;
 
-                case R.id.mapOption_moonlight:
-                    toggledValue = !options.showMoonLight;
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    if (!toggledValue && !options.showSunShadow) {
-                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
-                    }
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_moonlight) {
+                toggledValue = !options.showMoonLight;
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                if (!toggledValue && !options.showSunShadow) {
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                }
+                updateViews();
+                return true;
 
-                case R.id.mapOption_colors:
-                    showColorDialog(context);
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.mapOption_colors) {
+                showColorDialog(context);
+                return true;
             }
+            return false;
         }
     });
 

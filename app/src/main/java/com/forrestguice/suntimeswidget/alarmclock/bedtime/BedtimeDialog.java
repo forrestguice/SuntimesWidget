@@ -309,21 +309,16 @@ public class BedtimeDialog extends DialogBase
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_clear:
-                confirmClearAlarms(getActivity(), new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        BedtimeAlarmHelper.clearBedtimeItems(getActivity());
-                    }
-                });
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_clear) {
+            confirmClearAlarms(getActivity(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    BedtimeAlarmHelper.clearBedtimeItems(getActivity());
+                }
+            });
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -460,27 +455,24 @@ public class BedtimeDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_bedtime_sleepCycles:
-                        showConfigureSleepCyclesDialog(context, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_bedtime_sleepCycles) {
+                    showConfigureSleepCyclesDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleepCycleLength:
-                        showConfigureSleepCycleDialog(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_sleepCycleLength) {
+                    showConfigureSleepCycleDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleep_offset:
-                        showConfigureSleepOffsetDialog(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_sleep_offset) {
+                    showConfigureSleepOffsetDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleep_autooff:
-                        toggleConfigureBedtimeAutoOff(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_sleep_autooff) {
+                    toggleConfigureBedtimeAutoOff(context, item);
+                    return true;
                 }
+                return false;
             }
         };
         PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener).show();
@@ -1052,23 +1044,20 @@ public class BedtimeDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_bedtime_set:
-                        showAddBedtimeDialog(context, v, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_bedtime_set) {
+                    showAddBedtimeDialog(context, v, item);
+                    return true;
 
-                    case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item, false);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_from_wakeup) {
+                    configBedtimeFromWakeup(context, item, false);
+                    return true;
 
-                    case R.id.action_bedtime_now:
-                        triggerBedtimeNow(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_now) {
+                    triggerBedtimeNow(context, item);
+                    return true;
                 }
+                return false;
             }
         };
         PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener).show();
@@ -1142,19 +1131,16 @@ public class BedtimeDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_wakeup_set:
-                        showAddAlarmDialog(context, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_wakeup_set) {
+                    showAddAlarmDialog(context, item);
+                    return true;
 
-                    case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item, true);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_wakeup_from_bedtime) {
+                    configWakeupFromBedtime(context, item, true);
+                    return true;
                 }
+                return false;
             }
         };
         PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener).show();
@@ -1254,58 +1240,52 @@ public class BedtimeDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_wakeup_edit:
-                    case R.id.action_reminder_edit:
-                    case R.id.action_bedtime_edit:
-                        showAlarmEditActivity(context, BedtimeSettings.loadAlarmID(context, slotName), sharedView, requestID, false);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_wakeup_edit || itemId == R.id.action_reminder_edit || itemId == R.id.action_bedtime_edit) {
+                    showAlarmEditActivity(context, BedtimeSettings.loadAlarmID(context, slotName), sharedView, requestID, false);
+                    return true;
 
-                    case R.id.action_wakeup_delete:
-                    case R.id.action_reminder_delete:
-                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BedtimeAlarmHelper.clearBedtimeItem(context, slotName);
-                            }
-                        });
-                        return true;
+                } else if (itemId == R.id.action_wakeup_delete || itemId == R.id.action_reminder_delete) {
+                    AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            BedtimeAlarmHelper.clearBedtimeItem(context, slotName);
+                        }
+                    });
+                    return true;
 
-                    case R.id.action_bedtime_delete:
-                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
-                            }
-                        });
-                        return true;
+                } else if (itemId == R.id.action_bedtime_delete) {
+                    AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
+                        }
+                    });
+                    return true;
 
-                    case R.id.action_bedtime_set:
-                        showAddBedtimeDialog(context, v, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_set) {
+                    showAddBedtimeDialog(context, v, item);
+                    return true;
 
-                    case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item, false);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_from_wakeup) {
+                    configBedtimeFromWakeup(context, item, false);
+                    return true;
 
-                    case R.id.action_bedtime_now:
-                        triggerBedtimeNow(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_now) {
+                    triggerBedtimeNow(context, item);
+                    return true;
 
-                    case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item, true);
-                        return true;
+                } else if (itemId == R.id.action_wakeup_from_bedtime) {
+                    configWakeupFromBedtime(context, item, true);
+                    return true;
 
-                    case R.id.action_bedtime_alarmoff:
-                        toggleConfigureBedtimeAlarmOff(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_alarmoff) {
+                    toggleConfigureBedtimeAlarmOff(context, item);
+                    return true;
                 }
+                return false;
             }
         };
         PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener).show();

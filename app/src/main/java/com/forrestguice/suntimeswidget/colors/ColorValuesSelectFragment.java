@@ -264,23 +264,22 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_colors_add:
-                    onAddItem();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors_add) {
+                onAddItem();
+                return true;
 
-                case R.id.action_colors_delete:
-                    onDeleteItem();
-                    return true;
+            } else if (itemId == R.id.action_colors_delete) {
+                onDeleteItem();
+                return true;
 
-                case R.id.action_colors_share:
-                    onShareColors();
-                    return true;
+            } else if (itemId == R.id.action_colors_share) {
+                onShareColors();
+                return true;
 
-                case R.id.action_colors_import:
-                    onImportColors();
-                    return true;
+            } else if (itemId == R.id.action_colors_import) {
+                onImportColors();
+                return true;
             }
             return false;
         }

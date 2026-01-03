@@ -1425,67 +1425,64 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_settings:
-                showSettings();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_settings) {
+            showSettings();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_location_add:
-                configLocation();
-                return true;
+        } else if (itemId == R.id.action_location_add) {
+            configLocation();
+            return true;
 
-            case R.id.action_location_refresh:
-                refreshLocation();
-                return false;
+        } else if (itemId == R.id.action_location_refresh) {
+            refreshLocation();
+            return false;
 
-            case R.id.action_location_show:
-                showMap();
-                return true;
+        } else if (itemId == R.id.action_location_show) {
+            showMap();
+            return true;
 
-            case R.id.action_timezone:
-                configTimeZone();
-                return true;
+        } else if (itemId == R.id.action_timezone) {
+            configTimeZone();
+            return true;
 
-            case R.id.action_date:
-                showDate();
-                return true;
+        } else if (itemId == R.id.action_date) {
+            showDate();
+            return true;
 
-            case R.id.action_alarm:
-                scheduleAlarm();
-                return true;
+        } else if (itemId == R.id.action_alarm) {
+            scheduleAlarm();
+            return true;
 
-            case R.id.action_equinox:
-                showEquinoxDialog();
-                return true;
+        } else if (itemId == R.id.action_equinox) {
+            showEquinoxDialog();
+            return true;
 
-            case R.id.action_moon:
-                showMoonDialog();
-                return true;
+        } else if (itemId == R.id.action_moon) {
+            showMoonDialog();
+            return true;
 
-            case R.id.action_sunposition:
-                showLightMapDialog();
-                return true;
+        } else if (itemId == R.id.action_sunposition) {
+            showLightMapDialog();
+            return true;
 
-            case R.id.action_lightgraph:
-                showLightGraphDialog();
-                return true;
+        } else if (itemId == R.id.action_lightgraph) {
+            showLightGraphDialog();
+            return true;
 
-            case R.id.action_worldmap:
-                showWorldMapDialog();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.action_worldmap) {
+            showWorldMapDialog();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

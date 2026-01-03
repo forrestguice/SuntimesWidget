@@ -584,39 +584,36 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_themes:
-                launchThemeEditor(SuntimesWidgetListActivity.this);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_themes) {
+            launchThemeEditor(SuntimesWidgetListActivity.this);
+            return true;
 
-            case R.id.action_actionlist:
-                launchActionList(SuntimesWidgetListActivity.this);
-                return true;
+        } else if (itemId == R.id.action_actionlist) {
+            launchActionList(SuntimesWidgetListActivity.this);
+            return true;
 
-            case R.id.action_import:
-                importSettings(SuntimesWidgetListActivity.this);
-                return true;
+        } else if (itemId == R.id.action_import) {
+            importSettings(SuntimesWidgetListActivity.this);
+            return true;
 
-            case R.id.action_export:
-                exportSettings(SuntimesWidgetListActivity.this);
-                return true;
+        } else if (itemId == R.id.action_export) {
+            exportSettings(SuntimesWidgetListActivity.this);
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")

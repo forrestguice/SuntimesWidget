@@ -163,31 +163,28 @@ public class ActionListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.addAction:
-                helper.addAction();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.addAction) {
+            helper.addAction();
+            return true;
 
-            case R.id.clearAction:
-                helper.clearActions();
-                return true;
+        } else if (itemId == R.id.clearAction) {
+            helper.clearActions();
+            return true;
 
-            case R.id.exportAction:
-                helper.exportActions();
-                return true;
+        } else if (itemId == R.id.exportAction) {
+            helper.exportActions();
+            return true;
 
-            case R.id.importAction:
-                helper.importActions();
-                return true;
+        } else if (itemId == R.id.importAction) {
+            helper.importActions();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")

@@ -437,98 +437,94 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_enable:
-                returnItem(true);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_enable) {
+            returnItem(true);
+            return true;
 
-            case R.id.action_disable:
-                disableAlarm();
-                return true;
+        } else if (itemId == R.id.action_disable) {
+            disableAlarm();
+            return true;
 
-            case R.id.action_save:
-                returnItem(editor.getItem());
-                return true;
+        } else if (itemId == R.id.action_save) {
+            returnItem(editor.getItem());
+            return true;
 
-            case R.id.action_delete:
-                if (isNew)
-                {
-                    setResult(RESULT_CANCELED);
-                    finish();
+        } else if (itemId == R.id.action_delete) {
+            if (isNew) {
+                setResult(RESULT_CANCELED);
+                finish();
 
-                } else {
-                    AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
-                }
-                return true;
+            } else {
+                AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+            }
+            return true;
 
-            case R.id.setAlarmType:
-                editor.itemView.menu_type.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmType) {
+            editor.itemView.menu_type.performClick();
+            return true;
 
-            case R.id.setAlarmLabel:
-                editor.itemView.edit_label.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmLabel) {
+            editor.itemView.edit_label.performClick();
+            return true;
 
-            case R.id.setAlarmNote:
-                editor.itemView.edit_note.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmNote) {
+            editor.itemView.edit_note.performClick();
+            return true;
 
-            case R.id.setAlarmOffset:
-                editor.itemView.chip_offset.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmOffset) {
+            editor.itemView.chip_offset.performClick();
+            return true;
 
-            case R.id.setAlarmEvent:
-                editor.itemView.chip_event.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmEvent) {
+            editor.itemView.chip_event.performClick();
+            return true;
 
-            case R.id.setAlarmLocation:
-                editor.itemView.chip_location.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmLocation) {
+            editor.itemView.chip_location.performClick();
+            return true;
 
-            case R.id.setAlarmRepeat:
-                editor.itemView.chip_repeat.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmRepeat) {
+            editor.itemView.chip_repeat.performClick();
+            return true;
 
-            case R.id.setAlarmSound:
-                editor.itemView.chip_ringtone.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmSound) {
+            editor.itemView.chip_ringtone.performClick();
+            return true;
 
-            case R.id.setAlarmSnoozeLimit:
-                editor.itemView.chip_snoozeLimit.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmSnoozeLimit) {
+            editor.itemView.chip_snoozeLimit.performClick();
+            return true;
 
-            case R.id.setAlarmSnoozeLength:
-                editor.itemView.chip_snoozeLength.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmSnoozeLength) {
+            editor.itemView.chip_snoozeLength.performClick();
+            return true;
 
-            case R.id.setAlarmDismissChallenge:
-                editor.itemView.chip_dismissChallenge.performClick();
-                return true;
+        } else if (itemId == R.id.setAlarmDismissChallenge) {
+            editor.itemView.chip_dismissChallenge.performClick();
+            return true;
 
-            case R.id.configAlarmDismissChallenge:
-                configureDismissChallenge(AlarmEditActivity.this);
-                return true;
+        } else if (itemId == R.id.configAlarmDismissChallenge) {
+            configureDismissChallenge(AlarmEditActivity.this);
+            return true;
 
-            case R.id.testAlarmDismissChallenge:
-                testDismissChallenge(AlarmEditActivity.this);
-                return true;
+        } else if (itemId == R.id.testAlarmDismissChallenge) {
+            testDismissChallenge(AlarmEditActivity.this);
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")
@@ -845,19 +841,18 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_alarmsound_ringtone:
-                        ringtonePicker(item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_alarmsound_ringtone) {
+                    ringtonePicker(item);
+                    return true;
 
-                    case R.id.action_alarmsound_file:
-                        audioFilePicker(item);
-                        return true;
+                } else if (itemId == R.id.action_alarmsound_file) {
+                    audioFilePicker(item);
+                    return true;
 
-                    case R.id.action_alarmsound_none:
-                        onRingtoneResult(null, false);
-                        return true;
+                } else if (itemId == R.id.action_alarmsound_none) {
+                    onRingtoneResult(null, false);
+                    return true;
                 }
                 return false;
             }
@@ -1188,15 +1183,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_location_set:
-                        showLocationDialog(item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_location_set) {
+                    showLocationDialog(item);
+                    return true;
 
-                    case R.id.action_location_fromApp:
-                        toggleLocationFromApp(item);
-                        return true;
+                } else if (itemId == R.id.action_location_fromApp) {
+                    toggleLocationFromApp(item);
+                    return true;
                 }
                 return false;
             }

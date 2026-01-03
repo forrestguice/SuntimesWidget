@@ -139,23 +139,17 @@ public class SuntimesNavigation
                             @Override
                             public void run()
                             {
-                                switch (itemID)
-                                {
-                                    case R.id.action_suntimes:
-                                        showSuntimes(activity);
-                                        break;
+                                if (itemID == R.id.action_suntimes) {
+                                    showSuntimes(activity);
 
-                                    case R.id.action_alarms:
-                                        showSuntimesAlarms(activity);
-                                        break;
+                                } else if (itemID == R.id.action_alarms) {
+                                    showSuntimesAlarms(activity);
 
-                                    case R.id.action_settings:
-                                        showSettings(activity);
-                                        break;
+                                } else if (itemID == R.id.action_settings) {
+                                    showSettings(activity);
 
-                                    case R.id.action_about:
-                                        showAbout(activity);
-                                        break;
+                                } else if (itemID == R.id.action_about) {
+                                    showAbout(activity);
                                 }
                             }
                         }, 250);

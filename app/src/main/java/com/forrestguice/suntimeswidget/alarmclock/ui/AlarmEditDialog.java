@@ -342,12 +342,15 @@ public class AlarmEditDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.alarmTypeNotification: item.type = AlarmClockItem.AlarmType.NOTIFICATION; break;
-                    case R.id.alarmTypeNotification1: item.type = AlarmClockItem.AlarmType.NOTIFICATION1; break;
-                    case R.id.alarmTypeNotification2: item.type = AlarmClockItem.AlarmType.NOTIFICATION2; break;
-                    case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.alarmTypeNotification) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION;
+                } else if (itemId == R.id.alarmTypeNotification1) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION1;
+                } else if (itemId == R.id.alarmTypeNotification2) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION2;
+                } else {
+                    item.type = AlarmClockItem.AlarmType.ALARM;
                 }
                 boolean isAlarm = item.type == AlarmClockItem.AlarmType.ALARM;
                 itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
@@ -384,15 +387,11 @@ public class AlarmEditDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.deleteAlarm:
-                        confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
-                        return true;
-
-                    default:
-                        return false;
+                if (menuItem.getItemId() == R.id.deleteAlarm) {
+                    confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
+                    return true;
                 }
+                return false;
             }
         })).show();
     }

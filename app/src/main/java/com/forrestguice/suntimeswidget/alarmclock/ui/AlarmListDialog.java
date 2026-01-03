@@ -268,69 +268,66 @@ public class AlarmListDialog extends DialogBase
     public boolean onOptionsItemSelected(MenuItem item)
     {
         Activity activity = getActivity();
-        switch (item.getItemId())
-        {
-            case R.id.sortByAlarmTime:
-                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.sortByCreation:
-                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.sortEnabledFirst:
-                AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.showOffset:
-                AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.action_clear:
+        int itemId = item.getItemId();
+        if (itemId == R.id.sortByAlarmTime) {
+            AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
+            if (Build.VERSION.SDK_INT >= 11) {
                 if (activity != null) {
-                    confirmClearAlarms(activity);
+                    activity.invalidateOptionsMenu();
                 }
-                return true;
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
 
-            case R.id.action_export:
+        } else if (itemId == R.id.sortByCreation) {
+            AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
+            if (Build.VERSION.SDK_INT >= 11) {
                 if (activity != null) {
-                    exportAlarms(activity);
+                    activity.invalidateOptionsMenu();
                 }
-                return true;
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
 
-            case R.id.action_import:
+        } else if (itemId == R.id.sortEnabledFirst) {
+            AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
+            if (Build.VERSION.SDK_INT >= 11) {
                 if (activity != null) {
-                    importAlarms(activity);
+                    activity.invalidateOptionsMenu();
                 }
-                return true;
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.showOffset) {
+            AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
+            if (Build.VERSION.SDK_INT >= 11) {
+                if (activity != null) {
+                    activity.invalidateOptionsMenu();
+                }
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
+
+        } else if (itemId == R.id.action_clear) {
+            if (activity != null) {
+                confirmClearAlarms(activity);
+            }
+            return true;
+
+        } else if (itemId == R.id.action_export) {
+            if (activity != null) {
+                exportAlarms(activity);
+            }
+            return true;
+
+        } else if (itemId == R.id.action_import) {
+            if (activity != null) {
+                importAlarms(activity);
+            }
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1441,18 +1438,14 @@ public class AlarmListDialog extends DialogBase
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
-                    switch (menuItem.getItemId())
-                    {
-                        case R.id.action_delete:
-                            AlarmClockItem item = getItem(rowId);
-                            if (item != null) {
-                                AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
-                            }
-                            return true;
-
-                        default:
-                            return false;
+                    if (menuItem.getItemId() == R.id.action_delete) {
+                        AlarmClockItem item = getItem(rowId);
+                        if (item != null) {
+                            AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
+                        }
+                        return true;
                     }
+                    return false;
                 }
             })).show();
         }
@@ -1468,21 +1461,17 @@ public class AlarmListDialog extends DialogBase
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
-                    switch (menuItem.getItemId())
-                    {
-                        case R.id.alarmTypeNotification:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
+                    int itemId = menuItem.getItemId();
+                    if (itemId == R.id.alarmTypeNotification) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
 
-                        case R.id.alarmTypeNotification1:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
+                    } else if (itemId == R.id.alarmTypeNotification1) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
 
-                        case R.id.alarmTypeNotification2:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
-
-                        case R.id.alarmTypeAlarm:
-                        default:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
+                    } else if (itemId == R.id.alarmTypeNotification2) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
                     }
+                    return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
                 }
             })).show();
         }

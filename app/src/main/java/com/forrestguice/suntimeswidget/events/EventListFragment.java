@@ -166,51 +166,47 @@ public class EventListFragment extends DialogBase
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            //case R.id.addEvent:
-            //    helper.addEvent();
-            //    return true;
+        int itemId = item.getItemId();
+        //case R.id.addEvent:
+        //    helper.addEvent();
+        //    return true;
+        if (itemId == R.id.addEvent_sunEvent) {
+            helper.addEvent(EventType.SUN_ELEVATION);
+            return true;
 
-            case R.id.addEvent_sunEvent:
-                helper.addEvent(EventType.SUN_ELEVATION);
-                return true;
+        } else if (itemId == R.id.addEvent_shadowEvent) {
+            helper.addEvent(EventType.SHADOWLENGTH);
+            return true;
 
-            case R.id.addEvent_shadowEvent:
-                helper.addEvent(EventType.SHADOWLENGTH);
-                return true;
+        } else if (itemId == R.id.addEvent_dayPercentEvent) {
+            helper.addEvent(EventType.DAYPERCENT);
+            return true;
 
-            case R.id.addEvent_dayPercentEvent:
-                helper.addEvent(EventType.DAYPERCENT);
-                return true;
+        } else if (itemId == R.id.addEvent_moonIllumEvent) {
+            helper.addEvent(EventType.MOONILLUM);
+            return true;
 
-            case R.id.addEvent_moonIllumEvent:
-                helper.addEvent(EventType.MOONILLUM);
-                return true;
+        } else if (itemId == R.id.addEvent_moonEvent) {
+            helper.addEvent(EventType.MOON_ELEVATION);
+            return true;
 
-            case R.id.addEvent_moonEvent:
-                helper.addEvent(EventType.MOON_ELEVATION);
-                return true;
+        } else if (itemId == R.id.clearEvents) {
+            helper.clearEvents();
+            return true;
 
-            case R.id.clearEvents:
-                helper.clearEvents();
-                return true;
+        } else if (itemId == R.id.exportEvents) {
+            helper.exportEvents(FragmentCompat.from(EventListFragment.this));
+            return true;
 
-            case R.id.exportEvents:
-                helper.exportEvents(FragmentCompat.from(EventListFragment.this));
-                return true;
+        } else if (itemId == R.id.importEvents) {
+            helper.importEvents(FragmentCompat.from(EventListFragment.this));
+            return true;
 
-            case R.id.importEvents:
-                helper.importEvents(FragmentCompat.from(EventListFragment.this));
-                return true;
-
-            case R.id.helpEvents:
-                helper.showHelp();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.helpEvents) {
+            helper.showHelp();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private final View.OnClickListener onItemAccepted = new View.OnClickListener() {

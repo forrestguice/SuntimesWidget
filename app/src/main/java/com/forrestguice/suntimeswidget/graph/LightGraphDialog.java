@@ -675,100 +675,97 @@ public class LightGraphDialog extends BottomSheetDialogBase
             }
 
             boolean toggledValue;
-            switch (item.getItemId())
-            {
-                case R.id.graphOption_colors:
-                    showColorDialog(getActivity());
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.graphOption_colors) {
+                showColorDialog(getActivity());
+                return true;
 
-                case R.id.graphOption_showPoints:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showPoints) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWPOINTS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWPOINTS, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showAxis:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showAxis) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showCrosshair:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showCrosshair) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCROSSHAIR);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCROSSHAIR, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showGrid:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showGrid) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showLabels:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showLabels) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showTwilights:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, toggledValue);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, toggledValue);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, toggledValue);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showTwilights) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWLABELS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWTWILIGHT, MAPTAG_LIGHTGRAPH, toggledValue);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, toggledValue);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, toggledValue);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showCivil:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCIVIL);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showCivil) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWCIVIL);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWCIVIL, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showNautical:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showNautical) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWNAUTICAL);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWNAUTICAL, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showAstro:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showAstro) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWASTRO);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWASTRO, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.graphOption_showSeasons:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWSEASONS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWSEASONS);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWSEASONS, MAPTAG_LIGHTGRAPH, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews(context);
-                    return true;
+            } else if (itemId == R.id.graphOption_showSeasons) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWSEASONS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWSEASONS);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWSEASONS, MAPTAG_LIGHTGRAPH, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews(context);
+                return true;
 
-                case R.id.action_timezone:
-                    showTimeZoneMenu(context, text_time);
-                    return true;
+            } else if (itemId == R.id.action_timezone) {
+                showTimeZoneMenu(context, text_time);
+                return true;
 
-                case R.id.action_share:
-                    shareItem(getContext(), null);
-                    return true;
+            } else if (itemId == R.id.action_share) {
+                shareItem(getContext(), null);
+                return true;
 
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_help) {
+                showHelp(getContext());
+                return true;
             }
+            return false;
         }
     });
 
@@ -877,50 +874,46 @@ public class LightGraphDialog extends BottomSheetDialogBase
                 Intent itemData = item.getIntent();
                 long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
 
-                switch (item.getItemId())
-                {
-                    //case R.id.action_alarm:
-                    //    if (dialogListener != null) {
-                    //        dialogListener.onSetAlarm(itemMode);
-                    //    }
-                    //    return true;
+                int itemId = item.getItemId();
+                //case R.id.action_alarm:
+                //    if (dialogListener != null) {
+                //        dialogListener.onSetAlarm(itemMode);
+                //    }
+                //    return true;
+                if (itemId == R.id.action_sunposition) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(itemTime);
+                    }
+                    return true;
 
-                    case R.id.action_sunposition:
-                        if (dialogListener != null) {
-                            dialogListener.onShowPosition(itemTime);
-                        }
-                        return true;
+                } else if (itemId == R.id.action_moon) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoonInfo(itemTime);
+                    }
+                    return true;
 
-                    case R.id.action_moon:
-                        if (dialogListener != null) {
-                            dialogListener.onShowMoonInfo(itemTime);
-                        }
-                        return true;
+                } else if (itemId == R.id.action_worldmap) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(itemTime);
+                    }
+                    return true;
 
-                    case R.id.action_worldmap:
-                        if (dialogListener != null) {
-                            dialogListener.onShowMap(itemTime);
-                        }
-                        return true;
+                } else if (itemId == R.id.action_date) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(itemTime);
+                    }
+                    collapseSheet(getDialog());
+                    return true;
 
-                    case R.id.action_date:
-                        if (dialogListener != null) {
-                            dialogListener.onShowDate(itemTime);
-                        }
-                        collapseSheet(getDialog());
-                        return true;
+                } else if (itemId == R.id.action_calendar) {
+                    openCalendar(context, itemTime);
+                    return true;
 
-                    case R.id.action_calendar:
-                        openCalendar(context, itemTime);
-                        return true;
-
-                    case R.id.action_share:
-                        shareItem(getActivity(), itemData);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_share) {
+                    shareItem(getActivity(), itemData);
+                    return true;
                 }
+                return false;
             }
         };
     }
