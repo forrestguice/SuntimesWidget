@@ -427,6 +427,7 @@ public class AlarmListDialog extends DialogBase
         confirm.show();
     }
 
+    @SuppressLint("WrongConstant")
     public void offerUndoClearAlarms(Context context, final List<AlarmClockItem> items)
     {
         View view = getView();
@@ -447,6 +448,7 @@ public class AlarmListDialog extends DialogBase
         }
     }
 
+    @SuppressLint("WrongConstant")
     public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
     {
         View view = getView();
@@ -767,6 +769,7 @@ public class AlarmListDialog extends DialogBase
         }
     };
 
+    @SuppressLint("WrongConstant")
     public void offerUndoImport(Context context, final List<AlarmClockItem> items)
     {
         View view = getView();

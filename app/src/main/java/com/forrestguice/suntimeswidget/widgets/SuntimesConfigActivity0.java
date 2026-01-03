@@ -2703,6 +2703,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    @SuppressLint("WrongConstant")
     protected  void offerUndoImport(final Context context, final ContentValues previous)
     {
         View view = getWindow().getDecorView();

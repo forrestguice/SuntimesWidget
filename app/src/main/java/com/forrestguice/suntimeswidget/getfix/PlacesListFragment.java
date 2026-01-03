@@ -816,6 +816,7 @@ public class PlacesListFragment extends DialogBase
         };
     }
 
+    @SuppressLint("WrongConstant")
     protected void offerUndoDeletePlace(Context context, final PlaceItem... deletedItems)
     {
         View view = getView();
@@ -888,6 +889,7 @@ public class PlacesListFragment extends DialogBase
             reloadAdapter();
         }
     };
+    @SuppressLint("WrongConstant")
     protected void offerUndoClearPlaces(Context context, final PlaceItem... deletedItems)
     {
         View view = getView();

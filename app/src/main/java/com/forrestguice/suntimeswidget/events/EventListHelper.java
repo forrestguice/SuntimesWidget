@@ -706,6 +706,7 @@ public class EventListHelper
         }
     };
 
+    @SuppressLint("WrongConstant")
     public void offerUndoImport(Context context, final List<EventAlias> items)
     {
         View view = list;
