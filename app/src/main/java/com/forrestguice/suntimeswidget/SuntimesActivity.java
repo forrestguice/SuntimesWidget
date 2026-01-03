@@ -1467,11 +1467,13 @@ public class SuntimesActivity extends AppCompatActivity
             return true;
 
         } else if (itemId == R.id.action_moon) {
-            showMoonDialog();
+            //showMoonDialog();
+            showMoonPositionAtSelected();
             return true;
 
         } else if (itemId == R.id.action_sunposition) {
-            showLightMapDialog();
+            //showLightMapDialog();
+            showSunPositionAtSelected();
             return true;
 
         } else if (itemId == R.id.action_lightgraph) {
@@ -2442,6 +2444,11 @@ public class SuntimesActivity extends AppCompatActivity
         dialog = showLightMapDialog();
         dialog.showPositionAt(dateTime);
     }
+    public void showSunPositionAtSelected()
+    {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
+        showSunPositionAt(data.first.dataNoon.calendar().getTimeInMillis());
+    }
 
     /**
      * Show the world map dialog.
@@ -2628,7 +2635,7 @@ public class SuntimesActivity extends AppCompatActivity
             showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
         } else showMoonDialog();
     }
-    protected void showMoonPositionAt() {
+    protected void showMoonPositionAtSelected() {
         showMoonPositionAt(card_adapter, card_layout.findFirstVisibleItemPosition());
     }
 
