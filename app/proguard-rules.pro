@@ -30,7 +30,6 @@
 }
 
 # keep classes from support library
--keep class android.support.v7.widget.SearchView { *; }
 -keep class com.forrestguice.support.widget.SearchView { *; }
 
 # keep descriptor classes
