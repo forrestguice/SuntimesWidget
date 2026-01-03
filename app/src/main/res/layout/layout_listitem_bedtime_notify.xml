@@ -89,7 +89,7 @@
             android:paddingTop="8dp" android:paddingBottom="8dp"
             android:clipToPadding="false">
 
-            <Switch android:id="@+id/switch_enabled"
+            <com.forrestguice.support.widget.SwitchCompat android:id="@+id/switch_enabled"
 
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"

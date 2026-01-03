@@ -54,6 +54,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -172,7 +173,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected View text_time_layout;
         protected TextView text_time;
         protected TextView text_time_suffix;
-        protected Switch switch_enabled;
+        protected SwitchCompat switch_enabled;
 
         protected View layout_more;
         protected TextView status_sound;
@@ -192,7 +193,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             text_time_layout = view.findViewById(R.id.text_time_layout);
             text_time = (TextView) view.findViewById(R.id.text_time);
             text_time_suffix = (TextView) view.findViewById(R.id.text_time_suffix);
-            switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
+            switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);
             layout_more = view.findViewById(R.id.layout_more);
             status_sound = (TextView) view.findViewById(R.id.status_sound);
             status_silent = (ImageView) view.findViewById(R.id.status_silent);
