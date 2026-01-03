@@ -34,7 +34,10 @@
 
     <permission
         android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
-        android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
+        android:label="@string/permission_calculator_label"
+        android:description="@string/permission_calculator_desc"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="normal" />                       <!-- legacy permission; protects suntimeswidget.calculator.provider -->
     <uses-permission android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
