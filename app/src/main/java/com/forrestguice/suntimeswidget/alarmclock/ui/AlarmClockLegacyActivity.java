@@ -1379,6 +1379,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 } else Log.w(TAG, "onRequestPermissionResult: temp reference to AlarmClockItem was lost!");
                 break;
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

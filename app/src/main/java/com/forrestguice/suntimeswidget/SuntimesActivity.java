@@ -313,6 +313,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     @Override
     public void onNewIntent( Intent intent ) {
+        super.onNewIntent(intent);
         Log.d("onNewIntent", intent.toString());
         handleIntent(intent);
     }
