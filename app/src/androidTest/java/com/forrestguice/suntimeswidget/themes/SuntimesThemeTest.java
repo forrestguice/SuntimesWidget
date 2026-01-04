@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 //import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;

@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.getfix;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 
 import android.location.Location;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 

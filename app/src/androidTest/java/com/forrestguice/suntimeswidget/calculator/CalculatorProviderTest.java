@@ -26,8 +26,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 

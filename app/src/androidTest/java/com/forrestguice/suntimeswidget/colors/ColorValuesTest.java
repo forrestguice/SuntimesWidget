@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.colors.ColorValues;

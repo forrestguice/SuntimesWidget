@@ -20,9 +20,9 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.annotation.Nullable;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
