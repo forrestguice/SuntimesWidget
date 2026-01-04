@@ -1,6 +1,5 @@
 package com.forrestguice.suntimeswidget.support.espresso.action;
 
-import androidx.support.design.widget.TabLayout;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.CoordinatesProvider;
@@ -9,6 +8,8 @@ import androidx.test.espresso.action.GeneralSwipeAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Swipe;
 import android.view.View;
+
+import com.forrestguice.support.widget.TabLayout;
 
 import org.hamcrest.Matcher;
 

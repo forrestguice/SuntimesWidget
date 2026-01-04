@@ -246,15 +246,14 @@ dependencies {
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
 
     if (useAndroidX) {
-        if (targetVersion == null || targetVersion >= 33) {
+        androidTestImplementation 'androidx.test:core:1.1.0'
+        androidTestImplementation 'androidx.test:rules:1.2.0'
+
+        if (targetVersion != null && targetVersion >= 33) {
             androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-            androidTestImplementation 'androidx.test:core:1.1.0'
-            androidTestImplementation 'androidx.test:rules:1.2.0'
             androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
         } else {
             androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-            androidTestImplementation 'androidx.test:core:1.1.0'
-            androidTestImplementation 'androidx.test:rules:1.2.0'
             androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
         }
     } else {
