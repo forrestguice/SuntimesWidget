@@ -2,11 +2,14 @@ apply plugin: 'com.android.application'
 
 android
 {
-    def targetVersionDefault = 30
-    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
     if (targetVersion == null) {
-        targetVersion = targetVersionDefault
+        if (useAndroidX) {
+            targetVersion = 30
+        } else {
+            targetVersion = 28
+        }
     }
 
     compileSdkVersion targetVersion

@@ -3,10 +3,14 @@ plugins {
 }
 
 android {
-    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean()
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
     if (targetVersion == null) {
-        targetVersion = 28;
+        if (useAndroidX) {
+            targetVersion = 30;
+        } else {
+            targetVersion = 28;
+        }
     }
 
     defaultConfig {
@@ -238,7 +242,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    Boolean useAndroidX = project.properties['android.useAndroidX'].toBoolean();
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
 
     if (useAndroidX) {
