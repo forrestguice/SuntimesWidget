@@ -23,6 +23,12 @@ android
             res.srcDirs = ['src/main/res']
             assets.srcDirs = ['assets']
         }
+        production {
+            java.srcDirs('src/androidx/java')
+        }
+        nightly {
+            java.srcDirs('src/androidx/java')
+        }
     }
 
     defaultConfig
