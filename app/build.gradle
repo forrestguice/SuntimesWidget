@@ -56,7 +56,12 @@ android
         buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        if (useAndroidX) {
+            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        } else {
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        }
+
         resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh"
     }
 
