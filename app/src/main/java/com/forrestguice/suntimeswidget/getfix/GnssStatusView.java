@@ -119,7 +119,7 @@ public abstract class GnssStatusView extends FrameLayout
 
     public boolean hasPermission()
     {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 23) {
             Context context = getContext();
             if (context != null) {
                 return (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
