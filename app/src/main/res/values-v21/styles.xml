@@ -57,4 +57,9 @@
         <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
     </style>
 
+    <style name="LightMapSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">@color/transparent</item>
+        <item name="android:progressTint">@color/transparent</item>
+    </style>
+
 </resources>

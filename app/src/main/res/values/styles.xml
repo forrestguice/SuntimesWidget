@@ -1198,7 +1198,7 @@
     <style name="SunsetTimeSettingsGroupTitle">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">?attr/text_size_medium</item>
-        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_gravity">center_vertical</item>
@@ -1463,8 +1463,8 @@
     </style>
 
     <style name="LightMapSeekBar" parent="Widget.AppCompat.SeekBar">
-        <item name="android:progressBackgroundTint">@color/transparent</item>
-        <item name="android:progressTint">@color/transparent</item>
+        <!--<item name="android:progressBackgroundTint">@color/transparent</item>-->  <!-- api 21+ -->
+        <!--<item name="android:progressTint">@color/transparent</item>-->   <!-- api 21+ -->
     </style>
 
 
