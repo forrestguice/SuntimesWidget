@@ -26,6 +26,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
@@ -139,7 +141,13 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
         Bitmap b = new ClockFaceBitmap().makeClockBitmap(context, w, h, nowString, options);
         views.setImageViewBitmap(R.id.image_time, b);
-        views.setContentDescription(R.id.image_time, nowString);
+        setContentDescription(views, R.id.image_time, nowString);
+    }
+
+    protected static void setContentDescription(RemoteViews views, int viewId, CharSequence text) {
+        if (Build.VERSION.SDK_INT >= 15) {
+            views.setContentDescription(viewId, text);
+        }
     }
 
     public static boolean is24(Context context, int appWidgetId)
@@ -264,8 +272,12 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
 
         protected static StaticLayout getStaticLayout(String text, String[] lines, TextPaint p)
         {
-            return StaticLayout.Builder.obtain(text, 0, text.length(), p, (int) getWidth(lines, p))
-                    .setLineSpacing(0, 0.90f).build();
+            if (Build.VERSION.SDK_INT >= 23) {
+                return StaticLayout.Builder.obtain(text, 0, text.length(), p, (int) getWidth(lines, p))
+                        .setLineSpacing(0, 0.90f).build();
+            } else {
+                return new StaticLayout(text, p, (int) getWidth(lines, p), Layout.Alignment.ALIGN_NORMAL, 0.90f, 0, false);
+            }
         }
 
         protected static float getWidth(String[] lines, TextPaint p)
