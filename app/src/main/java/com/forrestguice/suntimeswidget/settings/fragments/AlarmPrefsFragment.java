@@ -48,6 +48,7 @@ import android.provider.Settings;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.app.NotificationManagerHelper;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -211,7 +212,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
 
@@ -235,7 +236,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
-            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
+            if (NotificationManagerHelper.canUseFullScreenIntent(context))
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
@@ -378,53 +379,6 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE_ID, colorsID)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
-        }
-    }
-
-    /**
-     * this method calls areNotificationsPaused (api29+) via reflection
-     */
-    private static boolean areNotificationsPaused(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 29) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
-        } else return false;
-    }
-
-    /**
-     * this method calls canUseFullScreenIntent (api34+) via reflection
-     */
-    private static boolean canUseFullScreenIntent(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 34) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
-        } else return true;
-    }
-
-    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
-    {
-        if (object != null)
-        {
-            try {
-                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
-                try {
-                    boolean result = (boolean) method.invoke(object);
-                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
-                    return result;
-
-                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
-                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                    return defaultValue;
-                }
-            } catch (SecurityException | NoSuchMethodException e) {
-                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                return defaultValue;
-            }
-        } else {
-            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
-            return defaultValue;
         }
     }
 
