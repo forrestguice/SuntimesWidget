@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 
@@ -65,10 +66,14 @@ public class LightMapSeekbar extends SeekBar
         }
         setPadding(0, 0, 0, 0);
         setMax(24 * 60);    // minutes in a day
-        setSplitTrack(true);
 
-        int thumbColor = ColorUtils.setAlphaComponent(options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), 255/2);
-        setThumbTintList(SuntimesUtils.colorStateList(Color.TRANSPARENT, Color.TRANSPARENT, thumbColor));
+        if (Build.VERSION.SDK_INT > 21)
+        {
+            setSplitTrack(true);
+
+            int thumbColor = ColorUtils.setAlphaComponent(options.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), 255/2);
+            setThumbTintList(SuntimesUtils.colorStateList(Color.TRANSPARENT, Color.TRANSPARENT, thumbColor));
+        } // else // TODO
     }
 
     public void resetThumb()
@@ -102,7 +107,9 @@ public class LightMapSeekbar extends SeekBar
         } else if (option_drawBackground) {
             LightMapView.LightMapTask draw = new LightMapView.LightMapTask(getContext());
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), options);
-            setBackground(new BitmapDrawable(b));
+            if (Build.VERSION.SDK_INT >= 16) {
+                setBackground(new BitmapDrawable(b));
+            } // else // TODO
         }
     }
 
