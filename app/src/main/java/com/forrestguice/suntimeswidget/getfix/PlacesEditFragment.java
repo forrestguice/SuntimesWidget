@@ -76,8 +76,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 {
     public static final String KEY_DIALOGTHEME = "dialogtheme";
 
-    public static final String KEY_LOCATION = "location";
-    public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
+    public static final String KEY_LOCATION_ITEM = "location";                        // PlaceItem (parcelable)
+    public static final String KEY_LOCATION_LATITUDE = "locationLatitude";            // double as String
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
     public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
@@ -667,7 +667,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
-        bundle.putParcelable(KEY_LOCATION, item);
+        bundle.putParcelable(KEY_LOCATION_ITEM, item);
         bundle.putString(KEY_LOCATION_LATITUDE, text_locationLat.getText().toString());
         bundle.putString(KEY_LOCATION_LONGITUDE, text_locationLon.getText().toString());
         bundle.putString(KEY_LOCATION_ALTITUDE, text_locationAlt.getText().toString());
@@ -681,7 +681,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     protected void loadSettings(Bundle bundle)
     {
-        item = bundle.getParcelable(KEY_LOCATION);
+        item = bundle.getParcelable(KEY_LOCATION_ITEM);
         String label = bundle.getString(KEY_LOCATION_LABEL);
         String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
         String latitude = bundle.getString(KEY_LOCATION_LATITUDE);

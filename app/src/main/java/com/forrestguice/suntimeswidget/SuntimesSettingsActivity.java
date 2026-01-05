@@ -274,11 +274,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             String selection = data.getStringExtra(ColorValuesSheetActivity.EXTRA_SELECTED_COLORS_ID);
             int appWidgetID = data.getIntExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, 0);
             String colorTag = data.getStringExtra(ColorValuesSheetActivity.EXTRA_COLORTAG);
-            ColorValuesCollection<ColorValues> collection = data.getParcelableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
+            ColorValuesCollection<ColorValues> collection = (ColorValuesCollection<ColorValues>) data.getSerializableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
             //Log.d("DEBUG", "onPickColors: " + selection);
 
             if (collection != null) {
                 collection.setSelectedColorsID(context, selection, appWidgetID, colorTag);
+            } else {
+                Log.w("SettingsActivity", "onPickColors: the expected result is missing!");
             }
 
             String key = prefKeyForRequestCode(requestCode);

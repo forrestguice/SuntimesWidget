@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -483,9 +484,11 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
         if (resultCode == Activity.RESULT_OK && data != null)
         {
-            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 setLocation(getActivity(), location);
+            } else {
+                Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }
             if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();

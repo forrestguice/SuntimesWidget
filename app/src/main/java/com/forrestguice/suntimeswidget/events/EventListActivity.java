@@ -49,7 +49,7 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
 
-    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;    // supply a Location (parcelable) or ...
+    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;    // supply a Location (serializable) or ...
     public static final String EXTRA_LOCATION_LABEL = "location_label";                  // provide latitude, longitude, and altitude separately
     public static final String EXTRA_LOCATION_LATITUDE = "location_latitude";
     public static final String EXTRA_LOCATION_LONGITUDE = "location_longitude";
@@ -95,7 +95,7 @@ public class EventListActivity extends AppCompatActivity
 
         if (intent.hasExtra(EXTRA_LOCATION))
         {
-            Location location = intent.getParcelableExtra(EXTRA_LOCATION);
+            Location location = (Location) intent.getSerializableExtra(EXTRA_LOCATION);
             list.setLocation(location);
 
         } else if (intent.hasExtra(EXTRA_LOCATION_LATITUDE) && intent.hasExtra(EXTRA_LOCATION_LONGITUDE)) {

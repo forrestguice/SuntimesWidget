@@ -3377,10 +3377,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (resultCode == Activity.RESULT_OK && data != null)
         {
-            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(Uri.parse(location.getUri()), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
                 updatePreview(SuntimesConfigActivity0.this);
+            } else {
+                Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }
         }
     }
