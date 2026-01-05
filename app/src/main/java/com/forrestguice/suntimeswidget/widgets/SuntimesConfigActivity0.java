@@ -1355,7 +1355,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             @Override
             public Bundle getAppWidgetOptions(int notUsed) {
-                return appWidgetManager.getAppWidgetOptions(appWidgetId);
+                if (Build.VERSION.SDK_INT >= 16) {
+                    return appWidgetManager.getAppWidgetOptions(appWidgetId);
+                } else return new Bundle();
             }
         };
 

@@ -476,7 +476,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         int[] mustFitWithinDp = {defSize[0], defSize[1]};
         //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= 16)
         {
             Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
@@ -501,7 +501,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         int[] mustFitWithinDp = {defSize[0], defSize[1]};
         //Log.d("widgetSizeDp", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= 16)
         {
             Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int[]  sizePortrait = { widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),   // dp values
@@ -623,9 +623,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
+        @TargetApi(16)
         @Override
         public Bundle getAppWidgetOptions(int appWidgetId) {
-            return appWidgetManager.getAppWidgetOptions(appWidgetId);
+            if (Build.VERSION.SDK_INT >= 16) {
+                return appWidgetManager.getAppWidgetOptions(appWidgetId);
+            } else return new Bundle();
         }
 
         @Override
@@ -651,7 +654,9 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         @Override
         public Bundle getAppWidgetOptions(int appWidgetId) {
-            return appWidgetManager.getAppWidgetOptions(appWidgetId);
+            if (Build.VERSION.SDK_INT >= 16) {
+                return appWidgetManager.getAppWidgetOptions(appWidgetId);
+            } else return new Bundle();
         }
     }
 
