@@ -53,6 +53,7 @@ public class GpsDebugDisplay
         return indices;
     }
 
+    @TargetApi(24)
     public static int countSatellitesWithSignal(GnssStatus status)
     {
         int c = 0;

@@ -265,6 +265,7 @@ public class GnssStatusBarView extends GnssStatusView
             }
         }
 
+        @TargetApi(24)
         protected void updateItem(GnssStatus status, int i, SatelliteItem item)
         {
             item.cnr = status.getCn0DbHz(i);
