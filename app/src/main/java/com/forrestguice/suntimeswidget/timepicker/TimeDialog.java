@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.timepicker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
@@ -55,9 +56,8 @@ public class TimeDialog extends TimeDialogBase
         timePicker = (TimePicker) dialogContent.findViewById(getTimePickerResID());
         if (timePicker != null)
         {
-            timePicker.setHour(getInitialHour());
-            timePicker.setMinute(getInitialMinute());
             timePicker.setIs24HourView(timeIs24());
+            setSelectedTime(getInitialHour(), getInitialMinute());
         }
     }
 
@@ -78,8 +78,7 @@ public class TimeDialog extends TimeDialogBase
             }
 
             if (timePicker != null && hour != -1 && minute != -1) {
-                timePicker.setHour(hour);
-                timePicker.setHour(minute);
+                setSelectedTime(hour, minute);
             }
         }
     }
@@ -95,19 +94,34 @@ public class TimeDialog extends TimeDialogBase
         }
     }
 
-    public void setSelectedTime(int hour, int minute) {
-        if (timePicker != null) {
-            timePicker.setHour(hour);
-            timePicker.setMinute(minute);
+    public void setSelectedTime(int hour, int minute)
+    {
+        if (timePicker != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23) {
+                timePicker.setHour(hour);
+                timePicker.setMinute(minute);
+            } else {
+                timePicker.setCurrentHour(hour);
+                timePicker.setCurrentMinute(minute);
+            }
         }
     }
 
     public int getSelectedHour() {
-        return (timePicker != null ? timePicker.getHour() : getInitialHour());
+        if (Build.VERSION.SDK_INT >= 23) {
+            return (timePicker != null ? timePicker.getHour() : getInitialHour());
+        } else {
+            return (timePicker != null ? timePicker.getCurrentHour() : getInitialHour());
+        }
     }
 
     public int getSelectedMinute() {
-        return (timePicker != null ? timePicker.getMinute() : getInitialMinute());
+        if (Build.VERSION.SDK_INT >= 23) {
+            return (timePicker != null ? timePicker.getMinute() : getInitialMinute());
+        } else {
+            return (timePicker != null ? timePicker.getCurrentMinute() : getInitialMinute());
+        }
     }
 
     public void setInitialTime(String hour, String minute) {
