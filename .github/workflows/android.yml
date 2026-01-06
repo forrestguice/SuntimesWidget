@@ -39,31 +39,31 @@ jobs:
             ${{ runner.os }}-gradle-
     
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleProductionDebug
     
     - name: Build with Gradle (Unit tests)
-      run: ./gradlew testRelease
+      run: ./gradlew testProductionRelease
     
     - name: Build with Gradle (lintVitalRelease)
-      run: ./gradlew lintVitalRelease
+      run: ./gradlew lintVitalProductionRelease
     
     - name: Upload artifacts (debug apk)
       uses: actions/upload-artifact@v4
       with:
         name: app
-        path: app/build/outputs/apk/debug/app-debug.apk    
+        path: app/build/outputs/apk/production/release/app-production-release-unsigned.apk
         
     - name: Upload artifacts (lint results)
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
         name: lint-results.html
-        path: app/build/reports/lint-results.html
+        path: app/build/reports/lint-results-productionRelease-fatal.html
 
     - name: Upload artifacts (test results)
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: app/build/reports/tests/testReleaseUnitTest/
+        path: app/build/reports/tests/testProductionReleaseUnitTest/
 
