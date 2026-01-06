@@ -27,6 +27,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 
 import com.forrestguice.annotation.NonNull;
@@ -99,30 +100,34 @@ public class CalculatorProvider extends ContentProvider
         }
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_CONFIG, URIMATCH_CONFIG);
+        uriMatcher.addURI(AUTHORITY(), QUERY_CONFIG, URIMATCH_CONFIG);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN, URIMATCH_SUN);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/*", URIMATCH_SUN_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN, URIMATCH_SUN);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN + "/*", URIMATCH_SUN_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS, URIMATCH_SUNPOS);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS + "/#", URIMATCH_SUNPOS_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUNPOS, URIMATCH_SUNPOS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUNPOS + "/#", URIMATCH_SUNPOS_FOR_DATE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON, URIMATCH_MOON);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/#", URIMATCH_MOON_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/*", URIMATCH_MOON_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON, URIMATCH_MOON);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON + "/#", URIMATCH_MOON_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON + "/*", URIMATCH_MOON_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS, URIMATCH_MOONPOS);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS + "/#", URIMATCH_MOONPOS_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPOS, URIMATCH_MOONPOS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPOS + "/#", URIMATCH_MOONPOS_FOR_DATE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE, URIMATCH_MOONPHASE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/*", URIMATCH_MOONPHASE_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE, URIMATCH_MOONPHASE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE + "/*", URIMATCH_MOONPHASE_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS, URIMATCH_SEASONS);
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS, URIMATCH_SEASONS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
         return uriMatcher;
+    }
+
+    private static String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".calculator.provider";
     }
 
     @Override

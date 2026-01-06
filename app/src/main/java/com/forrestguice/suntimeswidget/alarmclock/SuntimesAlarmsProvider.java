@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.BuildConfig;
 
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMS;
@@ -49,9 +50,13 @@ public class SuntimesAlarmsProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+    }
+
+    private static final String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".alarm.provider";
     }
 
     @Override

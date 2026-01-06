@@ -29,6 +29,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
@@ -67,8 +68,12 @@ public class SuntimesActionsProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
-        uriMatcher.addURI(AUTHORITY, QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
+        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+    }
+
+    private static String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".action.provider";
     }
 
     @Override
