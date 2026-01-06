@@ -2250,7 +2250,7 @@
 
     <string name="app_legal1"><![CDATA[
         <b>الشفرة المصدرية:</b><br/>
-        حقوق النشر 2014-2024 Forrest Guice &#169
+        حقوق النشر 2014-2026 Forrest Guice &#169
         <br/>الشفرة المصدرية متاحة بموجب GPLv3.
     ]]></string>
     <string name="app_legal2"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
