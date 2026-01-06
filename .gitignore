@@ -53,3 +53,4 @@ proguard/
 app/app.iml
 /.idea/modules
 SuntimesWidget.iml
+app/test_location_serializable.txt
