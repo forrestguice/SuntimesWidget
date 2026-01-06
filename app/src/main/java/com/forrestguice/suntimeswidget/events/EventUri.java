@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.events;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 
 public class EventUri
@@ -27,5 +28,10 @@ public class EventUri
 
     public static String getEventCalcUri(String authority, String eventID) {
         return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
+    }
+
+    public static String AUTHORITY() {
+        //return AlarmEventContract.AUTHORITY;
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".event.provider";
     }
 }

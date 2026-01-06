@@ -1159,7 +1159,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             item.hour = dialog.getHour();
             item.minute = dialog.getMinute();
             item.timezone = dialog.getTimeZone();
-            item.setEvent(dialog.getDate() != -1L ? EventUri.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(dialog.getDate())) : null);
+            item.setEvent(dialog.getDate() != -1L ? EventUri.getEventInfoUri(EventUri.AUTHORITY(), Long.toString(dialog.getDate())) : null);
         }
     }
 

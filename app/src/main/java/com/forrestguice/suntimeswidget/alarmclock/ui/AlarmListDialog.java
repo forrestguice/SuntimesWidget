@@ -491,7 +491,7 @@ public class AlarmListDialog extends DialogBase
         alarm.minute = minute;
         alarm.timezone = timezone;
         //Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
-        alarm.setEvent(date != -1L ? EventUri.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
+        alarm.setEvent(date != -1L ? EventUri.getEventInfoUri(EventUri.AUTHORITY(), Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
         alarm.repeatingDays = new ArrayList<>(repetitionDays);

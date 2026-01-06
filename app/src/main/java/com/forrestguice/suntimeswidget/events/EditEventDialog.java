@@ -684,7 +684,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
                 }
 
-                String eventUri = EventUri.getEventCalcUri(AUTHORITY, eventID);
+                String eventUri = EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID);
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
@@ -829,7 +829,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             if (validateInput_id()) {
-                setEventUri1(EventUri.getEventInfoUri(AUTHORITY, s.toString()));
+                setEventUri1(EventUri.getEventInfoUri(EventUri.AUTHORITY(), s.toString()));
             }
             setIsModified(true);
         }
@@ -846,7 +846,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             try {
                 double angle = Double.parseDouble(s.toString());
                 String eventID = SunElevationEvent.getEventName(angle, getOffset(), null);
-                setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                 setIsModified(true);
 
             } catch (NumberFormatException e) {
@@ -866,7 +866,7 @@ public class EditEventDialog extends EditBottomSheetDialog
             try {
                 double angle = Double.parseDouble(s.toString());
                 String eventID = MoonElevationEvent.getEventName(angle, getOffset(), null);
-                setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                 setIsModified(true);
 
             } catch (NumberFormatException e) {
@@ -888,7 +888,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (objHeightMeters != null)
                 {
                     String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                     setIsModified(true);
                 }
 
@@ -911,7 +911,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (lengthMeters != null)
                 {
                     String eventID = ShadowLengthEvent.getEventName(objHeightMeters, lengthMeters, getOffset(), null);
-                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                     setIsModified(true);
                 }
 
@@ -1038,7 +1038,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (percent != null)
                 {
                     String eventID = DayPercentEvent.getEventName(percent, getOffset(), null);
-                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                     setIsModified(true);
                 }
 
@@ -1059,7 +1059,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 if (percent != null)
                 {
                     String eventID = MoonIllumEvent.getEventName(percent, getOffset(), null);
-                    setEventUri(EventUri.getEventCalcUri(AUTHORITY, eventID));
+                    setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
                     setIsModified(true);
                 }
 

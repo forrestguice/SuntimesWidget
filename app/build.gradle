@@ -62,6 +62,7 @@ android
         versionName "0.16.12"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
+        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget\""
         buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
@@ -98,6 +99,7 @@ android
             versionNameSuffix "-legacy"
             resValue "string", "packageName", "com.forrestguice.suntimeswidget.legacy"   // TODO: cleaner way to set this resValue without duplication
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.legacy", suntimesPermissionRoot:"suntimes"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget.legacy\""
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         }
         nightly {
@@ -106,6 +108,7 @@ android
             versionNameSuffix "-nightly"
             resValue "string", "packageName", "com.forrestguice.suntimeswidget.nightly"   // TODO: cleaner way to set this resValue without duplication
             manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget.nightly\""
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
             def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
             versionCode nightlyVersionCode

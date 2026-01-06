@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
@@ -101,10 +102,10 @@ public class AlarmEventProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_EVENT_INFO, URIMATCH_EVENTS);                            // content://AUTHORITY/eventInfo
-        uriMatcher.addURI(AUTHORITY, QUERY_EVENT_INFO + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventInfo/[eventID]
-        uriMatcher.addURI(AUTHORITY, QUERY_EVENT_CALC + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventCalc/[eventID]
-        uriMatcher.addURI(AUTHORITY, QUERY_EVENT_TYPES, URIMATCH_EVENT_TYPES);                      // content://AUTHORITY/eventTypes
+        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO, URIMATCH_EVENTS);                            // content://AUTHORITY/eventInfo
+        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventInfo/[eventID]
+        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_CALC + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventCalc/[eventID]
+        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_TYPES, URIMATCH_EVENT_TYPES);                      // content://AUTHORITY/eventTypes
     }
 
     @Override

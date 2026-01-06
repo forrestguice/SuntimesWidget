@@ -19,7 +19,7 @@ public abstract class BaseEvent
     }
 
     protected String getUri() {
-        return EventUri.getEventCalcUri(AUTHORITY, getEventName());
+        return EventUri.getEventCalcUri(EventUri.AUTHORITY(), getEventName());
     }
 
     protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();

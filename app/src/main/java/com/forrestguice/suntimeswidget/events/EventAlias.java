@@ -108,7 +108,7 @@ public final class EventAlias
     }
 
     public String getAliasUri() {
-        return EventUri.getEventInfoUri(AUTHORITY, getID());
+        return EventUri.getEventInfoUri(EventUri.AUTHORITY(), getID());
     }
 
     private static EventItemResolver resolver = null;
