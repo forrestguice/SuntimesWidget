@@ -1459,12 +1459,6 @@
     <string name="appThemes_systemDefault1">Kontrasta (laŭ operaciumo)</string>
     <string name="appThemes_darkTheme1">Kontrasta (malhela)</string>
     <string name="appThemes_lightTheme1">Kontrasta (hela)</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>Hela</item>
-        <item>Malhela</item>
-        <item>@string/appThemes_nightMode</item>
-        <item>@string/appThemes_systemDefault</item>
-    </string-array>
 
     <!-- App Setting: text size -->
     <string name="configLabel_ui_textsize">Grando de teksto</string>

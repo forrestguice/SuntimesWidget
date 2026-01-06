@@ -74,9 +74,14 @@ public class AppSettings
     public static final String THEME_SYSTEM1 = "contrast_system";
     public static final String THEME_DARK1 = "contrast_dark";
     public static final String THEME_LIGHT1 = "contrast_light";
+    public static final String THEME_MONET_SYSTEM = "monet_system";
+    public static final String THEME_MONET_DARK = "monet_dark";
+    public static final String THEME_MONET_LIGHT = "monet_light";
 
     public static final String THEME_DEFAULT = "default";
-    public static final String[] THEMES = new String[] { THEME_DEFAULT, THEME_DARK, THEME_LIGHT, THEME_DAYNIGHT, THEME_SYSTEM, THEME_SYSTEM1, THEME_DARK1, THEME_LIGHT1 };
+    public static final String[] THEMES = new String[] { THEME_DEFAULT, THEME_DARK, THEME_LIGHT, THEME_DAYNIGHT, THEME_SYSTEM,
+            THEME_SYSTEM1, THEME_DARK1, THEME_LIGHT1,
+            THEME_MONET_SYSTEM, THEME_MONET_DARK, THEME_MONET_LIGHT };
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     // public static final String PREF_DEF_APPEARANCE_THEME = THEME_SYSTEM;    // @see R.string.def_app_appearance_theme
@@ -1092,6 +1097,15 @@ public class AppSettings
         } else if (extendedThemeName.startsWith(THEME_SYSTEM)) {
             return info_systemTheme;
 
+        } else if (extendedThemeName.startsWith(THEME_MONET_SYSTEM)) {
+            return info_monet_systemTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_MONET_DARK)) {
+            return info_monet_darkTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_MONET_LIGHT)) {
+            return info_monet_lightTheme;
+
         } else if (extendedThemeName.startsWith(THEME_DAYNIGHT)) {
             return info_dayNightTheme;
 
@@ -1110,13 +1124,17 @@ public class AppSettings
     private static final AppThemeInfo info_system1Theme = new System1ThemeInfo();
     private static final AppThemeInfo info_dark1Theme = new DarkTheme1Info();
     private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
+    private static final AppThemeInfo info_monet_systemTheme = new MonetSystemThemeInfo();
+    private static final AppThemeInfo info_monet_darkTheme = new MonetDarkThemeInfo();
+    private static final AppThemeInfo info_monet_lightTheme = new MonetLightThemeInfo();
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
 
     public static AppThemeInfo[] appThemeInfo()
     {
         return new AppThemeInfo[] {
                 info_systemTheme, info_darkTheme, info_lightTheme,
-                info_system1Theme, info_dark1Theme, info_light1Theme
+                info_system1Theme, info_dark1Theme, info_light1Theme,
+                info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme
         };
     }
 
@@ -1343,5 +1361,86 @@ public class AppSettings
         }
     }
 
+
+    public static class MonetSystemThemeInfo extends AppThemeInfo
+    {
+        public static String THEMENAME = THEME_MONET_SYSTEM;
+
+        @Override
+        public String getThemeName() {
+            return THEMENAME;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_System_Monet_Small;
+                case LARGE: return R.style.AppTheme_System_Monet_Large;
+                case XLARGE: return R.style.AppTheme_System_Monet_XLarge;
+                case NORMAL: default: return R.style.AppTheme_System_Monet;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemMonet);
+        }
+    }
+
+    public static class MonetDarkThemeInfo extends AppThemeInfo
+    {
+        public static String THEMENAME = THEME_MONET_DARK;
+
+        @Override
+        public String getThemeName() {
+            return THEMENAME;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Dark_Monet_Small;
+                case LARGE: return R.style.AppTheme_Dark_Monet_Large;
+                case XLARGE: return R.style.AppTheme_Dark_Monet_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Dark_Monet;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_darkMonet);
+        }
+    }
+
+    public static class MonetLightThemeInfo extends AppThemeInfo
+    {
+        public static String THEMENAME = THEME_MONET_LIGHT;
+
+        @Override
+        public String getThemeName() {
+            return THEMENAME;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Light_Monet_Small;
+                case LARGE: return R.style.AppTheme_Light_Monet_Large;
+                case XLARGE: return R.style.AppTheme_Light_Monet_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Light_Monet;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.appThemes_systemMonet);
+        }
+    }
 
 }

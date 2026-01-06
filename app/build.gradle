@@ -12,7 +12,11 @@ android
         }
     }
 
-    compileSdkVersion targetVersion
+    if (useAndroidX) {
+        compileSdkVersion 31
+    } else {
+        compileSdkVersion 28
+    }
 
     sourceSets
     {

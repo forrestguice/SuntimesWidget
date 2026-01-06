@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="monet_window_bg">@android:color/system_neutral1_10</color>
+    <color name="monet_primaryColor">@android:color/system_neutral2_50</color>
+    <color name="monet_dialog_frame">@android:color/system_neutral2_10</color>
+    <color name="monet_dialog_bg">@android:color/system_neutral1_10</color>
+    <color name="monet_dialog_bg_alt">@android:color/system_neutral2_100</color>
+    <color name="monet_card_bg">@android:color/system_neutral2_10</color>
+    <color name="monet_card_bg_trans">@color/card_bg_trans</color>
+    <color name="monet_chip_bg_disabled">@color/chip_bg_disabled_light</color>
+    <color name="monet_chip_bg_disabled_stroke">@color/chip_bg_disabled_stroke_light</color>
+    <color name="monet_chip_bg_enabled">@android:color/system_neutral2_10</color>
+    <color name="monet_chip_bg_enabled_stroke">@android:color/system_accent2_400</color>
+    <color name="monet_chip_bg_pressed">@android:color/system_accent1_400</color>
+    <color name="monet_chip_bg_pressed_stroke">@android:color/system_accent1_400</color>
+    <color name="monet_chip_tray_bg">@android:color/system_neutral1_50</color>
+    <color name="monet_menu_bg">@android:color/system_neutral2_10</color>
+
+    <color name="monet_hr">@android:color/system_neutral1_400</color>
+    <color name="monet_text_primary">@color/text_primary_dark</color>
+    <color name="monet_text_secondary">@color/text_secondary_dark</color>
+    <color name="monet_text_tertiary">@color/text_tertiary_dark</color>
+    <color name="monet_text_disabled">@color/text_disabled</color>
+    <color name="monet_text_accent">@android:color/system_accent1_400</color>
+    <color name="monet_snackbar_text">@color/snackbar_text</color>
+    <color name="monet_fab_ripple">@android:color/system_accent1_600</color>
+
+    <color name="monet_alarm_enabled">@android:color/system_accent1_400</color>
+    <color name="monet_alarm_pressed">@android:color/system_accent1_400</color>   <!-- TODO -->
+    <color name="monet_alarm_enabled_bg">@android:color/system_neutral2_50</color>  <!-- TODO -->
+    <color name="monet_alarm_disabled_bg">@android:color/system_neutral1_10</color>  <!-- TODO -->
+
+    <color name="monet_grid_selected">@android:color/system_accent1_400</color>
+    <color name="monet_btn_tint_pressed">@android:color/system_accent3_400</color>
+
+    <color name="monet_graphColor_bg">@color/monet_dialog_bg</color>
+    <color name="monet_graphColor_day">@color/graphColor_day</color>
+    <color name="monet_graphColor_night">@color/graphColor_night</color>
+    <color name="monet_graphColor_civil">@color/graphColor_civil</color>
+    <color name="monet_graphColor_nautical">@color/graphColor_nautical</color>
+    <color name="monet_graphColor_astronomical">@color/graphColor_astronomical</color>
+    <color name="monet_graphColor_pointFill">@color/graphColor_pointFill</color>
+    <color name="monet_graphColor_pointStroke">@color/graphColor_pointStroke</color>
+
+    <color name="monet_warningTag">@color/warningTag</color>
+    <color name="monet_errorTag">@color/errorTag</color>
+    <color name="monet_dstTag">@android:color/system_accent1_600</color>
+
+    <color name="monet_sunIcon_color_rising">@color/sunIcon_color_rising</color>
+    <color name="monet_sunIcon_color_setting">@color/sunIcon_color_setting</color>
+
+    <color name="monet_moonIcon_color_rising">@color/moonIcon_color_rising</color>
+    <color name="monet_moonIcon_color_setting">@color/moonIcon_color_setting</color>
+
+    <color name="monet_springColor">@color/springColor</color>
+    <color name="monet_summerColor">@color/summerColor</color>
+    <color name="monet_fallColor">@color/fallColor</color>
+    <color name="monet_winterColor">@color/winterColor</color>
+
+    <color name="monet_tagColor_warning">@color/warningTag</color>
+    <color name="monet_tagColor_error">@color/errorTag</color>
+    <color name="monet_tagColor_dst">@color/dstTag</color>
+</resources>
