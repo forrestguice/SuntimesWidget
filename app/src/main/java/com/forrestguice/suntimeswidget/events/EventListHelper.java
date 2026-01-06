@@ -140,6 +140,23 @@ public class EventListHelper
         typeFilter = filter;
     }
 
+    private String[] selectFilter = null;
+    public void setSelectFilter(@Nullable String[] filter) {
+        selectFilter = filter;
+    }
+    protected boolean isSelectable(@NonNull EventType type)
+    {
+        if (selectFilter == null || selectFilter.length == 0) {
+            return true;
+        }
+        for (String t : selectFilter) {
+            if (type.name().equals(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean expanded = false;
     public void setExpanded( boolean value ) {
         expanded = value;
@@ -1261,16 +1278,24 @@ public class EventListHelper
         protected boolean onPrepareActionMode(Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
-            MenuItem selectItem = menu.findItem(R.id.selectEvent);
-            selectItem.setVisible( !disallowSelect );
 
             String eventID = event.getID();
             boolean isModifiable = (eventID != null && !eventID.trim().isEmpty());
 
+            MenuItem selectItem = menu.findItem(R.id.selectEvent);
+            if (selectItem != null) {
+                selectItem.setVisible( !disallowSelect && isSelectable(event.getType()));
+            }
+
             MenuItem deleteItem = menu.findItem(R.id.deleteEvent);
+            if (deleteItem != null) {
+                deleteItem.setVisible( isModifiable );
+            }
+
             MenuItem editItem = menu.findItem(R.id.editEvent);
-            deleteItem.setVisible( isModifiable );
-            editItem.setVisible( isModifiable );
+            if (editItem != null) {
+                editItem.setVisible(isModifiable);
+            }
             return false;
         }
 

@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
@@ -299,8 +300,13 @@ public class UIPrefsFragment extends PreferenceFragment
     {
         return new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
-                activity.startActivityForResult(new Intent(activity, EventListActivity.class), SettingsActivityInterface.REQUEST_MANAGE_EVENTS);
+            public boolean onPreferenceClick(Preference preference)
+            {
+                String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SOLAREVENT.name() };
+                Intent intent = new Intent(activity, EventListActivity.class);
+                intent.putExtra(EventListActivity.EXTRA_SELECTFILTER, selectableTypes);
+
+                activity.startActivityForResult(intent, SettingsActivityInterface.REQUEST_MANAGE_EVENTS);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 return false;
             }

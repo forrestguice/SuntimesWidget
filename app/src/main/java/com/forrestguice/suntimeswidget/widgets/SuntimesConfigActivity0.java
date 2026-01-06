@@ -1797,6 +1797,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Intent eventEditorIntent(Context context)
     {
         Intent intent = new Intent(context, EventListActivity.class);
+
+        String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SOLAREVENT.name() };
+        intent.putExtra(EventListActivity.EXTRA_SELECTFILTER, selectableTypes);
+
         RiseSetDataMode item = (RiseSetDataMode) spinner_timeMode.getSelectedItem();
         intent.putExtra(EventListActivity.EXTRA_SELECTED, item.name());
         return intent;

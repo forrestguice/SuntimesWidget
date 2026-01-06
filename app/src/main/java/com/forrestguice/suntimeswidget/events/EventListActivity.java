@@ -56,6 +56,7 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_LOCATION_ALTITUDE = "location_altitude";
 
     public static final String EXTRA_TYPEFILTER = EventListFragment.EXTRA_TYPEFILTER;
+    public static final String EXTRA_SELECTFILTER = EventListFragment.EXTRA_SELECTFILTER;
 
     public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";                  // degrees
     public static final String EXTRA_ADD_SHADOWLENGTH = "addEventWithShadowLength";    // meters
@@ -91,6 +92,7 @@ public class EventListActivity extends AppCompatActivity
         list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
         list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
         list.setTypeFilter(intent.getStringArrayExtra(EXTRA_TYPEFILTER));
+        list.setSelectFilter(intent.getStringArrayExtra(EXTRA_SELECTFILTER));
         list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
 
         if (intent.hasExtra(EXTRA_LOCATION))
