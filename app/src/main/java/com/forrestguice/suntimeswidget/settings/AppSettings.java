@@ -1439,7 +1439,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_systemMonet);
+            return context.getString(R.string.appThemes_lightMonet);
         }
     }
 

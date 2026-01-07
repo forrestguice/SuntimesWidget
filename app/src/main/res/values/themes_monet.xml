@@ -2,9 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Monet (System) -->
-    <style name="AppThemeBase.System.Monet" parent="AppThemeBase.System">    <!-- monet requires api31+ -->
-        <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu</item>
-    </style>
+    <style name="AppThemeBase.System.Monet" parent="AppThemeBase.System" />    <!-- monet requires api31+ -->
     <style name="AppTheme.System.Monet" parent="AppThemeBase.System.Monet">
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
@@ -120,8 +118,14 @@
         <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
         <item name="actionBarSize">@dimen/xlarge_actionbar_size</item></style>
 
-    <style name="MonetOverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/monet_menu_bg</item>
+    <style name="MonetOverflowMenu.System" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_ref</item>
+    </style>
+    <style name="MonetOverflowMenu.Dark" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_dark</item>
+    </style>
+    <style name="MonetOverflowMenu.Light" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_light</item>
     </style>
 
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="monet_primaryColor" />    <!-- monet requires api31+ -->
+<resources>    <!-- monet requires api31+ -->
+    <color name="monet_primaryColor" />
     <color name="monet_dialog_frame" />
     <color name="monet_dialog_bg" />
     <color name="monet_dialog_bg_alt" />

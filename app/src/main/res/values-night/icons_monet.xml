@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="monet_widget_bg_ref">@drawable/bg_widget_dark</drawable>
+    <drawable name="monet_popupmenu_frame_ref">@drawable/monet_popupmenu_frame_dark</drawable>
 
     <drawable name="monet_chip_ref">@drawable/monet_chip_dark</drawable>
     <drawable name="monet_chip_tray_ref">@drawable/monet_chip_tray_dark</drawable>
