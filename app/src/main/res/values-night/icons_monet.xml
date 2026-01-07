@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <drawable name="widget_bg_ref1">@drawable/bg_widget_dark</drawable>
+    <drawable name="monet_widget_bg_ref">@drawable/bg_widget_dark</drawable>
 
-    <drawable name="chip_ref1">@drawable/monet_chip_dark</drawable>
-    <drawable name="chip_tray_ref1">@drawable/monet_chip_tray_dark</drawable>
+    <drawable name="monet_chip_ref">@drawable/monet_chip_dark</drawable>
+    <drawable name="monet_chip_tray_ref">@drawable/monet_chip_tray_dark</drawable>
 
-    <drawable name="card_alarmitem_enabled_ref1">@drawable/card_alarmitem_enabled_dark0</drawable>
-    <drawable name="card_alarmitem_disabled_ref1">@drawable/card_alarmitem_disabled_dark0</drawable>
+    <drawable name="monet_card_alarmitem_enabled_ref">@drawable/card_alarmitem_enabled_dark0</drawable>
+    <drawable name="monet_card_alarmitem_disabled_ref">@drawable/card_alarmitem_disabled_dark0</drawable>
 
-    <drawable name="selectable_item_ref1">@drawable/monet_selectable_item_dark</drawable>
-    <drawable name="btn_txt_ref1">@drawable/btn_txt_dark</drawable>
-    <drawable name="btn_datetxt_ref1">@drawable/btn_datetxt_dark</drawable>
+    <drawable name="monet_selectable_item_ref">@drawable/monet_selectable_item_dark</drawable>
+    <drawable name="monet_btn_txt_ref">@drawable/btn_txt_dark</drawable>
+    <drawable name="monet_btn_datetxt_ref">@drawable/btn_datetxt_dark</drawable>
 
     <drawable name="ic_sunrise_ref1">@drawable/ic_sunrise</drawable>
     <drawable name="ic_sunrise_large_ref1">@drawable/ic_sunrise_large</drawable>

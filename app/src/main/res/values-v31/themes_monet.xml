@@ -19,18 +19,18 @@
         <item name="text_secondaryColor">@color/monet_text_secondary</item>
         <item name="text_tertiaryColor">@color/monet_text_tertiary</item>
 
-        <item name="chipBackground">@drawable/chip_ref1</item>
-        <item name="chipTrayBackground">@drawable/chip_tray_ref1</item>
+        <item name="chipBackground">@drawable/monet_chip_ref</item>
+        <item name="chipTrayBackground">@drawable/monet_chip_tray_ref</item>
 
         <item name="alarmColorEnabled">@color/monet_alarm_enabled</item>
-        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_ref1</item>
-        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_ref1</item>
+        <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_enabled_ref</item>
+        <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_disabled_ref</item>
         <item name="gridItemSelected">@color/monet_grid_selected</item>
-        <item name="selectableItemCard">@drawable/selectable_item_ref1</item>
+        <item name="selectableItemCard">@drawable/monet_selectable_item_ref</item>
 
         <item name="buttonPressColor">@color/monet_btn_tint_pressed</item>
-        <item name="text_buttonSelector">@drawable/btn_txt_ref1</item>
-        <item name="date_buttonSelector">@drawable/btn_datetxt_ref1</item>
+        <item name="text_buttonSelector">@drawable/monet_btn_txt_ref</item>
+        <item name="date_buttonSelector">@drawable/monet_btn_datetxt_ref</item>
 
         <item name="graphColor_background">@color/monet_graphColor_bg</item>
         <item name="graphColor_day">@color/monet_graphColor_day</item>
