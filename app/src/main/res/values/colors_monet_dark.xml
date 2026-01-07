@@ -28,6 +28,7 @@
     <color name="monet_dark_alarm_pressed" />
     <color name="monet_dark_alarm_enabled_bg" />
     <color name="monet_dark_alarm_disabled_bg" />
+    <color name="monet_dark_alarm_disabled_stroke" />
 
     <color name="monet_dark_grid_selected" />
     <color name="monet_dark_btn_tint_pressed" />

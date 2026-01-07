@@ -12,6 +12,6 @@
     <item android:state_enabled="false"
         android:drawable="@drawable/monet_chip_light_disabled" />
 
-    <item android:drawable="@drawable/chip_light_enabled" />
+    <item android:drawable="@drawable/monet_chip_light_enabled" />
     <item android:drawable="@drawable/monet_chip_light_enabled" />
 </selector>

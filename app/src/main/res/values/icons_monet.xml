@@ -6,8 +6,9 @@
     <drawable name="monet_chip_ref">@drawable/monet_chip_light</drawable>
     <drawable name="monet_chip_tray_ref">@drawable/monet_chip_tray_light</drawable>
 
-    <drawable name="monet_card_alarmitem_enabled_ref">@drawable/card_alarmitem_enabled_light0</drawable>
-    <drawable name="monet_card_alarmitem_disabled_ref">@drawable/card_alarmitem_disabled_light0</drawable>
+    <drawable name="monet_card_alarmitem_enabled_ref">@drawable/monet_card_alarmitem_on_light</drawable>
+    <drawable name="monet_card_alarmitem_disabled_ref">@drawable/monet_card_alarmitem_off_light</drawable>
+    <drawable name="monet_card_alarmitem_controls_ref">@drawable/monet_card_alarmitem_controls_light</drawable>
 
     <drawable name="monet_selectable_item_ref">@drawable/monet_selectable_item_light</drawable>
     <drawable name="monet_btn_txt_ref">@drawable/btn_txt_light</drawable>

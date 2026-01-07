@@ -27,6 +27,7 @@
         <item name="alarmColorEnabled">@color/monet_alarm_enabled</item>
         <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_enabled_ref</item>
         <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_disabled_ref</item>
+        <item name="alarmCardControls">@drawable/monet_card_alarmitem_controls_ref</item>
         <item name="gridItemSelected">@color/monet_grid_selected</item>
         <item name="selectableItemCard">@drawable/monet_selectable_item_ref</item>
 
@@ -100,8 +101,9 @@
         <item name="chipTrayBackground">@drawable/monet_chip_tray_dark</item>
 
         <item name="alarmColorEnabled">@color/monet_dark_alarm_enabled</item>
-        <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_enabled_ref</item>
-        <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_disabled_ref</item>
+        <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_on_dark</item>
+        <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_off_dark</item>
+        <item name="alarmCardControls">@drawable/monet_card_alarmitem_controls_dark</item>
         <item name="gridItemSelected">@color/monet_dark_grid_selected</item>
         <item name="selectableItemCard">@drawable/monet_selectable_item_ref</item>
 
@@ -175,8 +177,9 @@
         <item name="chipTrayBackground">@drawable/monet_chip_tray_light</item>
 
         <item name="alarmColorEnabled">@color/monet_light_alarm_enabled</item>
-        <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_enabled_ref</item>
-        <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_disabled_ref</item>
+        <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_on_light</item>
+        <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_off_light</item>
+        <item name="alarmCardControls">@drawable/monet_card_alarmitem_controls_light</item>
         <item name="gridItemSelected">@color/monet_light_grid_selected</item>
         <item name="selectableItemCard">@drawable/monet_selectable_item_ref</item>
 

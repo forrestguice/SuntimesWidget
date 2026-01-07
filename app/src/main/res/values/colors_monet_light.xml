@@ -28,6 +28,7 @@
     <color name="monet_light_alarm_pressed" />
     <color name="monet_light_alarm_enabled_bg" />
     <color name="monet_light_alarm_disabled_bg" />
+    <color name="monet_light_alarm_disabled_stroke" />
 
     <color name="monet_light_grid_selected" />
     <color name="monet_light_btn_tint_pressed" />
