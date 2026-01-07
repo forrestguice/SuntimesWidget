@@ -43,7 +43,7 @@
     <color name="monet_dark_graphColor_pointFill">@color/graphColor_pointFill</color>
     <color name="monet_dark_graphColor_pointStroke">@color/graphColor_pointStroke</color>
 
-    <color name="monet_dark_warningTag">@color/warningTag</color>
+    <color name="monet_dark_warningTag">@android:color/system_accent3_200</color>
     <color name="monet_dark_errorTag">@color/errorTag</color>
     <color name="monet_dark_dstTag">@android:color/system_accent1_400</color>
 
@@ -58,7 +58,7 @@
     <color name="monet_dark_fallColor">@color/fallColor</color>
     <color name="monet_dark_winterColor">@color/winterColor</color>
 
-    <color name="monet_dark_tagColor_warning">@color/warningTag</color>
+    <color name="monet_dark_tagColor_warning">@android:color/system_accent3_200</color>
     <color name="monet_dark_tagColor_error">@color/errorTag</color>
-    <color name="monet_dark_tagColor_dst">@color/dstTag</color>
+    <color name="monet_dark_tagColor_dst">@android:color/system_accent1_400</color>
 </resources>
