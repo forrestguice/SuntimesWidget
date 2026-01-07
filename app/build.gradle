@@ -29,9 +29,11 @@ android
         }
         production {
             java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
         }
         nightly {
             java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
         }
     }
 
