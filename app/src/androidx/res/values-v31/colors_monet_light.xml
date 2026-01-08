@@ -60,5 +60,5 @@
 
     <color name="monet_light_tagColor_warning">@android:color/system_accent3_600</color>
     <color name="monet_light_tagColor_error">@color/errorTag</color>
-    <color name="monet_light_tagColor_dst">@color/dstTag</color>
+    <color name="monet_light_tagColor_dst">@android:color/system_accent1_600</color>
 </resources>

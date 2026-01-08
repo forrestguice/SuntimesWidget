@@ -28,6 +28,7 @@
         <item name="alarmCardEnabled">@drawable/monet_card_alarmitem_enabled_ref</item>
         <item name="alarmCardDisabled">@drawable/monet_card_alarmitem_disabled_ref</item>
         <item name="alarmCardControls">@drawable/monet_card_alarmitem_controls_ref</item>
+        <item name="alarmCardBackdrop">@drawable/monet_card_alarmitem_backdrop_ref</item>
         <item name="gridItemSelected">@color/monet_grid_selected</item>
         <item name="selectableItemCard">@drawable/monet_selectable_item_ref</item>
 

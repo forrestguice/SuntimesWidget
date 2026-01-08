@@ -9,6 +9,7 @@
     <drawable name="monet_card_alarmitem_enabled_ref">@drawable/monet_card_alarmitem_on_dark</drawable>
     <drawable name="monet_card_alarmitem_disabled_ref">@drawable/monet_card_alarmitem_off_dark</drawable>
     <drawable name="monet_card_alarmitem_controls_ref">@drawable/monet_card_alarmitem_controls_dark</drawable>
+    <drawable name="monet_card_alarmitem_backdrop_ref">@drawable/monet_card_alarmitem_backdrop_light</drawable>
 
     <drawable name="monet_selectable_item_ref">@drawable/monet_selectable_item_dark</drawable>
     <drawable name="monet_btn_txt_ref">@drawable/btn_txt_dark</drawable>
