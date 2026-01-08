@@ -1455,6 +1455,7 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
         <item name="android:windowBackground">?attr/tileCardBackground</item>
+        <item name="colorAccent">?attr/text_accentColor</item>
     </style>
 
     <style name="LockScreenDialogAnimation">

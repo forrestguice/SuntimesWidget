@@ -74,6 +74,7 @@
         <item name="fab_backgroundColor">@color/monet_text_accent</item>
         <item name="fab_rippleColor">@color/monet_fab_ripple</item>
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.System</item>
+        <item name="tileCardBackground">@drawable/monet_tilecard_bg_ref</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_ref</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_ref</item>
     </style>
@@ -150,6 +151,7 @@
         <item name="fab_backgroundColor">@color/monet_dark_text_accent</item>
         <item name="fab_rippleColor">@color/monet_dark_fab_ripple</item>
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.Dark</item>
+        <item name="tileCardBackground">@drawable/monet_tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_dark</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_dark</item>
     </style>
@@ -226,6 +228,7 @@
         <item name="fab_backgroundColor">@color/monet_light_text_accent</item>
         <item name="fab_rippleColor">@color/monet_light_fab_ripple</item>
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.Light</item>
+        <item name="tileCardBackground">@drawable/monet_tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_light</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_light</item>
     </style>
