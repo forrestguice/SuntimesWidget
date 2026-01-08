@@ -196,6 +196,16 @@ public class ViewUtils
         }
 
         @Override
+        public boolean hasOnDismissListener() {
+            return listener.hasOnDismissListener();
+        }
+
+        @Override
+        public void onDismiss() {
+            listener.onDismiss();
+        }
+
+        @Override
         public void onUpdateMenu(Context context, Menu menu) {
             listener.onUpdateMenu(context, menu);
         }
