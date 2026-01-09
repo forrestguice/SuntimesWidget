@@ -355,14 +355,14 @@ public class EditActionView extends LinearLayout
             if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.packageName)))
             {
                 text_launchActivity.requestFocus();
-                text_launchActivity.setText(suggestion != null ? suggestion.className : (suggestion.packageName + "."));
+                text_launchActivity.setText(suggestion != null ? suggestion.className : ".");
                 text_launchActivity.setSelection(text_launchActivity.getText().length());
             }
 
             String labelText = edit_label != null ? edit_label.getText().toString() : "";
             String defaultLabel = getContext().getString(R.string.addaction_custtitle, "");
             if (edit_label != null && (labelText.trim().isEmpty() || labelText.startsWith(defaultLabel))) {
-                edit_label.setText(suggestion.label);
+                edit_label.setText(suggestion != null ? suggestion.label : "");
             }
         }
     };

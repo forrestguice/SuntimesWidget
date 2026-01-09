@@ -431,8 +431,12 @@ public class GnssStatusBarView extends GnssStatusView
             }
         }
         private int getConstellationColor(int constellation) {
-            if (constellationColors.containsKey(constellation)) {
-                return constellationColors.get(constellation);
+            if (constellationColors.containsKey(constellation))
+            {
+                Integer result = constellationColors.get(constellation);
+                if (result != null) {
+                    return result;
+                }
             }
             return Color.LTGRAY;
         }

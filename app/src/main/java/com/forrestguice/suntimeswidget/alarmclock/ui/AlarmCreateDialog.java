@@ -771,7 +771,9 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         public void onClick(View v) {
             if (getShowsDialog())
             {
-                getDialog().cancel();
+                if (getDialog() != null) {
+                    getDialog().cancel();
+                }
 
             } else if (onCanceled != null) {
                 onCanceled.onClick(getDialog(), 0);

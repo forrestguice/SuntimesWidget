@@ -360,6 +360,10 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (cacheSize > cacheLimit)
         {
             File[] cacheFiles = cacheDir.listFiles();
+            if (cacheFiles == null) {
+                return;
+            }
+
             Arrays.sort(cacheFiles, new Comparator<File>()
             {
                 public int compare(File file1, File file2)

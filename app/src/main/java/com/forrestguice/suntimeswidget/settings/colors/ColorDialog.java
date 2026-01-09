@@ -201,7 +201,9 @@ public class ColorDialog extends BottomSheetDialogBase
         {
             if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE)
             {
-                getDialog().cancel();
+                if (getDialog() != null) {
+                    getDialog().cancel();
+                }
                 if (colorDialogListener != null) {
                     colorDialogListener.onCanceled();
                 }
@@ -338,7 +340,9 @@ public class ColorDialog extends BottomSheetDialogBase
     private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
             if (colorDialogListener != null) {
                 colorDialogListener.onCanceled();
             }

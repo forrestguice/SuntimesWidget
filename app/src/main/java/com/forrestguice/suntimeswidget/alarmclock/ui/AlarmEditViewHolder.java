@@ -584,7 +584,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
 
         } else {
-            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(null, item.location));
             adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
             adjustedTime.set(Calendar.MINUTE, item.minute);
             return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + context.getString(R.string.alarmOption_solarevent_none);

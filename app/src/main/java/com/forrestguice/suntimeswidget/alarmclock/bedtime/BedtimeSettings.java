@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.util.prefs.PrefTypeInfo;
@@ -379,15 +380,15 @@ public class BedtimeSettings
                     boolean modified = false;
 
                     int filter = BedtimeConditionService.getAutomaticZenRuleFilter(context);
-                    if (rule.getInterruptionFilter() != filter) {
+                    if (rule != null && rule.getInterruptionFilter() != filter) {
                         rule.setInterruptionFilter(filter);
                         modified = true;
                     }
-                    if (rule.isEnabled() != enabled) {
+                    if (rule != null && rule.isEnabled() != enabled) {
                         rule.setEnabled(enabled);
                         modified = true;
                     }
-                    if (modified) {
+                    if (rule != null && modified) {
                         notifications.updateAutomaticZenRule(ruleId, rule);
                         Log.d("BedtimeSettings", "Updated AutomaticZenRule " + ruleId + " (" + enabled + ": " + filter + ")");
                     }
@@ -430,8 +431,10 @@ public class BedtimeSettings
                 {
                     String ruleId = rules.keySet().toArray(new String[0])[0];
                     AutomaticZenRule rule = rules.get(ruleId);
-                    Log.d("DEBUG", "rule is enabled? " + rule.isEnabled());
-                    return rule.isEnabled();
+                    if (BuildConfig.DEBUG) {
+                        Log.d("DEBUG", "rule is enabled? " + (rule != null ? rule.isEnabled() : "null"));
+                    }
+                    return (rule != null && rule.isEnabled());
 
                 } else return false;
             } else return false;

@@ -1123,7 +1123,9 @@ public class SuntimesActivity extends AppCompatActivity
                 if (locations[0] != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
-                    getSupportActionBar().setSubtitle(location.toString());
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setSubtitle(location.toString());
+                    }
                 }
             }
 
@@ -1133,7 +1135,9 @@ public class SuntimesActivity extends AppCompatActivity
                 if (progress[0] != null && progress[0].getResult() != null)
                 {
                     com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
-                    getSupportActionBar().setSubtitle(location.toString());
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setSubtitle(location.toString());
+                    }
                 }
             }
 
@@ -1151,8 +1155,10 @@ public class SuntimesActivity extends AppCompatActivity
                 refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
                 if (refreshItem != null)
                 {
-                    getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
-                    getSupportActionBar().setSubtitle("");
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
+                        getSupportActionBar().setSubtitle("");
+                    }
                     refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
                 }
             }
@@ -2447,7 +2453,9 @@ public class SuntimesActivity extends AppCompatActivity
     public void showSunPositionAtSelected()
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
-        showSunPositionAt(data.first.dataNoon.calendar().getTimeInMillis());
+        if (data != null) {
+            showSunPositionAt(data.first.dataNoon.calendar().getTimeInMillis());
+        }
     }
 
     /**

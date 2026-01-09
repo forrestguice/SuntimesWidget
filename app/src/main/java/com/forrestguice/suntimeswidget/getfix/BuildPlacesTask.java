@@ -518,7 +518,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     public void onClick(View v)
                     {
                         ListView list = AlertDialog.getListView(dialog);
-                        for (int i=0; i<list.getCount(); i++)
+                        int n = (list != null ? list.getCount() : 0);
+                        for (int i=0; i<n; i++)
                         {
                             list.setItemChecked(i, true);
                             checked[i] = true;
