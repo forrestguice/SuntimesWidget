@@ -762,11 +762,11 @@ public class LightGraphDialog extends BottomSheetDialogBase
                 return true;
 
             } else if (itemId == R.id.action_share) {
-                shareItem(getContext(), null);
+                shareItem(context, null);
                 return true;
 
             } else if (itemId == R.id.action_help) {
-                showHelp(getContext());
+                showHelp(context);
                 return true;
             }
             return false;

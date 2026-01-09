@@ -57,8 +57,8 @@ public class ColorPickerFragment extends DialogBase
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        colorViewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
-        colorViewModel.color.observe(getActivity(), onViewModelColorChanged);
+        colorViewModel = ViewModelProviders.of(requireActivity()).get(ColorPickerModel.class);
+        colorViewModel.color.observe(requireActivity(), onViewModelColorChanged);
         return null;
     }
     

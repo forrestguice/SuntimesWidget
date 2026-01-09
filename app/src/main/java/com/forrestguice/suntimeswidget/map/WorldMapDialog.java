@@ -148,18 +148,19 @@ public class WorldMapDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
         initColors(contextWrapper);
 
-        initLocale(getContext());
-        initViews(getContext(), dialogContent);
+        initLocale(context);
+        initViews(context, dialogContent);
         if (savedState != null)
         {
             Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
-            worldmap.loadSettings(getContext(), savedState);
+            worldmap.loadSettings(context, savedState);
         }
-        themeViews(dialogContent.getContext());
+        themeViews(context);
 
         return dialogContent;
     }

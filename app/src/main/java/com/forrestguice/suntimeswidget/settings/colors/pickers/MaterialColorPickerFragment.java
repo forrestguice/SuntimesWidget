@@ -48,7 +48,7 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
     {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        materialColorModel = ViewModelProviders.of(getActivity()).get(MaterialColorPickerModel.class);
+        materialColorModel = ViewModelProviders.of(requireActivity()).get(MaterialColorPickerModel.class);
 
         View view = inflater.inflate(R.layout.layout_colors_material, container, false);
         initViews(getContext(), view);

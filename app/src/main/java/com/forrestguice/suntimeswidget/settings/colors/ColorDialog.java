@@ -136,11 +136,11 @@ public class ColorDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        Context context = getContext();
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireActivity();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerFragment.ColorPickerModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(ColorPickerFragment.ColorPickerModel.class);
         viewModel.setColor(getArgs().getInt(KEY_COLOR));
         viewModel.setColorUnder(getArgs().getInt(KEY_COLOR_UNDER));
         viewModel.setColorOver(getArgs().getInt(KEY_COLOR_OVER));
@@ -153,7 +153,7 @@ public class ColorDialog extends BottomSheetDialogBase
             setShowAlpha(savedState.getBoolean(KEY_SHOWALPHA, showAlpha()));
             setRecentColors(savedState.getIntegerArrayList(KEY_RECENT));
         }
-        initViews(getActivity(), dialogContent);
+        initViews(context, dialogContent);
 
         SharedPreferences prefs = context.getSharedPreferences(PREFS_COLORDIALOG, Context.MODE_PRIVATE);
         colorPager.setCurrentItem(prefs.getInt(KEY_COLORPICKER, 0));

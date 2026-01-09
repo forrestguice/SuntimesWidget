@@ -93,7 +93,7 @@ public class BedtimeSleepDialog extends DialogBase
         super.onCreate(savedInstanceState);
         SuntimesUtils.initDisplayStrings(getActivity());
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_sleepcycle, null);   // TODO

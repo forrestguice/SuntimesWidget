@@ -80,8 +80,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState)
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
-        View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
-        editViewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
+        View content = inflater.cloneInContext(requireActivity()).inflate(R.layout.fragment_colorsheet, container, false);
+        editViewModel = ViewModelProviders.of(requireActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }

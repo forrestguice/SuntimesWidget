@@ -45,7 +45,7 @@ public class IntegerPickerDialog extends DialogBase
     {
         initHelper();
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
         {
             @Override
@@ -76,7 +76,7 @@ public class IntegerPickerDialog extends DialogBase
             });
         }
 
-        View dialogView = helper.createDialogView(getActivity());
+        View dialogView = helper.createDialogView(requireActivity());
         dialog.setView(dialogView);
         helper.onBindDialogView(dialogView);
 

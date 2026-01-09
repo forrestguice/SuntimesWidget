@@ -202,12 +202,12 @@ public class LightMapDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
         initColors(contextWrapper);
 
-        SuntimesUtils.initDisplayStrings(getActivity());
-        WidgetSettings.initDisplayStrings_SolarTimeMode(getActivity());
+        SuntimesUtils.initDisplayStrings(requireActivity());
+        WidgetSettings.initDisplayStrings_SolarTimeMode(requireActivity());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
             //Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
@@ -2151,11 +2151,11 @@ public class LightMapDialog extends BottomSheetDialogBase
 
                 int itemId = item.getItemId();
                 if (itemId == R.id.action_seek_shadowlength) {
-                    showShadowSeekPopup(getActivity(), sunShadowObj);
+                    showShadowSeekPopup(context, sunShadowObj);
                     return true;
 
                 } else if (itemId == R.id.action_observerheight) {
-                    showShadowObjHeightPopup(getActivity(), sunShadowObj);
+                    showShadowObjHeightPopup(context, sunShadowObj);
                     return true;
                 }
                 return false;

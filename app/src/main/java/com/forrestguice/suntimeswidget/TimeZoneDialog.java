@@ -557,7 +557,8 @@ public class TimeZoneDialog extends BottomSheetDialogBase
             else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
             if (timezoneMode == TimezoneMode.CUSTOM_TIMEZONE) {
-                customTimezoneID = WidgetSettings.loadTimezonePref(getContext(), appWidgetId, SLOT_CUSTOM0);
+                Context context = getContext();
+                customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, SLOT_CUSTOM0);
             }
             setUseCustomTimezone((timezoneMode == TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == TimezoneMode.SOLAR_TIME));

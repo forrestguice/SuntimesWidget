@@ -81,9 +81,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState)
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
-        View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
+        View content = inflater.cloneInContext(requireActivity()).inflate(R.layout.fragment_colorvalues, container, false);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(ColorValuesEditViewModel.class);
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
@@ -100,7 +100,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             cancelButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onCancelButtonClicked));
         }
 
-        adapter = new ColorValuesEditViewAdapter(getActivity(), colorValues);
+        adapter = new ColorValuesEditViewAdapter(requireActivity(), colorValues);
         adapter.setFilter(getFilter());
         adapter.setAdapterListener(new ColorValuesEditViewAdapter.AdapterListener()
         {
@@ -111,7 +111,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         });
 
         panel = (RecyclerView) content.findViewById(R.id.colorPanel);
-        panel.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+        panel.setLayoutManager(new GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false));
         panel.setAdapter(adapter);
         panel.scrollToPosition(0);
 

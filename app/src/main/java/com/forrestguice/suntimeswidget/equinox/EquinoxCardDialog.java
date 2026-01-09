@@ -133,7 +133,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper context = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
 
@@ -178,13 +178,13 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
 
         initCardView(context, v);
 
-        options.trackingMode = WidgetSettings.loadTrackingModePref(getContext(), 0);
+        options.trackingMode = WidgetSettings.loadTrackingModePref(context, 0);
         if (savedState != null) {
             loadState(savedState);
         }
 
         themeViews(context);
-        updateViews(getContext(), card_adapter.initData(getContext(), EquinoxDataAdapter.CENTER_POSITION));
+        updateViews(context, card_adapter.initData(context, EquinoxDataAdapter.CENTER_POSITION));
         return v;
     }
 

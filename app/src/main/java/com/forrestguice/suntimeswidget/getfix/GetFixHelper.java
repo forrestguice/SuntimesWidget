@@ -462,7 +462,7 @@ public class GetFixHelper implements LocationHelper
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
-            final Activity context = getActivity();
+            final Activity context = requireActivity();
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(context.getString(R.string.gps_keeptrying_msg))
                     .setCancelable(false)

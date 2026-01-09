@@ -853,18 +853,19 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     protected PlaceItem createPlaceItem(PlaceItem item0)
     {
+        Context context = getActivity();
         PlaceItem item = new PlaceItem();
         if (item0 != null)
         {
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
-                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == LengthUnit.METRIC);
+                    WidgetSettings.loadLengthUnitsPref(context, 0) == LengthUnit.METRIC);
             item.comment = (text_locationComment != null ? text_locationComment.getText().toString() : item0.comment);
 
         } else {
             item.rowID = -1;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
-                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == LengthUnit.METRIC);
+                    WidgetSettings.loadLengthUnitsPref(context, 0) == LengthUnit.METRIC);
             item.comment = (text_locationComment != null ? text_locationComment.getText().toString() : "");
         }
         return item;

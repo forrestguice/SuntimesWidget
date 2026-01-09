@@ -82,11 +82,12 @@ public class EquinoxDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
+        Context context = requireActivity();
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_equinox, parent, false);
 
         equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
-        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(getContext(), 0));
+        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(context, 0));
         if (savedState != null)
         {
             //Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
@@ -97,14 +98,20 @@ public class EquinoxDialog extends BottomSheetDialogBase
         {
             @Override
             public void onMenuClick(View v, int position) {
-                showOverflowMenu(getContext(), v);
+                Context context = getContext();
+                if (context != null) {
+                    showOverflowMenu(context, v);
+                }
             }
             @Override
             public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime) {
-                showContextMenu(getContext(), v, mode, datetime);
+                Context context = getContext();
+                if (context != null) {
+                    showContextMenu(context, v, mode, datetime);
+                }
             }
         });
-        themeViews(getContext());
+        themeViews(context);
 
         if (overrideColumnWidthPx >= 0) {
             equinoxView.adjustColumnWidth(overrideColumnWidthPx);
@@ -264,11 +271,17 @@ public class EquinoxDialog extends BottomSheetDialogBase
         {
             int itemId = item.getItemId();
             if (itemId == R.id.trackRecent || itemId == R.id.trackClosest || itemId == R.id.trackUpcoming) {
-                onTrackingModeChanged(getContext(), item.getItemId());
+                Context context = getContext();
+                if (context != null) {
+                    onTrackingModeChanged(context, item.getItemId());
+                }
                 return true;
 
             } else if (itemId == R.id.action_help) {
-                showHelp(getContext());
+                Context context = getContext();
+                if (context != null) {
+                    showHelp(context);
+                }
                 return true;
             }
             return false;

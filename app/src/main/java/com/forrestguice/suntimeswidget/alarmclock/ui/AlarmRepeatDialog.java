@@ -88,7 +88,7 @@ public class AlarmRepeatDialog extends DialogBase
     {
         super.onCreate(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmrepeat, null);

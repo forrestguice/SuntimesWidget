@@ -48,7 +48,7 @@ public class TimeOffsetPickerDialog extends DialogBase
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
         SuntimesUtils.initDisplayStrings(getContext());
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
         {
             @Override
