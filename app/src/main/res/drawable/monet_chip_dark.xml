@@ -13,5 +13,4 @@
         android:drawable="@drawable/monet_chip_dark_disabled" />
 
     <item android:drawable="@drawable/monet_chip_dark_enabled" />
-    <item android:drawable="@drawable/monet_chip_dark_enabled" />
 </selector>
