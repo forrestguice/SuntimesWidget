@@ -55,7 +55,7 @@ public class SuntimesAlarmsProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY(), QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
     }
 
-    private static final String AUTHORITY() {
+    private static String AUTHORITY() {
         return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".alarm.provider";
     }
 

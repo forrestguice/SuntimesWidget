@@ -603,7 +603,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     }
 
-    private final PopupMenuCompat.PopupMenuListener onContextMenuClick(final SolsticeEquinoxMode mode, final long datetime)
+    private PopupMenuCompat.PopupMenuListener onContextMenuClick(final SolsticeEquinoxMode mode, final long datetime)
     {
         return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
