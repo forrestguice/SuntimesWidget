@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Date;
@@ -90,6 +91,7 @@ public class NoteData
         return hash;
     }
 
+    @NonNull
     @Override
     public String toString()
     {

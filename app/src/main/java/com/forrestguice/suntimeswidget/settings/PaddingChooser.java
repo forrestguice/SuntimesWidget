@@ -27,6 +27,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 
+import com.forrestguice.annotation.NonNull;
+
 public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
 {
     private final int[] padding = new int[4];
@@ -126,6 +128,7 @@ public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
         edit.setText(toString());
     }
 
+    @NonNull
     public String toString()
     {
         return "" + brackets[0] + padding[0] + separator + padding[1] + separator + padding[2] + separator + padding[3] + brackets[1];

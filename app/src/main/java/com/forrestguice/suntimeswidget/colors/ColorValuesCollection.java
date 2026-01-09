@@ -304,6 +304,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
         return "colors_";
     }
 
+    @NonNull
     @Override
     public String toString()
     {

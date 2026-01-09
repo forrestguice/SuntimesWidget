@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
@@ -222,8 +223,8 @@ public class Location implements Serializable
     /**
      * @return a decimal degrees string "latitude, longitude" describing this location
      */
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return latitude + ", " + longitude;
     }
 

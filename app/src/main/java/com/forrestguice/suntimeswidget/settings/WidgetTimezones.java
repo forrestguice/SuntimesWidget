@@ -230,6 +230,7 @@ public class WidgetTimezones
             return rawOffsetHr;
         }
 
+        @NonNull
         public String toString()
         {
             return timeZoneID + " (" + getOffsetString() + " " + displayString + ")";

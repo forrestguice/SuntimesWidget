@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -117,6 +118,7 @@ public class TimeZones
             return false;
         }
 
+        @NonNull
         @Override
         public String toString()
         {

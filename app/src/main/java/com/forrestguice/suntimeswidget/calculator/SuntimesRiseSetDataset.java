@@ -543,6 +543,7 @@ public class SuntimesRiseSetDataset
         } else return new Calendar[] { null, null };
     }
 
+    @NonNull
     @Override
     public String toString()
     {

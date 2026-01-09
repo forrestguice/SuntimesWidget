@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 public interface RiseSetDataMode
@@ -25,5 +26,6 @@ public interface RiseSetDataMode
     @Nullable
     TimeMode getTimeMode();
     String name();
+    @NonNull
     String toString();
 }

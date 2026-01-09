@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 /**
@@ -185,6 +186,7 @@ public class AlarmState implements Parcelable
         return false;
     }
 
+    @NonNull
     public String toString()
     {
         return "" + state;

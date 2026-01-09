@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
@@ -250,6 +251,7 @@ public enum SolarEvents
             return hash;
         }
 
+        @NonNull
         public String toString()
         {
             return event + " " + (tomorrow ? "tomorrow" : "today");

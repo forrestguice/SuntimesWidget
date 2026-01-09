@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -44,6 +45,7 @@ public class EventAliasTimeMode implements RiseSetDataMode
         return event.getID();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return event.getLabel();
