@@ -19,11 +19,13 @@
             android:gravity="center"
             android:background="@color/grey_900" android:textColor="@color/teal_500"
             android:textSize="?attr/text_size_small"
-            android:text="@string/configLabel_themeColorText" />
+            android:text="@string/configLabel_themeColorText"
+            tools:ignore="InconsistentLayout" />
 
         <View android:id="@+id/preview_color"
             android:layout_width="match_parent" android:layout_height="0dp"  android:layout_weight="1"
-            android:background="@color/teal_500" />
+            android:background="@color/teal_500"
+            tools:ignore="InconsistentLayout" />
 
         <TextView android:id="@+id/preview_color_text1"
             android:layout_width="@dimen/large_actionbar_size" android:layout_height="wrap_content"
@@ -32,7 +34,8 @@
             android:gravity="center"
             android:background="@color/teal_500" android:textColor="@color/grey_900"
             android:textSize="?attr/text_size_small"
-            android:text="@string/configLabel_themeColorText" />
+            android:text="@string/configLabel_themeColorText"
+            tools:ignore="InconsistentLayout" />
 
     </LinearLayout>
 

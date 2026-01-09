@@ -86,7 +86,7 @@
     <EditText android:id="@+id/appwidget_location_comment"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:hint="@string/configLabel_location_comment" android:textSize="?attr/text_size_small"
-        android:inputType="textNoSuggestions" android:enabled="false"
+        android:inputType="textNoSuggestions"
         android:minLines="2" tools:text="comment here"
         android:layout_row="3"
         android:layout_column="0" android:layout_columnSpan="5" />
