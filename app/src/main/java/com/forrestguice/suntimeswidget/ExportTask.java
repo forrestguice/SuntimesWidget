@@ -387,10 +387,12 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         long result = 0;
         if (dir != null && dir.exists())
         {
-            for (File file : dir.listFiles())
-            {
-                result += (file.isDirectory()) ? cacheSize(file)
-                        : file.length();
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    result += (file.isDirectory()) ? cacheSize(file)
+                            : file.length();
+                }
             }
         }
         return result;

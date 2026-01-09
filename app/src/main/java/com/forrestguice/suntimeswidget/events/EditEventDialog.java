@@ -950,14 +950,18 @@ public class EditEventDialog extends EditBottomSheetDialog
             AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            getDialog().cancel();
+                            if (getDialog() != null) {
+                                getDialog().cancel();
+                            }
                         }
                     })
                     .setNegativeButton(context.getString(R.string.discardchanges_dialog_cancel), null);
             confirm.show();
 
         } else {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     }
 

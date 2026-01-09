@@ -162,7 +162,8 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        Window w = getDialog().getWindow();
+        Dialog d = getDialog();
+        Window w = (d != null ? d.getWindow() : null);
         if (w != null) {
             w.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         }

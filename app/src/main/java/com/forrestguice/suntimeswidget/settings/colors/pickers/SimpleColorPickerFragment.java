@@ -115,12 +115,14 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL)
             {
-                ColorChooser.HexColorTextWatcher hexWatcher = (ColorChooser.HexColorTextWatcher) onTextChanged.get(edit_hex);
                 StringBuilder value = new StringBuilder(edit_hex.getText().toString());
                 while (value.length() < (showAlpha() ? 9 : 7)) {
                     value.append("F");
                 }
-                hexWatcher.onValueChanged(value.toString());
+                ColorChooser.HexColorTextWatcher hexWatcher = (ColorChooser.HexColorTextWatcher) onTextChanged.get(edit_hex);
+                if (hexWatcher != null) {
+                    hexWatcher.onValueChanged(value.toString());
+                }
             }
             return true;
         }

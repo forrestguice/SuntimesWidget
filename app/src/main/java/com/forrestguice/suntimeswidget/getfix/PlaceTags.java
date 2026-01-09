@@ -112,7 +112,8 @@ public class PlaceTags
             String tag0 = tag.trim() + "]";
             if (tagMap.containsKey(tag0))
             {
-                String[] a = tagMap.get(tag0).split(",");
+                String s0 = tagMap.get(tag0);
+                String[] a = (s0 != null ? s0.split(",") : new String[0]);
                 for (String v : a)
                 {
                     String expanded = "[" + v.trim() + "]";
@@ -129,7 +130,8 @@ public class PlaceTags
 
                 if (tagMap.containsKey(tag1))
                 {
-                    String[] a = tagMap.get(tag1).split(",");
+                    String s1 = tagMap.get(tag1);
+                    String[] a = (s1 != null ? s1.split(",") : new String[0]);
                     for (String v : a)
                     {
                         String expanded = "[" + v.trim() + "]";

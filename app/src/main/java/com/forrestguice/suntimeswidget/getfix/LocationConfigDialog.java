@@ -416,7 +416,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     });
 

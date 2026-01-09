@@ -291,7 +291,9 @@ public class TimeDateDialog extends BottomSheetDialogBase
     protected View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     };
 

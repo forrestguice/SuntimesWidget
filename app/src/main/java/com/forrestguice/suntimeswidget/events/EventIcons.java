@@ -205,7 +205,7 @@ public class EventIcons
             eventIcon = eventIcon.mutate();
         }
 
-        if (tint != null) {
+        if (eventIcon != null && tint != null) {
             tintDrawable(eventIcon, tint);
         }
 
@@ -213,7 +213,7 @@ public class EventIcons
             eventIcon = new InsetDrawable(eventIcon, inset, inset, inset, inset);
         }
 
-        if (width > 0 && height > 0 && scale[0] > 0 && scale[1] > 0) {
+        if (eventIcon != null && width > 0 && height > 0 && scale[0] > 0 && scale[1] > 0) {
             eventIcon.setBounds(0, 0, (int)(scale[0] * width), (int)(scale[1] * height));
         }
 

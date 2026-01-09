@@ -989,7 +989,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     {
         if (getShowsDialog())
         {
-            Window window = getDialog().getWindow();
+            Dialog d = getDialog();
+            Window window = (d != null ? d.getWindow() : null);
             if (window != null) {
                 View decorView = window.getDecorView().findViewById(DialogBase.getTouchOutsideResourceID());
                 decorView.setOnClickListener(null);
