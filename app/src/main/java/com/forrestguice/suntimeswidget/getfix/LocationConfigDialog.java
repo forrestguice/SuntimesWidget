@@ -58,7 +58,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
     protected ImageButton btn_accept, btn_cancel;
 
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    public void onInflate(@NonNull Activity activity, @NonNull AttributeSet attrs, Bundle savedInstanceState)
     {
         super.onInflate(activity, attrs, savedInstanceState);
 

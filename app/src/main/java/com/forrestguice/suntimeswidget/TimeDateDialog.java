@@ -298,7 +298,7 @@ public class TimeDateDialog extends BottomSheetDialogBase
     };
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);

@@ -237,12 +237,12 @@ public class AlarmListDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.alarmlist, menu);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu)
+    public void onPrepareOptionsMenu(@NonNull Menu menu)
     {
         MenuItem selectedItem;
         switch (AlarmSettings.loadPrefAlarmSort(getActivity())) {

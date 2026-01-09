@@ -258,7 +258,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         return dialog;
     }
 
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    public void onInflate(@NonNull Activity activity, @NonNull AttributeSet attrs, Bundle savedInstanceState)
     {
         super.onInflate(activity, attrs, savedInstanceState);
         TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.TimeZoneConfigDialog);
@@ -962,7 +962,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     });
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);

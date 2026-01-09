@@ -242,7 +242,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState ) {
+    public void onSaveInstanceState( @NonNull Bundle outState ) {
         super.onSaveInstanceState(outState);
     }
 
@@ -529,7 +529,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    protected boolean onPrepareOptionsPanel(View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
 

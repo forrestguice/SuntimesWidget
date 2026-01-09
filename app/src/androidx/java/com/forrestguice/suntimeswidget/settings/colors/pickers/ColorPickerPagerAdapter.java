@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 
 /**
@@ -43,6 +44,7 @@ public class ColorPickerPagerAdapter extends FragmentStatePagerAdapter
     }
     protected AdapterListener adapterListener = null;
 
+    @NonNull
     @Override
     public Fragment getItem(int position)
     {

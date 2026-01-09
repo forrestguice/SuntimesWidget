@@ -371,7 +371,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
 
     @Override
-    public void onSaveInstanceState( Bundle bundle )
+    public void onSaveInstanceState( @NonNull Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
         bundle.putParcelable("alarmItem", this.alarm);

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget;
 
+import com.forrestguice.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,7 @@ public class AboutPagerAdapter extends FragmentPagerAdapter
         super(activity.getSupportFragmentManager());
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position)
     {

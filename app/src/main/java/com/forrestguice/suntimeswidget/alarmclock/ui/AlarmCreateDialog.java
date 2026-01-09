@@ -780,7 +780,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
     });
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);
@@ -788,7 +788,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog)
+    public void onDismiss(@NonNull DialogInterface dialog)
     {
         super.onDismiss(dialog);
         saveSettings(getActivity());

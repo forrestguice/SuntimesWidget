@@ -716,7 +716,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     };
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         cancelGetFix();
         dismiss();

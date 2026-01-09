@@ -524,7 +524,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         //if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
         //    return true;

@@ -1327,7 +1327,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      * @param outState Bundle
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         outState.putString(THEME_NAME, chooseName.getThemeName());

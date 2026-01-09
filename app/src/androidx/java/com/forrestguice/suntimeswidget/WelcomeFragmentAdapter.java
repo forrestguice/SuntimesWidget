@@ -22,6 +22,7 @@ import android.content.Context;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.support.app.AppCompatActivity;
 
@@ -78,6 +79,7 @@ public class WelcomeFragmentAdapter extends FragmentPagerAdapter
         });
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position)
     {
