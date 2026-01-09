@@ -601,6 +601,7 @@ public class AlarmDatabaseAdapter
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
+        @SuppressWarnings("ConstantConditions")
         @Override
         public void onCreate(SQLiteDatabase db)
         {
