@@ -423,7 +423,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     });
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         dialogContent.cancelGetFix();
         dismiss();

@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 
@@ -52,7 +53,7 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
     protected HashMap<SeekBar, SeekBar.OnSeekBarChangeListener> onSeekBarChanged = new HashMap<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_colors_simple, container, false);

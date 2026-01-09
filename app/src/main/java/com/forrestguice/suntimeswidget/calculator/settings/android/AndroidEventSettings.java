@@ -1,5 +1,6 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
@@ -39,7 +40,7 @@ public class AndroidEventSettings implements EventSettingsInterface
     }
 
     @Override
-    public EventAlias saveEvent(EventType type, String id, String label, Integer color, String uri) {
+    public EventAlias saveEvent(@NonNull EventType type, String id, String label, Integer color, @NonNull String uri) {
         return EventSettings.saveEvent(this, type, id, label, color, uri);
     }
 
@@ -74,22 +75,22 @@ public class AndroidEventSettings implements EventSettingsInterface
     }
 
     @Override
-    public String loadEventValue(String id, String key) {
+    public String loadEventValue(@NonNull String id, String key) {
         return EventSettings.loadEventValue(this, id, key);
     }
 
     @Override
-    public boolean loadEventFlag(String id, String key) {
+    public boolean loadEventFlag(@NonNull String id, @NonNull String key) {
         return EventSettings.loadEventFlag(this, id, key);
     }
 
     @Override
-    public void saveEventFlag(String id, String key, boolean value) {
+    public void saveEventFlag(@NonNull String id, @NonNull String key, boolean value) {
         EventSettings.saveEventFlag(this, id, key, value);
     }
 
     @Override
-    public EventAlias loadEvent(String id) {
+    public EventAlias loadEvent(@NonNull String id) {
         return EventSettings.loadEvent(this, id);
     }
 
@@ -99,37 +100,37 @@ public class AndroidEventSettings implements EventSettingsInterface
     }
 
     @Override
-    public void deleteEvent(String id) {
+    public void deleteEvent(@NonNull String id) {
         EventSettings.deleteEvent(this, id);
     }
 
     @Override
-    public boolean hasEvent(String id) {
+    public boolean hasEvent(@NonNull String id) {
         return EventSettings.hasEvent(this, id);
     }
 
     @Override
-    public boolean isShown(String id) {
+    public boolean isShown(@NonNull String id) {
         return EventSettings.isShown(this, id);
     }
 
     @Override
-    public void setShown(String id, boolean value) {
+    public void setShown(@NonNull String id, boolean value) {
         EventSettings.setShown(this, id, value);
     }
 
     @Override
-    public String getEventUriLastPathSegment(String id) {
+    public String getEventUriLastPathSegment(@NonNull String id) {
         return EventSettings.getEventUriLastPathSegment(this, id);
     }
 
     @Override
-    public int getColor(String id) {
+    public int getColor(@NonNull String id) {
         return EventSettings.getColor(this, id);
     }
 
     @Override
-    public EventType getType(String id) {
+    public EventType getType(@NonNull String id) {
         return EventSettings.getType(this, id);
     }
 
