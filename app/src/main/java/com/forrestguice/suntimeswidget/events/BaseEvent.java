@@ -5,8 +5,6 @@ import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.util.Resources;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
-
 public abstract class BaseEvent
 {
     public BaseEvent(int offset) {

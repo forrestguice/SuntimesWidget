@@ -61,7 +61,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE_GENDER;

@@ -27,7 +27,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
 
 import com.forrestguice.annotation.NonNull;

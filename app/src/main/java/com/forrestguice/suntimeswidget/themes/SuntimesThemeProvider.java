@@ -35,7 +35,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.util.HashMap;
 
-import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES_PROJECTION;

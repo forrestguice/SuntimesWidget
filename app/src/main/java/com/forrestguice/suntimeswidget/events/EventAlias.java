@@ -25,8 +25,6 @@ import com.forrestguice.util.Log;
 
 import java.util.concurrent.Callable;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
-
 public final class EventAlias
 {
     public EventAlias(@NonNull EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)

@@ -53,8 +53,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
-
 public class EditEventDialog extends EditBottomSheetDialog
 {
     public static final String ARG_DIALOGMODE = "dialogMode";

@@ -36,7 +36,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import java.util.HashMap;
 import java.util.Set;
 
-import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_ACTION;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_CLASS;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_COLOR;

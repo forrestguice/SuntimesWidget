@@ -32,7 +32,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 
-import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMS;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMSTATE;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMSTATE_PROJECTION;
