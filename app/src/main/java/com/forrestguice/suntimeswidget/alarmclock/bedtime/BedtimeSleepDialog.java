@@ -143,7 +143,9 @@ public class BedtimeSleepDialog extends DialogBase
                 @Override
                 public void onShow(DialogInterface dialog) {
                     Button button = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
-                    button.setOnClickListener(onHelpButtonClicked);
+                    if (button != null) {
+                        button.setOnClickListener(onHelpButtonClicked);
+                    }
                 }
             });
         }

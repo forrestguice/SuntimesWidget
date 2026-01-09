@@ -33,6 +33,7 @@ import android.os.Build;
 import android.util.Log;
 import com.forrestguice.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.forrestguice.annotation.NonNull;
@@ -526,7 +527,10 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                         }
                     }
                 };
-                AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(toggleListener);
+                }
             }
         });
         d.show();

@@ -873,7 +873,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            onCancel(getDialog());
+            if (getDialog() != null) {
+                onCancel(getDialog());
+            }
         }
     };
 

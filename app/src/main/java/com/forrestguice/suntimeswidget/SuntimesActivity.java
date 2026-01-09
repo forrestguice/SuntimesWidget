@@ -2782,13 +2782,15 @@ public class SuntimesActivity extends AppCompatActivity
      * Get the current theme's resource id (used by test verification).
      * @return the resource id of the current theme/style (or 0 if getTHemeResId failed)
      */
+    @Deprecated
     public int getThemeId()
     {
         try {
             //noinspection JavaReflectionMemberAccess
             Method method = Context.class.getMethod("getThemeResId");
             method.setAccessible(true);
-            return (Integer) method.invoke(this);
+            Integer result = (Integer) method.invoke(this);
+            return (result != null ? result : 0);
 
         } catch (Exception e) {
             Log.e("getThemeId", "Failed to get theme ID");

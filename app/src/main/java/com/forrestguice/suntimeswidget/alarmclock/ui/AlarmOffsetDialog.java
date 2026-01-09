@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.NumberPicker;
 
 import com.forrestguice.annotation.NonNull;
@@ -109,18 +110,21 @@ public class AlarmOffsetDialog extends DialogBase
             @Override
             public void onShow(DialogInterface d)
             {
-                AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v) {
-                        if (offset == 0) {
-                            dialog.dismiss();
-                            if (onAccepted != null) {
-                                onAccepted.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                            }
-                        } else setOffset(0);
-                    }
-                });
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            if (offset == 0) {
+                                dialog.dismiss();
+                                if (onAccepted != null) {
+                                    onAccepted.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                }
+                            } else setOffset(0);
+                        }
+                    });
+                }
             }
         });
 

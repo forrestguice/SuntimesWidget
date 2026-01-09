@@ -432,7 +432,9 @@ public class ColorChooser implements View.OnFocusChangeListener
         } else {
             Log.w("showColorPicker", "fragmentManager is null; showing fallback ...");
             Dialog dialog = colorDialog.getDialog();
-            dialog.show();
+            if (dialog != null) {
+                dialog.show();
+            } else Log.w("showColorPicker", "dialog is null! unable to show fallback...");
         }
     }
 
