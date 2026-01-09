@@ -305,7 +305,7 @@ public class ColorDialog extends BottomSheetDialogBase
             btn_accept.setOnClickListener(onDialogAcceptClick);
         }
 
-        viewModel.color.observe(getActivity(), new Observer<Integer>()
+        viewModel.color.observe(requireActivity(), new Observer<Integer>()
         {
             @Override
             public void onChanged(@Nullable Integer value)

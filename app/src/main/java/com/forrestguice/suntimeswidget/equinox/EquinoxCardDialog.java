@@ -554,6 +554,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         public void requestExpandSheet() {}
         public void onModeChanged(int mode) {}
 
+        @SuppressWarnings("ConstantConditions")
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
@@ -671,11 +672,11 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
                     return true;
 
                 } else if (itemId == R.id.action_calendar) {
-                    openCalendar(getActivity(), itemTime);
+                    openCalendar(context, itemTime);
                     return true;
 
                 } else if (itemId == R.id.action_share) {
-                    shareItem(getContext(), itemData);
+                    shareItem(context, itemData);
                     return true;
                 }
                 return false;

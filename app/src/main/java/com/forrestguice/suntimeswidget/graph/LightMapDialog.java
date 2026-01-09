@@ -788,7 +788,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                 return true;
 
             } else if (itemId == R.id.action_seek_shadowlength) {
-                showShadowSeekPopup(getActivity(), sunShadowObj);
+                showShadowSeekPopup(context, sunShadowObj);
                 return true;
 
             } else if (itemId == R.id.action_seekdate) {
@@ -838,7 +838,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                 return true;
 
             } else if (itemId == R.id.action_help) {
-                showHelp(getContext());
+                showHelp(context);
                 return true;
             }
             return false;
@@ -1882,10 +1882,11 @@ public class LightMapDialog extends BottomSheetDialogBase
         public void afterTextChanged(Editable s)
         {
             try {
+                Context context = getActivity();
                 float value = Float.parseFloat(s.toString());
-                LengthUnit units = WidgetSettings.loadLengthUnitsPref(getActivity(), 0);
+                LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                 float meters = (units == LengthUnit.METRIC) ? value : (float) LengthUnit.feetToMeters(value);
-                WidgetSettings.saveObserverHeightPref(getActivity(), 0, meters);
+                WidgetSettings.saveObserverHeightPref(context, 0, meters);
                 updateViews();
 
             } catch (NumberFormatException e) {

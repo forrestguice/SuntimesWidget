@@ -125,6 +125,7 @@ public class ColorActivity extends AppCompatActivity
                 color = Color.parseColor("#" + data.getFragment());
 
             } catch (IllegalArgumentException e) {
+                //noinspection ConstantConditions
                 color = Color.WHITE;
                 Log.e("ColorActivity", e.toString());
             }

@@ -34,6 +34,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -606,7 +607,10 @@ public class MoonDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v) {
             //showMediaMenu(getActivity(), v);
-            showMediaPopup(getActivity(), text_dialogTimeOffset);
+            Context context = getActivity();
+            if (context != null) {
+                showMediaPopup(context, text_dialogTimeOffset);
+            }
         }
     };
     private final View.OnLongClickListener currentphase_onLongClickListener = new View.OnLongClickListener() {
@@ -765,13 +769,19 @@ public class MoonDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
+            Context context = getActivity();
+            if (context == null) {
+                Log.w("MoonDialog", "onMenuItemClick: null context!");
+                return false;
+            }
+
             int itemId = item.getItemId();
             if (itemId == R.id.action_colors) {
-                showColorDialog(getActivity());
+                showColorDialog(context);
                 return true;
 
             } else if (itemId == R.id.action_phase_showdate) {
-                toggleShowPhaseDate(getContext());
+                toggleShowPhaseDate(context);
                 return true;
 
             } else if (itemId == R.id.action_phase_columns_2) {
@@ -787,15 +797,15 @@ public class MoonDialog extends BottomSheetDialogBase
                 return true;
 
             } else if (itemId == R.id.action_show_controls) {
-                showMediaPopup(getActivity(), text_dialogTimeOffset);
+                showMediaPopup(context, text_dialogTimeOffset);
                 return true;
 
             } else if (itemId == R.id.action_lunarnoon_show) {
-                toggleLunarNoon(getContext());
+                toggleLunarNoon(context);
                 return true;
 
             } else if (itemId == R.id.action_help) {
-                showHelp(getContext());
+                showHelp(context);
                 return true;
             }
             return false;

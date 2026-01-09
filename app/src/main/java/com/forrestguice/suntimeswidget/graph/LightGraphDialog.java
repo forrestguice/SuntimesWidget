@@ -1018,8 +1018,11 @@ public class LightGraphDialog extends BottomSheetDialogBase
         public void onColorValuesSelected(ColorValues values)
         {
             options.colors = null;
-            updateGraphColors(getActivity());
-            updateGraphViews(getActivity());
+            Context context = getActivity();
+            if (context != null) {
+                updateGraphColors(getActivity());
+                updateGraphViews(getActivity());
+            } else Log.w("LightGraphDialog", "onColorValuesSelected: null context!");
 
             if (dialogListener != null) {
                 dialogListener.onColorsModified(values);
