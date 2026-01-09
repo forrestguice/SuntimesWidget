@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -382,6 +383,7 @@ public class AlarmWidget0ConfigFragment extends DialogBase
         }
 
         protected String displayString = "";
+        @NonNull
         public String toString() {
             return displayString;
         }

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 
 public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
@@ -31,14 +32,14 @@ public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename
     private final String id;
     private String displayString;
 
-    private SolarTimeMode(String id, String displayString)
+    private SolarTimeMode(String id, @NonNull String displayString)
     {
         this.id = id;
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 
@@ -47,13 +48,12 @@ public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename
         return id;
     }
 
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString )
-    {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 }

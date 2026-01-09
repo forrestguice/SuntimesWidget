@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum DateMode
 {
     CURRENT_DATE("Today"),
@@ -25,23 +27,21 @@ public enum DateMode
 
     private String displayString;
 
-    private DateMode(String displayString)
-    {
+    private DateMode(@NonNull String displayString) {
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString )
-    {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 }

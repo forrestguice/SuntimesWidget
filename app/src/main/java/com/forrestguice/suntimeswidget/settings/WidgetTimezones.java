@@ -231,8 +231,7 @@ public class WidgetTimezones
         }
 
         @NonNull
-        public String toString()
-        {
+        public String toString() {
             return timeZoneID + " (" + getOffsetString() + " " + displayString + ")";
         }
     }
@@ -419,23 +418,21 @@ public class WidgetTimezones
 
         private String displayString;
 
-        private TimeZoneSort( String displayString )
-        {
+        private TimeZoneSort( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
-        public void setDisplayString(String displayString)
-        {
+        public void setDisplayString(@NonNull String displayString) {
             this.displayString = displayString;
         }
 
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return getDisplayString();
         }
 

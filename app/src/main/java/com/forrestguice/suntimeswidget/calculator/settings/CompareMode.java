@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum CompareMode
 {
     YESTERDAY("Yesterday"),
@@ -25,23 +27,21 @@ public enum CompareMode
 
     private String displayString;
 
-    private CompareMode(String displayString )
-    {
+    private CompareMode(@NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString )
-    {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 }

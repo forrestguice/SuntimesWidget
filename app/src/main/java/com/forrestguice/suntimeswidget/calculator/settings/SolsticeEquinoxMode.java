@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum SolsticeEquinoxMode
 {
     CROSS_SPRING("Midpoint", "Spring cross-quarter"),
@@ -37,30 +39,30 @@ public enum SolsticeEquinoxMode
     private String shortDisplayString;
     private String longDisplayString;
 
-    private SolsticeEquinoxMode(String shortDisplayString, String longDisplayString)
+    private SolsticeEquinoxMode(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         if (shortDisplayStrings)
             return shortDisplayString;
         else return longDisplayString;
     }
 
-    public String getShortDisplayString()
-    {
+    @NonNull
+    public String getShortDisplayString() {
         return shortDisplayString;
     }
 
-    public String getLongDisplayString()
-    {
+    @NonNull
+    public String getLongDisplayString() {
         return longDisplayString;
     }
 
-    public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+    public void setDisplayStrings(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

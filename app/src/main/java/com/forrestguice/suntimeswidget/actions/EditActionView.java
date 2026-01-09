@@ -252,11 +252,11 @@ public class EditActionView extends LinearLayout
             }
             TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
             if (text1 != null && suggestion != null) {
-                text1.setText(suggestion.label);
+                text1.setText(suggestion.getLabel());
             }
             TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
             if (text2 != null && suggestion != null) {
-                text2.setText(suggestion.packageName);
+                text2.setText(suggestion.getPackageName());
             }
             return convertView;
         }
@@ -352,17 +352,17 @@ public class EditActionView extends LinearLayout
             String activityText = text_launchActivity != null ? text_launchActivity.getText().toString() : "";
             PackageSuggestion suggestion = (PackageSuggestion) parent.getItemAtPosition(position);
 
-            if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.packageName)))
+            if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.getPackageName())))
             {
                 text_launchActivity.requestFocus();
-                text_launchActivity.setText(suggestion != null ? suggestion.className : ".");
+                text_launchActivity.setText(suggestion != null ? suggestion.getClassName() : ".");
                 text_launchActivity.setSelection(text_launchActivity.getText().length());
             }
 
             String labelText = edit_label != null ? edit_label.getText().toString() : "";
             String defaultLabel = getContext().getString(R.string.addaction_custtitle, "");
             if (edit_label != null && (labelText.trim().isEmpty() || labelText.startsWith(defaultLabel))) {
-                edit_label.setText(suggestion != null ? suggestion.label : "");
+                edit_label.setText(suggestion != null ? suggestion.getLabel() : "");
             }
         }
     };
@@ -386,14 +386,30 @@ public class EditActionView extends LinearLayout
 
     public static final class PackageSuggestion
     {
-        public String label, packageName, className;
+        protected String label, packageName, className;
 
-        public PackageSuggestion(String label, String packageName, String className) {
+        public PackageSuggestion(@NonNull String label, @NonNull String packageName, @NonNull String className) {
             this.label = label;
             this.packageName = packageName;
             this.className = className;
         }
 
+        @NonNull
+        public String getLabel() {
+            return label;
+        }
+
+        @NonNull
+        public String getPackageName() {
+            return packageName;
+        }
+
+        @NonNull
+        public String getClassName() {
+            return className;
+        }
+
+        @NonNull
         public String toString() {
             return packageName;
         }

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
+import com.forrestguice.annotation.NonNull;
+
 /**
  * CalendarMode
  */
@@ -42,7 +44,7 @@ public enum CalendarMode
     private String displayString;
     private final String defaultPattern;
 
-    private CalendarMode(String displayString, String defaultPattern) {
+    private CalendarMode(@NonNull String displayString, String defaultPattern) {
         this.displayString = displayString;
         this.defaultPattern = defaultPattern;
     }
@@ -51,15 +53,17 @@ public enum CalendarMode
         return defaultPattern;
     }
 
+    @NonNull
     public String toString() {
         return displayString;
     }
 
+    @NonNull
     public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString ) {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 }

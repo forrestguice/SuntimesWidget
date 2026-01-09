@@ -173,6 +173,7 @@ public class MenuAddon
             return intent;
         }
 
+        @NonNull
         public String toString() {
             return title;
         }

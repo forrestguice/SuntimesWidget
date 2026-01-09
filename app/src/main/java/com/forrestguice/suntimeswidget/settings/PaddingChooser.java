@@ -129,8 +129,7 @@ public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
     }
 
     @NonNull
-    public String toString()
-    {
+    public String toString() {
         return "" + brackets[0] + padding[0] + separator + padding[1] + separator + padding[2] + separator + padding[3] + brackets[1];
     }
 

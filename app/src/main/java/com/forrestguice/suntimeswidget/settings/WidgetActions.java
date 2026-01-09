@@ -193,18 +193,16 @@ public class WidgetActions
         BROADCAST("Broadcast"),
         SERVICE("Service");
 
-        private LaunchType(String displayString)
-        {
+        private LaunchType(@NonNull String displayString) {
             this.displayString = displayString;
         }
 
         private String displayString;
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString(String value)
-        {
+        public void setDisplayString(@NonNull String value) {
             displayString = value;
         }
         public static void initDisplayStrings(Context context)
@@ -213,8 +211,8 @@ public class WidgetActions
             BROADCAST.setDisplayString(context.getString(R.string.launchType_broadcast));
             SERVICE.setDisplayString(context.getString(R.string.launchType_service));
         }
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
     }
@@ -341,9 +339,11 @@ public class WidgetActions
         return values;
     }
 
+    @Nullable
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key) {
         return loadActionLaunchPref(context, appWidgetId, id, key, defaultLaunchPrefValue(key));
     }
+    @Nullable
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key, String defaultValue)
     {
         if (id == null) {
@@ -819,7 +819,7 @@ public class WidgetActions
         private final String[] tags;
         private final boolean listed;
 
-        private SuntimesAction(String title, String desc, String[] tags, boolean listed)
+        private SuntimesAction(@NonNull String title, @NonNull String desc, String[] tags, boolean listed)
         {
             this.title = title;
             this.desc = desc;
@@ -827,21 +827,24 @@ public class WidgetActions
             this.listed = listed;
         }
 
+        @NonNull
         public String toString() {
             return (desc != null && !desc.trim().isEmpty()) ? desc : title;
         }
 
+        @NonNull
         public String desc() {
             return desc;
         }
-        public void setDesc( String desc ) {
+        public void setDesc( @NonNull String desc ) {
             this.desc = desc;
         }
 
+        @NonNull
         public String title() {
             return title;
         }
-        public void setTitle( String title ) {
+        public void setTitle( @NonNull String title ) {
             this.title = title;
         }
 

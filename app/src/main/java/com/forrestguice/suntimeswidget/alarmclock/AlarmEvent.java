@@ -214,6 +214,7 @@ public class AlarmEvent
             requires_location = value;
         }
 
+        @NonNull
         public String toString() {
             return getTitle();
         }

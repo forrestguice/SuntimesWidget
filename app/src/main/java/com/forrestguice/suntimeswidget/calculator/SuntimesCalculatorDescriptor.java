@@ -255,20 +255,20 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
      * @param displayString a short display string describing the calculator
      * @param classRef a fully qualified class string that can be used to instantiate the calculator via reflection
      */
-    public SuntimesCalculatorDescriptor(String name, String displayString, String classRef)
+    public SuntimesCalculatorDescriptor(@NonNull String name, String displayString, String classRef)
     {
         this.name = name;
         this.displayString = displayString;
         this.calculatorRef = classRef;
     }
-    public SuntimesCalculatorDescriptor(String name, String displayString, String classRef, int resID)
+    public SuntimesCalculatorDescriptor(@NonNull String name, String displayString, String classRef, int resID)
     {
         this.name = name;
         this.displayString = displayString;
         this.calculatorRef = classRef;
         this.resID = resID;
     }
-    public SuntimesCalculatorDescriptor(String name, String displayString, String classRef, int resID, int[] features)
+    public SuntimesCalculatorDescriptor(@NonNull String name, String displayString, String classRef, int resID, int[] features)
     {
         this.name = name;
         this.displayString = displayString;
@@ -305,8 +305,8 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
      * Get the calculator's name.
      * @return the name of the SuntimesCalculator this descriptor represents
      */
-    public String getName()
-    {
+    @NonNull
+    public String getName() {
         return name;
     }
 
@@ -325,8 +325,8 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     /**
      * @return the value of getDisplayString()
      */
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return name;
     }
 

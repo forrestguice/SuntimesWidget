@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
@@ -191,7 +192,7 @@ public class WorldMapWidgetSettings
         private String projectionTitle;
         private final String proj4String;
 
-        private WorldMapWidgetMode(String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
+        private WorldMapWidgetMode(@NonNull String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
         {
             this.displayString = displayString;
             this.projectionTitle = projectionTitle;
@@ -202,8 +203,8 @@ public class WorldMapWidgetSettings
             this.center = new double[] {centerLat, centerLon};
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
@@ -212,13 +213,12 @@ public class WorldMapWidgetSettings
             return layoutID;
         }
 
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
-        {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 

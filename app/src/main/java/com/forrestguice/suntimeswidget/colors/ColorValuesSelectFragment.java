@@ -482,8 +482,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             this.previewColors = previewColors;
         }
 
+        @NonNull
         public String toString() {
-            return displayString;
+            return (displayString != null ? displayString
+                    : colorsID != null ? colorsID
+                    : "null");
         }
 
         public static ColorValuesItem[] createItems(Context context, ColorValuesCollection<ColorValues> collection, String[] previewKeys)

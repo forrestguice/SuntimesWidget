@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum RiseSetOrder
 {
     TODAY("Today"),
@@ -25,18 +27,16 @@ public enum RiseSetOrder
 
     private String displayString;
 
-    private RiseSetOrder(String displayString)
-    {
+    private RiseSetOrder(@NonNull String displayString) {
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 
-    public void setDisplayString(String displayString)
-    {
+    public void setDisplayString(@NonNull String displayString) {
         this.displayString = displayString;
     }
 }

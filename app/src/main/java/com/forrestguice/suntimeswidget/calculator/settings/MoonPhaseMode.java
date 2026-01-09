@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum MoonPhaseMode
 {
     NEW_MOON("New", "New Moon"),
@@ -30,30 +32,30 @@ public enum MoonPhaseMode
 
     public static boolean shortDisplayStrings = false;
 
-    private MoonPhaseMode(String shortDisplayString, String longDisplayString )
+    private MoonPhaseMode(@NonNull String shortDisplayString, @NonNull String longDisplayString )
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         if (shortDisplayStrings)
             return shortDisplayString;
         else return longDisplayString;
     }
 
-    public String getShortDisplayString()
-    {
+    @NonNull
+    public String getShortDisplayString() {
         return shortDisplayString;
     }
 
-    public String getLongDisplayString()
-    {
+    @NonNull
+    public String getLongDisplayString() {
         return longDisplayString;
     }
 
-    public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+    public void setDisplayStrings(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum TrackingMode
 {
     RECENT("Recent Event"),
@@ -26,23 +28,21 @@ public enum TrackingMode
 
     private String displayString;
 
-    private TrackingMode(String displayString )
-    {
+    private TrackingMode(@NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString )
-    {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 }

@@ -1135,7 +1135,7 @@ public class SuntimesTheme
             }
         }
 
-        public ThemeDescriptor(String name, String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
+        public ThemeDescriptor(String name, @NonNull String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
         {
             this.name = name;
             this.displayString = displayString;
@@ -1169,11 +1169,13 @@ public class SuntimesTheme
             return backgroundColor;
         }
 
+        @NonNull
         public String displayString()
         {
             return displayString;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
@@ -1238,7 +1240,7 @@ public class SuntimesTheme
         private String displayString;
         private boolean customColors = false;
 
-        private ThemeBackground(int resId, String displayString, boolean customColors )
+        private ThemeBackground(int resId, @NonNull String displayString, boolean customColors )
         {
             this.resID = resId;
             this.displayString = displayString;
@@ -1255,18 +1257,17 @@ public class SuntimesTheme
             return customColors;
         }
 
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString )
-        {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
+        @NonNull
         @Override
-        public String toString()
-        {
+        public String toString() {
             return displayString;
         }
 

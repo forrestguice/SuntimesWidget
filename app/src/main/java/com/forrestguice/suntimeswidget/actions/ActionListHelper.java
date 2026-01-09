@@ -443,7 +443,7 @@ public class ActionListHelper
         public int color;
         public String[] tags;
 
-        public ActionDisplay(String id, String title, String desc, int color, String[] tags)
+        public ActionDisplay(String id, @NonNull String title, String desc, int color, String[] tags)
         {
             this.id = id;
             this.title = title;
@@ -451,6 +451,7 @@ public class ActionListHelper
             this.color = color;
             this.tags = tags;
         }
+        @NonNull
         public String toString() {
              return title;
         }

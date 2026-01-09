@@ -187,8 +187,7 @@ public class AlarmState implements Parcelable
     }
 
     @NonNull
-    public String toString()
-    {
+    public String toString() {
         return "" + state;
     }
 

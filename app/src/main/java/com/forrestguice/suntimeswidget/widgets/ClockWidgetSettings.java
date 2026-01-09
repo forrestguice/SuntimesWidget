@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
@@ -213,7 +214,7 @@ public class ClockWidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeClock1x1(String displayString, int layoutID)
+        private WidgetModeClock1x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -223,15 +224,17 @@ public class ClockWidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 

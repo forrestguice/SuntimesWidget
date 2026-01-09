@@ -26,7 +26,7 @@ import com.forrestguice.suntimeswidget.events.EventAlias;
 public class EventAliasTimeMode implements RiseSetDataMode
 {
     private final EventAlias event;
-    public EventAliasTimeMode(EventAlias event) {
+    public EventAliasTimeMode(@NonNull EventAlias event) {
         this.event = event;
     }
 
@@ -36,10 +36,12 @@ public class EventAliasTimeMode implements RiseSetDataMode
         return null;
     }
 
+    @NonNull
     public EventAlias getEvent() {
         return event;
     }
 
+    @NonNull
     @Override
     public String name() {
         return event.getID();

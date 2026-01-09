@@ -1036,17 +1036,16 @@ public class AlarmSettings
         MATH("Math Problem"),
         ADDON("Addon");
 
-        private DismissChallenge(String displayString)
-        {
+        private DismissChallenge(@NonNull String displayString) {
             this.displayString = displayString;
         }
 
         private String displayString;
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString(String value)
+        public void setDisplayString(@NonNull String value)
         {
             displayString = value;
         }
@@ -1055,8 +1054,8 @@ public class AlarmSettings
             NONE.setDisplayString(context.getString(R.string.alarmDismiss_none));
             MATH.setDisplayString(context.getString(R.string.alarmDismiss_math));
         }
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 

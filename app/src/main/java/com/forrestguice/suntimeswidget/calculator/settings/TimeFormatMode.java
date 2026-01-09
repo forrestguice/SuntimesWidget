@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum TimeFormatMode
 {
     MODE_SYSTEM("System"),
@@ -27,23 +29,21 @@ public enum TimeFormatMode
 
     private String displayString;
 
-    private TimeFormatMode(String displayString )
-    {
+    private TimeFormatMode(@NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
 
-    public void setDisplayString( String displayString )
-    {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 }

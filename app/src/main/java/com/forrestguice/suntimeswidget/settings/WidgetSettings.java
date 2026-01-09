@@ -455,22 +455,24 @@ public class WidgetSettings
 
         private String displayString;
 
-        private ActionMode(String displayString)
+        private ActionMode(@NonNull String displayString)
         {
             this.displayString = displayString;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -517,7 +519,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSun1x1(String displayString, int layoutID)
+        private WidgetModeSun1x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -528,17 +530,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -572,7 +576,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSun2x1(String displayString, int layoutID)
+        private WidgetModeSun2x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -583,17 +587,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -620,7 +626,7 @@ public class WidgetSettings
     {
         WIDGETMODE3x1_BOTH_1("Sunrise, Noon, and Sunset", R.layout.layout_widget_3x1_0);
 
-        private WidgetModeSun3x1(String displayString, int layoutID)
+        private WidgetModeSun3x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -632,15 +638,17 @@ public class WidgetSettings
         }
 
         private String displayString;
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
         public static void initDisplayStrings( Context context ) {
             WIDGETMODE3x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode3x1_sunrise_sunset_noon));
         }
+        @NonNull
         public String toString() {
             return displayString;
         }
@@ -667,7 +675,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos1x1(String displayString, int layoutID)
+        private WidgetModeSunPos1x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -678,17 +686,18 @@ public class WidgetSettings
             return layoutID;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -722,7 +731,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos3x1(String displayString, int layoutID)
+        private WidgetModeSunPos3x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -733,17 +742,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -778,7 +789,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos3x2(String displayString, int layoutID)
+        private WidgetModeSunPos3x2(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -788,15 +799,17 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -837,7 +850,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon1x1(String displayString, int layoutID)
+        private WidgetModeMoon1x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -848,17 +861,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -898,7 +913,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon2x1(String displayString, int layoutID)
+        private WidgetModeMoon2x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -909,17 +924,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -949,7 +966,7 @@ public class WidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon3x1(String displayString, int layoutID)
+        private WidgetModeMoon3x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -960,17 +977,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -1009,7 +1028,7 @@ public class WidgetSettings
         private String displayString;
         private final int position;
 
-        private WidgetGravity(String displayString, int position)
+        private WidgetGravity(@NonNull String displayString, int position)
         {
             this.displayString = displayString;
             this.position = position;
@@ -1019,13 +1038,15 @@ public class WidgetSettings
             return position;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 

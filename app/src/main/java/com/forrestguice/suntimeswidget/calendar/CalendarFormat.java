@@ -54,27 +54,30 @@ public enum CalendarFormat
     protected String displayString, displayString0;
     protected String pattern;
 
-    private CalendarFormat(String displayString, String pattern) {
+    private CalendarFormat(@NonNull String displayString, @Nullable String pattern) {
         this.displayString0 = this.displayString = displayString;
         this.pattern = pattern;
     }
 
+    @Nullable
     public String getPattern() {
         return pattern;
     }
-    public void setPattern( String value ) {
+    public void setPattern( @Nullable String value ) {
         pattern = value;
     }
 
+    @NonNull
     public String toString() {
         return displayString;
     }
 
+    @NonNull
     public String getDisplayString() {
         return displayString != null ? displayString : "";
     }
 
-    public void setDisplayString( String displayString ) {
+    public void setDisplayString( @NonNull String displayString ) {
         this.displayString = displayString;
     }
 

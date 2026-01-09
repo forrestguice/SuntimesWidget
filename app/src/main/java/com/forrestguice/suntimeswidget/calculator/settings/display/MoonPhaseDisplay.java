@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -42,7 +43,7 @@ public enum MoonPhaseDisplay
     private final int iconResource, viewResource;
     private String shortDisplayString, longDisplayString;
 
-    private MoonPhaseDisplay(String shortDisplayString, String longDisplayString, int iconResource, int viewResource)
+    private MoonPhaseDisplay(@NonNull String shortDisplayString, @NonNull String longDisplayString, int iconResource, int viewResource)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
@@ -50,8 +51,8 @@ public enum MoonPhaseDisplay
         this.viewResource = viewResource;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return longDisplayString;
     }
 
@@ -78,17 +79,17 @@ public enum MoonPhaseDisplay
         return viewResource;
     }
 
-    public String getShortDisplayString()
-    {
+    @NonNull
+    public String getShortDisplayString() {
         return shortDisplayString;
     }
 
-    public String getLongDisplayString()
-    {
+    @NonNull
+    public String getLongDisplayString() {
         return longDisplayString;
     }
 
-    public void setDisplayString(String shortDisplayString, String longDisplayString)
+    public void setDisplayString(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

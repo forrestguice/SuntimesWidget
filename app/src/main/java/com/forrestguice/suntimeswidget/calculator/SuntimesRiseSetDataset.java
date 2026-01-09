@@ -545,8 +545,7 @@ public class SuntimesRiseSetDataset
 
     @NonNull
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "" + date().getTime();
     }
 

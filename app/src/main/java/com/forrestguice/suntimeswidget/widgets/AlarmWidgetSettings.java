@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
@@ -285,7 +286,7 @@ public class AlarmWidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm1x1(String displayString, int layoutID)
+        private WidgetModeAlarm1x1(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -295,15 +296,17 @@ public class AlarmWidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -333,7 +336,7 @@ public class AlarmWidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm2x2(String displayString, int layoutID)
+        private WidgetModeAlarm2x2(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -343,15 +346,17 @@ public class AlarmWidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -381,7 +386,7 @@ public class AlarmWidgetSettings
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm3x2(String displayString, int layoutID)
+        private WidgetModeAlarm3x2(@NonNull String displayString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -391,13 +396,15 @@ public class AlarmWidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
         public static void initDisplayStrings( Context context ) {

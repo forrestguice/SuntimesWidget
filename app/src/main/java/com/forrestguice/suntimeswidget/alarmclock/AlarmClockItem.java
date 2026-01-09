@@ -680,6 +680,7 @@ public class AlarmClockItem implements Parcelable
             this.displayString = displayString;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
@@ -732,21 +733,23 @@ public class AlarmClockItem implements Parcelable
         private String displayString;
         private final String tzID;
 
-        private AlarmTimeZone(String displayString, String tzID)
+        private AlarmTimeZone(@NonNull String displayString, @Nullable String tzID)
         {
             this.displayString = displayString;
             this.tzID = tzID;
         }
 
+        @Nullable
         public String timeZoneID() {
             return tzID;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String displayString() {
             return displayString;
         }

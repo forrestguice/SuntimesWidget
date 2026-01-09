@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.Log;
 
@@ -52,7 +53,7 @@ public enum CardinalDirection
     private String longDisplayString;
     private final double degrees;
 
-    private CardinalDirection(int pointNum, String shortDisplayString, String longDisplayString, double degrees)
+    private CardinalDirection(int pointNum, @NonNull String shortDisplayString, @NonNull String longDisplayString, double degrees)
     {
         this.pointNum = pointNum;
         this.shortDisplayString = shortDisplayString;
@@ -83,8 +84,8 @@ public enum CardinalDirection
         return result;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return shortDisplayString;
     }
 
@@ -98,17 +99,19 @@ public enum CardinalDirection
         return pointNum;
     }
 
+    @NonNull
     public String getShortDisplayString()
     {
         return shortDisplayString;
     }
 
+    @NonNull
     public String getLongDisplayString()
     {
         return longDisplayString;
     }
 
-    public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+    public void setDisplayStrings(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

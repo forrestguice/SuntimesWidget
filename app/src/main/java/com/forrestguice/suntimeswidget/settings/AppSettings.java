@@ -1126,6 +1126,7 @@ public class AppSettings
     public abstract static class AppThemeInfo
     {
         public abstract int getStyleId(Context context, TextSize textSize, SuntimesRiseSetData data);
+        @NonNull
         public abstract String getThemeName();
 
         /**
@@ -1143,6 +1144,7 @@ public class AppSettings
         public String getDisplayString(Context context) {
             return getThemeName();
         }
+        @NonNull
         public String toString() {
             return getThemeName();
         }
@@ -1158,6 +1160,7 @@ public class AppSettings
 
     public static class SystemThemeInfo extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_SYSTEM;
@@ -1183,6 +1186,7 @@ public class AppSettings
 
     public static class LightThemeInfo extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_LIGHT;
@@ -1208,6 +1212,7 @@ public class AppSettings
 
     public static class DarkThemeInfo extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_DARK;
@@ -1233,6 +1238,7 @@ public class AppSettings
 
     public static class DayNightThemeInfo extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_DAYNIGHT;
@@ -1268,6 +1274,7 @@ public class AppSettings
 
     public static class LightTheme1Info extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_LIGHT1;
@@ -1293,6 +1300,7 @@ public class AppSettings
 
     public static class DarkTheme1Info extends AppThemeInfo
     {
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_DARK1;
@@ -1320,6 +1328,7 @@ public class AppSettings
     {
         public static String THEMENAME = THEME_SYSTEM1;
 
+        @NonNull
         @Override
         public String getThemeName() {
             return THEMENAME;

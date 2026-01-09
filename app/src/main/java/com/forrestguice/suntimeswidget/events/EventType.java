@@ -45,13 +45,15 @@ public enum EventType
         return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT };
     }
 
-    private String displayString;
+    private String displayString = name();
+    @NonNull
     public String getDisplayString() {
         return displayString;
     }
-    public void setDisplayString(String value) {
+    public void setDisplayString(@NonNull String value) {
         displayString = value;
     }
+    @NonNull
     public String toString() {
         return displayString;
     }

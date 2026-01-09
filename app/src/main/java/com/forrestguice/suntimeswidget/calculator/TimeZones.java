@@ -120,8 +120,7 @@ public class TimeZones
 
         @NonNull
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "id: " + getID() + ", offset: " + getRawOffset() + ", useDaylight: " + useDaylightTime();
         }
     }

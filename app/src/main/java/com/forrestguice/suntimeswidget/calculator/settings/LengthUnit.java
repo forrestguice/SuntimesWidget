@@ -18,27 +18,27 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
+
 public enum LengthUnit
 {
     METRIC("Metric"),
     IMPERIAL("Imperial");
 
-    private LengthUnit(String displayString)
-    {
+    private LengthUnit(@NonNull String displayString) {
         this.displayString = displayString;
     }
 
     private String displayString;
-    public String getDisplayString()
-    {
+    @NonNull
+    public String getDisplayString() {
         return displayString;
     }
-    public void setDisplayString(String value)
-    {
+    public void setDisplayString(@NonNull String value) {
         displayString = value;
     }
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return displayString;
     }
 

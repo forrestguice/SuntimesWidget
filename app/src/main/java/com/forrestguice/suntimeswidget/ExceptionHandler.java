@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.support.app.NotificationManagerCompat;
 
@@ -40,7 +41,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e)
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e)
     {
         try {
             Log.e("CRASH", e.getClass().getSimpleName(), e);

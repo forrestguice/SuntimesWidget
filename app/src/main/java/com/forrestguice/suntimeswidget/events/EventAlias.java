@@ -57,6 +57,7 @@ public final class EventAlias
     }
 
     private final String id;
+    @NonNull
     public String getID() {
         return id;
     }
@@ -75,6 +76,7 @@ public final class EventAlias
     }
 
     private final String label;
+    @NonNull
     public String getLabel() {
         return label;
     }
@@ -103,6 +105,7 @@ public final class EventAlias
         return summary;
     }
 
+    @NonNull
     public String toString() {
         return label != null ? label : id;
     }

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
 public enum TimeMode implements RiseSetDataMode
@@ -36,35 +37,34 @@ public enum TimeMode implements RiseSetDataMode
     private String longDisplayString;
     private String shortDisplayString;
 
-    private TimeMode(String shortDisplayString, String longDisplayString, Double angle)
+    private TimeMode(@NonNull String shortDisplayString, @NonNull String longDisplayString, Double angle)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
         this.angle = angle;
     }
 
+    @NonNull
     public String toString()
     {
-        if (shortDisplayStrings)
-        {
+        if (shortDisplayStrings) {
             return shortDisplayString;
-
         } else {
             return longDisplayString;
         }
     }
 
-    public String getShortDisplayString()
-    {
+    @NonNull
+    public String getShortDisplayString() {
         return shortDisplayString;
     }
 
-    public String getLongDisplayString()
-    {
+    @NonNull
+    public String getLongDisplayString() {
         return longDisplayString;
     }
 
-    public void setDisplayStrings(String shortDisplayString, String longDisplayString)
+    public void setDisplayStrings(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

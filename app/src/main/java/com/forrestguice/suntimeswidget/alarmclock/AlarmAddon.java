@@ -176,6 +176,7 @@ public class AlarmAddon
             return info;
         }
 
+        @NonNull
         public String toString() {
             return title;
         }

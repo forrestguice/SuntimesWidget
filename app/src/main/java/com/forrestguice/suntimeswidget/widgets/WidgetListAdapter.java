@@ -532,7 +532,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         protected final String title;
         protected final String summary;
 
-        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, String title, String summary, String configClass )
+        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, @NonNull String title, String summary, String configClass )
         {
             this.packageName = packageName;
             this.widgetClass = widgetClass;
@@ -565,6 +565,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return icon;
         }
 
+        @NonNull
         public String getTitle()
         {
             return title;
@@ -575,6 +576,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return summary;
         }
 
+        @NonNull
         public String toString()
         {
             return getTitle();

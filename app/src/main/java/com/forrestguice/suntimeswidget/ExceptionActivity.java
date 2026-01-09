@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AppCompatActivity;
 
@@ -40,7 +41,7 @@ public class ExceptionActivity extends AppCompatActivity
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
         {
             @Override
-            public void uncaughtException(Thread t, Throwable e) {
+            public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
                 Log.e("CRASH", e.getClass().getSimpleName(), e);
                 System.exit(0);
             }

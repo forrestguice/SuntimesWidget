@@ -99,7 +99,7 @@ public enum SolarEvents
         }
     }
 
-    private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource, int type, boolean rising)
+    private SolarEvents(@NonNull String shortDisplayString, @NonNull String longDisplayString, int iconResource, int type, boolean rising)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
@@ -108,8 +108,8 @@ public enum SolarEvents
         this.rising = rising;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return longDisplayString;
     }
 
@@ -157,17 +157,17 @@ public enum SolarEvents
         return rising;
     }
 
-    public String getShortDisplayString()
-    {
+    @NonNull
+    public String getShortDisplayString() {
         return shortDisplayString;
     }
 
-    public String getLongDisplayString()
-    {
+    @NonNull
+    public String getLongDisplayString() {
         return longDisplayString;
     }
 
-    public void setDisplayString(String shortDisplayString, String longDisplayString)
+    public void setDisplayString(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

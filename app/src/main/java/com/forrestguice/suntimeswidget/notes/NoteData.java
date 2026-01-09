@@ -93,8 +93,7 @@ public class NoteData
 
     @NonNull
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "NoteData[" + this.noteMode + " (" + this.time + " in" + timeText + ")" + "]";
     }
 }
