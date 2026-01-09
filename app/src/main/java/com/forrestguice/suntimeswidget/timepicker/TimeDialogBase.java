@@ -259,6 +259,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogBase
     public static Calendar getCalendar(TimeDialogResult dateTime, Calendar now) {
         return getCalendar(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), now);
     }
+    @SuppressWarnings("ConstantConditions")
     @Nullable
     public static Calendar getCalendar(Integer year, Integer month, Integer day, Integer hour, Integer minute, Calendar now )
     {

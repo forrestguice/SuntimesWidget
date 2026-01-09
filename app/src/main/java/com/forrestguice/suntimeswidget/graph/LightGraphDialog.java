@@ -1031,6 +1031,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         public void requestExpandSheet() {}
         public void onModeChanged(int mode) {}
 
+        @SuppressWarnings("ConstantConditions")
         @Nullable
         @Override
         public ColorValues getDefaultValues() {

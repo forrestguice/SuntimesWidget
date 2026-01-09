@@ -76,6 +76,7 @@ public enum TimeMode implements RiseSetDataMode
         return angle;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Nullable @Override
     public TimeMode getTimeMode() {
         return this;
