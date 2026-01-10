@@ -4,16 +4,275 @@
     <style name="AppTheme" parent="AppTheme.Dark">
     </style>
 
+    <!-- Theme: System (left-to-right) -->
+    <style name="AppThemeBase.System" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorBackgroundFloating">@color/surfaceContainerColor</item>
+        <item name="dialogFrame">@color/dialog_frame</item>
+        <item name="dialogBackground">@color/dialog_bg</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref</item>
+        <item name="widgetBackground">@drawable/widget_bg_ref</item>
+        <item name="settingsCardBackground">@color/card_bg</item>
+        <item name="timeCardBackground">@color/card_bg</item>
+        <item name="semiTransparentBackground">@color/card_bg_trans</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="hrColor">@color/hr</item>
+        <item name="colorAccent">@color/text_accent</item>
+        <item name="text_primaryColor">@color/text_primary</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse</item>
+        <item name="text_secondaryColor">@color/text_secondary</item>
+        <item name="text_tertiaryColor">@color/text_tertiary</item>
+        <item name="text_accentColor">@color/text_accent</item>
+        <item name="text_disabledColor">@color/text_disabled</item>
+
+        <item name="chipBackground">@drawable/chip_ref</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_ref</item>
+
+        <item name="alarmColorEnabled">@color/alarm_enabled</item>
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_ref</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_ref</item>
+        <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_ref</item>
+        <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_ref</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_ref</item>
+        <item name="alarmCardControls">@drawable/card_alarmitem_controls_ref</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_ref</item>
+        <item name="gridItemSelected">@color/grid_selected</item>
+        <item name="selectableItemCard">@drawable/selectable_item_ref</item>
+
+        <item name="buttonPressColor">@color/btn_tint_pressed</item>
+        <item name="text_buttonSelector">@drawable/btn_txt_ref</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_ref</item>
+
+        <item name="graphColor_background">@color/graphColor_bg</item>
+        <item name="graphColor_day">@color/graphColor_day</item>
+        <item name="graphColor_night">@color/graphColor_night</item>
+        <item name="graphColor_civil">@color/graphColor_civil</item>
+        <item name="graphColor_nautical">@color/graphColor_nautical</item>
+        <item name="graphColor_astronomical">@color/graphColor_astronomical</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke</item>
+        <item name="graphColor_axis">@color/graphColor_axis</item>
+        <item name="graphColor_grid">@color/graphColor_grid</item>
+        <item name="graphColor_labels">@color/graphColor_labels</item>
+        <item name="graphColor_labels_bg">@color/graphColor_labels_bg</item>
+
+        <item name="table_risingColor">@color/table_rising</item>
+        <item name="table_settingColor">@color/table_setting</item>
+        <item name="table_civilColor">@color/table_civil</item>
+        <item name="table_nauticalColor">@color/table_nautical</item>
+        <item name="table_astroColor">@color/table_astro</item>
+        <item name="table_nightColor">@color/table_night</item>
+        <item name="table_noonColor">@color/table_noon</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting</item>
+        <item name="table_springColor">@color/springColor</item>
+        <item name="table_summerColor">@color/summerColor</item>
+        <item name="table_fallColor">@color/fallColor</item>
+        <item name="table_winterColor">@color/winterColor</item>
+
+        <item name="sunriseIconSmall">@drawable/ic_sunrise_ref</item>
+        <item name="sunriseIconLarge">@drawable/ic_sunrise_large_ref</item>
+        <item name="sunriseColor">@color/sunIcon_color_rising</item>
+        <item name="sunsetColor">@color/sunIcon_color_setting</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset_ref</item>
+        <item name="sunsetIconLarge">@drawable/ic_sunset_large_ref</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large_ref</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_ref</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder</item>
+
+        <item name="moonriseIcon">@drawable/ic_moon_rise_ref</item>
+        <item name="moonriseColor">@color/moonIcon_color_rising</item>
+        <item name="moonsetIcon">@drawable/ic_moon_set_ref</item>
+        <item name="moonsetColor">@color/moonIcon_color_setting</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_ref</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_ref</item>
+
+        <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
+        <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
+        <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
+        <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing</item>
+        <item name="moonFullColor">@color/moonIcon_color_full</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning</item>
+
+        <item name="springColor">@color/springColor</item>
+        <item name="summerColor">@color/summerColor</item>
+        <item name="fallColor">@color/fallColor</item>
+        <item name="winterColor">@color/winterColor</item>
+
+        <item name="tagColor_warning">@color/warningTag</item>
+        <item name="tagColor_error">@color/errorTag</item>
+        <item name="tagColor_dst">@color/dstTag</item>
+
+        <item name="snackbar_textColor">@color/snackbar_text</item>
+        <item name="snackbar_accentColor">@color/text_accent</item>
+        <item name="snackbar_backgroundColor">@color/surfaceContainerColor</item>
+
+        <item name="fab_foregroundColor">@color/onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/secondaryContainerColor</item>
+        <item name="fab_rippleColor">@color/fab_ripple</item>
+
+        <item name="fab_foregroundColorAlt">@color/onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_ref</item>
+
+        <item name="icActionGPS">@drawable/ic_action_location_found_ref</item>
+        <item name="icActionGPS_off">@drawable/ic_action_location_off_ref</item>
+        <item name="icActionGPS_searching">@drawable/ic_action_location_searching_ref</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_ref</item>
+        <item name="icActionGPS_network">@drawable/ic_network_ref</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_ref</item>
+
+        <item name="icActionPlace">@drawable/ic_action_place_ref</item>
+        <item name="icActionMap">@drawable/ic_action_map1_ref</item>
+        <item name="icActionWorldMap">@drawable/ic_action_map_ref</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_ref</item>
+        <item name="icActionTime">@drawable/ic_action_time_ref</item>
+        <item name="icActionDst">@drawable/ic_weather_sunny_ref</item>
+        <item name="icActionDnd">@drawable/ic_action_dnd_ref</item>
+        <item name="icActionAlarm">@drawable/ic_action_alarms_ref</item>
+        <item name="icActionHome">@drawable/ic_action_home_ref</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime_ref</item>
+        <item name="icActionCalendar">@drawable/ic_calendar_ref</item>
+        <item name="icActionNotification">@drawable/ic_action_notification_ref</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1_ref</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2_ref</item>
+        <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_ref</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_ref</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_ref</item>
+        <item name="icActionAbout">@drawable/ic_action_about_ref</item>
+        <item name="icActionWarning">@drawable/ic_action_warning_ref</item>
+        <item name="icActionError">@drawable/ic_action_error_ref</item>
+        <item name="icActionWidgets">@drawable/ic_action_widget_ref</item>
+        <item name="icActionEvents">@drawable/ic_action_events_ref</item>
+        <item name="icActionAppearance">@drawable/ic_palette_ref</item>
+        <item name="icActionExtension">@drawable/ic_action_extension_ref</item>
+        <item name="icActionAltitude">@drawable/baseline_terrain_ref_18</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow_ref</item>
+        <item name="icActionSun">@drawable/ic_action_sun_ref</item>
+        <item name="icActionSunChart">@drawable/ic_action_multiline_chart_ref</item>
+        <item name="icActionLocale">@drawable/ic_action_locale_ref</item>
+        <item name="icActionSettings">@drawable/ic_action_settings_ref</item>
+        <item name="icActionHelp">@drawable/ic_action_help_ref</item>
+        <item name="icActionAccept">@drawable/ic_action_accept_ref</item>
+        <item name="icActionClose">@drawable/ic_action_close_ref</item>
+        <item name="icActionBack">@drawable/ic_action_back_ref</item>
+        <item name="icActionSearch">@drawable/ic_action_search_ref</item>
+        <item name="icActionNew">@drawable/ic_action_new_ref</item>
+        <item name="icActionNewAlarm">@drawable/ic_action_alarms_ref</item>
+        <item name="icActionNewNotification">@drawable/ic_action_notification_ref</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall_ref</item>
+        <item name="icActionSave">@drawable/ic_action_save_ref</item>
+        <item name="icActionEdit">@drawable/ic_action_edit_ref</item>
+        <item name="icActionDelete">@drawable/ic_action_discard_ref</item>
+        <item name="icActionCopy">@drawable/ic_action_copy_ref</item>
+        <item name="icActionSort">@drawable/ic_action_sort_ref</item>
+        <item name="icActionDismiss">@drawable/ic_action_dismiss_ref</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel_ref</item>
+        <item name="icActionShare">@drawable/ic_action_share_ref</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze_ref</item>
+        <item name="icActionLabel">@drawable/ic_action_label_ref</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel_ref</item>
+        <item name="icActionDeselect">@drawable/ic_action_deselect_ref</item>
+
+        <item name="icPlaceUser">@drawable/ic_action_place_ref</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale_ref</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_ref</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_ref</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_ref</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_ref</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_ref</item>
+
+        <item name="icActionPlay">@drawable/ic_action_play_ref</item>
+        <item name="icActionPause">@drawable/ic_action_pause_ref</item>
+        <item name="icActionRecord">@drawable/ic_action_record_ref</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset_ref</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand_ref</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility_on_ref</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_ref</item>
+        <item name="checkFavorite">@drawable/check_favorite_ref</item>
+        <item name="checkAltitude">@drawable/check_altitude_ref</item>
+        <item name="checkVibrate">@drawable/check_vibrate_ref</item>
+        <item name="checkDnd">@drawable/check_dnd_ref</item>
+        <item name="checkVisibility">@drawable/check_visible_ref</item>
+        <item name="checkReminder">@drawable/check_reminder_ref</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+
+    </style>
+    <style name="AppTheme.System" parent="AppThemeBase.System">
+        <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
+    </style>
+    <style name="AppTheme.System.Small" parent="AppTheme.System">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.System.Large" parent="AppTheme.System">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.System.XLarge" parent="AppTheme.System">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
+
     <!-- Theme: Light (left-to-right) -->
-    <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="dialogFrame">@android:color/white</item>
+    <style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/light_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/light_surfaceContainer</item>
+        <item name="dialogFrame">@color/dialog_frame_light</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
-        <item name="dialogBackgroundAlt">@color/grey_300</item>
-        <item name="settingsCardBackground">@drawable/bg_widget</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
+        <item name="widgetBackground">@drawable/bg_widget</item>
+        <item name="settingsCardBackground">@color/card_bg_light</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="hrColor">@color/hr_light</item>
+        <item name="colorAccent">@color/text_accent_light</item>
+        <item name="text_primaryColor">@color/text_primary_light</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
+        <item name="text_secondaryColor">@color/text_secondary_light</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
@@ -23,6 +282,11 @@
         <item name="alarmColorEnabled">@color/alarm_enabled_light</item>
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light0</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light0</item>
+        <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_light0</item>
+        <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_light0</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_light0</item>
+        <item name="alarmCardControls">@drawable/card_alarmitem_controls_light</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_light</item>
         <item name="gridItemSelected">@color/grid_selected_light</item>
         <item name="selectableItemCard">@drawable/selectable_item_light</item>
 
@@ -36,8 +300,26 @@
         <item name="graphColor_civil">@color/graphColor_civil_light</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_light</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
-        <item name="graphColor_pointFill">@color/sunIcon_color_noon_light</item>
-        <item name="graphColor_pointStroke">@color/sunIcon_color_noonBorder_light</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+        <item name="graphColor_axis">@color/graphColor_axis_light</item>
+        <item name="graphColor_grid">@color/graphColor_grid_light</item>
+        <item name="graphColor_labels">@color/graphColor_labels_light</item>
+        <item name="graphColor_labels_bg">@color/graphColor_labels_bg_light</item>
+
+        <item name="table_risingColor">@color/table_rising_light</item>
+        <item name="table_settingColor">@color/table_setting_light</item>
+        <item name="table_civilColor">@color/table_civil_light</item>
+        <item name="table_nauticalColor">@color/table_nautical_light</item>
+        <item name="table_astroColor">@color/table_astro_light</item>
+        <item name="table_nightColor">@color/table_night_light</item>
+        <item name="table_noonColor">@color/table_noon_light</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_light</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_light</item>
+        <item name="table_springColor">@color/springColor_light</item>
+        <item name="table_summerColor">@color/summerColor_light</item>
+        <item name="table_fallColor">@color/fallColor_light</item>
+        <item name="table_winterColor">@color/winterColor_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -46,16 +328,26 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_light</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_light</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
         <item name="moonsetIcon">@drawable/ic_moon_set_light</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon_light</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night_light</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
         <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
         <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_light</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_light</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_light</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_light</item>
 
         <item name="springColor">@color/springColor_light</item>
         <item name="summerColor">@color/summerColor_light</item>
@@ -66,24 +358,41 @@
         <item name="tagColor_error">@color/errorTag_light</item>
         <item name="tagColor_dst">@color/dstTag_light</item>
 
-        <item name="snackbar_textColor">@android:color/primary_text_light</item>
-        <item name="snackbar_accentColor">?colorAccent</item>
-        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+        <item name="snackbar_textColor">@color/snackbar_text_light</item>
+        <item name="snackbar_accentColor">@color/text_accent_light</item>
+        <item name="snackbar_backgroundColor">@color/light_surfaceContainer</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_light</item>
-        <item name="fab_rippleColor">@color/grey_50</item>
+        <item name="fab_foregroundColor">@color/light_onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/light_secondaryContainerColor</item>
+        <item name="fab_rippleColor">@color/fab_ripple_light</item>
+
+        <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/light_secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_light</item>
+        <item name="icActionGPS_network">@drawable/ic_network_light</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_light</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
-        <item name="icActionMap">@drawable/ic_action_map_light</item>
+        <item name="icActionMap">@drawable/ic_action_map1_light</item>
+        <item name="icActionWorldMap">@drawable/ic_action_map_light</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_light</item>
         <item name="icActionTime">@drawable/ic_action_time_light</item>
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
+        <item name="icActionDnd">@drawable/ic_action_dnd_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionHome">@drawable/ic_action_home_light</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime_light</item>
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
         <item name="icActionNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1_light</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2_light</item>
         <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_light</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
@@ -91,10 +400,13 @@
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
+        <item name="icActionEvents">@drawable/ic_action_widget_light</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionExtension">@drawable/ic_action_extension_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
+        <item name="icActionSun">@drawable/ic_action_sun_light</item>
+        <item name="icActionSunChart">@drawable/ic_action_multiline_chart_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
@@ -115,6 +427,17 @@
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
+        <item name="icActionLabel">@drawable/ic_action_label_light</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel_light</item>
+        <item name="icActionDeselect">@drawable/baseline_deselect_light_24</item>
+
+        <item name="icPlaceUser">@drawable/ic_action_place_light</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale_light</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_light</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_light</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_light</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_light</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_light</item>
 
         <item name="icActionPlay">@drawable/ic_action_play_light</item>
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
@@ -122,26 +445,87 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility_light</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_light</item>
+        <item name="checkFavorite">@drawable/check_favorite_light</item>
+        <item name="checkAltitude">@drawable/check_altitude_light</item>
         <item name="checkVibrate">@drawable/check_vibrate_light</item>
+        <item name="checkDnd">@drawable/check_dnd_light</item>
+        <item name="checkVisibility">@drawable/check_visible_light</item>
+        <item name="checkReminder">@drawable/check_reminder_light</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_light</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item_light</item>
     </style>
+    <style name="AppTheme.Light.Small" parent="AppTheme.Light">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Light.Large" parent="AppTheme.Light">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Light.XLarge" parent="AppTheme.Light">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="dialogFrame">@color/grey_800</item>
+        <item name="colorPrimary">@color/dark_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/dark_surfaceContainer</item>
+        <item name="dialogFrame">@color/dialog_frame_dark</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
-        <item name="dialogBackgroundAlt">@color/grey_900</item>
-        <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
+        <item name="widgetBackground">@drawable/bg_widget_dark</item>
+        <item name="settingsCardBackground">@color/card_bg_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="hrColor">@color/hr_dark</item>
+        <item name="colorAccent">@color/text_accent_dark</item>
+        <item name="text_primaryColor">@color/text_primary_dark</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
+        <item name="text_secondaryColor">@color/text_secondary_dark</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
@@ -151,6 +535,11 @@
         <item name="alarmColorEnabled">@color/alarm_enabled_dark</item>
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark0</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark0</item>
+        <item name="alarmCardSounding">@drawable/card_alarmitem_sounding_dark0</item>
+        <item name="alarmCardSnoozing">@drawable/card_alarmitem_snoozing_dark0</item>
+        <item name="alarmCardTimeout">@drawable/card_alarmitem_timeout_dark0</item>
+        <item name="alarmCardControls">@drawable/card_alarmitem_controls_dark</item>
+        <item name="alarmCardBackdrop">@drawable/card_alarmitem_backdrop_dark</item>
         <item name="gridItemSelected">@color/grid_selected_dark</item>
         <item name="selectableItemCard">@drawable/selectable_item_dark</item>
 
@@ -164,8 +553,26 @@
         <item name="graphColor_civil">@color/graphColor_civil_dark</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_dark</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
-        <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
-        <item name="graphColor_pointStroke">@color/sunIcon_color_noon_light</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
+        <item name="graphColor_axis">@color/graphColor_axis_dark</item>
+        <item name="graphColor_grid">@color/graphColor_grid_dark</item>
+        <item name="graphColor_labels">@color/graphColor_labels_dark</item>
+        <item name="graphColor_labels_bg">@color/graphColor_labels_bg_dark</item>
+
+        <item name="table_risingColor">@color/table_rising_dark</item>
+        <item name="table_settingColor">@color/table_setting_dark</item>
+        <item name="table_civilColor">@color/table_civil_dark</item>
+        <item name="table_nauticalColor">@color/table_nautical_dark</item>
+        <item name="table_astroColor">@color/table_astro_dark</item>
+        <item name="table_nightColor">@color/table_night_dark</item>
+        <item name="table_noonColor">@color/table_noon_dark</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_dark</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_dark</item>
+        <item name="table_springColor">@color/springColor_dark</item>
+        <item name="table_summerColor">@color/summerColor_dark</item>
+        <item name="table_fallColor">@color/fallColor_dark</item>
+        <item name="table_winterColor">@color/winterColor_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -174,16 +581,26 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_dark</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_dark</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
         <item name="moonsetIcon">@drawable/ic_moon_set</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night</item>
 
         <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
         <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
         <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
         <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_dark</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_dark</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_dark</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_dark</item>
 
         <item name="springColor">@color/springColor_dark</item>
         <item name="summerColor">@color/summerColor_dark</item>
@@ -194,24 +611,41 @@
         <item name="tagColor_error">@color/errorTag_dark</item>
         <item name="tagColor_dst">@color/dstTag_dark</item>
 
-        <item name="snackbar_textColor">@android:color/primary_text_dark</item>
-        <item name="snackbar_accentColor">?colorAccent</item>
-        <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
+        <item name="snackbar_textColor">@color/snackbar_text_dark</item>
+        <item name="snackbar_accentColor">@color/text_accent_dark</item>
+        <item name="snackbar_backgroundColor">@color/dark_surfaceContainer</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_dark</item>
-        <item name="fab_rippleColor">@color/grey_900</item>
+        <item name="fab_foregroundColor">@color/dark_onSecondaryContainerColor</item>
+        <item name="fab_backgroundColor">@color/dark_secondaryContainerColor</item>
+        <item name="fab_rippleColor">@color/fab_ripple_dark</item>
+
+        <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/dark_secondaryContainerColor</item>
+
+        <item name="fab_backgroundDrawable">@drawable/button_fab_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_dark</item>
+        <item name="icActionGPS_network">@drawable/ic_network_dark</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_dark</item>
 
         <item name="icActionPlace">@drawable/ic_action_place</item>
-        <item name="icActionMap">@drawable/ic_action_map</item>
+        <item name="icActionMap">@drawable/ic_action_map1</item>
+        <item name="icActionWorldMap">@drawable/ic_action_map</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline</item>
         <item name="icActionTime">@drawable/ic_action_time</item>
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
+        <item name="icActionDnd">@drawable/ic_action_dnd</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionHome">@drawable/ic_action_home</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime</item>
         <item name="icActionCalendar">@drawable/ic_calendar</item>
         <item name="icActionNotification">@drawable/ic_action_notification</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2</item>
         <item name="icActionVibrationEnabled">@drawable/ic_action_vibration</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
@@ -219,10 +653,13 @@
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
+        <item name="icActionEvents">@drawable/ic_action_widget</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionExtension">@drawable/ic_action_extension</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow</item>
+        <item name="icActionSun">@drawable/ic_action_sun_dark</item>
+        <item name="icActionSunChart">@drawable/ic_action_multiline_chart_dark</item>
         <item name="icActionLocale">@drawable/ic_action_locale</item>
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
@@ -243,6 +680,17 @@
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+        <item name="icActionLabel">@drawable/ic_action_label</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel</item>
+        <item name="icActionDeselect">@drawable/baseline_deselect_dark_24</item>
+
+        <item name="icPlaceUser">@drawable/ic_action_place</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_dark</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_dark</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about</item>
+        <item name="icPlaceHome">@drawable/ic_action_home</item>
 
         <item name="icActionPlay">@drawable/ic_action_play</item>
         <item name="icActionPause">@drawable/ic_action_pause</item>
@@ -250,18 +698,298 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off</item>
+        <item name="checkFavorite">@drawable/check_favorite_dark</item>
+        <item name="checkAltitude">@drawable/check_altitude_dark</item>
         <item name="checkVibrate">@drawable/check_vibrate_dark</item>
+        <item name="checkDnd">@drawable/check_dnd_dark</item>
+        <item name="checkVisibility">@drawable/check_visible_dark</item>
+        <item name="checkReminder">@drawable/check_reminder_dark</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_frame_dark</item>
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
     </style>
+    <style name="AppTheme.Dark.Small" parent="AppTheme.Dark">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Dark.Large" parent="AppTheme.Dark">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Dark.XLarge" parent="AppTheme.Dark">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
 
     <style name="ThemeOverlay.Suntimes.BottomSheetDialog" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!-- Contrast System Theme -->
+    <style name="AppTheme.System1" parent="AppTheme.System">
+        <item name="colorPrimary">@color/primaryColor_contrast</item>
+        <item name="colorBackgroundFloating">@color/surfaceColor_contrast</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast</item>
+        <item name="timeCardBackground">@color/card_bg_contrast</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast</item>
+        <item name="android:windowBackground">@color/backgroundColor_contrast</item>
+        <item name="table_risingColor">@color/table_rising_contrast</item>
+        <item name="table_settingColor">@color/table_setting_contrast</item>
+        <item name="table_civilColor">@color/table_civil_contrast</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast</item>
+        <item name="table_astroColor">@color/table_astro_contrast</item>
+        <item name="table_nightColor">@color/table_night_contrast</item>
+        <item name="table_noonColor">@color/table_noon_contrast</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast</item>
+        <item name="table_springColor">@color/table_spring_contrast</item>
+        <item name="table_summerColor">@color/table_summmer_contrast</item>
+        <item name="table_fallColor">@color/table_fall_contrast</item>
+        <item name="table_winterColor">@color/table_winter_contrast</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast</item>
+        <item name="chipBackground">@drawable/chip_contrast</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast</item>
+        <item name="tagColor_error">@color/errorTag_contrast</item>
+        <item name="tagColor_dst">@color/dstTag_contrast</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref1</item>
+    </style>
+    <style name="AppTheme.System1.Small" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.System1.Large" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.System1.XLarge" parent="AppTheme.System1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
+
+    <!-- Contrast Light Theme -->
+    <style name="AppTheme.Light1" parent="AppTheme.Light">
+        <item name="colorPrimary">@color/lightcontrast_primaryColor</item>
+        <item name="colorBackgroundFloating">@color/lightcontrast_surfaceContainer</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast_light</item>
+        <item name="timeCardBackground">@color/card_bg_contrast_light</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast_light</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast_light</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_light</item>
+        <item name="android:windowBackground">@color/lightcontrast_surfaceColor</item>
+        <item name="table_risingColor">@color/table_rising_contrast_light</item>
+        <item name="table_settingColor">@color/table_setting_contrast_light</item>
+        <item name="table_civilColor">@color/table_civil_contrast_light</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast_light</item>
+        <item name="table_astroColor">@color/table_astro_contrast_light</item>
+        <item name="table_nightColor">@color/table_night_contrast_light</item>
+        <item name="table_noonColor">@color/table_noon_contrast_light</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast_light</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast_light</item>
+        <item name="table_springColor">@color/table_spring_contrast_light</item>
+        <item name="table_summerColor">@color/table_summmer_contrast_light</item>
+        <item name="table_fallColor">@color/table_fall_contrast_light</item>
+        <item name="table_winterColor">@color/table_winter_contrast_light</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast_light</item>
+        <item name="chipBackground">@drawable/chip_contrast_light</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast_light</item>
+        <item name="tagColor_error">@color/errorTag_contrast_light</item>
+        <item name="tagColor_dst">@color/dstTag_contrast_light</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light1</item>
+    </style>
+    <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Light1.Large" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Light1.XLarge" parent="AppTheme.Light1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
+
+    <!-- Contrast Dark Theme -->
+    <style name="AppTheme.Dark1" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/darkcontrast_primaryColor</item>
+        <item name="colorPrimaryDark">@color/darkcontrast_primaryContainerColor</item>
+        <item name="colorSecondary">@color/darkcontrast_secondaryColor</item>
+        <item name="colorBackgroundFloating">@color/darkcontrast_surfaceContainer</item>
+        <item name="settingsCardBackground">@color/card_bg_contrast_dark</item>
+        <item name="timeCardBackground">@color/card_bg_contrast_dark</item>
+        <item name="dialogFrame">@color/dialog_frame_contrast_dark</item>
+        <item name="dialogBackground">@color/dialog_bg_contrast_dark</item>
+        <item name="dialogBackgroundAlt">@color/dialog_bg_alt_contrast_dark</item>
+        <item name="android:windowBackground">@color/darkcontrast_surfaceColor</item>
+        <item name="table_risingColor">@color/table_rising_contrast_dark</item>
+        <item name="table_settingColor">@color/table_setting_contrast_dark</item>
+        <item name="table_civilColor">@color/table_civil_contrast_dark</item>
+        <item name="table_nauticalColor">@color/table_nautical_contrast_dark</item>
+        <item name="table_astroColor">@color/table_astro_contrast_dark</item>
+        <item name="table_nightColor">@color/table_night_contrast_dark</item>
+        <item name="table_noonColor">@color/table_noon_contrast_dark</item>
+        <item name="table_moonRisingColor">@color/table_moonRising_contrast_dark</item>
+        <item name="table_moonSettingColor">@color/table_moonSetting_contrast_dark</item>
+        <item name="table_springColor">@color/table_spring_contrast_dark</item>
+        <item name="table_summerColor">@color/table_summmer_contrast_dark</item>
+        <item name="table_fallColor">@color/table_fall_contrast_dark</item>
+        <item name="table_winterColor">@color/table_winter_contrast_dark</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_contrast_dark</item>
+        <item name="chipBackground">@drawable/chip_contrast_dark</item>
+
+        <item name="tagColor_warning">@color/warningTag_contrast_dark</item>
+        <item name="tagColor_error">@color/errorTag_contrast_dark</item>
+        <item name="tagColor_dst">@color/dstTag_contrast_dark</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark1</item>
+    </style>
+    <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Dark1.Large" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Dark1.XLarge" parent="AppTheme.Dark1">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
     <!-- view styles -->
@@ -370,7 +1098,7 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
     </style>
     <style name="SunsetTimeTextView" parent="SunsetTimeTextViewBase">
@@ -382,17 +1110,32 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:antialias">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
     <style name="SunsetTimeTextView2" parent="SunsetTimeTextView">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">?attr/text_size_xsmall</item>
     </style>
 
-    <!-- A TextView for displaying the widget title -->
-    <style name="SunsetTimeTextTitleView" parent="SunsetTimeTextView">
-        <item name="android:textSize">10sp</item>
+    <!-- A TextView for displaying the widget title;
+         "Widget" styles must not contain ?attr dimen references -->
+
+    <style name="WidgetTimeTextView" parent="SunsetTimeTextViewBase">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:antialias">true</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+    <style name="WidgetTitleTextView" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
@@ -403,16 +1146,25 @@
         <!--<item name="android:textStyle">bold</item>-->
         <item name="android:layout_gravity">bottom</item>
     </style>
+    <style name="WidgetTimeTextView2" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+    </style>
+    <style name="WidgetSuffixTextView" parent="WidgetTimeTextView">
+        <item name="android:textSize">@dimen/text_size_tiny</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 
     <!-- A TextView for displaying some suffix after time/text -->
     <style name="SunsetTimeTextSuffixView" parent="SunsetTimeTextView">
-        <item name="android:textSize">6sp</item>
+        <item name="android:textSize">?attr/text_size_tiny</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <style name="SunsetTimeSettingsGroupTitle">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="SunsetTimeHorizontalRule">
@@ -425,7 +1177,7 @@
         <item name="android:layout_width">85dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textNoSuggestions</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="ColorEditLabel">
@@ -434,6 +1186,8 @@
         <item name="android:gravity">end</item>
         <item name="android:maxLines">2</item>
         <item name="android:textColor">@drawable/btn_labeltxt</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:paddingLeft">8dp</item>
@@ -450,12 +1204,37 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/ic_colortab</item>
     </style>
+    <style name="ColorEditButton1" parent="ColorEditButton">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+    <style name="ColorEditButton1_land" parent="ColorEditButton1">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
+    <style name="ColorEditButton2" parent="ColorEditButton">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+    <style name="ColorEditButton3" parent="ColorEditButton2">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
 
     <style name="SizeEdit" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minEms">2</item>
         <item name="android:inputType">numberDecimal</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="SizeEditLabel">
@@ -463,6 +1242,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxWidth">200dp</item>
         <item name="android:gravity">end</item>
+        <item name="android:textSize">?attr/text_size_small</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:paddingLeft">8dp</item>
@@ -473,6 +1253,9 @@
         <item name="android:background">?attr/chipTrayBackground</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">6dp</item>
+    </style>
+    <style name="ChipTrayLabel">
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
 
     <style name="ChipArea">
@@ -490,6 +1273,7 @@
 
     <style name="ChipTextBase" parent="android:TextAppearance.Small">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">?attr/text_size_small</item>
     </style>
     <style name="ChipText0" parent="ChipTextBase">
         <item name="android:maxWidth">250dp</item>
@@ -515,5 +1299,130 @@
     </style>
 
     <style name="ActionButton" parent="@android:style/Widget.Button.Small" />
+
+    <style name="SystemThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="DarkThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/grey_850</item>
+        <item name="android:textColor">@color/grey_200</item>
+    </style>
+    <style name="LightThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/grey_200</item>
+        <item name="android:textColor">@color/grey_850</item>
+    </style>
+    <style name="ThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/dialog_bg</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TimePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+    <style name="DatePickerStyle">
+        <item name="android:textSize">?attr/text_size_medium</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">?attr/popupMenuBackground</item>
+    </style>
+
+    <style name="ToastTextAppearance">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TooltipTextAppearance">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">?attr/toolbarTheme</item>
+        <item name="popupTheme">?attr/actionBarPopupTheme</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">?attr/text_size_xlarge</item>
+    </style>
+    <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
+
+    <style name="NavDrawerTextAppearance">
+        <item name="android:textSize">?attr/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AboutToolbarStyle" parent="@style/AppToolbarStyle">
+        <item name="android:visibility">visible</item>
+    </style>
+    <style name="AboutTabStyle">
+        <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="WelcomeTextSizeGroup">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_marginRight">32dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="DialogTitleStyle" parent="TableHeadTextView0">        <!-- rise/set header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
+    </style>
+    <style name="DialogSubTitleStyle">
+        <item name="android:textSize">?attr/text_size_small</item>
+    </style>
+
+    <style name="EquinoxDialogTitleStyle" parent="TableHeadDateView">
+        <item name="android:textSize">?attr/text_size_large</item>
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:paddingRight">32dp</item>
+    </style>
+    <style name="EquinoxDialogItemDateStyle">
+        <item name="android:textSize">?attr/text_size_small</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:antialias">true</item>
+    </style>
+    <style name="EquinoxDialogItemNoteStyle">
+        <item name="android:textSize">?attr/text_size_small</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:antialias">true</item>
+    </style>
+
+    <style name="LockScreenActivityStyleBase" parent="AppTheme.System">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+    </style>
+    <style name="LockScreenActivityStyle" parent="LockScreenActivityStyleBase">
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+    </style>
+
+    <style name="LockScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+        <item name="android:windowBackground">?attr/tileCardBackground</item>
+    </style>
+
+    <style name="LockScreenDialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 </resources>

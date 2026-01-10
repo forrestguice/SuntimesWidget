@@ -29,8 +29,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 /**
@@ -63,6 +63,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
     {
         return new String[] { WidgetSettings.ActionMode.ONTAP_DONOTHING.name(),
                               WidgetSettings.ActionMode.ONTAP_UPDATE.name(),
+                              WidgetSettings.ActionMode.ONTAP_UPDATE_ALL.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name(),
                               WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(),
                               WidgetSettings.ActionMode.ONTAP_FLIPTO_NEXTITEM.name() };
@@ -82,7 +83,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
             {
                 RemoteViews views = getWidgetViews(context, null, appWidgetId);
                 views.showNext(R.id.view_flip);
-                AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(appWidgetId, views);
+                AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, views);
                 return true;
             }
         }

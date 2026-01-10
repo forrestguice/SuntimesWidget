@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ContentValues;
@@ -28,6 +29,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -59,7 +62,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.LightMapView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
@@ -67,7 +70,10 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -95,18 +101,24 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_SHADOWCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MIN;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NAME;
@@ -169,6 +181,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_SUNPOS_3x1 = 3;
     public static final int PREVIEWID_SUNPOS_3x2 = 4;
     public static final int PREVIEWID_CLOCK_1x1 = 5;
+    public static final int PREVIEWID_DATE_1x1 = 6;    // TODO
+    public static final int PREVIEWID_ALARM_1x1 = 7;    // TODO
+    public static final int PREVIEWID_ALARM_2x2 = 8;    // TODO
+    public static final int PREVIEWID_ALARM_3x2 = 9;    // TODO
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -199,10 +215,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction, chooseColorAccent;
-    private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
+    private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight, chooseColorPointFill, chooseColorPointStroke;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
+    private ColorChooser chooseColorMoonNewText, chooseColorMoonFullText;
     private ColorChooser chooseColorMapBackground, chooseColorMapForeground, chooseColorMapShadow, chooseColorMapHighlight;
     private ArrayList<ColorChooser> colorChoosers;
     private CheckBox checkUseFill, checkUseStroke, checkUseNoon;
@@ -232,8 +249,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
         initLocale();
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_themeconfig);
@@ -260,16 +278,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data0 = new SuntimesRiseSetDataset(context, 0);  // use app configuration
-        data0.calculateData();
+        data0.calculateData(context);
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, 0, "moon");
-        data2.calculate();
+        data2.calculate(context);
     }
 
     private void initLocale()
@@ -380,6 +398,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorNautical = createColorChooser(context, R.id.chooser_nauticalColor, THEME_NAUTICALCOLOR, PREVIEWID_SUNPOS_3x1);
         chooseColorAstro = createColorChooser(context, R.id.chooser_astroColor, THEME_ASTROCOLOR, PREVIEWID_SUNPOS_3x1);
         chooseColorNight = createColorChooser(context, R.id.chooser_nightColor, THEME_NIGHTCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorPointFill = createColorChooser(context, R.id.chooser_pointFill, THEME_GRAPH_POINT_FILL_COLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorPointStroke = createColorChooser(context, R.id.chooser_pointStroke, THEME_GRAPH_POINT_STROKE_COLOR, PREVIEWID_SUNPOS_3x1);
 
         // map colors
         chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, THEME_MAP_BACKGROUNDCOLOR, PREVIEWID_SUNPOS_3x2);
@@ -406,6 +426,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorMoonNew = createColorChooser(this, R.id.chooser_moonNewColor, THEME_MOONNEWCOLOR);
         chooseColorMoonWaxing = createColorChooser(this, R.id.chooser_moonWaxingColor, THEME_MOONWAXINGCOLOR);
         chooseColorMoonFull = createColorChooser(this, R.id.chooser_moonFullColor, THEME_MOONFULLCOLOR);
+
+        //chooseColorMoonWaningText = createColorChooser(this, R.id.chooser_moonWaningColor_text, THEME_MOONWANINGCOLOR_TEXT);
+        chooseColorMoonNewText = createColorChooser(this, R.id.chooser_moonNewColor_text, THEME_MOONNEWCOLOR_TEXT);
+        //chooseColorMoonWaxingText = createColorChooser(this, R.id.chooser_moonWaxingColor_text, THEME_MOONWAXINGCOLOR_TEXT);
+        chooseColorMoonFullText = createColorChooser(this, R.id.chooser_moonFullColor_text, THEME_MOONFULLCOLOR_TEXT);
 
         // other colors
         chooseColorTitle = createColorChooser(this, R.id.chooser_titleColor, THEME_TITLECOLOR);
@@ -622,7 +647,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id, @Nullable final Integer previewID)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
-        chooser.setColorChangeListener(new ColorDialog.ColorChangeListener() {
+        chooser.setColorChangeListener(new ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
                 addRecentColor(color);
@@ -805,15 +830,22 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
             colors.initDefaultDark(this);
 
-            colors.colorDay = chooseColorDay.getColor();
-            colors.colorCivil = chooseColorCivil.getColor();
-            colors.colorNautical = chooseColorNautical.getColor();
-            colors.colorAstro = chooseColorAstro.getColor();
-            colors.colorNight = chooseColorNight.getColor();
+            colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_CIVIL, chooseColorCivil.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, chooseColorNautical.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, chooseColorAstro.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_NIGHT, chooseColorNight.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, chooseColorPointStroke.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
+
+            colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
+            colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
@@ -834,17 +866,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
-            options.backgroundColor = chooseColorMapBackground.getColor();
-            options.foregroundColor = chooseColorMapForeground.getColor();
-            options.sunShadowColor = chooseColorMapShadow.getColor();
-            options.moonLightColor = chooseColorMapHighlight.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, chooseColorMapBackground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, chooseColorMapForeground.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, chooseColorMapShadow.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, chooseColorMapHighlight.getColor());
 
-            options.sunFillColor = chooseColorNoonIconFill.getColor();
-            options.sunStrokeColor = chooseColorNoonIconStroke.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
             options.sunScale = 24;      // extra large so preview of colors is visible
 
-            options.moonFillColor = chooseColorMoonFull.getColor();
-            options.moonStrokeColor = chooseColorMoonWaning.getColor();
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, chooseColorMoonFull.getColor());
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, chooseColorMoonWaning.getColor());
             options.moonScale = 32;
 
             int dpWidth = 128;
@@ -1483,6 +1515,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorNautical.setColor(theme.getNauticalColor());
             chooseColorAstro.setColor(theme.getAstroColor());
             chooseColorNight.setColor(theme.getNightColor());
+            chooseColorPointFill.setColor(theme.getGraphPointFillColor());
+            chooseColorPointStroke.setColor(theme.getGraphPointStrokeColor());
 
             chooseColorSpring.setColor(theme.getSpringColor());
             chooseColorSummer.setColor(theme.getSummerColor());
@@ -1500,6 +1534,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorMoonNew.setColor(theme.getMoonNewColor());
             chooseColorMoonWaxing.setColor(theme.getMoonWaxingColor());
             chooseColorMoonFull.setColor(theme.getMoonFullColor());
+
+            chooseColorMoonNewText.setColor(theme.getMoonNewTextColor());
+            chooseColorMoonFullText.setColor(theme.getMoonFullTextColor());
 
             chooseMoonStroke.setValue(theme.getMoonFullStroke());
 
@@ -1579,6 +1616,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeNauticalColor = chooseColorNautical.getColor();
                 this.themeAstroColor = chooseColorAstro.getColor();
                 this.themeNightColor = chooseColorNight.getColor();
+                this.themeGraphPointFillColor = chooseColorPointFill.getColor();
+                this.themeGraphPointStrokeColor = chooseColorPointStroke.getColor();
 
                 this.themeSpringColor = chooseColorSpring.getColor();
                 this.themeSummerColor = chooseColorSummer.getColor();
@@ -1596,6 +1635,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeMoonNewColor = chooseColorMoonNew.getColor();
                 this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
                 this.themeMoonFullColor = chooseColorMoonFull.getColor();
+
+                this.themeMoonWaningTextColor = chooseColorMoonWaning.getColor();
+                this.themeMoonNewTextColor = chooseColorMoonNewText.getColor();
+                this.themeMoonWaxingTextColor = chooseColorMoonWaxing.getColor();
+                this.themeMoonFullTextColor = chooseColorMoonFullText.getColor();
 
                 this.themeMoonFullStroke = (int)chooseMoonStroke.getValue();
                 this.themeMoonNewStroke = (int)chooseMoonStroke.getValue();
@@ -1652,6 +1696,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         values.put(THEME_NAUTICALCOLOR, chooseColorNautical.getColor());
         values.put(THEME_ASTROCOLOR, chooseColorAstro.getColor());
         values.put(THEME_NIGHTCOLOR, chooseColorNight.getColor());
+        values.put(THEME_GRAPH_POINT_FILL_COLOR, chooseColorPointFill.getColor());
+        values.put(THEME_GRAPH_POINT_STROKE_COLOR, chooseColorPointStroke.getColor());
 
         values.put(THEME_SPRINGCOLOR, chooseColorSpring.getColor());
         values.put(THEME_SUMMERCOLOR, chooseColorSummer.getColor());
@@ -1669,6 +1715,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         values.put(THEME_MOONNEWCOLOR, chooseColorMoonNew.getColor());
         values.put(THEME_MOONWAXINGCOLOR, chooseColorMoonWaxing.getColor());
         values.put(THEME_MOONFULLCOLOR, chooseColorMoonFull.getColor());
+
+        values.put(THEME_MOONWANINGCOLOR_TEXT, chooseColorMoonWaning.getColor());
+        values.put(THEME_MOONNEWCOLOR_TEXT, chooseColorMoonNewText.getColor());
+        values.put(THEME_MOONWAXINGCOLOR_TEXT, chooseColorMoonWaxing.getColor());
+        values.put(THEME_MOONFULLCOLOR_TEXT, chooseColorMoonFullText.getColor());
 
         values.put(THEME_MOONFULL_STROKE_WIDTH, (int)chooseMoonStroke.getValue());
         values.put(THEME_MOONNEW_STROKE_WIDTH, (int)chooseMoonStroke.getValue());
@@ -1802,14 +1853,26 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     protected void initWallpaper()
     {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-        if (wallpaperManager != null)
+        ImageView background = (ImageView)findViewById(R.id.preview_background);
+
+        if (Build.VERSION.SDK_INT > 18)
         {
-            ImageView background = (ImageView)findViewById(R.id.preview_background);
-            Drawable wallpaper = wallpaperManager.getDrawable();
-            if (background != null && wallpaper != null)
-            {
-                background.setImageDrawable(wallpaper);
+            background.setVisibility(View.GONE);
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        } else {
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+                if (wallpaperManager != null)
+                {
+                    @SuppressLint("MissingPermission")
+                    Drawable wallpaper = wallpaperManager.getDrawable();
+                    if (background != null && wallpaper != null) {
+                        background.setImageDrawable(wallpaper);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("initWallpaper", "failed to init wallpaper; " + e);
             }
         }
     }

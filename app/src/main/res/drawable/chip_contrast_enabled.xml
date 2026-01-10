@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item>
+    <shape android:shape="rectangle">
+        <size android:width="24dp" android:height="24dp" />
+        <solid android:color="@color/chip_bg_enabled_contrast" />
+        <stroke android:width="@dimen/chip_stroke" android:color="@color/chip_bg_enabled_stroke_contrast" />
+        <corners android:radius="@dimen/chip_radius" />
+    </shape>
+</item>
+</layer-list>

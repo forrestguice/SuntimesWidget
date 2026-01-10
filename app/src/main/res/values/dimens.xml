@@ -3,6 +3,60 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="dialog_margin">8dp</dimen>
+    <dimen name="dialog_margin1">4dp</dimen>
+    <dimen name="tooltip_margin0">8dp</dimen>
+
+    <dimen name="fab_radius">12dp</dimen>
+    <dimen name="tooltip_radius">4dp</dimen>
+    <dimen name="toast_radius">28dp</dimen>
+    <dimen name="popupmenu_radius">8dp</dimen>
+    <dimen name="tilecard_radius">16dp</dimen>
+    <dimen name="chip_radius">6dp</dimen>
+    <dimen name="chip_stroke">2dp</dimen>
+    <dimen name="chip_minHeight">38dp</dimen>
+
+    <dimen name="snackbar_button_padding">8dp</dimen>
+
+    <dimen name="smalltext_size_tiny">6sp</dimen>      <!-- "small" sizes -->
+    <dimen name="smalltext_size_xsmall">10sp</dimen>
+    <dimen name="smalltext_size_small">12sp</dimen>
+    <dimen name="smalltext_size_medium">14sp</dimen>
+    <dimen name="smalltext_size_large">16sp</dimen>
+    <dimen name="smalltext_size_xlarge">18sp</dimen>
+    <dimen name="smalltext_size_huge">34sp</dimen>
+    <dimen name="smalltext_size_enormous">52sp</dimen>
+
+    <dimen name="text_size_tiny">10sp</dimen>   <!-- "normal" sizes -->
+    <dimen name="text_size_xsmall">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="text_size_huge">36sp</dimen>
+    <dimen name="text_size_enormous">56sp</dimen>
+
+    <dimen name="largetext_size_tiny">12sp</dimen>    <!-- "large" sizes -->
+    <dimen name="largetext_size_xsmall">14sp</dimen>
+    <dimen name="largetext_size_small">16sp</dimen>
+    <dimen name="largetext_size_medium">18sp</dimen>
+    <dimen name="largetext_size_large">20sp</dimen>
+    <dimen name="largetext_size_xlarge">24sp</dimen>
+    <dimen name="largetext_size_huge">38sp</dimen>
+    <dimen name="largetext_size_enormous">58sp</dimen>
+
+    <dimen name="xlargetext_size_tiny">14sp</dimen>    <!-- "xlarge" sizes -->
+    <dimen name="xlargetext_size_xsmall">16sp</dimen>
+    <dimen name="xlargetext_size_small">18sp</dimen>
+    <dimen name="xlargetext_size_medium">20sp</dimen>
+    <dimen name="xlargetext_size_large">22sp</dimen>
+    <dimen name="xlargetext_size_xlarge">26sp</dimen>
+    <dimen name="xlargetext_size_huge">40sp</dimen>
+    <dimen name="xlargetext_size_enormous">60sp</dimen>
+
+    <dimen name="small_actionbar_size">48sp</dimen>    <!-- action bar minimum height -->
+    <dimen name="normal_actionbar_size">54sp</dimen>
+    <dimen name="large_actionbar_size">64sp</dimen>
+    <dimen name="xlarge_actionbar_size">68sp</dimen>
 
     <integer name="widget_size_minWidthDp4x1">250</integer>
     <dimen name="widget_size_minWidth4x1">250dp</dimen>
@@ -49,6 +103,8 @@
     <dimen name="sunIcon_width_risingBorder">@dimen/sunIcon_width_border</dimen>
     <dimen name="sunIcon_width_settingBorder">@dimen/sunIcon_width_border</dimen>
 
+    <dimen name="noonIcon_width_border">2dp</dimen>
+
     <dimen name="moonIcon_inset">-9dip</dimen>
     <dimen name="moonIcon_height">9dip</dimen>
     <dimen name="moonIcon_width">18dip</dimen>
@@ -57,13 +113,15 @@
     <dimen name="settingsGroup_margin">5dp</dimen>
     <dimen name="settingsGroup_padding">4dp</dimen>
 
+    <integer name="anim_welcome_pause_duration">1500</integer>
+
     <item name="anim_slidein_fade_fromalpha" format="float" type="dimen">0.1</item>
     <item name="anim_slidein_fade_toalpha" format="float" type="dimen">1.0</item>
     <integer name="anim_slidein_fade_duration">700</integer>
     <integer name="anim_slidein_move_duration">700</integer>
 
-    <integer name="anim_fadein_duration">1750</integer>
-    <integer name="anim_fadeout_duration">700</integer>
+    <integer name="anim_fadein_duration">750</integer>
+    <integer name="anim_fadeout_duration">50</integer>
     <item name="anim_slideout_fade_fromalpha" format="float" type="dimen">1.0</item>
     <item name="anim_slideout_fade_toalpha" format="float" type="dimen">0.1</item>
     <integer name="anim_slideout_fade_duration">700</integer>
@@ -75,7 +133,9 @@
     <dimen name="widgetActivity_padding">0dp</dimen>  <!-- padding around activity title + content -->
     <dimen name="widgetActivity_padding_inner">8dp</dimen> <!-- padding around activity content -->
 
-    <integer name="widget_updateInterval">0</integer>
+    <integer name="widget_updateInterval">21600000</integer>         <!-- 6 hours -->
+    <integer name="widget_updateInterval_hourly">3600000</integer>   <!-- 1 hour -->
+    <integer name="widget_updateInterval_daily">86400000</integer>   <!-- 24 hours -->
 
     <dimen name="aboutIcon_margin">0dip</dimen>
 
@@ -84,5 +144,16 @@
     <dimen name="chipIcon_size">20dp</dimen>
     <dimen name="prefIcon_size">24dp</dimen>
     <dimen name="helpIcon_size">24dp</dimen>
+    <dimen name="aboutIcon_size">96dp</dimen>
+    <dimen name="welcomeIcon_size">128dp</dimen>
+
+    <dimen name="welcomeIndicator_size">36px</dimen>
+    <dimen name="welcomeActivity_margin">16dp</dimen>
+
+    <dimen name="equinoxItem_height">56dp</dimen>
+    <dimen name="equinoxItem_margin">12dp</dimen>
+    <dimen name="equinoxList_topMargin">6dp</dimen>
+
+    <dimen name="colortext_margin">3dp</dimen>
 
 </resources>

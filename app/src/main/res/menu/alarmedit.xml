@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
-
-
+        
         <item android:id="@+id/action_enable"
             android:icon="?attr/icActionEnableAlarm"
             android:title="@string/configAction_enableAlarm"
-            app:showAsAction="always"
+            app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="800" />
 
         <item android:id="@+id/action_save"
             android:icon="?attr/icActionSave"
             android:title="@string/configAction_saveAlarm"
-            app:showAsAction="always"
+            app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="810" />
 
         <item android:id="@+id/action_disable"
             android:icon="?attr/icActionCancel"
             android:title="@string/configAction_disableAlarm"
-            app:showAsAction="always"
+            app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="820" />
 
         <item android:id="@+id/action_delete"
@@ -34,6 +34,12 @@
             android:orderInCategory="950">
             <menu />    <!-- populated at runtime from menu/alarmcontext2 -->
         </item>
+
+        <item android:id="@+id/action_help"
+            android:icon="?attr/icActionHelp"
+            android:title="@string/configAction_help"
+            app:showAsAction="never"
+            android:orderInCategory="998" />
 
         <item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"

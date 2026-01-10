@@ -20,24 +20,30 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/preview_background"
+        android:id="@+id/preview_background" android:visibility="gone"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="?timeCardBackground" android:scaleType="centerCrop"
+        android:src="?android:attr/windowBackground" android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical"
         android:focusable="true" android:focusableInTouchMode="true">
 
-        <android.support.v7.widget.Toolbar android:id="@+id/app_menubar"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" android:theme="?attr/toolbarTheme" app:popupTheme="?attr/actionBarPopupTheme"
-            app:title="@string/configLabel_widgetThemeAdd" />
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/layout_app_menubar"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+                app:title="@string/configLabel_widgetThemeAdd" />
+
+        </android.support.design.widget.AppBarLayout>
 
         <include layout="@layout/layout_themeconfig_header" />
 
         <ScrollView android:id="@+id/scrollView"
-            android:layout_width="match_parent" android:layout_height="match_parent">
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:descendantFocusability="afterDescendants">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RadioGroup android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_gravity="center" android:gravity="center_vertical"
+        android:layout_marginStart="32dp" android:layout_marginEnd="32dp" android:layout_marginBottom="24dp"
+        tools:ignore="InconsistentLayout">
+
+        <RadioButton android:id="@+id/radio_text_small"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textSize="@dimen/smalltext_size_small" android:text="@string/textSize_small" />
+
+        <RadioButton android:id="@+id/radio_text_normal"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textSize="@dimen/text_size_small" android:text="@string/textSize_normal" />
+
+        <RadioButton android:id="@+id/radio_text_large"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textSize="@dimen/largetext_size_small" android:text="@string/textSize_large" />
+
+        <RadioButton android:id="@+id/radio_text_xlarge"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textSize="@dimen/xlargetext_size_small" android:text="@string/textSize_xlarge" />
+    </RadioGroup>
+</merge>

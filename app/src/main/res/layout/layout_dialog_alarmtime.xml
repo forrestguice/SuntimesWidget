@@ -27,7 +27,8 @@
         android:layout_marginLeft="0dp" android:layout_marginRight="8dp"
         android:layout_marginStart="0dp" android:layout_marginEnd="8dp"
         android:layout_gravity="end"
-        tools:text="System Time Zone" />
+        tools:text="System Time Zone"
+        android:nextFocusDown="@+id/locationPicker" android:nextFocusRight="@+id/locationPicker" />
 
     <TextView
         android:id="@+id/locationPicker" android:background="?attr/selectableItemBackground"
@@ -35,9 +36,10 @@
         android:gravity="center_vertical" android:drawablePadding="8dp"
         android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginBottom="0dp"
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingBottom="4dp"
-
         android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
-        tools:text="Location" />
+        android:textSize="?attr/text_size_small" tools:text="Location"
+        android:nextFocusUp="@+id/modepicker" android:nextFocusLeft="@+id/modepicker"
+        android:nextFocusDown="@+id/datePicker" android:nextFocusRight="@+id/datePicker" />
 
     <TextView
         android:id="@+id/datePicker" android:background="?attr/selectableItemBackground"
@@ -46,9 +48,11 @@
         android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="4dp" android:paddingBottom="4dp"
         android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
-        tools:text="" />
+        android:textSize="?attr/text_size_small" tools:text=""
+        android:nextFocusUp="@+id/locationPicker" android:nextFocusLeft="@+id/locationPicker"
+        android:nextFocusDown="@+id/timepicker" android:nextFocusRight="@+id/timepicker" />
 
-    <TimePicker
+    <TimePicker android:theme="@style/TimePickerStyle"
         android:id="@+id/timepicker"
         android:timePickerMode="spinner"
         android:layout_width="wrap_content"

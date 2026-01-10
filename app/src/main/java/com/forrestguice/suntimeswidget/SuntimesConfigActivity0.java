@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2022 Forrest Guice
+    Copyright (C) 2014-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,22 +18,31 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +67,7 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -65,12 +75,21 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
+import com.forrestguice.suntimeswidget.settings.WidgetSettingsMetadata;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
@@ -80,12 +99,20 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.views.TooltipCompat;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.events.EventListActivity.PICK_EVENT_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
@@ -99,12 +126,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
 
+    protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
+
+    public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
+
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
     protected ContentValues themeValues;
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
+    protected View progressView;
 
     protected ScrollView scrollView;
 
@@ -117,15 +150,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
+    protected CheckBox checkbox_showDate;
     protected CheckBox checkbox_showTimeDate;
+    protected CheckBox checkbox_showAbbrMonth;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
     protected CheckBox checkbox_locationFromApp;
+    protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
+    protected EditText edit_dayOffset;
 
     protected Spinner spinner_timeMode;
-    protected TimeModeAdapter spinner_timeModeAdapter;
+    protected ImageButton button_timeModeMenu;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -137,8 +174,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected TextView label_1x1mode, label_2x1mode, label_3x1mode, label_3x2mode, label_3x3mode;
-    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
+    protected TextView label_1x1mode, label_2x1mode, label_2x2mode, label_3x1mode, label_3x2mode, label_3x3mode;
+    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_2x2mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_scaleBase;
@@ -151,10 +188,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected LocationConfigView locationConfig;
 
+    protected TextView label_timezoneMode;
     protected Spinner spinner_timezoneMode;
 
     protected LinearLayout layout_timezone;
     protected TextView label_timezone;
+    protected ImageButton button_timezone_sort;
     protected Spinner spinner_timezone;
     protected ProgressBar progress_timezone;
 
@@ -184,7 +223,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         GetFixUI.themeIcons(this);
 
         super.onCreate(icicle);
@@ -214,7 +253,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         setResult(RESULT_CANCELED, cancelIntent);
 
         WidgetThemes.initThemes(context);
-        themeValues = WidgetSettings.loadThemePref(this, appWidgetId).toContentValues();
+        SuntimesTheme theme = WidgetSettings.loadThemePref(this, appWidgetId);
+        int[] padding = theme.getPaddingPixels(context);    // caches pixel values
+        themeValues = theme.toContentValues();
 
         initViews(context);
         loadSettings(context);
@@ -257,10 +298,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         saveLayoutSettings(context);
         saveGeneralSettings(context);
+        saveCalendarSettings(context);
         locationConfig.saveSettings(context);
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
         saveActionSettings(context);
+        saveMoreGeneralSettings(context);
+        saveMetadata(context);
     }
 
     /**
@@ -273,6 +317,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig.loadSettings(context);
         loadLayoutSettings(context);
         loadGeneralSettings(context);
+        loadMoreGeneralSettings(context);
+        loadCalendarSettings(context);
         loadAppearanceSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
@@ -345,6 +391,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
+    protected WidgetModeAdapter createAdapter_widgetModeSun3x1()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun3x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
+    }
+
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
         ArrayAdapter<WidgetSettings.ActionMode> adapter = new ArrayAdapter<WidgetSettings.ActionMode>(this, R.layout.layout_listitem_oneline, supportedActionModes());
@@ -372,11 +426,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
+    @SuppressWarnings("ResourceType")
     protected void initViews(final Context context)
     {
         initToolbar(context);
 
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        progressView = findViewById(R.id.progress);
 
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
@@ -399,6 +455,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
             //setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
+
+        initMoreGeneralSettings(context);
 
         //
         // widget: onTap
@@ -460,6 +518,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
+        // widget: show date, calendar mode
+        checkbox_showDate = (CheckBox) findViewById(R.id.appwidget_general_showDate);
+        initCalendarMode(context);
+
         //
         // widget: time format mode
         //
@@ -472,17 +534,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_timeMode = (Spinner) findViewById(R.id.appwidget_general_timeMode);
         checkbox_timeModeOverride = (CheckBox) findViewById(R.id.appwidget_general_timeMode_override);
         button_timeModeHelp = (ImageButton) findViewById(R.id.appwidget_general_timeMode_helpButton);
+        button_timeModeMenu = (ImageButton) findViewById(R.id.appwidget_general_timeMode_moreButton);
         initTimeMode(context);
 
         //
         // widget: timezone mode
         //
+        label_timezoneMode = (TextView) findViewById(R.id.appwidget_timezone_mode_label);
         spinner_timezoneMode = (Spinner) findViewById(R.id.appwidget_timezone_mode);
         if (spinner_timezoneMode != null)
         {
             spinner_timezoneMode.setAdapter(createAdapter_timezoneMode());
             spinner_timezoneMode.setOnItemSelectedListener(onTimezoneModeListener);
         }
+
+        //
+        // widget: date offset
+        //
+        edit_dayOffset = (EditText) findViewById(R.id.appwidget_general_dayOffset);
 
         //
         // widget: riseSetOrder
@@ -512,26 +581,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: timezone / solartime
         //
         layout_timezone = (LinearLayout) findViewById(R.id.appwidget_timezone_custom_layout);
+        button_timezone_sort = (ImageButton) findViewById(R.id.sort_timezones);
         label_timezone = (TextView) findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) findViewById(R.id.appwidget_timezone_custom);
         progress_timezone = (ProgressBar) findViewById(R.id.appwidget_timezone_progress);
 
-        if (label_timezone != null)
+        if (button_timezone_sort != null)
         {
-            label_timezone.setOnClickListener(new View.OnClickListener()
+            TooltipCompat.setTooltipText(button_timezone_sort, button_timezone_sort.getContentDescription());
+            button_timezone_sort.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
-                    triggerTimeZoneActionMode(view);
-                }
-            });
-            label_timezone.setOnLongClickListener(new View.OnLongClickListener()
-            {
-                @Override
-                public boolean onLongClick(View view)
-                {
-                    return triggerTimeZoneActionMode(view);
+                    //triggerTimeZoneActionMode(view);
+                    showTimeZoneSortMenu(context, view);
                 }
             });
         }
@@ -600,7 +664,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             public void onSaveSortMode(WidgetTimezones.TimeZoneSort sortMode)
             {
                 super.onSaveSortMode(sortMode);
-                AppSettings.setTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
+                AppSettings.saveTimeZoneSortPref(SuntimesConfigActivity0.this, sortMode);
             }
 
             @Override
@@ -617,8 +681,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
-            locationConfig.setAutoAllowed(false);
-            locationConfig.setHideMode(true);
+            locationConfig.setAutoAllowed(true);
+            locationConfig.setHideMode(false);
             locationConfig.init(this, false, this.appWidgetId);
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
@@ -631,7 +695,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
-        // widget: 1x1, 2x1, 3x1, 3x2, 3x3 widget modes
+        // widget: 1x1, 2x1, 2x2, 3x1, 3x2, 3x3 widget modes
         //
         label_1x1mode = (TextView) findViewById(R.id.appwidget_appearance_1x1mode_label);
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
@@ -640,6 +704,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         label_2x1mode = (TextView) findViewById(R.id.appwidget_appearance_2x1mode_label);
         spinner_2x1mode = (Spinner) findViewById(R.id.appwidget_appearance_2x1mode);
         initWidgetMode2x1(context);
+
+        label_2x2mode = (TextView) findViewById(R.id.appwidget_appearance_2x2mode_label);
+        spinner_2x2mode = (Spinner) findViewById(R.id.appwidget_appearance_2x2mode);
+        initWidgetMode2x2(context);
 
         label_3x1mode = (TextView) findViewById(R.id.appwidget_appearance_3x1mode_label);
         spinner_3x1mode = (Spinner) findViewById(R.id.appwidget_appearance_3x1mode);
@@ -725,6 +793,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_appearance_title));
+                    helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                    helpDialog.setNeutralButtonListener(helpDialogListener_substitutions, HELPTAG_SUBSTITUTIONS);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -818,6 +888,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionTimeDate(false);
 
         //
+        // widget: showAbbrMonth
+        //
+        checkbox_showAbbrMonth = (CheckBox)findViewById(R.id.appwidget_general_showAbbrMonth);
+        showOptionAbbrvMonth(false);
+
+        //
         // widget: showWeeks
         //
         checkbox_showWeeks = (CheckBox)findViewById(R.id.appwidget_general_showWeeks);
@@ -843,11 +919,32 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     locationConfig.setMode(isChecked ? LocationConfigView.LocationViewMode.MODE_DISABLED : LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                    locationConfig.setAutoAllowed(!isChecked);
+                    locationConfig.setHideMode(isChecked, true);
                     if (isChecked) {
                         locationConfig.updateViews(WidgetSettings.loadLocationPref(context, 0));
                     } else {
                         locationConfig.updateViews();
                     }
+                }
+            });
+        }
+
+        // widget: timezoneFromApp
+        checkbox_tzFromApp = (CheckBox)findViewById(R.id.appwidget_timezone_fromapp);
+        if (checkbox_tzFromApp != null)
+        {
+            checkbox_tzFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (label_timezoneMode != null) {
+                        label_timezoneMode.setEnabled(!isChecked);
+                    }
+                    if (spinner_timezoneMode != null) {
+                        spinner_timezoneMode.setEnabled(!isChecked);
+                    }
+                    loadTimezoneSettings(context, isChecked ? 0 : appWidgetId);
                 }
             });
         }
@@ -948,9 +1045,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // EMPTY
     }
 
+    protected void initWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void loadWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+    protected void saveWidgetMode2x2(Context context) {
+        // EMPTY
+    }
+
     protected void initWidgetMode3x1(Context context)
     {
-        // EMPTY
+        if (spinner_3x1mode != null) {
+            spinner_3x1mode.setAdapter(createAdapter_widgetModeSun3x1());
+        }
     }
     protected void loadWidgetMode3x1(Context context)
     {
@@ -994,6 +1103,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void initWidgetModeLayout(Context context)
     {
         showOption2x1LayoutMode(true);
+        showOption3x1LayoutMode(true);
         if (checkbox_allowResize != null)
         {
             checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
@@ -1032,6 +1142,27 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
+    }
+
+    protected void initMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void saveMoreGeneralSettings(final Context context) { /* EMPTY */ }
+    protected void loadMoreGeneralSettings(final Context context) { /* EMPTY */ }
+
+    protected void initCalendarMode(final Context context) { /* EMPTY */ }
+    protected void saveCalendarSettings(Context context) {
+        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, checkbox_showDate.isChecked());
+    }
+    protected void loadCalendarSettings(Context context) {
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE));
+    }
+
+    protected void dismissHelpDialog()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        HelpDialog dialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 
     /**
@@ -1073,6 +1204,26 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    protected void loadDateOffset(Context context)
+    {
+        if (edit_dayOffset != null) {
+            edit_dayOffset.setText(WidgetSettings.loadDateOffsetPref(context, appWidgetId) + "");
+        }
+    }
+    protected void saveDateOffset(Context context)
+    {
+        if (edit_dayOffset != null)
+        {
+            int offset = 0;
+            try {
+                offset = Integer.parseInt(edit_dayOffset.getText().toString());
+            } catch (NumberFormatException e) {
+                Log.e("saveSettings", "saveDateOffset: " + e);
+            }
+            WidgetSettings.saveDateOffsetPref(context, appWidgetId, offset);
+        }
+    }
 
     /**
      * @param context a context used to access resources
@@ -1081,19 +1232,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            //final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
-            //spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter = new TimeModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
-            spinner_timeModeAdapter.setThemeValues(themeValues);
-            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+            ArrayList<WidgetSettings.RiseSetDataMode> items = new ArrayList<WidgetSettings.RiseSetDataMode>(Arrays.asList(WidgetSettings.TimeMode.values()));
+            final TimeModeAdapter adapter = new TimeModeAdapter(this, R.layout.layout_listitem_events, items);
+            adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
+            adapter.setThemeValues(themeValues);
+            spinner_timeMode.setAdapter(adapter);
 
             spinner_timeMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    showOptionShowNoon(spinner_timeModeAdapter.getItem(i) != WidgetSettings.TimeMode.NOON);
+                    showOptionShowNoon(adapter.getItem(i) != WidgetSettings.TimeMode.NOON);
                 }
 
                 @Override
@@ -1108,33 +1258,136 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             button_timeModeHelp.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    String help0 = getString(R.string.help_general_actualTime);
-                    String help1 = getString(R.string.help_general_twilight);
-                    String help2 = getString(R.string.help_general_bluehour);
-                    String help3 = getString(R.string.help_general_goldhour);
-                    helpDialog.setContent(getString(R.string.help_general4, help0, help1, help2, help3));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                public void onClick(View v) {
+                    showTimeModeHelp();
                 }
             });
+            button_timeModeHelp.setVisibility(View.GONE);
+        }
+
+        if (button_timeModeMenu != null) {
+            button_timeModeMenu.setOnClickListener(onTimeModeMenuButtonClicked);
+            button_timeModeMenu.setVisibility(View.VISIBLE);
         }
 
         showOptionTimeModeOverride(false);
         showOptionTrackingMode(false);
     }
 
+    private View.OnClickListener onTimeModeMenuButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showTimeModeMenu(SuntimesConfigActivity0.this, v);
+        }
+    };
 
+    protected void showTimeModeMenu(Context context, View v)
+    {
+        PopupMenu menu = new PopupMenu(context, v);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.timemode_overflow, menu.getMenu());
+        menu.setOnMenuItemClickListener(onTimeModeMenuClicked);
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        prepareTimeModeMenu(context, menu.getMenu());
+        menu.show();
+    }
 
+    protected void prepareTimeModeMenu(Context context, Menu menu) {
+    }
+
+    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem)
+        {
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_manage_events:
+                    launchEventEditor(SuntimesConfigActivity0.this);
+                    return true;
+
+                case R.id.action_help:
+                    showTimeModeHelp();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    });
+
+    protected void showTimeModeHelp()
+    {
+        HelpDialog helpDialog = new HelpDialog();
+        String help0 = getString(R.string.help_general_actualTime);
+        String help1 = getString(R.string.help_general_twilight);
+        String help2 = getString(R.string.help_general_bluehour);
+        String help3 = getString(R.string.help_general_goldhour);
+        helpDialog.setContent(getString(R.string.help_general4, help0, help1, help2, help3));
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+    }
+
+    protected Intent eventEditorIntent(Context context)
+    {
+        Intent intent = new Intent(context, EventListActivity.class);
+        WidgetSettings.RiseSetDataMode item = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+        intent.putExtra(EventListActivity.EXTRA_SELECTED, item.name());
+        return intent;
+    }
+
+    protected void launchEventEditor(Context context)
+    {
+        Intent configEventsIntent = eventEditorIntent(context);
+        startActivityForResult(configEventsIntent, PICK_EVENT_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    protected int insertEventAliasIntoTimeModeAdapter(@NonNull Context context, String eventID)
+    {
+        TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
+        if (adapter != null)
+        {
+            for (int i=0; i<adapter.getCount(); i++)
+            {
+                WidgetSettings.RiseSetDataMode item = adapter.getItem(i);
+                if (item != null && item.name().equals(eventID)) {
+                    return i;
+                }
+            }
+
+            if (EventSettings.hasEvent(context, eventID))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
+                if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION
+                        || event.getType() == AlarmEventProvider.EventType.SHADOWLENGTH)
+                {
+                    WidgetSettings.EventAliasTimeMode item = new WidgetSettings.EventAliasTimeMode(event);
+                    adapter.insert(item, 0);
+                    return 0;
+                } else {
+                    Log.w("onPickEvent", "event has unexpected type! " + event.getType());
+                }
+            }
+        }
+        return -1;
+    }
 
     /**
      * @param context a context used to access shared prefs
      */
     protected void loadTimeMode(Context context)
     {
-        WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(timeMode));
+        if (spinner_timeMode != null) {
+            TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null) {
+                WidgetSettings.RiseSetDataMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+                int position = adapter.getPosition(timeMode);
+                if (position < 0) {
+                    position = insertEventAliasIntoTimeModeAdapter(context, timeMode.name());
+                }
+                spinner_timeMode.setSelection(position);
+            }
+        }
     }
 
     /**
@@ -1142,8 +1395,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveTimeMode(Context context)
     {
-        WidgetSettings.TimeMode timeMode = spinner_timeModeAdapter.getItem(spinner_timeMode.getSelectedItemPosition());
-        WidgetSettings.saveTimeModePref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
+        if (spinner_timeMode != null) {
+            TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null) {
+                WidgetSettings.RiseSetDataMode item = adapter.getItem(spinner_timeMode.getSelectedItemPosition());
+                WidgetSettings.saveTimeModePref(context, appWidgetId, ((item!= null) ? item : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
+            }
+        }
     }
 
     /**
@@ -1181,8 +1439,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void setUseSolarTime(boolean value)
     {
-        label_solartime.setEnabled(value);
-        spinner_solartime.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        label_solartime.setEnabled(value && !useAppTz);
+        spinner_solartime.setEnabled(value && !useAppTz);
         layout_solartime.setVisibility((value ? View.VISIBLE : View.GONE));
         layout_timezone.setVisibility((value ? View.GONE : View.VISIBLE));
     }
@@ -1196,8 +1455,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezone.setSelection(spinner_timezone_adapter.ordinal(timezoneID), true);
         }
 
-        label_timezone.setEnabled(value);
-        spinner_timezone.setEnabled(value);
+        boolean useAppTz = (checkbox_tzFromApp != null && checkbox_tzFromApp.isChecked());
+        button_timezone_sort.setEnabled(value && !useAppTz);
+        label_timezone.setEnabled(value && !useAppTz);
+        spinner_timezone.setEnabled(value && !useAppTz);
     }
 
     private boolean triggerTimeZoneActionMode(View view)
@@ -1210,6 +1471,42 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         return false;
     }
+
+    protected boolean showTimeZoneSortMenu(Context context, View view)
+    {
+        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.timezonesort, onTimeZoneSortMenuClick);
+        TimeZoneDialog.updateTimeZoneSortMenu(context, menu);
+        menu.show();
+        return true;
+    }
+    private final PopupMenu.OnMenuItemClickListener onTimeZoneSortMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = SuntimesConfigActivity0.this;
+            WidgetTimezones.TimeZoneSpinnerSortActionBase sortActionBase = new WidgetTimezones.TimeZoneSpinnerSortActionBase()
+            {
+                @Override
+                public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
+                {
+                    super.onSortTimeZones(result, sortMode);
+                    spinner_timezone_adapter = result;
+                    WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    progress_timezone.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onSaveSortMode( WidgetTimezones.TimeZoneSort sortMode )
+                {
+                    super.onSaveSortMode(sortMode);
+                    AppSettings.saveTimeZoneSortPref(context, sortMode);
+                }
+            };
+            sortActionBase.init(context, spinner_timezone);
+            return sortActionBase.onActionItemClicked(item.getItemId());
+        }
+    });
 
     /**
      *
@@ -1248,7 +1545,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            final WidgetSettings.ActionMode[] actionModes = WidgetSettings.ActionMode.values();
+            final WidgetSettings.ActionMode[] actionModes = supportedActionModes();
             WidgetSettings.ActionMode actionMode = actionModes[parent.getSelectedItemPosition()];
 
             View launchActionView = findViewById(R.id.applayout_action_launch);
@@ -1275,9 +1572,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveLayoutSettings(Context context)
     {
-        // save: widgetmode_1x1, 3x2, 3x3
+        // save: widgetmode_1x1, 2x2, 3x1, 3x2, 3x3
         saveWidgetMode1x1(context);
         saveWidgetMode2x1(context);
+        saveWidgetMode2x2(context);
         saveWidgetMode3x1(context);
         saveWidgetMode3x2(context);
         saveWidgetMode3x3(context);
@@ -1289,9 +1587,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void loadLayoutSettings(Context context)
     {
-        // load: widgetmode_1x1, 3x2, 3x3
+        // load: widgetmode_1x1, 2x2, 3x1, 3x2, 3x3
         loadWidgetMode1x1(context);
         loadWidgetMode2x1(context);
+        loadWidgetMode2x2(context);
         loadWidgetMode3x1(context);
         loadWidgetMode3x2(context);
         loadWidgetMode3x3(context);
@@ -1358,7 +1657,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             themeDescriptor = WidgetThemes.valueOf(theme.themeName());
         } catch (InvalidParameterException e) {
             Log.e("loadAppearanceSettings", "Failed to load theme " + theme.themeName());
-            themeDescriptor = DarkTheme.THEMEDEF_DESCRIPTOR;
+            themeDescriptor = DarkTheme.themeDescriptor(context);
         }
         if (themeDescriptor != null)
         {
@@ -1450,6 +1749,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean showTimeDate = checkbox_showTimeDate.isChecked();
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, showTimeDate);
 
+        // save: showAbbrMonth
+        boolean showAbbrMonth = checkbox_showAbbrMonth.isChecked();
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, showAbbrMonth);
+
         // save: showWeeks
         boolean showWeeks = checkbox_showWeeks.isChecked();
         WidgetSettings.saveShowWeeksPref(context, appWidgetId, showWeeks);
@@ -1466,6 +1769,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = checkbox_locationFromApp.isChecked();
         WidgetSettings.saveLocationFromAppPref(context, appWidgetId, locationFromApp);
 
+        // save: tzFromApp
+        boolean tzFromApp = checkbox_tzFromApp.isChecked();
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, tzFromApp);
+
         // save: localize hemisphere
         WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
 
@@ -1475,6 +1782,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: time format
         saveTimeFormatMode(context);
+
+        // save: date offset
+        saveDateOffset(context);
     }
 
     /**
@@ -1507,7 +1817,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_riseSetOrder.setSelection(riseSetOrder.ordinal());
 
         // load: showNoon
-        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
+        boolean showNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId, getDefaultShowSolarNoon());
         checkbox_showNoon.setChecked(showNoon);
 
         // load: showSeconds
@@ -1517,6 +1827,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load showTimeDate
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         checkbox_showTimeDate.setChecked(showTimeDate);
+
+        // load showAbbrMonth
+        boolean showAbbrMonth = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        checkbox_showAbbrMonth.setChecked(showAbbrMonth);
 
         // load: showWeeks
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
@@ -1531,8 +1845,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_useAltitude.setChecked(useAltitude);
 
         // load: locationFromApp
-        boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId, getDefaultLocationFromApp());
         checkbox_locationFromApp.setChecked(locationFromApp);
+
+        // load: tzFromApp
+        boolean tzFromApp = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        checkbox_tzFromApp.setChecked(tzFromApp);
 
         // load: localize hemisphere
         checkbox_localizeHemisphere.setChecked(WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId));
@@ -1543,6 +1861,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: time format
         loadTimeFormatMode(context);
+
+        // load: date offset
+        loadDateOffset(context);
+    }
+
+    public boolean getDefaultShowSolarNoon() {
+        return WidgetSettings.PREF_DEF_GENERAL_SHOWNOON;
+    }
+
+    public boolean getDefaultLocationFromApp() {
+        return WidgetSettings.PREF_DEF_LOCATION_FROMAPP;
     }
 
     /**
@@ -1580,22 +1909,36 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadTimezoneSettings(Context context)
     {
-        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId, getDefaultTimezoneMode());
+        int widgetId = (WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId) ? 0 : appWidgetId);
+        loadTimezoneSettings(context, widgetId);
+    }
+    protected void loadTimezoneSettings(Context context, int widgetId)
+    {
+        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, widgetId, getDefaultTimezoneMode());
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
+        WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, widgetId);
         spinner_solartime.setSelection(solartimeMode.ordinal());
 
         setCustomTimezoneEnabled(timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
         setUseSolarTime(timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, widgetId);
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
     }
 
     protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
     {
         return WidgetSettings.PREF_DEF_TIMEZONE_MODE;
+    }
+
+    protected void saveMetadata(Context context)
+    {
+        WidgetSettingsMetadata.WidgetMetadata metadata = new WidgetSettingsMetadata.WidgetMetadata(
+                getWidgetClass().getSimpleName(), BuildConfig.VERSION_CODE,
+                WidgetSettingsMetadata.loadMetaData(context, appWidgetId)
+        );
+        WidgetSettingsMetadata.saveMetaData(context, appWidgetId, metadata);
     }
 
     /**
@@ -1625,7 +1968,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        edit_launchIntent.loadIntent(context, appWidgetId, null);
+        edit_launchIntent.loadIntent(context, appWidgetId, null, launchActionIntentDefaults());
+    }
+
+    protected ContentValues launchActionIntentDefaults() {
+        return WidgetActions.defaultLaunchPrefValues();
     }
 
     /**
@@ -1643,6 +1990,293 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             }, 250);
         }
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
+    }
+    public void dismissProgress()
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * exportSettings
+     */
+    protected void exportSettings(Context context)
+    {
+        saveSettings(context);
+
+        String exportTarget = getWidgetClass().getSimpleName() + "_" + appWidgetId;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("ExportSettings", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
+        task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
+        task.execute();
+    }
+    public void exportSettings(Context context, @NonNull Uri uri)
+    {
+        Log.i("ExportSettings", "Starting export task: " + uri);
+        saveSettings(context);
+        WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
+        task.setTaskListener(exportSettingsListener);
+        task.setAppWidgetId(appWidgetId);
+        task.execute();
+    }
+
+    private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            //setRetainInstance(true);
+            Context context = SuntimesConfigActivity0.this;
+            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+        }
+
+        @Override
+        public void onFinished(WidgetSettingsExportTask.ExportResult results)
+        {
+            //setRetainInstance(false);
+            dismissProgress();
+
+            Context context = SuntimesConfigActivity0.this;
+            if (context != null)
+            {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
+                if (results.getResult())
+                {
+                    //if (isAdded()) {
+                    String successMessage = context.getString(R.string.msg_export_success, path);
+                    Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
+                    //}
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
+                }
+
+                //if (isAdded()) {
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                //}
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * importSettings
+     */
+    protected boolean importSettings(Context context)
+    {
+        if (context != null) {
+            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            return true;
+        }
+        return false;
+    }
+    public boolean importSettings(final Context context, @NonNull Uri uri)
+    {
+        Log.i("ImportSettings", "Starting import task: " + uri);
+        WidgetSettingsImportTask task = new WidgetSettingsImportTask(context);
+        task.setTaskListener(new WidgetSettingsImportTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {
+                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+            }
+
+            @Override
+            public void onFinished(WidgetSettingsImportTask.TaskResult result)
+            {
+                dismissProgress();
+                if (result.getResult() && result.numResults() > 0)
+                {
+                    ArrayList<ContentValues> values = new ArrayList<>();
+                    CharSequence[] labels = new CharSequence[result.numResults()];
+
+                    for (int i=0; i<result.numResults(); i++)
+                    {
+                        ContentValues v = result.getItems()[i];
+                        WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(v);
+                        String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
+                        labels[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
+                                ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
+
+                        if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
+                        {
+                            //Log.d("ImportSettings", "found settings for widget type " + values_widgetClassName + " at index " + i);
+                            values.add(v);
+                        }
+                    }
+
+                    if (values.size() == 1) {    // one match
+                        importSettings(context, values.get(0));
+
+                    } else if (values.size() > 1) {    // multiple matches; choose one
+                        chooseImportValuesOfSameType(context, values);
+
+                    } else {    // no matches; choose any
+                        chooseImportValuesOfDifferentType(context, result.getItems(), labels);
+                    }
+
+                } else {
+                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        task.execute(uri);
+        return true;
+    }
+
+    protected void chooseImportValuesOfSameType(final Context context, ArrayList<ContentValues> values)
+    {
+        final ContentValues[] matchingValues = values.toArray(new ContentValues[0]);
+        CharSequence[] labels = new CharSequence[matchingValues.length];
+        for (int i=0; i<matchingValues.length; i++) {
+            labels[i] = (i + 1) + "";
+        }
+        String title = context.getString(R.string.importwidget_dialog_title2);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < matchingValues.length)) {
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
+                            importSettings(context, matchingValues[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected void chooseImportValuesOfDifferentType(final Context context, final ContentValues[] values, final CharSequence[] labels)
+    {
+        String title = context.getString(R.string.importwidget_dialog_title1);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+                })
+                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if ((p >= 0 && p < values.length)) {
+                            //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
+                            importSettings(context, values[p]);
+                        }
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected void importSettings(Context context, ContentValues values) {
+        importSettings(context, values, true);
+    }
+    protected void importSettings(Context context, ContentValues values, boolean offerUndo)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        ContentValues previousValues = null;
+        if (offerUndo) {
+            previousValues = WidgetSettingsExportTask.toContentValues(prefs0, appWidgetId);
+        }
+
+        SharedPreferences.Editor prefs = prefs0.edit();
+        WidgetSettingsImportTask.importValues(prefs, values, WidgetSettings.PREF_PREFIX_KEY, (long) appWidgetId);
+        loadSettings(context);   // reload ui
+
+        if (offerUndo) {
+            //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
+            offerUndoImport(context, previousValues);
+        }
+    }
+
+    protected  void offerUndoImport(final Context context, final ContentValues previous)
+    {
+        View view = getWindow().getDecorView();
+        if (context != null && view != null)
+        {
+            CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
+            Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    importSettings(context, previous, false);
+                }
+            });
+            ViewUtils.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_IMPORT_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_IMPORT_MILLIS = 12000;
+
+    /**
+     * clear settings (restore defaults)
+     */
+    protected void confirmResetWidget(final Context context)
+    {
+        String title = context.getString(R.string.configAction_restoreDefaults);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage(context.getString(R.string.resetwidget_dialog_message))
+                .setPositiveButton(context.getString(R.string.configAction_restoreDefaults), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        resetWidget();
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        confirm.show();
+    }
+    protected void resetWidget()
+    {
+        WidgetSettings.deletePrefs(this, appWidgetId);
+        onResetWidget();
+        loadSettings(this);
+    }
+    protected void onResetWidget() { /* EMPTY */ }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Click handler executed when the "Add Widget" button is pressed.
@@ -1677,13 +2311,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected Class getWidgetClass() {
+        return SuntimesWidget0.class;
+    }
+
     /**
      * Update all widgets of this type (direct update, no broadcast).
      * @param context a context used to access resources
      */
     protected void updateWidgets(Context context, int[] appWidgetIds)
     {
-        Intent updateIntent = new Intent(context, SuntimesWidget0.class);
+        Intent updateIntent = new Intent(context, getWidgetClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         sendBroadcast(updateIntent);
@@ -1794,6 +2432,38 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void hideLocationSettings()
+    {
+        View settings = findViewById(R.id.appwidget_location_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+    
+    protected void hideTimeZoneSettings()
+    {
+        View settings = findViewById(R.id.appwidget_timezone_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
+    protected void hideAppearanceSettings()
+    {
+        View settings = findViewById(R.id.appwidget_appearance_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
+    protected void hideActionSettings()
+    {
+        View settings = findViewById(R.id.appwidget_action_layout);
+        if (settings != null) {
+            settings.setVisibility(View.GONE);
+        }
+    }
+
     protected void showDataSource(boolean showDataSourceUI)
     {
         View dataSourceLayout = findViewById(R.id.appwidget_general_calculator_layout);
@@ -1847,6 +2517,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void showOptionAbbrvMonth( boolean showOption )
+    {
+        View optionLayout = findViewById(R.id.appwidget_general_showAbbrMonth_layout);
+        if (optionLayout != null) {
+            optionLayout.setVisibility((showOption ? View.VISIBLE : View.GONE));
+        }
+    }
+
     /**
      * @param showCompareUI true: show comparison ui, false: hide comparison ui
      */
@@ -1883,6 +2561,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     /**
+     * @param showOption true; show title option, false hide option
+     */
+    protected void showOptionTitle(boolean showOption) {
+        if (checkbox_showTitle != null) {
+            checkbox_showTitle.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+        View titleLayout = findViewById(R.id.appwidget_appearance_titleText_layout);
+        if (titleLayout != null) {
+            titleLayout.setVisibility((showOption) ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
      * @param showUI true show option, false hide option
      */
     protected void showOptionTimeModeOverride(boolean showUI)
@@ -1915,6 +2606,53 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_riseSetOrder != null)
         {
             layout_riseSetOrder.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showOptionShowDate(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_showDate_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showCalendarMode(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_calendarMode_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showCalendarFormat(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_calendarFormat_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+        layout = findViewById(R.id.appwidget_general_calendarPattern_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showMoreGeneralSettings(boolean showUI) {
+        View layout = findViewById(R.id.appwidget_general_moreOptions_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 
@@ -1985,6 +2723,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void showOption2x2LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_2x2mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
     protected void showOption3x1LayoutMode(boolean show)
     {
         View layout_mode = findViewById(R.id.appwidget_appearance_3x1mode_layout);
@@ -2013,6 +2759,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void showOptionDateOffset(boolean show)
+    {
+        View layout = findViewById(R.id.appwidget_general_dayOffset_layout);
+        if (layout != null) {
+            layout.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
     /**
      * @param text activity title text
      */
@@ -2036,6 +2790,50 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    public void moveViewToTop(int sectionLayoutID, int viewID) {
+        moveViewToPosition(sectionLayoutID, viewID, 1);    // 1; 0 is group title view
+    }
+    public void moveViewToBeforeOther(int sectionLayoutID, int viewID, int otherViewID)
+    {
+        int i = getViewPosition(sectionLayoutID, otherViewID);
+        if (i >= 0) {
+            moveViewToPosition(sectionLayoutID, viewID, Math.max(i - 1, 0));
+        }
+    }
+    public void moveViewToAfterOther(int sectionLayoutID, int viewID, int otherViewID)
+    {
+        int i = getViewPosition(sectionLayoutID, otherViewID);
+        if (i >= 0) {
+            moveViewToPosition(sectionLayoutID, viewID, i + 1);
+        }
+    }
+    protected void moveViewToPosition(int sectionLayoutID, int viewID, int position)
+    {
+        LinearLayout layout = (LinearLayout) findViewById(sectionLayoutID);
+        if (layout != null && position >= 0)
+        {
+            View view = findViewById(viewID);
+            if (view != null)
+            {
+                LinearLayout parent = (LinearLayout) view.getParent();
+                parent.removeView(view);
+                layout.addView(view, position);
+            }
+        }
+    }
+    protected int getViewPosition(int sectionLayoutID, int viewID)
+    {
+        LinearLayout layout = (LinearLayout)findViewById(sectionLayoutID);
+        if (layout != null)
+        {
+            View view = layout.findViewById(viewID);
+            if (view != null) {
+                return layout.indexOfChild(view);
+            }
+        }
+        return -1;
+    }
+
     /**
      * @param requestCode anticipates PICK_THEME_REQUEST
      * @param resultCode RESULT_OK, RESULT_CANCELED
@@ -2047,13 +2845,47 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case EXPORT_REQUEST:
+                onExportResult(resultCode, data);
+                break;
+
+            case IMPORT_REQUEST:
+                onImportResult(resultCode, data);
+                break;
+
             case LocationConfigDialog.REQUEST_LOCATION:
                 onLocationResult(resultCode, data);
+                break;
+
+            case PICK_EVENT_REQUEST:
+                onPickEventResult(resultCode, data);
                 break;
 
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
+        }
+    }
+
+    protected void onExportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                exportSettings(this, uri);
+            }
+        }
+    }
+
+    protected void onImportResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri uri = (data != null ? data.getData() : null);
+            if (uri != null) {
+                importSettings(this, uri);
+            }
         }
     }
 
@@ -2064,6 +2896,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            }
+        }
+    }
+
+    protected void onPickEventResult(int resultCode, Intent data)
+    {
+        Context context = SuntimesConfigActivity0.this;
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            if (eventID != null) {
+                int position = insertEventAliasIntoTimeModeAdapter(context, eventID);
+                spinner_timeMode.setSelection(position);
             }
         }
     }
@@ -2083,7 +2928,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             boolean paramReloadAdapter = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
             if (paramReloadAdapter)
             {
-                Log.d("selectTheme", "reloading list of themes...");
+                //Log.d("selectTheme", "reloading list of themes...");
                 initThemeAdapter(this);
             }
 
@@ -2096,9 +2941,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void onThemeSelectionChanged()
     {
-        Log.d("DEBUG", "onThemeSelectionChanged");
+        //Log.d("DEBUG", "onThemeSelectionChanged");
         ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
-        this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
+
+        SuntimesTheme t = WidgetThemes.loadTheme(this, theme.name());
+        t.getPaddingPixels(this);
+        this.themeValues = t.toContentValues();
         themeViews(themeValues);
 
         updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews
@@ -2145,14 +2993,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private void updateTimeModeAdapter(ContentValues themeValues)
+    protected void updateTimeModeAdapter(ContentValues themeValues)
     {
-        if (spinner_timeMode != null && spinner_timeModeAdapter != null)
+        if (spinner_timeMode != null)
         {
-            WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner_timeMode.getSelectedItem();
-            spinner_timeModeAdapter.setThemeValues(themeValues);
-            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
-            spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(selected));
+            TimeModeAdapter adapter = (TimeModeAdapter) spinner_timeMode.getAdapter();
+            if (adapter != null)
+            {
+                WidgetSettings.RiseSetDataMode selected = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+                adapter.setThemeValues(themeValues);
+                spinner_timeMode.setAdapter(adapter);
+                spinner_timeMode.setSelection(adapter.getPosition(selected));
+            }
         }
     }
 
@@ -2191,7 +3043,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (position >= 0)
         {
             spinner_theme.setSelection(position, true);
-            Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
+            //Log.d("selectTheme", "selected theme: " + themeDescriptor.name());
 
         } else {
             Log.w("selectTheme", "unable to find " + themeDescriptor.name() + " (bad position).");
@@ -2236,8 +3088,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 showAbout();
                 return true;
 
+            case R.id.action_import:
+                importSettings(SuntimesConfigActivity0.this);
+                return true;
+
+            case R.id.action_export:
+                exportSettings(SuntimesConfigActivity0.this);
+                return true;
+
             case R.id.action_save:
                 addWidget();
+                return true;
+
+            case R.id.action_reset:
+                confirmResetWidget(this);
                 return true;
 
             case android.R.id.home:
@@ -2255,7 +3119,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 
@@ -2265,6 +3129,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
+    /**
+     * HelpDialog (title substitutions)
+     */
+    private final View.OnClickListener helpDialogListener_substitutions = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.help_url) + getString(R.string.help_substitutions_path))));
+        }
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -2272,10 +3147,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     public static class WidgetModeAdapter extends ArrayAdapter<WidgetSettings.WidgetModeDisplay>
     {
-        private int resourceID, dropDownResourceID;
-        private WidgetSettings.WidgetModeDisplay[] objects;
-        private WidgetThemePreview preview;
-        private ContentValues themeValues = null;
+        protected int resourceID, dropDownResourceID;
+        protected WidgetSettings.WidgetModeDisplay[] objects;
+        protected WidgetThemePreview preview;
+        protected ContentValues themeValues = null;
 
         public WidgetModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -2319,7 +3194,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return getItemView(position, convertView, parent, true, resourceID);
         }
 
-        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
+        protected void modifyThemeValues(int position, ContentValues values) {
+            /* EMPTY */
+        }
+
+        protected View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
@@ -2342,6 +3221,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     previewArea.removeAllViewsInLayout();
                     View previewView = layoutInflater.inflate(item.getLayoutID(), previewArea, true);
                     if (themeValues != null) {
+                        modifyThemeValues(position, themeValues);
                         preview.updatePreview(item.getLayoutID(), previewView, themeValues);
                     }
                 }
@@ -2356,23 +3236,85 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * TimeModeAdapter
      */
-    public static class TimeModeAdapter extends ArrayAdapter<WidgetSettings.TimeMode>
+    public static class TimeModeAdapter extends ModeAdapterBase<WidgetSettings.RiseSetDataMode>
     {
-        private int resourceID, dropDownResourceID;
-        private WidgetSettings.TimeMode[] objects;
-        private ContentValues themeValues = null;
+        private final SuntimesUtils utils = new SuntimesUtils();
+        private WeakReference<Context> contextRef;
 
         public TimeModeAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            contextRef = new WeakReference<>(context);
+        }
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.RiseSetDataMode[] objects) {
+            super(context, resource, objects);
+            contextRef = new WeakReference<>(context);
+        }
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.RiseSetDataMode> objects) {
+            super(context, resource, objects);
+            contextRef = new WeakReference<>(context);
+        }
+
+        @Override
+        protected String getNameForMode(WidgetSettings.RiseSetDataMode mode) {
+            return mode.name();
+        }
+
+        @Override
+        protected String getSummaryForMode(WidgetSettings.RiseSetDataMode item)
+        {
+            Context context = contextRef.get();
+            WidgetSettings.TimeMode timeMode = item.getTimeMode();
+            if (timeMode != null)
+            {
+                Double angle = timeMode.angle();
+                return angle != null ? utils.formatAsDegrees(angle, 1) : null;
+
+            } else if (context != null && EventSettings.hasEvent(context, item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
+                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
+                return ((event != null) ? utils.formatAsDegrees(event.getAngle(), 1) : null);
+
+            } else return null;
+        }
+
+        @Override
+        protected int getColorForMode(WidgetSettings.RiseSetDataMode item)
+        {
+            if (themeValues == null || item == null) {
+                return Color.TRANSPARENT;
+            }
+            if (item.getTimeMode() == null) {
+                return EventSettings.getColor(contextRef.get(), item.name());
+            }
+            switch (item.getTimeMode())
+            {
+                case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
+                case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
+                case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
+                case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
+                case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
+                case MIDNIGHT: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);
+                case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
+            }
+        }
+    }
+
+    public static class ModeAdapterBase<T> extends ArrayAdapter<T>
+    {
+        protected int resourceID, dropDownResourceID;
+        protected ContentValues themeValues = null;
+
+        public ModeAdapterBase(@NonNull Context context, int resource) {
             super(context, resource);
             init(context, resource);
         }
 
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.TimeMode[] objects) {
+        public ModeAdapterBase(@NonNull Context context, int resource, @NonNull T[] objects) {
             super(context, resource, objects);
             init(context, resource);
         }
 
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.TimeMode> objects) {
+        public ModeAdapterBase(@NonNull Context context, int resource, @NonNull List<T> objects) {
             super(context, resource, objects);
             init(context, resource);
         }
@@ -2407,42 +3349,52 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
 
-            WidgetSettings.TimeMode item = getItem(position);
+            T item = getItem(position);
             if (item == null) {
                 Log.w("getItemView", "item at position " + position + " is null.");
                 return view;
             }
 
             Object tag = view.getTag();
-            if (tag == null || !tag.equals(item.name()))
+            if (tag == null || !tag.equals(getNameForMode(item)))
             {
                 TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-                primaryText.setText(item.toString());
+                primaryText.setText(getLabelForMode(item));
 
-                View colorTab = view.findViewById(R.id.icon1);
+                TextView text2 = (TextView)view.findViewById(android.R.id.text2);
+                if (text2 != null)
+                {
+                    String summary = getSummaryForMode(item);
+                    text2.setText(summary);
+                    text2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
+                }
+
+                View colorTab = view.findViewById(android.R.id.icon1);
+                colorTab = (colorTab != null ? colorTab : view.findViewById(R.id.icon1));
                 if (colorTab != null && themeValues != null) {
                     colorTab.setBackgroundColor(getColorForMode(item));
                 }
-                view.setTag(item.name());
+                view.setTag(getNameForMode(item));
             }
             return view;
         }
 
-        private int getColorForMode(WidgetSettings.TimeMode mode)
-        {
-            if (themeValues == null) {
-                 return Color.TRANSPARENT;
-            }
-            switch (mode)
-            {
-                case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
-                case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
-                case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
-                case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
-                case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
-                case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
-            }
+        protected String getNameForMode(T mode) {
+            return null;
         }
-    }
 
+        protected String getSummaryForMode(T mode) {
+            return null;
+        }
+
+        protected String getLabelForMode(T mode) {
+            return mode.toString();
+        }
+
+        protected int getColorForMode(T mode) {
+            return Color.WHITE;
+        }
+
+    }
+    
 }

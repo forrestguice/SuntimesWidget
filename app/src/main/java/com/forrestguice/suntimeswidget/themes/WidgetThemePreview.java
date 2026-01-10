@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2021 Forrest Guice
+    Copyright (C) 2021-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,11 +21,13 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -33,7 +35,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.LightMapView;
+import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
@@ -41,21 +43,40 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
-import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
-import com.forrestguice.suntimeswidget.layouts.PositionLayout;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
-import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
-import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.graph.LightGraphView;
+import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
+import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
+import com.forrestguice.suntimeswidget.widgets.layouts.PositionLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_FILLPATH;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWAXIS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
+import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
+import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 
 public class WidgetThemePreview
 {
@@ -98,16 +119,16 @@ public class WidgetThemePreview
     {
         this.appWidgetId = appWidgetId;
         data0 = new SuntimesRiseSetDataset(context, appWidgetId);  // use app configuration
-        data0.calculateData();
+        data0.calculateData(context);
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data1.linkData(noonData);
 
         data2 = new SuntimesMoonData(context, appWidgetId, "moon");
-        data2.calculate();
+        data2.calculate(context);
 
         showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
         showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
@@ -167,16 +188,44 @@ public class WidgetThemePreview
             updatePreview_position0(previewLayout, values, 256, 32);
             updatePreview_position1(previewLayout, values, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
             updatePreview_position2(previewLayout, values);
+            updatePreview_position3(previewLayout, values, 256, 256);
+            updatePreview_position4(previewLayout, values, 256, 256);
             //updatePreview_solstice(previewLayout);  // TODO
 
-        } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID)) {
+        } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun3x1.supportsLayout(layoutID)) {
             updatePreview_sun(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeMoon1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeMoon2x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeMoon3x1.supportsLayout(layoutID)) {
             updatePreview_moon(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
-            updatePreview_position0(previewLayout, values, 128, 32);
+            WidgetSettings.WidgetModeSunPos3x1 mode;
+            try {
+                mode = WidgetSettings.WidgetModeSunPos3x1.valueOf(values.getAsString(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1));
+            } catch (IllegalArgumentException e) {
+                mode = WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP;
+            }
+            switch (mode) {
+                case MODE3x1_LIGHTMAP_SMALL: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_SMALL - 4); break;
+                case MODE3x1_LIGHTMAP_MEDIUM: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_MEDIUM - 4); break;
+                case MODE3x1_LIGHTMAP: default: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_LARGE - 4); break;
+            }
+
+        } else if (WidgetSettings.WidgetModeSunPos3x2.supportsLayout(layoutID)) {
+            WidgetSettings.WidgetModeSunPos3x2 mode;
+            try {
+                mode = WidgetSettings.WidgetModeSunPos3x2.valueOf(values.getAsString(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x2));
+            } catch (IllegalArgumentException e) {
+                mode = WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP;
+            }
+            switch (mode) {
+                case MODE3x2_LINEGRAPH: updatePreview_position3(previewLayout, values, 128, 64); break;
+                case MODE3x2_LIGHTGRAPH: updatePreview_position4(previewLayout, values, 128, 64); break;
+                case MODE3x2_WORLDMAP: default:
+                    WorldMapWidgetSettings.WorldMapWidgetMode mapMode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);
+                    updatePreview_position1(previewLayout, values, (mapMode != null ? mapMode : WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
+                    break;
+            }
 
         } else if (WorldMapWidgetSettings.WorldMapWidgetMode.supportsLayout(layoutID)) {
             WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);
@@ -200,13 +249,24 @@ public class WidgetThemePreview
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
             colors.initDefaultDark(previewLayout.getContext());
 
-            colors.colorDay = values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
-            colors.colorCivil = values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
-            colors.colorNautical = values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
-            colors.colorAstro = values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);;
-            colors.colorNight = values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);;
+            colors.values.setColor(LightMapColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_NAUTICAL, values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
 
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
+            if (values.getAsInteger("option_drawNow") != null) {
+                colors.option_drawNow = values.getAsInteger("option_drawNow");
+            }
+            if (values.getAsInteger("option_drawNow_pointSizePx") != null) {
+                colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
+            }
+
+            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
@@ -234,17 +294,18 @@ public class WidgetThemePreview
 
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
-            options.backgroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR));
             options.foregroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR);
-            options.sunShadowColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR);
-            options.moonLightColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_SHADOW, values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_LIGHT, values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR));
 
-            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR);
-            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
             options.sunScale = 24;      // extra large so preview of colors is visible
 
-            options.moonFillColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR);
-            options.moonStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONWANINGCOLOR);
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_FILL, values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR));
+            options.colors.setColor(WorldMapColorValues.COLOR_MOON_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_MOONWANINGCOLOR));
             options.moonScale = 32;
 
             int[] sizeDp = suggestedPreviewSizeDp(mode);
@@ -359,6 +420,126 @@ public class WidgetThemePreview
                     updateSize(previewDeclinationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
                 }
             }
+        }
+    }
+
+    public void updatePreview_position3(View previewLayout, ContentValues values, int widthDp, int heightDp)
+    {
+        final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_graph);
+        if (view != null)
+        {
+            Context context = view.getContext();
+            LineGraphView.LineGraphOptions options = new LineGraphView.LineGraphOptions(context);
+            options.initDefaultDark(previewLayout.getContext());
+            options.graph_width = LineGraphView.MINUTES_IN_DAY;
+            options.graph_height = 180;
+            options.graph_x_offset = options.graph_y_offset = 0;
+            options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
+            options.axisX_labels_show = options.axisY_labels_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWLABELS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWLABELS);
+            options.axisX_show = options.axisY_show = options.gridY_major_show = options.gridX_major_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWAXIS);
+            options.sunPath_show_line = true;
+            options.sunPath_show_fill = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_FILLPATH, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_FILLPATH);
+            options.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
+            options.moonPath_show_fill = options.sunPath_show_fill;
+            options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
+            options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+
+            LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask(context);
+            drawTask.setListener(new LineGraphView.LineGraphTaskListener() 
+            {
+                @Override
+                public void onFinished(Bitmap result) {
+                    super.onFinished(result);
+                    view.setImageBitmap(result);
+                }
+            });
+
+            int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
+            int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+            drawTask.execute(data0, widthPx, heightPx, options);
+        }
+    }
+
+    public void updatePreview_position4(View previewLayout, ContentValues values, final int widthDp, final int heightDp)
+    {
+        final ImageView view = (ImageView) previewLayout.findViewById(R.id.info_time_graph);
+        if (view != null)
+        {
+            final Context context = view.getContext();
+            final LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions(context);
+
+            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            options.colors = LightGraphColorValues.getColorDefaults(context, isNightMode);
+
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
+                    : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+
+            options.graph_width = 365;    // days
+            options.graph_height = 24;    // hours
+            options.graph_x_offset = options.graph_y_offset = 0;
+            options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
+            options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+
+            options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
+            options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);
+            options.gridX_major_show = options.gridY_major_show = false;
+            options.axisX_width = options.axisY_width = 365;
+            options.sunPath_show_points = true;
+            options.sunPath_show_fill = true;
+
+            options.colors.setColor(LightGraphColorValues.COLOR_NIGHT, values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_NAUTICAL, values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_ASTRONOMICAL, values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_POINT_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_POINT_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUN_FILL, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUN_STROKE, values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SPRING, values.getAsInteger(SuntimesThemeContract.THEME_SPRINGCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_SUMMER, values.getAsInteger(SuntimesThemeContract.THEME_SUMMERCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_AUTUMN, values.getAsInteger(SuntimesThemeContract.THEME_FALLCOLOR));
+            options.colors.setColor(LightGraphColorValues.COLOR_WINTER, values.getAsInteger(SuntimesThemeContract.THEME_WINTERCOLOR));
+
+            final int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
+            final int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+
+            final LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
+            drawTask.setListener(new LightGraphView.LightGraphTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result)
+                {
+                    super.onFinished(result);
+                    view.setImageBitmap(result);
+                }
+            });
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            final Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
+                    //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
+                    data.calculateData(context);
+                    drawTask.setData(LightGraphView.LightGraphTask.createYearData(context, data));
+                    handler.post(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            drawTask.execute(data0, widthPx, heightPx, options);
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -509,7 +690,9 @@ public class WidgetThemePreview
 
         ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
         if (previewNoonIcon != null) {
-            previewNoonIcon.setImageBitmap(SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels));
+            Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels);   // doesn't call mutate (themes other Drawable instances)
+            Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+            previewNoonIcon.setImageDrawable(d);
         }
     }
 
@@ -613,6 +796,7 @@ public class WidgetThemePreview
         // Position
         updatePreview_moonPosition(previewLayout, values);
         updatePreview_moonApogeePerigee(previewLayout, values);
+        updatePreview_moonDay(previewLayout, values);
 
         // Moon Labels
         updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_new_label), values);
@@ -802,6 +986,27 @@ public class WidgetThemePreview
                 previewMoonDistanceLabel.setTextColor(textColor);
                 updateSize(previewMoonDistanceLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
             }
+        }
+    }
+
+    public void updatePreview_moonDay(View previewLayout, ContentValues values)
+    {
+        //Context context = previewLayout.getContext();
+        //int timeColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+
+        TextView previewMoonDay = (TextView)previewLayout.findViewById(R.id.info_moon_day);
+        if (previewMoonDay != null)
+        {
+            previewMoonDay.setText("4");    // TODO
+            previewMoonDay.setTextColor(textColor);
+            updateSize(previewMoonDay, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+        }
+
+        TextView previewLabel = (TextView)previewLayout.findViewById(R.id.info_moon_day_label);
+        if (previewLabel != null) {
+            previewLabel.setTextColor(textColor);
+            updateSize(previewLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
         }
     }
 

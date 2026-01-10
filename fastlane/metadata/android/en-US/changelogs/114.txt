@@ -1,0 +1,9 @@
+- adds graph of sunlight over the year, and time of earliest/latest sunrise/sunset.
+- adds support for customizing map and graph colors.
+- adds support for custom events based on "shadow length".
+- adds "bedtime mode" to alarms; helps schedule do-not-disturb during sleep hours.
+- adds "use app location" option to alarms; reschedules alarms when the location changes.
+- adds "high brightness" option to alarms, and "swipe to dismiss" alarm UI.
+- adds "next alarm" quick settings tile, and "next alarm" widgets.
+- fixes bug "alarms fail to display over lock screen" (#802).
+- updates targetSdkVersion from 25 to 28 (Android 9); adds support for notification channels.

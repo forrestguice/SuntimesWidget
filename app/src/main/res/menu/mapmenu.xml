@@ -19,7 +19,7 @@
 
             <item android:id="@+id/mapOption_background"
                 android:title="@string/worldmap_dialog_option_background"
-                android:icon="?attr/icActionMap"
+                android:icon="?attr/icActionWorldMap"
                 app:showAsAction="never" />
 
             <item android:id="@+id/mapOption_background_clear"
@@ -40,6 +40,11 @@
         app:showAsAction="never">
 
         <menu>
+
+            <item android:id="@+id/mapOption_colors"
+                android:title="@string/configAction_colors"
+                android:icon="?attr/icActionAppearance"
+                app:showAsAction="never" />
 
             <group android:id="@+id/mapOption_group_light">
 
@@ -96,6 +101,17 @@
                     android:title="@string/configAction_sunDialog"
                     android:icon="@drawable/ic_sun"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_moon"
+                    android:title="@string/configAction_moon"
+                    android:icon="@drawable/ic_moon"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_calendar"
+                    android:title="@string/configAction_showCalendar"
+                    android:icon="?attr/icActionCalendar"
+                    app:showAsAction="never" />
+
             </menu>
     </item>
 

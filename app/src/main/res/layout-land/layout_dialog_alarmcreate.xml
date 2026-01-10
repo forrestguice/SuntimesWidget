@@ -26,7 +26,7 @@
         android:orientation="horizontal" android:gravity="center_vertical|start">
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/dialog_header"
         android:background="?attr/dialogBackgroundAlt"
         android:layout_width="match_parent" android:layout_height="56dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
@@ -49,19 +49,20 @@
         android:layout_width="match_parent" android:layout_height="32dp">
 
         <android.support.design.widget.TabItem
-            android:id="@+id/tab_event" android:tag="AlarmDialog"
+            android:id="@+id/tab_event"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/schedalarm_dialog_tab_event" />
 
         <android.support.design.widget.TabItem
-            android:id="@+id/tab_time" android:tag="AlarmTimeDialog"
+            android:id="@+id/tab_time"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/schedalarm_dialog_tab_time" />
 
     </android.support.design.widget.TabLayout>
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:minHeight="160dp">
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:minHeight="160dp"
+        android:baselineAligned="false">
 
         <FrameLayout android:background="?attr/dialogBackgroundAlt"
             android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="200dp">

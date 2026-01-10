@@ -20,7 +20,9 @@
     android:id="@+id/moonapsis_layout"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+    android:paddingLeft="8dp" android:paddingRight="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:focusable="true" android:clickable="true">
 
     <TextView android:id="@+id/moonapsis_label"
         style="@style/SunsetTimeTextView2" android:layout_margin="0dp"

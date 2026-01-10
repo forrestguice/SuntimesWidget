@@ -2,9 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
     <shape android:shape="rectangle">
-        <size android:width="22dp" android:height="22dp" />
-        <solid android:color="@color/grey_800" />
-        <corners android:radius="1dp" />
+        <solid android:color="@color/chip_tray_bg_dark" />
+        <corners android:radius="@dimen/clockcard_corners" />
     </shape>
 </item>
 </layer-list>

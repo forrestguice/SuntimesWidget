@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -27,9 +28,8 @@ import com.forrestguice.suntimeswidget.R;
 public class DarkThemeTranslucent extends DarkThemeTrans
 {
     public static final String THEMEDEF_NAME = "dark_translucent";
-    public static final String THEMEDEF_DISPLAYSTRING = "Dark (translucent)";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
+    private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.COLOR;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_dark;
@@ -40,14 +40,17 @@ public class DarkThemeTranslucent extends DarkThemeTrans
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = THEMEDEF_DISPLAYSTRING;
+        this.themeDisplayString = context.getString(R.string.widgetThemes_dark_translucent);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
     }
 
-    public ThemeDescriptor themeDescriptor()
+    public static ThemeDescriptor themeDescriptor(Context context)
     {
-        return DarkThemeTranslucent.THEMEDEF_DESCRIPTOR;
+        if (THEMEDEF_DESCRIPTOR == null) {
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark_translucent), THEMEDEF_VERSION, ThemeBackground.COLOR.name(), Color.parseColor("#82212121"));
+        }
+        return THEMEDEF_DESCRIPTOR;
     }
 }

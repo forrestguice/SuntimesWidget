@@ -1,0 +1,4 @@
+- adds Hijri calendar to the date widget (#714).
+- fixes bug where "Apparent Solar Time" alarms drift over time (#715).
+- fixes bug where dialogs display "Apparent Solar Time" with reduced accuracy.
+- fixes bugs when using %substitutions with widget actions.

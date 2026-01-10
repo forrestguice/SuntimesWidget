@@ -17,22 +17,31 @@
 */
 package com.forrestguice.suntimeswidget.actions;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 
 import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
@@ -41,15 +50,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -64,27 +80,22 @@ public class EditActionView extends LinearLayout
 
     protected static final String HELPTAG_LAUNCH = "action_launch";
 
-    private static String[] ACTION_SUGGESTIONS = new String[] {
-            Intent.ACTION_VIEW, Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_DELETE,
-            Intent.ACTION_PICK, Intent.ACTION_RUN, Intent.ACTION_SEARCH, Intent.ACTION_SYNC,
-            Intent.ACTION_CHOOSER, Intent.ACTION_GET_CONTENT,
-            Intent.ACTION_SEND, Intent.ACTION_SENDTO, Intent.ACTION_ATTACH_DATA,
-            Intent.ACTION_WEB_SEARCH, Intent.ACTION_MAIN
-    };
-
-    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "text/plain" };
+    private static HashMap<String,PackageSuggestion> PACKAGE_SUGGESTIONS = null;
+    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
+    private static String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
 
     protected View layout_label;
     protected TextView text_label, text_desc;
     protected EditText edit_label, edit_desc;
 
     protected EditText text_launchActivity;
+    protected AutoCompleteTextView text_launchPackage;
     protected Spinner spinner_launchType;
     protected ImageButton button_menu;
     protected ImageButton button_load;
     protected ToggleButton button_launchMore;
     protected AutoCompleteTextView text_launchAction;
-    protected EditText text_launchData;
+    protected AutoCompleteTextView text_launchData;
     protected AutoCompleteTextView text_launchDataType;
     protected EditText text_launchExtras;
 
@@ -137,6 +148,18 @@ public class EditActionView extends LinearLayout
 
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
 
+        text_launchPackage = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_package);
+        ImageButton button_launchPackageSuggest = (ImageButton) findViewById(R.id.appwidget_action_launch_package_suggest);
+        if (button_launchPackageSuggest != null) {
+            button_launchPackageSuggest.setOnClickListener(onSuggestPackagesClicked);
+        }
+        ImageButton button_launchPackageClear = (ImageButton) findViewById(R.id.appwidget_action_launch_package_clear);
+        if (button_launchPackageClear != null) {
+            button_launchPackageClear.setOnClickListener(onClearPackagesClicked);
+        }
+        text_launchPackage.addTextChangedListener(onSuggestTextChanged(text_launchPackage, button_launchPackageSuggest, button_launchPackageClear));
+        text_launchPackage.setOnItemClickListener(onSuggestPackage);
+
         button_menu = (ImageButton) findViewById(R.id.appwidget_action_launch_menu);
         button_menu.setOnClickListener(onMenuButtonClicked);
 
@@ -159,11 +182,29 @@ public class EditActionView extends LinearLayout
         spinner_launchType.setAdapter(launchTypeAdapter);
 
         text_launchAction = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_action);
-        text_launchAction.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, ACTION_SUGGESTIONS));
+        initAdapter(context, text_launchAction, WidgetActions.ANDROID_ACTION_SUGGESTIONS);
 
-        text_launchData = (EditText) findViewById(R.id.appwidget_action_launch_data);
+        ImageButton button_launchActionSuggest = (ImageButton) findViewById(R.id.appwidget_action_launch_action_suggest);
+        if (button_launchActionSuggest != null) {
+            button_launchActionSuggest.setOnClickListener(onSuggestButtonClicked(text_launchAction));
+        }
+        ImageButton button_launchActionClear = (ImageButton) findViewById(R.id.appwidget_action_launch_action_clear);
+        if (button_launchActionClear != null) {
+            button_launchActionClear.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    text_launchAction.requestFocus();
+                    text_launchAction.setText("");
+                }
+            });
+        }
+        text_launchAction.addTextChangedListener(onSuggestTextChanged(text_launchAction, button_launchActionSuggest, button_launchActionClear));
+
+        text_launchData = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_data);
+        initAdapter(context, text_launchData, DATA_SUGGESTIONS);
+
         text_launchDataType = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_datatype);
-        text_launchDataType.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, MIMETYPE_SUGGESTIONS));
+        initAdapter(context, text_launchDataType, MIMETYPE_SUGGESTIONS);
 
         text_launchExtras = (EditText) findViewById(R.id.appwidget_action_launch_extras);
 
@@ -183,6 +224,179 @@ public class EditActionView extends LinearLayout
 
         if (startExpanded) {
             setExpanded(true);
+        }
+    }
+
+    protected void initAdapter(Context context, final AutoCompleteTextView autocomplete, String[] suggestions) {
+        if (autocomplete != null) {
+            autocomplete.setAdapter(new ArrayAdapter<String>(context, R.layout.layout_listitem_classname, suggestions));  //android.R.layout.simple_dropdown_item_1line
+        }
+    }
+
+    public static class PackageSuggestionAdapter extends ArrayAdapter<PackageSuggestion>
+    {
+        private int layoutResID = R.layout.layout_listitem_twoline_alt;
+        public PackageSuggestionAdapter(Context context, ArrayList<PackageSuggestion> values) {
+            super(context, 0, values);
+        }
+        public PackageSuggestionAdapter(Context context, ArrayList<PackageSuggestion> values, int layoutResID) {
+            super(context, 0, values);
+            this.layoutResID = layoutResID;
+        }
+
+        @Override @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        {
+            PackageSuggestion suggestion = getItem(position);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(layoutResID, parent, false);
+            }
+            TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+            if (text1 != null) {
+                text1.setText(suggestion.label);
+            }
+            TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
+            if (text2 != null) {
+                text2.setText(suggestion.packageName);
+            }
+            return convertView;
+        }
+    }
+
+    /**
+     * onSuggestButtonClicked .. trigger the autocomplete popup
+     */
+    protected View.OnClickListener onSuggestButtonClicked(final AutoCompleteTextView autocomplete)
+    {
+        return new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (autocomplete != null) {
+                    autocomplete.showDropDown();
+                }
+            }
+        };
+    }
+    protected TextWatcher onSuggestTextChanged(final AutoCompleteTextView autocomplete, final ImageButton... button)
+    {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                button[0].setVisibility(s.toString().isEmpty() ? View.VISIBLE : View.GONE);
+                if (button.length > 1) {
+                    button[1].setVisibility(s.toString().isEmpty() ? View.GONE : View.VISIBLE);
+                }
+            }
+        };
+    }
+
+    /**
+     * onSuggestPackagesClicked
+     */
+    protected View.OnClickListener onSuggestPackagesClicked = new OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if (PACKAGE_SUGGESTIONS == null || PACKAGE_SUGGESTIONS.size() == 0) {
+                PACKAGE_SUGGESTIONS = queryPackageSuggestions(getContext());
+            }
+            if (text_launchPackage != null && text_launchPackage.getAdapter() == null) {
+                ArrayList<PackageSuggestion> suggestions = new ArrayList<>(PACKAGE_SUGGESTIONS.values());
+                Collections.sort(suggestions, new Comparator<PackageSuggestion>() {
+                    @Override
+                    public int compare(PackageSuggestion o1, PackageSuggestion o2) {
+                        return o1.label.compareTo(o2.label);
+                    }
+                });
+                text_launchPackage.setAdapter(new PackageSuggestionAdapter(getContext(), suggestions));
+            }
+            if (text_launchPackage != null) {
+                text_launchPackage.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        text_launchPackage.showDropDown();
+                    }
+                }, 250);
+            }
+        }
+    };
+
+    protected View.OnClickListener onClearPackagesClicked = new OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if (text_label != null && edit_label != null) {
+                edit_label.setText(text_label.getText());
+            }
+            if (text_launchActivity != null) {
+                text_launchActivity.setText("");
+            }
+            if (text_launchPackage != null) {
+                text_launchPackage.requestFocus();
+                text_launchPackage.setText("");
+            }
+        }
+    };
+
+    protected AdapterView.OnItemClickListener onSuggestPackage = new AdapterView.OnItemClickListener()
+    {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            String activityText = text_launchActivity != null ? text_launchActivity.getText().toString() : "";
+            PackageSuggestion suggestion = (PackageSuggestion) parent.getItemAtPosition(position);
+
+            if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.packageName)))
+            {
+                text_launchActivity.requestFocus();
+                text_launchActivity.setText(suggestion != null ? suggestion.className : (suggestion.packageName + "."));
+                text_launchActivity.setSelection(text_launchActivity.getText().length());
+            }
+
+            String labelText = edit_label != null ? edit_label.getText().toString() : "";
+            String defaultLabel = getContext().getString(R.string.addaction_custtitle, "");
+            if (edit_label != null && (labelText.trim().isEmpty() || labelText.startsWith(defaultLabel))) {
+                edit_label.setText(suggestion.label);
+            }
+        }
+    };
+    public static HashMap<String,PackageSuggestion> queryPackageSuggestions(@NonNull Context context)
+    {
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        HashMap<String,PackageSuggestion> map = new HashMap<>();
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, 0);
+        for (ResolveInfo resolveInfo : packageInfo) {
+            if (resolveInfo.activityInfo.packageName != null && !map.containsKey(resolveInfo.activityInfo.packageName))
+            {
+                String label = resolveInfo.activityInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+                PackageSuggestion suggestion = new PackageSuggestion(label, resolveInfo.activityInfo.packageName, resolveInfo.activityInfo.name);
+                map.put(resolveInfo.activityInfo.packageName, suggestion);
+            }
+        }
+        return map;
+    }
+
+    public static final class PackageSuggestion
+    {
+        public String label, packageName, className;
+
+        public PackageSuggestion(String label, String packageName, String className) {
+            this.label = label;
+            this.packageName = packageName;
+            this.className = className;
+        }
+
+        public String toString() {
+            return packageName;
         }
     }
 
@@ -257,18 +471,28 @@ public class EditActionView extends LinearLayout
 
         if (!launchClassName.trim().isEmpty())
         {
-            Class<?> launchClass;
-            try {
-                launchClass = Class.forName(launchClassName);
-                launchIntent = new Intent(getContext(), launchClass);
+            String launchPackageName = text_launchPackage.getText().toString();
 
-            } catch (ClassNotFoundException e) {
-                Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
-                snackbar.show();
-                return;
+            if (launchPackageName != null && !launchPackageName.trim().isEmpty())
+            {
+                launchIntent = new Intent();
+                launchIntent.setClassName(launchPackageName, launchClassName);
+
+            } else {
+                Class<?> launchClass;
+                try {
+                    launchClass = Class.forName(launchClassName);
+                    launchIntent = new Intent(getContext(), launchClass);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
+                    Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
+                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
+                    snackbar.show();
+                    return;
+                }
             }
+
         } else {
             launchIntent = new Intent();
         }
@@ -283,7 +507,7 @@ public class EditActionView extends LinearLayout
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
             Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+            ViewUtils.themeSnackbar(getContext(), snackbar, null);
             snackbar.show();
         }
     }
@@ -305,7 +529,7 @@ public class EditActionView extends LinearLayout
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.editintent, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
 
         MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
         for (MenuItem item : restrictedItems)
@@ -319,7 +543,7 @@ public class EditActionView extends LinearLayout
         menu.show();
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
     {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -342,7 +566,7 @@ public class EditActionView extends LinearLayout
                     return false;
             }
         }
-    };
+    });
 
     public void saveIntent()
     {
@@ -402,7 +626,7 @@ public class EditActionView extends LinearLayout
      */
     public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title, @Nullable String desc)
     {
-        WidgetActions.saveActionLaunchPref(context, title, desc, getIntentColor(), getIntentTags().toArray(new String[0]), appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
+        WidgetActions.saveActionLaunchPref(context, title, desc, getIntentColor(), getIntentTags().toArray(new String[0]), appWidgetId, id, getIntentClass(), getIntentPackage(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
         lastLoadedID = id;
     }
 
@@ -411,22 +635,29 @@ public class EditActionView extends LinearLayout
      * @param context Context
      * @param id Intent id (or null)
      */
-    public void loadIntent(Context context, int appWidgetId, @Nullable String id)
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id) {
+        loadIntent(context, appWidgetId, id, WidgetActions.defaultLaunchPrefValues());
+    }
+    public void loadIntent(Context context, int appWidgetId, @Nullable String id, ContentValues defaults)
     {
-        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
-        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
+        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC));
+        String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null, defLaunchPrefValue(defaults, ""));
+        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE));
+        String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE));
+        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA));
+        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS));
         Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
+
+        initAdapter(context, text_launchAction, WidgetActions.getSuggestedActions(launchString));    // re-initialize action adapter with additional suggestions
 
         setIntentTitle(title);
         setIntentDesc(desc);
         setIntentClass(launchString);
+        setIntentPackage(packageString);
         setIntentAction((actionString != null ? actionString : ""));
         setIntentData((dataString != null ? dataString : ""));
         setIntentDataType((mimeType != null ? mimeType : ""));
@@ -437,6 +668,13 @@ public class EditActionView extends LinearLayout
         lastLoadedID = id;
     }
     private String lastLoadedID = null;
+
+    public static String defLaunchPrefValue(@NonNull ContentValues values, String key)
+    {
+        if (values.containsKey(key)) {
+            return values.getAsString(key);
+        } else return WidgetActions.defaultLaunchPrefValue(key);
+    }
 
     /**
      * restoreDefaults
@@ -452,6 +690,7 @@ public class EditActionView extends LinearLayout
         text_launchData.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA);
         text_launchDataType.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE);
         text_launchExtras.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
+        text_launchPackage.setText(WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         text_launchActivity.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH);
         text_launchActivity.selectAll();
         text_launchActivity.requestFocus();
@@ -466,7 +705,7 @@ public class EditActionView extends LinearLayout
     public void setData(SuntimesData data) {
         this.data = data;
         if (!this.data.isCalculated()) {
-            data.calculate();
+            data.calculate(getContext());
         }
     }
 
@@ -489,6 +728,18 @@ public class EditActionView extends LinearLayout
     {
         text_launchActivity.setText(className);
     }
+
+    /**
+     * getIntentPackage
+     */
+    public String getIntentPackage() {
+        return text_launchPackage.getText().toString();
+    }
+    public void setIntentPackage( String packageName )
+    {
+        text_launchPackage.setText(packageName);
+    }
+
 
     /**
      * getIntentType
@@ -599,6 +850,7 @@ public class EditActionView extends LinearLayout
         setIntentDesc(other.getIntentDesc());
         setIntentType(other.getIntentType().name());
         setIntentClass(other.getIntentClass());
+        setIntentPackage(other.getIntentPackage());
         setIntentAction(other.getIntentAction());
         setIntentData(other.getIntentData());
         setIntentDataType(other.getIntentDataType());
@@ -653,7 +905,7 @@ public class EditActionView extends LinearLayout
         {
             Context context = getContext();
             if (context != null) {
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_action_url))));
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_url) + context.getString(R.string.help_action_path))));
             }
         }
     };

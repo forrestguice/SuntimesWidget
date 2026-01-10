@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/layout_header" android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="end">
+
+        <ImageButton android:id="@+id/cancelButton"
+            style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionBack"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:tooltipText="@string/dialog_cancel"
+            android:contentDescription="@android:string/cancel" />
+
+        <EditText android:id="@+id/editTextLabel"
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
+            android:inputType="text"
+            android:hint="@string/hint_colorlabel" android:textSize="?attr/text_size_medium"
+            android:importantForAutofill="no" />
+
+        <ImageButton android:id="@+id/saveButton"
+            style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionSave"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:tooltipText="@string/configAction_saveColors"
+            android:contentDescription="@string/configAction_saveColors" />
+
+        <ImageButton android:id="@+id/overflow"
+            style="@style/Widget.AppCompat.ActionButton.Overflow" android:visibility="gone"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:contentDescription="@string/configAction_overflow" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/layout_id"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|start"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorPanel">
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:labelFor="@+id/editTextID"
+            android:textSize="?attr/text_size_small"
+            android:text="@string/configLabel_themeID" />
+
+        <EditText android:id="@+id/editTextID"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="200dp"
+            android:inputType="text" tools:text="ID"
+            android:hint="@string/hint_colorid" android:textSize="?attr/text_size_small"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:importantForAutofill="no" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView android:id="@+id/colorPanel"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header" app:layout_constraintBottom_toTopOf="@+id/layout_id"
+        app:layout_constraintHeight_max="350dp"
+        app:spanCount="2" tools:itemCount="6" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/action_dnd_disable"
+            android:title="@string/configLabel_dnd_disabled"
+            app:showAsAction="never"
+            android:icon="?attr/checkDnd"
+            android:checked="true"
+            android:orderInCategory="1" />
+
+        <item android:id="@+id/action_dnd_priority"
+            android:title="@string/configLabel_dnd_priority"
+            app:showAsAction="never"
+            android:icon="?attr/icActionDnd"
+            android:orderInCategory="2" />
+
+        <item android:id="@+id/action_dnd_alarms"
+            android:title="@string/configLabel_dnd_alarms"
+            android:icon="?attr/icActionDnd"
+            app:showAsAction="never"
+            android:orderInCategory="3" />
+
+    </group>
+</menu>

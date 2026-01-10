@@ -4,7 +4,7 @@
 
     <LinearLayout android:id="@+id/widgetframe_inner"
         style="@style/SunsetTimeWidget" android:layout_width="match_parent" android:layout_height="match_parent">
-        <include layout="@layout/layout_widget_2x1_0_content" />
+        <include layout="@layout/layout_widget_2x1_0_content_fill" />
     </LinearLayout>
 
 </FrameLayout>

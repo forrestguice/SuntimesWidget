@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Brazzaville</string>
+    <string name="default_location_latitude">-4.27758</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">15.24504</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">320</string>         <!-- meters -->
+    <string name="default_timezone">Africa/Brazzaville</string>         <!-- tzid -->
+</resources>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,25 +19,28 @@
 package com.forrestguice.suntimeswidget.themes;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
@@ -50,24 +53,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.AdapterView;
 
 import android.widget.GridView;
 
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.io.File;
 
@@ -77,11 +83,13 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 public class WidgetThemeListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_themelist_path;
 
     public static final int WALLPAPER_DELAY = 1000;
 
     public static final int PICK_THEME_REQUEST = 1;
     public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
 
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
@@ -120,8 +128,13 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(icicle);
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
         initLocale();
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_themelist);
@@ -154,11 +167,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
         data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
         data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
-        data.calculate();
+        data.calculate(context);
 
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
         noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
-        noonData.calculate();
+        noonData.calculate(context);
         data.linkData(noonData);
     }
 
@@ -187,6 +200,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
                     toggleWallpaper();
                 }
             });
+        }
+
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            ImageView background = (ImageView)findViewById(R.id.themegrid_background);
+            if (background != null) {
+                background.setAlpha(1f);
+            }
         }
     }
 
@@ -337,7 +358,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private boolean exportThemes(Context context, SuntimesTheme.ThemeDescriptor[] themes)
+    protected boolean exportThemes(Context context, SuntimesTheme.ThemeDescriptor... themes)         // TODO: use SAF for single-theme export
     {
         if (context != null)
         {
@@ -355,6 +376,48 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
         return false;
     }
+    protected boolean exportThemes(Context context)
+    {
+        if (isImporting || isExporting) {
+            Log.e("exportThemes", "Already busy importing/exporting! ignoring request");
+            return false;
+        }
+
+        if (context != null)
+        {
+            String exportTarget = "SuntimesThemes";
+            if (Build.VERSION.SDK_INT >= 19)
+            {
+                String filename = exportTarget + ExportThemesTask.FILEEXT;
+                Intent intent = ExportTask.getCreateFileIntent(filename, ExportThemesTask.MIMETYPE);
+                try {
+                    startActivityForResult(intent, EXPORT_REQUEST);
+                    return true;
+
+                } catch (ActivityNotFoundException e) {
+                    Log.e("exportThemes", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+                }
+            }
+            exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
+            exportTask.setDescriptors(WidgetThemes.values());
+            exportTask.setTaskListener(exportThemesListener);
+            exportTask.execute();
+            return true;
+        } else return false;
+    }
+    protected void exportThemes(Context context, @NonNull Uri uri)
+    {
+        if (isImporting || isExporting) {
+            Log.e("exportThemes", "Busy! Already importing/exporting.. ignoring request");
+            return;
+        }
+
+        Log.i("exportThemes", "Starting export with uri: " + uri);
+        exportTask = new ExportThemesTask(context, uri);
+        exportTask.setDescriptors(WidgetThemes.values());
+        exportTask.setTaskListener(exportThemesListener);
+        exportTask.execute();
+    }
 
     /**
      */
@@ -367,8 +430,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 return false;
 
             } else {
-                Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
-                intent.setType("text/*");
+                Intent intent = ExportTask.getOpenFileIntent(ExportThemesTask.MIMETYPE);
                 startActivityForResult(intent, IMPORT_REQUEST);
                 return true;
             }
@@ -470,31 +532,25 @@ public class WidgetThemeListActivity extends AppCompatActivity
             isExporting = false;
             dismissProgress();
 
+            File file = results.getExportFile();
+            String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContentResolver(), results.getExportUri()));
+
             if (results.getResult())
             {
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.setType(results.getMimeType());
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                String successMessage = getString(R.string.msg_export_success, path);
+                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                // TODO: use a snackbar instead; offer 'copy path' action
 
-                try {
-                    //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                    Uri shareURI = FileProvider.getUriForFile(WidgetThemeListActivity.this, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-
-                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                    Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
-                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-                    return;     // successful export ends here...
-
-                } catch (Exception e) {
-                    Log.e("ExportThemes", "Failed to share file URI! " + e);
+                if (Build.VERSION.SDK_INT >= 19) {
+                    if (results.getExportUri() == null) {
+                        ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
+                    }
+                } else {
+                    ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
                 }
+                return;
             }
 
-            File file = results.getExportFile();   // export failed
-            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
             String failureMessage = getString(R.string.msg_export_failure, path);
             Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
         }
@@ -553,7 +609,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 return true;
 
             case R.id.exportThemes:
-                exportThemes(this, WidgetThemes.values());
+                exportThemes(this);
                 return true;
 
             case R.id.action_help:
@@ -613,7 +669,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         @Override
         public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
 
             MenuItem selectItem = menu.findItem(R.id.selectTheme);
             selectItem.setVisible( !disallowSelect );
@@ -655,7 +711,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                         return true;
 
                     case R.id.exportTheme:
-                        exportThemes(WidgetThemeListActivity.this, new SuntimesTheme.ThemeDescriptor[] { theme.themeDescriptor()} );
+                        exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor() );
                         return true;  // TODO: messages
                 }
             }
@@ -681,6 +737,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             case EDIT_THEME_REQUEST:
                 onEditThemeResult(resultCode, data);
+                break;
+
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportThemes(this, uri);
+                    }
+                }
                 break;
 
             case IMPORT_REQUEST:
@@ -739,12 +805,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    public static void updateWidgetsMatchingTheme(Context context, String themeName)
-    {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
-        updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
-        context.sendBroadcast(updateIntent);
+    public static void updateWidgetsMatchingTheme(Context context, String themeName) {
+        WidgetListAdapter.updateWidgetsMatchingTheme(context, WidgetListAdapter.createWidgetListAdapter(context), themeName);
     }
 
     @Override
@@ -799,9 +861,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        if (useWallpaper)
-        {
+        if (useWallpaper) {
             initWallpaper(false);
+        } else {
+            hideWallpaper();
         }
         if (isExporting && exportTask != null)
         {
@@ -816,6 +879,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
             showImportProgress();
             importTask.resumeTask();
         }
+
+        FragmentManager fragments = getSupportFragmentManager();
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(this, HELP_PATH_ID), DIALOGTAG_HELP);
+        }
     }
 
     /**
@@ -823,11 +892,30 @@ public class WidgetThemeListActivity extends AppCompatActivity
      */
     protected void initWallpaper(boolean animate)
     {
+        if (Build.VERSION.SDK_INT > 18)
+        {
+            ImageView shade = (ImageView)findViewById(R.id.themegrid_background);
+            shade.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
+
+        } else {
+            try {
+                initWallpaperLegacy(animate);
+            } catch (Exception e) {
+                Log.e("initWallpaper", "failed to init wallpaper; " + e);
+            }
+        }
+    }
+
+    @TargetApi(18)
+    @SuppressLint("MissingPermission")
+    @Deprecated
+    protected void initWallpaperLegacy(boolean animate)
+    {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         if (wallpaperManager != null)
         {
             ImageView background = (ImageView)findViewById(R.id.themegrid_background);
-            Drawable wallpaper = wallpaperManager.getDrawable();
+            Drawable wallpaper = wallpaperManager.getDrawable();    // requires MANAGE_EXTERNAL_STORAGE
             if (background != null && wallpaper != null)
             {
                 background.setImageDrawable(wallpaper);
@@ -851,8 +939,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         ImageView background = (ImageView)findViewById(R.id.themegrid_background);
         if (background != null)
         {
-            if (Build.VERSION.SDK_INT >= 12)
-            {
+            if (Build.VERSION.SDK_INT > 18) {
+                ImageView shade = background;
+                shade.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
+
+            } else if (Build.VERSION.SDK_INT >= 12) {
                 background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
 
             } else if (Build.VERSION.SDK_INT >= 11) {
@@ -902,6 +993,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -916,7 +1009,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 }

@@ -13,5 +13,15 @@
             android:icon="?attr/icActionNotification"
             app:showAsAction="never" />
 
+        <item android:id="@+id/alarmTypeNotification1"
+            android:title="@string/alarmMode_notification1"
+            android:icon="?attr/icActionNotification1"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/alarmTypeNotification2"
+            android:title="@string/alarmMode_notification2"
+            android:icon="?attr/icActionNotification2"
+            app:showAsAction="never" android:enabled="false" android:visible="false" />
+
     </group>
 </menu>

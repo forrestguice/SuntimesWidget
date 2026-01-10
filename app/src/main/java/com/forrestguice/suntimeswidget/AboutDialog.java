@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,18 +44,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class AboutDialog extends BottomSheetDialogFragment
 {
-    public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
-    public static final String ADDONS_URL = "https://forrestguice.github.io/SuntimesWidget/";
-    public static final String PRIVACY_URL = "https://github.com/forrestguice/SuntimesWidget/wiki/Privacy";
-    public static final String CHANGELOG_URL = "https://github.com/forrestguice/SuntimesWidget/blob/master/CHANGELOG.md";
-    public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
-
     public static final String KEY_ICONID = "paramIconID";
     public static final String KEY_APPNAME = "paramAppName";
 
@@ -77,7 +74,7 @@ public class AboutDialog extends BottomSheetDialogFragment
             @Override
             public void onShow(DialogInterface dialog) {
                 BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
-                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
                 if (layout != null)
                 {
                     layout.post(new Runnable() {
@@ -126,7 +123,7 @@ public class AboutDialog extends BottomSheetDialogFragment
         }
 
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
@@ -136,8 +133,10 @@ public class AboutDialog extends BottomSheetDialogFragment
         }
     }
 
-    public static String anchor(String url, String text)
-    {
+    public static String anchor(String url) {
+        return anchor(url, url);
+    }
+    public static String anchor(String url, String text) {
         return "<a href=\"" + url + "\">" + text + "</a>";
     }
 
@@ -148,8 +147,8 @@ public class AboutDialog extends BottomSheetDialogFragment
 
     public String htmlVersionString()
     {
-        String buildString = anchor(COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
-        String versionString = anchor(CHANGELOG_URL, BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
+        String buildString = anchor(getString(R.string.help_commit_url) + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
+        String versionString = anchor(getString(R.string.help_changelog_url), BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
         if (BuildConfig.DEBUG)
         {
             versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
@@ -157,13 +156,12 @@ public class AboutDialog extends BottomSheetDialogFragment
         return getString(R.string.app_version, versionString);
     }
 
-    protected void openLink(String url)
+    public static void openLink(Context context, String url)
     {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        Activity activity = getActivity();
-        if (activity != null && intent.resolveActivity(activity.getPackageManager()) != null)
-        {
-            startActivity(intent);
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {
+            Log.e("About", "openLink: " + e);
         }
     }
 
@@ -176,7 +174,7 @@ public class AboutDialog extends BottomSheetDialogFragment
             @Override
             public void onClick(View v)
             {
-                openLink(WEBSITE_URL);
+                openLink(getActivity(), getString(R.string.help_app_url));
             }
         });
 
@@ -187,13 +185,9 @@ public class AboutDialog extends BottomSheetDialogFragment
         versionView.setMovementMethod(LinkMovementMethod.getInstance());
         versionView.setText(SuntimesUtils.fromHtml(htmlVersionString()));
 
-        TextView urlView = (TextView) dialogContent.findViewById(R.id.txt_about_url);
-        urlView.setMovementMethod(LinkMovementMethod.getInstance());
-        urlView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_url)));
-
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url)));
+        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
 
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         legalView1.setMovementMethod(LinkMovementMethod.getInstance());
@@ -221,9 +215,15 @@ public class AboutDialog extends BottomSheetDialogFragment
         String privacy = context.getString(R.string.privacy_policy, permissionsExplained);
         legalView4.setText(SuntimesUtils.fromHtml(privacy));
 
-        TextView legalView5 = (TextView) dialogContent.findViewById(R.id.txt_about_legal5);
-        legalView5.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView5.setText(SuntimesUtils.fromHtml(context.getString(R.string.privacy_url)));
+        int[] linkViews = new int[] { R.id.txt_help_url, R.id.txt_about_url, R.id.txt_about_legal5 };
+        for (int resID : linkViews)
+        {
+            TextView text = (TextView) dialogContent.findViewById(resID);
+            if (text != null) {
+                text.setText(SuntimesUtils.fromHtml(anchor(text.getText().toString())));
+                text.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+        }
     }
 
     @Override

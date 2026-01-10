@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -38,19 +39,25 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_SHADOWCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR_TEXT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_DEF;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOON_STROKE_MIN;
@@ -156,6 +163,8 @@ public class SuntimesTheme
     protected int themeNauticalColor;
     protected int themeAstroColor;
     protected int themeNightColor;
+    protected int themeGraphPointFillColor;
+    protected int themeGraphPointStrokeColor;
 
     protected int themeSpringColor;
     protected int themeSummerColor;
@@ -173,6 +182,11 @@ public class SuntimesTheme
     protected int themeMoonNewColor;
     protected int themeMoonWaxingColor;
     protected int themeMoonFullColor;
+
+    protected int themeMoonWaningTextColor;
+    protected int themeMoonNewTextColor;
+    protected int themeMoonWaxingTextColor;
+    protected int themeMoonFullTextColor;
 
     protected int themeMoonFullStroke;
     protected int themeMoonFullStrokePixels = -1;
@@ -233,6 +247,11 @@ public class SuntimesTheme
         this.themeMoonWaxingColor = otherTheme.themeMoonWaxingColor;
         this.themeMoonFullColor = otherTheme.themeMoonFullColor;
 
+        this.themeMoonWaningTextColor = otherTheme.themeMoonWaningTextColor;
+        this.themeMoonNewTextColor = otherTheme.themeMoonNewTextColor;
+        this.themeMoonWaxingTextColor = otherTheme.themeMoonWaxingTextColor;
+        this.themeMoonFullTextColor = otherTheme.themeMoonFullTextColor;
+
         this.themeMoonFullStroke = otherTheme.themeMoonFullStroke;
         this.themeMoonNewStroke = otherTheme.themeMoonNewStroke;
 
@@ -241,6 +260,8 @@ public class SuntimesTheme
         this.themeNauticalColor = otherTheme.themeNauticalColor;
         this.themeAstroColor = otherTheme.themeAstroColor;
         this.themeNightColor = otherTheme.themeNightColor;
+        this.themeGraphPointFillColor = otherTheme.themeGraphPointFillColor;
+        this.themeGraphPointStrokeColor = otherTheme.themeGraphPointStrokeColor;
 
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
@@ -259,6 +280,85 @@ public class SuntimesTheme
 
         this.themeTitleBold = otherTheme.themeTitleBold;
         this.themeTimeBold = otherTheme.themeTimeBold;
+    }
+
+    public SuntimesTheme(ContentValues values)    // TODO: test
+    {
+        this.themeVersion = values.getAsInteger(THEME_VERSION);
+        this.themeName = values.getAsString(THEME_NAME);
+        this.themeIsDefault = values.getAsBoolean(THEME_ISDEFAULT);
+        this.themeDisplayString = values.getAsString(THEME_DISPLAYSTRING);
+
+        this.themeBackground = ThemeBackground.valueOf(values.getAsString(THEME_BACKGROUND));
+        this.themeBackgroundColor = values.getAsInteger(THEME_BACKGROUND_COLOR);
+
+        this.themePadding[0] = values.getAsInteger(THEME_PADDING_LEFT);
+        this.themePadding[1] = values.getAsInteger(THEME_PADDING_TOP);
+        this.themePadding[2] = values.getAsInteger(THEME_PADDING_RIGHT);
+        this.themePadding[3] = values.getAsInteger(THEME_PADDING_BOTTOM);
+
+        this.themeTextColor = values.getAsInteger(THEME_TEXTCOLOR);
+        this.themeTitleColor = values.getAsInteger(THEME_TITLECOLOR);
+        this.themeTimeColor = values.getAsInteger(THEME_TIMECOLOR);
+        this.themeTimeSuffixColor = values.getAsInteger(THEME_TIMESUFFIXCOLOR);
+        this.themeActionColor = values.getAsInteger(THEME_ACTIONCOLOR);
+        this.themeAccentColor = values.getAsInteger(THEME_ACCENTCOLOR);
+
+        this.themeSunriseTextColor = values.getAsInteger(THEME_SUNRISECOLOR);
+        this.themeSunriseIconColor = values.getAsInteger(THEME_RISEICON_FILL_COLOR);
+        this.themeSunriseIconStrokeColor = values.getAsInteger(THEME_RISEICON_STROKE_COLOR);
+        this.themeSunriseIconStrokeWidth = values.getAsInteger(THEME_RISEICON_STROKE_WIDTH);
+
+        this.themeNoonTextColor = values.getAsInteger(THEME_NOONCOLOR);
+        this.themeNoonIconColor = values.getAsInteger(THEME_NOONICON_FILL_COLOR);
+        this.themeNoonIconStrokeColor = values.getAsInteger(THEME_NOONICON_STROKE_COLOR);
+        this.themeNoonIconStrokeWidth = values.getAsInteger(THEME_NOONICON_STROKE_WIDTH);
+
+        this.themeSunsetTextColor = values.getAsInteger(THEME_SUNSETCOLOR);
+        this.themeSunsetIconColor = values.getAsInteger(THEME_SETICON_FILL_COLOR);
+        this.themeSunsetIconStrokeColor = values.getAsInteger(THEME_SETICON_STROKE_COLOR);
+        this.themeSunsetIconStrokeWidth = values.getAsInteger(THEME_SETICON_STROKE_WIDTH);
+
+        this.themeMoonriseTextColor = values.getAsInteger(THEME_MOONRISECOLOR);
+        this.themeMoonsetTextColor = values.getAsInteger(THEME_MOONSETCOLOR);
+        this.themeMoonWaningColor = values.getAsInteger(THEME_MOONWANINGCOLOR);
+        this.themeMoonNewColor = values.getAsInteger(THEME_MOONNEWCOLOR);
+        this.themeMoonWaxingColor = values.getAsInteger(THEME_MOONWAXINGCOLOR);
+        this.themeMoonFullColor = values.getAsInteger(THEME_MOONFULLCOLOR);
+
+        this.themeMoonWaningTextColor = values.getAsInteger(THEME_MOONWANINGCOLOR_TEXT);
+        this.themeMoonNewTextColor = values.getAsInteger(THEME_MOONNEWCOLOR_TEXT);
+        this.themeMoonWaxingTextColor = values.getAsInteger(THEME_MOONWAXINGCOLOR_TEXT);
+        this.themeMoonFullTextColor = values.getAsInteger(THEME_MOONFULLCOLOR_TEXT);
+
+        this.themeMoonFullStroke = values.getAsInteger(THEME_MOONFULL_STROKE_WIDTH);
+        this.themeMoonNewStroke = values.getAsInteger(THEME_MOONNEW_STROKE_WIDTH);
+
+        this.themeDayColor = values.getAsInteger(THEME_DAYCOLOR);
+        this.themeCivilColor = values.getAsInteger(THEME_CIVILCOLOR);
+        this.themeNauticalColor = values.getAsInteger(THEME_NAUTICALCOLOR);
+        this.themeAstroColor = values.getAsInteger(THEME_ASTROCOLOR);
+        this.themeNightColor = values.getAsInteger(THEME_NIGHTCOLOR);
+        this.themeGraphPointFillColor = values.getAsInteger(THEME_GRAPH_POINT_FILL_COLOR);
+        this.themeGraphPointStrokeColor = values.getAsInteger(THEME_GRAPH_POINT_STROKE_COLOR);
+
+        this.themeSpringColor = values.getAsInteger(THEME_SPRINGCOLOR);
+        this.themeSummerColor = values.getAsInteger(THEME_SUMMERCOLOR);
+        this.themeFallColor = values.getAsInteger(THEME_FALLCOLOR);
+        this.themeWinterColor = values.getAsInteger(THEME_WINTERCOLOR);
+
+        this.themeMapBackgroundColor = values.getAsInteger(THEME_MAP_BACKGROUNDCOLOR);
+        this.themeMapForegroundColor = values.getAsInteger(THEME_MAP_FOREGROUNDCOLOR);
+        this.themeMapShadowColor = values.getAsInteger(THEME_MAP_SHADOWCOLOR);
+        this.themeMapHighlightColor = values.getAsInteger(THEME_MAP_HIGHLIGHTCOLOR);
+
+        this.themeTitleSize = values.getAsFloat(THEME_TITLESIZE);
+        this.themeTextSize = values.getAsFloat(THEME_TEXTSIZE);
+        this.themeTimeSize = values.getAsFloat(THEME_TIMESIZE);
+        this.themeTimeSuffixSize = values.getAsFloat(THEME_TIMESUFFIXSIZE);
+
+        this.themeTitleBold = values.getAsBoolean(THEME_TITLEBOLD);
+        this.themeTimeBold = values.getAsBoolean(THEME_TIMEBOLD);
     }
 
     public boolean initTheme( Context context, String themesPrefix, String themeName, SuntimesTheme defaultTheme )
@@ -328,6 +428,11 @@ public class SuntimesTheme
         this.themeMoonWaxingColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR, defaultTheme.themeMoonWaxingColor );
         this.themeMoonFullColor = themes.getInt( theme + THEME_MOONFULLCOLOR, defaultTheme.themeMoonFullColor );
 
+        this.themeMoonWaningTextColor = themes.getInt( theme + THEME_MOONWANINGCOLOR_TEXT, defaultTheme.themeMoonWaningTextColor );
+        this.themeMoonNewTextColor = themes.getInt( theme + THEME_MOONNEWCOLOR_TEXT, defaultTheme.themeMoonNewTextColor );
+        this.themeMoonWaxingTextColor = themes.getInt( theme + THEME_MOONWAXINGCOLOR_TEXT, defaultTheme.themeMoonWaxingTextColor );
+        this.themeMoonFullTextColor = themes.getInt( theme + THEME_MOONFULLCOLOR_TEXT, defaultTheme.themeMoonFullTextColor );
+
         this.themeMoonFullStroke = themes.getInt( theme + THEME_MOONFULL_STROKE_WIDTH, defaultTheme.themeMoonFullStroke );
         this.themeMoonNewStroke = themes.getInt( theme + THEME_MOONNEW_STROKE_WIDTH, defaultTheme.themeMoonNewStroke );
 
@@ -336,6 +441,8 @@ public class SuntimesTheme
         this.themeNauticalColor = themes.getInt( theme + THEME_NAUTICALCOLOR, defaultTheme.themeNauticalColor );
         this.themeAstroColor = themes.getInt( theme + THEME_ASTROCOLOR, defaultTheme.themeAstroColor );
         this.themeNightColor = themes.getInt( theme + THEME_NIGHTCOLOR, defaultTheme.themeNightColor );
+        this.themeGraphPointFillColor = themes.getInt( theme + THEME_GRAPH_POINT_FILL_COLOR, defaultTheme.themeGraphPointFillColor );
+        this.themeGraphPointStrokeColor = themes.getInt( theme + THEME_GRAPH_POINT_STROKE_COLOR, defaultTheme.themeGraphPointStrokeColor );
 
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
@@ -356,7 +463,7 @@ public class SuntimesTheme
         this.themeTimeBold = themes.getBoolean( theme + THEME_TIMEBOLD, defaultTheme.themeTimeBold );
 
         long bench_end = System.nanoTime();
-        Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        //Log.d("DEBUG", "init theme: " + this.themeName() + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         return true;
     }
 
@@ -412,6 +519,11 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
         themePrefs.putInt(themePrefix + THEME_MOONFULLCOLOR, this.themeMoonFullColor);
 
+        themePrefs.putInt(themePrefix + THEME_MOONWANINGCOLOR_TEXT, this.themeMoonWaningTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONNEWCOLOR_TEXT, this.themeMoonNewTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONWAXINGCOLOR_TEXT, this.themeMoonWaxingTextColor);
+        themePrefs.putInt(themePrefix + THEME_MOONFULLCOLOR_TEXT, this.themeMoonFullTextColor);
+
         themePrefs.putInt(themePrefix + THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
         themePrefs.putInt(themePrefix + THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
 
@@ -420,6 +532,8 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + THEME_NAUTICALCOLOR, this.themeNauticalColor);
         themePrefs.putInt(themePrefix + THEME_ASTROCOLOR, this.themeAstroColor);
         themePrefs.putInt(themePrefix + THEME_NIGHTCOLOR, this.themeNightColor);
+        themePrefs.putInt(themePrefix + THEME_GRAPH_POINT_FILL_COLOR, this.themeGraphPointFillColor);
+        themePrefs.putInt(themePrefix + THEME_GRAPH_POINT_STROKE_COLOR, this.themeGraphPointStrokeColor);
 
         themePrefs.putInt(themePrefix + THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -457,15 +571,15 @@ public class SuntimesTheme
         values.put(THEME_BACKGROUND, this.themeBackground.name());
         values.put(THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
 
-        values.put(THEME_PADDING_LEFT, this.themePaddingPixels[0]);
-        values.put(THEME_PADDING_TOP, this.themePaddingPixels[1]);
-        values.put(THEME_PADDING_RIGHT, this.themePaddingPixels[2]);
-        values.put(THEME_PADDING_BOTTOM, this.themePaddingPixels[3]);
+        values.put(THEME_PADDING_LEFT, this.themePadding[0]);
+        values.put(THEME_PADDING_TOP, this.themePadding[1]);
+        values.put(THEME_PADDING_RIGHT, this.themePadding[2]);
+        values.put(THEME_PADDING_BOTTOM, this.themePadding[3]);
 
-        values.put(THEME_PADDING_LEFT + THEME_PADDING_PIXELS, this.themePadding[0]);
-        values.put(THEME_PADDING_TOP + THEME_PADDING_PIXELS, this.themePadding[1]);
-        values.put(THEME_PADDING_RIGHT + THEME_PADDING_PIXELS, this.themePadding[2]);
-        values.put(THEME_PADDING_BOTTOM + THEME_PADDING_PIXELS, this.themePadding[3]);
+        values.put(THEME_PADDING_LEFT + THEME_PADDING_PIXELS, this.themePaddingPixels[0]);
+        values.put(THEME_PADDING_TOP + THEME_PADDING_PIXELS, this.themePaddingPixels[1]);
+        values.put(THEME_PADDING_RIGHT + THEME_PADDING_PIXELS, this.themePaddingPixels[2]);
+        values.put(THEME_PADDING_BOTTOM + THEME_PADDING_PIXELS, this.themePaddingPixels[3]);
 
         values.put(THEME_TEXTCOLOR, this.themeTextColor);
         values.put(THEME_TITLECOLOR, this.themeTitleColor);
@@ -496,6 +610,11 @@ public class SuntimesTheme
         values.put(THEME_MOONWAXINGCOLOR, this.themeMoonWaxingColor);
         values.put(THEME_MOONFULLCOLOR, this.themeMoonFullColor);
 
+        values.put(THEME_MOONWANINGCOLOR_TEXT, this.themeMoonWaningTextColor);
+        values.put(THEME_MOONNEWCOLOR_TEXT, this.themeMoonNewTextColor);
+        values.put(THEME_MOONWAXINGCOLOR_TEXT, this.themeMoonWaxingTextColor);
+        values.put(THEME_MOONFULLCOLOR_TEXT, this.themeMoonFullTextColor);
+
         values.put(THEME_MOONFULL_STROKE_WIDTH, this.themeMoonFullStroke);
         values.put(THEME_MOONNEW_STROKE_WIDTH, this.themeMoonNewStroke);
 
@@ -504,6 +623,8 @@ public class SuntimesTheme
         values.put(THEME_NAUTICALCOLOR, this.themeNauticalColor);
         values.put(THEME_ASTROCOLOR, this.themeAstroColor);
         values.put(THEME_NIGHTCOLOR, this.themeNightColor);
+        values.put(THEME_GRAPH_POINT_FILL_COLOR, this.themeGraphPointFillColor);
+        values.put(THEME_GRAPH_POINT_STROKE_COLOR, this.themeGraphPointStrokeColor);
 
         values.put(THEME_SPRINGCOLOR, this.themeSpringColor);
         values.put(THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -632,9 +753,8 @@ public class SuntimesTheme
 
     public ThemeDescriptor themeDescriptor()
     {
-        if (descriptor == null)
-        {
-            descriptor = new ThemeDescriptor(this.themeName, this.themeDisplayString, this.themeVersion);
+        if (descriptor == null) {
+            descriptor = new ThemeDescriptor(this.themeName, this.themeDisplayString, this.themeVersion, this.themeBackground.name(), this.themeBackgroundColor);
         }
         return descriptor;
     }
@@ -731,20 +851,32 @@ public class SuntimesTheme
     {
         return themeMoonWaningColor;
     }
+    public int getMoonWaningTextColor() {
+        return themeMoonWaningTextColor;
+    }
 
     public int getMoonNewColor()
     {
         return themeMoonNewColor;
+    }
+    public int getMoonNewTextColor() {
+        return themeMoonNewTextColor;
     }
 
     public int getMoonWaxingColor()
     {
         return themeMoonWaxingColor;
     }
+    public int getMoonWaxingTextColor() {
+        return themeMoonWaxingTextColor;
+    }
 
     public int getMoonFullColor()
     {
         return themeMoonFullColor;
+    }
+    public int getMoonFullTextColor() {
+        return themeMoonFullTextColor;
     }
 
     public int getMoonriseTextColor()
@@ -834,6 +966,12 @@ public class SuntimesTheme
     {
         return themeNightColor;
     }
+    public int getGraphPointFillColor() {
+        return themeGraphPointFillColor;
+    }
+    public int getGraphPointStrokeColor() {
+        return themeGraphPointStrokeColor;
+    }
 
     public int getSpringColor()
     {
@@ -855,15 +993,10 @@ public class SuntimesTheme
     {
         switch (event)
         {
-            case SOLSTICE_WINTER:
-                return getWinterColor();
-            case EQUINOX_AUTUMNAL:
-                return getFallColor();
-            case SOLSTICE_SUMMER:
-                return getSummerColor();
-            case EQUINOX_SPRING:
-            default:
-                return getSpringColor();
+            case SOLSTICE_WINTER: case CROSS_WINTER: return getWinterColor();
+            case EQUINOX_AUTUMNAL: case CROSS_AUTUMN: return getFallColor();
+            case SOLSTICE_SUMMER: case CROSS_SUMMER: return getSummerColor();
+            case EQUINOX_SPRING: case CROSS_SPRING: default: return getSpringColor();
         }
     }
 
@@ -1002,12 +1135,12 @@ public class SuntimesTheme
             }
         }
 
-        public ThemeDescriptor(String name, String displayString, int version)
+        public ThemeDescriptor(String name, String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
         {
             this.name = name;
             this.displayString = displayString;
-            this.backgroundName = null;
-            this.backgroundColor = Color.TRANSPARENT;
+            this.backgroundName = backgroundName;
+            this.backgroundColor = (backgroundColor == null ? Color.TRANSPARENT : backgroundColor);
             this.version = version;
             this.isDefault = false;
         }

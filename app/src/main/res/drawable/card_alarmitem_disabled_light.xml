@@ -5,7 +5,7 @@
         <size android:width="22dp" android:height="22dp" />
         <solid android:color="@color/alarm_disabled_bg_light" />
         <stroke android:width="2dp" android:color="@color/grey_300" />
-        <corners android:radius="0dp" />
+        <corners android:radius="@dimen/alarmcard_corners_disabled" />
     </shape>
 </item>
 </layer-list>

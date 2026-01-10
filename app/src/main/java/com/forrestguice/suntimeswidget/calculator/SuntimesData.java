@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -151,8 +152,9 @@ public class SuntimesData
 
     /**
      * perform calculation on the data
+     * @param context
      */
-    public void calculate()
+    public void calculate(Context context)
     {
         this.calculated = true;
     }
@@ -232,6 +234,14 @@ public class SuntimesData
 
     public void initTimezone(Context context)
     {
+        int widgetID = appWidgetID;
+        if (appWidgetID != 0 && WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetID))
+        {
+            widgetID = 0;
+            timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
+            timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
+        }
+
         switch (timezoneMode)
         {
             case CUSTOM_TIMEZONE:
@@ -243,7 +253,7 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
@@ -332,21 +342,17 @@ public class SuntimesData
      * @param date
      * @return
      */
-    public Calendar nowThen(Calendar date)
-    {
-        Calendar nowThen = now();
-        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
-        return nowThen;
+    public Calendar nowThen(Calendar date) {
+        return nowThen(now(), date);
     }
 
     public static Calendar nowThen(Calendar now, Calendar date)
     {
-        Calendar nowThen = (Calendar)now.clone();
-        nowThen.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+        Calendar nowThen = (Calendar) date.clone();
+        nowThen.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
+        nowThen.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
+        nowThen.set(Calendar.SECOND, now.get(Calendar.SECOND));
+        nowThen.set(Calendar.MILLISECOND, now.get(Calendar.MILLISECOND));
         return nowThen;
     }
 
@@ -372,6 +378,23 @@ public class SuntimesData
             }
         }
         return (soonest != null ? soonest.getTimeInMillis() : -1);
+    }
+
+    @Nullable
+    public static Calendar midpoint(@Nullable Calendar c1, @Nullable Calendar c2)
+    {
+        if (c1 != null)
+        {
+            Calendar r = (Calendar) c1.clone();
+            if (c2 != null) {
+                long d = c2.getTimeInMillis() - c1.getTimeInMillis();
+                r.setTimeInMillis(c1.getTimeInMillis() + (d / 2L));
+            }
+            return r;
+        } else {
+            Log.e("DEBUG", "midpoint: null calendar!");
+            return null;
+        }
     }
 
 }

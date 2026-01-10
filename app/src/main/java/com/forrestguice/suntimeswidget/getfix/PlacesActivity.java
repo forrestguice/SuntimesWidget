@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,9 +33,9 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 
 public class PlacesActivity extends AppCompatActivity
 {
@@ -57,7 +56,7 @@ public class PlacesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        setTheme(AppSettings.loadTheme(this));
+        AppSettings.setTheme(this, AppSettings.loadThemePref(this));
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
 
@@ -76,6 +75,7 @@ public class PlacesActivity extends AppCompatActivity
 
         FragmentManager fragments = getSupportFragmentManager();
         list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
+        list.setDialogThemOverride(AppSettings.loadTheme(this));
         list.setFragmentListener(listFragmentListener);
 
         Intent intent = getIntent();
@@ -101,7 +101,7 @@ public class PlacesActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
 

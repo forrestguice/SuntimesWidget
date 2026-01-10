@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 @SuppressWarnings("Convert2Diamond")
 public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
@@ -125,15 +126,19 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            if (validateInput())
-            {
-                dismiss();
-                if (onAccepted != null) {
-                    onAccepted.onClick(getDialog(), 0);
-                }
-            }
+            accept();
         }
     };
+    protected void accept()
+    {
+        if (validateInput())
+        {
+            dismiss();
+            if (onAccepted != null) {
+                onAccepted.onClick(getDialog(), 0);
+            }
+        }
+    }
 
     protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
@@ -152,7 +157,7 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
         }
 
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);

@@ -19,11 +19,11 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
@@ -31,9 +31,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
-import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
-import com.forrestguice.suntimeswidget.map.WorldMapTask;
-import com.forrestguice.suntimeswidget.map.WorldMapView;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
@@ -76,10 +75,25 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_lengthUnitsPref()
+    public void test_lastUpdate()
     {
         Context context = activityRule.getActivity();
         int appWidgetId = Integer.MAX_VALUE;
+
+        WidgetSettings.saveTimeLastUpdate(context, appWidgetId, 10);
+        long value1 = WidgetSettings.getTimeLastUpdate(context, appWidgetId);
+        assertTrue("value should be 10", value1 == 10);
+
+        WidgetSettings.deleteTimeLastUpdate(context, appWidgetId);
+        long value0 = WidgetSettings.getTimeLastUpdate(context, appWidgetId);
+        assertTrue("value should be -1", value0 == -1);
+    }
+
+    @Test
+    public void test_lengthUnitsPref()
+    {
+        Context context = activityRule.getActivity();
+        int appWidgetId = 0;
 
         WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
         WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
@@ -91,12 +105,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
         WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+        assertTrue("units should be default (" + WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH + ") but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
 
         double meters0 = Math.PI;
         double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
         double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
         assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+
+        WidgetSettings.deleteLengthUnitsPref(context, Integer.MAX_VALUE);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
     }
 
     @Test
@@ -157,15 +180,15 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_timeModePref()
     {
         WidgetSettings.saveTimeModePref(context, appWidgetId, WidgetSettings.TimeMode.CIVIL);
-        WidgetSettings.TimeMode pref2 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        WidgetSettings.RiseSetDataMode pref2 = WidgetSettings.loadTimeModePref(context, appWidgetId);
         assertTrue("pref should be CIVIL but was " + pref2, pref2.equals(WidgetSettings.TimeMode.CIVIL));
 
         WidgetSettings.saveTimeModePref(context, appWidgetId, WidgetSettings.TimeMode.NAUTICAL);
-        WidgetSettings.TimeMode pref1 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        WidgetSettings.RiseSetDataMode pref1 = WidgetSettings.loadTimeModePref(context, appWidgetId);
         assertTrue("pref should be NAUTICAL but was " + pref1, pref1.equals(WidgetSettings.TimeMode.NAUTICAL));
 
         WidgetSettings.deleteTimeModePref(context, appWidgetId);
-        WidgetSettings.TimeMode pref0 = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        WidgetSettings.RiseSetDataMode pref0 = WidgetSettings.loadTimeModePref(context, appWidgetId);
         assertTrue("pref should be default (OFFICIAL) but was " + pref1, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE) &&  pref0.equals(WidgetSettings.TimeMode.OFFICIAL));
     }
 
@@ -228,6 +251,53 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
+    public void test_calendarShowDate()
+    {
+        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, false);
+        boolean value2 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        assertFalse("flag should be false but was " + value2, value2);
+
+        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, true);
+        boolean value1 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        assertTrue("flag should be true but was " + value1, value1);
+
+        CalendarSettings.deleteCalendarPref(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE);
+        boolean value0 = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        assertTrue("flag should be " + CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE + " but was " + value0, value0 == CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+    }
+
+    @Test
+    public void test_calendarModePref()
+    {
+        CalendarSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.GREGORIAN);
+        CalendarMode mode2 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be GREGORIAN but was " + mode2, mode2 == CalendarMode.GREGORIAN);
+
+        CalendarSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.PERSIAN);
+        CalendarMode mode1 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be PERSIAN but was " + mode1, mode1 == CalendarMode.PERSIAN);
+
+        CalendarSettings.deleteCalendarPref(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_MODE);
+        CalendarMode mode0 = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == CalendarSettings.PREF_DEF_CALENDAR_MODE && mode0 == CalendarMode.GREGORIAN);
+    }
+
+    @Test
+    public void test_calendarFormatPref()
+    {
+        String tag = "TEST";
+        CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, tag, "YYYY");
+        String format2 = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
+        assertTrue("mode should be YYYY but was " + format2, "YYYY".equals(format2));
+
+        CalendarSettings.deleteCalendarFormatPatternPref(context, appWidgetId, tag);
+        String format0 = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
+        assertTrue("mode should be default but was " + format0, CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN.equals(format0));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
     public void test_dateModePref()
     {
         WidgetSettings.saveDateModePref(context, appWidgetId, WidgetSettings.DateMode.CURRENT_DATE);
@@ -266,6 +336,20 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("dates should match (" + WidgetSettings.PREF_DEF_DATE_YEAR + "." + WidgetSettings.PREF_DEF_DATE_MONTH + "." + WidgetSettings.PREF_DEF_DATE_DAY + " != " + info0.getYear() + "." + info0.getMonth() + "." + info0.getDay() + ")", info0.equals(date0) && !info0.isSet());
     }
 
+    @Test
+    public void test_dateOffsetPref()
+    {
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 1);
+        assertEquals(1, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.saveDateOffsetPref(context, appWidgetId, 20);
+        assertEquals(20, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+
+        WidgetSettings.deleteDateOffsetPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, WidgetSettings.loadDateOffsetPref(context, appWidgetId));
+        assertEquals(WidgetSettings.PREF_DEF_DATE_OFFSET, 0);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
@@ -281,7 +365,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteTimezoneModePref(context, appWidgetId);
         WidgetSettings.TimezoneMode mode0 = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-        assertTrue("mode should be default (SOLAR) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_TIMEZONE_MODE && mode0 == WidgetSettings.TimezoneMode.SOLAR_TIME);
+        assertTrue("mode should be default (CURRENT) but was " + mode0, mode0 == WidgetSettings.PREF_DEF_TIMEZONE_MODE && mode0 == WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
     }
 
     @Test
@@ -326,37 +410,6 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
     ///////////////////////////////////////////////////////////////////////////
 
-    @Test public void test_location()
-    {
-        Location loc0 = new Location("0", "0");
-        assertEquals(0d, loc0.getLatitudeAsDouble());
-        assertEquals(0d, loc0.getLongitudeAsDouble());
-
-        Location loc1 = new Location("90", "180");
-        assertEquals(90d, loc1.getLatitudeAsDouble());
-        assertEquals(-180d, loc1.getLongitudeAsDouble());
-
-        Location loc2 = new Location("-90", "-180");
-        assertEquals(-90d, loc2.getLatitudeAsDouble());
-        assertEquals(-180d, loc2.getLongitudeAsDouble());
-
-        Location loc3 = new Location("91", "181");
-        assertEquals(89d, loc3.getLatitudeAsDouble());
-        assertEquals(-179d, loc3.getLongitudeAsDouble());
-
-        Location loc4 = new Location("181", "359");
-        assertEquals(89d, loc4.getLatitudeAsDouble());
-        assertEquals(-1d, loc4.getLongitudeAsDouble());
-
-        Location loc5 = new Location("-91", "-181");
-        assertEquals(-89d, loc5.getLatitudeAsDouble());
-        assertEquals(179d, loc5.getLongitudeAsDouble());
-
-        Location loc6 = new Location("-179", "-359");
-        assertEquals(-1d, loc6.getLatitudeAsDouble());
-        assertEquals(1d, loc6.getLongitudeAsDouble());
-    }
-
     @Test
     public void test_locationModePref()
     {
@@ -385,7 +438,8 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match! " + pref1.getUri() + " != " + testloc1.getUri(), pref1.equals(testloc1));
 
-        Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        //Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
+        Location testloc0 = WidgetSettings.loadLocationPref(context, 0);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
         assertTrue("location does not match default! " + pref0.getUri() + " != " + testloc0.getUri(), pref0.equals(testloc0));
@@ -424,6 +478,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_FROMAPP);
     }
 
+    @Test
+    public void test_tzFromAppPref()
+    {
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, true);
+        boolean isEnabled0 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, false);
+        boolean isEnabled1 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertFalse("value does not match! " + isEnabled1, isEnabled1);
+
+        WidgetSettings.deleteTimeZoneFromAppPref(context, appWidgetId);
+        boolean isEnabled2 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertEquals("value does not match! " + isEnabled2, isEnabled2, WidgetSettings.PREF_DEF_TIMEZONE_FROMAPP);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
@@ -453,12 +523,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc2 = "desc2";
         int color2 = Color.BLUE;
         String value2 = "com.forrestguice.suntimeswidget.SuntimesActivity";
+        String package2 = "com.forrestguice.suntimeswidget";
         String action2 = "ACTION2";
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
+        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, package2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
         String pref2_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref2_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref2_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref2_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -467,6 +539,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref2_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref2_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value2 + " but was " + pref2_value, pref2_value.equals(value2));
+        assertTrue("pref package should be " + value2 + " but was " + pref2_package, pref2_package.equals(package2));
         assertTrue("pref action should be " + action2 + " but was " + pref2_action, pref2_action.equals(action2));
         assertTrue("pref data should be " + data2 + " but was " + pref2_data, pref2_data.equals(data2));
         assertTrue("pref datatype should be " + mime2 + " but was " + pref2_mime, pref2_mime.equals(mime2));
@@ -479,12 +552,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc1 = "desc1";
         int color1 = Color.YELLOW;
         String value1 = "test value 1";
+        String package1 = "some.package.name";
         String action1 = "ACTION1";
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
+        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, package1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
         String pref1_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref1_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref1_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref1_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -493,6 +568,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref1_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref1_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value1 + " but was " + pref1_value, pref1_value.equals(value1));
+        assertTrue("pref package should be " + package1 + " but was " + pref1_package, pref1_package.equals(package1));
         assertTrue("pref action should be " + action1 + " but was " + pref1_action, pref1_action.equals(action1));
         assertTrue("pref data should be " + data1 + " but was " + pref1_data, pref1_data.equals(data1));
         assertTrue("pref datatype should be " + mime1 + " but was " + pref1_mime, pref1_mime.equals(mime1));
@@ -504,6 +580,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String value0 = "com.forrestguice.suntimeswidget.SuntimesActivity";
         WidgetActions.deleteActionLaunchPref(context, appWidgetId, null);
         String pref0_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref0_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref0_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref0_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref0_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -512,6 +589,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref0_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref0_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be default (" + value0 + ") but was " + pref0_value, pref0_value.equals(value0) && value0.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH));
+        assertTrue("pref package should be default (empty) but was " + pref0_package, pref0_package.equals(""));
         assertTrue("pref action should be default (empty) but was " + pref0_action, pref0_action.equals(""));
         assertTrue("pref data should be default (empty) but was " + pref0_data, pref0_data.equals(""));
         assertTrue("pref datatype should be default (empty) but was " + pref0_mime, pref0_mime.equals(""));
@@ -519,6 +597,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("pref title should be default", pref0_title.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE));
         assertTrue("pref desc should be default", pref0_desc.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC));
         assertTrue("pref color should be default", pref0_color == WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR);
+    }
+
+    @Test
+    public void test_actionApplyExtras()
+    {
+        Intent intent0 = new Intent();
+        String extraString0 = "one=1&two=2L&three=3d&four=4f&string=string&bool=true&L=L";
+        WidgetActions.applyExtras(context, intent0, extraString0, null);
+        assertEquals(1, intent0.getIntExtra("one", -1));
+        assertEquals(2L, intent0.getLongExtra("two", -1L));
+        assertEquals(3d, intent0.getDoubleExtra("three", -1d));
+        assertEquals(4f, intent0.getFloatExtra("four", -1f));
+        assertEquals("string", intent0.getStringExtra("string"));
+        assertEquals("L", intent0.getStringExtra("L"));
+        assertTrue("bool", intent0.getBooleanExtra("bool", false));
     }
 
     @Test
@@ -707,6 +800,34 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_3x1SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP);
+        WidgetSettings.WidgetModeSunPos3x1 pref2 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
+
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL);
+        WidgetSettings.WidgetModeSunPos3x1 pref1 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP1 but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL));
+
+        WidgetSettings.deleteSunPos3x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x1 pref0 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be default (LIGHTMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1) && pref0.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
+    }
+
+    @Test
+    public void test_3x2SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x2ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH);
+        WidgetSettings.WidgetModeSunPos3x2 pref2 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be LINEGRAPH but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_LINEGRAPH));
+
+        WidgetSettings.deleteSunPos3x2ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x2 pref0 = WidgetSettings.loadSunPos3x2ModePref(context, appWidgetId);
+        assertTrue("pref should be default (WORLDMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x2) && pref0.equals(WidgetSettings.WidgetModeSunPos3x2.MODE3x2_WORLDMAP));
+    }
+
+    @Test
     public void test_sunPosMapModePref()
     {
         WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE, WorldMapWidgetSettings.MAPTAG_3x2);
@@ -768,6 +889,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteTrackingModePref(context, appWidgetId);
         WidgetSettings.TrackingMode mode0 = WidgetSettings.loadTrackingModePref(context, appWidgetId);
         assertTrue("mode should be default (SOONEST) but was " + mode0, mode0 == WidgetSettings.TrackingMode.SOONEST && mode0 == WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE);
+    }
+
+    @Test
+    public void test_trackingLevelPref()
+    {
+        WidgetSettings.saveTrackingLevelPref(context, appWidgetId, 1);
+        int level1 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(1, level1);
+
+        WidgetSettings.saveTrackingLevelPref(context, appWidgetId, 10);
+        int level10 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(10, level10);
+
+        WidgetSettings.deleteTrackingLevelPref(context, appWidgetId);
+        int level0 = WidgetSettings.loadTrackingLevelPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL, level0);
+        assertEquals(10, WidgetSettings.PREF_DEF_GENERAL_TRACKINGLEVEL);
     }
 
     @Test
@@ -887,7 +1025,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_showTimeDatePref()
     {
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, true);
-        boolean showTimeDate = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be true but was " + showTimeDate, showTimeDate);
 
         WidgetSettings.saveShowTimeDatePref(context, appWidgetId, false);
@@ -897,6 +1035,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
         showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
+    @Test
+    public void test_showAbbrMonthPref()
+    {
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, true);
+        boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be true but was " + abbreviate, abbreviate);
+
+        WidgetSettings.saveShowAbbrMonthPref(context, appWidgetId, false);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be false but was " + abbreviate, !abbreviate);
+
+        WidgetSettings.deleteShowAbbrMonthPref(context, appWidgetId);
+        abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
+        assertTrue("abbreviate should be default (true) but was " + abbreviate, abbreviate && abbreviate == WidgetSettings.PREF_DEF_GENERAL_SHOWABBRMONTH);
     }
 
     @Test

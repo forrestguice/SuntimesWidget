@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.net.Uri;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -32,6 +33,9 @@ import java.io.IOException;
 
 public class ExportPlacesTask extends ExportTask
 {
+    public static final String FILEEXT = ".csv";
+    public static final String MIMETYPE = "text/csv";
+
     private Cursor cursor;
     private GetFixDatabaseAdapter db;
 
@@ -45,11 +49,16 @@ public class ExportPlacesTask extends ExportTask
         super(context, exportTarget, useExternalStorage, saveToCache);
         initTask();
     }
+    public ExportPlacesTask(Context context, Uri uri)
+    {
+        super(context, uri);
+        initTask();
+    }
 
     private void initTask()
     {
-        ext = ".csv";
-        mimeType = "text/csv";
+        ext = FILEEXT;
+        mimeType = MIMETYPE;
     }
 
     @Override
@@ -59,9 +68,10 @@ public class ExportPlacesTask extends ExportTask
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
         db.open();
         numEntries = db.getPlaceCount();
-        out = new BufferedOutputStream(new FileOutputStream(exportFile));
         cursor = db.getAllPlaces(-1, true);
-        return exportDatabase(db, cursor, out);
+        boolean result = exportDatabase(db, cursor, out);
+        cursor.close();
+        return result;
     }
 
     @Override

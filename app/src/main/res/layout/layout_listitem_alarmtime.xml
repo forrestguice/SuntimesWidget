@@ -30,7 +30,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
 
         android:textColor="?attr/text_buttonSelector" android:gravity="center"
-        android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
+        android:textSize="?attr/text_size_small" android:maxLines="1" android:ellipsize="end"
         tools:text="1h 30m before" android:minEms="5"
 
         app:layout_constraintStart_toStartOf="@+id/text_datetime"
@@ -39,7 +39,8 @@
 
     <TextSwitcher
         android:id="@+id/text_datetime"
-        android:layout_width="wrap_content" android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:minHeight="67dp"
         android:layout_marginTop="8dp" android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,13 +53,13 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:ellipsize="end" android:gravity="center" android:maxLines="1"
-            android:textColor="?attr/text_buttonSelector" android:textSize="52dp" android:textStyle="bold"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
             tools:ignore="SpUsage" tools:text="11:22 am" />
 
         <TextView
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:ellipsize="end" android:gravity="center" android:maxLines="1"
-            android:textColor="?attr/text_buttonSelector" android:textSize="52dp" android:textStyle="bold"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
             tools:ignore="SpUsage" tools:text="11:22 am" />
 
     </TextSwitcher>
@@ -78,7 +79,7 @@
         tools:text="June 21, 2019"
         android:textColor="?attr/text_buttonSelector"
         android:gravity="center_horizontal"
-        android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
+        android:textSize="?attr/text_size_small" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@id/text_datetime"
         app:layout_constraintEnd_toEndOf="@+id/text_datetime"
@@ -88,10 +89,10 @@
     <TextView
         android:id="@+id/text_note" android:visibility="visible"
         android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp" android:layout_marginTop="8dp" android:layout_marginRight="16dp" android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp" android:layout_marginTop="8dp" android:layout_marginRight="16dp" android:layout_marginBottom="16dp"
         tools:text="~15m\nfrom now"
         android:gravity="end"
-        android:textSize="10sp" android:maxLines="3" android:ellipsize="end"
+        android:textSize="?attr/text_size_xsmall" android:maxLines="3" android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/text_datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

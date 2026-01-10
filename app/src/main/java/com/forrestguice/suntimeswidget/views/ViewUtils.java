@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2023 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,10 +20,31 @@ package com.forrestguice.suntimeswidget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.preference.Preference;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.R;
 
 public class ViewUtils
 {
@@ -93,4 +114,202 @@ public class ViewUtils
             }
         }
     }
+
+    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                View divider1 = bottomSheet.findViewById(bottomViewResId);
+                if (divider1 != null)
+                {
+                    Rect headerBounds = new Rect();
+                    divider1.getDrawingRect(headerBounds);
+                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
+                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
+
+                } else {
+                    behavior.setPeekHeight(-1);
+                }
+            }
+        }
+    }
+
+    public static void disableTouchOutsideBehavior(Dialog dialog)
+    {
+        Window window = (dialog != null ? dialog.getWindow() : null);
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
+            decorView.setOnClickListener(null);
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    {
+        Integer[] colors = new Integer[] {null, null, null};
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
+        TypedArray a = context.obtainStyledAttributes(colorAttrs);
+        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        Drawable buttonDrawable = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.button_fab_dark));
+        int buttonPadding = (int)context.getResources().getDimension(R.dimen.snackbar_button_padding);
+        a.recycle();
+
+        if (colorOverrides != null && colorOverrides.length == colors.length) {
+            for (int i=0; i<colors.length; i++) {
+                if (colorOverrides[i] != null) {
+                    colors[i] = colorOverrides[i];
+                }
+            }
+        }
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(colors[2]);
+        snackbar.setActionTextColor(colors[1]);
+
+        TextView snackbarText = (TextView)snackbarView.findViewById(getSnackbarTextResourceID());
+        if (snackbarText != null) {
+            snackbarText.setTextColor(colors[0]);
+            snackbarText.setMaxLines(3);
+        }
+
+        View snackbarAction = snackbarView.findViewById(getSnackbarActionResourceID());
+        if (snackbarAction != null) {
+            if (Build.VERSION.SDK_INT >= 16)
+            {
+                snackbarAction.setBackground(buttonDrawable);
+                snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            }
+        }
+    }
+
+    public static int getTouchOutsideResourceID() {
+        return android.support.design.R.id.touch_outside;    // support libraries
+        //return com.google.android.material.R.id.touch_outside;   // androidx
+    }
+
+    public static int getSnackbarTextResourceID() {
+        return android.support.design.R.id.snackbar_text;    // support libraries
+        //return com.google.android.material.R.id.snackbar_text;   // androidx
+    }
+
+    public static int getSnackbarActionResourceID() {
+        return android.support.design.R.id.snackbar_action;    // support libraries
+        //return com.google.android.material.R.id.snackbar_action;   // androidx
+    }
+
+    public static int getBottomSheetResourceID() {
+        return android.support.design.R.id.design_bottom_sheet;    // support libraries
+        //return com.google.android.material.R.id.design_bottom_sheet;   // androidx
+    }
+
+    /**
+     * ThrottledClickListener
+     */
+    public static class ThrottledClickListener implements View.OnClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected View.OnClickListener listener;
+
+        public ThrottledClickListener(@NonNull View.OnClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledClickListener(@NonNull View.OnClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnClickListener is null!");
+            }
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                listener.onClick(v);
+            }
+        }
+    }
+
+    /**
+     * ThrottledMenuItemClickListener
+     */
+    public static class ThrottledMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected PopupMenu.OnMenuItemClickListener listener;
+
+        public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener) {
+            this(listener, 750);
+        }
+
+        public ThrottledMenuItemClickListener(@NonNull PopupMenu.OnMenuItemClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnMenuItemClickListener is null!");
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onMenuItemClick(item);
+            }
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "onMenuItemClick: throttled: " + Math.abs(currentClickAt - previousClickAt));
+            }
+            return true;
+        }
+    }
+
+    /**
+     * ThrottledPreferenceClickListener
+     */
+    public static class ThrottledPreferenceClickListener implements Preference.OnPreferenceClickListener
+    {
+        protected long delayMs;
+        protected Long previousClickAt;
+        protected Preference.OnPreferenceClickListener listener;
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener) {
+            this(listener, 1000);
+        }
+
+        public ThrottledPreferenceClickListener(@NonNull Preference.OnPreferenceClickListener listener, long delayMs)
+        {
+            this.delayMs = delayMs;
+            this.listener = listener;
+            if (listener == null) {
+                throw new NullPointerException("OnPreferenceClickListener is null!");
+            }
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference)
+        {
+            long currentClickAt = System.currentTimeMillis();
+            if (previousClickAt == null || Math.abs(currentClickAt - previousClickAt) > delayMs) {
+                previousClickAt = currentClickAt;
+                return listener.onPreferenceClick(preference);
+            }
+            return false;
+        }
+    }
+
 }

@@ -17,7 +17,8 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
@@ -26,8 +27,10 @@
             android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_timezone_mode"
+                android:id="@+id/appwidget_timezone_mode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_mode" />
+                android:layout_height="wrap_content" android:text="@string/configLabel_timezone_mode"
+                android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_timezone_mode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -38,25 +41,24 @@
         <LinearLayout android:id="@+id/appwidget_timezone_custom_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/settingsGroup_padding">
+            android:paddingTop="8dp" android:gravity="center_vertical">
 
             <TextView android:id="@+id/appwidget_timezone_custom_label"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_vertical" android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_timezone_custom"
-                android:textColor="@drawable/btn_labeltxt"
-                android:clickable="true" android:focusable="true"
-                android:enabled="false" android:labelFor="@+id/appwidget_timezone_custom" />
+                android:textSize="?attr/text_size_small"
+                android:labelFor="@+id/appwidget_timezone_custom" />
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content">
 
                 <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
                     android:dropDownVerticalOffset="32sp" android:layout_height="wrap_content" />
 
                 <ProgressBar android:id="@+id/appwidget_timezone_progress" android:visibility="gone"
-                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end|right"/>
 
             </FrameLayout>
@@ -71,19 +73,26 @@
 
             </LinearLayout>
 
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/sort_timezones"
+                style="@style/ActionButton" android:visibility="visible"
+                android:src="?attr/icActionSort" app:tint="@drawable/btn_accent"
+                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:contentDescription="@string/timezone_sort_contextAction" />
+
         </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_solartime_layout"
                       android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="center"
                       android:orientation="horizontal"
-                      android:paddingTop="@dimen/settingsGroup_padding"
-                      android:visibility="gone">
+                      android:paddingTop="8dp"
+                      android:visibility="visible">
 
-            <TextView android:id="@+id/appwidget_solartime_label"
+            <TextView android:id="@+id/appwidget_solartime_label" android:visibility="gone"
                       android:labelFor="@+id/appwidget_solartime"
                       android:layout_gravity="center_vertical"
                       android:layout_width="wrap_content"
-                      android:layout_height="wrap_content" android:text="@string/configLabel_timezone_standard" />
+                      android:layout_height="wrap_content" android:text="@string/configLabel_timezone_standard"
+                      android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_solartime"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_gravity="center"
@@ -91,9 +100,9 @@
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_solartime_help"
-                style="@style/Widget.AppCompat.ActionButton"
+                style="@style/ActionButton" android:visibility="visible"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="wrap_content" android:layout_height="32dp"
                 android:contentDescription="@string/configAction_help" />
 
         </LinearLayout>
@@ -112,7 +121,7 @@
                 android:id="@+id/appwidget_timezone_extras0"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="12sp"
+                android:textSize="?attr/text_size_small"
                 android:paddingTop="@dimen/settingsGroup_padding"
                 tools:text="timezone extras" />
 

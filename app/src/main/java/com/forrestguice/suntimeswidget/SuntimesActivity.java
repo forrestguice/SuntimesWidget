@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -27,17 +28,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
@@ -48,14 +45,12 @@ import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.Pair;
@@ -63,29 +58,47 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
+
+import com.forrestguice.suntimeswidget.colors.AppColorValues;
+import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.getfix.GeoIntents;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.moon.MoonDialog;
+import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.getfix.LocationHelper;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
+import com.forrestguice.suntimeswidget.graph.LightGraphDialog;
+import com.forrestguice.suntimeswidget.notes.NoteViewFlipper;
+import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
+import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialog;
+import com.forrestguice.suntimeswidget.equinox.EquinoxCardView;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -96,16 +109,15 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 import android.os.Handler;
@@ -113,44 +125,67 @@ import android.os.Handler;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ALARM";
+    public static final String ACTION_ADD_ALARM = "suntimes.action.ALARM";
 
-    public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
-    public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
-    public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
-    public static final String ACTION_VIEW_WORLDMAP = "com.forrestguice.suntimeswidget.VIEW_WORLDMAP";
+    public static final String ACTION_VIEW_SUN = "suntimes.action.VIEW_SUN";
+    public static final String ACTION_VIEW_MOON = "suntimes.action.VIEW_MOON";
+    public static final String ACTION_VIEW_SOLSTICE = "suntimes.action.VIEW_SOLSTICE";
+    public static final String ACTION_VIEW_WORLDMAP = "suntimes.action.VIEW_WORLDMAP";
+    public static final String ACTION_VIEW_SUNLIGHT = "suntimes.action.VIEW_SUNLIGHT";
 
-    public static final String ACTION_CARD_NEXT = "com.forrestguice.suntimeswidget.CARD_NEXT";
-    public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
-    public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.SWAP_CARD";
-    public static final String ACTION_CARD_SHOW = "com.forrestguice.suntimeswidget.SHOW_CARD";
-    public static final String EXTRA_SHOW_DATE = "dateMillis";
+    public static final String ACTION_CARD_NEXT = "suntimes.action.CARD_NEXT";
+    public static final String ACTION_CARD_PREV = "suntimes.action.CARD_PREV";
+    public static final String ACTION_CARD_RESET = "suntimes.action.SWAP_CARD";
+    public static final String ACTION_CARD_SHOW = "suntimes.action.SHOW_CARD";
 
-    public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
-    public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";
-    public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.RESET_NOTE";
+    public static final String ACTION_SHOW_DATE = "suntimes.action.SHOW_DATE";
+    public static final String EXTRA_SHOW_DATE = MenuAddon.EXTRA_SHOW_DATE;
 
-    public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
-    public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.TIMEZONE";
-    public static final String ACTION_CONFIG_DATE = "com.forrestguice.suntimeswidget.CONFIG_DATE";
+    public static final String ACTION_NOTE_NEXT = "suntimes.action.NEXT_NOTE";
+    public static final String ACTION_NOTE_PREV = "suntimes.action.PREV_NOTE";
+    public static final String ACTION_NOTE_RESET = "suntimes.action.RESET_NOTE";
+    public static final String ACTION_NOTE_SEEK = "suntimes.action.SEEK_NOTE";
+    public static final String EXTRA_SOLAREVENT = "solarevent";
+
+    public static final String ACTION_CONFIG_LOCATION = "suntimes.action.CONFIG_LOCATION";
+    public static final String ACTION_CONFIG_TIMEZONE = "suntimes.action.TIMEZONE";
+    public static final String ACTION_CONFIG_DATE = "suntimes.action.CONFIG_DATE";
+
+    public static final String EXTRA_APPTHEME = "apptheme";   // DEBUG only
+
+    public static final String ACTION_WIDGETS_UPDATE_ALL = "suntimes.action.widgets.UPDATE_ALL";
+
+    public static final String SUNTIMES_ACTION_PREFIX = "suntimes.action";
+    public static final String[] SUNTIMES_ACTIONS = new String[] {
+            ACTION_ADD_ALARM, ACTION_VIEW_SUN, ACTION_VIEW_SUNLIGHT, ACTION_VIEW_MOON, ACTION_VIEW_SOLSTICE, ACTION_VIEW_WORLDMAP,
+            ACTION_CARD_NEXT, ACTION_CARD_PREV, ACTION_CARD_RESET, ACTION_CARD_SHOW,
+            ACTION_NOTE_NEXT, ACTION_NOTE_PREV, ACTION_NOTE_RESET, ACTION_NOTE_SEEK,
+            ACTION_CONFIG_LOCATION, ACTION_CONFIG_TIMEZONE, ACTION_CONFIG_DATE,
+            ACTION_WIDGETS_UPDATE_ALL
+    };
+    private static final HashMap<String, String> SUNTIMES_ACTION_MAP = createLegacyActionMap();
 
     public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_NOTEINDEX = "noteIndex";
-    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+    public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard_main";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
+    public static final String WARNINGID_LOCATION_PERMISSION = "LocationPermission";
 
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
     private static final String DIALOGTAG_HELP = "help";
+    private static final int HELP_PATH_ID = R.string.help_main_path;
     private static final String DIALOGTAG_LOCATION = "location";
-    private static final String DIALOGTAG_DATE = "dateselect";
+    private static final String DIALOGTAG_DATE_CONFIG = "dateconfig";
+    private static final String DIALOGTAG_DATE_SEEK = "dateselect";
     private static final String DIALOGTAG_LIGHTMAP = "lightmap";
+    private static final String DIALOGTAG_LIGHTGRAPH = "lightgraph";
     private static final String DIALOGTAG_WORLDMAP = "worldmap";
     private static final String DIALOGTAG_EQUINOX = "equinox";
     private static final String DIALOGTAG_MOON = "moon";
@@ -161,15 +196,14 @@ public class SuntimesActivity extends AppCompatActivity
     private Menu actionBarMenu;
     private String appTheme;
     private int appThemeResID;
-    private SuntimesTheme appThemeOverride = null;
     private AppSettings.LocaleInfo localeInfo;
+    private SuntimesNavigation navigation;
 
-    private GetFixHelper getFixHelper;
+    private LocationHelper getFixHelper;
 
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
-    protected SuntimesEquinoxSolsticeDataset dataset_equinox;
     protected SuntimesMoonData dataset_moon;
 
     private int color_textTimeDelta;
@@ -183,7 +217,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     // note views
     private ProgressBar note_progress;
-    private ViewFlipper note_flipper;
+    private NoteViewFlipper note_flipper;
     private Animation anim_note_inPrev, anim_note_inNext;
     private Animation anim_note_outPrev, anim_note_outNext;
 
@@ -195,10 +229,9 @@ public class SuntimesActivity extends AppCompatActivity
     // time card views
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
-    private LinearSmoothScroller card_scroller;
     private CardAdapter card_adapter;
 
-    private EquinoxView card_equinoxSolstice;
+    private EquinoxCardView card_equinoxSolstice;
     private View equinoxLayout;
 
     private TextView txt_datasource;
@@ -211,10 +244,7 @@ public class SuntimesActivity extends AppCompatActivity
     private long userSwappedCard = -1L;
     private boolean onResume_resetNoteIndex = true;
 
-    private boolean showWarnings = false;
-    private SuntimesWarning timezoneWarning;
-    private SuntimesWarning dateWarning;
-    private List<SuntimesWarning> warnings;
+    private SuntimesWarningCollection warnings;
 
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
@@ -248,7 +278,6 @@ public class SuntimesActivity extends AppCompatActivity
         initLocale(this);  // must follow super.onCreate or locale is reverted
         setContentView(R.layout.layout_main);
         initViews(context);
-        themeViews(context);
 
         initWarnings(context, savedState);
 
@@ -256,6 +285,25 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.loadSettings(savedState);
 
         handleIntent(getIntent());
+
+        if (AppSettings.isFirstLaunch(this))
+        {
+            startActivityForResult(new Intent(this, WelcomeActivity.class), SUNTIMES_SETTINGS_REQUEST);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (navigation != null && navigation.isNavigationDrawerOpen()) {
+            navigation.closeNavigationDrawer();
+            return;
+
+        } else if (warnings.dismissWarning()) {
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -269,6 +317,11 @@ public class SuntimesActivity extends AppCompatActivity
         String action = intent.getAction();
         intent.setAction(null);
 
+        if (SUNTIMES_ACTION_MAP.containsKey(action)) {
+            Log.d("handleIntent", "legacy action: " + action);
+            action = SUNTIMES_ACTION_MAP.get(action);
+        }
+
         Uri data = intent.getData();
         intent.setData(null);
 
@@ -276,25 +329,38 @@ public class SuntimesActivity extends AppCompatActivity
         if (action != null)
         {
             if (action.equals(ACTION_VIEW_SUN)) {
-                showLightMapDialog();
+                showSunPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
+
+            } else if (action.equals(ACTION_VIEW_SUNLIGHT)) {
+                showLightGraphDialogAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_VIEW_MOON)) {
-                showMoonDialog();
+                showMoonPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_VIEW_SOLSTICE)) {
                 showEquinoxDialog();
 
             } else if (action.equals(ACTION_VIEW_WORLDMAP)) {
-                showWorldMapDialog();
+                showMapPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_ADD_ALARM)) {
-                scheduleAlarm();
+                scheduleAlarm(intent.getStringExtra(EXTRA_SOLAREVENT));
 
             } else if (action.equals(ACTION_CONFIG_TIMEZONE)) {
                 configTimeZone();
 
             } else if (action.equals(ACTION_CONFIG_DATE)) {
                 configDate();
+
+            } else if (action.equals(ACTION_SHOW_DATE)) {
+                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, (Long) null));
+
+            } else if (action.equals(ACTION_NOTE_SEEK)) {
+                String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);
+                if (eventID == null) {
+                    eventID = SolarEvents.SUNSET.name();
+                }
+                seekNextNote(eventID);
 
             } else if (action.equals(ACTION_NOTE_NEXT)) {
                 setUserSwappedCard( false, "handleIntent (nextNote)" );
@@ -345,6 +411,9 @@ public class SuntimesActivity extends AppCompatActivity
             } else if (action.equals(ACTION_CONFIG_LOCATION)) {
                 configLocation();
 
+            } else if (action.equals(ACTION_WIDGETS_UPDATE_ALL)) {
+                WidgetListAdapter.updateAllWidgetAlarms(SuntimesActivity.this);
+
             } else {
                 if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {
                     configLocation(data);
@@ -353,17 +422,29 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
+    public static HashMap<String, String> createLegacyActionMap() {
+        return createLegacyActionMap(SUNTIMES_ACTIONS);
+    }
+    public static HashMap<String, String> createLegacyActionMap(String[] actions) {
+        HashMap<String, String> actionMap = new HashMap<>();
+        for (String action : actions) {
+            actionMap.put(action.replaceFirst(SUNTIMES_ACTION_PREFIX, BuildConfig.APPLICATION_ID), action);   // "com.forrestguice.suntimeswidget.ACTION" -> "suntimes.action.ACTION"
+        }
+        return actionMap;
+    }
+
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
-        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
-
-        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
-        if (themeName != null)
+        if (BuildConfig.DEBUG)
         {
-            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
-            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+            Intent intent = getIntent();
+            if (intent != null && intent.hasExtra(EXTRA_APPTHEME)) {
+                appTheme = intent.getStringExtra(EXTRA_APPTHEME);
+                Log.w("DEBUG", "hasExtra, overriding appTheme: " + appTheme);
+            }
         }
+        appThemeResID = AppSettings.setTheme(this, appTheme);
 
         int[] attrs = new int[] { R.attr.sunnoonIcon, R.attr.text_disabledColor };
         TypedArray a = obtainStyledAttributes(attrs);
@@ -427,27 +508,47 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-            timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+            timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
             timezoneDialog.setCalculator(dataset.calculator());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
             //Log.d("DEBUG", "TimeZoneDialog listeners restored.");
         }
 
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
+        final LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
             locationDialog.setOnAcceptedListener( onConfigLocation(locationDialog) );
             //Log.d("DEBUG", "LocationConfigDialog listeners restored.");
         }
 
-        TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
+        TimeDateConfigDialog dateDialog = (TimeDateConfigDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_CONFIG);
         if (dateDialog != null)
         {
             dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        TimeDateDialog seekDateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE_SEEK);
+        if (seekDateDialog != null)
+        {
+            seekDateDialog.setTimezone(dataset.timezone());
+            seekDateDialog.setOnAcceptedListener(onSeekDate(seekDateDialog));
+            //Log.d("DEBUG", "TimeDateDialog listeners restored.");
+        }
+
+        if ((WidgetSettings.loadLocationModePref(this, 0) == WidgetSettings.LocationMode.CURRENT_LOCATION)
+                && LocationHelperSettings.lastAutoLocationIsStale(SuntimesActivity.this))
+        {
+            card_view.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    getFixHelper.getFix();
+                }
+            });
         }
     }
 
@@ -462,10 +563,18 @@ public class SuntimesActivity extends AppCompatActivity
             //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
+        LightGraphDialog lightGraphDialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        if (lightGraphDialog != null)
+        {
+            lightGraphDialog.setData(context, dataset);
+            lightGraphDialog.setDialogListener(lightGraphDialogListener);
+            lightGraphDialog.updateViews(context);
+            //Log.d("DEBUG", "LightGraphDialog updated on restore.");
+        }
+
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
         if (lightMapDialog != null)
         {
-            lightMapDialog.themeViews(this, appThemeOverride);
             lightMapDialog.setData(context, dataset);
             lightMapDialog.setDialogListener(lightMapListener);
             lightMapDialog.updateViews();
@@ -475,30 +584,32 @@ public class SuntimesActivity extends AppCompatActivity
         WorldMapDialog worldMapDialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
         if (worldMapDialog != null)
         {
-            worldMapDialog.themeViews(this, appThemeOverride);
             worldMapDialog.setData(dataset);
             worldMapDialog.setDialogListener(worldMapListener);
             worldMapDialog.updateViews();
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
 
-        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null)
         {
-            equinoxDialog.themeViews(this, appThemeOverride);
             equinoxDialog.setDialogListener(equinoxDialogListener);
-            equinoxDialog.updateViews();
+            equinoxDialog.updateViews(this);
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
 
         MoonDialog moonDialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
         if (moonDialog != null)
         {
-            moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
             moonDialog.setDialogListener(moonDialogListener);
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
+        }
+
+        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (helpDialog != null) {
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
@@ -543,7 +654,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             Calendar now = dataset.now();
             Calendar midnight = SuntimesRiseSetDataset.midnight(dataset.dataActual.getOtherCalendar());
-            Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
+            //Log.d("UpdateAlarms", "setAlarm (fullUpdate): " + utils.calendarDateTimeDisplayString(context, midnight).toString());
 
             if (midnight.after(now))
                 setUpdateAlarm(alarmManager, midnight, getFullUpdateIntent(context));
@@ -556,9 +667,9 @@ public class SuntimesActivity extends AppCompatActivity
         if (alarmManager != null)
         {
             Calendar now = dataset.now();
-            Calendar updateTime = dataset.findNextEvent();
+            Calendar updateTime = dataset.findNextEvent().getCalendar();
             if (updateTime != null && updateTime.after(now)) {
-                Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
+                //Log.d("UpdateAlarms", "setAlarm (partialUpdate): " + utils.calendarDateTimeDisplayString(context, updateTime).toString());
                 setUpdateAlarm(alarmManager, updateTime, getPartialUpdateIntent(context));
             }
             //else Log.d("UpdateAlarms", "..skipping alarm: partialUpdate (isPast)");
@@ -663,7 +774,7 @@ public class SuntimesActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         //Log.d("DEBUG", "onSaveInstanceState");
 
-        saveWarnings(outState);
+        warnings.saveWarnings(outState);
         outState.putInt(KEY_UI_NOTEINDEX, notes.getNoteIndex());
         outState.putLong(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
@@ -676,7 +787,7 @@ public class SuntimesActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedInstanceState);
         //Log.d("DEBUG", "onRestoreInstanceState");
 
-        restoreWarnings(savedInstanceState);
+        warnings.restoreWarnings(savedInstanceState);
         userSwappedCard = savedInstanceState.getLong(KEY_UI_USERSWAPPEDCARD, -1L);
         card_equinoxSolstice.loadState(savedInstanceState);
 
@@ -691,7 +802,6 @@ public class SuntimesActivity extends AppCompatActivity
             cardPosition = CardAdapter.TODAY_POSITION;
         }
         card_view.scrollToPosition(cardPosition);
-        card_view.smoothScrollBy(1, 0);  // triggers a snap
     }
 
     /**
@@ -701,12 +811,32 @@ public class SuntimesActivity extends AppCompatActivity
     public void onStop()
     {
         //Log.d("DEBUG", "onStop");
+        if (card_view != null)
+        {
+            //Log.d("DEBUG", "onStop: setLayoutManager: null");
+            t_card_position = card_layout.findFirstVisibleItemPosition();
+            card_view.setLayoutManager(null);
+        }
+
         unregisterReceivers(SuntimesActivity.this);
         unsetUpdateAlarms(SuntimesActivity.this);
 
         stopTimeTask();
         getFixHelper.cancelGetFix();
         super.onStop();
+    }
+    private int t_card_position = CardAdapter.TODAY_POSITION;
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        if (card_view != null)
+        {
+            card_view.setLayoutManager(card_layout);
+            card_view.scrollToPosition(t_card_position);
+            //Log.d("DEBUG", "onRestart: setLayoutManager: position " + t_card_position);
+        }
     }
 
     /**
@@ -749,17 +879,20 @@ public class SuntimesActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
-            boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
-                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
+            boolean recreateFlag = (data != null && data.getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false));
+            Log.d("DEBUG", "onActivityResult: " + requestCode + ":" + resultCode + " recreate? " + recreateFlag + ", hasData? " + (data != null));
+
+            boolean needsRecreate = (recreateFlag    // recreate requested
+                    || (!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                                                  // or theme mode changed
+            //        || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
                     || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
                     || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
 
             if (needsRecreate)
             {
-                Log.i("SuntimesActivity", "theme/locale was changed; calling recreate");
-                Handler handler = new Handler();
-                handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
+                Log.i("SuntimesActivity", "settings were changed; calling recreate");
+                txt_time.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
             }
         }
     }
@@ -776,6 +909,7 @@ public class SuntimesActivity extends AppCompatActivity
             } else {
                 finish();
                 startActivity(getIntent());
+                overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
             }
         }
     };
@@ -784,6 +918,7 @@ public class SuntimesActivity extends AppCompatActivity
      * Override the appearance of views if appThemeOverride is defined.
      * @param context Context
      */
+    /*@Deprecated
     protected void themeViews(Context context)
     {
         if (appThemeOverride != null)
@@ -836,7 +971,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_adapter.setThemeOverride(appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
         }
-    }
+    }*/
 
     /**
      * initialize ui/views
@@ -857,21 +992,37 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initWarnings(Context context, Bundle savedState)
     {
-        timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE);
-        dateWarning = new SuntimesWarning(WARNINGID_DATE);
+        warnings = new SuntimesWarningCollection(context, savedState)
+        {
+            @Override
+            protected void initWarnings(Context context)
+            {
+                addWarning(context, WARNINGID_LOCATION_PERMISSION, getString(R.string.locationPermissionWarning), card_view, getString(R.string.configAction_appDetails), new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        AppSettings.openAppDetails(SuntimesActivity.this);
+                    }
+                });
 
-        warnings = new ArrayList<SuntimesWarning>();
-        warnings.add(timezoneWarning);
-        warnings.add(dateWarning);
+                addWarning(context, WARNINGID_TIMEZONE, getString(R.string.timezoneWarning), txt_timezone, getString(R.string.configAction_setTimeZone), new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        configTimeZone();
+                    }
+                });
 
-        restoreWarnings(savedState);
+                addWarning(context, WARNINGID_DATE, getString(R.string.dateWarning), card_view, getString(R.string.configAction_setDate), new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        configDate();
+                    }
+                });
+            }
+        };
     }
-    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
-        @Override
-        public void onShowNextWarning() {
-            showWarnings();
-        }
-    };
 
     /**
      * initialize the actionbar
@@ -881,6 +1032,14 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            boolean sideNavigation = AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(context));
+            actionBar.setHomeButtonEnabled(sideNavigation);
+            actionBar.setDisplayHomeAsUpEnabled(sideNavigation);
+        }
+        
+        navigation = new SuntimesNavigation(this, menuBar, R.id.action_suntimes);
     }
 
     private void initMisc(final Context context)
@@ -891,14 +1050,14 @@ public class SuntimesActivity extends AppCompatActivity
         if (txt_datasource != null)
         {
             txt_datasource.setClickable(true);
-            txt_datasource.setOnClickListener(new View.OnClickListener()
+            txt_datasource.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
                     showGeneralSettings();
                 }
-            });
+            }));
             txt_datasource.setOnLongClickListener(new View.OnLongClickListener()
             {
                 @Override
@@ -916,7 +1075,7 @@ public class SuntimesActivity extends AppCompatActivity
         layout_altitude = findViewById(R.id.layout_altitude);
         if (layout_altitude != null)
         {
-            layout_altitude.setOnClickListener(new View.OnClickListener()
+            layout_altitude.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -928,7 +1087,7 @@ public class SuntimesActivity extends AppCompatActivity
                     setUpdateAlarms(SuntimesActivity.this);
                     updateViews(SuntimesActivity.this);
                 }
-            });
+            }));
         }
     }
     
@@ -937,7 +1096,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initGetFix()
     {
-        getFixHelper = new GetFixHelper(this, new GetFixUI()
+        GetFixUI getFixUI = new GetFixUI()
         {
             private MenuItem refreshItem = null;
 
@@ -992,23 +1151,27 @@ public class SuntimesActivity extends AppCompatActivity
                     if (result != null)
                     {
                         com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), result);
-                        WidgetSettings.saveLocationPref(SuntimesActivity.this, 0, location);
+                        LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis());
+                        AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
                     } else {
                         String msg = (wasCancelled ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
-                        Toast errorMsg = Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG);
-                        errorMsg.show();
+                        Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
                     SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
-
-                    Intent updateWidgets = new Intent();
-                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                    sendBroadcast(updateWidgets);
                 }
             }
-        });
+        };
+
+        getFixHelper = new GetFixHelper(this, getFixUI)
+        {
+            @Override
+            public int getMinElapsedTime() {
+                return 1000;
+            }
+        };
     }
 
     /**
@@ -1018,6 +1181,18 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (actionBarMenu != null)
         {
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                MenuItem mapItem = actionBarMenu.findItem(R.id.action_location_show);
+                if (mapItem != null)
+                {
+                    boolean showMapButton = AppSettings.loadShowMapButtonPref(this);
+                    boolean hideItems = getResources().getBoolean(R.bool.is_watch);
+                    int showAsAction = (showMapButton ? (hideItems ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM) : MenuItem.SHOW_AS_ACTION_NEVER);
+                    mapItem.setShowAsAction(showAsAction);
+                }
+            }
+
             MenuItem refreshItem = actionBarMenu.findItem(R.id.action_location_refresh);
             if (refreshItem != null)
             {
@@ -1031,6 +1206,8 @@ public class SuntimesActivity extends AppCompatActivity
                     refreshItem.setVisible(true);
                 }
             }
+
+            SuntimesNavigation.updateMenuNavigationItems(context, actionBarMenu);
         }
     }
 
@@ -1046,16 +1223,9 @@ public class SuntimesActivity extends AppCompatActivity
             note_progress.setVisibility(View.GONE);
         }
 
-        note_flipper = (ViewFlipper) findViewById(R.id.info_note_flipper);
-        if (note_flipper != null)
-        {
-            note_flipper.setOnTouchListener(noteTouchListener);
-            note_flipper.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                { /* DO NOTHING HERE (but we still need this listener) */ }
-            });
+        note_flipper = (NoteViewFlipper) findViewById(R.id.info_note_flipper);
+        if (note_flipper != null) {
+            note_flipper.setViewFlipperListener(noteFlipListener);
 
         } else {
             Log.w("initNoteViews", "Failed to set touchListener; note_flipper is null!");
@@ -1096,16 +1266,16 @@ public class SuntimesActivity extends AppCompatActivity
     {
         equinoxLayout = findViewById(R.id.info_time_equinox_layout);
 
-        card_equinoxSolstice = (EquinoxView) findViewById(R.id.info_date_solsticequinox);
+        card_equinoxSolstice = (EquinoxCardView) findViewById(R.id.info_date_solsticequinox);
         card_equinoxSolstice.setMinimized(true);
-        card_equinoxSolstice.setOnClickListener( new View.OnClickListener()
+        card_equinoxSolstice.setOnClickListener(new ViewUtils.ThrottledClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 showEquinoxDialog();
             }
-        });
+        }));
         card_equinoxSolstice.setOnLongClickListener( new View.OnLongClickListener()
         {
             @Override
@@ -1125,6 +1295,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         card_adapter = new CardAdapter(context);
         card_adapter.setCardAdapterListener(cardAdapterListener);
+        card_adapter.initOptions(context);
 
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
         card_view.setHasFixedSize(true);
@@ -1137,7 +1308,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
-        card_scroller = new CardAdapter.CardViewScroller(context);
         card_view.setOnScrollListener(onCardScrollListener);
     }
 
@@ -1147,9 +1317,8 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initClockViews(Context context)
     {
-        LinearLayout clockLayout = (LinearLayout) findViewById(R.id.layout_clock);
-        if (clockLayout != null)
-        {
+        LinearLayout clockLayout = (LinearLayout) findViewById(R.id.text_time_layout);
+        if (clockLayout != null) {
             clockLayout.setOnClickListener(onClockClick);
         }
 
@@ -1190,8 +1359,13 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initNotes()
     {
-        notes = new SuntimesNotes();
-        notes.themeViews(this, appThemeOverride);
+        notes = new SuntimesNotes(this);
+
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(this);
+        if (colors != null) {
+            notes.setColors(this, colors);
+        }
+
         notes.init(this, dataset, dataset_moon);
         notes.setOnChangedListener(new NoteChangedListener()
         {
@@ -1202,22 +1376,6 @@ public class SuntimesActivity extends AppCompatActivity
             }
         });
     }
-
-    private View.OnClickListener onMoonriseClick = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v) {
-            showMoonDialog();
-        }
-    };
-    private View.OnLongClickListener onMoonriseLongClick = new View.OnLongClickListener()
-    {
-        @Override
-        public boolean onLongClick(View v) {
-            showMoonDialog();
-            return true;
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -1233,7 +1391,13 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
-        SuntimesUtils.forceActionBarIcons(menu);
+        PopupMenuCompat.forceActionBarIcons(menu);
+
+        MenuItem alarmItem = menu.findItem(R.id.action_alarm);
+        if (alarmItem != null) {
+            alarmItem.setVisible(AlarmSettings.hasAlarmSupport(SuntimesActivity.this));    // alarms disabled on tvs (not supported)
+        }
+
         return super.onPrepareOptionsPanel(view, menu);
     }
 
@@ -1271,7 +1435,7 @@ public class SuntimesActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_date:
-                configDate();
+                showDate();
                 return true;
 
             case R.id.action_alarm:
@@ -1290,6 +1454,10 @@ public class SuntimesActivity extends AppCompatActivity
                 showLightMapDialog();
                 return true;
 
+            case R.id.action_lightgraph:
+                showLightGraphDialog();
+                return true;
+
             case R.id.action_worldmap:
                 showWorldMapDialog();
                 return true;
@@ -1300,15 +1468,61 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
+     * showDate
+     */
+    protected void showDate()
+    {
+        int position = card_layout.findFirstVisibleItemPosition();
+        Long datetime = (position != CardAdapter.TODAY_POSITION) ? card_adapter.findDateForPosition(this, position) : null;
+        showDate(datetime);
+    }
+    protected void showDate(@Nullable Long datetime)
+    {
+        Long startDate = card_adapter.findDateForPosition(this, 0);
+        Long endDate = card_adapter.findDateForPosition(this, CardAdapter.MAX_POSITIONS-1);
+
+        final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
+        datePicker.setTimezone(dataset.timezone());
+        if (startDate != null) {
+            datePicker.setMinDate(startDate);
+        }
+        if (endDate != null) {
+            datePicker.setMaxDate(endDate);
+        }
+        datePicker.setOnAcceptedListener(onSeekDate(datePicker));
+
+        if (datetime != null) {
+            datePicker.setInitialDateTime(datetime);
+        }
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_SEEK);
+    }
+    DialogInterface.OnClickListener onSeekDate(final TimeDateDialog dialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                Calendar now = Calendar.getInstance(dialog.getTimeZone());
+                Calendar then = dialog.getDateInfo().getCalendar(dialog.getTimeZone(), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+                then.set(Calendar.SECOND, now.get(Calendar.SECOND));
+                then.set(Calendar.MILLISECOND, now.get(Calendar.MILLISECOND));
+                scrollToDate(then.getTimeInMillis());
+            }
+        };
+    }
+    
+    /**
      * Select a date other than today.
      */
     private void configDate()
     {
-        final TimeDateDialog datePicker = new TimeDateDialog();
+        final TimeDateConfigDialog datePicker = new TimeDateConfigDialog();
         datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
-        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
+        datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE_CONFIG);
     }
     DialogInterface.OnClickListener onConfigDate = new DialogInterface.OnClickListener()
     {
@@ -1323,12 +1537,12 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            showWarnings();
+            warnings.showWarnings(SuntimesActivity.this);
         }
     };
     private void afterConfigDate()
     {
-        dateWarning.reset();
+        warnings.resetWarning(WARNINGID_DATE);
         calculateData(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
         updateViews(SuntimesActivity.this);
@@ -1336,12 +1550,30 @@ public class SuntimesActivity extends AppCompatActivity
         Log.d("DEBUG", "afterConfigDate");
     }
 
+    public static class TimeDateConfigDialog extends TimeDateDialog
+    {
+        @Override
+        protected void saveSettings(Context context)
+        {
+            WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
+            WidgetSettings.saveDateModePref(context, getAppWidgetId(), dateMode);
+
+            WidgetSettings.DateInfo dateInfo = getDateInfo();
+            WidgetSettings.saveDatePref(context, getAppWidgetId(), dateInfo);
+        }
+    }
+
     /**
      * Refresh location (current location mode).
      */
     protected void refreshLocation()
     {
-        getFixHelper.getFix();
+        if (!getFixHelper.getFix())
+        {
+            warnings.setWasDismissed(WARNINGID_LOCATION_PERMISSION, false);    // ignore previous dismissal
+            warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, true);
+            warnings.showWarnings(this);
+        }
     }
 
     /**
@@ -1375,14 +1607,8 @@ public class SuntimesActivity extends AppCompatActivity
                 updateViews(SuntimesActivity.this);
 
                 WidgetSettings.LocationMode locationMode = dialog.getDialogContent().getLocationMode();
-                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
-                {
+                if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
                     getFixHelper.getFix();
-
-                } else {
-                    Intent updateWidgets = new Intent();
-                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-                    sendBroadcast(updateWidgets);
                 }
             }
         };
@@ -1397,7 +1623,8 @@ public class SuntimesActivity extends AppCompatActivity
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-        timezoneDialog.setLongitude(dataset.location().getLongitudeAsDouble());
+        timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
+        timezoneDialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(SuntimesActivity.this, 0));
         timezoneDialog.setCalculator(dataset.calculator());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
         timezoneDialog.setOnCanceledListener(onCancelTimeZone);
@@ -1408,7 +1635,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            timezoneWarning.reset();
+            warnings.resetWarning(WARNINGID_TIMEZONE);
             CalculatorProvider.clearCachedConfig(0);
             calculateData(SuntimesActivity.this);
             setUpdateAlarms(SuntimesActivity.this);
@@ -1418,9 +1645,8 @@ public class SuntimesActivity extends AppCompatActivity
     DialogInterface.OnClickListener onCancelTimeZone = new DialogInterface.OnClickListener()
     {
         @Override
-        public void onClick(DialogInterface dialogInterface, int i)
-        {
-            showWarnings();
+        public void onClick(DialogInterface dialogInterface, int i) {
+            warnings.showWarnings(SuntimesActivity.this);
         }
     };
 
@@ -1429,49 +1655,14 @@ public class SuntimesActivity extends AppCompatActivity
      * Intent filtering code based off answer by "gumberculese";
      * http://stackoverflow.com/questions/5734678/custom-filtering-of-intent-chooser-based-on-installed-android-package-name
      */
-    protected void showMap()
-    {
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(location.getUri());
-        //if (mapIntent.resolveActivity(getPackageManager()) != null)
-        //{
-        //    startActivity(mapIntent);
-        //}
-
-        String myPackage = "com.forrestguice.suntimeswidget";
-        List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
-        List<Intent> geoIntents = new ArrayList<Intent>();
-
-        if (!info.isEmpty())
-        {
-            for (ResolveInfo resolveInfo : info)
-            {
-                String packageName = resolveInfo.activityInfo.packageName;
-                if (!TextUtils.equals(packageName, myPackage))
-                {
-                    Intent geoIntent = new Intent(Intent.ACTION_VIEW);
-                    geoIntent.setPackage(packageName);
-                    geoIntent.setData(location.getUri());
-                    geoIntents.add(geoIntent);
-                }
-            }
-        }
-
-        if (geoIntents.size() > 0)
-        {
-            Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
-            startActivity(chooserIntent);
-
-        } else {
-            Toast noAppError = Toast.makeText(this, getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG);
-            noAppError.show();
-        }
+    protected void showMap() {
+        GeoIntents.shareLocation(this, location.getUri());
     }
 
     /**
      * Show the help dialog.
      */
+    @SuppressLint("ResourceType")
     protected void showHelp()
     {
         String actual = getString(R.string.help_general_actualTime);
@@ -1483,12 +1674,26 @@ public class SuntimesActivity extends AppCompatActivity
         String blueHour = getString(R.string.help_general_bluehour);
         String blueGoldText = getString(R.string.help_general2, blueHour, goldHour);
 
-        String moonIllum = getString(R.string.help_general_moonillum);
+        //String moonIllum = getString(R.string.help_general_moonillum);
+        String dstText = getString(R.string.help_general_dst);
 
-        String helpText = getString(R.string.help_general3, moonIllum, timeText, blueGoldText);
+        int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
+        int[] iconAttrs = { R.attr.tagColor_dst, R.attr.icActionDst };
+        TypedArray typedArray = obtainStyledAttributes(iconAttrs);
+        int dstIconColor = ContextCompat.getColor(this, typedArray.getResourceId(0, R.color.dstTag_dark));
+        ImageSpan dstIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_weather_sunny), iconSize, iconSize, dstIconColor);
+        typedArray.recycle();
+
+        SuntimesUtils.ImageSpanTag[] helpTags = {
+                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        };
+        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_general3, timeText, blueGoldText, dstText));
+        CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(helpText);
+        helpDialog.setContent(helpSpan);
+        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -1518,7 +1723,7 @@ public class SuntimesActivity extends AppCompatActivity
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
-            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SuntimesSettingsActivity.GeneralPrefsFragment.class.getName() );
+            settingsIntent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, GeneralPrefsFragment.class.getName() );
             settingsIntent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
 
         } else {
@@ -1535,22 +1740,37 @@ public class SuntimesActivity extends AppCompatActivity
     {
         scheduleAlarm(null);
     }
-    protected void scheduleAlarm( SolarEvents event )
+    protected void scheduleAlarm( String eventID )
     {
         if (dataset.isCalculated())
         {
+            boolean isRising = eventID != null && eventID.endsWith(AlarmEventProvider.SunElevationEvent.SUFFIX_RISING);
+            if (eventID != null && (eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_RISING) ||
+                    eventID.endsWith("_" + AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING))) {
+                eventID = eventID.substring(0, eventID.lastIndexOf("_"));
+            }
+
+            String alarmID = eventID;
+            if (EventSettings.hasEvent(this, eventID))
+            {
+                EventSettings.EventAlias event = EventSettings.loadEvent(this, eventID);
+                alarmID = event.getAliasUri() + (isRising ? AlarmEventProvider.SunElevationEvent.SUFFIX_RISING : AlarmEventProvider.SunElevationEvent.SUFFIX_SETTING);
+            }
+
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
-            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
+            dialog.setDialogMode(alarmID != null ? 0 : 1);
+            dialog.setEvent((alarmID != null ? alarmID : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
+            dialog.setUseAppLocation(SuntimesActivity.this, true);
             dialog.setShowAlarmListButton(true);
+
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
 
         } else {
             String msg = getString(R.string.schedalarm_dialog_error2);
-            Toast errorMsg = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-            errorMsg.show();
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1609,20 +1829,20 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void scheduleAlarmFromNote()
     {
-        scheduleAlarm(notes.getNote().noteMode);
+        NoteData note = notes.getNote();
+        if (note != null) {
+            Log.d("DEBUG", "scheduleAlarmFromNote: " + note.noteMode);
+            scheduleAlarm(note.noteMode);  // TODO: fix.. AlarmDialog is expecting a SolarEvents enum or a URI, but noteMode might be an EventAlias id
+        }
     }
 
     protected void calculateData( Context context )
     {
         card_adapter.initData(context);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
-        dataset = cardData.first;
-        dataset_moon = cardData.second;
-
-        dataset_equinox = null;
-        if (AppSettings.loadShowEquinoxPref(context)) {
-            EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
-            dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
+        if (cardData != null) {
+            dataset = cardData.first;
+            dataset_moon = cardData.second;
         }
 
         initNotes();
@@ -1636,9 +1856,6 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset_moon != null) {
             dataset_moon.invalidateCalculation();
         }
-        if (dataset_equinox != null) {
-            dataset_equinox.invalidateCalculation();
-        }
         if (card_adapter != null) {
             card_adapter.invalidateData();
         }
@@ -1650,13 +1867,18 @@ public class SuntimesActivity extends AppCompatActivity
         stopTimeTask();
 
         verboseAccessibility = AppSettings.loadVerboseAccessibilityPref(this);
-        showWarnings = AppSettings.loadShowWarningsPref(this);
-        dateWarning.setShouldShow(false);
-        timezoneWarning.setShouldShow(false);
+
+        boolean showWarnings = AppSettings.loadShowWarningsPref(this);
+        warnings.setShowWarnings(showWarnings);
+        warnings.resetWarnings();
 
         WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
+
+        if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION) {
+            warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, !getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions
+        }
 
         SpannableString locationSubtitle;
         String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
@@ -1686,10 +1908,11 @@ public class SuntimesActivity extends AppCompatActivity
         //
         boolean enableEquinox = AppSettings.loadShowEquinoxPref(this);
         showEquinoxView(enableEquinox && card_equinoxSolstice.isImplemented(context));
+        card_equinoxSolstice.setShowDate(AppSettings.loadShowEquinoxDatePref(context));
         card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(context, AppWidgetManager.INVALID_APPWIDGET_ID));
         card_equinoxSolstice.updateViews(context);
         card_equinoxSolstice.post(updateEquinoxViewColumnWidth);
-
+        
         //
         // clock & date
         //
@@ -1704,19 +1927,19 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 Date time = now.getTime();
                 if (data_date.after(time)) {
-                    dateWarning.setShouldShow(true);
+                    warnings.setShouldShow(WARNINGID_DATE, true);
 
                 } else if (data_date.before(time)) {
-                    dateWarning.setShouldShow(true);
+                    warnings.setShouldShow(WARNINGID_DATE, true);
                 }
             }
         }
 
         // timezone field
         TimeZone timezone = dataset.timezone();
-        timezoneWarning.setShouldShow( WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date()) );
+        warnings.setShouldShow(WARNINGID_TIMEZONE, WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date()));
         int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
-        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow()) ? SuntimesUtils.createWarningSpan(this, iconSize) : null;
+        ImageSpan timezoneWarningIcon = (showWarnings && warnings.shouldShow(WARNINGID_TIMEZONE)) ? SuntimesUtils.createWarningSpan(this, iconSize) : null;
 
         boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
                                                                      : timezone.observesDaylightTime());
@@ -1741,7 +1964,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
         if (txt_altitude != null)
         {
-            txt_altitude.setText(altitudeString);
+            txt_altitude.setText(altitudeString.isEmpty() ? context.getString(R.string.configLabel_general_altitude_enabled) : altitudeString);
         }
         if (check_altitude != null)
         {
@@ -1754,12 +1977,12 @@ public class SuntimesActivity extends AppCompatActivity
         showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
-        showWarnings();
+        warnings.showWarnings(this);
 
         startTimeTask();
     }
 
-    private Runnable updateEquinoxViewColumnWidth = new Runnable()
+    private final Runnable updateEquinoxViewColumnWidth = new Runnable()
     {
         @Override
         public void run()
@@ -1768,13 +1991,15 @@ public class SuntimesActivity extends AppCompatActivity
             if (card != null) {
                 View column = card.findViewById(R.id.header_column);
                 if (column != null) {
-                    card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    if (!getResources().getBoolean(R.bool.is_watch)) {
+                        card_equinoxSolstice.adjustColumnWidth(column.getMeasuredWidth());
+                    }
                 }
             }
         }
     };
 
-    private void updateEquinoxDialogColumnWidth(EquinoxDialog equinoxDialog)
+    private void updateEquinoxDialogColumnWidth(EquinoxCardDialog equinoxDialog)
     {
         View card = findViewById(R.id.info_time_all_today);
         if (card != null && equinoxDialog != null)
@@ -1784,43 +2009,6 @@ public class SuntimesActivity extends AppCompatActivity
                 equinoxDialog.adjustColumnWidth(column.getMeasuredWidth());
             }
         }
-    }
-
-    private void showWarnings()
-    {
-        if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
-        {
-            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
-            timezoneWarning.getSnackbar().setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    configTimeZone();
-                }
-            });
-            timezoneWarning.show();
-            return;
-        }
-
-        if (showWarnings && dateWarning.shouldShow() && !dateWarning.wasDismissed())
-        {
-            dateWarning.initWarning(this, card_view, getString(R.string.dateWarning));
-            dateWarning.getSnackbar().setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    configDate();
-                }
-            });
-            dateWarning.show();
-            return;
-        }
-
-        // no warnings shown; clear previous (stale) messages
-        timezoneWarning.dismiss();
-        dateWarning.dismiss();
     }
 
     /**
@@ -1864,14 +2052,21 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        //Log.d("DEBUG", "" + now.getTimeZone());
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
+    }
 
-        // TODO: commented during refactor ..restore this update
-        //lightmap.updateViews(false);
+    protected void seekNextNote(String eventID)
+    {
+        //Log.d("DEBUG", "seekNextNote: " + eventID);
+        setUserSwappedCard(false, "seekNextNote: " + eventID);
+        notes.setNoteIndex(notes.getNoteIndex(eventID));
+        NoteData note = notes.getNote();
+        if (note != null) {
+            highlightTimeField1(note.noteMode);
+        }
     }
 
     private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
@@ -1889,67 +2084,90 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onSunriseHeaderClick(CardAdapter adapter, int position)
         {
-            setUserSwappedCard(false, "onSunriseClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
+            if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
+                onLightmapClick(adapter, position);
+                if (position == CardAdapter.TODAY_POSITION || position == (CardAdapter.TODAY_POSITION + 1) || position == (CardAdapter.TODAY_POSITION - 1)) {
+                    txt_time.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            seekNextNote(SolarEvents.SUNRISE.name());
+                        }
+                    }, 500);
+                }
+            } else {
+                seekNextNote(SolarEvents.SUNRISE.name());
             }
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
-            setUserSwappedCard(false, "onSunriseClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+            seekNextNote(SolarEvents.SUNRISE.name());
             return true;
         }
 
         @Override
         public void onSunsetHeaderClick(CardAdapter adapter, int position)
         {
-            setUserSwappedCard(false, "onSunsetClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
+            if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
+                onLightmapClick(adapter, position);
+                if (position == CardAdapter.TODAY_POSITION || position == (CardAdapter.TODAY_POSITION + 1) || position == (CardAdapter.TODAY_POSITION - 1)) {
+                    txt_time.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            txt_time.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    seekNextNote(SolarEvents.SUNSET.name());
+                                }
+                            }, 500);
+                        }
+                    });
+                }
+            } else {
+                seekNextNote(SolarEvents.SUNSET.name());
             }
         }
         @Override
-        public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
-        {
-            setUserSwappedCard(false, "onSunsetClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+        public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position) {
+            seekNextNote(SolarEvents.SUNSET.name());
+            return true;
+        }
+
+        @Override
+        public void onNoonHeaderClick(CardAdapter adapter, int position) {
+            onLightmapClick(adapter, position);
+        }
+        @Override
+        public boolean onNoonHeaderLongClick(CardAdapter adapter, int position) {
+            onLightmapClick(adapter, position);
             return true;
         }
 
         @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+            showMoonPositionAt(adapter, position);
         }
         @Override
-        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position) {
-            showMoonDialog();
+        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
+        {
+            showMoonPositionAt(adapter, position);
             return true;
         }
 
         @Override
         public void onLightmapClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+        }
+        @Override
+        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
+            onLightmapAction(adapter, position);
+            return true;
+        }
+        protected void onLightmapAction(CardAdapter adapter, int position)
+        {
             Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
             if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
                 showSunPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
             } else showLightMapDialog();
-        }
-        @Override
-        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
-            onLightmapClick(adapter, position);
-            return true;
         }
 
         @Override
@@ -1958,6 +2176,7 @@ public class SuntimesActivity extends AppCompatActivity
             int nextPosition = (position + 1);
             if (nextPosition < card_adapter.getItemCount()) {
                 setUserSwappedCard(true, "onNextClick");
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(SuntimesActivity.this);
                 card_scroller.setTargetPosition(nextPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -1968,6 +2187,7 @@ public class SuntimesActivity extends AppCompatActivity
             int prevPosition = (position - 1);
             if (prevPosition >= 0) {
                 setUserSwappedCard(true, "onPrevClick");
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(SuntimesActivity.this);
                 card_scroller.setTargetPosition(prevPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -1987,82 +2207,60 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * viewFlipper "note" onTouchListener; swipe between available notes
      */
-    private View.OnTouchListener noteTouchListener = new View.OnTouchListener()
+    private final NoteViewFlipper.ViewFlipperListener noteFlipListener = new NoteViewFlipper.ViewFlipperListener()
     {
-        public int MOVE_SENSITIVITY = 25;
-        public int FLING_SENSITIVITY = 10;
-        public float firstTouchX, secondTouchX;
+        @Override
+        public boolean performClick()
+        {
+            String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
+            if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
+                scheduleAlarmFromNote();
+            } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
+                setUserSwappedCard(false, "noteTouchListener (next note)");
+                notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
+            } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
+                setUserSwappedCard(false, "noteTouchListener (prev note)");
+                notes.showPrevNote();
+            } else {
+                onTapAction(actionID, "onNoteTouch");
+            }
+            return true;
+        }
 
         @Override
-        public boolean onTouch(View view, MotionEvent event)
+        public boolean performFlingPrev()
         {
-            switch (event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    firstTouchX = event.getX();
-                    break;
+            setUserSwappedCard(false, "noteTouchListener (fling prev)");
+            notes.showPrevNote();   // swipe left: prev
+            return true;
+        }
 
-                case MotionEvent.ACTION_UP:
-                    secondTouchX = event.getX();
-                    if ((firstTouchX - secondTouchX) >= FLING_SENSITIVITY)
-                    {
-                        setUserSwappedCard(false, "noteTouchListener (fling next)");
-                        if (isRtl)
-                            notes.showPrevNote();
-                        else notes.showNextNote();    // swipe right: next
-
-                    } else if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY) {
-                        setUserSwappedCard(false, "noteTouchListener (fling prev)");
-                        if (isRtl)
-                            notes.showNextNote();
-                        else notes.showPrevNote();   // swipe left: prev
-
-                    } else {                    // click: user defined
-                        String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
-                            scheduleAlarmFromNote();
-                        } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
-                            setUserSwappedCard(false, "noteTouchListener (next note)");
-                            notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
-                        } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
-                            setUserSwappedCard(false, "noteTouchListener (prev note)");
-                            notes.showPrevNote();
-                        } else {
-                            onTapAction(actionID, "onNoteTouch");
-                        }
-                    }
-                    break;
-
-                case MotionEvent.ACTION_MOVE:
-                    final View currentView = note_flipper.getCurrentView();
-                    int moveDeltaX = (isRtl ? (int)(firstTouchX - event.getX()) : (int)(event.getX() - firstTouchX));
-                    if (Math.abs(moveDeltaX) < MOVE_SENSITIVITY)
-                    {
-                        currentView.layout(moveDeltaX, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
-                    }
-                    break;
-            }
-            return false;
+        @Override
+        public boolean performFlingNext()
+        {
+            setUserSwappedCard(false, "noteTouchListener (fling next)");
+            notes.showNextNote();    // swipe right: next
+            return true;
         }
     };
 
-    View.OnClickListener onTimeZoneClick = new View.OnClickListener()
+    protected View.OnClickListener onTimeZoneClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
             configTimeZone();
         }
-    };
+    });
 
-    View.OnClickListener onClockClick = new View.OnClickListener()
+    protected View.OnClickListener onClockClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
             onTapAction(AppSettings.loadClockTapActionPref(SuntimesActivity.this), "onClockClick");
         }
-    };
+    });
 
     private void onTapAction( String actionID, String caller )
     {
@@ -2093,22 +2291,103 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * Show the lightmap dialog.
+     * Show the lightgraph dialog.
+     * @return
      */
-    protected LightMapDialog showLightMapDialog()
+    protected LightGraphDialog showLightGraphDialog()
     {
-        final LightMapDialog lightMapDialog = new LightMapDialog();
-        lightMapDialog.themeViews(this, appThemeOverride);
-        lightMapDialog.setData(SuntimesActivity.this, dataset);
-        lightMapDialog.setDialogListener(lightMapListener);
-        lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
-        return lightMapDialog;
+        final LightGraphDialog dialog = new LightGraphDialog();
+        dialog.setDialogListener(lightGraphDialogListener);
+
+        if (dataset != null) {
+            dialog.setData(SuntimesActivity.this, dataset);
+        } else {
+            SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
+            data.calculateData(this);
+            dialog.setData(SuntimesActivity.this, data);
+        }
+
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTGRAPH);
+        return dialog;
     }
-    private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
+    public void showLightGraphDialogAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        LightGraphDialog dialog = (LightGraphDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTGRAPH);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showLightGraphDialog();
+        //dialog.showPositionAt(dateTime);   // TODO
+    }
+
+    private final LightGraphDialog.DialogListener lightGraphDialogListener = new LightGraphDialog.DialogListener()
+    {
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
+
+        @Override
+        public void onShowPosition( long suggestedDate ) {
+            showSunPositionAt(suggestedDate);
+        }
+
         @Override
         public void onShowMap( long suggested) {
             showMapPositionAt(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggestDate) {
+            showMoonPositionAt(suggestDate);
+        }
+
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+    };
+
+    /**
+     * Show the sun position dialog.
+     */
+    protected LightMapDialog showLightMapDialog()
+    {
+        final LightMapDialog lightMapDialog = new LightMapDialog();
+        if (dataset != null) {
+            lightMapDialog.setData(SuntimesActivity.this, dataset);
+        } else {
+            SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
+            data.calculateData(this);
+            lightMapDialog.setData(SuntimesActivity.this, data);
+        }
+        lightMapDialog.setDialogListener(lightMapListener);
+        lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+        return lightMapDialog;
+    }
+    private final LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener()
+    {
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
+        @Override
+        public void onShowMap( long suggested) {
+            showMapPositionAt(suggested);
+        }
+
+        @Override
+        public void onShowChart( long suggested) {
+            showLightGraphDialogAt(suggested);
+        }
+
+        @Override
+        public void onShowMoonInfo(long suggestDate) {
+            showMoonPositionAt(suggestDate);
+        }
+
         @Override
         public void onShowDate(long suggested) {
             scrollToDate(suggested);
@@ -2131,7 +2410,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected WorldMapDialog showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
-        worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.setDialogListener(worldMapListener);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
@@ -2156,6 +2434,11 @@ public class SuntimesActivity extends AppCompatActivity
 
             scrollToDate(suggested);
         }
+
+        @Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested - (60 * 1000));
+        }
     };
     public void showMapPositionAt(@Nullable Long dateTime)
     {
@@ -2178,32 +2461,106 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void showEquinoxDialog()
     {
-        final EquinoxDialog equinoxDialog = new EquinoxDialog();
-        updateEquinoxDialogColumnWidth(equinoxDialog);
-        equinoxDialog.themeViews(this, appThemeOverride);
+        final EquinoxCardDialog equinoxDialog = new EquinoxCardDialog();
+        if (!getResources().getBoolean(R.bool.is_watch)) {
+            updateEquinoxDialogColumnWidth(equinoxDialog);
+        }
         equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
     protected void dismissEquinoxDialog()
     {
         FragmentManager fragments = getSupportFragmentManager();
-        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        EquinoxCardDialog equinoxDialog = (EquinoxCardDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
         if (equinoxDialog != null) {
             equinoxDialog.dismiss();
         }
     }
-    private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
+    private final EquinoxCardDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxCardDialog.EquinoxDialogListener()
     {
         @Override
-        public void onOptionsModified() {
+        public void onOptionsModified(boolean closeDialog)
+        {
             updateViews(SuntimesActivity.this);
-            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this)) {
-                dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this))
+            {
+                if (closeDialog) {
+                    dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+                }
+                card_equinoxSolstice.setTrackingMode(WidgetSettings.loadTrackingModePref(SuntimesActivity.this, 0));
+                card_equinoxSolstice.initAdapter(SuntimesActivity.this);
+                card_equinoxSolstice.updateViews(SuntimesActivity.this);
             }
         }
+
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
         @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
-            scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
+            scheduleAlarm(SolarEvents.valueOf(suggestedEvent).name());
+        }
+        @Override
+        public void onShowMap( long suggestDate ) {
+            showMapPositionAt(suggestDate);
+        }
+        @Override
+        public void onShowPosition( long suggested ) {
+            showSunPositionAt(suggested);
+        }
+
+        //@Override
+        public void onShowMoonInfo(long suggested) {
+            showMoonPositionAt(suggested);
+        }
+
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
+    };
+
+    protected void onColorsModified(ColorValues values)
+    {
+        Log.d("DEBUG", "onColorsModified");
+        if (notes != null) {
+            initNotes();
+        }
+        if (card_adapter != null) {
+            card_adapter.notifyDataSetChanged();
+        }
+        if (card_equinoxSolstice != null) {
+            card_equinoxSolstice.setColorValues(SuntimesActivity.this, values);
+        }
+    }
+
+    /**
+     * Show the moon dialog.
+     */
+    protected MoonDialog showMoonDialog()
+    {
+        MoonDialog moonDialog = new MoonDialog();
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
+        SuntimesMoonData d = (data != null ? data.second : null);
+        moonDialog.setData((d != null) ? d : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        moonDialog.setDialogListener(moonDialogListener);
+        moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
+        return moonDialog;
+    }
+    private final MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
+    {
+        @Override
+        public void onColorsModified(ColorValues values) {
+            SuntimesActivity.this.onColorsModified(values);
+        }
+
+        @Override
+        public void onSetAlarm( @Nullable SolarEvents suggestedEvent ) {
+            if (suggestedEvent != null) {
+                scheduleAlarm(suggestedEvent.name());
+            }
         }
         @Override
         public void onShowMap( long suggestDate ) {
@@ -2218,29 +2575,26 @@ public class SuntimesActivity extends AppCompatActivity
             scrollToDate(suggested);
         }
     };
-
-    /**
-     * Show the moon dialog.
-     */
-    protected void showMoonDialog()
+    public void showMoonPositionAt(@Nullable Long dateTime)
     {
-        MoonDialog moonDialog = new MoonDialog();
-        moonDialog.themeViews(this, appThemeOverride);
-        moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
-        moonDialog.setDialogListener(moonDialogListener);
-        moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
+        FragmentManager fragments = getSupportFragmentManager();
+        MoonDialog dialog = (MoonDialog) fragments.findFragmentByTag(DIALOGTAG_MOON);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showMoonDialog();
+        dialog.showPositionAt(dateTime);
     }
-    private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
+    protected void showMoonPositionAt(CardAdapter adapter, int position)
     {
-        @Override
-        public void onSetAlarm( SolarEvents suggestedEvent ) {
-            scheduleAlarm(suggestedEvent);
-        }
-        @Override
-        public void onShowMap( long suggestDate ) {
-            showWorldMapDialog();   // TODO: at suggested date
-        }
-    };
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = ((adapter != null) ? adapter.initData(SuntimesActivity.this, position) : null);
+        if (cardData != null) {
+            showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
+        } else showMoonDialog();
+    }
+    protected void showMoonPositionAt() {
+        showMoonPositionAt(card_adapter, card_layout.findFirstVisibleItemPosition());
+    }
 
     /**
      * Show data source labels / ui.
@@ -2253,9 +2607,10 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    public void highlightTimeField1(SolarEvents event)
+    public void highlightTimeField1(String eventID)
     {
-        int cardPosition = card_adapter.highlightField(this, event);
+        //Log.d("DEBUG", "highlightTimeField1: " + eventID);
+        int cardPosition = card_adapter.highlightField(this, eventID);
         if (!checkUserSwappedCard() && cardPosition != -1) {
             scrollTo(cardPosition);
         }
@@ -2268,6 +2623,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (Math.abs(firstPosition - position) > HIGHLIGHT_SCROLLING_ITEMS) {
             card_view.scrollToPosition(position);        // far; jump straight to item
         } else {
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(this);
             card_scroller.setTargetPosition(position);   // near; animated scroll to item
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -2280,7 +2636,7 @@ public class SuntimesActivity extends AppCompatActivity
             card_view.scrollToPosition(position);
         }
     }
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState)
@@ -2292,16 +2648,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    private void adjustNoteIconSize(NoteData note, ImageView icon)
-    {
-        Resources resources = getResources();
-        int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-        int iconHeight = ((note.noteIconResource == resID_noonIcon) ? iconWidth : (int)resources.getDimension(R.dimen.sunIconLarge_height));
 
-        ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
-        iconParams.width = iconWidth;
-        iconParams.height = iconHeight;
-    }
 
     protected void updateNoteUI( NoteData note, int transition )
     {
@@ -2309,30 +2656,36 @@ public class SuntimesActivity extends AppCompatActivity
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
-            if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
-            }
-            adjustNoteIconSize(note, ic_time2_note);
+            //if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
+            //}
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
             txt_time2_note2.setText(note.prefixText);
             txt_time2_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time2_note3.setText(note.noteText);
-            txt_time2_note3.setTextColor(note.noteColor);
+            txt_time2_note3.setTextColor(note.textColor);
+
+            txt_time1_note1.setText(note.timeText.toString());
+            txt_time1_note3.setText(note.noteText);
 
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
-            if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.noteColor, note.noteColor2, note.noteIconStroke);
-            }
-            adjustNoteIconSize(note, ic_time1_note);
+            //if (appThemeOverride != null) {
+                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
+            //}
+            SuntimesNotes.adjustNoteIconSize(this, note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());
             txt_time1_note2.setText(note.prefixText);
             txt_time1_note2.setVisibility(note.prefixText.isEmpty() ? View.GONE : View.VISIBLE);
             txt_time1_note3.setText(note.noteText);
-            txt_time1_note3.setTextColor(note.noteColor);
+            txt_time1_note3.setTextColor(note.textColor);
+
+            txt_time2_note1.setText(note.timeText.toString());
+            txt_time2_note3.setText(note.noteText);
         }
 
         if (transition == NoteChangedListener.TRANSITION_NEXT)
@@ -2354,31 +2707,6 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         highlightTimeField1(note.noteMode);
-    }
-
-    /**
-     * Save the state of warning objects to Bundle.
-     * @param outState a Bundle to save state to
-     */
-    private void saveWarnings( Bundle outState )
-    {
-        for (SuntimesWarning warning : warnings)
-        {
-            warning.save(outState);
-        }
-    }
-
-    /**
-     * Restore the state of warning objects from Bundle.
-     * @param savedState a Bundle containing saved state
-     */
-    private void restoreWarnings(Bundle savedState)
-    {
-        for (SuntimesWarning warning : warnings)
-        {
-            warning.restore(savedState);
-            warning.setWarningListener(warningListener);
-        }
     }
 
     private void setUserSwappedCard( boolean value, String tag )

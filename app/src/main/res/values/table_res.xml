@@ -2,13 +2,32 @@
 <!-- values\table_res.xml :: typical sized phone (width <= 320dp) -->
 <resources>
 
+    <dimen name="clock_fontsize">@dimen/text_size_enormous</dimen>
+    <dimen name="clock_suffix_fontsize">@dimen/text_size_xlarge</dimen>
     <integer name="clock_amppm_maxems">2</integer>
     <dimen name="clock_note_maxwidth">125dp</dimen>
+
+    <style name="ClockTextView0" parent="SunsetTimeTextView">    <!-- clock text (base) -->
+        <item name="android:textSize">@dimen/clock_fontsize</item>
+    </style>
+    <style name="ClockSuffixTextView0" parent="SunsetTimeTextSuffixView">  <!-- clock suffix (base) -->
+        <item name="android:textSize">@dimen/clock_suffix_fontsize</item>
+        <item name="android:maxEms">@integer/clock_amppm_maxems</item>
+    </style>
+
+    <style name="ClockTextView" parent="ClockTextView0">         <!-- clock text -->
+        <item name="android:textSize">?attr/text_size_enormous</item>
+    </style>
+    <style name="ClockSuffixTextView" parent="ClockSuffixTextView0">   <!-- clock suffix -->
+        <item name="android:textSize">?attr/text_size_xlarge</item>
+    </style>
 
     <dimen name="solsticetable_column0_width">130dp</dimen>
     <dimen name="moonphase_column0_width">75dp</dimen>
 
+    <dimen name="table_cell_minwidth">72dp</dimen>
     <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
+    <dimen name="table_cell_spacing_half">8dp</dimen>
     <integer name="table_weight0">9</integer>
     <integer name="table_weight1">1</integer>
 
@@ -21,12 +40,12 @@
     <dimen name="table_moon_startEndMargin">6dp</dimen>
 
     <!-- table heading: date field (col 0) -->
-    <dimen name="table_heading_date_fontsize">14sp</dimen>
+    <dimen name="table_heading_date_fontsize">@dimen/text_size_medium</dimen>
     <integer name="table_heading_date_maxems">7</integer>
     <integer name="table_heading_date_maxlength">32</integer>
     <integer name="table_heading_date_maxlines">2</integer>
 
-    <style name="TableHeadDateView">                                     <!-- date header text -->
+    <style name="TableHeadDateView0">                                     <!-- date header text (base) -->
         <item name="android:textColor">?attr/date_buttonSelector</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_date_fontsize</item>
@@ -40,21 +59,27 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="TableHeadDateView" parent="TableHeadDateView0">                                     <!-- date header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
+    </style>
 
     <!-- table heading: rise/set field (col 1,2) -->
-    <dimen name="table_heading_label_fontsize">14sp</dimen>
+    <dimen name="table_heading_label_fontsize">@dimen/text_size_medium</dimen>
     <integer name="table_heading_label_maxlines">1</integer>
     <dimen name="table_heading_label_maxdim">84dp</dimen>
     <dimen name="table_heading_label_iconSpacing">2dp</dimen>
 
     <dimen name="table_heading_iconsize">24dp</dimen>
 
+    <dimen name="tablerow_label_fontsize">@dimen/text_size_small</dimen>  <!-- sp -->
+    <dimen name="table_row_fontsize_emphasized">4sp</dimen>   <!-- +4 sp over the label size -->
+
     <style name="TableHeadImageView" parent="SunsetTimeImageView">      <!-- rise/set header icons-->
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_margin">5dp</item>
     </style>
 
-    <style name="TableHeadTextView" parent="SunsetTimeTextView">        <!-- rise/set header text -->
+    <style name="TableHeadTextView0" parent="SunsetTimeTextView">        <!-- rise/set header text (base) -->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/table_heading_label_fontsize</item>
         <item name="android:ellipsize">end</item>
@@ -62,6 +87,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/table_heading_label_iconSpacing</item>
+    </style>
+    <style name="TableHeadTextView" parent="TableHeadTextView0">        <!-- rise/set header text -->
+        <item name="android:textSize">?attr/text_size_large</item>
     </style>
 
     <!-- lightmap -->

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:gravity="center"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingBottom="48dp">
+
+    <LinearLayout android:id="@+id/header"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:orientation="vertical" android:gravity="center"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/content_layout"
+        app:layout_constraintVertical_chainStyle="spread">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="128dp" android:layout_height="128dp" android:scaleType="fitCenter"
+            android:src="@drawable/ic_style_128dp" app:tint="?attr/colorControlNormal"
+            tools:ignore="ContentDescription" />
+
+        <TextView android:id="@+id/text_title"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:gravity="start" android:layout_margin="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_xlarge"
+            android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
+            android:text="@string/configLabel_appearance" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_welcome_appearance_content"
+        android:id="@+id/content_layout" />
+
+</android.support.constraint.ConstraintLayout>

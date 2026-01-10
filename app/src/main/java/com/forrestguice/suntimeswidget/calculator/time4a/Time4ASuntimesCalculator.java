@@ -46,7 +46,7 @@ import java.util.TimeZone;
 
 public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 {
-    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION };
+    public static final int[] FEATURES = new int[] { FEATURE_RISESET, FEATURE_SOLSTICE, FEATURE_GOLDBLUE, FEATURE_POSITION, FEATURE_RISESET1, FEATURE_SHADOW };
 
     public abstract StdSolarCalculator getCalculator();
 
@@ -147,6 +147,14 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSolarMidnightCalendarForDate(Calendar date)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> noon = this.solarTime.transitAtMidnight();
+        return momentToCalendar(localDate.get(noon));
+    }
+
+    @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
         PlainDate localDate = calendarToPlainDate(date);
@@ -168,6 +176,36 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         PlainDate localDate = calendarToPlainDate(date);
         ChronoFunction<CalendarDate, Moment> astroSet = this.solarTime.sunset(Twilight.ASTRONOMICAL);
         return momentToCalendar(localDate.get(astroSet));
+    }
+
+    @Override
+    public Calendar getSunriseCalendarForDate( Calendar date, double angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunrise(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
+    }
+
+    @Override
+    public Calendar getSunsetCalendarForDate( Calendar date, double angle )
+    {
+        SolarTime.Calculator calculator = solarTime.getCalculator();
+        int altitude = clampAltitude(solarTime.getAltitude());
+        double latitude = solarTime.getLatitude();
+        double longitude = solarTime.getLongitude();
+        double geodeticAngle = calculator.getGeodeticAngle(latitude, altitude);
+        double eventAngle = 90 + geodeticAngle + (-1 * angle);
+
+        PlainDate localDate = calendarToPlainDate(date);
+        Moment moment = calculator.sunset(localDate, latitude, longitude, eventAngle);
+        return momentToCalendar(moment);
     }
 
     @Override
@@ -282,6 +320,16 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         AstronomicalSeason winterSolstice = adjustSeasonToHemisphere(AstronomicalSeason.WINTER_SOLSTICE);
         Moment moment = winterSolstice.inYear(date.get(Calendar.YEAR));
         return momentToCalendar(moment);
+    }
+
+    @Override
+    public long getTropicalYearLength(Calendar date)
+    {
+        int year = date.get(Calendar.YEAR);
+        AstronomicalSeason vernalEquinox = AstronomicalSeason.VERNAL_EQUINOX.onNorthernHemisphere();
+        long t0 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year));
+        long t1 = TemporalType.MILLIS_SINCE_UNIX.from(vernalEquinox.inYear(year + 1));
+        return t1 - t0;
     }
 
     @Override
@@ -406,6 +454,22 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
         net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
         return position.getShadowLength(objHeight);
+    }
+
+    @Override
+    public Calendar getTimeOfShadowBeforeNoon(Calendar date, double objHeight, double shadowLength)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> shadow = solarTime.timeOfShadowBeforeNoon(objHeight, shadowLength);
+        return momentToCalendar(localDate.get(shadow));
+    }
+
+    @Override
+    public Calendar getTimeOfShadowAfterNoon(Calendar date, double objHeight, double shadowLength)
+    {
+        PlainDate localDate = calendarToPlainDate(date);
+        ChronoFunction<CalendarDate, Moment> shadow = solarTime.timeOfShadowAfterNoon(objHeight, shadowLength);
+        return momentToCalendar(localDate.get(shadow));
     }
 
     @Override

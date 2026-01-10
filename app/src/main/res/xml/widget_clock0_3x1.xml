@@ -3,9 +3,9 @@
                     xmlns:tools="http://schemas.android.com/tools"
                     tools:ignore="UnusedAttribute"
 
-    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/clockwidget_1x1_preview"
+    android:previewImage="@drawable/clockwidget_3x1_preview"
 
     android:resizeMode="horizontal|vertical"
     android:minWidth="@dimen/widget_size_minWidth3x1" android:minHeight="@dimen/widget_size_minHeight"
@@ -13,6 +13,7 @@
 
     android:initialKeyguardLayout="@layout/layout_widget_clock_1x1_0"
     android:initialLayout="@layout/layout_widget_clock_1x1_0"
+    android:widgetFeatures="reconfigurable"
     android:configure="com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity_3x1">
 
 </appwidget-provider>

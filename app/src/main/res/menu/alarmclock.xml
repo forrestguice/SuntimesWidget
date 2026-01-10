@@ -3,10 +3,17 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/action_bedtime"
+            android:icon="?attr/icActionBedtime"
+            android:title="@string/configLabel_bedtime"
+            app:showAsAction="ifRoom"
+            android:orderInCategory="10" />
+
         <item android:id="@+id/action_settings"
             android:icon="?attr/icActionSettings"
             android:title="@string/configAction_settings"
             app:showAsAction="never"
+            android:visible="false"
             android:orderInCategory="997" />
 
         <!--<item android:id="@+id/action_help"
@@ -19,6 +26,7 @@
             android:icon="?attr/icActionAbout"
             android:title="@string/configAction_aboutWidget"
             app:showAsAction="never"
+            android:visible="false"
             android:orderInCategory="999" />
 
     </group>

@@ -16,37 +16,45 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_drawer"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true" tools:openDrawer="start">
+
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                   android:orientation="vertical" >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/app_menubar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="?attr/toolbarTheme"
-            app:popupTheme="?attr/actionBarPopupTheme" />
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/layout_app_menubar"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+                app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
             android:paddingTop="6dp" android:paddingBottom="6dp" android:paddingLeft="8dp" android:paddingRight="8dp">
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/clockPanel"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:orientation="vertical" android:minWidth="150dp">
+                android:orientation="vertical" android:minWidth="200dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <LinearLayout android:id="@+id/layout_clock"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
                     android:orientation="vertical"
                     android:padding="10dp"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <include layout="@layout/info_time_now" />
@@ -58,14 +66,15 @@
                     android:layout_width="0dp" android:layout_height="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/layout_clock"
                     app:layout_constraintBottom_toTopOf="@+id/layout_datasource"
-                    app:layout_constraintStart_toStartOf="@+id/layout_clock"
-                    app:layout_constraintEnd_toEndOf="@+id/layout_clock">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                    <ViewFlipper
+                    <com.forrestguice.suntimeswidget.notes.NoteViewFlipper
                         android:id="@+id/info_note_flipper"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:background="?attr/selectableItemBackground"
+                        android:focusable="true"
                         android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
 
                         <LinearLayout
@@ -88,7 +97,7 @@
 
                         </LinearLayout>
 
-                    </ViewFlipper>
+                    </com.forrestguice.suntimeswidget.notes.NoteViewFlipper>
 
                 </ScrollView>
 
@@ -108,6 +117,7 @@
                     style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="center"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_gravity="bottom"
                     android:layout_marginBottom="0dp" android:layout_marginTop="4dp"
+                    android:paddingLeft="0dp" android:paddingRight="0dp"
                     android:paddingTop="0dp" android:paddingBottom="0dp"
 
                     app:layout_constraintStart_toStartOf="parent"
@@ -121,32 +131,49 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/info_time_flipper1"
-                android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:elevation="5dp" />  <!-- TODO: margins -->
+            <ScrollView
+                android:layout_width="0dp" android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/clockPanel"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </LinearLayout>
+                <LinearLayout android:orientation="vertical"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/info_time_equinox_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/timeCardBackground"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:layout_marginBottom="6dp">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/info_time_flipper1"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:elevation="5dp" />
 
-            <com.forrestguice.suntimeswidget.EquinoxView
-                android:id="@+id/info_date_solsticequinox"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:minimized="true" />
+                    <LinearLayout
+                        android:id="@+id/info_time_equinox_layout"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:background="?attr/timeCardBackground"
+                        android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                        android:layout_marginBottom="6dp">
 
-        </LinearLayout>
+                        <com.forrestguice.suntimeswidget.equinox.EquinoxCardView
+                            android:id="@+id/info_date_solsticequinox"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="0dp" android:padding="0dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:focusable="true" android:clickable="true"
+                            android:descendantFocusability="afterDescendants"
+                            app:minimized="true" />
 
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+
+<include layout="@layout/nav_main" />
+</android.support.v4.widget.DrawerLayout>

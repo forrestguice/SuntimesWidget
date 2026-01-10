@@ -1,0 +1,8 @@
+- fixes crash in sunlight widget (#735).
+- fixes bugs when triggering bedtime mode (#818).
+- fixes missing "bright alarm" setting (Android 14).
+- fixes text readability when modifying custom colors.
+- adds "bright alarm colors" (customize the alarm screen).
+- updates translation to Norwegian.
+- updates translation to Polish and Esperanto.
+- updates translations to Simplified Chinese, and Traditional Chinese.

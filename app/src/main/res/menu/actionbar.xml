@@ -17,19 +17,19 @@
           android:title="@string/configAction_mapLocation"
           app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/action_date"
+        android:icon="?attr/icActionCalendar"
+        android:title="@string/configAction_viewDate"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_timezone"
+        android:icon="?attr/icActionTime"
+        android:title="@string/configAction_setTimeZone"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_alarm"
           android:icon="?attr/icActionAlarm"
           android:title="@string/configAction_setAlarm"
-          app:showAsAction="never" />
-
-    <item android:id="@+id/action_date"
-          android:icon="?attr/icActionTime"
-          android:title="@string/configAction_setDate"
-          app:showAsAction="never" />
-
-    <item android:id="@+id/action_timezone"
-          android:icon="?attr/icActionTime"
-          android:title="@string/configAction_setTimeZone"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_moon"
@@ -38,9 +38,14 @@
           app:showAsAction="never" />
 
     <item android:id="@+id/action_sunposition"
-          android:icon="@drawable/ic_sun"
+          android:icon="?attr/icActionSun"
           android:title="@string/configAction_sunDialog"
           app:showAsAction="never" />
+
+    <item android:id="@+id/action_lightgraph"
+        android:icon="?attr/icActionSunChart"
+        android:title="@string/configAction_lightGraphDialog"
+        app:showAsAction="never" />
 
     <item android:id="@+id/action_equinox"
           android:icon="?attr/icActionAbout"
@@ -48,13 +53,14 @@
           app:showAsAction="never" />
 
     <item android:id="@+id/action_worldmap"
-          android:icon="?attr/icActionMap"
+          android:icon="?attr/icActionWorldMap"
           android:title="@string/configAction_worldMap"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_settings"
           android:icon="?attr/icActionSettings"
           android:title="@string/configAction_settings"
+          android:visible="false"
           app:showAsAction="never" />
 
     <item android:id="@+id/action_help"
@@ -65,6 +71,7 @@
     <item android:id="@+id/action_about"
           android:icon="?attr/icActionAbout"
           android:title="@string/configAction_aboutWidget"
+          android:visible="false"
           app:showAsAction="never" />
 
 </menu>

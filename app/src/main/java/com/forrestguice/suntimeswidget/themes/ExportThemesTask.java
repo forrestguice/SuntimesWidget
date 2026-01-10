@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,11 +21,16 @@ package com.forrestguice.suntimeswidget.themes;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import android.content.Context;
+import android.net.Uri;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 public class ExportThemesTask extends ExportTask
 {
+    public static final String FILEEXT = ".xml";
+    public static final String MIMETYPE = "text/xml";
+
     public ExportThemesTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
@@ -36,11 +41,16 @@ public class ExportThemesTask extends ExportTask
         super(context, exportTarget, useExternalStorage, saveToCache);
         initTask();
     }
+    public ExportThemesTask(Context context, Uri uri)
+    {
+        super(context, uri);
+        initTask();
+    }
 
     private void initTask()
     {
-        ext = ".xml";
-        mimeType = "text/plain";
+        ext = FILEEXT;
+        mimeType = MIMETYPE;
     }
 
     private SuntimesTheme.ThemeDescriptor[] descriptors = null;

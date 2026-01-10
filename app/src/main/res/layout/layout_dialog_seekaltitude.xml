@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:paddingStart="@dimen/dialog_margin" android:paddingEnd="@dimen/dialog_margin"
+    android:gravity="center_vertical">
+
+    <EditText android:id="@+id/edit_altitude"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:singleLine="true" android:maxLines="1" android:gravity="end" tools:text="45"
+        android:inputType="numberSigned" android:minWidth="72dp"
+        android:hint="@string/seekAltitude_configHint" />
+
+    <TextView android:id="@+id/suffix_altitude"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginRight="4dp" android:layout_marginEnd="4dp"
+        android:text="@string/seekAltitude_suffix" />
+
+    <Button
+        android:id="@+id/button_rising"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/seekAltitude_rising" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_rising_contentDescription" />
+
+    <Button
+        android:id="@+id/button_setting"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/seekAltitude_setting_contentDescription" />
+
+</LinearLayout>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,8 +35,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,15 +54,21 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -71,6 +77,8 @@ import java.util.Locale;
 
 public class PlacesListFragment extends Fragment
 {
+    public static final String KEY_DIALOGTHEME = "dialogtheme";
+
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
     public static final String KEY_FILTER_TEXT = "filterText";
     public static final String KEY_FILTER_EXCEPTIONS = "filterExceptions";
@@ -80,6 +88,7 @@ public class PlacesListFragment extends Fragment
     public static final String DIALOG_EDITPLACE = "placedialog";
 
     public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
 
     protected FragmentListener listener;
     protected PlacesListAdapter adapter;
@@ -113,6 +122,19 @@ public class PlacesListFragment extends Fragment
         if (editDialog != null) {
             editDialog.setFragmentListener(onEditPlace);
         }
+    }
+
+    public void setDialogThemOverride(@Nullable Integer resID)
+    {
+        if (resID != null) {
+            getArguments().putInt(KEY_DIALOGTHEME, resID);
+        } else getArguments().remove(KEY_DIALOGTHEME);
+    }
+    @Nullable
+    protected Integer getDialogThemeOverride()
+    {
+        int resID = getArguments().getInt(KEY_DIALOGTHEME, -1);
+        return (resID >= 0 ? resID : null);
     }
 
     @Override
@@ -158,6 +180,16 @@ public class PlacesListFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportPlaces(getActivity(), uri);
+                    }
+                }
+                break;
+
             case IMPORT_REQUEST:
                 if (resultCode == Activity.RESULT_OK)
                 {
@@ -321,7 +353,7 @@ public class PlacesListFragment extends Fragment
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu)
         {
-            SuntimesUtils.forceActionBarIcons(menu);
+            PopupMenuCompat.forceActionBarIcons(menu);
 
             int[] singleSelectItems = new int[] { R.id.pickPlace, R.id.sharePlace, R.id.editPlace, R.id.copyPlace };
             for (int resID : singleSelectItems)
@@ -515,42 +547,23 @@ public class PlacesListFragment extends Fragment
     protected void sharePlace(@Nullable PlaceItem item)
     {
         Context context = getActivity();
-        if (item != null && item.location != null && context != null)
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(item.location.getUri());
-            List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
-            List<Intent> geoIntents = new ArrayList<Intent>();
+        if (item != null && item.location != null && context != null) {
+            GeoIntents.shareLocation(context, item.location.getUri());
+        }
+    }
 
-            if (!info.isEmpty())
-            {
-                for (ResolveInfo resolveInfo : info)
-                {
-                    if (!TextUtils.equals(resolveInfo.activityInfo.packageName, "com.forrestguice.suntimeswidget"))
-                    {
-                        Intent geoIntent = new Intent(Intent.ACTION_VIEW);
-                        geoIntent.setPackage(resolveInfo.activityInfo.packageName);
-                        geoIntent.setData(item.location.getUri());
-                        geoIntents.add(geoIntent);
-                    }
-                }
-            }
-
-            if (geoIntents.size() > 0)
-            {
-                Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
-                startActivity(chooserIntent);
-
-            } else {
-                Toast.makeText(context, context.getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
-            }
+    public static class PlacesEditFragment0 extends PlacesEditFragment
+    {
+        @Nullable
+        protected LocationHelper createLocationHelper() {
+            return new GetFixHelper(getActivity(), getFixUI());
         }
     }
 
     protected void addPlace(Context context)
     {
-        PlacesEditFragment dialog = new PlacesEditFragment();
+        PlacesEditFragment0 dialog = new PlacesEditFragment0();
+        dialog.setDialogThemOverride(getDialogThemeOverride());
         dialog.setFragmentListener(onEditPlace);
         dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
     }
@@ -562,7 +575,8 @@ public class PlacesListFragment extends Fragment
             Location location = new Location("", item.location.getLatitude(), item.location.getLongitude(), item.location.getAltitude());
             PlaceItem place = new PlaceItem(-1, location);
 
-            PlacesEditFragment dialog = new PlacesEditFragment();
+            PlacesEditFragment0 dialog = new PlacesEditFragment0();
+            dialog.setDialogThemOverride(getDialogThemeOverride());
             dialog.setFragmentListener(onEditPlace);
             dialog.setPlace(place);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -581,7 +595,8 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (item != null && item.location != null && context != null)
             {
-                PlacesEditFragment dialog = new PlacesEditFragment();
+                PlacesEditFragment0 dialog = new PlacesEditFragment0();
+                dialog.setDialogThemOverride(getDialogThemeOverride());
                 dialog.setFragmentListener(onEditPlace);
                 dialog.setPlace(item);
                 dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -769,57 +784,12 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
-
-    public static class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
-    {
-        private GetFixDatabaseAdapter database;
-        private Long[] rowIDs = new Long[] { -1L };
-
-        public DeletePlaceTask(Context context) {
-            database = new GetFixDatabaseAdapter(context.getApplicationContext());
-        }
-
-        @Override
-        protected Boolean doInBackground(Long... params)
-        {
-            if (params.length > 0) {
-                rowIDs = params;
-            }
-
-            boolean result = false;
-            database.open();
-            for (long rowID : rowIDs)
-            {
-                if (rowID != -1) {
-                    result = database.removePlace(rowID);
-                }
-            }
-            database.close();
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            if (taskListener != null)
-                taskListener.onFinished(result, rowIDs);
-        }
-
-        private TaskListener taskListener = null;
-        public void setTaskListener( TaskListener listener ) {
-            taskListener = listener;
-        }
-        public static abstract class TaskListener
-        {
-            public void onFinished( boolean result, Long... rowIDs ) {}
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -901,7 +871,7 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            ViewUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -913,11 +883,8 @@ public class PlacesListFragment extends Fragment
 
     public boolean importPlaces(Context context)
     {
-        if (context != null)
-        {
-            Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
-            intent.setType("text/*");
-            startActivityForResult(intent, IMPORT_REQUEST);
+        if (context != null) {
+            startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
             return true;
         }
         return false;
@@ -937,10 +904,32 @@ public class PlacesListFragment extends Fragment
 
     public void exportPlaces(Context context)
     {
-        ExportPlacesTask task = new ExportPlacesTask(context, "SuntimesPlaces", true, true);  // export to external cache
+        String exportTarget = "SuntimesPlaces";
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + ExportPlacesTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, ExportPlacesTask.MIMETYPE);
+            try {
+                startActivityForResult(intent, EXPORT_REQUEST);
+                return;
+
+            } catch (ActivityNotFoundException e) {
+                Log.e("exportPlaces", "SAF is unavailable? (" + e + ").. falling back to legacy export method.");
+            }
+        }
+        ExportPlacesTask task = new ExportPlacesTask(context, exportTarget, true, true);  // export to external cache
         task.setTaskListener(exportPlacesListener);
         task.execute();
     }
+
+    public void exportPlaces(Context context, @NonNull Uri uri)
+    {
+        Log.i("exportPlaces", "Starting export task: " + uri);
+        ExportPlacesTask task = new ExportPlacesTask(context, uri);
+        task.setTaskListener(exportPlacesListener);
+        task.execute();
+    }
+
     private ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
     {
         @Override
@@ -962,34 +951,31 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (context != null)
             {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
                 if (results.getResult())
                 {
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType(results.getMimeType());
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    try {
-                        //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-
-                        String successMessage = context.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    if (isAdded()) {
+                        String successMessage = context.getString(R.string.msg_export_success, path);
                         Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
-
-                        context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
-                        return;   // successful export ends here...
-
-                    } catch (Exception e) {
-                        Log.e("ExportPlaces", "Failed to share file URI! " + e);
                     }
 
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
                 }
 
-                File file = results.getExportFile();    // export failed
-                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                String failureMessage = context.getString(R.string.msg_export_failure, path);
-                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                if (isAdded()) {
+                    String failureMessage = context.getString(R.string.msg_export_failure, path);
+                    Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                }
             }
         }
     };
@@ -997,13 +983,10 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addWorldPlaces(Context context)
-    {
-        BuildPlacesTask task = new BuildPlacesTask(context);
-        task.setTaskListener(buildPlacesListener);
-        task.execute();
+    public void addWorldPlaces(final Context context) {
+        BuildPlacesTask.promptAddWorldPlaces(context, buildPlacesListener);
     }
-    private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+    private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -1057,20 +1040,28 @@ public class PlacesListFragment extends Fragment
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast())
                 {
-                    String name = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_NAME));
-                    String lat = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
-                    String lon = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
-                    String alt = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
-                    String comment = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
-                    Location location = new Location(name, lat, lon, alt);
-                    location.setUseAltitude(true);
+                    try {
+                        int i_name = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_NAME);    // optional fields
+                        int i_alt = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE);
+                        int i_comment = cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_COMMENT);
 
-                    PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_ROWID)), location);
-                    item.isDefault = (comment != null && comment.contains(PlaceItem.TAG_DEFAULT));
+                        String name = (i_name >= 0) ? cursor.getString(i_name) : "";
+                        String lat = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+                        String lon = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+                        String alt = (i_alt >= 0) ? cursor.getString(i_alt) : "0";
+                        String comment = (i_comment >= 0) ? cursor.getString(i_comment) : "";
+                        Location location = new Location(name, lat, lon, alt);
+                        location.setUseAltitude(true);
 
-                    result.add(item);
+                        PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID)), location, comment);
+                        result.add(item);
+
+                    } catch (IllegalArgumentException e) {
+                        Log.w("PlacesListFragment", "missing columns! skipping item... " + e);
+                    }
                     cursor.moveToNext();
                 }
+                cursor.close();
             }
             database.close();
             return result;
@@ -1482,7 +1473,7 @@ public class PlacesListFragment extends Fragment
             protected FilterResults performFiltering(CharSequence constraint)
             {
                 FilterResults results = new FilterResults();
-                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT)) : items0);
+                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT).trim()) : items0);
                 return results;
             }
 
@@ -1490,22 +1481,29 @@ public class PlacesListFragment extends Fragment
             {
                 List<PlaceItem> values0  = new ArrayList<>();
                 List<PlaceItem> values1  = new ArrayList<>();
+                List<PlaceItem> values2  = new ArrayList<>();
                 for (PlaceItem item : items0)
                 {
                     String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
+                    String label0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
+                    label0 = label0.replaceAll("\\p{M}", "");          // and remove them; e.g. Rīga -> Riga
 
-                    if (label.equals(constraint) || filterExceptions.contains(item.rowID)) {
+                    if (label.equals(constraint) || label0.equals(constraint) || filterExceptions.contains(item.rowID)) {
                         values0.add(0, item);
+                        continue;
 
-                    } else if (label.startsWith(constraint)) {
-                        values0.add(item);
-
-                    } else if (label.contains(constraint)) {
+                    } else if (label.startsWith(constraint) || label0.startsWith(constraint)) {
                         values1.add(item);
+                        continue;
+
+                    } else if (label.contains(constraint) || label0.contains(constraint)) {
+                        values2.add(item);
+                        continue;
                     }
                 }
                 List<PlaceItem> values = new ArrayList<>(values0);
                 values.addAll(values1);
+                values.addAll(values2);
                 return values;
             }
 
@@ -1554,10 +1552,10 @@ public class PlacesListFragment extends Fragment
             if (item != null)
             {
                 if (icon_default != null) {
-                    icon_default.setVisibility(item.isDefault ? View.VISIBLE : View.GONE);
+                    icon_default.setVisibility(item.isDefault() ? View.VISIBLE : View.GONE);
                 }
                 if (icon_userdefined != null) {
-                    icon_userdefined.setVisibility(item.isDefault ? View.GONE : View.VISIBLE);
+                    icon_userdefined.setVisibility(item.isDefault() ? View.GONE : View.VISIBLE);
                 }
             }
         }

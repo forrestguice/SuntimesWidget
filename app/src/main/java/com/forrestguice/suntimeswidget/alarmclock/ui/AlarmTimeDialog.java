@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,13 +40,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
+import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 
@@ -56,6 +58,12 @@ public class AlarmTimeDialog extends DialogFragment
 
     public static final String PREF_KEY_ALARM_TIME_DATE = "alarmdate";
     public static final long PREF_DEF_ALARM_TIME_DATE = -1L;
+
+    public static final String PREF_KEY_ALARM_TIME_DATE_SHOW = "showalarmdate";
+    public static final boolean PREF_DEF_ALARM_TIME_DATE_SHOW = true;
+
+    public static final String PREF_KEY_ALARM_TIMEZONE_SHOW = "showtimezone";
+    public static final boolean PREF_DEF_ALARM_TIMEZONE_SHOW = true;
 
     public static final String PREF_KEY_ALARM_TIME_HOUR = "alarmhour";
     public static final int PREF_DEF_ALARM_TIME_HOUR = 0;
@@ -81,6 +89,8 @@ public class AlarmTimeDialog extends DialogFragment
         super();
 
         Bundle defaultArgs = new Bundle();
+        defaultArgs.putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
+        defaultArgs.putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
         defaultArgs.putLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
@@ -118,6 +128,12 @@ public class AlarmTimeDialog extends DialogFragment
         getArguments().putParcelable(PREF_KEY_ALARM_LOCATION, location);
         updateDate();
     }
+    public void setShowDateButton(boolean value) {
+        getArguments().putBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, value);
+    }
+    public void setShowTimeZoneSelect(boolean value) {
+        getArguments().putBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, value);
+    }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
@@ -146,6 +162,13 @@ public class AlarmTimeDialog extends DialogFragment
         modePicker.setAdapter(modeAdapter);
 
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
+        if (timePicker != null) {
+            if (Build.VERSION.SDK_INT >= 11) {
+                timePicker.setSaveFromParentEnabled(false);    // fixes crash #482 (https://issuetracker.google.com/issues/36936584)
+            }
+            timePicker.setSaveEnabled(true);
+        }
+
         locationPicker = (TextView) dialogContent.findViewById(R.id.locationPicker);
         datePicker = (TextView) dialogContent.findViewById(R.id.datePicker);
         setTimeChangedListener();
@@ -225,23 +248,23 @@ public class AlarmTimeDialog extends DialogFragment
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnClickListener onLocationClicked = new View.OnClickListener() {
+    private final View.OnClickListener onLocationClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
                 listener.onLocationClick(AlarmTimeDialog.this);
             }
         }
-    };
+    });
 
-    private View.OnClickListener onDateClicked = new View.OnClickListener() {
+    private final View.OnClickListener onDateClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
                 listener.onDateClick(AlarmTimeDialog.this);
             }
         }
-    };
+    });
 
     protected void updateViews(Context context)
     {
@@ -250,10 +273,12 @@ public class AlarmTimeDialog extends DialogFragment
         if (modePicker != null && modeAdapter != null) {
             AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArguments().getString(PREF_KEY_ALARM_TIME_MODE));
             modePicker.setSelection(modeAdapter.getPosition(mode));
+            modePicker.setVisibility(getShowTimeZoneSelect() ? View.VISIBLE : View.GONE);
         }
 
         if (datePicker != null) {
             datePicker.setText(displayDate(getActivity(), getDate()));
+            datePicker.setVisibility(getShowDateButton() ? View.VISIBLE : View.GONE);
         }
 
         if (timePicker != null)
@@ -313,6 +338,14 @@ public class AlarmTimeDialog extends DialogFragment
 
     public Location getLocation() {
         return (Location)getArguments().getParcelable(PREF_KEY_ALARM_LOCATION);
+    }
+
+    public boolean getShowDateButton() {
+        return getArguments().getBoolean(PREF_KEY_ALARM_TIME_DATE_SHOW, PREF_DEF_ALARM_TIME_DATE_SHOW);
+    }
+
+    public boolean getShowTimeZoneSelect() {
+        return getArguments().getBoolean(PREF_KEY_ALARM_TIMEZONE_SHOW, PREF_DEF_ALARM_TIMEZONE_SHOW);
     }
 
     public interface DialogListener

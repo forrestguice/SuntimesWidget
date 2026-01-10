@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/colorPreview0"
+        android:layout_width="32dp" android:layout_height="32dp"
+        android:background="@color/indigo_a100"
+        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
+        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:contentDescription="@string/configAction_chooseColor" />
+
+    <View
+        android:id="@+id/colorPreview1"
+        android:layout_width="16dp" android:layout_height="32dp"
+        android:background="@color/indigo_a200"
+        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
+        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:contentDescription="@string/configAction_chooseColor" />
+
+    <View
+        android:id="@+id/colorPreview2"
+        android:layout_width="16dp" android:layout_height="32dp"
+        android:background="@color/indigo_a400"
+        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
+        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:contentDescription="@string/configAction_chooseColor" />
+
+    <!-- <View
+        android:id="@+id/colorPreview3"
+        android:layout_width="16dp" android:layout_height="32dp"
+        android:background="@color/indigo_100"
+        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
+        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:contentDescription="@string/configAction_chooseColor" />
+
+    <View
+        android:id="@+id/colorPreview4"
+        android:layout_width="16dp" android:layout_height="32dp"
+        android:background="@color/indigo_200"
+        android:paddingLeft="64dp" android:paddingRight="?android:attr/scrollbarSize"
+        android:paddingStart="64dp" android:paddingEnd="?android:attr/scrollbarSize"
+        android:contentDescription="@string/configAction_chooseColor" /> -->
+
+</LinearLayout>

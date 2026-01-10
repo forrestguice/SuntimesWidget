@@ -9,7 +9,8 @@
     android:initialLayout="@layout/layout_widget_sunpos_1x1_5"
     android:initialKeyguardLayout="@layout/layout_widget_sunpos_1x1_5"
 
-    android:updatePeriodMillis="@integer/widget_updateInterval"
+    android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
+    android:widgetFeatures="reconfigurable"
     android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity2"
     android:widgetCategory="home_screen|keyguard"
     android:previewImage="@drawable/sunposwidget0_1x1_preview">

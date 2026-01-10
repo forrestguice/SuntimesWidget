@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+    android:paddingTop="8dp" android:paddingBottom="8dp"
+    android:orientation="vertical">
+
+    <TextView android:id="@+id/text_numCycles"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:labelFor="@+id/pick_numCycles"
+        android:text="@string/configLabel_numSleepCycles" />
+
+    <NumberPicker
+        android:id="@+id/pick_numCycles"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</LinearLayout>
+

@@ -21,7 +21,8 @@ package com.forrestguice.suntimeswidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesWidget2_3x1 extends SuntimesWidget2
 {
@@ -41,7 +42,8 @@ public class SuntimesWidget2_3x1 extends SuntimesWidget2
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2_3x1.class, getMinSize(context), new SunPosLayout_3X1_0());
+        SunPosLayout layout = WidgetSettings.loadSunPos3x1ModePref_asLayout(context, appWidgetId);
+        SuntimesWidget2.updateAppWidget(context, appWidgetManager, appWidgetId, SuntimesWidget2_3x1.class, getMinSize(context), layout);
     }
 
 }
