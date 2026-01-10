@@ -1621,25 +1621,6 @@
     <string name="appThemes_darkTheme1">التباين (الداكن)</string>
     <string name="appThemes_lightTheme1">التباين (الفاتح)</string>
 
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>@string/appThemes_nightMode</item>
-        <item>@string/appThemes_systemDefault</item>
-    </string-array>
-
-    <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
-        <item>@string/appThemes_systemDefault1</item>
-        <item>@string/appThemes_lightTheme1</item>
-    </string-array>
-
-    <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
-        <item>@string/appThemes_systemDefault1</item>
-        <item>@string/appThemes_darkTheme1</item>
-    </string-array>
-
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
         <item>@string/timeFormatMode_system</item>

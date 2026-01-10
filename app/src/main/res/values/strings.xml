@@ -1808,40 +1808,9 @@
     <string name="appThemes_systemDefault1">Contrast (System Default)</string>
     <string name="appThemes_darkTheme1">Contrast (Dark)</string>
     <string name="appThemes_lightTheme1">Contrast (Light)</string>
-    <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
-        <item>@string/appThemes_lightTheme</item>
-        <item>@string/appThemes_darkTheme</item>
-        <item>@string/appThemes_nightMode</item>
-        <item>@string/appThemes_systemDefault</item>
-    </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-        <item>system</item>
-    </string-array>
-
-    <string-array name="appThemes_light_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
-        <item>@string/appThemes_systemDefault1</item>
-        <item>@string/appThemes_lightTheme1</item>
-    </string-array>
-    <string-array name="appThemes_light_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
-        <item>default</item>
-        <item>contrast_system</item>
-        <item>contrast_light</item>
-    </string-array>
-
-    <string-array name="appThemes_dark_display"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
-        <item>@string/appThemes_systemDefault1</item>
-        <item>@string/appThemes_darkTheme1</item>
-    </string-array>
-    <string-array name="appThemes_dark_values" translatable="false">  <!-- config values (one-to-one with appThemes_dark_display) -->
-        <item>default</item>
-        <item>contrast_system</item>
-        <item>contrast_dark</item>
-    </string-array>
+    <string name="appThemes_systemMonet">Monet (System Default)</string>     <!-- TODO -->
+    <string name="appThemes_darkMonet">Monet (Dark)</string>    <!-- TODO -->
+    <string name="appThemes_lightMonet">Monet (Light)</string>     <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

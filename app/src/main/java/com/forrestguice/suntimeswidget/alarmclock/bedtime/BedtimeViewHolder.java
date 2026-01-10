@@ -337,11 +337,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             if (context != null)
             {
-                int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
+                int[] attrs = { R.attr.alarmColorEnabled, R.attr.colorControlNormal,
                         R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
                 TypedArray a = context.obtainStyledAttributes(attrs);
                 @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
-                @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
+                @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.white));
                 @SuppressLint("ResourceType") int cardBgOn = a.getResourceId(2, R.drawable.card_alarmitem_enabled_dark);
                 @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
                 a.recycle();

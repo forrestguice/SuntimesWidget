@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.System.Monet" parent="AppThemeBase.System.Monet">
+        <item name="icActionNext">@drawable/ic_action_previous_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_next_item_ref</item>
+    </style>
+</resources>

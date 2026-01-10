@@ -12,7 +12,11 @@ android
         }
     }
 
-    compileSdkVersion targetVersion
+    if (useAndroidX) {
+        compileSdkVersion 31
+    } else {
+        compileSdkVersion 28
+    }
 
     sourceSets
     {
@@ -25,9 +29,11 @@ android
         }
         production {
             java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
         }
         nightly {
             java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
         }
     }
 

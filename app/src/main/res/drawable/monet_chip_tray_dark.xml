@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/monet_dark_chip_tray_bg" />
+            <corners android:radius="@dimen/clockcard_corners" />
+        </shape>
+    </item>
+</layer-list>
