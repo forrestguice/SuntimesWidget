@@ -2,39 +2,33 @@
 
 ### DEVELOP
 
+* adds "Material You" app themes (api31+) (#635).
 * adds custom events; `day/night percent`, `moon elevation`, and `moon illumination` (#900).
-* adds additional digital clock widgets (fancy typeface).
-* adds map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
+* adds digital clock widgets with fancy typeface.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
-
-* adds `map location` picker to the location dialog; pick coordinates from the world map.
-* adds option to show/hide the location coordinates in the action bar.
-* adds option `label (alternate)` that displays alternate labels "dawn" and "dusk" in the main table.
-
-* adds `seek time` action to the sun, moon, and world map dialogs (#863).
-* adds `seek bar` to the sun dialog; tapping or dragging the lightmap or graph areas seeks to that time (#826).
-* adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek the time of twilight or events.
-* adds `seek altitude` and `seek shadow length` menus to the sun dialog; seek or add/manage custom events.
+* adds world map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
+* adds `map location` picker to the location dialog; choose coordinates from the world map.
+* adds `seek time/date` action to the sun, moon, and world map dialogs (#863).
+* adds `seek bar` to the sun dialog; tapping or dragging the lightmap or graph jumps to that time (#826).
+* adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek to twilight or custom events.
+* adds `seek altitude` and `seek shadow length` menus to the sun dialog; seek to or manage custom events.
 * adds `10min`, `15min`, and `7d` step sizes to the sun dialog, and `7d` step size to the world map dialog.
-* adds `solar noon` option to the sun dialog; draw a line at solar noon.
-* adds `symbol` option to the sun dialog; display a "circle", "cross", "dot", or "line".
-
-* adds `sort places` action to the places activity; sort by label (ascending), label (descending), or nearest (to app location).
+* adds `solar noon` and sun `symbol` options to the sun dialog; draw a line at solar noon; draw a "circle", "cross", "dot", or "line".
+* adds `sort places` action to the places activity; sort by label (ascending, descending), or nearest (to app location).
 * improves the `search places` action; adds descriptive tags/icons to the default world places.
 * enhances the places activity dialog; adds `gps menu`, `gps status` views, `reload agps`, and `average location` actions (#884).
 * adds permission `android.permission.ACCESS_LOCATION_EXTRA_COMMANDS`; required to reload agps data [PERMISSION].
 * adds `last update` location debug information to place settings; time of last update, location provider, accuracy, time elapsed, and number of satellites (#884).
-* fixes bug where location accuracy is potentially affected by stale providers (#884).
-
-* adds `snooze` chip to the alarm edit dialog that allows setting the snooze length per alarm.
-* adds `snooze limit` chip to the alarm edit dialog that allows setting the snooze limit per alarm.
-
+* adds option to hide the location coordinates in the action bar.
+* adds option `label (alternate)` that displays alternate labels "dawn" and "dusk" in the main table.
+* adds `snooze` and `snooze limit` chips to the alarm edit dialog that allows setting these values per alarm.
 * adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
 * adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by Actions to launch user-defined intents) [permission].
+* adds permission `suntimes.permission.ADDON` (replacement for `suntimes.permission.READ_CALCULATOR`).
 * refactor; decouples core data classes from the Android api; decouples UI classes from the Android Support Library.
-* build; updates targetSdkVersion (28 -> 30) and migrates to AndroidX; the `legacy` build uses the older Android Support Library.
-* build; adds `production`, `nightly`, and `legacy` build flavors (#892).
+* build; updates targetSdkVersion (28 -> 30) and migrates the app to AndroidX.
+* build; adds `production`, `nightly`, and `legacy` build flavors (#892); the `legacy` flavor builds against the older Android Support Library.
 
 ### v0.16.12 (2025-12-28)
 * fixes bug where US English strings are displayed for other English locales. (#902)
