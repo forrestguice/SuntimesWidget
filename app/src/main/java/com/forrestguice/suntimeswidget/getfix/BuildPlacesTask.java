@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,22 +27,21 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -60,8 +60,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private GetFixDatabaseAdapter db;
-    private WeakReference<Context> contextRef;
+    private final GetFixDatabaseAdapter db;
+    private final WeakReference<Context> contextRef;
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -507,27 +507,30 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
                 });
 
-        final AlertDialog d = confirm.create();
+        final Dialog d = confirm.create();
         d.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
-            public void onShow(DialogInterface dialog)
+            public void onShow(final DialogInterface dialog)
             {
-                final AlertDialog d = (AlertDialog) dialog;
                 final View.OnClickListener toggleListener = new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        ListView list = d.getListView();
-                        for (int i=0; i<list.getCount(); i++)
+                        ListView list = AlertDialog.getListView(dialog);
+                        int n = (list != null ? list.getCount() : 0);
+                        for (int i=0; i<n; i++)
                         {
                             list.setItemChecked(i, true);
                             checked[i] = true;
                         }
                     }
                 };
-                d.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(toggleListener);
+                }
             }
         });
         d.show();

@@ -19,29 +19,28 @@
 
 package com.forrestguice.suntimeswidget.colors;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 
 import java.util.Locale;
 
 public class ColorValuesSheetFragment extends ColorValuesFragment
 {
+    public static final String ARG_COLLECTION = "colorCollection";
+
     public static final String ARG_HIDE_AFTER_SAVE = "hideAfterSave";    // sheet is hidden/dismissed after saving from edit dialog
     public static final boolean DEF_HIDE_AFTER_SAVE = true;
 
@@ -81,8 +80,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState)
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
-        View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorsheet, container, false);
-        editViewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
+        View content = inflater.cloneInContext(requireActivity()).inflate(R.layout.fragment_colorsheet, container, false);
+        editViewModel = ViewModelProviders.of(requireActivity()).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         if (savedState != null) {
             onRestoreInstanceState(savedState);
         }
@@ -92,9 +91,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void initViews()
     {
-        FragmentManager fragments = getChildFragmentManager();
-        listDialog = (ColorValuesSelectFragment) fragments.findFragmentByTag(DIALOG_LIST);
-        editDialog = (ColorValuesEditFragment) fragments.findFragmentByTag(DIALOG_EDIT);
+        listDialog = (ColorValuesSelectFragment) getChildFragmentManager().findFragmentByTag(DIALOG_LIST);
+        editDialog = (ColorValuesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDIT);
 
         if (listDialog == null)
         {
@@ -106,10 +104,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listDialog.setShowMenu(getShowMenu());
             listDialog.setPreviewKeys(previewKeys());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.add(R.id.layout_color_sheet, listDialog, DIALOG_LIST);
-            transaction.addToBackStack(DIALOG_LIST);
-            transaction.commit();
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.layout_color_sheet, listDialog, DIALOG_LIST)
+                    .addToBackStack(DIALOG_LIST)
+                    .commit();
         }
         if (editDialog == null)
         {
@@ -118,12 +116,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             editDialog.setFilter(getFilter());
             editDialog.setApplyFilter(applyFilter());
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT);
-            transaction.addToBackStack(DIALOG_EDIT);
-            transaction.commit();
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.layout_color_sheet, editDialog, DIALOG_EDIT)
+                    .addToBackStack(DIALOG_EDIT)
+                    .commit();
         }
-        fragments.executePendingTransactions();
+        getChildFragmentManager().executePendingTransactions();
     }
 
     @Override
@@ -171,13 +169,14 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
-        colorCollection = savedState.getParcelable("colorCollection");
+        //noinspection unchecked
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("mode", mode);
-        outState.putParcelable("colorCollection", colorCollection);
+        outState.putSerializable(ARG_COLLECTION, colorCollection);
         super.onSaveInstanceState(outState);
     }
 
@@ -209,10 +208,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
 
     public void setPreviewKeys(String... keys) {
-        getArguments().putStringArray("previewKeys", keys);
+        getArgs().putStringArray("previewKeys", keys);
     }
     public String[] previewKeys() {
-        return getArguments().getStringArray("previewKeys");
+        return getArgs().getStringArray("previewKeys");
     }
 
     protected String suggestColorValuesID(Context context)
@@ -306,7 +305,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         public void onDeleteClicked(@Nullable String colorsID)
         {
             Context context = getActivity();
-            if (context != null && !colorCollection.isDefaultColorID(colorsID))
+            if (context != null && colorsID != null && !colorCollection.isDefaultColorID(colorsID))
             {
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
@@ -356,7 +355,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         ColorValues values = listener.getDefaultValues();
         if (values != null)
         {
-            if (values.loadColorValues(jsonString))
+            if (new ColorValuesJSON().loadColorValues(values, jsonString))
             {
                 String id = values.getID();
                 if (id != null)
@@ -451,31 +450,31 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     }
 
     public boolean persistSelection() {
-        return getArguments().getBoolean(ARG_PERSIST_SELECTION, DEF_PERSIST_SELECTION);
+        return getArgs().getBoolean(ARG_PERSIST_SELECTION, DEF_PERSIST_SELECTION);
     }
     public void setPersistSelection(boolean value) {
-        getArguments().putBoolean(ARG_PERSIST_SELECTION, value);
+        getArgs().putBoolean(ARG_PERSIST_SELECTION, value);
     }
 
     public void setHideAfterSave(boolean showBack) {
-        getArguments().putBoolean(ARG_HIDE_AFTER_SAVE, showBack);
+        getArgs().putBoolean(ARG_HIDE_AFTER_SAVE, showBack);
     }
     public boolean getHideAfterSave() {
-        return getArguments().getBoolean(ARG_HIDE_AFTER_SAVE, DEF_HIDE_AFTER_SAVE);
+        return getArgs().getBoolean(ARG_HIDE_AFTER_SAVE, DEF_HIDE_AFTER_SAVE);
     }
 
     public void setShowBack(boolean showBack) {
-        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
+        getArgs().putBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, showBack);
     }
     public boolean getShowBack() {
-        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
+        return getArgs().getBoolean(ColorValuesSelectFragment.ARG_SHOW_BACK, ColorValuesSelectFragment.DEF_SHOW_BACK);
     }
 
     public void setShowMenu(boolean showMenu) {
-        getArguments().putBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, showMenu);
+        getArgs().putBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, showMenu);
     }
     public boolean getShowMenu() {
-        return getArguments().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
+        return getArgs().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
     }
 
     public String getSelectedID() {
@@ -484,52 +483,52 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     public void setAppWidgetID(int id)
     {
-        getArguments().putInt("appWidgetID", id);
+        getArgs().putInt("appWidgetID", id);
         if (listDialog != null) {
             listDialog.setAppWidgetID(id);
         }
     }
     public int getAppWidgetID() {
-        return getArguments().getInt("appWidgetID", 0);
+        return getArgs().getInt("appWidgetID", 0);
     }
 
     public void setColorTag(@Nullable String tag)
     {
-        getArguments().putString("colorTag", tag);
+        getArgs().putString("colorTag", tag);
         if (listDialog != null) {
             listDialog.setColorTag(tag);
         }
     }
     @Nullable
     public String getColorTag() {
-        return getArguments().getString("colorTag", null);
+        return getArgs().getString("colorTag", null);
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (editDialog != null) {
             editDialog.setApplyFilter(value);
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (getFilter() != null && getFilter().length > 0);
     }
 
     public void setFilter(String[] keys) {
-        getArguments().putStringArray("filterValues", keys);
+        getArgs().putStringArray("filterValues", keys);
         if (editDialog != null) {
             editDialog.setFilter(keys);
         }
     }
     @Nullable
     public String[] getFilter() {
-        return getArguments().getStringArray("filterValues");
+        return getArgs().getStringArray("filterValues");
     }
     public void clearFilter() {
-        getArguments().remove("filterValues");
+        getArgs().remove("filterValues");
         if (editDialog != null) {
             editDialog.clearFilter();
         }

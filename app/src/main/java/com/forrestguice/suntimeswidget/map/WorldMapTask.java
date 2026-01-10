@@ -27,13 +27,14 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,7 +175,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         }
 
         public void init(Context context) {
-            colors = new WorldMapColorValues(context, true);
+            colors = new WorldMapColorValues(AndroidResources.wrap(context), true);
         }
         public WorldMapColorValues colors;
         public int foregroundColor = Color.TRANSPARENT;
@@ -232,6 +233,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
         public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);
+        public abstract double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h);
         public double[] getCenter() { return new double[] {0,0}; }
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
@@ -411,6 +413,8 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
             return retvalue;
         }
+
+
     }
 
     /**

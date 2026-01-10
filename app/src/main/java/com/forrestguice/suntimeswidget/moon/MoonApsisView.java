@@ -24,16 +24,20 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,22 +51,22 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonApsisView extends LinearLayout
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     private LinearLayout content;
     private RecyclerView card_view;
@@ -154,9 +158,9 @@ public class MoonApsisView extends LinearLayout
         }
     };
 
-    private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListenerCompat onScrollChanged = new RecyclerView.OnScrollListenerCompat() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             int position = card_layout.findFirstVisibleItemPosition();
@@ -177,14 +181,14 @@ public class MoonApsisView extends LinearLayout
         }
     };
 
-    private OnClickListener onResetClick0 = new OnClickListener() {
+    private final OnClickListener onResetClick0 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // back to position; scrolling from right-to-left
             card_view.scrollToPosition(MoonApsisAdapter.CENTER_POSITION);
             card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
-    private OnClickListener onResetClick1 = new OnClickListener() {
+    private final OnClickListener onResetClick1 = new OnClickListener() {
         @Override
         public void onClick(View v) {      // forward to position; scrolling from left-to-right
             card_view.scrollToPosition(MoonApsisAdapter.CENTER_POSITION + 1);
@@ -291,9 +295,9 @@ public class MoonApsisView extends LinearLayout
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
 
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         @SuppressLint("UseSparseArrays")
-        private HashMap<Integer, SuntimesMoonData0> data = new HashMap<>();
+        private final HashMap<Integer, SuntimesMoonData0> data = new HashMap<>();
         private boolean isRising = false;
 
         private MoonApsisColorValues colors;
@@ -314,6 +318,7 @@ public class MoonApsisView extends LinearLayout
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
         public MoonApsisField onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -323,7 +328,7 @@ public class MoonApsisView extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(MoonApsisField holder)
+        public void onViewRecycled(@NonNull MoonApsisField holder)
         {
             detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
@@ -333,7 +338,7 @@ public class MoonApsisView extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(MoonApsisField holder, int position)
+        public void onBindViewHolder(@NonNull MoonApsisField holder, int position)
         {
             Context context = contextRef.get();
             if (context == null) {
@@ -443,7 +448,7 @@ public class MoonApsisView extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            colors = new MoonApsisColorValues(context);
+            colors = new MoonApsisColorValues(AndroidResources.wrap(context));
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
@@ -507,7 +512,7 @@ public class MoonApsisView extends LinearLayout
 
         /**
          * setAdapterListener
-         * @param listener
+         * @param listener listener
          */
         public void setAdapterListener( @NonNull MoonApsisAdapterListener listener ) {
             adapterListener = listener;
@@ -568,7 +573,7 @@ public class MoonApsisView extends LinearLayout
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             if (data != null && data.isCalculated())
             {
@@ -606,14 +611,14 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, WidgetSettings.LengthUnit units)
+        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
         {
             if (apsis != null)
             {
                 labelView.setText(context.getString(isRising ? R.string.label_apogee : R.string.label_perigee));
                 timeView.setText(utils.calendarDateTimeDisplayString(context, apsis.first, showTime, showSeconds).getValue());
                 noteView.setText(createApsisNote(context, apsis.first, showWeeks, showHours, timeColor));
-                positionView.setText(SuntimesUtils.formatAsDistance(context, SuntimesUtils.formatAsDistance(context, apsis.second.distance, units, 2, true)));
+                positionView.setText(SuntimesUtils.formatAsDistance(context, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), apsis.second.distance, units, 2, true)));
 
                 timeView.setVisibility(View.VISIBLE);
                 noteView.setVisibility(View.VISIBLE);

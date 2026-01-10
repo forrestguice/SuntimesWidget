@@ -21,8 +21,9 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.annotation.Nullable;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -35,7 +36,7 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
     public static final String TAG = "importThemesTask";
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask()
@@ -162,19 +163,19 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private SuntimesTheme[] themes;
+        private final SuntimesTheme[] themes;
         public SuntimesTheme[] getThemes()
         {
             return themes;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -184,7 +185,7 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             return (themes != null ? themes.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;

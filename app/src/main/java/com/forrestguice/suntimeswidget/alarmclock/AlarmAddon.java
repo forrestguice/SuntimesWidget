@@ -28,12 +28,11 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
@@ -41,13 +40,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * AlarmAddon
@@ -55,7 +47,6 @@ import java.util.concurrent.TimeoutException;
  *
  * @see AlarmEventContract
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmAddon
 {
     public static final String CATEGORY_SUNTIMES_ALARM = "suntimes.SUNTIMES_ALARM";
@@ -70,14 +61,6 @@ public class AlarmAddon
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
     public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
-
-    public static String getEventInfoUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + eventID;
-    }
-
-    public static String getEventCalcUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
-    }
 
     /**
      * queryAlarmDismissChallenges
@@ -193,6 +176,7 @@ public class AlarmAddon
             return info;
         }
 
+        @NonNull
         public String toString() {
             return title;
         }

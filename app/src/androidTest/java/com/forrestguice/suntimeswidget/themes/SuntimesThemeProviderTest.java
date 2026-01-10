@@ -22,10 +22,10 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
@@ -37,12 +37,10 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;
@@ -129,11 +127,11 @@ public class SuntimesThemeProviderTest
     {
         List<String> columns0 = new ArrayList<>();
         Collections.addAll(columns0, QUERY_THEME_PROJECTION);
-        test_projectionHasUniqueColumns(columns0.toArray(new String[columns0.size()]));
+        test_projectionHasUniqueColumns(columns0.toArray(new String[0]));
 
         List<String> columns1 = new ArrayList<>();
         Collections.addAll(columns1, QUERY_THEMES_PROJECTION);
-        test_projectionHasUniqueColumns(columns1.toArray(new String[columns1.size()]));
+        test_projectionHasUniqueColumns(columns1.toArray(new String[0]));
 
         test_query_theme_projection();
         test_query_themes_projection();
@@ -312,6 +310,7 @@ public class SuntimesThemeProviderTest
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_THEMES);
         String[] projection = QUERY_THEMES_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
+        assertNotNull(cursor);
         test_cursorHasColumns("QUERY_THEMES", cursor, projection);
         test_theme(cursor);
 

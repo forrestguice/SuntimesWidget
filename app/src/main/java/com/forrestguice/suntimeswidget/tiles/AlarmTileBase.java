@@ -25,12 +25,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -39,6 +39,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -120,7 +122,9 @@ public class AlarmTileBase extends SuntimesTileBase
 
         AlarmClockItem alarm = initAlarmItem(context);
         Drawable d = ContextCompat.getDrawable(context, ((alarm != null) ? alarm.getIcon() : R.drawable.ic_action_alarms));
-        d.setTint(ContextCompat.getColor(contextWrapper, color));
+        if (d != null) {
+            d.setTint(ContextCompat.getColor(contextWrapper, color));
+        }
         return d;
     }
 
@@ -130,7 +134,7 @@ public class AlarmTileBase extends SuntimesTileBase
         AlarmClockItem item = initAlarmItem(context);
         if (item != null)
         {
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
             String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
@@ -151,7 +155,7 @@ public class AlarmTileBase extends SuntimesTileBase
         if (item != null)
         {
             // formatted alarm time
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
             String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
@@ -184,7 +188,7 @@ public class AlarmTileBase extends SuntimesTileBase
                 }
                 if (item.note != null) {
                     msg.append("\n");
-                    msg.append(DataSubstitutions.displayStringForTitlePattern0(context, item.note, data));
+                    msg.append(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, data));
                 }
             }
 

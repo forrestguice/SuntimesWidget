@@ -21,23 +21,22 @@ package com.forrestguice.suntimeswidget.map;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatSeekBar;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.widget.SeekBar;
 
-public class WorldMapSeekBar extends AppCompatSeekBar
+public class WorldMapSeekBar extends SeekBar
 {
     private Drawable majorTick, minorTick, centerTick;
 
@@ -153,7 +152,7 @@ public class WorldMapSeekBar extends AppCompatSeekBar
             float tickSpacing = (getWidth() - getPaddingLeft() - getPaddingRight()) / (float) intervals;
 
             int saveCount = canvas.save();
-            canvas.translate(getPaddingLeft(), getHeight() / 2);
+            canvas.translate(getPaddingLeft(), getHeight() / 2f);
             for (int i = 0; i <= intervals; i++)
             {
                 if (i == intervals / 2) {

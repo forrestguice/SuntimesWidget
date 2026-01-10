@@ -24,9 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.util.Log;
+import com.forrestguice.support.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
@@ -37,7 +35,10 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.map.WorldMapMercator;
+import com.forrestguice.suntimeswidget.map.WorldMapSinusoidal;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapVanDerGrinten;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
@@ -84,6 +85,27 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         WorldMapTask.WorldMapProjection projection;
         switch (mapMode)
         {
+            case MERCATOR_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapMercator();
+                break;
+
+            case VANDERGRINTEN_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_van_der_grinten);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapVanDerGrinten();
+                break;
+
+            case SINUSOIDAL_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_sinusoidal);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapSinusoidal();
+                break;
+
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;

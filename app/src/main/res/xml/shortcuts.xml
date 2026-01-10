@@ -70,7 +70,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity" />
     </shortcut>
 
 </shortcuts>

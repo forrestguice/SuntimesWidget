@@ -25,7 +25,7 @@
     android:orientation="vertical" android:gravity="center"
     android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="8dp">
 
-    <ImageView android:id="@+id/icon_datetime_offset" android:visibility="invisible"
+    <com.forrestguice.support.widget.ImageView android:id="@+id/icon_datetime_offset" android:visibility="invisible"
         android:layout_width="16dp" android:layout_height="16dp"
         android:contentDescription="@string/offset_button_after"
         android:src="?attr/icActionTimeReset" />

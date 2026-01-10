@@ -36,9 +36,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,23 +44,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.ClockWidget0;
-import com.forrestguice.suntimeswidget.ClockWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0;
-import com.forrestguice.suntimeswidget.MoonWidget0_2x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x2;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SolsticeWidget0;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_2x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x3;
 
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
@@ -71,7 +57,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -79,13 +66,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * A ListAdapter of WidgetListItems.
@@ -118,7 +100,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     }
 
     private final WeakReference<Context> contextRef;
-    private ArrayList<WidgetListItem> widgets;
+    private final ArrayList<WidgetListItem> widgets;
 
     public WidgetListAdapter(Context context)
     {
@@ -163,7 +145,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
                         return result;
                     }
                 }, MAX_WAIT_MS);
-                addAll(items);
+                if (items != null) {
+                    addAll(items);
+                }
             }
             executor.shutdownNow();
 
@@ -276,25 +260,25 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             if (widgetClass0.equals("SolsticeWidget0"))
             {
                 SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
-                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("MoonWidget0") || widgetClass0.equals("MoonWidget0_2x1") || widgetClass0.equals("MoonWidget0_3x1") || widgetClass0.equals("MoonWidget0_3x2")) {
                 SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
-                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")
                     || widgetClass0.equals("DateWidget0")
                     || widgetClass0.equals("AlarmWidget0") || widgetClass0.equals("AlarmWidget0_2x2") || widgetClass0.equals("AlarmWidget0_3x2")) {
                 SuntimesClockData data0 = new SuntimesClockData(context, id);
-                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
                 data = data0;
 
             } else {
                 SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
-                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
             }
 
@@ -467,7 +451,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     public static final String ACTION_SUNTIMES_LISTWIDGETS = "suntimes.action.LIST_WIDGETS";
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String KEY_WIDGET_INFO_PROVIDER = "WidgetInfoProvider";
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    public static String REQUIRED_PERMISSION() {
+        return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
 
     public static final String COLUMN_WIDGET_PACKAGENAME = "packagename";
     public static final String COLUMN_WIDGET_APPWIDGETID = "appwidgetid";
@@ -519,8 +505,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         boolean hasPermission = false;
         if (packageInfo.requestedPermissions != null)
         {
+            String requiredPermission = REQUIRED_PERMISSION();
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(requiredPermission)) {
                     hasPermission = true;
                     break;
                 }
@@ -545,7 +532,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         protected final String title;
         protected final String summary;
 
-        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, String title, String summary, String configClass )
+        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, @NonNull String title, String summary, String configClass )
         {
             this.packageName = packageName;
             this.widgetClass = widgetClass;
@@ -578,6 +565,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return icon;
         }
 
+        @NonNull
         public String getTitle()
         {
             return title;
@@ -588,6 +576,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return summary;
         }
 
+        @NonNull
         public String toString()
         {
             return getTitle();

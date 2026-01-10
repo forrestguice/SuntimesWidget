@@ -45,3 +45,12 @@ proguard/
 .idea/caches/build_file_checksums.ser
 *.gz
 *.zip
+/.idea/libraries
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+app/app.iml
+/.idea/modules
+SuntimesWidget.iml
+app/test_location_serializable.txt

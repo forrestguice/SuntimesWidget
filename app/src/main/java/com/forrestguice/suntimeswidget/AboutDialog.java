@@ -27,12 +27,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -43,13 +37,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AboutDialog extends BottomSheetDialogFragment
+public class AboutDialog extends BottomSheetDialogBase
 {
     public static final String KEY_ICONID = "paramIconID";
     public static final String KEY_APPNAME = "paramAppName";
@@ -66,15 +63,16 @@ public class AboutDialog extends BottomSheetDialogFragment
         param_appName = resID;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
-                BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
-                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
+            public void onShow(DialogInterface dialog)
+            {
+                FrameLayout layout = getBottomSheetFrameLayout(dialog);
                 if (layout != null)
                 {
                     layout.post(new Runnable() {
@@ -116,23 +114,6 @@ public class AboutDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
     public static String anchor(String url) {
         return anchor(url, url);
     }
@@ -156,8 +137,11 @@ public class AboutDialog extends BottomSheetDialogFragment
         return getString(R.string.app_version, versionString);
     }
 
-    public static void openLink(Context context, String url)
+    public static void openLink(@Nullable Context context, @Nullable String url)
     {
+        if (context == null || url == null) {
+            return;
+        }
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         } catch (ActivityNotFoundException e) {
@@ -256,8 +240,12 @@ public class AboutDialog extends BottomSheetDialogFragment
         return initCredits(activity, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
     }
 
-    public static String initTranslationCredits(Activity activity)
+    public static String initTranslationCredits(@Nullable Activity activity)
     {
+        if (activity == null) {
+            return "";
+        }
+
         final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
         final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
         final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);

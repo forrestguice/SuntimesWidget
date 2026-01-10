@@ -25,7 +25,7 @@
         android:layout_width="match_parent" android:layout_height="56dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
-        <ImageButton android:id="@+id/dialog_button_cancel" style="?attr/actionOverflowButtonStyle"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_cancel" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
             android:src="?attr/icActionBack" android:contentDescription="@string/dialog_cancel" />
 
@@ -37,7 +37,7 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
             android:text="@string/alarmMode_notification" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/dialog_button_accept" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
             android:scaleType="center"

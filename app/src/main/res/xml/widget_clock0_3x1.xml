@@ -14,6 +14,6 @@
     android:initialKeyguardLayout="@layout/layout_widget_clock_1x1_0"
     android:initialLayout="@layout/layout_widget_clock_1x1_0"
     android:widgetFeatures="reconfigurable"
-    android:configure="com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity_3x1">
+    android:configure="com.forrestguice.suntimeswidget.widgets.ClockWidget0ConfigActivity_3x1">
 
 </appwidget-provider>

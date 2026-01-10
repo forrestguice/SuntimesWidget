@@ -26,9 +26,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,11 +34,14 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.app.AlertDialog;
 
-public class BedtimeSleepDialog extends DialogFragment
+public class BedtimeSleepDialog extends DialogBase
 {
     protected static final String DIALOGTAG_HELP = "sleepcyclehelp";
 
@@ -55,29 +55,29 @@ public class BedtimeSleepDialog extends DialogFragment
     }
 
     public void setShowHelp(boolean showHelp, CharSequence helpContent, String helpUrl, String helpTag) {
-        getArguments().putBoolean("showHelp", showHelp);
-        getArguments().putCharSequence("helpContent", helpContent);
-        getArguments().putString("helpUrl", helpUrl);
-        getArguments().putString("helpTag", helpTag);
+        getArgs().putBoolean("showHelp", showHelp);
+        getArgs().putCharSequence("helpContent", helpContent);
+        getArgs().putString("helpUrl", helpUrl);
+        getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArguments().getCharSequence("helpContent");
+        return getArgs().getCharSequence("helpContent");
     }
     public String helpUrl() {
-        return getArguments().getString("helpUrl");
+        return getArgs().getString("helpUrl");
     }
     public String helpTag() {
-        return getArguments().getString("helpTag");
+        return getArgs().getString("helpTag");
     }
     public boolean showHelp() {
-        return getArguments().getBoolean("showHelp", false);
+        return getArgs().getBoolean("showHelp", false);
     }
 
     public void setDialogTitle(String value) {
-        getArguments().putString("dialogTitle", value);
+        getArgs().putString("dialogTitle", value);
     }
     public String getDialogTitle(Context context) {
-        String title = getArguments().getString("dialogTitle");
+        String title = getArgs().getString("dialogTitle");
         return (title != null ? title : context.getString(R.string.configLabel_sleepCycles));
     }
 
@@ -86,13 +86,14 @@ public class BedtimeSleepDialog extends DialogFragment
      * @return a Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         SuntimesUtils.initDisplayStrings(getActivity());
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_sleepcycle, null);   // TODO
@@ -104,10 +105,10 @@ public class BedtimeSleepDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(getDialogTitle(myParent));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -121,7 +122,7 @@ public class BedtimeSleepDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -137,12 +138,14 @@ public class BedtimeSleepDialog extends DialogFragment
 
         if (showHelp())
         {
-            dialog.setButton(AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener) null);
+            AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener) null);
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
-                    button.setOnClickListener(onHelpButtonClicked);
+                    Button button = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
+                    if (button != null) {
+                        button.setOnClickListener(onHelpButtonClicked);
+                    }
                 }
             });
         }
@@ -178,7 +181,7 @@ public class BedtimeSleepDialog extends DialogFragment
     };
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -234,11 +237,11 @@ public class BedtimeSleepDialog extends DialogFragment
 
     public void setNumCycles(float value)
     {
-        getArguments().putFloat("numCycles", value);
+        getArgs().putFloat("numCycles", value);
         updateViews(getContext());
     }
     public float getNumCycles() {
-        return getArguments().getFloat("numCycles", BedtimeSettings.PREF_DEF_SLEEPCYCLE_COUNT);
+        return getArgs().getFloat("numCycles", BedtimeSettings.PREF_DEF_SLEEPCYCLE_COUNT);
     }
 
     protected void loadSettings(Bundle bundle) {

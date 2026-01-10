@@ -24,12 +24,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.content.FileProvider;
 
 import java.io.File;
 import java.util.Calendar;
@@ -57,8 +57,10 @@ public class ShareUtils
                     clipboard.setPrimaryClip(ClipData.newPlainText((itemString != null ? itemString : itemDisplay), itemDisplay));
                 }
             } else {
+                @SuppressWarnings("deprecation")
                 android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (clipboard != null) {
+                    //noinspection deprecation
                     clipboard.setText(itemDisplay);
                 }
             }

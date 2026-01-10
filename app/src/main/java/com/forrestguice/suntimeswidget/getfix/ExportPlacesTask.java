@@ -28,7 +28,6 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ExportPlacesTask extends ExportTask

@@ -31,14 +31,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.content.ContextCompat;
 
-import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -50,15 +43,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
+import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
@@ -76,15 +72,17 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.List;
 
-public class AlarmEventDialog extends BottomSheetDialogFragment
+public class AlarmEventDialog extends BottomSheetDialogBase
 {
     public static final int REQUEST_ADDON_ALARMPICKER = 3000;
     public static final int REQUEST_EVENTALIAS = 4000;
@@ -285,7 +283,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -298,7 +296,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
         saveSettings(outState);
@@ -321,7 +319,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         initColors(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
 
         icon_note = (ImageView) dialogContent.findViewById(R.id.appwidget_schedalarm_note_icon);
         icon_note.setVisibility(View.GONE);
@@ -444,14 +442,25 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onMoreButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+    private final View.OnClickListener onMoreButtonClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener()
+    {
         @Override
         public void onClick(View v)
         {
             Context context = getActivity();
-            PopupMenu popup = new PopupMenu(context, v);
-            Menu menu = popup.getMenu();
+            if (context == null) {
+                return;
+            }
+            PopupMenuCompat.createMenu(context, v, onMoreMenuClick).show();
+        }
+    });
+    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
+    private final PopupMenuCompat.PopupMenuListener onMoreMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
+    {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu)
+        {
             if (alarmPickers == null) {
                 alarmPickers = AlarmAddon.queryEventPickers(context);
             }
@@ -471,16 +480,8 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
 
             MenuItem item0 = menu.add(0, -1, 0, context.getString(R.string.configAction_manageEvents));
             item0.setIcon(icon1);
-
-            PopupMenuCompat.forceActionBarIcons(menu);
-            popup.setOnMenuItemClickListener(onMoreMenuClick);
-            popup.show();
         }
-    });
-    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
-    private final PopupMenu.OnMenuItemClickListener onMoreMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-    {
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -579,7 +580,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getEventInfoUri(reference, name)))
+            if (AlarmAddon.checkUriPermission(context, EventUri.getEventInfoUri(reference, name)))
             {
                 AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
                 if (item.isResolved())
@@ -777,7 +778,16 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return true;
+    }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return true;
+    }
+
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
@@ -785,7 +795,7 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -800,37 +810,24 @@ public class AlarmEventDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            dismiss();
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
-            }
-            if (listener != null) {
-                listener.onAccepted(AlarmEventDialog.this);
+            Context context = getContext();
+            if (context != null)
+            {
+                saveSettings(context);
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
+                if (listener != null) {
+                    listener.onAccepted(AlarmEventDialog.this);
+                }
             }
         }
     };
-
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
 
 }

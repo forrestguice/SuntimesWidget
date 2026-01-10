@@ -25,11 +25,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -45,13 +41,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -68,8 +68,8 @@ public class ActionListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
 
-    private WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private final WeakReference<Context> contextRef;
+    private FragmentManagerCompat fragmentManager;
 
     private ActionDisplay selectedItem;
     private ListView list;
@@ -82,7 +82,7 @@ public class ActionListHelper
         return adapterModified;
     }
 
-    public ActionListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
+    public ActionListHelper(@NonNull Context context, @NonNull FragmentManagerCompat fragments)
     {
         contextRef = new WeakReference<>(context);
         setFragmentManager(fragments);
@@ -98,7 +98,7 @@ public class ActionListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
+    public void setFragmentManager(FragmentManagerCompat fragments) {
         fragmentManager = fragments;
     }
 
@@ -249,13 +249,7 @@ public class ActionListHelper
 
     protected void showOverflowMenu(Context context, View parent)
     {
-        PopupMenu menu = new PopupMenu(context, parent);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.editintent1, menu.getMenu());
-        menu.setOnMenuItemClickListener(onMenuItemClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        prepareOverflowMenu(context, menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, parent, R.menu.editintent1, onMenuItemClicked).show();
     }
 
     protected void prepareOverflowMenu(Context context, Menu menu)
@@ -276,32 +270,34 @@ public class ActionListHelper
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenuCompat.PopupMenuListener onMenuItemClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            prepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.addAction:
-                    addAction();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.addAction) {
+                addAction();
+                return true;
 
-                case R.id.editAction:
-                    editAction();
-                    return true;
+            } else if (itemId == R.id.editAction) {
+                editAction();
+                return true;
 
-                case R.id.clearAction:
-                    clearActions();
-                    return true;
+            } else if (itemId == R.id.clearAction) {
+                clearActions();
+                return true;
 
-                case R.id.deleteAction:
-                    deleteAction();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.deleteAction) {
+                deleteAction();
+                return true;
             }
+            return false;
         }
     });
 
@@ -316,7 +312,7 @@ public class ActionListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
     }
 
     protected void editAction()
@@ -336,7 +332,7 @@ public class ActionListHelper
             });
 
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
         }
     }
 
@@ -447,7 +443,7 @@ public class ActionListHelper
         public int color;
         public String[] tags;
 
-        public ActionDisplay(String id, String title, String desc, int color, String[] tags)
+        public ActionDisplay(String id, @NonNull String title, String desc, int color, String[] tags)
         {
             this.id = id;
             this.title = title;
@@ -455,6 +451,7 @@ public class ActionListHelper
             this.color = color;
             this.tags = tags;
         }
+        @NonNull
         public String toString() {
              return title;
         }
@@ -685,21 +682,20 @@ public class ActionListHelper
         {
             if (action != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectAction:
-                        if (onItemSelected != null) {
-                            onItemSelected.onClick(list);
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectAction) {
+                    if (onItemSelected != null) {
+                        onItemSelected.onClick(list);
+                    }
+                    return true;
 
-                    case R.id.deleteAction:
-                        deleteAction();
-                        return true;
+                } else if (itemId == R.id.deleteAction) {
+                    deleteAction();
+                    return true;
 
-                    case R.id.editAction:
-                        editAction();
-                        return true;
+                } else if (itemId == R.id.editAction) {
+                    editAction();
+                    return true;
                 }
             }
             return false;
@@ -707,7 +703,7 @@ public class ActionListHelper
 
     }
 
-    private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
+    /*private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
     {
         public ActionDisplayActionMode() {
             super();
@@ -729,7 +725,7 @@ public class ActionListHelper
             mode.finish();
             return onActionItemClicked(item);
         }
-    }
+    }*/
 
     @TargetApi(11)
     private class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback

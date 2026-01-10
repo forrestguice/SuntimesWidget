@@ -22,21 +22,22 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.filters.LargeTest;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.filters.LargeTest;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject2;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 import android.util.Log;
 import android.view.View;
 
@@ -47,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.hamcrest.Matcher;
 
@@ -62,24 +64,24 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.registerIdlingResources;
+import static androidx.test.espresso.Espresso.unregisterIdlingResources;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeRight;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
@@ -169,8 +171,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.action_location_add)).check(assertShown);
 
-        WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
-        if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
+        if (mode == LocationMode.CURRENT_LOCATION)
         {
             onView(withId(R.id.action_location_refresh)).check(assertShown);
 
@@ -182,7 +184,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyClock(SuntimesActivity activity)
     {
         SuntimesRiseSetDataset dataset = activity.dataset;
-        SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
+        TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
         String timezoneID = dataset.timezone().getID();
 
         onView(withId(R.id.text_time)).check(assertShown);
@@ -265,7 +267,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_mainActivity_navigation_mapButton()
     {
         Activity context = activityRule.getActivity();
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         config(context).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true).apply();
         MainActivityRobot robot = new MainActivityRobot();
 
@@ -305,7 +307,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         {
             robot.showDialog(activityRule.getActivity())
                     .assertDialogShown(activityRule.getActivity())
-                    .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                    .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                     .clickLocationEditButton()
                     .inputLocationEditValues(name[i], lat[i], lon[i])
                     .assertLocationEditCoordinates(lat[i], lon[i])
@@ -324,7 +326,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
                 .assertDialogShown(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+                .selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent()
                 .applyDialog(activityRule.getActivity());
         // TODO: verify action
@@ -612,7 +614,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .clickLocationEditButton()
                 .inputLocationEditValues(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON)
                 .applyDialog(activityRule.getActivity());

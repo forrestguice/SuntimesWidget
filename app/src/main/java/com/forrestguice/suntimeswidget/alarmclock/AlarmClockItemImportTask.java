@@ -19,15 +19,14 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import org.json.JSONObject;
@@ -49,7 +48,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -115,13 +114,14 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
-        for (AlarmClockItem item : items)
-        {
-            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
-            {
-                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
-                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+        if (items != null) {
+            for (AlarmClockItem item : items) {
+                if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
+                {
+                    // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+                    item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                    item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                }
             }
         }
 
@@ -162,19 +162,19 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private AlarmClockItem[] items;
+        private final AlarmClockItem[] items;
         public AlarmClockItem[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -184,7 +184,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;

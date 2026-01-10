@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -53,23 +52,22 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.app.NotificationCompat;
+
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -83,10 +81,15 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.NotificationCompat;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -164,7 +167,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
     };
 
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
     private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
     /**
@@ -204,8 +207,13 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmJobService.scheduleJobAfterBootCompleted(context);
 
         } else {
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= 23) {
+                flags = flags | PendingIntent.FLAG_IMMUTABLE;
+            }
+
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
-                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), PendingIntent.FLAG_UPDATE_CURRENT);
+                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), flags);
             long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
             addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
         }
@@ -231,7 +239,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
         showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
     }
-    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
@@ -252,7 +260,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 default:
-                    SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
+                    TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
                     alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
                     alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
                     break;
@@ -260,22 +268,23 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (view != null)
             {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
                 if (actionText != null && actionListener != null) {
-                    snackbar.setAction(actionText, actionListener);
+                    SnackbarUtils.make(context, view, alarmDisplay, duration)
+                            .setAction(actionText, actionListener)
+                            .show();
+                } else {
+                    SnackbarUtils.make(context, view, alarmDisplay, duration).show();
                 }
-                ViewUtils.themeSnackbar(context, snackbar, null);
-                snackbar.show();
-                return snackbar;
+                return;
 
             } else {
                 Toast.makeText(context, alarmDisplay, duration).show();
-                return null;
+                return;
             }
 
         }
         Log.e(TAG, "showTimeUntilToast: context is null!");
-        return null;
+        return;
     }
 
     /**
@@ -320,7 +329,11 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             if (Build.VERSION.SDK_INT >= 21)
             {
-                PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
+                int flags = 0;
+                if (Build.VERSION.SDK_INT >= 23) {
+                    flags = flags | PendingIntent.FLAG_IMMUTABLE;
+                }
+                PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), flags);
                 AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
                 //noinspection MissingPermission
                 alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));    // TODO:  android.permission.SCHEDULE_EXACT_ALARM required after targeting api31+
@@ -651,7 +664,11 @@ public class AlarmNotifications extends BroadcastReceiver
     public static PendingIntent getPendingIntent(Context context, String action, Uri data)
     {
         Intent intent = getAlarmIntent(context, action, data);
-        return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        return PendingIntent.getBroadcast(context, (int)ContentUris.parseId(data), intent, flags);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -897,7 +914,6 @@ public class AlarmNotifications extends BroadcastReceiver
         };
     }
 
-    @NonNull
     private static void startFadeIn(Context context, @Nullable MediaPlayer player, final long duration)
     {
         if (player != null)
@@ -1223,6 +1239,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (Build.VERSION.SDK_INT >= 26) {
             builder = new NotificationCompat.Builder(context, createNotificationChannel(context, channelID));
         } else {
+            //noinspection deprecation
             builder = new NotificationCompat.Builder(context);
         }
         return builder;
@@ -1257,17 +1274,22 @@ public class AlarmNotifications extends BroadcastReceiver
                 data.calculate(context);
             }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
-            notificationMsg = DataSubstitutions.displayStringForTitlePattern0(context, notificationMsg, data);
+            notificationMsg = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), notificationMsg, data);
         }
         int notificationIcon = alarm.getIcon();
 
         builder.setDefaults( Notification.DEFAULT_LIGHTS );
 
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingDismissWithChallenge = PendingIntent.getActivity(context, alarm.hashCode(), getFullscreenIntent(context, alarm.getUri()).setAction(ACTION_DISMISS), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), flags);
+        PendingIntent pendingDismissWithChallenge = PendingIntent.getActivity(context, alarm.hashCode(), getFullscreenIntent(context, alarm.getUri()).setAction(ACTION_DISMISS), flags);
+        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), flags);
+        PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), flags);
+        PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), flags);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
@@ -1310,7 +1332,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (reminderIntent != null)
                             {
                                 String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, reminderActionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-                                builder.addAction(R.drawable.ic_action_extension, actionTitle, PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                                builder.addAction(R.drawable.ic_action_extension, actionTitle, PendingIntent.getActivity(context, alarm.hashCode(), reminderIntent, flags));
                             }
                         }
                         builder.setContentIntent(pendingView);
@@ -1321,7 +1343,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
                     SuntimesUtils.initDisplayStrings(context);
-                    SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
+                    TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_snoozing));
@@ -1422,19 +1444,28 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
 
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+
         boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
         builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
-        builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), PendingIntent.FLAG_UPDATE_CURRENT));
+        builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), flags));
 
         if (isPaused) {
-            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), flags);
             builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
         } else {
-            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), flags);
             builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
         }
 
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), 0);
+        int flags0 = 0;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags0 = flags0 | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), flags0);
         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
         return builder.build();
     }
@@ -1464,7 +1495,11 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
 
-        PendingIntent pendingView = PendingIntent.getActivity(context, message.hashCode(), getAlarmListIntent(context, null), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, message.hashCode(), getAlarmListIntent(context, null), flags);
         builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.app_name_alarmclock), pendingView);
         return builder.build();
     }
@@ -1505,7 +1540,11 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setContentText(message);
 
         Intent intent = AlarmSettings.getAutostartSettingsIntent(context);
-        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, flags);
         builder.setContentIntent(pendingView);
 
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
@@ -1528,7 +1567,11 @@ public class AlarmNotifications extends BroadcastReceiver
             intent = AlarmSettings.getRequestIgnoreBatteryOptimizationIntent(context);
         }
 
-        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingView = PendingIntent.getActivity(context, builder.hashCode(), intent, flags);
         builder.setContentIntent(pendingView);
         //builder.addAction(R.drawable.ic_action_settings, context.getString(R.string.configLabel_alarms_optWhiteList), pendingView);
 
@@ -2992,7 +3035,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
         Uri uri_id = Uri.parse(eventID);
-        Uri uri_calc = Uri.parse(AlarmAddon.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        Uri uri_calc = Uri.parse(EventUri.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
 
         StringBuilder repeatingDaysString = new StringBuilder("[");
         if (repeating) {
@@ -3142,10 +3185,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static SuntimesRiseSetData getData_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location)
     {
-        WidgetSettings.TimeMode timeMode = event.toTimeMode();
+        TimeMode timeMode = event.toTimeMode();
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
-        sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+        sunData.setTimeMode(timeMode != null ? timeMode : TimeMode.OFFICIAL);
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
@@ -3158,7 +3201,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     private static SuntimesEquinoxSolsticeData getData_seasons(Context context, @NonNull SolarEvents event, @NonNull Location location)
     {
-        WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
+        SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
         data.setTimeMode(season);
         data.setLocation(location);

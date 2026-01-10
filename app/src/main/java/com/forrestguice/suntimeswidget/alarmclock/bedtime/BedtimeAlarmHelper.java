@@ -20,10 +20,10 @@ package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 import android.content.ContentUris;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
@@ -40,7 +40,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.util.Calendar;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class BedtimeAlarmHelper
 {
     public static void pauseBedtimeEvent(final Context context) {

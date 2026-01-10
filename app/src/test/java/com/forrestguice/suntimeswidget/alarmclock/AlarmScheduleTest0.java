@@ -23,8 +23,8 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -36,7 +36,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
-@SuppressWarnings("ConstantConditions")
 public class AlarmScheduleTest0
 {
     public SuntimesUtils utils = new SuntimesUtils();
@@ -50,7 +49,7 @@ public class AlarmScheduleTest0
 
         AlarmClockItem alarm = createAlarmClockItem(true);
         alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = WidgetTimezones.LocalMeanTime.TIMEZONEID;
+        alarm.timezone = TimeZones.LocalMeanTime.TIMEZONEID;
         alarm.hour = hour;
         alarm.minute = minute;
 
@@ -103,13 +102,13 @@ public class AlarmScheduleTest0
 
         AlarmClockItem alarm = createAlarmClockItem(true);
         alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.timezone = TimeZones.ApparentSolarTime.TIMEZONEID;
         alarm.hour = hour;
         alarm.minute = minute;
 
         int c = 0, n = 7;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
         Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)

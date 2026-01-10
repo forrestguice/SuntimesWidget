@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import android.content.Context;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -27,7 +25,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.8.1
+ * @version 1.8.2
  */
 public interface SuntimesCalculator
 {
@@ -79,7 +77,8 @@ public interface SuntimesCalculator
      * @param context a context object
      * @since 1.2.0
      */
-    void init(Location location, TimeZone timezone, Context context );
+    //@Deprecated   // removed 1.8.2
+    //void init(Location location, TimeZone timezone, Context context );
 
     /**
      * Morning Astronomical Twilight

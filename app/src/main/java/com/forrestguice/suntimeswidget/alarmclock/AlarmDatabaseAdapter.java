@@ -32,9 +32,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -600,12 +601,12 @@ public class AlarmDatabaseAdapter
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
+        @SuppressWarnings("ConstantConditions")
         @Override
         public void onCreate(SQLiteDatabase db)
         {
             switch (DATABASE_VERSION)
             {
-                //noinspection ConstantConditions
                 case 0: case 1: case 2: case 3: case 4:
                 default:
                     db.execSQL(TABLE_ALARMS_CREATE);
@@ -682,7 +683,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         protected AlarmDatabaseAdapter db;
 
         public AlarmItemTask(Context context)
@@ -746,7 +747,7 @@ public class AlarmDatabaseAdapter
             }
         }
 
-        private List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
+        private final List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
         public void addAlarmItemTaskListener(AlarmItemTaskListener listener )
         {
             this.taskListeners.add(listener);
@@ -1076,7 +1077,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmListObserver
     {
-        private HashMap<Long, Boolean> items;
+        private final HashMap<Long, Boolean> items;
 
         @SuppressLint("UseSparseArrays")
         public AlarmListObserver(Long[] alarmList, AlarmListObserverListener listener)
@@ -1109,7 +1110,7 @@ public class AlarmDatabaseAdapter
             return retValue;
         }
 
-        private AlarmListObserverListener observerListener;
+        private final AlarmListObserverListener observerListener;
         public static abstract class AlarmListObserverListener
         {
             public void onObservedItem( Long id ) {}

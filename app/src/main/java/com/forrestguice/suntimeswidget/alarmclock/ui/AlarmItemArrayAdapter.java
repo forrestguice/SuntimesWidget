@@ -29,19 +29,16 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.SwitchCompat;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.text.Spannable;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +50,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -64,9 +63,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.SwitchCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,14 +76,13 @@ import java.util.Calendar;
 /**
  * AlarmClockAdapter
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 {
     private static final SuntimesUtils utils = new SuntimesUtils();
 
     private Context context;
     private long selectedItem;
-    private ArrayList<AlarmClockItem> items;
+    private final ArrayList<AlarmClockItem> items;
     private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled, iconAction;
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;
@@ -94,7 +94,6 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     public AlarmItemArrayAdapter(Context context)
     {
         super(context, R.layout.layout_listitem_alarmclock);
-        this.resource = resource;
         initAdapter(context);
         this.items = new ArrayList<>();
     }
@@ -575,7 +574,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
             } else {
                 view.check_enabled.setChecked(item.enabled);
-                CompoundButtonCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+                ViewCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
             }
         }
 
@@ -706,8 +705,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             view.check_vibrate.setChecked(item.vibrate);
             view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
             if (item.enabled)
-                CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
-            else CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
+                ViewCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
+            else ViewCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
         }
 
         // repeating
@@ -799,110 +798,104 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void showOverflowMenu(final AlarmClockItem item, final View buttonView, final View itemView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmcontext, menu.getMenu());
-
-        MenuItem[] restrictedMenuItems = new MenuItem[] {     // only permitted when alarm not already enabled
-                menu.getMenu().findItem(R.id.setAlarmType),
-                menu.getMenu().findItem(R.id.setAlarmTime),
-                menu.getMenu().findItem(R.id.setAlarmOffset),
-                menu.getMenu().findItem(R.id.setAlarmEvent),
-                menu.getMenu().findItem(R.id.setAlarmLocation),
-                menu.getMenu().findItem(R.id.setAlarmRepeat)
-        };
-        for (MenuItem menuItem : restrictedMenuItems) {
-            menuItem.setEnabled(!item.enabled);
-        }
-
-        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
-                    menu.getMenu().findItem(R.id.setAlarmTime),
-                    menu.getMenu().findItem(R.id.setAlarmOffset)
-            };
-            for (MenuItem menuItem : notSupportedMenuItems) {
-                menuItem.setEnabled(false);
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                MenuItem[] restrictedMenuItems = new MenuItem[] {     // only permitted when alarm not already enabled
+                        menu.findItem(R.id.setAlarmType),
+                        menu.findItem(R.id.setAlarmTime),
+                        menu.findItem(R.id.setAlarmOffset),
+                        menu.findItem(R.id.setAlarmEvent),
+                        menu.findItem(R.id.setAlarmLocation),
+                        menu.findItem(R.id.setAlarmRepeat)
+                };
+                for (MenuItem menuItem : restrictedMenuItems) {
+                    menuItem.setEnabled(!item.enabled);
+                }
+
+                if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+                {
+                    MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                            menu.findItem(R.id.setAlarmTime),
+                            menu.findItem(R.id.setAlarmOffset)
+                    };
+                    for (MenuItem menuItem : notSupportedMenuItems) {
+                        menuItem.setEnabled(false);
+                    }
+                }
             }
-        }
 
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.setAlarmType:
-                        showAlarmTypeMenu(item, buttonView, itemView);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.setAlarmType) {
+                    showAlarmTypeMenu(item, buttonView, itemView);
+                    return true;
 
-                    case R.id.setAlarmAction:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestAction(item, 0);  // TODO: action1
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmAction) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestAction(item, 0);  // TODO: action1
+                    }
+                    return true;
 
-                    case R.id.setAlarmSound:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRingtone(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmSound) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestRingtone(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmDismissChallenge:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestDismissChallenge(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmDismissChallenge) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestDismissChallenge(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmLabel:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLabel(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmLabel) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestLabel(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmTime:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestTime(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmTime) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestTime(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmEvent:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestSolarEvent(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmEvent) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestSolarEvent(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmOffset:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestOffset(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmOffset) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestOffset(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmLocation:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLocation(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmLocation) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestLocation(item);
+                    }
+                    return true;
 
-                    case R.id.setAlarmRepeat:
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRepetition(item);
-                        }
-                        return true;
+                } else if (itemId == R.id.setAlarmRepeat) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestRepetition(item);
+                    }
+                    return true;
 
-                    case R.id.deleteAlarm:
-                        confirmDeleteAlarm(item, itemView);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.deleteAlarm) {
+                    confirmDeleteAlarm(item, itemView);
+                    return true;
                 }
+                return false;
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     /**
@@ -913,35 +906,28 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void showAlarmTypeMenu(final AlarmClockItem item, final View buttonView, final View itemView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.alarmTypeNotification:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.alarmTypeNotification) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
 
-                    case R.id.alarmTypeNotification1:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+                } else if (itemId == R.id.alarmTypeNotification1) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
 
-                    case R.id.alarmTypeNotification2:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
-
-                    case R.id.alarmTypeAlarm:
-                    default:
-                        return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
+                } else if (itemId == R.id.alarmTypeNotification2) {
+                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
                 }
+                return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     protected boolean changeAlarmType(AlarmClockItem item, AlarmClockItem.AlarmType type)

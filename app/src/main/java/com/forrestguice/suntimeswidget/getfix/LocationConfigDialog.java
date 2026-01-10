@@ -25,29 +25,29 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentActivity;
 
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentCompat;
 
-public class LocationConfigDialog extends BottomSheetDialogFragment
+public class LocationConfigDialog extends BottomSheetDialogBase
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
@@ -58,7 +58,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     protected ImageButton btn_accept, btn_cancel;
 
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    public void onInflate(@NonNull Activity activity, @NonNull AttributeSet attrs, Bundle savedInstanceState)
     {
         super.onInflate(activity, attrs, savedInstanceState);
 
@@ -102,7 +102,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return dialogContent.saveSettings(context);
         }
@@ -122,7 +122,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             /* EMPTY */
         }
 
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return true;
         }
@@ -130,14 +130,13 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     /**
      * setLocation
-     * @param location
      */
     private Location presetLocation = null;
     public void setLocation(Context context, Location location)
     {
         presetLocation = location;
         if (dialogContent != null) {
-            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }
 
@@ -244,7 +243,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (dialogContent != null)
@@ -279,7 +278,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final FragmentActivity myParent = getActivity();
+        final AppCompatActivity myParent = (AppCompatActivity) getActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
@@ -287,7 +286,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
         dialogContent.init(myParent, false);
-        dialogContent.setFragment(this);
+        dialogContent.setFragment(FragmentCompat.from(this));
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
@@ -343,7 +342,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a Bundle containing previously saved dialog state
      * @return an AlertDialog ready for display
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -356,7 +355,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "LocationConfigDialog onSaveInstanceState");
         saveSettings(outState);
@@ -406,7 +405,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            BottomSheetDialogBase.initPeekHeight(dialog, R.id.dialog_footer);
 
             if (AppSettings.isTelevision(getActivity())) {
                 btn_accept.requestFocus();
@@ -417,12 +416,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     });
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         dialogContent.cancelGetFix();
         dismiss();
@@ -458,28 +459,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     });
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     @Override
@@ -502,9 +486,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
         if (resultCode == Activity.RESULT_OK && data != null)
         {
-            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 setLocation(getActivity(), location);
+            } else {
+                Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }
             if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();

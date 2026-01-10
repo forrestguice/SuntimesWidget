@@ -23,15 +23,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -42,7 +44,7 @@ import java.util.TimeZone;
 public class ClockTileBase extends SuntimesTileBase
 {
     public static final boolean DEF_LOCATION_FROM_APP = true;
-    public static final WidgetSettings.TimezoneMode DEF_TIMEZONE_MODE = WidgetSettings.TimezoneMode.SOLAR_TIME;
+    public static final TimezoneMode DEF_TIMEZONE_MODE = TimezoneMode.SOLAR_TIME;
     public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
 
     protected SuntimesUtils utils = new SuntimesUtils();
@@ -85,7 +87,7 @@ public class ClockTileBase extends SuntimesTileBase
     public SpannableStringBuilder formatDialogTitle(Context context)
     {
         Calendar now = now(context);
-        WidgetSettings.TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+        TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
         String timeString = utils.calendarTimeShortDisplayString(context, now, false, formatMode).toString();
         SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
         timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);

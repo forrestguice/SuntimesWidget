@@ -23,7 +23,6 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
-import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
 
 /**
  *  Alarm widget 2x2
@@ -31,7 +30,7 @@ import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
 public class AlarmWidget0_2x2 extends AlarmWidget0
 {
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return AlarmWidget0ConfigActivity_2x2.class;
     }
 
@@ -46,7 +45,7 @@ public class AlarmWidget0_2x2 extends AlarmWidget0
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         AlarmLayout defLayout = AlarmWidgetSettings.loadAlarm2x2ModePref_asLayout(context, appWidgetId);
-        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, AlarmWidget0_2x2.class, getMinSize(context), defLayout);
+        AlarmWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, AlarmWidget0_2x2.class, getMinSize(context), defLayout);
     }
 
 }

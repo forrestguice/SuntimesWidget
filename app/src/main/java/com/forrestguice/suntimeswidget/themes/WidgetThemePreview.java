@@ -21,24 +21,33 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
+
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
-import android.util.Pair;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -48,7 +57,10 @@ import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
@@ -60,6 +72,8 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -77,6 +91,7 @@ import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAP
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWLABELS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.PREF_KEY_GRAPH_SHOWMOON;
 import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 
 public class WidgetThemePreview
 {
@@ -84,7 +99,7 @@ public class WidgetThemePreview
         initData(context, appWidgetId);
     }
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
 
     private int appWidgetId = 0;
     public int getAppWidgetId() {
@@ -104,7 +119,7 @@ public class WidgetThemePreview
     private boolean showHours = false;
     private boolean showTimeDate = false;
     private boolean showSeconds = false;
-    private WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+    private LengthUnit units = LengthUnit.METRIC;
 
     private SuntimesRiseSetDataset data0;
     private SuntimesRiseSetData data1;
@@ -123,7 +138,7 @@ public class WidgetThemePreview
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 
@@ -234,6 +249,17 @@ public class WidgetThemePreview
         } else if (WidgetSettings.WidgetModeSunPos1x1.supportsLayout(layoutID)) {
             updatePreview_position2(previewLayout, values);
 
+        } else if (ClockWidgetSettings.WidgetModeClock1x1.supportsLayout(layoutID)) {
+            ClockWidgetSettings.WidgetModeClock1x1 mode = ClockWidgetSettings.WidgetModeClock1x1.findMode(layoutID);
+            if (mode != null) {
+                switch (mode) {
+                    case CLOCK0: updatePreview_clock(previewLayout, values); break;
+                    default: updatePreview_clock1(previewLayout, mode, values); break;
+                }
+            } else {
+                updatePreview_clock1(previewLayout, null, values);
+            }
+
         } else {
             updatePreview_clock(previewLayout, values);
             //updatePreview_solstice(previewLayout);  // TODO
@@ -265,6 +291,9 @@ public class WidgetThemePreview
             if (values.getAsInteger("option_drawNow_pointSizePx") != null) {
                 colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
             }
+
+            colors.setOption_drawNow(context != null ? SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())) : SunSymbol.CIRCLE);
+            colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
@@ -333,10 +362,14 @@ public class WidgetThemePreview
     {
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
+            case VANDERGRINTEN_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
                 return new int[] { 128, 128 };
+
+            case SINUSOIDAL_SIMPLE:
             case EQUIRECTANGULAR_BLUEMARBLE:
             case EQUIRECTANGULAR_SIMPLE:
             default:
@@ -471,9 +504,9 @@ public class WidgetThemePreview
             final LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions(context);
 
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
-            options.colors = LightGraphColorValues.getColorDefaults(context, isNightMode);
+            options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
 
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
             options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
                     : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
 
@@ -565,10 +598,12 @@ public class WidgetThemePreview
             previewTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 
-            Calendar now = Calendar.getInstance();
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
+            SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+            data.calculate(context);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, data.now(), false, timeFormat);
             String nowString = nowText.getValue();
+
             CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
             previewTime.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR));
@@ -576,6 +611,49 @@ public class WidgetThemePreview
 
             previewTimeSuffix.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR));
             previewTimeSuffix.setText(nowText.getSuffix());
+        }
+    }
+
+    public void updatePreview_clock1(View previewLayout, ClockWidgetSettings.WidgetModeClock1x1 mode, ContentValues values)
+    {
+        Context context = previewLayout.getContext();
+        ImageView previewTime = (ImageView) previewLayout.findViewById(R.id.image_time);
+        if (previewTime != null)
+        {
+            ClockLayout_1x1_1.ClockFaceOptions options = new ClockLayout_1x1_1.ClockFaceOptions(context, appWidgetId);
+            options.textColor = ClockWidgetSettings.loadClockTypefaceValue(context, appWidgetId, ClockWidgetSettings.PREF_KEY_APPEARANCE_TYPEFACE_COLOR, values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR));
+            options.minTextSizePx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), context.getResources().getDisplayMetrics());
+            options.textAlign = AppSettings.isLocaleRtl(context) ? Paint.Align.LEFT : Paint.Align.RIGHT;
+
+            switch (mode)
+            {
+                case CLOCK1: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL; break;
+                case CLOCK2: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0; break;
+                case CLOCK3: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1; break;
+            }
+
+            SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+            data.calculate(context);
+            String nowString = ClockLayout_1x1_1.getNowString(context, appWidgetId, data.now(), options);
+
+            int w, h;
+            switch (options.style)
+            {
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0:
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1:
+                    w = 256;
+                    h = 128;
+                    break;
+
+                case ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL:
+                default:
+                    w = h = 256;
+                    break;
+            }
+
+            Bitmap b = new ClockLayout_1x1_1.ClockFaceBitmap().makeClockBitmap(context, w, h, nowString, options);
+            previewTime.setImageBitmap(b);
+            previewTime.setContentDescription(nowString);
         }
     }
 
@@ -591,9 +669,9 @@ public class WidgetThemePreview
         TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
         SuntimesRiseSetData noonData = data1.getLinked();
-        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
+        TimeDisplayText noonText = ((noonData != null)
                 ? utils.calendarTimeShortDisplayString(previewLayout.getContext(), noonData.sunriseCalendarToday())
-                : new SuntimesUtils.TimeDisplayText("12:00"));
+                : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
@@ -613,7 +691,7 @@ public class WidgetThemePreview
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -633,7 +711,7 @@ public class WidgetThemePreview
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -691,7 +769,7 @@ public class WidgetThemePreview
         ImageView previewNoonIcon = (ImageView)previewLayout.findViewById(R.id.icon_time_noon);
         if (previewNoonIcon != null) {
             Bitmap noonIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_noon_large1, values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR), values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR), noonStrokePixels);   // doesn't call mutate (themes other Drawable instances)
-            Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
+            Drawable d = ContextCompat.getDrawable(context.getResources(), R.drawable.ic_noon_large1, null);
             previewNoonIcon.setImageDrawable(d);
         }
     }
@@ -738,7 +816,7 @@ public class WidgetThemePreview
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(context, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(context, data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
@@ -758,7 +836,7 @@ public class WidgetThemePreview
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(context, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(context, data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
@@ -945,7 +1023,7 @@ public class WidgetThemePreview
 
             if (previewMoonAzimuth != null)
             {
-                SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+                TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
                 previewMoonAzimuth.setTextColor(textColor);
                 previewMoonAzimuth.setText(PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
                 updateSize(previewMoonAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -1036,7 +1114,7 @@ public class WidgetThemePreview
             }
             if (apogee != null)
             {
-                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
                 previewMoonApogeeDate.setText(perigeeString.getValue());
                 previewMoonApogeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), apogee.first, showWeeks, showHours, timeColor, boldTime));
 
@@ -1069,7 +1147,7 @@ public class WidgetThemePreview
             }
             if (perigee != null)
             {
-                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
                 previewMoonPerigeeDate.setText(perigeeString.getValue());
                 previewMoonPerigeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), perigee.first, showWeeks, showHours, timeColor, boldTime));
 

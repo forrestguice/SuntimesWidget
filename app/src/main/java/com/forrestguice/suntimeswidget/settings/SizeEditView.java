@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
-@SuppressWarnings("Convert2Diamond")
 public class SizeEditView extends LinearLayout
 {
     private EditText edit;

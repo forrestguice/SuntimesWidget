@@ -26,18 +26,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 
-import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,16 +45,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
-import com.forrestguice.suntimeswidget.views.Toast;
 import android.widget.ToggleButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.HelpDialog;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.FragmentManagerCompat;
+
+import com.forrestguice.suntimeswidget.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,8 +80,8 @@ public class EditActionView extends LinearLayout
     protected static final String HELPTAG_LAUNCH = "action_launch";
 
     private static HashMap<String,PackageSuggestion> PACKAGE_SUGGESTIONS = null;
-    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
-    private static String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
+    private static final String[] MIMETYPE_SUGGESTIONS = new String[] { "*/*", "audio/*", "image/*", "text/plain", "text/html", "time/epoch", "video/*" };
+    private static final String[] DATA_SUGGESTIONS = new String[] { "content:", "file:", "geo:", "http:", "https:" };
 
     protected View layout_label;
     protected TextView text_label, text_desc;
@@ -252,12 +251,12 @@ public class EditActionView extends LinearLayout
                 convertView = LayoutInflater.from(getContext()).inflate(layoutResID, parent, false);
             }
             TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
-            if (text1 != null) {
-                text1.setText(suggestion.label);
+            if (text1 != null && suggestion != null) {
+                text1.setText(suggestion.getLabel());
             }
             TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
-            if (text2 != null) {
-                text2.setText(suggestion.packageName);
+            if (text2 != null && suggestion != null) {
+                text2.setText(suggestion.getPackageName());
             }
             return convertView;
         }
@@ -353,17 +352,17 @@ public class EditActionView extends LinearLayout
             String activityText = text_launchActivity != null ? text_launchActivity.getText().toString() : "";
             PackageSuggestion suggestion = (PackageSuggestion) parent.getItemAtPosition(position);
 
-            if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.packageName)))
+            if (text_launchActivity != null && (activityText.trim().isEmpty() || !activityText.startsWith(suggestion.getPackageName())))
             {
                 text_launchActivity.requestFocus();
-                text_launchActivity.setText(suggestion != null ? suggestion.className : (suggestion.packageName + "."));
+                text_launchActivity.setText(suggestion != null ? suggestion.getClassName() : ".");
                 text_launchActivity.setSelection(text_launchActivity.getText().length());
             }
 
             String labelText = edit_label != null ? edit_label.getText().toString() : "";
             String defaultLabel = getContext().getString(R.string.addaction_custtitle, "");
             if (edit_label != null && (labelText.trim().isEmpty() || labelText.startsWith(defaultLabel))) {
-                edit_label.setText(suggestion.label);
+                edit_label.setText(suggestion != null ? suggestion.getLabel() : "");
             }
         }
     };
@@ -387,14 +386,30 @@ public class EditActionView extends LinearLayout
 
     public static final class PackageSuggestion
     {
-        public String label, packageName, className;
+        protected String label, packageName, className;
 
-        public PackageSuggestion(String label, String packageName, String className) {
+        public PackageSuggestion(@NonNull String label, @NonNull String packageName, @NonNull String className) {
             this.label = label;
             this.packageName = packageName;
             this.className = className;
         }
 
+        @NonNull
+        public String getLabel() {
+            return label;
+        }
+
+        @NonNull
+        public String getPackageName() {
+            return packageName;
+        }
+
+        @NonNull
+        public String getClassName() {
+            return className;
+        }
+
+        @NonNull
         public String toString() {
             return packageName;
         }
@@ -413,7 +428,7 @@ public class EditActionView extends LinearLayout
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
                 helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+                helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
             }
         }
     };
@@ -486,9 +501,7 @@ public class EditActionView extends LinearLayout
 
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                    Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                    ViewUtils.themeSnackbar(getContext(), snackbar, null);
-                    snackbar.show();
+                    SnackbarUtils.make(getContext(), this, getContext().getString(R.string.startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -506,9 +519,7 @@ public class EditActionView extends LinearLayout
 
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
-            Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-            ViewUtils.themeSnackbar(getContext(), snackbar, null);
-            snackbar.show();
+            SnackbarUtils.make(getContext(), this, getContext().getString(R.string.startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
         }
     }
 
@@ -525,46 +536,41 @@ public class EditActionView extends LinearLayout
 
     protected void showOverflowMenu(Context context, View parent)
     {
-        PopupMenu menu = new PopupMenu(context, parent);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.editintent, menu.getMenu());
-        menu.setOnMenuItemClickListener(onMenuItemClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
+        PopupMenuCompat.createMenu(context, parent, R.menu.editintent, onMenuItemClicked).show();
+    }
 
-        MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
-        for (MenuItem item : restrictedItems)
+    protected PopupMenuCompat.PopupMenuListener onMenuItemClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
+    {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu)
         {
-            if (item != null) {
-                item.setEnabled(allowSaveLoad);
-                item.setVisible(allowSaveLoad);
+            MenuItem[] restrictedItems = new MenuItem[] { menu.findItem(R.id.saveIntent), menu.findItem(R.id.loadIntent) };
+            for (MenuItem item : restrictedItems)
+            {
+                if (item != null) {
+                    item.setEnabled(allowSaveLoad);
+                    item.setVisible(allowSaveLoad);
+                }
             }
         }
 
-        menu.show();
-    }
-
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-    {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.testIntent:
-                    testIntent();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.testIntent) {
+                testIntent();
+                return true;
 
-                case R.id.saveIntent:
-                    saveIntent();
-                    return true;
+            } else if (itemId == R.id.saveIntent) {
+                saveIntent();
+                return true;
 
-                case R.id.loadIntent:
-                    loadIntent();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.loadIntent) {
+                loadIntent();
+                return true;
             }
+            return false;
         }
     });
 
@@ -582,7 +588,7 @@ public class EditActionView extends LinearLayout
             }
         });
         saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
+        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_SAVE);
     }
 
     public void loadIntent()
@@ -591,7 +597,7 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
-        loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+        loadDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_LOAD);
     }
 
     private DialogInterface.OnClickListener onSaveDialogAccepted(final Context context, final SaveActionDialog saveDialog)
@@ -712,8 +718,8 @@ public class EditActionView extends LinearLayout
     /**
      * setFragmentManager
      */
-    protected FragmentManager fragmentManager = null;
-    public void setFragmentManager( FragmentManager fragmentManager ) {
+    protected FragmentManagerCompat fragmentManager = null;
+    public void setFragmentManager( FragmentManagerCompat fragmentManager ) {
         this.fragmentManager = fragmentManager;
     }
 
@@ -862,7 +868,7 @@ public class EditActionView extends LinearLayout
     /**
      * onResume()
      */
-    public void onResume( FragmentManager fragments, @Nullable SuntimesData data )
+    public void onResume(FragmentManagerCompat fragments, @Nullable SuntimesData data )
     {
         setFragmentManager(fragments);
         setData(data);
@@ -898,7 +904,7 @@ public class EditActionView extends LinearLayout
     /**
      * HelpDialog onShow (launch App)
      */
-    private View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
+    private final View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)

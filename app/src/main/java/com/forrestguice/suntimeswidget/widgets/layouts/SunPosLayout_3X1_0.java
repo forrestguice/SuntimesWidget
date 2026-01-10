@@ -25,16 +25,24 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
+
+import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 
 /**
  * A 3x1 layout with the lightmap graph.
@@ -109,14 +117,14 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
 
     public static String buildContentDescription(Context context, Calendar now, SuntimesCalculator.SunPosition sunPosition)
     {
-        String contentDescription = utils.calendarTimeShortDisplayString(context, now, false).toString();
+        String contentDescription = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false).toString();
         if (sunPosition != null)
         {
-            SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
-            contentDescription += ", " + utils.formatAsElevation(elevationDisplay.getValue(), elevationDisplay.getSuffix());
+            TimeDisplayText elevationDisplay = angle_utils.formatAsElevation(sunPosition.elevation, DECIMAL_PLACES);
+            contentDescription += ", " + angle_utils.formatAsElevation(elevationDisplay.getValue(), elevationDisplay.getSuffix());
 
-            SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, true);
-            contentDescription += ", " + utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
+            TimeDisplayText azimuthDisplay = angle_utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, true);
+            contentDescription += ", " + angle_utils.formatAsDirection(azimuthDisplay.getValue(), azimuthDisplay.getSuffix());
         }
         return contentDescription;        // time, elevation, azimuth
     }
@@ -157,6 +165,9 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         colors.values.setColor(LightMapColorValues.COLOR_POINT_STROKE, theme.getGraphPointStrokeColor());
         colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, theme.getGraphPointFillColor());
         colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, theme.getGraphPointStrokeColor());
+
+        colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
+        colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
     }
 
 }

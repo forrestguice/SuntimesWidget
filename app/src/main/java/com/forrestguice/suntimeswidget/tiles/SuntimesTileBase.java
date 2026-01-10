@@ -29,10 +29,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,9 +37,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
-import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
@@ -51,6 +50,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -154,12 +154,12 @@ public abstract class SuntimesTileBase
             {
                 startUpdateTask(context, d);
 
-                Button settingsButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                Button settingsButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
                 if (settingsButton != null) {
                     settingsButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, configIntent));
                 }
 
-                Button launchButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                Button launchButton = AlertDialog.getButton(dialog, AlertDialog.BUTTON_POSITIVE);
                 if (launchButton != null) {
                     launchButton.setOnClickListener(onActionClickListener(activityRef, contextRef, d, launchIntent));
                 }
@@ -327,12 +327,12 @@ public abstract class SuntimesTileBase
     protected TimeZone timezone(Context context)
     {
         initData(context);
-        return (data != null ? data.timezone() : WidgetTimezones.localMeanTime(context, location(context)));
+        return (data != null ? data.timezone() : WidgetTimezones.localMeanTime(location(context)));
     }
 
     public static boolean isLocalTime(String tzID) {
-        return WidgetTimezones.LocalMeanTime.TIMEZONEID.equals(tzID) || WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(tzID)
-                || WidgetTimezones.SiderealTime.TZID_LMST.equalsIgnoreCase(tzID);
+        return TimeZones.LocalMeanTime.TIMEZONEID.equals(tzID) || TimeZones.ApparentSolarTime.TIMEZONEID.equals(tzID)
+                || TimeZones.SiderealTime.TZID_LMST.equalsIgnoreCase(tzID);
     }
 
     protected Location location(Context context) {

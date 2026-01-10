@@ -25,8 +25,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
@@ -170,7 +170,7 @@ public class WidgetSettingsExportTask extends ExportTask
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS)
         {
             Bundle bundle = new Bundle();
             bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());

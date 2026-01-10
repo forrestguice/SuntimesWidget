@@ -1,15 +1,49 @@
-Tracks sunlight and moonlight times. Features an app, alarm clock, and widget collection.
+Tracks sunlight and moonlight times. Features a clock, alarm clock, widget collection, and more.
 
-Suntimes displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination. The alarm clock schedules daily repeating alarms (or notifications) for sunrise, sunset, and other events. The app includes many features commonly associated with a world clock.
+Suntimes displays rising/setting information for the sun and moon. It includes many features commonly associated with a world clock.
 
 The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.
 
+Features:
+* clock
+* alarm clock
+* widgets
+* tiles
+
+Clock
+* current time (System, Apparent Solar, Local Mean, UTC, or Sidereal time).
+* time of sunrise, sunset, twilights (civil, nautical, astronomical), and blue/golden hour.
+* time of moonrise, moonset, apogee/perigee, moon phases and illumination.
+* time of solstices, equinoxes, and cross-quarter days.
+* day/night world map, yearly sunlight, and sun altitude graphs.
+
+Alarm Clock:
+* general purpose alarms; full screen alarms, notifications, and quick notifications.
+* daily repeating alarms for sunrise, sunset, or other reoccurring events.
+* bedtime alarms with support for sleep cycles and do-not-disturb settings.
+* gentle alarms that gradually change screen brightness, colors, and volume.
+* features for heavy sleepers; math problems, NFC tags (requires SuntimesNFC), and snooze limits.
+* automated actions; user-defined intents when alarms are triggered or dismissed.
+* other alarms; "roman time" alarms (Natural Hour), midpoint alarms (Interval Midpoints).
+
 The app benefits from the following permissions:
 * <small><u>ACCESS_FINE_LOCATION</u></small> is used to obtain the current position (latitude, longitude, altitude).
+* <small><u>ACCESS_LOCATION_EXTRA_COMMANDS</u></small> is used to configure GPS hardware.
+* <small><u>ACCESS_NOTIFICATION_POLICY</u></small> is used to change do-not-disturb settings at Bedtime.
 * <small><u>BOOT_COMPLETED</u></small> is used to restore active alarms after a reboot.
-* <small><u>SET_ALARM</u></small> is used to schedule alarms using the AlarmClock app.
+* <small><u>FOREGROUND_SERVICE</u></small> is used to deliver alarms.</small>.
+* <small><u>POST_NOTIFICATIONS</u></small> is used to deliver alarms.</small>.
+* <small><u>REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</u></small> is used to ensure reliable delivery of alarms.
+* <small><u>SCHEDULE_EXACT_ALARM</u></small> is used to schedule alarms.</small>.
+* <small><u>SET_ALARM</u></small> is used to interact with the system AlarmClock app.
+* <small><u>USE_FULL_SCREEN_INTENT</u></small> is used to deliver alarms.</small>.
+* <small><u>QUERY_ALL_PACKAGES</u></small> is used to configure and launch user-defined actions.</small>.
 * <small><u>VIBRATE</u></small> is used by alarm notifications.
+
+With older devices:
 * <small><u>READ_EXTERNAL_STORAGE</u></small> is used to play alarm sounds located on the SD card <small>(api&le;=18 only)</small>.
 * <small><u>WRITE_EXTERNAL_STORAGE</u></small> is used to backup data to file (places, themes, etc) <small>(api&le;=18 only)</small>.
 
 Note: The "Calendar Integration" and permissions added in v0.9.0 were removed in v0.10.0. This feature is now available as a separate add-on app; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>.
+
+Visit https://forrestguice.codeberg.page/Suntimes/ for more information.

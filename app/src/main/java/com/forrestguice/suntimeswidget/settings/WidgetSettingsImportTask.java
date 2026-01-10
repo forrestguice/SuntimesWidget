@@ -26,19 +26,20 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.support.app.AlertDialog;
 
 import org.json.JSONObject;
 
@@ -149,6 +150,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            //noinspection CharsetObjectCanBeUsed
             JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
             reader.setLenient(true);
             try {
@@ -194,19 +196,19 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private ContentValues[] items;
+        private final ContentValues[] items;
         public ContentValues[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -216,7 +218,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;
@@ -503,7 +505,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return result;
     }
 
-    public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
+    public static boolean importValue(SharedPreferences.Editor prefs, Class<?> type, String key, Object value)
     {
         boolean retValue = true;
         if (type.equals(String.class)) {
@@ -539,6 +541,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     {
         Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
+        prefTypes.putAll(ClockWidgetSettings.getPrefTypes());
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
@@ -578,8 +581,8 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
             if (prefTypes.containsKey(k0))
             {
-                Class expectedType = prefTypes.get(k0);
-                Class valueType = value.getClass();
+                Class<?> expectedType = prefTypes.get(k0);
+                Class<?> valueType = value.getClass();
                 if (valueType.equals(expectedType)) {
                     importValue(prefs, expectedType, k, value);    // types match (direct cast)
 
@@ -716,7 +719,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })

@@ -20,24 +20,25 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-@SuppressWarnings("Convert2Diamond")
+import com.forrestguice.support.app.FragmentCompat;
+
 public interface LocationHelper
 {
     void saveSettings( Bundle bundle );
     void loadSettings( Bundle bundle );
 
-    void setFragment(Fragment f);
-    Fragment getFragment();
+    void setFragment(FragmentCompat f);
+    FragmentCompat getFragment();
     void onResume();
 
     GetFixUI getUI();
     void addUI( GetFixUI ui );
 
     boolean getFix();
-    void getFix( int i );
+    void getFix( int i, boolean autoStop );
     void setGettingFix(boolean value);
     boolean gettingFix();
     void cancelGetFix();
@@ -50,6 +51,9 @@ public interface LocationHelper
     void addGetFixTaskListener( GetFixTaskListener listener );
     void removeGetFixTaskListener( GetFixTaskListener listener );
 
-    boolean hasLocationPermission(Activity activity);
+    boolean hasLocationPermission(Context context);
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+
+    void reloadAGPS(Activity context, boolean coldStart);
+    void reloadAGPS(Activity context, boolean coldStart, DialogInterface.OnClickListener listener);
 }

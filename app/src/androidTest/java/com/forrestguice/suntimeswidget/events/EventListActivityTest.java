@@ -29,9 +29,12 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.util.ContextInterface;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,20 +45,20 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Set;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertEnabled;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
@@ -150,7 +153,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
                 .assertClearDialogShown()
                 .clickConfirmClear();
 
-        Set<String> events = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> events = EventSettings.loadEventList(contextIntf);
         assertTrue(events.isEmpty());
         robot.assertEmptyListShown(activity)
                 .assertListHasItems(activity, 0);
@@ -188,7 +192,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         String angle = "15";
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)
@@ -230,7 +235,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
     {
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)

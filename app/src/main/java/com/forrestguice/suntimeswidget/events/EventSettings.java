@@ -18,191 +18,41 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.ContextInterface;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.UriUtils;
+import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREFS_EVENTS;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_COLOR;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_ID;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_SHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_DEF_EVENT_URI;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_COLOR;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_ID;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LABEL;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LIST;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_LISTSHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_SHOWN;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_KEY_EVENT_URI;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_PREFIX_KEY;
+import static com.forrestguice.suntimeswidget.events.EventSettingsInterface.PREF_PREFIX_KEY_EVENT;
 
 public class EventSettings
 {
-    public static final String PREFS_EVENTS = "suntimes.events";
-    public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
-    public static final String PREF_PREFIX_KEY_EVENT = "_event_";
-
-    public static final String PREF_KEY_EVENT_ID = "id";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
-
-    public static final String PREF_KEY_EVENT_URI = "uri"; // SuntimesEventContract.COLUMN_EVENT_URI;  // TODO: contract class
-    public static String PREF_DEF_EVENT_URI = null;
-
-    public static final String PREF_KEY_EVENT_TYPE = "type";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
-    public static final AlarmEventProvider.EventType PREF_DEF_EVENT_TYPE = AlarmEventProvider.EventType.SUN_ELEVATION;
-
-    public static final String PREF_KEY_EVENT_LABEL = "label"; // SuntimesEventContract.COLUMN_EVENT_LABEL;  // TODO: contract class
-    public static final String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
-    public static int PREF_DEF_EVENT_COLOR = Color.GRAY;
-
-    public static final String PREF_KEY_EVENT_SHOWN = "shown"; // SuntimesEventContract.COLUMN_EVENT_SHOWN;  // TODO: contract class
-    public static final boolean PREF_DEF_EVENT_SHOWN = false;
-
-    public static final String PREF_KEY_EVENT_LIST = "list";
-    public static final String PREF_KEY_EVENT_LISTSHOWN = "list_shown";
-
-    public static final String PREF_DEF_EVENT_ID = "CUSTOM";
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * EventAlias
-     */
-    public static final class EventAlias
-    {
-        public EventAlias(@NonNull AlarmEventProvider.EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
-        {
-            this.type = type;
-            this.id = id;
-            this.label = (label != null ? label : id);
-            this.color = (color != null ? color : PREF_DEF_EVENT_COLOR);
-            this.uri = uri;
-            this.shown = shown;
-            this.summary = null;
-        }
-
-        public EventAlias( EventAlias other )
-        {
-            this.type = other.type;
-            this.id = other.id;
-            this.label = other.label;
-            this.color = other.color;
-            this.uri = other.uri;
-            this.shown = other.shown;
-            this.summary = other.summary;
-        }
-
-        public EventAlias( ContentValues values )
-        {
-            this.type = AlarmEventProvider.EventType.valueOf(values.getAsString(PREF_KEY_EVENT_TYPE));
-            this.id = values.getAsString(PREF_KEY_EVENT_ID);
-            this.label = values.getAsString(PREF_KEY_EVENT_LABEL);
-            this.color = values.getAsInteger(PREF_KEY_EVENT_COLOR);
-            this.uri = values.getAsString(PREF_KEY_EVENT_URI);
-            this.shown = values.getAsBoolean(PREF_KEY_EVENT_SHOWN);
-            this.summary = null;
-        }
-
-        public ContentValues toContentValues()
-        {
-            ContentValues values = new ContentValues();
-            values.put(PREF_KEY_EVENT_TYPE, this.type.name());
-            values.put(PREF_KEY_EVENT_ID, this.id);
-            values.put(PREF_KEY_EVENT_LABEL, this.label);
-            values.put(PREF_KEY_EVENT_COLOR, this.color);
-            values.put(PREF_KEY_EVENT_URI, this.uri);
-            values.put(PREF_KEY_EVENT_SHOWN, this.shown);
-            return values;
-        }
-
-        private final AlarmEventProvider.EventType type;
-        public AlarmEventProvider.EventType getType() {
-            return type;
-        }
-
-        private final String id;
-        public String getID() {
-            return id;
-        }
-
-        /**
-         * @return a partial AlarmEvent uri (needs rising/setting suffix to be complete)
-         */
-        public String getUri() {
-            return uri;
-        }
-        private final String uri;
-
-        private boolean shown;
-        public boolean isShown() {
-            return shown;
-        }
-
-        private final String label;
-        public String getLabel() {
-            return label;
-        }
-
-        private final Integer color;
-        public Integer getColor() {
-            return color;
-        }
-
-        private String summary;
-        public String getSummary(final Context context) {
-            if (summary == null) {
-                summary = ExecutorUtils.getResult("getSummary", new Callable<String>()
-                {
-                    public String call() {
-                        return resolveSummary(context);
-                    }
-                }, 1000);
-            }
-            return summary;
-        }
-        protected String resolveSummary(Context context)
-        {
-            String retValue = null;
-            String uri = getUri();
-            if (uri != null && !uri.trim().isEmpty())
-            {
-                Cursor cursor = context.getContentResolver().query(Uri.parse(uri), new String[] { AlarmEventContract.COLUMN_EVENT_SUMMARY }, null, null, null);
-                if (cursor != null)
-                {
-                    cursor.moveToFirst();
-                    if (!cursor.isAfterLast()) {
-                        int i = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
-                        retValue = ((i >= 0) ? cursor.getString(i) : null);
-                    }
-                    cursor.close();
-                }
-            }
-            return retValue;
-        }
-
-        public String toString() {
-            return label != null ? label : id;
-        }
-
-        public String getAliasUri() {
-            return AlarmAddon.getEventInfoUri(AUTHORITY, getID());
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static String suggestEventID(@NonNull Context context)
+    public static String suggestEventID(@NonNull ContextInterface context)
     {
         String id;
         int i = 0;
@@ -213,16 +63,19 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(@NonNull Context context, AlarmEventProvider.EventType eventType)
+    public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType)
     {
         switch (eventType) {
+            case SUN_ELEVATION: return context.getString(R.string.editevent_dialog_label_suggested);
             case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
-            case SUN_ELEVATION:
-            default: return context.getString(R.string.editevent_dialog_label_suggested);
+            case MOONILLUM: return context.getString(R.string.moonillumevent_label_suggested);
+            case MOON_ELEVATION: return context.getString(R.string.moonevent_label_suggested);
+            case DAYPERCENT:
+            default: return context.getString(R.string.editevent_dialog_label_suggested2);
         }
     }
 
-    public static EventAlias saveEvent(@NonNull Context context, @NonNull AlarmEventProvider.EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
+    public static EventAlias saveEvent(@NonNull ContextInterface context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
             id = suggestEventID(context);
@@ -231,10 +84,10 @@ public class EventSettings
         saveEvent(context, alias);
         return alias;
     }
-    public static void saveEvent(Context context, EventAlias event)
+    public static void saveEvent(ContextInterface context, EventAlias event)
     {
         String id = event.getID();
-        AlarmEventProvider.EventType type = event.getType();
+        EventType type = event.getType();
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -258,18 +111,18 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static Set<String> loadVisibleEvents(Context context) {
-        return loadVisibleEvents(context, AlarmEventProvider.EventType.visibleTypes());
+    public static Set<String> loadVisibleEvents(ContextInterface context) {
+        return loadVisibleEvents(context, EventType.visibleTypes());
     }
-    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType... types)
+    public static Set<String> loadVisibleEvents(ContextInterface context, EventType... types)
     {
         Set<String> result = new TreeSet<>();
-        for (AlarmEventProvider.EventType type : types) {
+        for (EventType type : types) {
             result.addAll(loadVisibleEvents(context, type));
         }
         return result;
     }
-    public static Set<String> loadVisibleEvents(Context context, AlarmEventProvider.EventType type)
+    public static Set<String> loadVisibleEvents(ContextInterface context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LISTSHOWN;
@@ -277,15 +130,15 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
-    public static Set<String> loadEventList(Context context)
+    public static Set<String> loadEventList(ContextInterface context)
     {
         Set<String> result = new TreeSet<>();
-        for (AlarmEventProvider.EventType type : AlarmEventProvider.EventType.values()) {
+        for (EventType type : EventType.values()) {
             result.addAll(loadEventList(context, type));
         }
         return result;
     }
-    public static Set<String> loadEventList(Context context, AlarmEventProvider.EventType type)
+    public static Set<String> loadEventList(ContextInterface context, EventType type)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String listKey = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST;
@@ -293,7 +146,7 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
-    public static String loadEventValue(Context context, @NonNull String id, @Nullable String key)
+    public static String loadEventValue(ContextInterface context, @NonNull String id, @Nullable String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -323,7 +176,7 @@ public class EventSettings
         }
     }
 
-    public static boolean loadEventFlag(Context context, @NonNull String id, @NonNull String key)
+    public static boolean loadEventFlag(ContextInterface context, @NonNull String id, @NonNull String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -335,7 +188,7 @@ public class EventSettings
         }
         return false;
     }
-    public static void saveEventFlag(Context context, @NonNull String id, @NonNull String key, boolean value)
+    public static void saveEventFlag(ContextInterface context, @NonNull String id, @NonNull String key, boolean value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -343,7 +196,7 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static EventAlias loadEvent(Context context, @NonNull String id)
+    public static EventAlias loadEvent(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -354,7 +207,7 @@ public class EventSettings
                 loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN));
     }
 
-    public static List<EventAlias> loadEvents(Context context, AlarmEventProvider.EventType type)
+    public static List<EventAlias> loadEvents(ContextInterface context, EventType type)
     {
         Set<String> events = loadEventList(context, type);
         ArrayList<EventAlias> list = new ArrayList<>();
@@ -364,9 +217,9 @@ public class EventSettings
         return list;
     }
 
-    public static void deleteEvent(Context context, @NonNull String id)
+    public static void deleteEvent(ContextInterface context, @NonNull String id)
     {
-        AlarmEventProvider.EventType type = getType(context, id);
+        EventType type = getType(context, id);
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -388,21 +241,21 @@ public class EventSettings
         prefs.commit();
     }
 
-    public static boolean hasEvent(@NonNull Context context, @NonNull String id)
+    public static boolean hasEvent(@NonNull ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         return prefs.contains(prefs_prefix + PREF_KEY_EVENT_TYPE);
     }
 
-    public static boolean isShown(Context context, @NonNull String id) {
+    public static boolean isShown(ContextInterface context, @NonNull String id) {
         return loadEventFlag(context, id, PREF_KEY_EVENT_SHOWN);
     }
-    public static void setShown(Context context, @NonNull String id, boolean value)
+    public static void setShown(ContextInterface context, @NonNull String id, boolean value)
     {
         saveEventFlag(context, id, PREF_KEY_EVENT_SHOWN, value);
 
-        AlarmEventProvider.EventType eventType = getType(context, id);
+        EventType eventType = getType(context, id);
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         Set<String> eventList1 = loadVisibleEvents(context, eventType);
         if (value) {
@@ -412,26 +265,26 @@ public class EventSettings
         prefs.apply();
     }
 
-    public static String getEventUriLastPathSegment(Context context, @NonNull String id)
+    public static String getEventUriLastPathSegment(ContextInterface context, @NonNull String id)
     {
-        String eventUri = EventSettings.loadEventValue(context, id, EventSettings.PREF_KEY_EVENT_URI);
-        return Uri.parse(eventUri).getLastPathSegment();
+        String eventUri = EventSettings.loadEventValue(context, id, PREF_KEY_EVENT_URI);
+        return UriUtils.getLastPathSegment(eventUri);
     }
 
-    public static int getColor(Context context, @NonNull String id)
+    public static int getColor(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         return prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR);
     }
 
-    public static AlarmEventProvider.EventType getType(Context context, @NonNull String id)
+    public static EventType getType(ContextInterface context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
         String typeString = prefs.getString(prefs_prefix + PREF_KEY_EVENT_TYPE, PREF_DEF_EVENT_TYPE.name());
         try {
-            return AlarmEventProvider.EventType.valueOf(typeString);
+            return EventType.valueOf(typeString);
         } catch (IllegalArgumentException e) {
             Log.e("EventSettings", "getType: " + id + ": " + e);
             return PREF_DEF_EVENT_TYPE;
@@ -441,52 +294,29 @@ public class EventSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues)    // TODO: needs test
-    {
-        if (Build.VERSION.SDK_INT >= 11) {
-            return prefs.getStringSet(key, defValues);
-        } else {
-            String s = prefs.getString(key, null);
-            return (s != null) ? new TreeSet<>(Arrays.asList(s.split("\\|"))) : null;
-        }
+    public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues) {
+        return prefs.getStringSet(key, defValues);
     }
 
-    public static void putStringSet(SharedPreferences.Editor prefs, String key, @Nullable Set<String> values)  // TODO: needs test
-    {
-        if (Build.VERSION.SDK_INT >= 11) {
-            prefs.putStringSet(key, values);
-        } else {
-            prefs.putString(key, stringSetToString(values));
-        }
+    public static void putStringSet(SharedPreferences.Editor prefs, String key, @Nullable Set<String> values) {
+        prefs.putStringSet(key, values);
         prefs.apply();
     }
-    public static String stringSetToString(@Nullable Set<String> values)
-    {
-        if (values != null) {
-            StringBuilder s = new StringBuilder();
-            for (String v : values) {
-                s.append(v).append("|");
-            }
-            return s.toString();
-        } else {
-            return null;
-        }
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void deletePrefs(Context context)
+    public static void deletePrefs(ContextInterface context)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         prefs.clear();
         prefs.apply();
     }
 
-    public static void initDefaults(Context context) {
+    public static void initDefaults(ContextInterface context) {
     }
 
-    public static void initDisplayStrings( Context context ) {
+    public static void initDisplayStrings(Resources context) {
         //EventType.initDisplayStrings(context);
     }
 

@@ -25,19 +25,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.NumberPicker;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
 
 @TargetApi(11)
-public class AlarmOffsetDialog extends DialogFragment
+public class AlarmOffsetDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_TIME_OFFSET = "alarmoffset";
     public static final long PREF_DEF_ALARM_TIME_OFFSET = 0L;
@@ -57,7 +58,7 @@ public class AlarmOffsetDialog extends DialogFragment
     {
         super.onCreate(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmoffset, null);
@@ -69,10 +70,10 @@ public class AlarmOffsetDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(myParent.getString(R.string.alarmoffset_dialog_title));
 
-        final AlertDialog dialog = builder.create();
+        final Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -86,7 +87,7 @@ public class AlarmOffsetDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmoffset_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmoffset_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -100,7 +101,7 @@ public class AlarmOffsetDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
         });
@@ -109,18 +110,21 @@ public class AlarmOffsetDialog extends DialogFragment
             @Override
             public void onShow(DialogInterface d)
             {
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v) {
-                        if (offset == 0) {
-                            dialog.dismiss();
-                            if (onAccepted != null) {
-                                onAccepted.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                            }
-                        } else setOffset(0);
-                    }
-                });
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            if (offset == 0) {
+                                dialog.dismiss();
+                                if (onAccepted != null) {
+                                    onAccepted.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                                }
+                            } else setOffset(0);
+                        }
+                    });
+                }
             }
         });
 
@@ -134,7 +138,7 @@ public class AlarmOffsetDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -203,7 +207,7 @@ public class AlarmOffsetDialog extends DialogFragment
         pickerOffsetDays.setOnValueChangedListener(onOffsetChanged);
     }
 
-    private NumberPicker.OnValueChangeListener onOffsetChanged = new NumberPicker.OnValueChangeListener() {
+    private final NumberPicker.OnValueChangeListener onOffsetChanged = new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
             offset = determineOffset();

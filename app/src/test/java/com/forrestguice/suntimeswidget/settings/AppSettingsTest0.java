@@ -23,12 +23,11 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValu
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
-import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

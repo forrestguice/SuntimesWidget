@@ -28,7 +28,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|start">
 
-            <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:src="?attr/icActionBack"
                 android:contentDescription="@string/timedate_dialog_cancel" />
@@ -40,7 +40,7 @@
                 style="@style/Base.DialogWindowTitle.AppCompat"
                 android:text="@string/timedate_dialog_title" />
 
-            <ImageButton android:id="@+id/dialog_button_accept"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_accept"
                 style="@style/ActionButton" android:contentDescription="@string/timedate_dialog_ok"
                 android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
                 android:src="?attr/icActionAccept"

@@ -24,9 +24,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,23 +31,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 import java.io.File;
 
-public class EventListFragment extends Fragment
+public class EventListFragment extends DialogBase
 {
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String EXTRA_SELECTED = "selected";
     public static final String EXTRA_NOSELECT = "noselect";
     public static final String EXTRA_EXPANDED = "expanded";
     public static final String EXTRA_LOCATION = "location";
-    public static final String EXTRA_TYPEFILTER = "typefilter";
+    public static final String EXTRA_TYPEFILTER = "typefilter";       // filter list by event type
+    public static final String EXTRA_SELECTFILTER = "selectfilter";   // allow "select and return" for given types
 
     private EventListHelper helper;
 
@@ -72,11 +73,12 @@ public class EventListFragment extends Fragment
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(v.getContext(), getChildFragmentManager());
+        helper = new EventListHelper(v.getContext(), FragmentManagerCompat.from(this, true));
         helper.setLocation(getLocation());
         helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
         helper.setTypeFilter(getArgs().getStringArray(EXTRA_TYPEFILTER));
+        helper.setSelectFilter(getArgs().getStringArray(EXTRA_SELECTFILTER));
         helper.initViews(getActivity(), v, savedState);
 
         String preselectedEvent = getArgs().getString(EXTRA_SELECTED);
@@ -88,6 +90,7 @@ public class EventListFragment extends Fragment
         return v;
     }
 
+    @Override
     @NonNull
     public Bundle getArgs()
     {
@@ -104,6 +107,7 @@ public class EventListFragment extends Fragment
         args.putBoolean(EXTRA_NOSELECT, false);
         args.putBoolean(EXTRA_EXPANDED, false);
         args.putStringArray(EXTRA_TYPEFILTER, null);
+        args.putStringArray(EXTRA_SELECTFILTER, null);
         setArguments(args);
         return args;
     }
@@ -112,7 +116,7 @@ public class EventListFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getChildFragmentManager());
+        helper.setFragmentManager(FragmentManagerCompat.from(this, true));
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
         helper.setImportTaskListener(importListener);
@@ -154,46 +158,58 @@ public class EventListFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.eventlist, menu);
+    }
+
+    public void showAddEventDialog(EventType type, Double angle, Double shadowLength, Double objectHeight) {
+        helper.addEvent(type, angle, shadowLength, objectHeight);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            //case R.id.addEvent:
-            //    helper.addEvent();
-            //    return true;
+        int itemId = item.getItemId();
+        //case R.id.addEvent:
+        //    helper.addEvent();
+        //    return true;
+        if (itemId == R.id.addEvent_sunEvent) {
+            helper.addEvent(EventType.SUN_ELEVATION);
+            return true;
 
-            case R.id.addEvent_sunEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
-                return true;
+        } else if (itemId == R.id.addEvent_shadowEvent) {
+            helper.addEvent(EventType.SHADOWLENGTH);
+            return true;
 
-            case R.id.addEvent_shadowEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
-                return true;
+        } else if (itemId == R.id.addEvent_dayPercentEvent) {
+            helper.addEvent(EventType.DAYPERCENT);
+            return true;
 
-            case R.id.clearEvents:
-                helper.clearEvents();
-                return true;
+        } else if (itemId == R.id.addEvent_moonIllumEvent) {
+            helper.addEvent(EventType.MOONILLUM);
+            return true;
 
-            case R.id.exportEvents:
-                helper.exportEvents(EventListFragment.this);
-                return true;
+        } else if (itemId == R.id.addEvent_moonEvent) {
+            helper.addEvent(EventType.MOON_ELEVATION);
+            return true;
 
-            case R.id.importEvents:
-                helper.importEvents(EventListFragment.this);
-                return true;
+        } else if (itemId == R.id.clearEvents) {
+            helper.clearEvents();
+            return true;
 
-            case R.id.helpEvents:
-                helper.showHelp();
-                return true;
+        } else if (itemId == R.id.exportEvents) {
+            helper.exportEvents(FragmentCompat.from(EventListFragment.this));
+            return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.importEvents) {
+            helper.importEvents(FragmentCompat.from(EventListFragment.this));
+            return true;
+
+        } else if (itemId == R.id.helpEvents) {
+            helper.showHelp();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
@@ -236,15 +252,17 @@ public class EventListFragment extends Fragment
     }
 
     public void setLocation(Location value) {
-        getArgs().putParcelable(EXTRA_LOCATION, value);
+        getArgs().putSerializable(EXTRA_LOCATION, value);
     }
     public Location getLocation() {
-        return getArgs().getParcelable(EXTRA_LOCATION);
+        return (Location) getArgs().getSerializable(EXTRA_LOCATION);
     }
 
-    private String[] typeFilter = null;
     public void setTypeFilter(@Nullable String[] filter) {
         getArgs().putStringArray(EXTRA_TYPEFILTER, filter);
+    }
+    public void setSelectFilter(@Nullable String[] filter) {
+        getArgs().putStringArray(EXTRA_SELECTFILTER, filter);
     }
 
     /**

@@ -20,18 +20,17 @@ package com.forrestguice.suntimeswidget.graph;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -39,6 +38,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -49,7 +50,7 @@ import java.util.concurrent.locks.Lock;
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
  * night, day, and twilight times.
  */
-public class LightMapView extends android.support.v7.widget.AppCompatImageView
+public class LightMapView extends ImageView
 {
     private static final double MINUTES_IN_DAY = 24 * 60;
     private static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
@@ -145,6 +146,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         if (colors == null) {
             colors = new LightMapColors();
         }
+        themeViews(context, theme, colors);
+    }
+    public static void themeViews( Context context, @NonNull SuntimesTheme theme, @NonNull LightMapColors colors )
+    {
         colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
         colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
         colors.values.setColor(LightMapColorValues.COLOR_ASTRONOMICAL, theme.getAstroColor());
@@ -394,6 +399,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         } else return null;
     }
 
+    public Long findShadow( Context context, @Nullable Double shadowLengthMeters, @Nullable Double objHeightMeters, boolean rising )
+    {
+        if (data != null && shadowLengthMeters != null && objHeightMeters != null)
+        {
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+            Calendar event = rising ? data.calculator().getTimeOfShadowBeforeNoon(calendar, objHeightMeters, shadowLengthMeters)
+                                    : data.calculator().getTimeOfShadowAfterNoon(calendar, objHeightMeters, shadowLengthMeters);
+            return ((event != null) ? event.getTimeInMillis() : null);
+        } else return null;
+    }
+
     public void setOffsetMinutes( long value ) {
         colors.offsetMinutes = value;
         updateViews(true);
@@ -413,7 +430,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      */
     public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
-        private WeakReference<Context> contextRef;
+        private final WeakReference<Context> contextRef;
         private LightMapColors colors;
 
         private SuntimesRiseSetDataset t_data = null;
@@ -604,41 +621,26 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     }
                 }
 
+                // draw solar noon
+                if (colors.option_drawNoon)
+                {
+                    int lineWidth = (int)Math.ceil(c.getWidth() / (24d * 12d));     // a line that is 5 minutes wide
+                    p.setColor(colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE));
+                    drawVerticalLine(data.dataNoon.sunriseCalendarToday(), data.dataNoon, lineWidth, c, p);
+                }
+
                 // draw now marker
                 if (colors.option_drawNow > 0)
                 {
-                    int pointRadius;
-                    if (colors.option_drawNow_pointSizePx <= 0)
-                    {
-                        pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
-                        int maxPointRadius = (int)(c.getHeight() / 2d);
-                        if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
-                            pointRadius = (maxPointRadius - (pointRadius/3));
-                        }
-                    } else {
-                        pointRadius = colors.option_drawNow_pointSizePx;
-                    }
-                    int pointStroke = (int)Math.ceil(pointRadius / 3d);
-
                     //if (colors.option_lmt)
                     //{
-                        TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                        TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                         Calendar nowLmt = Calendar.getInstance(lmt);
                         nowLmt.setTimeInMillis(now.getTimeInMillis());
                         now = nowLmt;
                     //}
 
-                    switch (colors.option_drawNow) {
-                        case LightMapColors.DRAW_SUN2:
-                            DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), dashed);
-                            break;
-
-                        case LightMapColors.DRAW_SUN1:
-                        default:
-                            drawPoint(now, pointRadius, pointStroke, c, p, colors.values.getColor(LightMapColorValues.COLOR_SUN_FILL), colors.values.getColor(LightMapColorValues.COLOR_SUN_STROKE), null);
-                            break;
-                    }
+                    drawSunSymbol(colors.option_drawNow, now, c, p, colors);
                 }
             }
 
@@ -648,8 +650,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 Bitmap b0 = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
                 Canvas c0 = new Canvas(b0);
 
-                long zoneOffsetMs = data.timezone().getOffset(now.getTimeInMillis());
-                long lonOffsetMs = Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d);
+                long zoneOffsetMs = ((data != null) ? data.timezone().getOffset(now.getTimeInMillis()) : 0);
+                long lonOffsetMs = ((data != null) ? Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d) : 0);
                 long offsetMs = zoneOffsetMs - lonOffsetMs;
 
                 float left = (float)(offsetMs * ONE_DIVIDED_MILLIS_IN_DAY * w);
@@ -669,7 +671,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return retValue;
         }
 
-        protected Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
+        protected static Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
         {
             Calendar mapTime;
             if (options.now >= 0)
@@ -744,11 +746,50 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         /////////////////////////////////////////////
 
+        protected void drawSunSymbol(int symbol, Calendar calendar, Canvas c, Paint p, LightMapColors options)
+        {
+            int pointRadius;
+            if (colors.option_drawNow_pointSizePx <= 0)
+            {
+                pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
+                int maxPointRadius = (int)(c.getHeight() / 2d);
+                if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
+                    pointRadius = (maxPointRadius - (pointRadius/3));
+                }
+            } else {
+                pointRadius = colors.option_drawNow_pointSizePx;
+            }
+
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            int y = c.getHeight() / 2;
+
+            SunSymbolBitmap.drawSunSymbol(symbol, x, y, pointRadius, c, p, options.values);
+
+            int w = c.getWidth();
+            if (x + pointRadius > w) {    // point cropped at image bounds, so translate and draw it again
+                SunSymbolBitmap.drawSunSymbol(symbol, x - w, y, pointRadius, c, p, options.values);
+            } else if (x - pointRadius < 0) {
+                SunSymbolBitmap.drawSunSymbol(symbol, x + w, y, pointRadius, c, p, options.values);
+            }
+        }
+
+        /////////////////////////////////////////////
+
         protected void drawRect(Canvas c, Paint p)
         {
             int w = c.getWidth();
             int h = c.getHeight();
             c.drawRect(0, 0, w, h, p);
+        }
+
+        protected void drawVerticalLine(Calendar calendar0,  SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
+        {
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(data.location()));
+            calendar.setTimeInMillis(calendar0.getTimeInMillis());
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -763,7 +804,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
             //if (options.option_lmt)
             //{
-                TimeZone lmt = WidgetTimezones.localMeanTime(null, data.location());
+                TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
                 if (riseTime != null)
                 {
                     Calendar riseTimeLmt = Calendar.getInstance(lmt);
@@ -821,6 +862,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
+        protected void drawVerticalLine(Calendar calendar, int lineWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            SunSymbolBitmap.drawVerticalLine(x, lineWidth, c, p, color, effect);
+        }
+
+        protected void drawCross(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
+        {
+            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            int cX = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+            int cY = c.getHeight() / 2;
+            SunSymbolBitmap.drawCross(cX, cY, radius, strokeWidth, c, p, color, effect);
+        }
+
         protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
             if (calendar != null)
@@ -831,30 +887,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
                 int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
                 int y = h / 2;
-                drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                SunSymbolBitmap.drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
 
                 if (x + radius > w) {    // point cropped at image bounds, so translate and draw it again
-                    drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                    SunSymbolBitmap.drawPoint(x - w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 } else if (x - radius < 0) {
-                    drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
+                    SunSymbolBitmap.drawPoint(x + w, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
                 }
             }
-        }
-        protected void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
-        {
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(fillColor);
-            c.drawCircle(x, y, radius, p);
-
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(strokeWidth);
-            p.setColor(strokeColor);
-
-            if (strokeEffect != null) {
-                p.setPathEffect(strokeEffect);
-            }
-
-            c.drawCircle(x, y, radius, p);
         }
 
         private LightMapTaskListener listener = null;
@@ -890,13 +930,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("WeakerAccess")
     public static class LightMapColors
     {
-        public static final int DRAW_NONE = 0;
-        public static final int DRAW_SUN1 = 1;    // solid stroke
-        public static final int DRAW_SUN2 = 2;    // dashed stroke
+        public static final String MAPTAG_LIGHTMAP = "_lightmap";
 
-        public int option_drawNow = DRAW_SUN1;
+        public void setOption_drawNow(SunSymbol symbol) {
+            option_drawNow = SunSymbolBitmap.fromSunSymbol(symbol);
+        }
+
+        public int option_drawNow = SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID;
         public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
         public boolean option_lmt = false;
+
+        public boolean option_drawNoon = false;
 
         public long offsetMinutes = 0;
         public long now = -1L;
@@ -916,15 +960,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         public void initDefaultDark(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(context, true));
+            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), true));      // TODO: Resources
         }
 
         public void initDefaultLight(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(context, false));
+            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), false));       // TODO: Resources
         }
 
         public void init(Context context) {
-            values = new LightMapColorValues(context);
+            values = new LightMapColorValues(AndroidResources.wrap(context));
         }
 
         public void acquireDrawLock()

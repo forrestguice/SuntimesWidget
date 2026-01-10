@@ -40,16 +40,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.FloatingActionButton;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -77,11 +78,14 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -187,11 +191,11 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             colors = (!getIntent().hasExtra(EXTRA_TEST_BRIGHTMODE)) ? collection.getSelectedColors(context, 0, BrightAlarmColorValues.TAG_ALARMCOLORS)
                                                                     : collection.getColors(context, param_colorsID);
             if (colors == null) {
-                colors = new BrightAlarmColorValues(context, false);
+                colors = new BrightAlarmColorValues(AndroidResources.wrap(context), false);
             }
 
         } else {
-            colors = new AlarmColorValues(context, true);
+            colors = new AlarmColorValues(AndroidResources.wrap(context), true);
         }
 
     }
@@ -367,7 +371,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
 
     @Override
-    public void onSaveInstanceState( Bundle bundle )
+    public void onSaveInstanceState( @NonNull Bundle bundle )
     {
         super.onSaveInstanceState(bundle);
         bundle.putParcelable("alarmItem", this.alarm);
@@ -380,7 +384,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         //int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);
@@ -882,7 +886,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             offsetText.setText(formatOffsetDisplay(context));
 
             if (alarm.note != null) {
-                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(context, alarm.note, AlarmNotifications.getData(context, alarm)));
+                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmNotifications.getData(context, alarm)));
             } else noteText.setText("");
 
 
@@ -1003,7 +1007,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
     {
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
         if (SuntimesUtils.is24()) {
             return timeText.getValue();
         } else {
@@ -1034,7 +1038,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         long snoozeMillis = (alarm != null)
                 ? alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this))    // NPE this line after rotation
                 : AlarmSettings.PREF_DEF_ALARM_SNOOZE;
-        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
+        TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
         String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
         return SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
     }

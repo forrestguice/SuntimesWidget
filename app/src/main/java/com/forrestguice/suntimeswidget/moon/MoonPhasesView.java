@@ -20,8 +20,7 @@ package com.forrestguice.suntimeswidget.moon;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
 import android.view.Gravity;
@@ -32,29 +31,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 @Deprecated
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhasesView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
     private boolean isRtl = false;
     private boolean centered = false;
 
     private LinearLayout content;
     private PhaseField phaseNew, phaseFirst, phaseFull, phaseLast;
-    private ArrayList<PhaseField> phases = new ArrayList<>();
+    private final ArrayList<PhaseField> phases = new ArrayList<>();
     private TextView empty;
 
     public MoonPhasesView(Context context)
@@ -143,8 +143,8 @@ public class MoonPhasesView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     private void showEmptyView( boolean show )

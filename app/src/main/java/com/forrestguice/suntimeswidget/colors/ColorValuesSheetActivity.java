@@ -19,27 +19,25 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.Toolbar;
 
 public class ColorValuesSheetActivity extends AppCompatActivity
 {
@@ -77,7 +75,6 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         setContentView(R.layout.layout_activity_colorsheet);
 
         Intent intent = getIntent();
-        FragmentManager fragments = getSupportFragmentManager();
 
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         editViewModel.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
@@ -87,13 +84,14 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             previewIntentBuilder = intent.getParcelableExtra(EXTRA_PREVIEW_INTENTBUILDER);
         }
 
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getSupportFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
             colorSheet.setAppWidgetID(intent.getIntExtra(EXTRA_APPWIDGET_ID, 0));
             colorSheet.setColorTag(intent.getStringExtra(EXTRA_COLORTAG));
-            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getParcelableExtra(EXTRA_COLLECTION));
+            //noinspection unchecked
+            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getSerializableExtra(EXTRA_COLLECTION));
             colorSheet.setPreviewKeys(intent.getStringArrayExtra(EXTRA_PREVIEW_KEYS));
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
             colorSheet.setShowBack(false);
@@ -104,24 +102,23 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setFragmentListener(sheetListener);
         }
 
-        FragmentTransaction transaction = fragments.beginTransaction();
-        transaction.replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET);
-        transaction.commit();
-        fragments.executePendingTransactions();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             CharSequence title = intent.getCharSequenceExtra(EXTRA_TITLE);
             if (title != null) {
-                actionBar.setTitle(title);
+                getSupportActionBar().setTitle(title);
             }
-            actionBar.setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
+            getSupportActionBar().setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
         }
     }
 
@@ -264,44 +261,41 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_colors_preview:
-                previewColors();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_colors_preview) {
+            previewColors();
+            return true;
 
-            case R.id.action_colors_select:
-                selectColorID();
-                return true;
+        } else if (itemId == R.id.action_colors_select) {
+            selectColorID();
+            return true;
 
-            case R.id.action_colors_add:
-                colorSheet.listDialog.onAddItem();
-                return true;
+        } else if (itemId == R.id.action_colors_add) {
+            colorSheet.listDialog.onAddItem();
+            return true;
 
-            case R.id.action_colors_delete:
-                colorSheet.listDialog.onDeleteItem();
-                return true;
+        } else if (itemId == R.id.action_colors_delete) {
+            colorSheet.listDialog.onDeleteItem();
+            return true;
 
-            case R.id.action_colors_share:
-                colorSheet.listDialog.onShareColors();
-                return true;
+        } else if (itemId == R.id.action_colors_share) {
+            colorSheet.listDialog.onShareColors();
+            return true;
 
-            case R.id.action_colors_import:
-                colorSheet.listDialog.onImportColors();
-                return true;
+        } else if (itemId == R.id.action_colors_import) {
+            colorSheet.listDialog.onImportColors();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    protected boolean onPrepareOptionsPanel(View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);

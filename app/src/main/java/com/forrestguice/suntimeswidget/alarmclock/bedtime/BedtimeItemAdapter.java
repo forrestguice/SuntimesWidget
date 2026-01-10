@@ -19,14 +19,15 @@
 package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -176,6 +177,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         } else return BedtimeItem.ItemType.NONE;
     }
 
+    @NonNull
     @Override
     public BedtimeViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -207,7 +209,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(final BedtimeViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final BedtimeViewHolder holder, int position)
     {
         Context context = contextRef.get();
         final BedtimeItem item = getItem(position);
@@ -309,14 +311,14 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
     }
 
     @Override
-    public void onViewAttachedToWindow(BedtimeViewHolder holder)
+    public void onViewAttachedToWindow(@NonNull BedtimeViewHolder holder)
     {
         super.onViewAttachedToWindow(holder);
         holder.startUpdateTask();
     }
 
     @Override
-    public void onViewDetachedFromWindow(BedtimeViewHolder holder)
+    public void onViewDetachedFromWindow(@NonNull BedtimeViewHolder holder)
     {
         super.onViewDetachedFromWindow(holder);
         holder.stopUpdateTask();

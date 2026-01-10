@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- monet requires api31+ -->
+    <color name="monet_dark_primaryColor" />
+    <color name="monet_dark_dialog_frame" />
+    <color name="monet_dark_dialog_bg" />
+    <color name="monet_dark_dialog_bg_alt" />
+    <color name="monet_dark_card_bg" />
+    <color name="monet_dark_card_bg_trans" />
+    <color name="monet_dark_chip_bg_disabled" />
+    <color name="monet_dark_chip_bg_disabled_stroke" />
+    <color name="monet_dark_chip_bg_enabled" />
+    <color name="monet_dark_chip_bg_enabled_stroke" />
+    <color name="monet_dark_chip_bg_pressed" />
+    <color name="monet_dark_chip_bg_pressed_stroke" />
+    <color name="monet_dark_chip_tray_bg" />
+    <color name="monet_dark_menu_bg" />
+
+    <color name="monet_dark_hr" />
+    <color name="monet_dark_text_primary" />
+    <color name="monet_dark_text_secondary" />
+    <color name="monet_dark_text_tertiary" />
+    <color name="monet_dark_text_disabled" />
+    <color name="monet_dark_text_accent" />
+    <color name="monet_dark_snackbar_text" />
+    <color name="monet_dark_fab_ripple" />
+
+    <color name="monet_dark_alarm_enabled" />
+    <color name="monet_dark_alarm_pressed" />
+    <color name="monet_dark_alarm_enabled_bg" />
+    <color name="monet_dark_alarm_disabled_bg" />
+    <color name="monet_dark_alarm_disabled_stroke" />
+
+    <color name="monet_dark_grid_selected" />
+    <color name="monet_dark_btn_tint_pressed" />
+
+    <color name="monet_dark_graphColor_bg" />
+    <color name="monet_dark_graphColor_day" />
+    <color name="monet_dark_graphColor_night" />
+    <color name="monet_dark_graphColor_civil" />
+    <color name="monet_dark_graphColor_nautical" />
+    <color name="monet_dark_graphColor_astronomical" />
+    <color name="monet_dark_graphColor_pointFill" />
+    <color name="monet_dark_graphColor_pointStroke" />
+
+    <color name="monet_dark_warningTag" />
+    <color name="monet_dark_errorTag" />
+    <color name="monet_dark_dstTag" />
+
+    <color name="monet_dark_sunIcon_color_rising" />
+    <color name="monet_dark_sunIcon_color_setting" />
+
+    <color name="monet_dark_moonIcon_color_rising" />
+    <color name="monet_dark_moonIcon_color_setting" />
+
+    <color name="monet_dark_springColor" />
+    <color name="monet_dark_summerColor" />
+    <color name="monet_dark_fallColor" />
+    <color name="monet_dark_winterColor" />
+
+    <color name="monet_dark_tagColor_warning" />
+    <color name="monet_dark_tagColor_error" />
+    <color name="monet_dark_tagColor_dst" />
+</resources>

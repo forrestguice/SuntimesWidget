@@ -296,7 +296,7 @@ public class SolarEventCalculator {
     /**
      * Returns the local rise/set time in the form HH:MM.
      *
-     * @param localTime
+     * @param localTimeParam
      *            <code>BigDecimal</code> representation of the local rise/set time.
      * @return <code>String</code> representation of the local rise/set time in HH:MM format.
      */
@@ -323,7 +323,7 @@ public class SolarEventCalculator {
         }
 
         String minuteString = minutes.intValue() < 10 ? "0" + minutes.toPlainString() : minutes.toPlainString();
-        String hourString = (hour < 10) ? "0" + String.valueOf(hour) : String.valueOf(hour);
+        String hourString = (hour < 10) ? "0" + hour : String.valueOf(hour);
         return hourString + ":" + minuteString;
     }
 

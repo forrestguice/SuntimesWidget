@@ -19,12 +19,9 @@ package com.forrestguice.suntimeswidget.moon;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,23 +31,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonRiseSetView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private final SuntimesUtils utils = new SuntimesUtils();
     //private boolean isRtl = false;
     //private boolean centered = false;
     private boolean showPosition = false;
@@ -58,7 +58,7 @@ public class MoonRiseSetView extends LinearLayout
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
     private MoonRiseSetField risingTextField1, settingTextField1;
-    private ArrayList<MoonRiseSetField> f = new ArrayList<>();
+    private final ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
 
     protected MoonRiseSetColorValues colors;
@@ -151,7 +151,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initColors(Context context)
     {
-        colors = new MoonRiseSetColorValues(context);
+        colors = new MoonRiseSetColorValues(AndroidResources.wrap(context));
         /*int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -487,7 +487,7 @@ public class MoonRiseSetView extends LinearLayout
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
-            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
             timeView.setText(text.toString());
         }
 
@@ -504,13 +504,13 @@ public class MoonRiseSetView extends LinearLayout
                 positionView.setContentDescription("");
 
             } else {
-                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
+                TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
                 String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
                 SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
                 azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
-                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
+                TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
                 positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
             }
         }

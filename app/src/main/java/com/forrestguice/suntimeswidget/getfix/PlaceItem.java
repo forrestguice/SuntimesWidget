@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,7 +21,11 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlaceItem implements Parcelable
 {
@@ -48,7 +52,7 @@ public class PlaceItem implements Parcelable
     public PlaceItem( Parcel in )
     {
         this.rowID = in.readLong();
-        this.location = in.readParcelable(getClass().getClassLoader());
+        this.location = (Location) in.readSerializable();
         //this.isDefault = (in.readInt() == 1);
         this.comment = in.readString();
     }
@@ -60,6 +64,30 @@ public class PlaceItem implements Parcelable
         return (comment != null && comment.contains(tag));
     }
 
+    public ArrayList<String> getTags() {
+        return getTags(null, true, false);
+    }
+    public ArrayList<String> getTags(@Nullable HashMap<String, String> expandedMap, boolean includeOriginal, boolean includeOptional)
+    {
+        if (comment != null && comment.contains("[") && comment.contains("]"))
+        {
+            String block = comment.substring(comment.indexOf("["), comment.lastIndexOf("]"));
+            ArrayList<String> tags = PlaceTags.splitTags(block);
+            ArrayList<String> r = new ArrayList<>();
+            for (int i=0; i<tags.size(); i++)
+            {
+                if (expandedMap != null) {
+                    for (String tag1 : PlaceTags.splitTags(PlaceTags.expandTags(tags.get(i), expandedMap, includeOriginal))) {
+                        if (includeOptional || !tag1.endsWith("*]")) {
+                            r.add(tag1);
+                        }
+                    }
+                } else r.add(tags.get(i));
+            }
+            return r;
+        } else return new ArrayList<>();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,7 +96,7 @@ public class PlaceItem implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(rowID);
-        dest.writeParcelable(location, 0);
+        dest.writeSerializable(location);
         //dest.writeInt(isDefault ? 1 : 0);
         dest.writeString(comment);
     }

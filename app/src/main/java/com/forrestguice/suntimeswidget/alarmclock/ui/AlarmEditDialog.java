@@ -26,16 +26,11 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +39,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 
@@ -52,13 +49,15 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
 
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
-public class AlarmEditDialog extends DialogFragment
+public class AlarmEditDialog extends DialogBase
 {
     public static final String EXTRA_SHOW_FRAME = "show_frame";
     public static final String EXTRA_SHOW_OVERFLOW = "show_overflow";
@@ -131,7 +130,7 @@ public class AlarmEditDialog extends DialogFragment
         {
             detachClickListeners(itemView);
             itemView.bindDataToPosition(getActivity(), item, options, 0);
-            itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
+            itemView.menu_overflow.setVisibility(getArgs().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
@@ -143,7 +142,7 @@ public class AlarmEditDialog extends DialogFragment
     public void onCreate(Bundle savedState)
     {
         super.onCreate(savedState);
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        setStyle(DialogBase.STYLE_NO_FRAME, R.style.AppTheme);
         initOptions(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -194,27 +193,28 @@ public class AlarmEditDialog extends DialogFragment
         }
 
         dialogFrame = dialogContent.findViewById(R.id.dialog_frame);
-        setShowDialogFrame(getArguments().getBoolean(EXTRA_SHOW_FRAME, true));
+        setShowDialogFrame(getArgs().getBoolean(EXTRA_SHOW_FRAME, true));
 
         bindItemToHolder(item);
     }
 
     public void setShowOverflow(boolean value)
     {
-        getArguments().putBoolean(EXTRA_SHOW_OVERFLOW, value);
+        getArgs().putBoolean(EXTRA_SHOW_OVERFLOW, value);
         bindItemToHolder(getItem());
     }
 
     public void setShowDialogFrame(boolean value)
     {
-        getArguments().putBoolean(EXTRA_SHOW_FRAME, value);
+        getArgs().putBoolean(EXTRA_SHOW_FRAME, value);
         if (dialogFrame != null) {
             dialogFrame.setVisibility(value ? View.VISIBLE : View.GONE);
         }
     }
 
-    @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @SuppressWarnings({"RestrictedApi"})
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -223,7 +223,7 @@ public class AlarmEditDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -258,7 +258,7 @@ public class AlarmEditDialog extends DialogFragment
         super.onResume();
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    private final DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
@@ -266,7 +266,7 @@ public class AlarmEditDialog extends DialogFragment
         }
     };
 
-    private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -275,7 +275,7 @@ public class AlarmEditDialog extends DialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Dialog dialog = getDialog();
@@ -286,23 +286,27 @@ public class AlarmEditDialog extends DialogFragment
     };
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    private final View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
+            Context context = getContext();
+            if (context != null)
+            {
+                saveSettings(context);
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
+                dismiss();
             }
-            dismiss();
         }
     };
 
@@ -329,21 +333,24 @@ public class AlarmEditDialog extends DialogFragment
 
     protected void showAlarmTypeMenu(Context context, final AlarmClockItem item, final View buttonView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.alarmTypeNotification: item.type = AlarmClockItem.AlarmType.NOTIFICATION; break;
-                    case R.id.alarmTypeNotification1: item.type = AlarmClockItem.AlarmType.NOTIFICATION1; break;
-                    case R.id.alarmTypeNotification2: item.type = AlarmClockItem.AlarmType.NOTIFICATION2; break;
-                    case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.alarmTypeNotification) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION;
+                } else if (itemId == R.id.alarmTypeNotification1) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION1;
+                } else if (itemId == R.id.alarmTypeNotification2) {
+                    item.type = AlarmClockItem.AlarmType.NOTIFICATION2;
+                } else {
+                    item.type = AlarmClockItem.AlarmType.ALARM;
                 }
                 boolean isAlarm = item.type == AlarmClockItem.AlarmType.ALARM;
                 itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
@@ -355,48 +362,38 @@ public class AlarmEditDialog extends DialogFragment
                 notifyItemChanged();
                 return true;
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     protected void showOverflowMenu(final Context context, final AlarmClockItem item, final View buttonView)
     {
-        PopupMenu menu = new PopupMenu(context, buttonView);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
-
-        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext1, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
-                    menu.getMenu().findItem(R.id.setAlarmTime),
-                    menu.getMenu().findItem(R.id.setAlarmOffset)
-            };
-            for (MenuItem menuItem : notSupportedMenuItems) {
-                menuItem.setEnabled(false);
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
+            {
+                if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+                {
+                    MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                            menu.findItem(R.id.setAlarmTime),
+                            menu.findItem(R.id.setAlarmOffset)
+                    };
+                    for (MenuItem menuItem : notSupportedMenuItems) {
+                        menuItem.setEnabled(false);
+                    }
+                }
             }
-        }
 
-        menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.deleteAlarm:
-                        confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
-                        return true;
-
-                    default:
-                        return false;
+                if (menuItem.getItemId() == R.id.deleteAlarm) {
+                    confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
+                    return true;
                 }
+                return false;
             }
-        }));
-
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        })).show();
     }
 
     public static void confirmDeleteAlarm(@Nullable final Context context, @Nullable final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
@@ -454,6 +451,8 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_reminder.setOnCheckedChangeListener(pickReminder());
         holder.chip_action2.setOnClickListener(pickAction(2));
         holder.chip_dismissChallenge.setOnClickListener(pickDismissChallenge());
+        holder.chip_snoozeLimit.setOnClickListener(pickSnoozeLimit());
+        holder.chip_snoozeLength.setOnClickListener(pickSnoozeLength());
         holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 
@@ -656,7 +655,7 @@ public class AlarmEditDialog extends DialogFragment
                 if (isChecked && !item.vibrate)
                 {
                     Context context = getActivity();
-                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    Vibrator vibrate = ((context != null) ? (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) : null);
                     if (vibrate != null) {
                         vibrate.vibrate(500);
                     }
@@ -716,5 +715,28 @@ public class AlarmEditDialog extends DialogFragment
         };
     }
 
+    private View.OnClickListener pickSnoozeLimit()
+    {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestSnoozeLimit(item);
+                }
+            }
+        });
+    }
+
+    private View.OnClickListener pickSnoozeLength()
+    {
+        return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestSnoozeLength(item);
+                }
+            }
+        });
+    }
 
 }

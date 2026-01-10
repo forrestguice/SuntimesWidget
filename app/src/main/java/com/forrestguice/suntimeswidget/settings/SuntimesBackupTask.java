@@ -30,14 +30,12 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -45,21 +43,25 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesJSON;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -208,9 +210,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
-            List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
-            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventSettings.EventAlias[0]), out);
+            List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOON_ELEVATION));
+            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }
 
@@ -281,6 +286,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
      */
     public static void writeColorsJSONArray(Context context, ColorValuesCollection<ColorValues> collection, BufferedOutputStream out) throws IOException
     {
+        ColorValuesJSON json = new ColorValuesJSON();
         out.write("[".getBytes());
 
         int c = 0;
@@ -292,7 +298,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             ColorValues colors = collection.getColors(context, colorsID);
             if (colors != null) {
-                out.write(colors.toJSON().getBytes());
+                out.write(json.toJSON(colors).getBytes());
                 c++;
             }
         }
@@ -443,7 +449,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     protected static ArrayList<Integer> getAllWidgetIds(Context context)
     {
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             ids.addAll(getAllWidgetIds(context, widgetClass));
         }
         ids.add(0);                                                    // include app config and quick settings tiles
@@ -452,7 +458,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ids.add(AlarmTileService.ALARMTILE_APPWIDGET_ID);
         return ids;
     }
-    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
+    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class<?> widgetClass)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
@@ -583,17 +589,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     {
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-
             if (report != null) {
-                snackbar.setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report));
+                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                        .setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report))
+                        .show();
 
             } else if (result && shareUri != null) {
-                snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
+                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                        .setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri))
+                        .show();
             }
-
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.show();
         }
     }
 

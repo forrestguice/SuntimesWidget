@@ -25,14 +25,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
+
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -41,16 +34,22 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.SwitchCompat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
-public class AlarmRepeatDialog extends DialogFragment
+public class AlarmRepeatDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_REPEAT = "alarmrepeat_repeat";
     public static final boolean PREF_DEF_ALARM_REPEAT = false;
@@ -83,12 +82,13 @@ public class AlarmRepeatDialog extends DialogFragment
      * @return an Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmrepeat, null);
@@ -100,10 +100,10 @@ public class AlarmRepeatDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -117,7 +117,7 @@ public class AlarmRepeatDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -143,7 +143,7 @@ public class AlarmRepeatDialog extends DialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
         saveSettings(outState);
@@ -181,7 +181,7 @@ public class AlarmRepeatDialog extends DialogFragment
             checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat);
             if (checkRepeat != null) {
                 checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
-                CompoundButtonCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
+                ViewCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
             }
         }
 

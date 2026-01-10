@@ -32,23 +32,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,7 +82,7 @@ import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues
 /**
  * LightGraphView
  */
-public class LightGraphView extends android.support.v7.widget.AppCompatImageView
+public class LightGraphView extends ImageView
 {
     public static final String PREF_KEY_GRAPH_SHOWPOINTS = "showPoints";
     public static final boolean DEF_KEY_GRAPH_SHOWPOINTS = true;
@@ -230,11 +234,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 Location location = ((data0 != null) ? data0.location() : null);
                 double longitude = ((location != null) ? location.getLongitudeAsDouble() : 0);
 
-                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+                String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
                 TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
-                options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(WidgetSettings.TimeMode.OFFICIAL, data);
+                options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(TimeMode.OFFICIAL, data);
 
                 handler.post(new Runnable() {
                     @Override
@@ -563,7 +567,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                 date0.set(Calendar.DAY_OF_MONTH, 1);
                 date0.set(Calendar.HOUR_OF_DAY, 12);
 
-                WidgetSettings.TimeMode[] modes = new WidgetSettings.TimeMode[] { WidgetSettings.TimeMode.OFFICIAL, WidgetSettings.TimeMode.CIVIL, WidgetSettings.TimeMode.NAUTICAL, WidgetSettings.TimeMode.ASTRONOMICAL };
+                TimeMode[] modes = new TimeMode[] { TimeMode.OFFICIAL, TimeMode.CIVIL, TimeMode.NAUTICAL, TimeMode.ASTRONOMICAL };
 
                 for (int i = 0; i < yearData.length; i++)
                 {
@@ -572,7 +576,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     date.add(Calendar.DATE, i);
 
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0, modes);
-                    data.setTimeZone(context, timezone);
+                    data.setTimeZone(timezone);
                     data.setTodayIs(date);
                     data.calculateData(context);
                     yearData[i] = data;
@@ -792,33 +796,33 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         {
             if (options.sunPath_show_line || options.sunPath_show_fill)
             {
-                WidgetSettings.TimeMode nightBoundary = WidgetSettings.TimeMode.OFFICIAL;
+                TimeMode nightBoundary = TimeMode.OFFICIAL;
                 paintPath.setColor(options.colors.getColor(COLOR_NIGHT));
                 drawPath(now, data, nightBoundary, true, c, paintPath, options);
                 drawPath(now, data, nightBoundary, false, c, paintPath, options);
 
                 if (options.showCivil)
                 {
-                    nightBoundary = WidgetSettings.TimeMode.CIVIL;
+                    nightBoundary = TimeMode.CIVIL;
                     paintPath.setColor(options.colors.getColor(COLOR_CIVIL));
-                    drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, true, c, paintPath, options);
-                    drawPath(now, data, WidgetSettings.TimeMode.OFFICIAL, false, c, paintPath, options);
+                    drawPath(now, data, TimeMode.OFFICIAL, true, c, paintPath, options);
+                    drawPath(now, data, TimeMode.OFFICIAL, false, c, paintPath, options);
                 }
 
                 if (options.showNautical)
                 {
-                    nightBoundary = WidgetSettings.TimeMode.NAUTICAL;
+                    nightBoundary = TimeMode.NAUTICAL;
                     paintPath.setColor(options.colors.getColor(COLOR_NAUTICAL));
-                    drawPath(now, data, WidgetSettings.TimeMode.CIVIL, true, c, paintPath, options);
-                    drawPath(now, data, WidgetSettings.TimeMode.CIVIL, false, c, paintPath, options);
+                    drawPath(now, data, TimeMode.CIVIL, true, c, paintPath, options);
+                    drawPath(now, data, TimeMode.CIVIL, false, c, paintPath, options);
                 }
 
                 if (options.showAstro)
                 {
-                    nightBoundary = WidgetSettings.TimeMode.ASTRONOMICAL;
+                    nightBoundary = TimeMode.ASTRONOMICAL;
                     paintPath.setColor(options.colors.getColor(COLOR_ASTRONOMICAL));
-                    drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, true, c, paintPath, options);
-                    drawPath(now, data, WidgetSettings.TimeMode.NAUTICAL, false, c, paintPath, options);
+                    drawPath(now, data, TimeMode.NAUTICAL, true, c, paintPath, options);
+                    drawPath(now, data, TimeMode.NAUTICAL, false, c, paintPath, options);
                 }
 
                 paintPath.setColor(options.colors.getColor(COLOR_NIGHT));
@@ -827,11 +831,11 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        private ArrayList<Path> sun_paths = new ArrayList<>();
-        private HashMap<Path, Double> sun_hours = new HashMap<>();
+        private final ArrayList<Path> sun_paths = new ArrayList<>();
+        private final HashMap<Path, Double> sun_hours = new HashMap<>();
 
 
-        protected void drawPath(Calendar now, SuntimesRiseSetDataset[] data, WidgetSettings.TimeMode mode, boolean rising, Canvas c, Paint p, LightGraphOptions options)
+        protected void drawPath(Calendar now, SuntimesRiseSetDataset[] data, TimeMode mode, boolean rising, Canvas c, Paint p, LightGraphOptions options)
         {
             if (options.sunPath_show_fill)
             {
@@ -889,7 +893,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             //Log.d("DEBUG", "sunPath_points: " + options.sunPath_points.length);
         }
 
-        protected HashMap<Path, Double> createSunPath(Calendar now, SuntimesRiseSetDataset[] data, WidgetSettings.TimeMode mode, boolean rising, Canvas c, LightGraphOptions options, boolean closed, ArrayList<Path> paths, HashMap<Path,Double> hours)
+        protected HashMap<Path, Double> createSunPath(Calendar now, SuntimesRiseSetDataset[] data, TimeMode mode, boolean rising, Canvas c, LightGraphOptions options, boolean closed, ArrayList<Path> paths, HashMap<Path,Double> hours)
         {
             paths.clear();
             hours.clear();
@@ -1509,8 +1513,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
 
         public boolean is24 = false;
-        public void setTimeFormat(Context context, WidgetSettings.TimeFormatMode timeFormat) {
-            is24 = ((timeFormat == WidgetSettings.TimeFormatMode.MODE_24HR) || (timeFormat == WidgetSettings.TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
+        public void setTimeFormat(Context context, TimeFormatMode timeFormat) {
+            is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
         }
 
         public void setLocation(Location value) {
@@ -1540,7 +1544,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
 
         protected void init(Context context)
         {
-            colors = new LightGraphColorValues(context);
+            colors = new LightGraphColorValues(AndroidResources.wrap(context));
             //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
             //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
             //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -1594,7 +1598,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
         public double late_sunset_hour = -1;
         public int late_sunset_day = -1;
 
-        public static EarliestLatestSunriseSunsetData findEarliestLatest(WidgetSettings.TimeMode mode, @NonNull SuntimesRiseSetDataset[] data)
+        public static EarliestLatestSunriseSunsetData findEarliestLatest(TimeMode mode, @NonNull SuntimesRiseSetDataset[] data)
         {
             long bench_start = System.nanoTime();
             EarliestLatestSunriseSunsetData result = new EarliestLatestSunriseSunsetData();
@@ -1606,8 +1610,8 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
             int i = 0;
             while (i < data.length)
             {
-                SuntimesRiseSetData d = data[i].getData(mode.name());
-                Calendar risingEvent = d.sunriseCalendarToday();
+                SuntimesRiseSetData d = ((data[i] != null) ? data[i].getData(mode.name()) : null);
+                Calendar risingEvent = ((d != null) ? d.sunriseCalendarToday() : null);
                 if (risingEvent != null)
                 {
                     double lmtRisingHour = lmtHour(risingEvent, result.longitude);
@@ -1621,7 +1625,7 @@ public class LightGraphView extends android.support.v7.widget.AppCompatImageView
                     }
                 }
 
-                Calendar settingEvent = d.sunsetCalendarToday();
+                Calendar settingEvent = ((d != null) ? d.sunsetCalendarToday() : null);
                 if (settingEvent != null)
                 {
                     double lmtSettingHour = lmtHour(settingEvent, result.longitude);

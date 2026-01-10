@@ -24,7 +24,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -32,8 +31,12 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -41,6 +44,9 @@ public abstract class SuntimesLayout
 {
     public static final int MAX_SP = 72;
     protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay time_utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay time_utils1 = new TimeDeltaDisplay();
+    protected static final AngleDisplay angle_utils = new AngleDisplay();
 
     protected int layoutID;
 

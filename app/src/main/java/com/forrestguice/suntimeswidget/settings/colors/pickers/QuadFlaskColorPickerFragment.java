@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.slider.AlphaSlider;
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.quadflask.LightnessSlider;
 
@@ -72,7 +73,7 @@ public class QuadFlaskColorPickerFragment extends ColorPickerFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(getLayoutResID(), container, false);

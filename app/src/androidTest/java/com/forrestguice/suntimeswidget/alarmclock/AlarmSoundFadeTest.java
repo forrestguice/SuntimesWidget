@@ -26,8 +26,8 @@ import android.media.RingtoneManager;
 import android.media.VolumeShaper;
 import android.net.Uri;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import org.junit.Assert;
@@ -120,6 +120,7 @@ public class AlarmSoundFadeTest
             Log.i("TEST", "startAlert: playing " + uri);
 
             long t0 = System.currentTimeMillis();
+            //noinspection StatementWithEmptyBody
             while (System.currentTimeMillis() - t0 <= volumeShaperConfig.getDuration()) {
                 //Log.i("TEST", "startAlert: still playing " + uri);
             }

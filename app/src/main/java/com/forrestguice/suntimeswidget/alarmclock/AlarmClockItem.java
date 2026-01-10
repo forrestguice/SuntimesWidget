@@ -24,14 +24,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,6 +104,7 @@ public class AlarmClockItem implements Parcelable
 
         this.location = ((other.location != null) ? new Location(other.location) : null);
         this.event = other.event;
+        this.eventItem = null;
         this.timezone = other.timezone;
 
         this.vibrate = other.vibrate;
@@ -411,7 +412,7 @@ public class AlarmClockItem implements Parcelable
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
-            case ACTIONID_RESERVED: actionID2 = value; break;
+            case ACTIONID_RESERVED: actionID3 = value; break;
             case ACTIONID_REMINDER: actionID2 = value; break;
             case ACTIONID_DISMISS: actionID1 = value; break;
             case ACTIONID_MAIN: default: actionID0 = value; break;
@@ -679,6 +680,7 @@ public class AlarmClockItem implements Parcelable
             this.displayString = displayString;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
@@ -724,28 +726,30 @@ public class AlarmClockItem implements Parcelable
      */
     public static enum AlarmTimeZone
     {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
+        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, TimeZones.ApparentSolarTime.TIMEZONEID),
+        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, TimeZones.LocalMeanTime.TIMEZONEID),
         SYSTEM_TIME("System Time Zone", null);
 
         private String displayString;
-        private String tzID;
+        private final String tzID;
 
-        private AlarmTimeZone(String displayString, String tzID)
+        private AlarmTimeZone(@NonNull String displayString, @Nullable String tzID)
         {
             this.displayString = displayString;
             this.tzID = tzID;
         }
 
+        @Nullable
         public String timeZoneID() {
             return tzID;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String displayString() {
             return displayString;
         }
@@ -789,10 +793,10 @@ public class AlarmClockItem implements Parcelable
                 return TimeZone.getDefault();
 
             } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
+                return new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
 
             } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
+                return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
 
             } else {
                 return TimeZone.getTimeZone(tzID);

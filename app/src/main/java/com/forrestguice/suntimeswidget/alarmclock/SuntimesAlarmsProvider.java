@@ -26,11 +26,12 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.AUTHORITY;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.BuildConfig;
+
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMS;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMSTATE;
 import static com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsContract.QUERY_ALARMSTATE_PROJECTION;
@@ -48,9 +49,13 @@ public class SuntimesAlarmsProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
-        uriMatcher.addURI(AUTHORITY, QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+    }
+
+    private static String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".alarm.provider";
     }
 
     @Override

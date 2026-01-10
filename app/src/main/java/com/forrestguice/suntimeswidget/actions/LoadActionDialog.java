@@ -20,11 +20,13 @@ package com.forrestguice.suntimeswidget.actions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.support.app.FragmentManagerCompat;
 
 /**
  * LoadActionDialog
@@ -34,7 +36,7 @@ public class LoadActionDialog extends EditActionDialog
     private ActionListHelper listHelper;
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         listHelper.onSaveInstanceState(outState);
@@ -44,7 +46,7 @@ public class LoadActionDialog extends EditActionDialog
     public void onResume()
     {
         super.onResume();
-        listHelper.setFragmentManager(getFragmentManager());
+        listHelper.setFragmentManager(FragmentManagerCompat.from(this));
         listHelper.setData(data);
         listHelper.setOnItemAcceptedListener(onItemAccepted);
         listHelper.setOnUpdateViews(new View.OnClickListener() {
@@ -62,7 +64,7 @@ public class LoadActionDialog extends EditActionDialog
     }
 
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             btn_accept.performClick();
@@ -90,7 +92,7 @@ public class LoadActionDialog extends EditActionDialog
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         super.initViews(context, dialogContent, savedState);
-        listHelper = new ActionListHelper(context, getFragmentManager());
+        listHelper = new ActionListHelper(context, FragmentManagerCompat.from(this));
         listHelper.initViews(context, dialogContent, savedState);
         listHelper.setDisallowSelect(true);
     }
