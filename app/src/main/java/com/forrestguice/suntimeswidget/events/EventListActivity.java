@@ -215,7 +215,7 @@ public class EventListActivity extends AppCompatActivity
     /**
      * @return true adapter modified
      */
-    public static boolean onEventListActivityResult(Context context, int requestCode, int resultCode, @Nullable Intent data)
+    public static boolean onEventListActivityResult(@NonNull Context context, int requestCode, int resultCode, @Nullable Intent data)
     {
         boolean adapterModified = ((data != null) && data.getBooleanExtra(EventListActivity.ADAPTER_MODIFIED, false));
         if (resultCode == RESULT_OK)
