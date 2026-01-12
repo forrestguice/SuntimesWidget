@@ -131,7 +131,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         {
             TooltipCompat.setTooltipText(cancelButton, cancelButton.getContentDescription());
             cancelButton.setOnClickListener(onDialogCancelClick);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(context)) {
                 cancelButton.setFocusableInTouchMode(true);
             }
         }
@@ -154,6 +154,11 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         @Override
         public boolean onTouch(View v, MotionEvent event)
         {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
             switch (event.getAction())
             {
                 case MotionEvent.ACTION_UP:
@@ -163,7 +168,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
                         setMarkerPosition(event.getX(), event.getY());
                         marker.setPressed(false);
                     }
-                    updateDialogSubtitle();
+                    updateDialogSubtitle(context);
                     return true;
 
                 case MotionEvent.ACTION_DOWN:
@@ -179,7 +184,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
                     if (isDown) {
                         setSelectedCoordinates(map.getLatitudeLongitudeAt(event.getX(), event.getY(), mid, map.getWidth(), map.getHeight()));
                         setMarkerPosition(event.getX(), event.getY());
-                        updateDialogSubtitle();
+                        updateDialogSubtitle(context);
                     }
                     return true;
                 default: return false;
@@ -187,24 +192,24 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         }
     };
 
-    protected void updateViews()
+    protected void updateViews(@NonNull Context context)
     {
-        updateDialogSubtitle();
-        updateMap();
-        updateMarker();
+        updateDialogSubtitle(context);
+        updateMap(context);
+        updateMarker(context);
     }
 
-    protected void updateMap() {
+    protected void updateMap(@NonNull Context context) {
         if (map != null) {
-            options.locations = new double[][] {{ getInitialLatitude(), getInitialLongitude() }};
+            options.locations = new double[][] {{ getInitialLatitude(context), getInitialLongitude(context) }};
             map.updateViews(null, true);
         }
     }
 
-    protected void updateMarker()
+    protected void updateMarker(@NonNull Context context)
     {
         if (marker != null && projection != null) {
-            int[] coordinates = projection.toBitmapCoords(map.getWidth(), map.getHeight(), new double[] {map.getWidth()/2d, map.getHeight()/2d}, getSelectedLatitude(), getSelectedLongitude());
+            int[] coordinates = projection.toBitmapCoords(map.getWidth(), map.getHeight(), new double[] {map.getWidth()/2d, map.getHeight()/2d}, getSelectedLatitude(context), getSelectedLongitude(context));
             setMarkerPosition(coordinates[0], coordinates[1]);
         }
     }
@@ -222,11 +227,11 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         }
     }
 
-    protected void updateDialogSubtitle()
+    protected void updateDialogSubtitle(@NonNull Context context)
     {
         if (subtitleText != null) {
-            String latitudeDisplay = formatCoordinate(getSelectedLatitude());
-            String longitudeDisplay = formatCoordinate(getSelectedLongitude());
+            String latitudeDisplay = formatCoordinate(getSelectedLatitude(context));
+            String longitudeDisplay = formatCoordinate(getSelectedLongitude(context));
             subtitleText.setText(getString(R.string.location_format_latlon, latitudeDisplay, longitudeDisplay));
         }
     }
@@ -238,13 +243,13 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(getLayoutResID(), parent, false);
-        initViews(getContext(), dialogContent);
+        initViews(requireContext(), dialogContent);
         if (savedState != null) {
             loadSettings(savedState);
         }
-        updateViews();
+        updateViews(requireContext());
         return dialogContent;
     }
 
@@ -328,7 +333,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
                 onShowListener.onShow(dialog);
             }
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 acceptButton.requestFocus();
             }
 
@@ -338,8 +343,10 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
                 marker.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        updateMarker();
-                        marker.animate().alpha(getMarkerAlpha()).setDuration(duration);
+                        if (getContext() != null) {
+                            updateMarker(getContext());
+                            marker.animate().alpha(getMarkerAlpha()).setDuration(duration);
+                        }
                     }
                 }, duration);
             }
@@ -393,17 +400,17 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         getArgs().putDouble(KEY_DIALOG_LATITUDE_INITIAL, latitude);
         getArgs().putDouble(KEY_DIALOG_LONGITUDE_INITIAL, longitude);
     }
-    public double getInitialLatitude() {
-        return getArgs().getDouble(KEY_DIALOG_LATITUDE_INITIAL, WidgetSettings.loadLocationPref(getActivity(), 0).getLatitudeAsDouble());
+    public double getInitialLatitude(@NonNull Context context) {
+        return getArgs().getDouble(KEY_DIALOG_LATITUDE_INITIAL, WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble());
     }
-    public double getInitialLongitude() {
-        return getArgs().getDouble(KEY_DIALOG_LONGITUDE_INITIAL, WidgetSettings.loadLocationPref(getActivity(), 0).getLongitudeAsDouble());
+    public double getInitialLongitude(@NonNull Context context) {
+        return getArgs().getDouble(KEY_DIALOG_LONGITUDE_INITIAL, WidgetSettings.loadLocationPref(context, 0).getLongitudeAsDouble());
     }
-    public double getSelectedLatitude() {
-        return getArgs().getDouble(KEY_DIALOG_LATITUDE_SELECTED, getInitialLatitude());
+    public double getSelectedLatitude(@NonNull Context context) {
+        return getArgs().getDouble(KEY_DIALOG_LATITUDE_SELECTED, getInitialLatitude(context));
     }
-    public double getSelectedLongitude() {
-        return getArgs().getDouble(KEY_DIALOG_LONGITUDE_SELECTED, getInitialLongitude());
+    public double getSelectedLongitude(@NonNull Context context) {
+        return getArgs().getDouble(KEY_DIALOG_LONGITUDE_SELECTED, getInitialLongitude(context));
     }
 
     /**
