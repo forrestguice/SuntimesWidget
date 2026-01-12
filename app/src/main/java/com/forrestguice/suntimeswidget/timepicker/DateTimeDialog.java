@@ -17,10 +17,12 @@
 */
 package com.forrestguice.suntimeswidget.timepicker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
@@ -42,7 +44,9 @@ public class DateTimeDialog extends DateDialog
 
     @Override
     protected void onDialogNeutralClick(View v) {
-        showTimeDialog(getActivity());
+        if (getActivity() != null) {
+            showTimeDialog(getActivity());
+        }
     }
 
     @Override
@@ -55,10 +59,10 @@ public class DateTimeDialog extends DateDialog
         }
     }
 
-    protected void showTimeDialog(Context context)
+    protected void showTimeDialog(@NonNull Activity activity)
     {
         TimeDialog dialog = new TimeDialog();
-        dialog.loadSettings(getActivity());
+        dialog.loadSettings(activity);
         dialog.setTimeIs24(timeIs24());
         dialog.setOnAcceptedListener(onTimeDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
