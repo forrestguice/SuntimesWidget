@@ -83,7 +83,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
         Context context = requireActivity();
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_equinox, parent, false);
 
         equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
@@ -137,7 +137,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
         public void onShow(DialogInterface dialogInterface) {
             Context context = getContext();
             if (context != null) {
-                equinoxView.updateViews(getContext());
+                equinoxView.updateViews(context);
                 equinoxView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -168,7 +168,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
 
     public void updateViews()
     {
-        if (equinoxView != null) {
+        if (equinoxView != null && getContext() != null) {
             equinoxView.updateViews(getContext());
             //Log.d("DEBUG", "EquinoxDialog updated");
         }
@@ -400,7 +400,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
                     return true;
 
                 } else if (itemId == R.id.action_share) {
-                    shareItem(getContext(), itemData);
+                    shareItem(context, itemData);
                     return true;
                 }
                 return false;
@@ -437,7 +437,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
                     clipboard.setText(itemDisplay);
                 }
             }
-            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
         }
     }
 

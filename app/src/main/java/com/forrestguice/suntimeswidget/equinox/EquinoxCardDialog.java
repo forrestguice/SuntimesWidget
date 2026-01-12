@@ -117,7 +117,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         if (hasSelection())
         {
             setSelection((Integer) null);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_menu.requestFocus();
             }
             return true;
@@ -133,7 +133,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper context = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper context = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_equinox1, parent, false);
         initLocale(context);
 
@@ -171,7 +171,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_menu.setFocusableInTouchMode(true);
             }
         }
@@ -200,13 +200,13 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
             boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
-            colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
+            colorDialog.setColorCollection(new AppColorValuesCollection<>(requireContext()));
             colorDialog.setDialogListener(colorDialogListener);
         }
 
         HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
-            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(requireContext(), HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
@@ -223,7 +223,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
             Context context = getContext();
             if (context != null)
             {
-                updateViews(getContext());
+                updateViews(context);
                 text_title.post(new Runnable() {
                     @Override
                     public void run() {
@@ -231,7 +231,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
                     }
                 });
 
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(context)) {
                     btn_menu.requestFocus();
                 }
 
@@ -252,8 +252,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
             int seekPosition = EquinoxDataAdapter.CENTER_POSITION;
             if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(seekPosition);
-            } else {
-                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
+            } else if (getContext() != null) {
+                CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getContext());
                 card_scroller.setTargetPosition(seekPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -267,8 +267,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     };
     protected void onNextClicked(int position) {
-        if (position >= 0) {
-            setUserSwappedCard(showNextCard(position));
+        if (position >= 0 && getContext() != null) {
+            setUserSwappedCard(showNextCard(getContext(), position));
         }
     }
 
@@ -279,15 +279,17 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     };
     protected void onPrevClicked(int position) {
-        if (position >= 0) {
-            setUserSwappedCard(showPreviousCard(position));
+        if (position >= 0 && getContext() != null) {
+            setUserSwappedCard(showPreviousCard(getContext(), position));
         }
     }
 
     private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showOverflowMenu(getContext(), v);
+            if (getContext() != null) {
+                showOverflowMenu(getContext(), v);
+            }
         }
     });
 
@@ -403,7 +405,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);
         helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
-        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -463,7 +465,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
         if (mode != null) {
             WidgetSettings.saveTrackingModePref(context, 0, mode);
-            updateViews(getActivity());
+            updateViews(context);
             if (dialogListener != null) {
                 dialogListener.onOptionsModified(true);
             }
@@ -496,21 +498,26 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
             int itemId = item.getItemId();
             if (itemId == R.id.action_colors) {
-                showColorDialog(getActivity());
+                showColorDialog(context);
                 return true;
 
             } else if (itemId == R.id.trackRecent || itemId == R.id.trackClosest || itemId == R.id.trackUpcoming) {
-                onTrackingModeChanged(getContext(), item.getItemId());
+                onTrackingModeChanged(context, item.getItemId());
                 return true;
 
             } else if (itemId == R.id.action_crossquarterdays) {
-                onToggleCrossQuarterDays(getActivity(), item);
+                onToggleCrossQuarterDays(context, item);
                 return true;
 
             } else if (itemId == R.id.action_help) {
-                showHelp(getContext());
+                showHelp(context);
                 return true;
             }
             return false;
@@ -539,8 +546,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         {
             if (values != null) {
                 options.colors = new EquinoxColorValues(values);
-            } else {
-                options.init(getActivity());
+            } else if (getContext() != null) {
+                options.init(getContext());
             }
             card_adapter.notifyDataSetChanged();
 
@@ -558,7 +565,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new AppColorValues(AndroidResources.wrap(getActivity()), true);
+            return (getContext() != null ? new AppColorValues(AndroidResources.wrap(getContext()), true) : null);
         }
     };
 
@@ -720,7 +727,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
                     clipboard.setText(itemDisplay);
                 }
             }
-            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -823,25 +830,25 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         return first;
     }
 
-    public boolean showNextCard(int position)
+    public boolean showNextCard(@NonNull Context context, int position)
     {
         int nextPosition = (position + card_itemsPerPage);
         int n = card_adapter.getItemCount();
         if (nextPosition < n) {
             setUserSwappedCard(true);
-            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(context);
             card_scroller.setTargetPosition(nextPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
         return true;
     }
 
-    public boolean showPreviousCard(int position)
+    public boolean showPreviousCard(@NonNull Context context, int position)
     {
         int prevPosition = (position - card_itemsPerPage);
         if (prevPosition >= 0) {
             setUserSwappedCard(true);
-            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(getActivity());
+            CardAdapter.CardViewScroller card_scroller = new CardAdapter.CardViewScroller(context);
             card_scroller.setTargetPosition(prevPosition);
             card_layout.startSmoothScroll(card_scroller);
         }
@@ -872,7 +879,9 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
         @Override
         public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {
-            showContextMenu(getContext(), view, mode, datetime);
+            if (getContext() != null) {
+                showContextMenu(getContext(), view, mode, datetime);
+            }
         }
     };
 
