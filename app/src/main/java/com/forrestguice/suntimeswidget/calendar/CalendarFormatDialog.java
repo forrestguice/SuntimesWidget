@@ -61,8 +61,8 @@ public class CalendarFormatDialog extends DialogBase
     {
         super.onCreate(savedState);
         View dialogContent = inflater.inflate(R.layout.layout_dialog_calendarformat, null);
-        initViews(getActivity(), dialogContent);
-        updateViews(getContext());
+        initViews(requireContext(), dialogContent);
+        updateViews(requireContext());
         return dialogContent;
     }
 
@@ -242,7 +242,9 @@ public class CalendarFormatDialog extends DialogBase
      */
     public void setCalendarMode(CalendarMode mode) {
         getArgs().putString(PREF_KEY_CALENDAR_MODE, mode.name());
-        updateViews(getActivity());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public CalendarMode getCalendarMode() {
         try {
@@ -258,7 +260,9 @@ public class CalendarFormatDialog extends DialogBase
      */
     public void setFormatPattern(String value) {
         getArgs().putString(PREF_KEY_CALENDAR_FORMATPATTERN, value);
-        updateViews(getActivity());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public String getFormatPattern() {
         return getArgs().getString(PREF_KEY_CALENDAR_FORMATPATTERN);
