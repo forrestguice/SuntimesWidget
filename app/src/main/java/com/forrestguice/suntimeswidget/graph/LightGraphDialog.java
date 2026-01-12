@@ -134,13 +134,13 @@ public class LightGraphDialog extends BottomSheetDialogBase
     public void setData(Context context, SuntimesRiseSetDataset data, boolean updateNow)
     {
         this.data = data;
-        if (isAdded())
+        if (isAdded() && getContext() != null)
         {
             graph.setData(data);
             lightmap.setData(data);
 
             if (updateNow) {
-                updateViews(getActivity());
+                updateViews(getContext());
             }
         }
     }
@@ -163,7 +163,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper context = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper context = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View v = inflater.cloneInContext(context).inflate(R.layout.layout_dialog_lightgraph, parent, false);
         initColors(context);
 
@@ -187,7 +187,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
             {
                 @Override
                 public void onFinished(Bitmap result) {
-                    updateEarliestLatestText(getActivity());
+                    if (getContext() != null) {
+                        updateEarliestLatestText(getContext());
+                    }
                 }
 
                 @Override
@@ -214,7 +216,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         {
             TooltipCompat.setTooltipText(btn_menu, btn_menu.getContentDescription());
             btn_menu.setOnClickListener(onMenuClicked);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(context)) {
                 btn_menu.setFocusableInTouchMode(true);
             }
         }
@@ -241,7 +243,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         }
 
         themeViews(context);
-        updateViews(getContext());
+        updateViews(context);
         return v;
     }
 
@@ -254,7 +256,6 @@ public class LightGraphDialog extends BottomSheetDialogBase
             graph.onResume();
         }
 
-        Context context = getActivity();
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
@@ -266,8 +267,8 @@ public class LightGraphDialog extends BottomSheetDialogBase
         }
 
         //HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-        //if (helpDialog != null) {
-        //    helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        //if (helpDialog != null && getContext() != null) {
+        //    helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getContext(), HELP_PATH_ID), DIALOGTAG_HELP);
         //}
 
         expandSheet(getDialog());
@@ -292,7 +293,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             Context context = getContext();
             if (context != null)
             {
-                updateViews(getContext());
+                updateViews(context);
                 if (text_title != null) {
                     text_title.post(new Runnable() {
                         @Override
@@ -302,7 +303,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                     });
                 }
 
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(context)) {
                     btn_menu.requestFocus();
                 }
 
@@ -313,7 +314,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
     private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showOverflowMenu(getContext(), v);
+            if (getContext() != null) {
+                showOverflowMenu(getContext(), v);
+            }
         }
     });
 
@@ -568,12 +571,16 @@ public class LightGraphDialog extends BottomSheetDialogBase
         @Override
         public void run()
         {
-            if (data != null && !graph.isAnimated()) {
-                updateTimeViews(getActivity());
-                updateGraphViews(getActivity());
-            }
-            if (graph != null && updateTask_isRunning) {
-                graph.postDelayed(this, UPDATE_RATE);
+            Context context = getContext();
+            if (context != null)
+            {
+                if (data != null && !graph.isAnimated()) {
+                    updateTimeViews(context);
+                    updateGraphViews(context);
+                }
+                if (graph != null && updateTask_isRunning) {
+                    graph.postDelayed(this, UPDATE_RATE);
+                }
             }
         }
     };
@@ -673,7 +680,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            Context context = getActivity();
+            Context context = getContext();
             if (context == null) {
                 return false;
             }
@@ -681,7 +688,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             boolean toggledValue;
             int itemId = item.getItemId();
             if (itemId == R.id.graphOption_colors) {
-                showColorDialog(getActivity());
+                showColorDialog(context);
                 return true;
 
             } else if (itemId == R.id.graphOption_showPoints) {
@@ -787,10 +794,12 @@ public class LightGraphDialog extends BottomSheetDialogBase
     {
         @Override
         public void onClick(View v) {
-            showTimeZoneMenu(getActivity(), text_time);
+            if (getContext() != null) {
+                showTimeZoneMenu(getContext(), text_time);
+            }
         }
     });
-    protected boolean showTimeZoneMenu(Context context, View view)
+    protected boolean showTimeZoneMenu(@NonNull Context context, View view)
     {
         PopupMenuCompat.createMenu(context, view, R.menu.lightgraphmenu_tz, onTimeZoneMenuClick).show();
         return true;
@@ -811,7 +820,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                 if (tzID != null) {
                     WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, tzID);
                     setData(context, data, false);    // reconstructs year data using given timezone
-                    updateViews(getActivity());
+                    updateViews(context);
                 }
                 return (tzID != null);
             } else return false;
@@ -823,12 +832,14 @@ public class LightGraphDialog extends BottomSheetDialogBase
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showContextMenu(getActivity(), v, label, datetime);
+                if (getContext() != null) {
+                    showContextMenu(getContext(), v, label, datetime);
+                }
             }
         };
     }
 
-    protected void showContextMenu(Context context, View v, final String label, final long datetime) {
+    protected void showContextMenu(@NonNull Context context, View v, final String label, final long datetime) {
         PopupMenuCompat.createMenu(context, v, R.menu.lightgraphmenu_context, onContextMenuClicked(label, datetime)).show();
     }
     private void updateContextMenu(Context context, Menu m, final String label, final long datetime)
@@ -914,7 +925,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                     return true;
 
                 } else if (itemId == R.id.action_share) {
-                    shareItem(getActivity(), itemData);
+                    shareItem(context, itemData);
                     return true;
                 }
                 return false;
@@ -961,7 +972,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                         clipboard.setText(itemDisplay);
                     }
                 }
-                Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
             }
 
         } else {
@@ -1018,10 +1029,10 @@ public class LightGraphDialog extends BottomSheetDialogBase
         public void onColorValuesSelected(ColorValues values)
         {
             options.colors = null;
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null) {
-                updateGraphColors(getActivity());
-                updateGraphViews(getActivity());
+                updateGraphColors(context);
+                updateGraphViews(context);
             } else Log.w("LightGraphDialog", "onColorValuesSelected: null context!");
 
             if (dialogListener != null) {
@@ -1038,7 +1049,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new AppColorValues(AndroidResources.wrap(getActivity()), true);
+            return (getContext() != null ? new AppColorValues(AndroidResources.wrap(getContext()), true) : null);
         }
     };
 
