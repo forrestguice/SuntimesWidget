@@ -149,7 +149,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
         Context context = requireContext();
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
         initColors(contextWrapper);
 
@@ -189,7 +189,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             updateViews();
             startUpdateTask();
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 menuButton.requestFocus();
             }
         }
@@ -267,8 +267,8 @@ public class WorldMapDialog extends BottomSheetDialogBase
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
-        WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
-        WidgetSettings.initDisplayStrings_SolarTimeMode(dialogContent.getContext());
+        WorldMapWidgetSettings.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_SolarTimeMode(context);
 
         int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -328,7 +328,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         int modePosition = mapAdapter.getPosition(mapMode);
         mapSelector.setSelection(Math.max(modePosition, 0));
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
@@ -411,7 +411,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(context)) {
                 menuButton.setFocusableInTouchMode(true);
             }
         }
@@ -425,7 +425,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         seekGroup = dialogView.findViewById(R.id.media_seek);
     }
 
-    private void updateSeekbarDrawables(Context context)
+    private void updateSeekbarDrawables(@Nullable Context context)
     {
         if (context == null) {
             return;
@@ -501,7 +501,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     private SuntimesTheme themeOverride = null;
     @Deprecated
-    public void themeViews(Context context, SuntimesTheme theme)
+    public void themeViews(Context context, @Nullable SuntimesTheme theme)
     {
         if (theme != null)
         {
@@ -512,7 +512,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     }
 
-    public void updateOptions(Context context)
+    public void updateOptions(@Nullable Context context)
     {
         if (context != null)
         {
@@ -666,14 +666,16 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
         TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
-        String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+        String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);
     }
 
     private final AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
+            if (getContext() != null) {
+                setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
+            }
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -761,20 +763,17 @@ public class WorldMapDialog extends BottomSheetDialogBase
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            Context context = getContext();
-            if (context == null) {
-                return false;
-            }
-
             if (item.getItemId() == R.id.action_seektime) {
-                showSeekTimeDialog(getActivity());
+                if (getActivity() != null) {
+                    showSeekTimeDialog(getActivity());
+                }
                 return true;
 
             } else {
                 String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
-                if (tzID != null)
+                if (tzID != null && getContext() != null)
                 {
-                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
+                    WorldMapWidgetSettings.saveWorldMapString(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
                     updateViews();
                 }
                 return (tzID != null);
@@ -782,12 +781,12 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     });
 
-    protected void showSeekTimeDialog(Context context)
+    protected void showSeekTimeDialog(Activity activity)
     {
         TimeDateDialog dialog = new TimeDateDialog();
-        dialog.loadSettings(getActivity());
-        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == TimeFormatMode.MODE_24HR);
-        dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
+        dialog.loadSettings(activity);
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(activity, 0) == TimeFormatMode.MODE_24HR);
+        dialog.setDialogTitle(activity.getString(R.string.configAction_seekTime));
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
     }
@@ -797,7 +796,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                Context context = getActivity();
+                Context context = getContext();
                 if (context != null)
                 {
                     String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
@@ -1069,7 +1068,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         String locationDisplay = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
@@ -1083,7 +1082,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
@@ -1383,7 +1382,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v) {
             playMap();
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (pauseButton != null) {
                     pauseButton.requestFocus();
                 }
@@ -1397,7 +1396,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         {
             if (worldmap.isAnimated()) {
                 stopMap(false);
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(getContext())) {
                     if (playButton != null) {
                         playButton.requestFocus();
                     }
@@ -1406,7 +1405,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             } else {
                 playMap();
                 shareMap();
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(getContext())) {
                     if (recordButton != null) {
                         recordButton.requestFocus();
                     }
@@ -1426,7 +1425,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v) {
             stopMap(false);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (playButton != null) {
                     playButton.requestFocus();
                 }
@@ -1438,7 +1437,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v) {
             stopMap(true);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (playButton != null) {
                     playButton.requestFocus();
                 }
@@ -1459,7 +1458,9 @@ public class WorldMapDialog extends BottomSheetDialogBase
     {
         @Override
         public void onClick(View v) {
-            showContextMenu(getContext(), dialogTitle);
+            if (getContext() != null) {
+                showContextMenu(getContext(), dialogTitle);
+            }
         }
     });
 
@@ -1467,7 +1468,9 @@ public class WorldMapDialog extends BottomSheetDialogBase
     {
         @Override
         public void onClick(View v) {
-            showSpeedMenu(getContext(), v);
+            if (getContext() != null) {
+                showSpeedMenu(getContext(), v);
+            }
         }
     });
 
@@ -1507,10 +1510,11 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 t_prevProgress = seek_now;
             }
 
-            if (fromUser)
+            Context context = getContext();
+            if (fromUser && context != null)
             {
                 long offset = progress - t_prevProgress;
-                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(getContext(), 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
                 boolean speed_1d = (mapSpeed == MapSpeed.ONE_DAY);
                 long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / mapSpeed.getStepMinutes()) * mapSpeed.getStepMinutes() : offset);
                 worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + scaledOffset);
@@ -1594,7 +1598,6 @@ public class WorldMapDialog extends BottomSheetDialogBase
     {
         super.onResume();
 
-        Context context = getActivity();
         ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
@@ -1633,14 +1636,18 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
         protected void updateColors(ColorValues values)
         {
-            if (values != null) {
-                worldmap.getOptions().colors = new WorldMapColorValues(values);
-            } else {
-                worldmap.getOptions().init(getActivity());
+            Context context = getContext();
+            if (context != null)
+            {
+                if (values != null) {
+                    worldmap.getOptions().colors = new WorldMapColorValues(values);
+                } else {
+                    worldmap.getOptions().init(context);
+                }
+                worldmap.themeViews(context);
+                worldmap.setMapMode(context, mapMode);
+                updateViews();
             }
-            worldmap.themeViews(getActivity());
-            worldmap.setMapMode(getActivity(), mapMode);
-            updateViews();
         }
 
         public void requestPeekHeight(int height) {}
@@ -1652,7 +1659,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new WorldMapColorValues(AndroidResources.wrap(getActivity()), true);
+            return (getContext() != null ? new WorldMapColorValues(AndroidResources.wrap(getContext()), true) : null);
         }
     };
 
