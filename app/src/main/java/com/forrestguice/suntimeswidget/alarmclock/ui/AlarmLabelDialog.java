@@ -170,7 +170,7 @@ public class AlarmLabelDialog extends DialogBase
             loadSettings(savedInstanceState);
         }
         initViews(myParent, dialogContent);
-        updateViews(getContext());
+        updateViews(myParent);
 
         Window w = dialog.getWindow();
         if (w != null) {
@@ -277,7 +277,9 @@ public class AlarmLabelDialog extends DialogBase
     public void setLabel(String value)
     {
         this.label = value;
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public String getLabel()
     {

@@ -135,7 +135,7 @@ public class AlarmRepeatDialog extends DialogBase
             loadSettings(savedInstanceState);
         }
         initViews(myParent, dialogContent);
-        updateViews(getContext());
+        updateViews(myParent);
         return dialog;
     }
 
@@ -247,7 +247,9 @@ public class AlarmRepeatDialog extends DialogBase
         {
             repeat = isChecked;
             repeatDays = (repeat ? new ArrayList<Integer>(PREF_DEF_ALARM_REPEATDAYS) : new ArrayList<Integer>());
-            updateViews(getContext());
+            if (getContext() != null) {
+                updateViews(getContext());
+            }
         }
     };
 
@@ -276,7 +278,9 @@ public class AlarmRepeatDialog extends DialogBase
                 if (repeatDays.isEmpty()) {
                     repeat = false;
                 }
-                updateViews(getContext());
+                if (getContext() != null) {
+                    updateViews(getContext());
+                }
             }
         }
     };
@@ -303,10 +307,12 @@ public class AlarmRepeatDialog extends DialogBase
     {
         this.repeat = value;
         repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmClockItem.everyday());
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
-    private void updateViews(Context context)
+    private void updateViews(@NonNull Context context)
     {
         if (Build.VERSION.SDK_INT >= 14)
         {

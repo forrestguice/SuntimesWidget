@@ -110,9 +110,12 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public AlarmClockItem.AlarmType getType() {
         return type;
     }
-    public void setType(AlarmClockItem.AlarmType type) {
+    public void setType(AlarmClockItem.AlarmType type)
+    {
         this.type = type;
-        updateViews(getActivity());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
     private String dialogTitle = null;
@@ -134,7 +137,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public void setUseAppLocation(boolean value)
     {
         useAppLocation = value;
-        if (isAdded()) {
+        if (isAdded() && getContext() != null) {
             updateViews(getContext());
         }
     }
@@ -217,7 +220,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
 
             if (adapter != null)
             {
-                Context context = getActivity();
+                Context context = getContext();
                 if (context != null && !adapter.containsItem(choice))
                 {
                     AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(choice, context.getContentResolver());
@@ -264,17 +267,17 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_schedalarm, parent, false);
 
         if (savedState != null) {
             loadSettings(savedState);
         } else if (choice == null) {
-            loadSettings(getActivity());
+            loadSettings(requireContext());
         }
 
-        initViews(getActivity(), dialogContent);
-        updateViews(getActivity());
+        initViews(requireContext(), dialogContent);
+        updateViews(requireContext());
 
         return dialogContent;
     }
@@ -357,6 +360,11 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                 {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
+                        Context context = getContext();
+                        if (context == null) {
+                            return;
+                        }
+
                         updateLocationLabel(context, txt_location, dataset.location());
 
                         AlarmEvent.AlarmEventItem item = (AlarmEvent.AlarmEventItem)spinner_scheduleMode.getSelectedItem();
@@ -376,7 +384,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                         {
                             String displayString = item.getTitle();
                             Calendar now0 = dataset.nowThen(dataset.calendar());
-                            Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
+                            Calendar alarmCalendar = getCalendarForAlarmChoice(context, choice, now0);
                             if (alarmCalendar != null)
                             {
                                 Calendar now = dataset.now();
@@ -447,11 +455,10 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v)
         {
-            Context context = getActivity();
-            if (context == null) {
-                return;
+            Context context = getContext();
+            if (context != null) {
+                PopupMenuCompat.createMenu(context, v, onMoreMenuClick).show();
             }
-            PopupMenuCompat.createMenu(context, v, onMoreMenuClick).show();
         }
     });
     private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
@@ -493,7 +500,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
             int i = item.getItemId();
             if (i == -1)
             {
-                Intent intent = new Intent(getActivity(), EventListActivity.class);
+                Intent intent = new Intent(context, EventListActivity.class);
                 intent.putExtra(EventListActivity.EXTRA_EXPANDED, true);
                 intent.putExtra(EventListActivity.EXTRA_LOCATION, getLocation());
                 startActivityForResult(intent, REQUEST_EVENTALIAS);
@@ -525,8 +532,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                     if (data != null)
                     {
                         boolean adapterModified = data.getBooleanExtra(EventListActivity.ADAPTER_MODIFIED, false);
-                        if (adapterModified) {
-                            updateAdapter(getActivity());
+                        if (adapterModified && getContext() != null) {
+                            updateAdapter(getContext());
                         }
 
                         String eventUri = data.getStringExtra(EventListActivity.SELECTED_EVENTURI);
@@ -547,7 +554,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                         String name = data.getStringExtra(AlarmEventContract.COLUMN_EVENT_NAME);
                         //String title = data.getStringExtra(AlarmAddon.COLUMN_ALARM_TITLE);
                         //String summary = data.getStringExtra(AlarmAddon.COLUMN_ALARM_SUMMARY);
-                        //Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();
 
                         if ((reference != null && name != null)) {
                             selectAddonAlarm(reference, name);
@@ -576,7 +583,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     }
     protected void selectAddonAlarm(@NonNull String reference, @NonNull String name)
     {
-        Context context = getActivity();
+        Context context = getContext();
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
@@ -715,15 +722,15 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         onCanceled = listener;
     }
 
-    public Calendar getCalendarForAlarmChoice( String choice, Calendar now )
+    public Calendar getCalendarForAlarmChoice( @NonNull Context context, String choice, Calendar now )
     {
-        AlarmClockItem item = createAlarmItem();
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
+        AlarmClockItem item = createAlarmItem(context);
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
         return (isSchedulable) ? item.getCalendar() : null;
     }
 
-    protected AlarmClockItem createAlarmItem() {
-        return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+    protected AlarmClockItem createAlarmItem(@NonNull Context context) {
+        return AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     private final View.OnClickListener onLocationClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {

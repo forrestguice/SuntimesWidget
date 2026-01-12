@@ -78,11 +78,11 @@ public class AlarmEditDialog extends DialogBase
     }
 
     protected AlarmListDialog.AlarmListDialogOptions options;
-    public void initOptions(Context context)
+    public void initOptions(@NonNull Context context)
     {
         options = new AlarmListDialog.AlarmListDialogOptions(context);
 
-        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
         if (colors != null) {
             options.colors = new AppColorValues(colors);
         }
@@ -94,7 +94,7 @@ public class AlarmEditDialog extends DialogBase
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
     {
-        if (addItem) {
+        if (addItem && getContext() != null) {
             loadSettings(getContext(), item);
         }
 
@@ -117,19 +117,22 @@ public class AlarmEditDialog extends DialogBase
     public void notifyItemChanged() {
         item.modified = true;
         bindItemToHolder(item);
-        itemView.bindDataToPosition(getActivity(), item, options, 0);
+        if (getContext() != null) {
+            itemView.bindDataToPosition(getContext(), item, options, 0);
+        }
     }
 
     protected void bindItemToHolder(AlarmClockItem item)
     {
-        if (item != null && AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(item.ringtoneURI)) {
-            item.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(getActivity(), item.type).toString();
-            item.ringtoneName = AlarmSettings.getDefaultRingtoneName(getActivity(), item.type);
+        Context context = getContext();
+        if (item != null && context != null && AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(item.ringtoneURI)) {
+            item.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(context, item.type).toString();
+            item.ringtoneName = AlarmSettings.getDefaultRingtoneName(context, item.type);
         }
-        if (itemView != null)
+        if (itemView != null && context != null)
         {
             detachClickListeners(itemView);
-            itemView.bindDataToPosition(getActivity(), item, options, 0);
+            itemView.bindDataToPosition(context, item, options, 0);
             itemView.menu_overflow.setVisibility(getArgs().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
@@ -143,20 +146,22 @@ public class AlarmEditDialog extends DialogBase
     {
         super.onCreate(savedState);
         setStyle(DialogBase.STYLE_NO_FRAME, R.style.AppTheme);
-        initOptions(getActivity());
+        initOptions(requireContext());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+            if (getContext() != null) {
+                setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmitem, parent, false);
 
-        initViews(getContext(), dialogContent);
+        initViews(requireContext(), dialogContent);
         if (savedState != null) {
             loadSettings(savedState);
         }
@@ -387,8 +392,13 @@ public class AlarmEditDialog extends DialogBase
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
                 if (menuItem.getItemId() == R.id.deleteAlarm) {
-                    confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
+                    confirmDeleteAlarm(context, item, onDeleteConfirmed(item));
                     return true;
                 }
                 return false;
@@ -421,9 +431,9 @@ public class AlarmEditDialog extends DialogBase
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
-                Context context = getActivity();
+                Context context = getContext();
                 if (context != null) {
-                    context.sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+                    context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
                 } else Log.w("AlarmEditDialog", "null context! delete alarm broadcast was not sent...");
                 dialog.cancel();
             }
@@ -470,7 +480,9 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlarmTypeMenu(getActivity(), item, v);
+                if (getContext() != null) {
+                    showAlarmTypeMenu(getContext(), item, v);
+                }
             }
         });
     }
@@ -480,7 +492,9 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOverflowMenu(getActivity(), item, v);
+                if (getContext() != null) {
+                    showOverflowMenu(getContext(), item, v);
+                }
             }
         });
     }
@@ -592,16 +606,17 @@ public class AlarmEditDialog extends DialogBase
     }
     protected void animatePreviewOffset(final AlarmEditViewHolder holder, final boolean enable)
     {
-        if (holder == null || getActivity() == null || !isAdded()) {
+        Context context = getContext();
+        if (holder == null || context == null || !isAdded()) {
             return;
         }
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item, Calendar.getInstance(), false);
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
 
         if (holder.text_datetime != null) {
-            holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
+            holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, enable) : "");
         }
         if (holder.text_date != null) {
-            holder.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
+            holder.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, enable): "");
         }
 
         if (holder.text_datetime_offset != null)
@@ -654,7 +669,7 @@ public class AlarmEditDialog extends DialogBase
             {
                 if (isChecked && !item.vibrate)
                 {
-                    Context context = getActivity();
+                    Context context = getContext();
                     Vibrator vibrate = ((context != null) ? (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) : null);
                     if (vibrate != null) {
                         vibrate.vibrate(500);
@@ -698,7 +713,8 @@ public class AlarmEditDialog extends DialogBase
             {
                 itemView.chip_action2.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
 
-                if (AlarmSettings.loadPrefAlarmUpcoming(getContext()) > 0)
+                Context context = getContext();
+                if (context != null && AlarmSettings.loadPrefAlarmUpcoming(context) > 0)
                 {
                     if (isChecked) {
                         item.clearFlag(AlarmClockItem.FLAG_REMINDER_WITHIN);

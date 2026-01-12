@@ -99,7 +99,7 @@ public class AlarmTimeDialog extends DialogBase
     {
         Bundle args = getArgs();
         if (getLocation() == null) {
-            args.putSerializable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+            args.putSerializable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(requireContext(), 0));
         }
         super.onCreate(savedState);
     }
@@ -143,8 +143,8 @@ public class AlarmTimeDialog extends DialogBase
     {
         super.onCreate(savedState);
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmtime, null);
-        initViews(getActivity(), dialogContent);
-        updateViews(getContext());
+        initViews(requireContext(), dialogContent);
+        updateViews(requireContext());
         return dialogContent;
     }
 
@@ -235,7 +235,9 @@ public class AlarmTimeDialog extends DialogBase
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             setTimeZone(((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
-            updateViews(getActivity());
+            if (getContext() != null) {
+                updateViews(getContext());
+            }
             if (listener != null) {
                 listener.onChanged(AlarmTimeDialog.this);
             }
@@ -262,7 +264,7 @@ public class AlarmTimeDialog extends DialogBase
         }
     });
 
-    protected void updateViews(Context context)
+    protected void updateViews(@NonNull Context context)
     {
         clearTimeChangedListener();
 
@@ -273,7 +275,7 @@ public class AlarmTimeDialog extends DialogBase
         }
 
         if (datePicker != null) {
-            datePicker.setText(displayDate(getActivity(), getDate()));
+            datePicker.setText(displayDate(context, getDate()));
             datePicker.setVisibility(getShowDateButton() ? View.VISIBLE : View.GONE);
         }
 
@@ -285,14 +287,14 @@ public class AlarmTimeDialog extends DialogBase
         }
 
         if (locationPicker != null) {
-            locationPicker.setText(displayLocation(getActivity(), getLocation()));
+            locationPicker.setText(displayLocation(context, getLocation()));
             locationPicker.setVisibility(getArgs().getString(PREF_KEY_ALARM_TIME_MODE) == null ? View.GONE : View.VISIBLE);
         }
 
         setTimeChangedListener();
     }
 
-    public CharSequence displayDate(Context context, long datetime)
+    public CharSequence displayDate(@NonNull Context context, long datetime)
     {
         if (datetime != -1L)
         {
@@ -383,18 +385,13 @@ public class AlarmTimeDialog extends DialogBase
         private View createView(int position, View convertView, ViewGroup parent)
         {
             View view = convertView;
-            if (view == null) {
+            if (view == null && getContext() != null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 view = inflater.inflate(layout, parent, false);
             }
 
-            int[] iconAttr = { R.attr.icActionTime };
-            TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
-            int res_icon0 = typedArray.getResourceId(0, R.drawable.ic_action_time);
-            typedArray.recycle();
-
-            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
+            ImageView icon = (view != null ? (ImageView) view.findViewById(android.R.id.icon1) : null);
+            TextView text = (view != null ? (TextView) view.findViewById(android.R.id.text1) : null);
 
             AlarmClockItem.AlarmTimeZone item = getItem(position);
 
@@ -402,8 +399,13 @@ public class AlarmTimeDialog extends DialogBase
                 text.setText(item != null ? item.displayString() : "");
             }
 
-            if (icon != null)
+            if (icon != null && getContext() != null)
             {
+                int[] iconAttr = { R.attr.icActionTime };
+                TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
+                int res_icon0 = typedArray.getResourceId(0, R.drawable.ic_action_time);
+                typedArray.recycle();
+
                 int resID = (item != null && item.timeZoneID() != null ? R.drawable.ic_sun : res_icon0);
                 icon.setImageDrawable(null);
                 icon.setBackgroundResource(item != null ? resID : 0);

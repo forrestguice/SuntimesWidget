@@ -242,7 +242,7 @@ public class AlarmOffsetDialog extends DialogBase
         return closestIndex;
     }
 
-    private void updateViews(Context context)
+    private void updateViews(@NonNull Context context)
     {
         boolean isBefore = (offset <= 0);
         long offset0 = Math.abs(offset);
@@ -271,7 +271,9 @@ public class AlarmOffsetDialog extends DialogBase
     public void setOffset(long offset)
     {
         this.offset = offset;
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
     public long getOffset()
