@@ -99,7 +99,7 @@ public class TimeDateDialog extends BottomSheetDialogBase
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
-        if (AppSettings.isTelevision(getActivity())) {
+        if (AppSettings.isTelevision(context)) {
             btn_cancel.setFocusableInTouchMode(true);
         }
 
@@ -120,14 +120,14 @@ public class TimeDateDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_date1, parent, false);
 
-        initViews(getContext(), dialogContent);
+        initViews(requireContext(), dialogContent);
         if (savedState != null) {
             loadSettings(savedState);
         } else {
-            loadSettings(getActivity());
+            loadSettings(requireContext());
         }
 
         return dialogContent;
@@ -269,7 +269,7 @@ public class TimeDateDialog extends BottomSheetDialogBase
                 onShowListener.onShow(dialog);
             }
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();
             }
         }
@@ -310,10 +310,12 @@ public class TimeDateDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            dismiss();
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
+            if (getContext() != null) {
+                saveSettings(getContext());
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
             }
         }
     };
