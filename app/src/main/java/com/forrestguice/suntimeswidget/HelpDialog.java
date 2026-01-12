@@ -64,7 +64,7 @@ public class HelpDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_help, parent, false);
 
         initViews(dialogContent);
@@ -109,7 +109,7 @@ public class HelpDialog extends BottomSheetDialogBase
         buttonFrame = dialogView.findViewById(R.id.dialog_buttons);
         neutralButton = (Button)dialogView.findViewById(R.id.dialog_button_neutral);
         if (neutralButton != null) {
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 neutralButton.setFocusableInTouchMode(true);
             }
         }
