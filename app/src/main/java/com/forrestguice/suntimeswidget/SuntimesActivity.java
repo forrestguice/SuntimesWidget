@@ -1196,7 +1196,7 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper = new GetFixHelper(this, getFixUI)
         {
             @Override
-            public int getMinElapsedTime() {
+            public int getMinElapsedTime(@NonNull Context context) {
                 return 1000;
             }
         };

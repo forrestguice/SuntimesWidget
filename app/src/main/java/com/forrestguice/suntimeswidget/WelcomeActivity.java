@@ -756,7 +756,7 @@ public class WelcomeActivity extends AppCompatActivity
         {
             LocationConfigDialog locationConfig = getLocationConfigDialog();
             if (locationConfig != null) {
-                return locationConfig.getDialogContent().validateInput();
+                return locationConfig.getDialogContent().validateInput(context);
             }
             return super.validateInput(context);
         }

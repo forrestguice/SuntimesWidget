@@ -231,7 +231,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     public void setData(Uri data)
     {
         presetData = data;
-        if (dialogContent != null)
+        if (dialogContent != null && getActivity() != null)
         {
             dialogContent.loadSettings(getActivity(), presetData);
         }
@@ -276,9 +276,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(requireActivity()));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final AppCompatActivity myParent = (AppCompatActivity) getActivity();
+        final AppCompatActivity myParent = (AppCompatActivity) requireActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
@@ -290,11 +290,15 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PlacesActivity.class);
-                intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
-                //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
-                startActivityForResult(intent, REQUEST_LOCATION);
+            public void onClick(View v)
+            {
+                if (getActivity() != null)
+                {
+                    Intent intent = new Intent(getActivity(), PlacesActivity.class);
+                    intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
+                    //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
+                    startActivityForResult(intent, REQUEST_LOCATION);
+                } else Log.w("LocationConfigDialog", "onListButtonClicked: activity is null!");
             }
         });
         dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener() {
@@ -318,7 +322,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
-        if (AppSettings.isTelevision(getActivity())) {
+        if (AppSettings.isTelevision(requireActivity())) {
             btn_cancel.setFocusableInTouchMode(true);
         }
 
@@ -333,7 +337,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
             dialogContent.loadSettings(myParent, presetData);
 
         } else if (presetLocation != null) {
-            setLocation(getContext(), presetLocation);
+            setLocation(myParent, presetLocation);
         }
         return view;
     }
@@ -396,7 +400,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         showAddButton = bundle.getBoolean(KEY_LOCATION_SHOWADDBUTTON);
         setShowAddButton(showAddButton);
 
-        if (dialogContent != null) {
+        if (dialogContent != null && getActivity() != null) {
             dialogContent.loadSettings(getActivity(), bundle);
         }
     }
@@ -437,9 +441,10 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         @Override
         public void onClick(View v)
         {
+            Context context = getActivity();
             dialogContent.cancelGetFix();
-            if (dialogListener != null &&
-                    dialogListener.saveSettings(getActivity(), dialogContent.getLocationMode(), dialogContent.getLocation()))
+            if (context != null && dialogListener != null &&
+                    dialogListener.saveSettings(context, dialogContent.getLocationMode(), dialogContent.getLocation(context)))
             {
                 LocationConfigView.LocationViewMode mode = dialogContent.getMode();
                 switch (mode)
@@ -487,18 +492,18 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         if (resultCode == Activity.RESULT_OK && data != null)
         {
             Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
-            if (location != null) {
+            if (location != null && getActivity() != null) {
                 setLocation(getActivity(), location);
             } else {
                 Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }
-            if (AppSettings.isTelevision(getContext())) {
+            if (AppSettings.isTelevision(getActivity())) {
                 btn_accept.requestFocus();
             }
 
         } else {
             getDialogContent().populateLocationList();
-            if (AppSettings.isTelevision(getContext())) {
+            if (AppSettings.isTelevision(getActivity())) {
                 btn_cancel.requestFocus();
             }
         }

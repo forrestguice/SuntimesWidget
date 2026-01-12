@@ -45,7 +45,7 @@ public interface LocationHelper
     boolean hasFix();
 
     boolean isLocationEnabled(Context context);
-    void fallbackToLastLocation();
+    void fallbackToLastLocation(Context context);
     android.location.Location getLastKnownLocation(Context context);
 
     void addGetFixTaskListener( GetFixTaskListener listener );

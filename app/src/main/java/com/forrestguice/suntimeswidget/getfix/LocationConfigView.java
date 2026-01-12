@@ -81,7 +81,6 @@ public class LocationConfigView extends LinearLayout
     public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
     public static final String KEY_LOCATION_LABEL = "locationLabel";
 
-    private AppCompatActivity myParent;
     private boolean isInitialized = false;
 
     public LocationConfigView(Context context)
@@ -94,23 +93,22 @@ public class LocationConfigView extends LinearLayout
         super(context, attribs);
     }
 
-    public void init(AppCompatActivity context, boolean asDialog)
+    public void init(@NonNull AppCompatActivity activity, boolean asDialog)
     {
-        final LayoutInflater inflater = LayoutInflater.from(context);
+        final LayoutInflater inflater = LayoutInflater.from(activity);
         inflater.inflate((asDialog ? R.layout.layout_dialog_location2 : R.layout.layout_settings_location2), this);
-        myParent = context;
-        initViews(context);
+        initViews(activity, activity);
 
-        loadSettings(context);
+        loadSettings(activity);
         setMode(mode);
         populateLocationList();
         isInitialized = true;
     }
 
-    public void init(AppCompatActivity context, boolean asDialog, int appWidgetId)
+    public void init(@NonNull AppCompatActivity activity, boolean asDialog, int appWidgetId)
     {
         this.appWidgetId = appWidgetId;
-        init(context, asDialog);
+        init(activity, asDialog);
     }
 
     public boolean isInitialized() { return isInitialized; }
@@ -118,19 +116,19 @@ public class LocationConfigView extends LinearLayout
     public void setFragment(FragmentCompat f) {
         if (getFixHelper != null) {
             getFixHelper.setFragment(f);
-        }
+        } else Log.w("LocationConfigView", "setFragment: getFixHelper is null!");
     }
     public FragmentCompat getFragment() {
         return getFixHelper != null ? getFixHelper.getFragment() : null;
     }
 
-    public com.forrestguice.suntimeswidget.calculator.core.Location getLocation()
+    public com.forrestguice.suntimeswidget.calculator.core.Location getLocation(@NonNull Context context)
     {
         String name = text_locationName.getText().toString();
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
 
-        LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         String altitude = text_locationAlt.getText().toString();
         if (altitude.trim().isEmpty()) {
             altitude = "0";
@@ -166,10 +164,10 @@ public class LocationConfigView extends LinearLayout
     {
         return appWidgetId;
     }
-    public void setAppWidgetId(int value)
+    public void setAppWidgetId(@NonNull Context context, int value)
     {
         appWidgetId = value;
-        loadSettings(myParent);
+        loadSettings(context);
     }
 
     /**
@@ -263,6 +261,8 @@ public class LocationConfigView extends LinearLayout
             getFixHelper.cancelGetFix();
         }
 
+        String name;
+        Context context = getContext();
         LocationViewMode previousMode = this.mode;
         this.mode = mode;
         switch (mode)
@@ -280,7 +280,8 @@ public class LocationConfigView extends LinearLayout
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
 
-                spin_locationName.setSelection(GetFixDatabaseAdapter.findPlaceByName(myParent.getString(R.string.gps_lastfix_title_found), getFixAdapter.getCursor()));
+                name = (context != null ? context.getString(R.string.gps_lastfix_title_found) : "Last Position");
+                spin_locationName.setSelection(GetFixDatabaseAdapter.findPlaceByName(name, getFixAdapter.getCursor()));
                 spin_locationName.setEnabled(false);
                 flipper.setDisplayedChild(1);
 
@@ -370,7 +371,8 @@ public class LocationConfigView extends LinearLayout
                 flipper2.setDisplayedChild(1);
 
                 if (previousMode == LocationViewMode.MODE_AUTO) {
-                    text_locationName.setText(myParent.getString(R.string.gps_lastfix_title_cached));
+                    name = (context != null ? context.getString(R.string.gps_lastfix_title_cached) : "Previous Position");
+                    text_locationName.setText(name);
                     populateLocationList();
                 }
                 break;
@@ -428,9 +430,12 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             if (locations != null && locations[0] != null)
             {
+                Context context = getContext();
+                LengthUnit units = (context != null ? WidgetSettings.loadLengthUnitsPref(context, appWidgetId) : LengthUnit.METRIC);
+
                 text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
                 text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-                text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+                text_locationAlt.setText( getAltitudeString(locations[0], formatter, units) );
 
             } else {
                 text_locationLat.setText("");
@@ -504,9 +509,12 @@ public class LocationConfigView extends LinearLayout
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             if (locations != null && locations.length > 0 && locations[0] != null)
             {
+                Context context = getContext();
+                LengthUnit units = (context != null ? WidgetSettings.loadLengthUnitsPref(context, appWidgetId) : LengthUnit.METRIC);
+
                 text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
                 text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-                text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+                text_locationAlt.setText( getAltitudeString(locations[0], formatter, units) );
             }
         }
 
@@ -538,7 +546,7 @@ public class LocationConfigView extends LinearLayout
      *
      * @param context a context used to access resources
      */
-    protected void initViews( Context context )
+    protected void initViews( Context context, AppCompatActivity parent )
     {
         //Log.d("DEBUG", "LocationConfigView initViews");
         WidgetSettings.initDisplayStrings(context);
@@ -551,7 +559,7 @@ public class LocationConfigView extends LinearLayout
         flipper2.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         flipper2.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
 
-        ArrayAdapter<LocationMode> spinner_locationModeAdapter = new LocationModeAdapter(myParent, LocationMode.values());
+        ArrayAdapter<LocationMode> spinner_locationModeAdapter = new LocationModeAdapter(context, LocationMode.values());
         spinner_locationModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_locationMode = (Spinner)findViewById(R.id.appwidget_location_mode);
@@ -566,8 +574,8 @@ public class LocationConfigView extends LinearLayout
         int[] to = new int[] {android.R.id.text1};
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to, 0);
-        else getFixAdapter = new SimpleCursorAdapter(myParent, R.layout.layout_listitem_locations, null, from, to);
+            getFixAdapter = new SimpleCursorAdapter(context, R.layout.layout_listitem_locations, null, from, to, 0);
+        else getFixAdapter = new SimpleCursorAdapter(context, R.layout.layout_listitem_locations, null, from, to);
 
         getFixAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -648,7 +656,7 @@ public class LocationConfigView extends LinearLayout
         TooltipCompat.setTooltipText(button_auto, button_auto.getContentDescription());
         button_auto.setOnClickListener(onAutoButtonClicked);
 
-        getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
+        getFixHelper = new GetFixHelper(parent, getFixUI_editMode);    // 0; getFixUI_editMode
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
 
@@ -663,16 +671,19 @@ public class LocationConfigView extends LinearLayout
 
     protected View.OnClickListener onMapButtonClicked = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            showMapCoordinateDialog();
+        public void onClick(View v)
+        {
+            if (getContext() != null) {
+                showMapCoordinateDialog(getContext());
+            }
         }
     };
 
     public static final String DIALOGTAG_MAP = "MapDialog";
-    protected void showMapCoordinateDialog()
+    protected void showMapCoordinateDialog(@NonNull Context context)
     {
         MapCoordinateDialog dialog = new MapCoordinateDialog();
-        dialog.setColorCollection(new WorldMapColorValuesCollection<>(getContext()));
+        dialog.setColorCollection(new WorldMapColorValuesCollection<>(context));
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
 
@@ -715,7 +726,7 @@ public class LocationConfigView extends LinearLayout
         int icon = GetFixUI.ICON_GPS_SEARCHING;
         if (!isInEditMode())
         {
-            if (!getFixHelper.isLocationEnabled(getContext()))
+            if (getContext() == null || !getFixHelper.isLocationEnabled(getContext()))
             {
                 icon = GetFixUI.ICON_GPS_DISABLED;
 
@@ -780,7 +791,7 @@ public class LocationConfigView extends LinearLayout
     /**
      * @param context a context used to access shared prefs
      */
-    public void loadSettings(Context context)
+    public void loadSettings(@NonNull Context context)
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
         if (isInEditMode())
@@ -802,7 +813,7 @@ public class LocationConfigView extends LinearLayout
      * @param context a context used to access shared prefs
      * @param bundle a Bundle containing saved state
      */
-    public void loadSettings(Context context, Bundle bundle )
+    public void loadSettings(@NonNull Context context, @NonNull Bundle bundle )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (bundle)");
 
@@ -865,7 +876,7 @@ public class LocationConfigView extends LinearLayout
      * @param context a context used to access shared prefs
      * @param data a Uri with geo location data
      */
-    public void loadSettings(Context context, Uri data )
+    public void loadSettings(@NonNull Context context, Uri data )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
         loadSettings(context, bundleData(data, context.getString(R.string.gps_lastfix_title_set)));
@@ -874,17 +885,17 @@ public class LocationConfigView extends LinearLayout
     /**
      *
      */
-    public boolean saveSettings(Context context) {
+    public boolean saveSettings(@NonNull Context context) {
         return saveSettings(context, appWidgetId);
     }
-    public boolean saveSettings(Context context, int appWidgetId)
+    public boolean saveSettings(@NonNull Context context, int appWidgetId)
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
 
         LocationMode locationMode = getLocationMode();
         WidgetSettings.saveLocationModePref(context, appWidgetId, locationMode);
 
-        if (validateInput())
+        if (validateInput(context))
         {
             String latitude = text_locationLat.getText().toString();
             String longitude = text_locationLon.getText().toString();
@@ -906,7 +917,7 @@ public class LocationConfigView extends LinearLayout
      * @param bundle a Bundle to save to
      * @return true settings were saved
      */
-    public boolean saveSettings(Bundle bundle)
+    public boolean saveSettings(@NonNull Bundle bundle)
     {
         //Log.d("DEBUG", "LocationConfigView saveSettings (bundle)");
 
@@ -996,7 +1007,13 @@ public class LocationConfigView extends LinearLayout
      */
     public void populateLocationList()
     {
-        LocationListTask task = new LocationListTask(myParent, getLocation());
+        Context context = getContext();
+        if (context == null) {
+            Log.w("LocationConfigView", "populateLocationList: context is null!");
+            return;
+        }
+
+        LocationListTask task = new LocationListTask(context, getLocation(context));
         task.setTaskListener( new LocationListTask.LocationListTaskListener()
         {
             @Override
@@ -1107,7 +1124,7 @@ public class LocationConfigView extends LinearLayout
      * values.
      * @return true if all fields valid, false otherwise
      */
-    public boolean validateInput()
+    public boolean validateInput(@NonNull Context context)
     {
         boolean isValid = true;
 
@@ -1117,12 +1134,12 @@ public class LocationConfigView extends LinearLayout
             if (lat.doubleValue() < -90d || lat.doubleValue() > 90d)
             {
                 isValid = false;
-                text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
+                text_locationLat.setError(context.getString(R.string.location_dialog_error_lat));
             }
 
         } catch (NumberFormatException e1) {
             isValid = false;
-            text_locationLat.setError(myParent.getString(R.string.location_dialog_error_lat));
+            text_locationLat.setError(context.getString(R.string.location_dialog_error_lat));
         }
 
         String longitude = text_locationLon.getText().toString();
@@ -1131,12 +1148,12 @@ public class LocationConfigView extends LinearLayout
             if (lon.doubleValue() < -180d || lon.doubleValue() > 180d)
             {
                 isValid = false;
-                text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
+                text_locationLon.setError(context.getString(R.string.location_dialog_error_lon));
             }
 
         } catch (NumberFormatException e2) {
             isValid = false;
-            text_locationLon.setError(myParent.getString(R.string.location_dialog_error_lon));
+            text_locationLon.setError(context.getString(R.string.location_dialog_error_lon));
         }
 
         String altitude = text_locationAlt.getText().toString();
@@ -1147,7 +1164,7 @@ public class LocationConfigView extends LinearLayout
 
             } catch (NumberFormatException e3) {
                 isValid = false;
-                text_locationAlt.setError(myParent.getString(R.string.location_dialog_error_alt));
+                text_locationAlt.setError(context.getString(R.string.location_dialog_error_alt));
             }
         }
 
@@ -1183,13 +1200,13 @@ public class LocationConfigView extends LinearLayout
     /**
      * Copy the location in decimal degrees (DD) to clipboard (locale invariant `lat, lon`)
      */
-    public void copyLocationToClipboard(Context context)
+    public void copyLocationToClipboard(@NonNull Context context)
     {
         copyLocationToClipboard(context, false);
     }
-    public void copyLocationToClipboard(Context context, boolean silent)
+    public void copyLocationToClipboard(@NonNull Context context, boolean silent)
     {
-        com.forrestguice.suntimeswidget.calculator.core.Location location = getLocation();
+        com.forrestguice.suntimeswidget.calculator.core.Location location = getLocation(context);
         String clipboardText = location.toString();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -1345,12 +1362,13 @@ public class LocationConfigView extends LinearLayout
         @Override
         public void onClick(View view)
         {
-            final boolean validInput = validateInput();
+            Context context = getContext();
+            final boolean validInput = (context != null && validateInput(context));
             if (validInput)
             {
                 setMode(LocationViewMode.MODE_CUSTOM_SELECT);
                 populateLocationList();
-                if (AppSettings.isTelevision(getContext())) {
+                if (AppSettings.isTelevision(context)) {
                     button_edit.requestFocus();
                 }
             }

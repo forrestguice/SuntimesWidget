@@ -2767,7 +2767,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void addWidget()
     {
-        boolean hasValidInput = locationConfig.validateInput();  // todo: && validate other potentially troublesome input values
+        boolean hasValidInput = locationConfig.validateInput(this);  // todo: && validate other potentially troublesome input values
         if (hasValidInput)
         {
             locationConfig.setMode(LocationConfigView.LocationViewMode.MODE_DISABLED);

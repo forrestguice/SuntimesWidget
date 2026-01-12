@@ -73,14 +73,39 @@ public class GetFixHelper implements LocationHelper
     public boolean wasGettingFix = false;
     public boolean gotFix = false;
 
-    private final AppCompatActivity myParent;
+    private final WeakReference<AppCompatActivity> myParent;
     private final ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
     public GetFixHelper(AppCompatActivity parent, GetFixUI ui)
     {
-        myParent = parent;
+        myParent = new WeakReference<>(parent);
         addUI(ui);
+    }
+
+    @Nullable
+    protected AppCompatActivity getActivity() {
+        return (myParent != null ? myParent.get() : null);
+    }
+
+    protected boolean hasActivity()
+    {
+        AppCompatActivity activity = getActivity();
+        boolean isValid = (activity != null && !activity.isFinishing());
+        if (Build.VERSION.SDK_INT >= 17) {
+            isValid = isValid && !activity.isDestroyed();
+        }
+        return isValid;
+    }
+
+    @NonNull
+    protected AppCompatActivity requireActivity()
+    {
+        AppCompatActivity activity = getActivity();
+        if (!hasActivity()) {
+            throw new NullPointerException("Activity required but the reference is null!");
+        }
+        return activity;
     }
 
     public void setFragment(FragmentCompat f) {
@@ -91,13 +116,13 @@ public class GetFixHelper implements LocationHelper
     }
     private WeakReference<FragmentCompat> fragmentRef = null;
 
-    public int getMinElapsedTime() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
+    public int getMinElapsedTime(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
     }
 
-    public int getMinElapsedTimeSinceFirstFix() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
+    public int getMinElapsedTimeSinceFirstFix(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return LocationHelperSettings.loadPrefGpsMinElapsedSinceFirstFix(prefs, GetFixTask.MIN_ELAPSED_FF);
     }
 
@@ -113,16 +138,22 @@ public class GetFixHelper implements LocationHelper
     }
     public boolean getFix(boolean autoStop)
     {
+        AppCompatActivity activity = getActivity();
+        if (activity == null) {
+            Log.w("GetFixHelper", "getFix: activity is null!");
+            return false;
+        }
+
         if (!gettingFix)
         {
-            if (checkGPSPermissions(myParent, REQUEST_GETFIX_LOCATION))
+            if (checkGPSPermissions(activity, REQUEST_GETFIX_LOCATION))
             {
-                if (isLocationEnabled(myParent))
+                if (isLocationEnabled(activity))
                 {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myParent);
-                    getFixTask = new GetFixTask(myParent, this);
-                    getFixTask.setMinElapsed(getMinElapsedTime());
-                    getFixTask.setMinElapsedSinceFirstFix(getMinElapsedTimeSinceFirstFix());
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+                    getFixTask = new GetFixTask(activity, this);
+                    getFixTask.setMinElapsed(getMinElapsedTime(activity));
+                    getFixTask.setMinElapsedSinceFirstFix(getMinElapsedTimeSinceFirstFix(activity));
                     getFixTask.setAutoStop(autoStop);
 
                     int maxElapsed = LocationHelperSettings.loadPrefGpsMaxElapsed(prefs, GetFixTask.MAX_ELAPSED);
@@ -143,14 +174,14 @@ public class GetFixHelper implements LocationHelper
                         {
                             fix = result;
                             gotFix = (fix != null);
-
+                            
                             if (!getFixTask.isCancelled() && !gotFix)
                             {
                                 showKeepSearchingPrompt();
                             }
                         }
                     });
-                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(myParent));
+                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(activity));
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while location disabled; showing a prompt");
@@ -191,11 +222,11 @@ public class GetFixHelper implements LocationHelper
     }
 
     @Override
-    public void fallbackToLastLocation()
+    public void fallbackToLastLocation(@NonNull Context context)
     {
         GetFixUI uiObj = getUI();
         try {
-            Location location = lastKnownLocation(myParent);
+            Location location = lastKnownLocation(context);
             String logItem = "D/" + "fallback to last location: " + (location != null ? location.getProvider().toUpperCase() : "null");
 
             fix = location;
@@ -302,7 +333,9 @@ public class GetFixHelper implements LocationHelper
     protected void requestPermissions(final int requestID) {
         if (getFragment() != null) {
             requestPermissions(getFragment(), requestID);
-        } else requestPermissions(myParent, requestID);
+        } else if (getActivity() != null) {
+            requestPermissions(getActivity(), requestID);
+        } else Log.w("GetFixHelper", "requestPermissions: both fragment and activity are null!");
     }
     protected void requestPermissions(Activity activity, final int requestID) {
         ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
@@ -429,14 +462,15 @@ public class GetFixHelper implements LocationHelper
 
     public void onResume()
     {
+        AppCompatActivity activity = requireActivity();
         //Log.d("DEBUG", "GetFixHelper onResume");
-        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) myParent.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_KEEPTRYING);
+        KeepTryingDialog keepTryingDialog = (KeepTryingDialog) activity.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_KEEPTRYING);
         if (keepTryingDialog != null)
         {
             keepTryingDialog.setHelper(this);
         }
 
-        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) myParent.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ENABLEGPS);
+        EnableGPSDialog enableGPSDialog = (EnableGPSDialog) activity.getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ENABLEGPS);
         if (enableGPSDialog != null)
         {
             enableGPSDialog.setHelper(this);
@@ -484,7 +518,9 @@ public class GetFixHelper implements LocationHelper
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            helper.fallbackToLastLocation();
+                            if (getActivity() != null) {
+                                helper.fallbackToLastLocation(getActivity());
+                            } else Log.w("GetFixHelper", "fallbackToLastLocation: activity is null!");
                         }
                     });
             return builder.create();
@@ -493,9 +529,11 @@ public class GetFixHelper implements LocationHelper
 
     public void showKeepSearchingPrompt()
     {
-        final KeepTryingDialog dialog = new KeepTryingDialog();
-        dialog.setHelper(this);
-        dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_KEEPTRYING);
+        if (hasActivity()) {
+            final KeepTryingDialog dialog = new KeepTryingDialog();
+            dialog.setHelper(this);
+            dialog.show(getActivity().getSupportFragmentManager(), DIALOGTAG_KEEPTRYING);
+        } else Log.w("GetFixHelper", "showKeepSearchingPrompt: activity is null!");
     }
 
     /**
@@ -565,9 +603,11 @@ public class GetFixHelper implements LocationHelper
 
     public void showGPSEnabledPrompt()
     {
-        final EnableGPSDialog dialog = new EnableGPSDialog();
-        dialog.setHelper(this);
-        dialog.show(myParent.getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
+        if (hasActivity()) {
+            final EnableGPSDialog dialog = new EnableGPSDialog();
+            dialog.setHelper(this);
+            dialog.show(getActivity().getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
+        } else Log.w("GetFixHelper", "showGPSEnabledPrompt: activity is null!");
     }
 
 
