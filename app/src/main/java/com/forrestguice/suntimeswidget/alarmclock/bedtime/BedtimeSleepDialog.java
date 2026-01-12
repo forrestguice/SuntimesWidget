@@ -91,7 +91,7 @@ public class BedtimeSleepDialog extends DialogBase
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        SuntimesUtils.initDisplayStrings(getActivity());
+        SuntimesUtils.initDisplayStrings(requireContext());
 
         final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
@@ -154,7 +154,7 @@ public class BedtimeSleepDialog extends DialogBase
             loadSettings(savedInstanceState);
         }
         initViews(myParent, dialogContent);
-        updateViews(getContext());
+        updateViews(requireContext());
         return dialog;
     }
 
@@ -205,11 +205,13 @@ public class BedtimeSleepDialog extends DialogBase
         public void onValueChange(NumberPicker picker, int oldVal, int newVal)
         {
             setNumCycles(newVal);
-            updateViews(getActivity());
+            if (getContext() != null) {
+                updateViews(getContext());
+            }
         }
     };
 
-    private void updateViews(Context context)
+    private void updateViews(@NonNull Context context)
     {
         float numCycles = getNumCycles();
         if (sleepCyclePicker != null)
@@ -238,7 +240,9 @@ public class BedtimeSleepDialog extends DialogBase
     public void setNumCycles(float value)
     {
         getArgs().putFloat("numCycles", value);
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public float getNumCycles() {
         return getArgs().getFloat("numCycles", BedtimeSettings.PREF_DEF_SLEEPCYCLE_COUNT);
