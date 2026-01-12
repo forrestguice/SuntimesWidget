@@ -210,7 +210,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         setEventUri(event.getUri());
         setEventUri1(event.getAliasUri());
         setEventIsShown(event.isShown());
-        updateViews(getActivity(), type);
+        if (getContext() != null) {
+            updateViews(getContext(), type);
+        }
     }
     public void setType(EventType value) {
         type = value;
@@ -255,15 +257,15 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         objHeight = value;
 
-        Context context = getActivity();
+        Context context = getContext();
         if (edit_objHeight != null && context != null) {
-            edit_objHeight.setText(SuntimesUtils.formatAsHeight(getActivity(), objHeight, units, 2, true).getValue());
+            edit_objHeight.setText(SuntimesUtils.formatAsHeight(context, objHeight, units, 2, true).getValue());
         }
     }
     @Nullable
     public Double getObjHeightMeters()
     {
-        Context context = getActivity();
+        Context context = getContext();
         if (edit_objHeight != null && context != null)
         {
             try {
@@ -284,15 +286,15 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         shadowLength = value;
 
-        Context context = getActivity();
+        Context context = getContext();
         if (edit_shadowLength != null && context != null) {
-            edit_shadowLength.setText(SuntimesUtils.formatAsHeight(getActivity(), shadowLength, units, 2, true).getValue());
+            edit_shadowLength.setText(SuntimesUtils.formatAsHeight(context, shadowLength, units, 2, true).getValue());
         }
     }
     @Nullable
     public Double getShadowLengthMeters()
     {
-        Context context = getActivity();
+        Context context = getContext();
         if (edit_shadowLength != null && context != null)
         {
             try {
@@ -327,7 +329,9 @@ public class EditEventDialog extends EditBottomSheetDialog
 
     @Override
     public boolean onBackPressed() {
-        confirmDiscardChanges(getActivity());
+        if (getContext() != null) {
+            confirmDiscardChanges(getContext());
+        }
         return true;
     }
 
@@ -511,7 +515,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         updateViews(context, getEventType());
     }
 
-    protected void updateViews(Context context, EventType type)
+    protected void updateViews(@NonNull Context context, EventType type)
     {
         setEventLabel(getEventLabel());
 
@@ -637,7 +641,9 @@ public class EditEventDialog extends EditBottomSheetDialog
                 dialog.show(getChildFragmentManager(), DIALOGTAG_OFFSET);
 
             }  else {
-                Toast.makeText(getActivity(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+                }
             }
         }
     };
@@ -646,8 +652,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void onDialogAccepted(long value)
         {
+            Context context = getContext();
             TimeOffsetPickerDialog offsetDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
-            if (offsetDialog != null)
+            if (offsetDialog != null && context != null)
             {
                 int offset = (int) value;
 
@@ -686,7 +693,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
-                updateViews(getActivity());
+                updateViews(context);
             }
         }
     };
@@ -936,7 +943,9 @@ public class EditEventDialog extends EditBottomSheetDialog
     private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            confirmDiscardChanges(getActivity());
+            if (getContext() != null) {
+                confirmDiscardChanges(getContext());
+            }
         }
     };
 
@@ -972,7 +981,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected void setPercentValue(double value)
     {
         percentValue = value;
-        Context context = getActivity();
+        Context context = getContext();
         if (edit_percentValue != null && context != null) {
             edit_percentValue.setText(Math.abs(percentValue) + "");
         }
@@ -985,12 +994,11 @@ public class EditEventDialog extends EditBottomSheetDialog
 
     public Double getPercentValue()
     {
-        Context context = getActivity();
-
         boolean isDay = true;
         if (radio_percentDay != null) {
             isDay = radio_percentDay.isChecked();
         }
+        Context context = getContext();
         if (edit_percentValue != null && context != null) {
             try {
                 return (isDay ? 1 : -1) * Double.parseDouble(edit_percentValue.getText().toString());
