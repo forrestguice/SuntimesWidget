@@ -617,7 +617,9 @@ public class MoonRiseSetView1 extends LinearLayout
         private boolean showPosition = false;
 
         private void attachClickListeners(@NonNull MoonRiseSetField holder, int position) {
-            holder.layout.setOnClickListener(onItemClick(position, holder.eventID.name()));
+            if (holder.eventID != null) {
+                holder.layout.setOnClickListener(onItemClick(position, holder.eventID.name()));
+            }
         }
 
         private void detachClickListeners(@NonNull MoonRiseSetField holder) {

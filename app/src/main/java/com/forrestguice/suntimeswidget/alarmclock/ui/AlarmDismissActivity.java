@@ -208,28 +208,24 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         background = findViewById(R.id.background);
 
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
-        alarmTitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
-
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
-        alarmSubtitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
-
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
-        alarmText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
-
         clockText = (TextView)findViewById(R.id.txt_clock_time);
-        clockText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_TIME));
-
         timezoneText = (TextView)findViewById(R.id.txt_clock_timezone);
-        timezoneText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
-
         offsetText = (TextView)findViewById(R.id.txt_alarm_offset);
-        offsetText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
-
         infoText = (TextView)findViewById(R.id.txt_snooze);
-        infoText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
-
         noteText = (TextView)findViewById(R.id.txt_alarm_note);
-        noteText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+
+        if (colors != null) {
+            alarmTitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
+            alarmSubtitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
+            alarmText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+            clockText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_TIME));
+            timezoneText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+            offsetText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+            infoText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+            noteText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+        }
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
         iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
@@ -695,6 +691,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (Build.VERSION.SDK_INT < 11) {
             return;
         }
+        if (colors == null) {
+            Log.w("AlarmDismissActivity", "resetAnimateColors: colors are null!");
+            return;
+        }
 
         clockText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_TIME));
         alarmTitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
@@ -830,7 +830,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (alarmTitle != null) {
             return alarmTitle.getCurrentTextColor();
         } else {
-            return colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY);
+            return colors != null ? colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY) : Color.BLACK;
         }
     }
     protected int currentTimeColor()
@@ -838,7 +838,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (clockText != null) {
             return clockText.getCurrentTextColor();
         } else {
-            return colors.getColor(AlarmColorValues.COLOR_TEXT_TIME);
+            return colors != null ? colors.getColor(AlarmColorValues.COLOR_TEXT_TIME) : Color.BLACK;
         }
     }
     protected int currentTextColor()
@@ -846,7 +846,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (infoText != null) {
             return infoText.getCurrentTextColor();
         } else {
-            return colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY);
+            return colors != null ? colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY) : Color.BLACK;
         }
     }
 
@@ -856,7 +856,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         if (d instanceof ColorDrawable) {
             return ((ColorDrawable) d.mutate()).getColor();
         } else {
-            return colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
+            return colors != null ? colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START) : Color.MAGENTA;
         }
     }
 
@@ -949,7 +949,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             resetAnimateColors(labels, buttons);
             if (isBrightMode)
             {
-                int timeoutBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
+                int timeoutBackgroundColor = colors != null ? colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START) : Color.MAGENTA;
                 int timeoutTitleColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
                 int timeoutTimeColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
                 int timeoutTextColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_SECONDARY, AlarmColorValues.COLOR_TEXT_SECONDARY_INVERSE);

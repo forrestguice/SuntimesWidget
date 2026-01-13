@@ -537,7 +537,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     }
 
     protected void reloadAGPS() {
-        if (getActivity() != null)
+        if (getActivity() != null && getFixHelper != null)
         {
             getFixHelper.reloadAGPS(getActivity(), false, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -547,7 +547,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
     }
     protected void deleteAGPS() {
-        if (getActivity() != null) {
+        if (getActivity() != null && getFixHelper != null) {
             getFixHelper.reloadAGPS(getActivity(), true, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     resetGpsStatusView();

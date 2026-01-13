@@ -458,7 +458,8 @@ public class MoonDialog extends BottomSheetDialogBase
 
         long dialogTimeMillis = getDialogTime();
 
-        Calendar dialogTime = Calendar.getInstance(data.timezone());
+        TimeZone tz = (data != null ? data.timezone() : TimeZone.getDefault());
+        Calendar dialogTime = Calendar.getInstance(tz);
         dialogTime.setTimeInMillis(dialogTimeMillis);
         boolean nowIsAfter = now.after(dialogTime);
 

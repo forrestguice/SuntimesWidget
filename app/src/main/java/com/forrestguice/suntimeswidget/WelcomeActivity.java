@@ -1158,9 +1158,9 @@ public class WelcomeActivity extends AppCompatActivity
             @Override
             public void onFinished(AlarmClockItemImportTask.TaskResult result)
             {
-                if (result.getResult())
+                final Context context = getContext();
+                if (result.getResult() && context != null)
                 {
-                    final Context context = getContext();
                     final AlarmClockItem[] items = result.getItems();
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
                     task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -1193,12 +1193,12 @@ public class WelcomeActivity extends AppCompatActivity
                     importTask = null;
                     toggleProgress(false);
                     toggleControlsEnabled(true);
-                    if (isAdded())
+                    if (isAdded() && context != null)
                     {
                         Uri uri = result.getUri();   // import failed
                         String path = ((uri != null) ? uri.toString() : "<path>");
                         String failureMessage = getString(R.string.msg_import_failure, path);
-                        Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
                     }
                 }
             }

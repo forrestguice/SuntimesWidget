@@ -175,11 +175,11 @@ public class GetFixDatabaseAdapter
      * @param place a Location object describing the place
      * @return the rowID of the newly added place or -1 if an error
      */
-    public long addPlace( Location place ) {
+    public long addPlace( @NonNull Location place ) {
         return addPlace(place, "");
     }
 
-    public long addPlace( Location place, String comment )
+    public long addPlace( @NonNull Location place, String comment )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());

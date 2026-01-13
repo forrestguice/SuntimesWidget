@@ -190,6 +190,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
         if (todayIsNotToday())
         {
+            //noinspection ConstantConditions
             lastYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             thisYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             nextYearCalendar.setTimeInMillis(todayIs.getTimeInMillis());

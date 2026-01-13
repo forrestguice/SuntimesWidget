@@ -220,6 +220,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
 
         if (todayIsNotToday())
         {
+            //noinspection ConstantConditions
             todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             otherCalendar0.setTimeInMillis(todayIs.getTimeInMillis());

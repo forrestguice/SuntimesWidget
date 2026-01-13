@@ -798,6 +798,7 @@ public class EquinoxView extends LinearLayout
             this.selected_mode = mode;
             notifyDataSetChanged();
         }
+        @Nullable
         protected SolsticeEquinoxMode selected_mode = null;
 
         /**
@@ -1234,6 +1235,7 @@ public class EquinoxView extends LinearLayout
 
         public int titleColor, noteColor, disabledColor, pressedColor;
         public Integer[] seasonColors = new Integer[4];
+        @Nullable
         public Integer labelColor, textColor;
         public int resID_buttonPressColor;
 

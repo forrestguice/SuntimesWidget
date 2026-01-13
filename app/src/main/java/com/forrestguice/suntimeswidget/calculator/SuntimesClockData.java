@@ -32,6 +32,7 @@ public class SuntimesClockData extends SuntimesData
         initFromOther(other);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void calculate(Object context)
     {

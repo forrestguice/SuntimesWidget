@@ -362,6 +362,7 @@ public class SuntimesRiseSetData extends SuntimesData
 
         if (todayIsNotToday())
         {
+            //noinspection ConstantConditions
             todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }

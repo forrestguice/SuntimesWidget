@@ -403,7 +403,9 @@ public class WorldMapView extends ImageView
             default:
                 projection = new WorldMapEquirectangular();
                 w = getWidth();
-                h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+                h = (options.map != null)
+                        ? (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()))
+                        : (int)(w * 0.5);
                 break;
         }
 

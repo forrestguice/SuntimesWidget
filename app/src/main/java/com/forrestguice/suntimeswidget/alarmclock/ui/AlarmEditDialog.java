@@ -117,8 +117,11 @@ public class AlarmEditDialog extends DialogBase
         return ((item != null && item.modified) || original == null);
     }
 
-    public void notifyItemChanged() {
-        item.modified = true;
+    public void notifyItemChanged()
+    {
+        if (item != null) {
+            item.modified = true;
+        }
         bindItemToHolder(item);
         if (getContext() != null) {
             itemView.bindDataToPosition(getContext(), item, options, 0);
@@ -140,7 +143,7 @@ public class AlarmEditDialog extends DialogBase
             attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
-            text_title.setText(item != null ? item.type.getDisplayString() : "");
+            text_title.setText(item != null && item.type != null ? item.type.getDisplayString() : "");
         }
     }
 
@@ -592,7 +595,7 @@ public class AlarmEditDialog extends DialogBase
 
     protected void triggerPreviewOffset(AlarmEditViewHolder holder)
     {
-        if (!holder.preview_offset && item.offset != 0) {
+        if (!holder.preview_offset && item != null && item.offset != 0) {
             holder.preview_offset = true;
             animatePreviewOffset(holder, true);
         }

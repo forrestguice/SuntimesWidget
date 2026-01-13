@@ -109,6 +109,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected static final String HELPTAG_SUBSTITUTIONS = "help_substitutions";
 
+    @Nullable
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
     private boolean isNew = false;

@@ -98,12 +98,13 @@ public class SuntimesData
     /**
      * Property: location
      */
+    @Nullable
     protected Location location;
-    public Location location()
-    {
+    @Nullable
+    public Location location() {
         return location;
     }
-    public void setLocation(Location location)
+    public void setLocation(@Nullable Location location)
     {
         this.location = location;
         invalidateCalculation();

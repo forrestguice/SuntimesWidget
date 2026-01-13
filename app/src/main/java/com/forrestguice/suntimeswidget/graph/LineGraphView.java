@@ -805,7 +805,8 @@ public class LineGraphView extends ImageView
                 p.setStyle(Paint.Style.FILL);
                 for (Path path : moonFill.keySet())
                 {
-                    boolean isDay = (moonFill.get(path) >= 0);
+                    Double v = moonFill.get(path);
+                    boolean isDay = (v != null && v >= 0);
                     p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_MOONPATH_DAY_FILL) : options.getColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_FILL));
                     p.setAlpha(isDay ? options.moonPath_color_day_closed_alpha : options.moonPath_color_night_closed_alpha);
                     c.drawPath(path, p);
@@ -820,7 +821,8 @@ public class LineGraphView extends ImageView
                 p.setStyle(Paint.Style.STROKE);
                 for (Path path : moonPath.keySet())
                 {
-                    boolean isDay = (moonPath.get(path) >= 0);
+                    Double v = moonPath.get(path);
+                    boolean isDay = (v!= null && v >= 0);
                     p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_MOONPATH_DAY_STROKE) : options.getColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_STROKE));
                     p.setAlpha(255);
                     c.drawPath(path, p);
@@ -911,7 +913,8 @@ public class LineGraphView extends ImageView
                 p.setStyle(Paint.Style.FILL);
                 for (Path path : sunFill.keySet())
                 {
-                    boolean isDay = (sunFill.get(path) >= 0);
+                    Double v = sunFill.get(path);
+                    boolean isDay = (v != null && v >= 0);
                     p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_SUNPATH_DAY_FILL) : options.getColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_FILL));
                     p.setAlpha(isDay ? options.sunPath_color_day_closed_alpha : options.sunPath_color_night_closed_alpha);
                     c.drawPath(path, p);
@@ -926,7 +929,8 @@ public class LineGraphView extends ImageView
                 p.setStyle(Paint.Style.STROKE);
                 for (Path path : sunPath.keySet())
                 {
-                    boolean isDay = (sunPath.get(path) >= 0);
+                    Double v = sunPath.get(path);
+                    boolean isDay = (v != null && v >= 0);
                     p.setColor(isDay ? options.getColor(LineGraphColorValues.COLOR_SUNPATH_DAY_STROKE) : options.getColor(LineGraphColorValues.COLOR_SUNPATH_NIGHT_STROKE));
                     p.setAlpha(255);
                     c.drawPath(path, p);

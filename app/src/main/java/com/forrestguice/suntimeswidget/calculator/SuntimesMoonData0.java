@@ -66,7 +66,7 @@ public class SuntimesMoonData0 extends SuntimesData
      */
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
     {
-        Calendar apogeeDate = calculator.getMoonApogeeNextDate(todaysCalendar);
+        Calendar apogeeDate = (calculator != null ? calculator.getMoonApogeeNextDate(todaysCalendar) : null);
         if (apogeeDate != null) {
             SuntimesCalculator.MoonPosition apogeePosition = calculator.getMoonPosition(apogeeDate);
             return new Pair<>(apogeeDate, apogeePosition);
@@ -78,7 +78,7 @@ public class SuntimesMoonData0 extends SuntimesData
      */
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
     {
-        Calendar perigeeDate = calculator.getMoonPerigeeNextDate(todaysCalendar);
+        Calendar perigeeDate = (calculator != null ? calculator.getMoonPerigeeNextDate(todaysCalendar) : null);
         if (perigeeDate != null) {
             SuntimesCalculator.MoonPosition perigeePosition = calculator.getMoonPosition(perigeeDate);
             return new Pair<>(perigeeDate, perigeePosition);
@@ -99,6 +99,7 @@ public class SuntimesMoonData0 extends SuntimesData
         otherCalendar = Calendar.getInstance(timezone);
         if (todayIsNotToday())
         {
+            //noinspection ConstantConditions
             todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
             otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
         }

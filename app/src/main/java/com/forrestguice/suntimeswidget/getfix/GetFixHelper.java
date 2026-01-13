@@ -107,6 +107,7 @@ public class GetFixHelper implements LocationHelper
         if (!hasActivity()) {
             throw new NullPointerException("Activity required but the reference is null!");
         }
+        //noinspection ConstantConditions
         return activity;
     }
 

@@ -1768,8 +1768,8 @@ public class PlacesListFragment extends DialogBase
                 {
                     Location location0 = WidgetSettings.loadLocationPref(context, 0);
                     LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-                    double d = ((item != null) ? item.location.distanceTo(location0) : 0);
-                    distance.setText(context != null ? LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), d, units, 2, true).toString() : "");
+                    double d = ((item != null && item.location != null) ? item.location.distanceTo(location0) : 0);
+                    distance.setText(LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), d, units, 2, true).toString());
                 }
                 distance.setVisibility(sortMode == SORT_BY_PROXIMITY ? View.VISIBLE : View.GONE);
             }
@@ -1778,13 +1778,13 @@ public class PlacesListFragment extends DialogBase
             {
                 boolean showLatLon = true;
                 CharSequence latLonDisplay = null;
-                if (showLatLon && (context != null && item != null && item.location != null)) {
+                if (showLatLon && (context != null && item.location != null)) {
                     latLonDisplay = locationDisplayString(context, item.location, true);
                 }
 
                 boolean showTags = true;
                 CharSequence tagDisplay = null;
-                if (showTags && (context != null && item != null))
+                if (showTags && (context != null))
                 {
                     if (tagMap == null) {
                         tagMap = PlaceTags.loadTagMap(context);

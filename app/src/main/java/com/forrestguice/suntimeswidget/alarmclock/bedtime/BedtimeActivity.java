@@ -251,7 +251,9 @@ public class BedtimeActivity extends AppCompatActivity
                 list.notifyItemChanged(0);
             }
         } else {
-            list.reloadAdapter();
+            if (list != null) {
+                list.reloadAdapter();
+            }
         }
     }
 

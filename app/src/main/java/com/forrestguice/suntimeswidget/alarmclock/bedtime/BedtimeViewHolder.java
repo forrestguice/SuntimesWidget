@@ -319,7 +319,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             if (card != null)
             {
-                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                Drawable background0 = ContextCompat.getDrawable(context, resId);
+                Drawable background = (background0 != null ? background0.mutate() : null);
                 if (Build.VERSION.SDK_INT >= 16) {
                     card.setBackground(background);
                 } else {
@@ -942,7 +943,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             if (card != null)
             {
-                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                Drawable background0 = ContextCompat.getDrawable(context, resId);
+                Drawable background = (background0 != null ? background0.mutate() : null);
                 if (Build.VERSION.SDK_INT >= 16) {
                     card.setBackground(background);
                 } else {

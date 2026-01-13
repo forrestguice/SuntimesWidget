@@ -1362,7 +1362,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, ringtoneType);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, (item.type != null ? item.type.getDisplayString() : ""));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, new AlarmSettings().setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
@@ -1750,7 +1750,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             if (itemDialog != null && offsetDialog != null)
             {
                 AlarmClockItem item = itemDialog.getItem();
-                item.offset = offsetDialog.getOffset();
+                if (item != null) {
+                    item.offset = offsetDialog.getOffset();
+                }
                 itemDialog.notifyItemChanged();
             }
         }
@@ -1775,7 +1777,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             if (itemDialog != null)
             {
                 AlarmClockItem item = itemDialog.getItem();
-                item.location = location;
+                if (item != null) {
+                    item.location = location;
+                }
                 itemDialog.notifyItemChanged();
                 return true;
             }
@@ -1801,8 +1805,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             if (itemDialog != null && repeatDialog != null)
             {
                 AlarmClockItem item = itemDialog.getItem();
-                item.repeating = repeatDialog.getRepetition();
-                item.repeatingDays = repeatDialog.getRepetitionDays();
+                if (item != null) {
+                    item.repeating = repeatDialog.getRepetition();
+                    item.repeatingDays = repeatDialog.getRepetitionDays();
+                }
                 itemDialog.notifyItemChanged();
             }
         }
@@ -1832,7 +1838,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 if (dialog != null && dialog1 != null)
                 {
                     AlarmClockItem item = dialog1.getItem();
-                    item.setActionID(actionNum, dialog.getIntentID());
+                    if (item != null) {
+                        item.setActionID(actionNum, dialog.getIntentID());
+                    }
                     dialog1.notifyItemChanged();
                 }
             }
