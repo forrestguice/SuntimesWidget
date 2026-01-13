@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>    <!-- monet requires api31+ -->
     <color name="monet_dark_primaryColor" />
+    <color name="monet_dark_window_bg" />
     <color name="monet_dark_dialog_frame" />
     <color name="monet_dark_dialog_bg" />
     <color name="monet_dark_dialog_bg_alt" />

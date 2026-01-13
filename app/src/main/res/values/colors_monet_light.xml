@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="monet_light_primaryColor" />
+    <color name="monet_light_window_bg" />
     <color name="monet_light_dialog_frame" />
     <color name="monet_light_dialog_bg" />
     <color name="monet_light_dialog_bg_alt" />
