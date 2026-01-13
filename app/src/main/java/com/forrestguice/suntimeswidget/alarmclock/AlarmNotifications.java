@@ -285,7 +285,6 @@ public class AlarmNotifications extends BroadcastReceiver
 
         }
         Log.e(TAG, "showTimeUntilToast: context is null!");
-        return;
     }
 
     /**
@@ -1254,6 +1253,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param alarm AlarmClockItem
      * @return a Notification object (or null if a notification shouldn't be shown)
      */
+    @Nullable
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, alarm);

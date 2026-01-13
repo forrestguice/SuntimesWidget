@@ -128,12 +128,15 @@ public class WorldMapSeekBar extends SeekBar
         getProgressDrawable().setBounds(bounds);
     }
 
-    private void initTick(Drawable tick, boolean majorTick)
+    private void initTick(@Nullable Drawable tick, boolean majorTick)
     {
         initTick(tick, majorTick, (majorTick ? majorTickColor : minorTickColor));
     }
-    private void initTick(Drawable tick, boolean majorTick, int color)
+    private void initTick(@Nullable Drawable tick, boolean majorTick, int color)
     {
+        if (tick == null) {
+            return;
+        }
         int w = tick.getIntrinsicWidth();
         int h = tick.getIntrinsicHeight();
         int wBound = w <= 0 ? 1 : w / 2;

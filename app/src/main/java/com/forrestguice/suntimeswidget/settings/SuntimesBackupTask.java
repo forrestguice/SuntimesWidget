@@ -160,8 +160,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         out.write(("\"" + KEY_VERSION + "\": " + BuildConfig.VERSION_CODE).getBytes());                // declare version (expected to be the second item)
         int c = 2;    // keys written
 
-        if (includedKeys.containsKey(KEY_APPSETTINGS) && includedKeys.get(KEY_APPSETTINGS))
+        if (containsAndisTrue(includedKeys, KEY_APPSETTINGS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -172,6 +173,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             if (Build.VERSION.SDK_INT >= 24)
             {
+                //noinspection ConstantConditions
                 if (c > 0) {
                     out.write(",\n".getBytes());
                 }
@@ -182,8 +184,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             }
         }
 
-        if (includedKeys.containsKey(KEY_WIDGETSETTINGS) && includedKeys.get(KEY_WIDGETSETTINGS) && appWidgetIds.size() > 0)
+        if (containsAndisTrue(includedKeys, KEY_WIDGETSETTINGS) && appWidgetIds.size() > 0)
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -193,8 +196,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_ALARMITEMS) && includedKeys.get(KEY_ALARMITEMS))
+        if (containsAndisTrue(includedKeys, KEY_ALARMITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -204,8 +208,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_EVENTITEMS) && includedKeys.get(KEY_EVENTITEMS))
+        if (containsAndisTrue(includedKeys, KEY_EVENTITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -219,8 +224,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_PLACEITEMS) && includedKeys.get(KEY_PLACEITEMS))
+        if (containsAndisTrue(includedKeys, KEY_PLACEITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -230,8 +236,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_ACTIONS) && includedKeys.get(KEY_ACTIONS))
+        if (containsAndisTrue(includedKeys, KEY_ACTIONS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -241,8 +248,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_WIDGETTHEMES) && includedKeys.get(KEY_WIDGETTHEMES))
+        if (containsAndisTrue(includedKeys, KEY_WIDGETTHEMES))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -252,8 +260,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_COLORS) && includedKeys.get(KEY_COLORS))
+        if (containsAndisTrue(includedKeys, KEY_COLORS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -261,6 +270,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             writeColorsJSONArray(context, new AppColorValuesCollection<ColorValues>(context), out);
             c++;
 
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -268,6 +278,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             writeColorsJSONArray(context, new WorldMapColorValuesCollection<ColorValues>(context), out);
             c++;
 
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -278,6 +289,15 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
         out.write("}".getBytes());
         out.flush();
+    }
+
+    public static boolean containsAndisTrue(Map<String, Boolean> map, String key)
+    {
+        if (map.containsKey(key)) {
+            Boolean b = map.get(key);
+            return (b != null && b);
+        }
+        return false;
     }
 
     /**
@@ -595,7 +615,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                         .show();
 
             } else if (result && shareUri != null) {
-                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                SnackbarUtils.make(context, view, message, 7000)
                         .setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri))
                         .show();
             }
