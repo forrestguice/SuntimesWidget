@@ -2167,9 +2167,9 @@ public class AlarmListDialog extends DialogBase
                     } else if (background instanceof AnimationDrawable) {
                         //Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
                         AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
-                    } else {
+                    } //else {
                         //Log.d("DEBUG", "starting background: skipped: " + this);
-                    }
+                    //}
                 }
             }
         }

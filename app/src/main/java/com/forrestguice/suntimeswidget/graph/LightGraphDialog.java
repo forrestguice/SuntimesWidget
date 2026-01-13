@@ -202,9 +202,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
         initLocale(context);
 
         text_title = (TextView) v.findViewById(R.id.dialog_title);
-        if (text_title != null) {
+        //if (text_title != null) {
             //text_title.setOnClickListener(onTitleClicked);
-        }
+        //}
 
         text_time = (TextView) v.findViewById(R.id.info_time_graph);
         if (text_time != null) {
@@ -322,9 +322,8 @@ public class LightGraphDialog extends BottomSheetDialogBase
 
     private void themeViews(Context context)
     {
-        if (themeOverride != null)
+        /*if (themeOverride != null)
         {
-            /*
             options.init(themeOverride);
             card_adapter.setThemeOverride(themeOverride);
 
@@ -341,8 +340,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             if (options.timeSizeSp != null) {
                 //text_year_length.setTextSize(options.timeSizeSp);
             }
-            */  // TODO
-        }
+        } */  // TODO
         updateGraphColors(context);
     }
 

@@ -186,11 +186,11 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
                 // k = 1;
                 point[0] = point[1] = 0;
 
-            } else if (cosC < 0) {
+            } //else if (cosC < 0) {
                 // k = 1;
                 //point[0] = -1 * center[0];    // TODO
                 //point[1] = center[1] + 180;
-            }
+            //}
         } else {
             double k = c / Math.sin(c);
             double R = 1;

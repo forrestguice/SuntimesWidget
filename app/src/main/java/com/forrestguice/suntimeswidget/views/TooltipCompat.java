@@ -44,9 +44,9 @@ public class TooltipCompat
         final Context context = view.getContext();
         if (context != null && tooltipText != null)
         {
-            if (context.getApplicationContext().getApplicationInfo().targetSdkVersion >= 26) {
+            //if (context.getApplicationContext().getApplicationInfo().targetSdkVersion >= 26) {
                 //return;  // TODO: call through to built-in api
-            }
+            //}
 
             view.setLongClickable(true);
             view.setOnLongClickListener(new View.OnLongClickListener()

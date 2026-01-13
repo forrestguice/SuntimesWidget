@@ -399,9 +399,7 @@ public abstract class SuntimesActivityTestBase
             automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
-        } else {
-            // TODO
-        }
+        } // else // TODO
     }
 
     public static Context getContext() {

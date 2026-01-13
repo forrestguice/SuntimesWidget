@@ -374,8 +374,10 @@ public class SuntimesThemeProviderTest
         if (cursor != null) {
             try {
                 int index = cursor.getColumnIndex(column);
+                //noinspection StatementWithEmptyBody
                 if (cursor.getType(index) == Cursor.FIELD_TYPE_INTEGER);
                 {
+                    //noinspection unused
                     int value = cursor.getInt(index);
                     return true;
                 }

@@ -38,7 +38,7 @@ public final class EventAlias
         this.summary = null;
     }
 
-    public EventAlias(EventAlias other )
+    public EventAlias(EventAlias other)
     {
         this.type = other.type;
         this.id = other.id;

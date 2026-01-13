@@ -247,11 +247,11 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                         }
                     }
 
-                    if (!found)
-                    {
+                    //if (!found)
+                    //{
                         // TODO: fallback action when the choice isn't in the adapter because it wasn't added for some reason, or it failed to resolve.. maybe display a message
                         // for now do nothing.. the spinner won't match the custom selection (instead displaying an arbitrary item), and will eventually overwrite it.
-                    }
+                    //}
                 }
             }
         }
