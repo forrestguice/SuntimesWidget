@@ -593,7 +593,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         if (view.typeButton != null)
         {
             view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
-            view.typeButton.setContentDescription(item.type.getDisplayString());
+            view.typeButton.setContentDescription(item.type != null ? item.type.getDisplayString() : AlarmClockItem.AlarmType.ALARM.getDisplayString());
 
             if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));

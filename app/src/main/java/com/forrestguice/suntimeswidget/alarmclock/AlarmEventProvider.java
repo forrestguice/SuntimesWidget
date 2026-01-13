@@ -714,7 +714,8 @@ public class AlarmEventProvider extends ContentProvider
         eventCalendar.setTimeInMillis(timedatemillis);
 
         Calendar alarmCalendar = Calendar.getInstance();
-        long offset = Long.parseLong(selectionMap != null && selectionMap.containsKey(EXTRA_ALARM_OFFSET) ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0");
+        String offset0 = (selectionMap != null && selectionMap.containsKey(EXTRA_ALARM_OFFSET) ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0");
+        long offset = (offset0 != null ? Long.parseLong(offset0) : 0);
         alarmCalendar.setTimeInMillis(eventCalendar.getTimeInMillis() + offset);
 
         while (alarmCalendar.getTimeInMillis() < now.getTimeInMillis()) {

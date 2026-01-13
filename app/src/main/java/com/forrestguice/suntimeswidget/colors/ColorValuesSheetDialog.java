@@ -216,7 +216,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     public void updateFilterVisibility(Context context)
     {
         if (check_filter != null) {
-            check_filter.setVisibility((colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT && hasFilter())
+            check_filter.setVisibility((colorSheet != null && colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT && hasFilter())
                     ? View.VISIBLE : View.GONE);
         }
     }
@@ -254,14 +254,18 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
             titleText.setText(title);
         }
 
-        colorSheet.updateViews();
+        if (colorSheet != null) {
+            colorSheet.updateViews();
+        }
     }
 
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
         outState.putSerializable(ARG_COLLECTION, colorCollection);
-        colorSheet.onSaveInstanceState(outState);
+        if (colorSheet != null) {
+            colorSheet.onSaveInstanceState(outState);
+        }
         super.onSaveInstanceState(outState);
     }
     protected void onRestoreInstanceState( Bundle savedState ) {

@@ -166,7 +166,7 @@ public class PlacesActivity extends AppCompatActivity
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED, item.rowID);
         intent.putExtra(EXTRA_LOCATION, item.location);
-        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, (list != null && list.isModified()));
         setResult(Activity.RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
@@ -184,7 +184,7 @@ public class PlacesActivity extends AppCompatActivity
     public void onBackPressed()
     {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, (list != null && list.isModified()));
         setResult(list.isModified() ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
         finish();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);

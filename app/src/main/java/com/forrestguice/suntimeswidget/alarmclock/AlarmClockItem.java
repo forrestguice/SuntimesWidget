@@ -363,6 +363,9 @@ public class AlarmClockItem implements Parcelable
 
     public int getIcon()
     {
+        if (this.type == null) {
+            return ICON_NOTIFICATION;
+        }
         switch (this.type) {
             case ALARM: return ICON_ALARM;
             case NOTIFICATION2: return ICON_NOTIFICATION2;
@@ -373,6 +376,9 @@ public class AlarmClockItem implements Parcelable
 
     public String getLabel(Context context)
     {
+        if (type == null) {
+            return context.getString(R.string.alarmMode_notification);
+        }
         switch(type) {
             case ALARM: return context.getString(R.string.alarmMode_alarm);
             case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:

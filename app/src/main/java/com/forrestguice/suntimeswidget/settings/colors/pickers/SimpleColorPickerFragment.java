@@ -152,16 +152,19 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
         try {
             value[0] = Integer.parseInt(edit_r.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[0] = 0;
         }
         try {
             value[1] = Integer.parseInt(edit_g.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[1] = 0;
         }
         try {
             value[2] = Integer.parseInt(edit_b.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[2] = 0;
         }
 

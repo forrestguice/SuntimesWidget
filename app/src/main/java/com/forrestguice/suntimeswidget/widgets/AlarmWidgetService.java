@@ -140,7 +140,7 @@ public class AlarmWidgetService extends RemoteViewsService
                         AlarmNotifications.updateAlarmTime(context, item);
                     }
 
-                    if (filterTypes.contains(item.type.name())) {
+                    if (item.type != null && filterTypes.contains(item.type.name())) {
                         items.add(item);
                     }
                     cursor.moveToNext();

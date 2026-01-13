@@ -166,7 +166,11 @@ public class GnssStatusBarView extends GnssStatusView
             SatelliteItem item = adapter.getItem(popupItem.id, popupItem.constellation);
             if (item != null) {
                 popupItem.updateViews(context, item);
-            } else popup.dismiss();
+            } else {
+                if (popup != null) {
+                    popup.dismiss();
+                }
+            }
         }
     }
     @Nullable

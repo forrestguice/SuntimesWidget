@@ -534,6 +534,7 @@ public class GetFixHelper implements LocationHelper
         if (hasActivity()) {
             final KeepTryingDialog dialog = new KeepTryingDialog();
             dialog.setHelper(this);
+            //noinspection ConstantConditions
             dialog.show(getActivity().getSupportFragmentManager(), DIALOGTAG_KEEPTRYING);
         } else Log.w("GetFixHelper", "showKeepSearchingPrompt: activity is null!");
     }
@@ -608,6 +609,7 @@ public class GetFixHelper implements LocationHelper
         if (hasActivity()) {
             final EnableGPSDialog dialog = new EnableGPSDialog();
             dialog.setHelper(this);
+            //noinspection ConstantConditions
             dialog.show(getActivity().getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
         } else Log.w("GetFixHelper", "showGPSEnabledPrompt: activity is null!");
     }

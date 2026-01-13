@@ -654,7 +654,9 @@ public class WelcomeActivity extends AppCompatActivity
         {
             @Override
             public void onClick(View v) {
-                BuildPlacesTask.promptAddWorldPlaces(getActivity(), buildPlacesListener);
+                if (getContext() != null) {
+                    BuildPlacesTask.promptAddWorldPlaces(getContext(), buildPlacesListener);
+                }
             }
         };
         private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
@@ -727,9 +729,7 @@ public class WelcomeActivity extends AppCompatActivity
         private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
-                if (getChildFragmentManager() != null) {
-                    return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
-                }
+                return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
             }
             return null;
         }
@@ -831,7 +831,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected TimeZoneDialog getTimeZoneDialog() {
-            return ((getChildFragmentManager() != null) ? (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog") : null);
+            return (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog");
         }
 
         @Override

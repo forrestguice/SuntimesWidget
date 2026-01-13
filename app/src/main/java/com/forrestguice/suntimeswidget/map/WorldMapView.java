@@ -469,7 +469,7 @@ public class WorldMapView extends ImageView
         @Override
         public void afterFrame(Bitmap frame, long offsetMinutes)
         {
-            if (isRecording()) {
+            if (isRecording() && exportTask != null) {
                 exportTask.addBitmap(frame);
             }
         }

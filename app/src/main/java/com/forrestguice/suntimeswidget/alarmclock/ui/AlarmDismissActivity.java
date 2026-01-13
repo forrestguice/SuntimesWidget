@@ -176,6 +176,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private String appTheme;
     private int appThemeResID;
     private boolean isBrightMode = false;
+    @Nullable
     private ColorValues colors;
 
     private void initTheme(Context context)
@@ -1087,10 +1088,13 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                     case KeyEvent.KEYCODE_CAMERA:
                     case KeyEvent.KEYCODE_VOLUME_UP:
                     case KeyEvent.KEYCODE_VOLUME_DOWN:
-                        hardwareButtonPressed = true;
-                        String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
-                        Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarmAction, alarm.getUri());
-                        sendBroadcast(intent);
+                        if (alarm != null)
+                        {
+                            hardwareButtonPressed = true;
+                            String alarmAction = AlarmSettings.loadPrefOnHardwareButtons(AlarmDismissActivity.this);
+                            Intent intent = AlarmNotifications.getAlarmIntent(AlarmDismissActivity.this, alarmAction, alarm.getUri());
+                            sendBroadcast(intent);
+                        }
                         return true;
 
                     default:

@@ -113,6 +113,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         setArguments(new Bundle());
     }
 
+    @Nullable
     protected LocationHelper getFixHelper = null;
     public void setLocationHelper( @Nullable LocationHelper helper ) {
         getFixHelper = helper;

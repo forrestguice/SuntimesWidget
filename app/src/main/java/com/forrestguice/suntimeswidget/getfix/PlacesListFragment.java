@@ -380,7 +380,9 @@ public class PlacesListFragment extends DialogBase
 
     protected void finishActionMode()
     {
-        actionMode.finish();
+        if (actionMode != null) {
+            actionMode.finish();
+        }
         if (listener != null) {
             listener.onActionModeFinished();
         }

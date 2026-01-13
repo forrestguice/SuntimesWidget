@@ -133,7 +133,8 @@ public class GpsDebugDisplay
         if (status != null) {
             for (int i : getSatellites(status, usedInFix)) {
                 int type = status.getConstellationType(i);
-                int c = (count.containsKey(type) ? count.get(type) : 0);
+                Integer c0 = (count.containsKey(type) ? count.get(type) : 0);
+                int c = (c0 != null ? c0 : 0);
                 count.put(type, ++c);
             }
         }

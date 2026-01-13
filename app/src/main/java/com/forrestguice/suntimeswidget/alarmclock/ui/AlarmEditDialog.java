@@ -613,7 +613,7 @@ public class AlarmEditDialog extends DialogBase
         if (holder == null || context == null || !isAdded()) {
             return;
         }
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
+        boolean isSchedulable = (item != null && AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false));
 
         if (holder.text_datetime != null) {
             holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, enable) : "");
@@ -670,16 +670,19 @@ public class AlarmEditDialog extends DialogBase
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                if (isChecked && !item.vibrate)
+                if (item != null)
                 {
-                    Context context = getContext();
-                    Vibrator vibrate = ((context != null) ? (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) : null);
-                    if (vibrate != null) {
-                        vibrate.vibrate(500);
+                    if (isChecked && !item.vibrate)
+                    {
+                        Context context = getContext();
+                        Vibrator vibrate = ((context != null) ? (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) : null);
+                        if (vibrate != null) {
+                            vibrate.vibrate(500);
+                        }
                     }
+                    item.vibrate = isChecked;
+                    item.modified = true;
                 }
-                item.vibrate = isChecked;
-                item.modified = true;
             }
         };
     }
@@ -717,7 +720,7 @@ public class AlarmEditDialog extends DialogBase
                 itemView.chip_action2.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
 
                 Context context = getContext();
-                if (context != null && AlarmSettings.loadPrefAlarmUpcoming(context) > 0)
+                if (context != null && item != null && AlarmSettings.loadPrefAlarmUpcoming(context) > 0)
                 {
                     if (isChecked) {
                         item.clearFlag(AlarmClockItem.FLAG_REMINDER_WITHIN);
@@ -729,7 +732,9 @@ public class AlarmEditDialog extends DialogBase
                     } else item.clearFlag(AlarmClockItem.FLAG_REMINDER_WITHIN);
                 }*/
 
-                item.modified = true;
+                if (item != null) {
+                    item.modified = true;
+                }
             }
         };
     }

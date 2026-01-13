@@ -65,13 +65,16 @@ public class ExportPlacesTask extends ExportTask
     @Override
     public boolean export( Context context, BufferedOutputStream out ) throws IOException
     {
+        boolean result = false;
         cursor = null;
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
         db.open();
         numEntries = db.getPlaceCount();
         cursor = db.getAllPlaces(-1, true);
-        boolean result = exportDatabase(db, cursor, out);
-        cursor.close();
+        if (cursor != null) {
+            result = exportDatabase(db, cursor, out);
+            cursor.close();
+        }
         return result;
     }
 

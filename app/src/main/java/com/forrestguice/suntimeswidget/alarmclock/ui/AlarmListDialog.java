@@ -451,7 +451,8 @@ public class AlarmListDialog extends DialogBase
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            SnackbarUtils.make(context, view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), SnackbarUtils.LENGTH_INDEFINITE)
+            String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmClockItem.AlarmType.ALARM.getDisplayString());
+            SnackbarUtils.make(context, view, context.getString(R.string.deletealarm_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
@@ -1827,12 +1828,16 @@ public class AlarmListDialog extends DialogBase
             if (view.typeButton != null)
             {
                 int typeDrawable;
-                switch (item.type) {
-                    case NOTIFICATION: typeDrawable = res_iconNotification; break;
-                    case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
-                    case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
-                    case ALARM: default: typeDrawable = res_iconAlarm; break;
-                }
+                if (item.type != null)
+                {
+                    switch (item.type) {
+                        case NOTIFICATION: typeDrawable = res_iconNotification; break;
+                        case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
+                        case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
+                        case ALARM: default: typeDrawable = res_iconAlarm; break;
+                    }
+                } else typeDrawable = res_iconAlarm;
+
                 view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, typeDrawable));
                 view.typeButton.setContentDescription(item.type.getDisplayString());
 

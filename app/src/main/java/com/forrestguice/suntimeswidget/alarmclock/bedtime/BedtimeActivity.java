@@ -219,7 +219,7 @@ public class BedtimeActivity extends AppCompatActivity
 
     protected void onAlarmItemUpdated(@Nullable Long alarmID, boolean deleted)
     {
-        BedtimeItemAdapter adapter = list.getAdapter();
+        BedtimeItemAdapter adapter = (list != null ? list.getAdapter() : null);
         if (adapter != null)
         {
             if (alarmID != null)

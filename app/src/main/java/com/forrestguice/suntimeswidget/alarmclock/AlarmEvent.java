@@ -175,7 +175,8 @@ public class AlarmEvent
 
         @NonNull
         public String getTitle() {
-            return (event != null ? event.getLongDisplayString() : title);
+            return (event != null ? event.getLongDisplayString()
+                    : title != null ? title : "");
         }
 
         @Nullable

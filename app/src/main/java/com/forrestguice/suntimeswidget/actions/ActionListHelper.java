@@ -218,7 +218,8 @@ public class ActionListHelper
         {
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             String desc = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-            Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
+            String color0 = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR);
+            int color = (color0 != null) ? Integer.parseInt(color0) : Color.WHITE;
             String[] tags = WidgetActions.loadActionTags(context, 0, id).toArray(new String[0]);
             if (title != null && !title.trim().isEmpty()) {
                 ids.add(new ActionDisplay(id, title, desc, color, tags));

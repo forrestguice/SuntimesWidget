@@ -124,6 +124,7 @@ public final class ShadowLengthEvent extends ElevationEvent
                     length = Double.parseDouble(shadowParts[1]);
 
                 } else if (shadowParts.length > 0) {
+                    //noinspection ConstantConditions
                     height = 1;
                     length = Double.parseDouble(shadowParts[0]);
                 }

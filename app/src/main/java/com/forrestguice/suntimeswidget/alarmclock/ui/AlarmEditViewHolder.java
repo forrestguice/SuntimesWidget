@@ -235,12 +235,15 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }*/
 
             int menuDrawable;
-            switch (item.type) {
-                case NOTIFICATION: menuDrawable = res_icNotification; break;
-                case NOTIFICATION1: menuDrawable = res_icNotification1; break;
-                case NOTIFICATION2: menuDrawable = res_icNotification2; break;
-                case ALARM: default:  menuDrawable = res_icAlarm; break;
-            }
+            if (item.type != null) {
+                switch (item.type) {
+                    case NOTIFICATION: menuDrawable = res_icNotification; break;
+                    case NOTIFICATION1: menuDrawable = res_icNotification1; break;
+                    case NOTIFICATION2: menuDrawable = res_icNotification2; break;
+                    case ALARM: default: menuDrawable = res_icAlarm; break;
+                }
+            } else menuDrawable = res_icAlarm;
+
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
             menu_type.setContentDescription(item.type.getDisplayString());
             TooltipCompat.setTooltipText(menu_type, menu_type.getContentDescription());

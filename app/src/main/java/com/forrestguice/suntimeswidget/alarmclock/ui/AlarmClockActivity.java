@@ -358,12 +358,16 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (param_data != null)
                 {
                     try {
-                        list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                        if (list != null) {
+                            list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                        }
                     } catch (NumberFormatException e) {
                         Log.e(TAG, "handleIntent: invalid data! " + e);
                     }
                 } else {
-                    list.notifyAlarmsCleared();
+                    if (list != null) {
+                        list.notifyAlarmsCleared();
+                    }
                     selectItem = false;
                 }
             }
@@ -371,7 +375,9 @@ public class AlarmClockActivity extends AppCompatActivity
             if (param_data != null)
             {
                 try {
-                    list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                    if (list != null) {
+                        list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                    }
                 } catch (NumberFormatException e) {
                     Log.e(TAG, "handleIntent: invalid data! " + e);
                 }
@@ -382,7 +388,9 @@ public class AlarmClockActivity extends AppCompatActivity
         if (selectItem && selectedID != -1)
         {
             Log.d(TAG, "handleIntent: selected id: " + selectedID);
-            list.setSelectedRowID(selectedID);
+            if (list != null) {
+                list.setSelectedRowID(selectedID);
+            }
         }
     }
 
@@ -429,7 +437,9 @@ public class AlarmClockActivity extends AppCompatActivity
             param_skipUI = intent.getBooleanExtra(EXTRA_SKIP_UI, false);
         }
         if (param_skipUI) {   // TODO: support date
-            list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
+            if (list != null) {
+                list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
+            }
         } else {
             AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
             AlarmNotifications.updateAlarmTime(context, item);
@@ -905,7 +915,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void showAddDialog(@Nullable AlarmClockItem.AlarmType type)
     {
-        list.clearSelection();
+        if (list != null) {
+            list.clearSelection();
+        }
 
         AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
@@ -1118,10 +1130,11 @@ public class AlarmClockActivity extends AppCompatActivity
         } else if (isAddDialogShowing()) {
             sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
 
-        } else if (list.getSelectedRowID() != -1) {
+        } else if (list != null && list.getSelectedRowID() != -1) {
             list.clearSelection();
 
         } else if (warnings.dismissWarning()) {
+            //noinspection UnnecessaryReturnStatement
             return;
 
         } else {

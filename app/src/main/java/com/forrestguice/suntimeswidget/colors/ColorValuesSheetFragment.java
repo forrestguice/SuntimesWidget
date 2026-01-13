@@ -158,9 +158,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     public void requestFocus()
     {
         if (mode == MODE_EDIT) {
-            editDialog.requestFocus();
+            if (editDialog != null) {
+                editDialog.requestFocus();
+            }
         } else {
-            listDialog.requestFocus();
+            if (listDialog != null) {
+                listDialog.requestFocus();
+            }
         }
     }
 
@@ -429,10 +433,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected void toggleFragmentVisibility(int mode)
     {
-        if (listDialog.getView() != null) {
+        if (listDialog != null && listDialog.getView() != null) {
             listDialog.getView().setVisibility(mode == MODE_EDIT ? View.GONE : View.VISIBLE);
         }
-        if (editDialog.getView() != null) {
+        if (editDialog != null && editDialog.getView() != null) {
             editDialog.getView().setVisibility(mode == MODE_EDIT ? View.VISIBLE : View.GONE);
         }
         if (AppSettings.isTelevision(getActivity())) {

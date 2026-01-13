@@ -142,6 +142,7 @@ public class EventListHelper
         typeFilter = filter;
     }
 
+    @Nullable
     private String[] selectFilter = null;
     public void setSelectFilter(@Nullable String[] filter) {
         selectFilter = filter;

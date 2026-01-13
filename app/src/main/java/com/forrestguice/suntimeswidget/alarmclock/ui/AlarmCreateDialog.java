@@ -1101,7 +1101,9 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
                 fragment.setType(getAlarmType());
             }
         }
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public AlarmClockItem.AlarmType getAlarmType() {
         return (AlarmClockItem.AlarmType) getArgs().getSerializable(EXTRA_ALARMTYPE);
