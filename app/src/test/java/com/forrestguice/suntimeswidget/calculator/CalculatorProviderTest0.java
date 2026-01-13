@@ -291,6 +291,7 @@ public class CalculatorProviderTest0
     // Query Helpers
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void test_processSelection()
     {

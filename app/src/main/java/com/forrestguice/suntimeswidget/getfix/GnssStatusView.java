@@ -64,6 +64,7 @@ public abstract class GnssStatusView extends FrameLayout
 
     public void loadSettings(Context context) {
         if (isInEditMode()) {
+            //noinspection UnnecessaryReturnStatement
             return;
         }
     }

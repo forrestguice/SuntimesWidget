@@ -106,7 +106,9 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_getFileName()
     {
+        //noinspection ConstantConditions
         String filename0 = ExportTask.getFileName(null, null);
+        //noinspection ConstantConditions
         assertNull(filename0);
     }
 

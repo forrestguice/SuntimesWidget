@@ -1651,6 +1651,7 @@ public class PlacesListFragment extends DialogBase
                 return results;
             }
 
+            @SuppressWarnings("UnnecessaryContinue")
             protected List<PlaceItem> getFilteredValues(String constraint)
             {
                 List<PlaceItem> values0  = new ArrayList<>();

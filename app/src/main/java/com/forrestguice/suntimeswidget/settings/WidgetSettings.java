@@ -2428,6 +2428,7 @@ public class WidgetSettings
             return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM;
         else return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM + "_" + slotName;
     }
+    @SuppressWarnings("UnnecessaryContinue")
     public static String defaultTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         slotName = slotName.toLowerCase(Locale.US).trim();

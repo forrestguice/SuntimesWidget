@@ -162,6 +162,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         Context context = activityRule.getActivity();
         String[] values = context.getResources().getStringArray(array1Id);
         for (String value : values) {
+            //noinspection unchecked
             Enum<?> e = Enum.valueOf(enumClass, value);
         }
     }

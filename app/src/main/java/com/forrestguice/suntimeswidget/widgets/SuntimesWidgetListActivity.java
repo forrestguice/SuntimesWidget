@@ -386,6 +386,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             dismissProgress();
 
             Context context = SuntimesWidgetListActivity.this;
+            //noinspection ConstantConditions
             if (context != null)
             {
                 File file = results.getExportFile();

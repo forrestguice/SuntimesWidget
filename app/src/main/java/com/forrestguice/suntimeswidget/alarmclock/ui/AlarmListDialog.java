@@ -755,6 +755,7 @@ public class AlarmListDialog extends DialogBase
                     String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
                     Toast.makeText(getContext(), successMessage, Toast.LENGTH_LONG).show();
                 }*/
+                //noinspection UnnecessaryReturnStatement
                 return;    // finished import
 
             } else {
