@@ -108,8 +108,8 @@ public class ColorDialog extends BottomSheetDialogBase
         } else {
             colorPagerArgs.putInt(KEY_SUGGESTED, color);
         }
-        if (isAdded()) {
-            updateViews(getActivity());
+        if (isAdded() && getContext() != null) {
+            updateViews(getContext());
         }
     }
 
@@ -136,8 +136,8 @@ public class ColorDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        Context context = requireActivity();
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
         viewModel = ViewModelProviders.of(requireActivity()).get(ColorPickerFragment.ColorPickerModel.class);
@@ -187,8 +187,7 @@ public class ColorDialog extends BottomSheetDialogBase
         @Override
         public void onShow(DialogInterface dialog)
         {
-            Context context = getActivity();
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_cancel.requestFocus();
             }
         }
@@ -310,8 +309,8 @@ public class ColorDialog extends BottomSheetDialogBase
             @Override
             public void onChanged(@Nullable Integer value)
             {
-                if (isAdded() && getView() != null) {
-                    updateViews(getActivity());
+                if (isAdded() && getView() != null && getContext() != null) {
+                    updateViews(getContext());
                 }
             }
         });
@@ -319,7 +318,7 @@ public class ColorDialog extends BottomSheetDialogBase
         updateViews(context);
     }
 
-    public void updateViews(Context context)
+    public void updateViews(@NonNull Context context)
     {
         if (btn_suggest != null) {
             btn_suggest.setVisibility(suggestedColor() != null ? View.VISIBLE : View.GONE);
