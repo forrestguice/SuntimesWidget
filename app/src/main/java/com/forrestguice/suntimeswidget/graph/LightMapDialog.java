@@ -1003,10 +1003,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         if (d >= 0 && d < eventIDs.length) {
             eventID = eventIDs[d];
         }
-        if (eventID != null) {
-            return eventID;
-        }
-        return null;
+        return eventID;
     }
 
     @Nullable
