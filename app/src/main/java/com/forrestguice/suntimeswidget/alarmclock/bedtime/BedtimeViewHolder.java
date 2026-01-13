@@ -849,7 +849,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
                     R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
@@ -860,7 +860,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
             a.recycle();
 
-            AlarmClockItem bedtimeOff = item.getAlarmItem();
+            AlarmClockItem bedtimeOff = (item != null ? item.getAlarmItem() : null);
             boolean enabled = (bedtimeOff != null && bedtimeOff.enabled);
             setCardBackground(context, enabled ? cardBgOn : cardBgOff);
 

@@ -120,6 +120,7 @@ public class ViewUtils
         {
             this.delayMs = delayMs;
             this.listener = listener;
+            //noinspection ConstantConditions
             if (listener == null) {
                 throw new NullPointerException("OnClickListener is null!");
             }
@@ -190,6 +191,7 @@ public class ViewUtils
         {
             this.delayMs = delayMs;
             this.listener = listener;
+            //noinspection ConstantConditions
             if (listener == null) {
                 throw new NullPointerException("OnMenuItemClickListener is null!");
             }
@@ -242,6 +244,7 @@ public class ViewUtils
         {
             this.delayMs = delayMs;
             this.listener = listener;
+            //noinspection ConstantConditions
             if (listener == null) {
                 throw new NullPointerException("OnPreferenceClickListener is null!");
             }

@@ -227,8 +227,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void initThemeAdapter(Context context)
     {
+        SuntimesRiseSetData linked = data.getLinked();
         adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.sortedValues(true));
-        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday(), data.getLinked().sunriseCalendarToday());
+        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday(), (linked != null ? linked.sunriseCalendarToday() : data.sunsetCalendarToday()));
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

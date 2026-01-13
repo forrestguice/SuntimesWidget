@@ -359,7 +359,8 @@ public class SuntimesActivity extends AppCompatActivity
                 configDate();
 
             } else if (action.equals(ACTION_SHOW_DATE)) {
-                showDate(intent.getLongExtra(EXTRA_SHOW_DATE, (Long) null));
+                long extraShowDate = intent.getLongExtra(EXTRA_SHOW_DATE, -1);
+                showDate((extraShowDate >= 0) ? extraShowDate : null);
 
             } else if (action.equals(ACTION_NOTE_SEEK)) {
                 String eventID = intent.getStringExtra(EXTRA_SOLAREVENT);

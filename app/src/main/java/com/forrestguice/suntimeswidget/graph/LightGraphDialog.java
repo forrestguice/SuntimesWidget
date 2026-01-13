@@ -1031,6 +1031,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             Context context = getContext();
             if (context != null)
             {
+                //noinspection ConstantConditions
                 options.colors = null;
                 updateGraphColors(context);
                 updateGraphViews(context);

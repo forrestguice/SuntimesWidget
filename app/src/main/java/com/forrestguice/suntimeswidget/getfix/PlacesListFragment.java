@@ -1551,6 +1551,7 @@ public class PlacesListFragment extends DialogBase
 
         protected void attachClickListeners(PlacesListViewHolder holder)
         {
+            //noinspection ConstantConditions
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(onItemClicked(holder));
                 holder.itemView.setOnLongClickListener(onItemLongClicked(holder));
@@ -1586,6 +1587,7 @@ public class PlacesListFragment extends DialogBase
 
         protected void detachClickListeners(PlacesListViewHolder holder)
         {
+            //noinspection ConstantConditions
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(null);
                 holder.itemView.setOnLongClickListener(null);

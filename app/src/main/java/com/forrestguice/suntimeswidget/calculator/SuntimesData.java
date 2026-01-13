@@ -262,11 +262,12 @@ public class SuntimesData
                 break;
 
             case SOLAR_TIME:
+                Location loc = (location != null) ? location : new Location("0", "0");
                 SolarTimeMode solarMode = settings.loadSolarTimeModePref(widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:
-                        timezone = TimeZones.apparentSolarTime(location, calculator);
+                        timezone = TimeZones.apparentSolarTime(loc, calculator);
                         break;
 
                     case GMST:
@@ -274,7 +275,7 @@ public class SuntimesData
                         break;
 
                     case LMST:
-                        timezone = TimeZones.siderealTime(location);
+                        timezone = TimeZones.siderealTime(loc);
                         break;
 
                     case UTC:
@@ -283,7 +284,7 @@ public class SuntimesData
 
                     case LOCAL_MEAN_TIME:
                     default:
-                        timezone = TimeZones.localMeanTime(location);
+                        timezone = TimeZones.localMeanTime(loc);
                         break;
                 }
                 break;

@@ -853,7 +853,7 @@ public class MoonRiseSetView1 extends LinearLayout
                 return getCalendarForEvent(data, MoonRiseSetEvent.valueOf(eventID));
             } catch (IllegalArgumentException e) {
                 Log.w("MoonRiseSetEvent", "Unrecognized eventID: " + eventID + ": " + e);
-                return getCalendarForEvent(data, (MoonRiseSetEvent) null);
+                return null;
             }
         }
         public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable MoonRiseSetEvent event)
