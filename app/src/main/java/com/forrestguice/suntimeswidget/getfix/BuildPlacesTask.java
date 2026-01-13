@@ -420,7 +420,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     /**
      * promptAddWorldPlaces
      */
-    public static void promptAddWorldPlaces(final Context context, final BuildPlacesTask.TaskListener l)
+    public static void promptAddWorldPlaces(@NonNull final Context context, final BuildPlacesTask.TaskListener l)
     {
         BuildPlacesTask.chooseGroups(context, new BuildPlacesTask.ChooseGroupsDialogListener()
         {

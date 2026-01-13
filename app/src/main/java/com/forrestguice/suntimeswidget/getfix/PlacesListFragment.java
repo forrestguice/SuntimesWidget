@@ -143,14 +143,15 @@ public class PlacesListFragment extends DialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
+        Context context = requireContext();
         View dialogContent = inflater.inflate(R.layout.layout_dialog_placeslist, parent, false);
 
-        adapter = new PlacesListAdapter(getActivity());
+        adapter = new PlacesListAdapter(context);
         adapter.setFilterText(getFilterText());
         adapter.setAdapterListener(listAdapterListener);
 
         listView = (RecyclerView) dialogContent.findViewById(R.id.placesList);
-        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listView.setLayoutManager(new LinearLayoutManager(context));
         listView.setAdapter(adapter);
 
         emptyView = dialogContent.findViewById(android.R.id.empty);
@@ -181,14 +182,15 @@ public class PlacesListFragment extends DialogBase
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        Context context = getContext();
         switch (requestCode)
         {
             case EXPORT_REQUEST:
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        exportPlaces(getActivity(), uri);
+                    if (uri != null && context != null) {
+                        exportPlaces(context, uri);
                     }
                 }
                 break;
@@ -197,8 +199,8 @@ public class PlacesListFragment extends DialogBase
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        importPlaces(getActivity(), uri);
+                    if (uri != null && context != null) {
+                        importPlaces(context, uri);
                     }
                 }
                 break;
@@ -247,7 +249,11 @@ public class PlacesListFragment extends DialogBase
             }
         }
 
-        switch (loadPrefPlacesListSortMode(getActivity()))
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        switch (loadPrefPlacesListSortMode(context))
         {
             case SORT_BY_PROXIMITY:
                 MenuItem sortByProximity = menu.findItem(R.id.sortByProximity);
@@ -274,39 +280,44 @@ public class PlacesListFragment extends DialogBase
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
+        Context context = getContext();
+        if (context == null) {
+            return false;
+        }
+
         int itemId = item.getItemId();
         if (itemId == R.id.sortByLabelAsc) {
-            sortList(getActivity(), SORT_BY_LABEL_ASC);
+            sortList(context, SORT_BY_LABEL_ASC);
             return true;
 
         } else if (itemId == R.id.sortByLabelDesc) {
-            sortList(getActivity(), SORT_BY_LABEL_DESC);
+            sortList(context, SORT_BY_LABEL_DESC);
             return true;
 
         } else if (itemId == R.id.sortByProximity) {
-            sortList(getActivity(), SORT_BY_PROXIMITY);
+            sortList(context, SORT_BY_PROXIMITY);
             return true;
 
         } else if (itemId == R.id.addPlace) {
-            addPlace(getActivity());
+            addPlace(context);
             return true;
 
         } else if (itemId == R.id.clearPlaces) {
-            clearPlaces(getActivity());
+            clearPlaces(context);
             return true;
 
         } else if (itemId == R.id.importPlaces) {
-            importPlaces(getActivity());
+            importPlaces(context);
             return true;
 
         } else if (itemId == R.id.exportPlaces) {
-            exportPlaces(getActivity());
+            exportPlaces(context);
             return true;
 
         } else if (itemId == R.id.addWorldPlaces) {
-            addWorldPlaces(getActivity());
+            addWorldPlaces(context);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -314,18 +325,21 @@ public class PlacesListFragment extends DialogBase
 
     protected void triggerActionMode(PlaceItem... items)
     {
+        Activity activity = getActivity();
         if (actionMode == null)
         {
-            if (items[0] != null)
+            if (items[0] != null && activity != null)
             {
-                actionMode = AppCompatActivity.startSupportActionMode(getActivity(), actions);
+                actionMode = AppCompatActivity.startSupportActionMode(activity, actions);
                 if (actionMode != null) {
-                    updateActionMode(getActivity(), items);
+                    updateActionMode(activity, items);
                 }
             }
 
         } else {
-            updateActionMode(getActivity(), items);
+            if (activity != null) {
+                updateActionMode(activity, items);
+            }
         }
     }
 
@@ -426,7 +440,9 @@ public class PlacesListFragment extends DialogBase
                 return true;
 
             } else if (itemId == R.id.deletePlace) {
-                deletePlace(getActivity(), items);
+                if (getContext() != null) {
+                    deletePlace(getContext(), items);
+                }
                 return true;
 
             } else if (itemId == R.id.sharePlace) {
@@ -462,7 +478,7 @@ public class PlacesListFragment extends DialogBase
 
     public void reloadAdapter( PlacesListTask.TaskListener taskListener )
     {
-        Context context = getActivity();
+        Context context = getContext();
         if (context != null)
         {
             PlacesListTask listTask = new PlacesListTask(context);
@@ -588,7 +604,7 @@ public class PlacesListFragment extends DialogBase
 
     protected void sharePlace(@Nullable PlaceItem item)
     {
-        Context context = getActivity();
+        Context context = getContext();
         if (item != null && item.location != null && context != null) {
             GeoIntents.shareLocation(context, Uri.parse(item.location.getUri()));
         }
@@ -598,7 +614,7 @@ public class PlacesListFragment extends DialogBase
     {
         @Nullable
         protected LocationHelper createLocationHelper() {
-            return new GetFixHelper((AppCompatActivity) getActivity(), getFixUI());
+            return (getActivity() != null ? new GetFixHelper((AppCompatActivity) getActivity(), getFixUI()) : null);
         }
     }
 
@@ -634,7 +650,7 @@ public class PlacesListFragment extends DialogBase
 
         if (!editHandled)
         {
-            Context context = getActivity();
+            Context context = getContext();
             if (item != null && item.location != null && context != null)
             {
                 PlacesEditFragment0 dialog = new PlacesEditFragment0();
@@ -646,9 +662,9 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    protected void addOrUpdatePlace(PlaceItem... item)
+    protected void addOrUpdatePlace(@NonNull Context context, PlaceItem... item)
     {
-        addOrUpdatePlace(new PlacesListTask.TaskListener()
+        addOrUpdatePlace(context, new PlacesListTask.TaskListener()
         {
             @Override
             public void onStarted() {}
@@ -658,7 +674,9 @@ public class PlacesListFragment extends DialogBase
             {
                 if (results.size() > 0)
                 {
-                    updateActionMode(getActivity(), results.toArray(new PlaceItem[0]));
+                    if (getContext() != null) {
+                        updateActionMode(getContext(), results.toArray(new PlaceItem[0]));
+                    }
 
                     if (adapter.getItemCount() == 0) {
                         reloadAdapter(listTaskListener(results.get(0).rowID));
@@ -673,10 +691,10 @@ public class PlacesListFragment extends DialogBase
         }, item);
     }
 
-    protected void addOrUpdatePlace(PlacesListTask.TaskListener listener, PlaceItem... item)
+    protected void addOrUpdatePlace(@NonNull Context context, PlacesListTask.TaskListener listener, PlaceItem... item)
     {
         setModified(true);
-        PlacesEditTask task = new PlacesEditTask(getActivity());
+        PlacesEditTask task = new PlacesEditTask(context);
         task.setTaskListener(listener);
         task.execute(item);
     }
@@ -703,7 +721,9 @@ public class PlacesListFragment extends DialogBase
 
         @Override
         public void onAccepted(PlaceItem item) {
-            addOrUpdatePlace(item);
+            if (getContext() != null) {
+                addOrUpdatePlace(getContext(), item);
+            }
         }
     };
 
@@ -743,9 +763,7 @@ public class PlacesListFragment extends DialogBase
         public boolean onMenuItemActionCollapse(MenuItem item) {
             item.setVisible(true);
             if (Build.VERSION.SDK_INT >= 11) {
-                if (getActivity() != null) {
-                    getActivity().invalidateOptionsMenu();
-                }
+                invalidateOptionsMenu();
             }
             return true;
         }
@@ -754,7 +772,7 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void deletePlace(final Context context, @Nullable final PlaceItem... items)
+    protected void deletePlace(@NonNull Context context, @Nullable final PlaceItem... items)
     {
         if (items != null && items.length > 0
                 && items[0] != null && items[0].location != null)
@@ -779,12 +797,17 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    private DialogInterface.OnClickListener onConfirmDeletePlace(final Context context, final Long[] rowIDs)
+    private DialogInterface.OnClickListener onConfirmDeletePlace(@NonNull Context context, final Long[] rowIDs)
     {
         return new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
+                Context context = getContext();
+                if (context == null) {
+                    return;
+                }
+
                 DeletePlaceTask task = new DeletePlaceTask(context);
                 task.setTaskListener(new DeletePlaceTask.TaskListener()
                 {
@@ -823,12 +846,12 @@ public class PlacesListFragment extends DialogBase
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = getActivity();
+                    Context context = getContext();
                     if (context != null) {
                         for (PlaceItem item : deletedItems) {
                             item.rowID = -1;    // re-add item
                         }
-                        addOrUpdatePlace(deletedItems);
+                        addOrUpdatePlace(context, deletedItems);
                     }
                 }
             }).setDuration(UNDO_DELETE_MILLIS).show();
@@ -839,7 +862,7 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void clearPlaces(final Context context)
+    public void clearPlaces(@NonNull Context context)
     {
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.locationclear_dialog_title))
@@ -849,9 +872,11 @@ public class PlacesListFragment extends DialogBase
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        BuildPlacesTask task = new BuildPlacesTask(context);
-                        task.setTaskListener(clearPlacesListener);
-                        task.execute(true);   // clearFlag set to true
+                        if (getContext() != null) {
+                            BuildPlacesTask task = new BuildPlacesTask(getContext());
+                            task.setTaskListener(clearPlacesListener);
+                            task.execute(true);   // clearFlag set to true
+                        }
                     }
                 })
                 .setNegativeButton(context.getString(R.string.locationclear_dialog_cancel), null);
@@ -864,7 +889,7 @@ public class PlacesListFragment extends DialogBase
         public void onStarted()
         {
             setRetainInstance(true);
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null) {
                 showProgress(context, context.getString(R.string.locationcleared_dialog_title), context.getString(R.string.locationcleared_dialog_message));
             }
@@ -877,7 +902,7 @@ public class PlacesListFragment extends DialogBase
             setRetainInstance(false);
             dismissProgress();
 
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null) {
                 offerUndoClearPlaces(context, adapter.getItems());
             }
@@ -885,10 +910,10 @@ public class PlacesListFragment extends DialogBase
         }
     };
     @SuppressLint("WrongConstant")
-    protected void offerUndoClearPlaces(Context context, final PlaceItem... deletedItems)
+    protected void offerUndoClearPlaces(@NonNull Context context, final PlaceItem... deletedItems)
     {
         View view = getView();
-        if (context != null && view != null && deletedItems != null)
+        if (view != null && deletedItems != null)
         {
             SnackbarUtils.make(context, view, context.getString(R.string.locationcleared_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
@@ -896,14 +921,14 @@ public class PlacesListFragment extends DialogBase
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = getActivity();
+                    Context context = getContext();
                     if (context != null)
                     {
                         showProgress(context, null, null);
                         for (PlaceItem item : deletedItems) {
                             item.rowID = -1;    // re-add item
                         }
-                        addOrUpdatePlace(new PlacesListTask.TaskListener()
+                        addOrUpdatePlace(context, new PlacesListTask.TaskListener()
                         {
                             @Override
                             public void onStarted() {}
@@ -983,7 +1008,7 @@ public class PlacesListFragment extends DialogBase
         public void onStarted()
         {
             setRetainInstance(true);
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null) {
                 showProgress(context, context.getString(R.string.locationexport_dialog_title), context.getString(R.string.locationexport_dialog_message));
             }
@@ -995,7 +1020,7 @@ public class PlacesListFragment extends DialogBase
             setRetainInstance(false);
             dismissProgress();
 
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null)
             {
                 File file = results.getExportFile();
@@ -1030,7 +1055,7 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addWorldPlaces(final Context context) {
+    public void addWorldPlaces(@NonNull Context context) {
         BuildPlacesTask.promptAddWorldPlaces(context, buildPlacesListener);
     }
     private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
@@ -1039,7 +1064,7 @@ public class PlacesListFragment extends DialogBase
         public void onStarted()
         {
             setRetainInstance(true);
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null) {
                 showProgress(context, context.getString(R.string.locationbuild_dialog_title), context.getString(R.string.locationbuild_dialog_message));
             }
@@ -1053,7 +1078,7 @@ public class PlacesListFragment extends DialogBase
             if (result > 0)
             {
                 reloadAdapter();
-                Context context = getActivity();
+                Context context = getContext();
                 if (context != null) {
                     Toast.makeText(context, context.getString(R.string.locationbuild_toast_success, result.toString()), Toast.LENGTH_LONG).show();
                 }
@@ -1071,25 +1096,29 @@ public class PlacesListFragment extends DialogBase
     public static final String PREF_KEY_PLACES_SORT = "app_places_sort";
     public static final int PREF_DEF_PLACES_SORT = SORT_BY_LABEL_ASC;
 
-    public void sortList(Context context, int sortMode)
+    public void sortList(@NonNull Context context, int sortMode)
     {
         savePrefPlacesListSortMode(context, sortMode);
-        if (getActivity() != null) {
-            getActivity().invalidateOptionsMenu();
-        }
+        invalidateOptionsMenu();
         if (adapter != null) {
             adapter.sortItems(context);
         }
     }
 
-    public static int loadPrefPlacesListSortMode(Context context)
+    protected void invalidateOptionsMenu() {
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
+    }
+
+    public static int loadPrefPlacesListSortMode(@Nullable Context context)
     {
         if (context != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             return prefs.getInt(PREF_KEY_PLACES_SORT, PREF_DEF_PLACES_SORT);
         } else return PREF_DEF_PLACES_SORT;
     }
-    public static void savePrefPlacesListSortMode(Context context, int value)
+    public static void savePrefPlacesListSortMode(@NonNull Context context, int value)
     {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         prefs.putInt(PREF_KEY_PLACES_SORT, value);

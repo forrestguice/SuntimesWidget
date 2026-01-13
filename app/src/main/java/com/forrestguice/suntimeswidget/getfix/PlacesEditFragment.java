@@ -203,7 +203,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         public void updateUI(LocationProgress... progress)
         {
             super.updateUI(progress);
-            Context context = getActivity();
+            Context context = getContext();
             if (progress[0] != null && progress_getfix_label != null && context != null)
             {
                 double accuracy = progress[0].getAccuracy();
@@ -223,7 +223,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         @Override
         public void updateUI(android.location.Location... locations)
         {
-            Context context = getActivity();
+            Context context = getContext();
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             if (locations != null && locations[0] != null && context != null)
             {
@@ -244,8 +244,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             }
             if (progress_getfix_label != null)
             {
-                if (getActivity() != null) {
-                    lengthUnit = WidgetSettings.loadLengthUnitsPref(getActivity(), 0);
+                if (getContext() != null) {
+                    lengthUnit = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
                 }
                 progress_getfix_label.setVisibility((showProgress ? View.VISIBLE : View.GONE));
                 if (!showProgress) {
@@ -323,7 +323,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         super.onResume();
         MapCoordinateDialog mapDialog = (MapCoordinateDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_MAP);
         if (mapDialog != null) {
-            mapDialog.setColorCollection(new WorldMapColorValuesCollection<>(getActivity()));
+            mapDialog.setColorCollection(new WorldMapColorValuesCollection<>(requireContext()));
             mapDialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(mapDialog));
         }
 
@@ -348,10 +348,11 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
+        Context context = requireContext();
         Integer appTheme = getDialogThemeOverride();
-        View view = ((appTheme != null) ? inflater.cloneInContext(new ContextThemeWrapper(getActivity(), appTheme)).inflate(R.layout.layout_dialog_place, parent, false)
+        View view = ((appTheme != null) ? inflater.cloneInContext(new ContextThemeWrapper(context, appTheme)).inflate(R.layout.layout_dialog_place, parent, false)
                                         : inflater.inflate(R.layout.layout_dialog_place, parent, false));
-        initViews(getActivity(), view);
+        initViews(context, view);
 
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
@@ -402,7 +403,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             button_map.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showMapCoordinateDialog(getActivity());
+                    if (getContext() != null) {
+                        showMapCoordinateDialog(getContext());
+                    }
                 }
             });
         }
@@ -448,7 +451,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         {
             @Override
             public void onClick(View v) {
-                showGetFixMenu(v.getContext(), v);
+                if (v != null && v.getContext() != null) {
+                    showGetFixMenu(v.getContext(), v);
+                }
             }
         });
         button_getfix.setOnLongClickListener(new View.OnLongClickListener()
@@ -465,7 +470,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         if (getFixHelper != null) {
             getFixHelper.setFragment(FragmentCompat.from(this));
         }
-        updateGPSButtonIcons();
+        updateGPSButtonIcons(context);
     }
 
     /**
@@ -514,10 +519,10 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     }
     protected void getFix(boolean autoStop)
     {
-        Context context = getActivity();
+        Context context = getContext();
         if (layout_log != null && context != null) {
             boolean showLogView = LocationHelperSettings.keepLastLocationLog(context) && loadLogViewState()
-                    && LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER);
+                    && LocationHelperSettings.isProviderRequested(context, LocationManager.GPS_PROVIDER);
             layout_log.setVisibility(showLogView ? View.VISIBLE : View.GONE);
         }
         showGpsStatusView();
@@ -551,9 +556,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     protected void showGpsStatusView()
     {
-        if (gpsStatusView != null)
+        if (gpsStatusView != null && getContext() != null)
         {
-            gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getActivity(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
+            gpsStatusView.setVisibility(LocationHelperSettings.isProviderRequested(getContext(), LocationManager.GPS_PROVIDER) ? View.VISIBLE : View.GONE);
             if (!gpsStatusView.isMonitoring()) {
                 gpsStatusView.startMonitoring();
             }
@@ -640,13 +645,15 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                double latitude = dialog.getSelectedLatitude();
-                text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
+                Context context = getContext();
+                if (context != null)
+                {
+                    double latitude = dialog.getSelectedLatitude(context);
+                    text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
 
-                double longitude = dialog.getSelectedLongitude();
-                text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
-
-
+                    double longitude = dialog.getSelectedLongitude(context);
+                    text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
+                }
             }
         };
     }
@@ -709,7 +716,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             expandSheet(dialogInterface);
             disableTouchOutsideBehavior();
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 button_cancel.requestFocus();
             }
         }
@@ -734,13 +741,13 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
     }
 
-    public void updateGPSButtonIcons()
+    public void updateGPSButtonIcons(@NonNull Context context)
     {
         int icon = GetFixUI.ICON_GPS_DISABLED;
         if (getFixHelper != null)
         {
             icon = GetFixUI.ICON_GPS_SEARCHING;
-            if (!getFixHelper.isLocationEnabled(getContext())) {
+            if (!getFixHelper.isLocationEnabled(context)) {
                 icon = GetFixUI.ICON_GPS_DISABLED;
 
             } else if (getFixHelper.hasFix()) {
@@ -803,9 +810,13 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             text_locationLat.setText(location.getLatitude());
             text_locationLon.setText(location.getLongitude());
             text_locationName.setText(location.getLabel());
-            updateAltitudeField(getActivity(), location);
+            if (getContext() != null) {
+                updateAltitudeField(getContext(), location);
+            }
         }
-        updateAltitudeLabel(getActivity());
+        if (getContext() != null) {
+            updateAltitudeLabel(getContext());
+        }
     }
     private void updateComment(String comment)
     {
@@ -851,9 +862,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
     }
 
-    protected PlaceItem createPlaceItem(PlaceItem item0)
+    protected PlaceItem createPlaceItem(@NonNull Context context, PlaceItem item0)
     {
-        Context context = getActivity();
         PlaceItem item = new PlaceItem();
         if (item0 != null)
         {
@@ -883,13 +893,15 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            savePlace();
+            if (getContext() != null) {
+                savePlace(getContext());
+            }
         }
     };
 
-    protected void savePlace()
+    protected void savePlace(@NonNull Context context)
     {
-        final PlaceItem returnValue = createPlaceItem(item);
+        final PlaceItem returnValue = createPlaceItem(context, item);
         final boolean validInput = validateInput();
         if (validInput)
         {
@@ -922,7 +934,6 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     public boolean validateInput()
     {
-        Context myParent = getActivity();
         boolean isValid = true;
 
         String name = text_locationName.getText().toString();
@@ -1006,17 +1017,21 @@ public class PlacesEditFragment extends BottomSheetDialogBase
      */
     protected void triggerActionMode(PlaceItem item)
     {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
         if (actionMode == null)
         {
             if (item != null)
             {
-                actionMode = AppCompatActivity.startSupportActionMode(getActivity(), actions);
+                actionMode = AppCompatActivity.startSupportActionMode(activity, actions);
                 if (actionMode != null) {
-                    updateActionMode(getActivity(), item);
+                    updateActionMode(activity, item);
                 }
             }
         } else {
-            updateActionMode(getActivity(), item);
+            updateActionMode(activity, item);
         }
     }
 
@@ -1051,7 +1066,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         public boolean onActionItemClicked(ActionModeCompat mode, MenuItem menuItem)
         {
             if (menuItem.getItemId() == R.id.savePlace) {
-                savePlace();
+                if (getContext() != null) {
+                    savePlace(getContext());
+                }
             }
             return false;
         }
