@@ -31,6 +31,7 @@ import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.content.FileProvider;
 
@@ -78,18 +79,18 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         return isPaused;
     }
 
-    public ExportTask(Context context, String exportTarget)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget)
     {
         this(context, exportTarget, false, false);
     }
-    public ExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
     }
-    public ExportTask(Context context, Uri exportUri)
+    public ExportTask(@NonNull Context context, Uri exportUri)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = null;

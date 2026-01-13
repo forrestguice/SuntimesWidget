@@ -27,6 +27,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
+
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -38,6 +40,7 @@ import com.forrestguice.support.widget.SeekBar;
 
 public class WorldMapSeekBar extends SeekBar
 {
+    @Nullable
     private Drawable majorTick, minorTick, centerTick;
 
     public WorldMapSeekBar(Context context) {

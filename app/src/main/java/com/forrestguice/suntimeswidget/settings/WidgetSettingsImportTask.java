@@ -233,8 +233,9 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         public void onStarted() {}
         public void onFinished( TaskResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {

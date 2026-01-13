@@ -1237,7 +1237,9 @@ public class EquinoxView extends LinearLayout
         public Integer labelColor, textColor;
         public int resID_buttonPressColor;
 
+        @Nullable
         public Float timeSizeSp = null;
+        @Nullable
         public Float titleSizeSp = null;
         public boolean titleBold = false;
 

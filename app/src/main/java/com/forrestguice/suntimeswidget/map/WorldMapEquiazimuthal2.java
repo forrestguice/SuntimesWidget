@@ -438,6 +438,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
     private static ArrayList<float[]> grid_x = null, grid_y = null;
+    @Nullable
     private static double[] grid_mid;
 
     @Override

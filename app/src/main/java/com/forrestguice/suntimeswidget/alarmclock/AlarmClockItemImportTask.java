@@ -201,7 +201,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
     }
     @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {

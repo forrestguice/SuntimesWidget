@@ -520,6 +520,7 @@ public class GnssStatusBarView extends GnssStatusView
         }
     }
 
+    @Nullable
     protected ViewListener viewListener;
     protected void initViewListener()
     {

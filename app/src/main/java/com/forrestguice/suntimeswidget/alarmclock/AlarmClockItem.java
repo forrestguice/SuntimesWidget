@@ -64,6 +64,7 @@ public class AlarmClockItem implements Parcelable
     @Nullable
     public String label = null;
     public String note = null;
+    @Nullable
     private String event = null;
     @Nullable
     public String timezone = null;

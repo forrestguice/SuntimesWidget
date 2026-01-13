@@ -256,6 +256,7 @@ public class LightGraphView extends ImageView
         });
     }
 
+    @Nullable
     public SuntimesRiseSetDataset getData0() {
         return data0;
     }

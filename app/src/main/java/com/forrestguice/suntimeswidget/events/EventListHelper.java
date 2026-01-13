@@ -136,6 +136,7 @@ public class EventListHelper
         disallowSelect = value;
     }
 
+    @Nullable
     private String[] typeFilter = null;
     public void setTypeFilter(@Nullable String[] filter) {
         typeFilter = filter;
@@ -1026,6 +1027,7 @@ public class EventListHelper
             return view;
         }
 
+        @Nullable
         private Location location = null;
         public void setLocation(@Nullable Location value) {
             location = value;

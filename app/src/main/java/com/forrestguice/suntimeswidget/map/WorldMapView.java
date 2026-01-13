@@ -554,6 +554,7 @@ public class WorldMapView extends ImageView
     }
 
     private Bitmap bitmap;
+    @Nullable
     private static WorldMapExportTask exportTask = null;
 
     public boolean isRecording() {
@@ -611,6 +612,7 @@ public class WorldMapView extends ImageView
         }
     };
 
+    @Nullable
     private ProgressDialog progressDialog;
     private void showProgress()
     {

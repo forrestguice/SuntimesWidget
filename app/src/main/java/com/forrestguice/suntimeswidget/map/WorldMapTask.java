@@ -210,6 +210,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public boolean translateToLocation = false;
 
         public double[] center = null;
+        @Nullable
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public double locationScale = 1 / 192d;
 

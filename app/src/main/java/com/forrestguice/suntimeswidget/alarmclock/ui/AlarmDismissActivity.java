@@ -117,7 +117,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     public static final int REQUEST_DISMISS_CHALLENGE = 100;
 
+    @Nullable
     private AlarmClockItem alarm = null;
+    @Nullable
     private String mode = null, prevMode = null;
 
     private boolean isTesting = false;

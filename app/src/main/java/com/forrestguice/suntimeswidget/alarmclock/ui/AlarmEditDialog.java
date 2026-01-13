@@ -104,9 +104,11 @@ public class AlarmEditDialog extends DialogBase
         this.item.modified = false;
         bindItemToHolder(item);
     }
+    @Nullable
     public AlarmClockItem getItem() {
         return item;
     }
+    @Nullable
     public AlarmClockItem getOriginal() {
         return original;
     }

@@ -78,8 +78,9 @@ public class SuntimesData
      */
     @Nullable
     protected Calendar todayIs = null;
+    @Nullable
     public Calendar todayIs() { return todayIs; }
-    public void setTodayIs(Calendar day) { todayIs = day; }
+    public void setTodayIs(@Nullable Calendar day) { todayIs = day; }
     public void setTodayIsToday() { todayIs = null; }
     public boolean todayIsNotToday() { return todayIs != null; }
 

@@ -63,6 +63,7 @@ public class LightMapView extends ImageView
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LightMapColors colors;
+    @Nullable
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;

@@ -1238,6 +1238,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        @Nullable
         protected String themeID = null, themeID1 = null, darkThemeID = null, lightThemeID = null;
         protected AppSettings.TextSize textSize;
 

@@ -66,7 +66,9 @@ public class GetFixHelper implements LocationHelper
 
     public static final int REQUEST_GETFIX_LOCATION = 1;
 
+    @Nullable
     public GetFixTask getFixTask = null;
+    @Nullable
     public Location fix = null;
 
     public boolean gettingFix = false;

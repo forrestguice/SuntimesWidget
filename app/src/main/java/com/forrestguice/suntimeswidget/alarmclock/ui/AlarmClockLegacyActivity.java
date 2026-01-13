@@ -39,6 +39,7 @@ import android.os.Handler;
 import android.provider.AlarmClock;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -138,9 +139,12 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     private List<SuntimesWarning> warnings;
 
     private AlarmItemArrayAdapter adapter = null;
+    @Nullable
     private Long t_selectedItem = null;
+    @Nullable
     private Location t_selectedLocation = null;
 
+    @Nullable
     private AlarmClockListTask updateTask = null;
 
     private AppSettings.LocaleInfo localeInfo;

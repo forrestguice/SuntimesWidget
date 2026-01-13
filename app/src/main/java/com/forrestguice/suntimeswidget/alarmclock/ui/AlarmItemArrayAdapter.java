@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Vibrator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -84,6 +85,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     private long selectedItem;
     private final ArrayList<AlarmClockItem> items;
     private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled, iconAction;
+    @Nullable
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;
     private int onColor, offColor, disabledColor, pressedColor;
