@@ -996,7 +996,7 @@ public class MoonDialog extends BottomSheetDialogBase
     protected boolean showContextMenu(final Context context, View view, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID)
     {
         SuntimesMoonData data = adapter.initData(context, position);
-        if (data != null && eventID != null)
+        if (eventID != null)
         {
             Calendar date = MoonRiseSetView1.MoonRiseSetEvent.getCalendarForEvent(data, eventID);
             if (date != null)

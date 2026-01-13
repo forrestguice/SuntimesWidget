@@ -134,7 +134,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
     public void startUpdateTask()
     {
-        if (itemView != null && updateTask != null) {
+        if (updateTask != null) {
             itemView.removeCallbacks(updateTask);
             itemView.post(updateTask);
             taskIsRunning = true;
@@ -142,7 +142,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     }
     public void stopUpdateTask()
     {
-        if (itemView != null && updateTask != null) {
+        if (updateTask != null) {
             itemView.removeCallbacks(updateTask);
             taskIsRunning = false;
         }

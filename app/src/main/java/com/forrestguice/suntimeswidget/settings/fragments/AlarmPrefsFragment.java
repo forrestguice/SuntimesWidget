@@ -166,7 +166,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_alarms(final AlarmPrefsFragment fragment)
     {
-        final Context context = fragment.getActivity();
+        Context context = fragment.getActivity();
         if (context == null) {
             return;
         }
@@ -315,7 +315,10 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue)
                 {
-                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    Context context = preference.getContext();
+                    if (context != null) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    }
                     return true;
                 }
             });
@@ -332,6 +335,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue)
                 {
+                    Context context = preference.getContext();
                     if (context != null)
                     {
                         AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);

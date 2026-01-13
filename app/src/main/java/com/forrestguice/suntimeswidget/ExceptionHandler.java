@@ -49,6 +49,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             if (context != null)
             {
                 NotificationManagerCompat notifications = NotificationManagerCompat.from(context);
+                //noinspection ConstantConditions
                 if (notifications != null && notifications.areNotificationsEnabled()) {
                     showCrashReportNotification(context, e);
                 } else {

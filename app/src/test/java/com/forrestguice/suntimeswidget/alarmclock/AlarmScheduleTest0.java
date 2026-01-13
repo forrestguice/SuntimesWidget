@@ -69,6 +69,7 @@ public class AlarmScheduleTest0
 
         while (c < n)
         {
+            //noinspection ConstantConditions
             Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {

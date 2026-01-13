@@ -739,11 +739,13 @@ public class EquinoxView extends LinearLayout
         @Override
         public void onBindViewHolder(@NonNull EquinoxViewHolder holder, int position)
         {
+            //noinspection ConstantConditions
             Context context = (contextRef != null ? contextRef.get() : null);
             if (context == null) {
                 Log.w("EquinoxViewAdapter", "onBindViewHolder: null context!");
                 return;
             }
+            //noinspection ConstantConditions
             if (holder == null) {
                 Log.w("EquinoxViewAdapter", "onBindViewHolder: null view holder!");
                 return;

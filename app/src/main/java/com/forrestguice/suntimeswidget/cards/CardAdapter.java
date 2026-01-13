@@ -245,6 +245,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             Log.w("CardAdapter", "onBindViewHolder: null context!");
             return;
         }
+        //noinspection ConstantConditions
         if (holder == null) {
             Log.w("CardAdapter", "onBindViewHolder: null view holder!");
             return;

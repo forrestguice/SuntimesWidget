@@ -485,6 +485,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
 
     private void updateViews(@NonNull Context context)
     {
+        //noinspection ConstantConditions
         if (context == null || !isAdded()) {
             return;
         }

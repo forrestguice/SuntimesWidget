@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -510,15 +511,15 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                 int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
                 if (previewKeys != null)
                 {
-                    ColorValues values = collection.getDefaultColors(context);
+                    ColorValues values = (collection != null ? collection.getDefaultColors(context) : null);
                     for (int i=0; i<previewKeys.length; i++) {
-                        colors[i] = values.getColor(previewKeys[i]);
+                        colors[i] = (values != null ? values.getColor(previewKeys[i]) : Color.MAGENTA);
                     }
                 }
                 return colors;
 
             } else {
-                return collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys);
+                return collection != null ? collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys) : new int[0];
             }
         }
     }

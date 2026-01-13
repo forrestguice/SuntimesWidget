@@ -32,6 +32,7 @@ import android.view.View;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -787,11 +788,15 @@ public class LightMapView extends ImageView
 
         protected void drawVerticalLine(Calendar calendar0,  SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
         {
-            Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(data.location()));
-            calendar.setTimeInMillis(calendar0.getTimeInMillis());
-            double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
-            c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
+            Location location = data.location();
+            if (location != null)
+            {
+                Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(location));
+                calendar.setTimeInMillis(calendar0.getTimeInMillis());
+                double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
+                c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
+            }
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -804,9 +809,10 @@ public class LightMapView extends ImageView
                 return false;
             }
 
-            //if (options.option_lmt)
-            //{
-                TimeZone lmt = WidgetTimezones.localMeanTime(data.location());
+            Location location = data.location();
+            if (location != null)
+            {
+                TimeZone lmt = WidgetTimezones.localMeanTime(location);
                 if (riseTime != null)
                 {
                     Calendar riseTimeLmt = Calendar.getInstance(lmt);
@@ -819,7 +825,7 @@ public class LightMapView extends ImageView
                     setTimeLmt.setTimeInMillis(setTime.getTimeInMillis());
                     setTime = setTimeLmt;
                 }
-            //}
+            }
 
             int w = c.getWidth();
             int h = c.getHeight();

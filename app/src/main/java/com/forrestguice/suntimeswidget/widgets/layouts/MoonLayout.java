@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
@@ -61,7 +62,9 @@ public abstract class MoonLayout extends SuntimesLayout
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data) {
         this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
-        northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (data.location().getLatitudeAsDouble() < 0));
+        Location location = data.location();
+        double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
+        northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (latitude < 0));
     }
     protected boolean northward = false;
 

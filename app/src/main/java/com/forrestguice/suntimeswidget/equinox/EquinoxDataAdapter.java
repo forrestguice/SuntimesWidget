@@ -127,6 +127,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
             Log.w("EquinoxDataAdapter", "onBindViewHolder: null context!");
             return;
         }
+        //noinspection ConstantConditions
         if (holder == null) {
             Log.w("EquinoxDataAdapter", "onBindViewHolder: null view holder!");
             return;

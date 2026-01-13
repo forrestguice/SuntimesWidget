@@ -81,6 +81,8 @@ public class GetFixDatabaseAdapter
         this.context = context;
     }
 
+    public static final String MSG_ILLEGAL_STATE = "database reference is null; was this method called after close() ?";
+
     /**
      * Open the database
      * @return a reference the (now open) database adapter
@@ -112,6 +114,9 @@ public class GetFixDatabaseAdapter
      */
     public int getPlaceCount()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM " + TABLE_PLACES, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
@@ -127,6 +132,9 @@ public class GetFixDatabaseAdapter
      */
     public Cursor getAllPlaces(int n, boolean fullEntry)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
         Cursor cursor =  (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
                                  : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
@@ -145,6 +153,9 @@ public class GetFixDatabaseAdapter
      */
     public Cursor getPlace(long row) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         @SuppressWarnings("UnnecessaryLocalVariable")
         String[] QUERY = QUERY_PLACES_FULLENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
@@ -159,6 +170,9 @@ public class GetFixDatabaseAdapter
 
     public Cursor getPlace(String name, boolean fullEntry) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
                 KEY_PLACE_NAME + " = ?", new String[] { name },
@@ -190,7 +204,11 @@ public class GetFixDatabaseAdapter
         return addPlace(values);
     }
 
-    public long addPlace(ContentValues values) {
+    public long addPlace(ContentValues values)
+    {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return (verifyContentValues(values) ? database.insert(TABLE_PLACES, null, values) : -1);
     }
     protected boolean verifyContentValues(@Nullable ContentValues values)
@@ -216,6 +234,9 @@ public class GetFixDatabaseAdapter
 
     public void updatePlace( Location place )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
@@ -226,6 +247,9 @@ public class GetFixDatabaseAdapter
 
     public void updatePlace( long rowID, Location place )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_ROWID, rowID);
         values.put(KEY_PLACE_NAME, place.getLabel());
@@ -237,6 +261,9 @@ public class GetFixDatabaseAdapter
 
     public void updateComment( long rowID, String comment )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_ROWID, rowID);
         values.put(KEY_PLACE_COMMENT, comment);
@@ -296,6 +323,9 @@ public class GetFixDatabaseAdapter
      */
     public boolean removePlace(long row)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.delete(TABLE_PLACES, KEY_ROWID + "=" + row, null) > 0;
     }
 
@@ -306,6 +336,9 @@ public class GetFixDatabaseAdapter
      */
     public boolean clearPlaces()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.delete(TABLE_PLACES, null, null) > 0;
     }
 

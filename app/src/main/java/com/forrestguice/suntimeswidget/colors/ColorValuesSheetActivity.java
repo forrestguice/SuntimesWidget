@@ -168,16 +168,22 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
     protected void selectColorID()
     {
+        if (colorSheet == null) {
+            return;
+        }
+
         if (colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT)
         {
-            if (!colorSheet.editDialog.onSaveColorValues()) {
+            if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
                 return;
             }
             ColorValues values = colorSheet.editDialog.getColorValues();
             selectColorID((values != null) ? values.getID() : null);
 
         } else {
-            selectColorID(colorSheet.listDialog.getSelectedID());
+            if (colorSheet.listDialog != null) {
+                selectColorID(colorSheet.listDialog.getSelectedID());
+            }
         }
     }
 
@@ -192,16 +198,21 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     @Nullable
     protected String getSelectedColorID()
     {
+        if (colorSheet == null) {
+            return null;
+        }
         if (colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT)
         {
-            if (!colorSheet.editDialog.onSaveColorValues()) {
+            if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
                 return null;
             }
             ColorValues values = colorSheet.editDialog.getColorValues();
             return (values != null) ? values.getID() : null;
 
         } else {
-            return colorSheet.listDialog.getSelectedID();
+            if (colorSheet.listDialog != null) {
+                return colorSheet.listDialog.getSelectedID();
+            } else return null;
         }
     }
 
@@ -234,9 +245,11 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     protected Intent createReturnIntent()
     {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_APPWIDGET_ID, colorSheet.getAppWidgetID());
-        intent.putExtra(EXTRA_COLORTAG, colorSheet.getColorTag());
-        intent.putExtra(EXTRA_COLLECTION, colorSheet.colorCollection);
+        if (colorSheet != null) {
+            intent.putExtra(EXTRA_APPWIDGET_ID, colorSheet.getAppWidgetID());
+            intent.putExtra(EXTRA_COLORTAG, colorSheet.getColorTag());
+            intent.putExtra(EXTRA_COLLECTION, colorSheet.colorCollection);
+        }
         return intent;
     }
 
@@ -248,7 +261,9 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
-            deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
+            if (colorSheet != null) {
+                deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
+            } else deleteItem.setEnabled(false);
         }
 
         MenuItem previewItem = menu.findItem(R.id.action_colors_preview);
@@ -272,19 +287,27 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             return true;
 
         } else if (itemId == R.id.action_colors_add) {
-            colorSheet.listDialog.onAddItem();
+            if (colorSheet != null && colorSheet.listDialog != null) {
+                colorSheet.listDialog.onAddItem();
+            }
             return true;
 
         } else if (itemId == R.id.action_colors_delete) {
-            colorSheet.listDialog.onDeleteItem();
+            if (colorSheet != null && colorSheet.listDialog != null) {
+                colorSheet.listDialog.onDeleteItem();
+            }
             return true;
 
         } else if (itemId == R.id.action_colors_share) {
-            colorSheet.listDialog.onShareColors();
+            if (colorSheet != null && colorSheet.listDialog != null) {
+                colorSheet.listDialog.onShareColors();
+            }
             return true;
 
         } else if (itemId == R.id.action_colors_import) {
-            colorSheet.listDialog.onImportColors();
+            if (colorSheet != null && colorSheet.listDialog != null) {
+                colorSheet.listDialog.onImportColors();
+            }
             return true;
 
         } else if (itemId == android.R.id.home) {

@@ -188,6 +188,7 @@ public class DataSubstitutions
     @Nullable
     public static <T extends SuntimesData> Calendar getCalendarForEvent(@NonNull SolarEvents event, @NonNull T data)
     {
+        //noinspection ConstantConditions
         if (data == null || data.calculator() == null) {
             if (BuildConfig.DEBUG) {
                 Log.w("DEBUG", "getCalendarForEvent: null data or calculator! returning null...");

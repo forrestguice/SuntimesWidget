@@ -911,7 +911,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             dismissButton.setEnabled(true);
             backButton.show();
 
-            pulseAnimationObj = animateColors(labels, buttons, iconSnoozing, colors.getColor(AlarmColorValues.COLOR_SNOOZING_PULSE_START), colors.getColor(AlarmColorValues.COLOR_SNOOZING_PULSE_END), pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            int startColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SNOOZING_PULSE_START) : Color.DKGRAY);
+            int endColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SNOOZING_PULSE_END) : Color.BLACK);
+            pulseAnimationObj = animateColors(labels, buttons, iconSnoozing, startColor, endColor, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             if (isBrightMode)
             {
                 int snoozeBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
@@ -971,7 +973,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             dismissButton.setEnabled(true);
             backButton.hide();
 
-            pulseAnimationObj = animateColors(labels, buttons, iconSounding, colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_START), colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_END), pulseSoundingDuration, new AccelerateInterpolator());
+            int startColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_START) : Color.RED);
+            int endColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_END) : Color.BLUE);
+            pulseAnimationObj = animateColors(labels, buttons, iconSounding, startColor, endColor, pulseSoundingDuration, new AccelerateInterpolator());
             if (isBrightMode)
             {
                 int soundingBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_END);
@@ -994,7 +998,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             dismissButton.setEnabled(false);
             backButton.hide();
 
-            pulseAnimationObj = animateColors(labels, buttons, iconSounding, colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_START), colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_END), pulseSoundingDuration, new AccelerateInterpolator());
+            int startColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_START) : Color.RED);
+            int endColor = (colors != null ? colors.getColor(AlarmColorValues.COLOR_SOUNDING_PULSE_END) : Color.BLUE);
+            pulseAnimationObj = animateColors(labels, buttons, iconSounding, startColor, endColor, pulseSoundingDuration, new AccelerateInterpolator());
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
         }
     }

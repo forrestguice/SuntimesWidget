@@ -261,7 +261,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 default:
                     TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
-                    alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
+                    String typeDisplay = (item.type != null ? item.type.getDisplayString() : "Alarm");
+                    alarmString = context.getString(messageResID, typeDisplay, alarmText.getValue());
                     alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
                     break;
             }
@@ -752,6 +753,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     protected static void startAlert(final Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
+        //noinspection ConstantConditions
         if (soundUri == null) {
             throw new IOException("URI must not be null!");
         } else if (soundUri.toString().trim().isEmpty()) {
@@ -856,7 +858,8 @@ public class AlarmNotifications extends BroadcastReceiver
             vibrationHandler = new Handler();
         }
         int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM) ? 0 : -1;
-        vibration = vibrate(alarm.type.name(), AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
+        String channel = (alarm.type != null ? alarm.type.name() : AlarmClockItem.AlarmType.ALARM.name());
+        vibration = vibrate(channel, AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
         vibrationHandler.post(vibration);
     }
     public static void stopVibration()
@@ -1269,6 +1272,7 @@ public class AlarmNotifications extends BroadcastReceiver
         String notificationMsg = (eventDisplay != null ? eventDisplay : "");
         if (alarm.note != null)
         {
+            //noinspection ConstantConditions
             if (data == null) {
                 data = getData(context, alarm);
                 data.calculate(context);

@@ -489,7 +489,7 @@ public class EditActionView extends LinearLayout
         {
             String launchPackageName = text_launchPackage.getText().toString();
 
-            if (launchPackageName != null && !launchPackageName.trim().isEmpty())
+            if (!launchPackageName.trim().isEmpty())
             {
                 launchIntent = new Intent();
                 launchIntent.setClassName(launchPackageName, launchClassName);

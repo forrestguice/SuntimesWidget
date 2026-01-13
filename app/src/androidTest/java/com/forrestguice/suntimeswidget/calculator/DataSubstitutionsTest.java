@@ -110,6 +110,7 @@ public class DataSubstitutionsTest
             String result = DataSubstitutions.displayStringForTitlePattern0(contextIntf, pattern, data);
             long bench_end = System.nanoTime();
             Log.d("DEBUG", "displayStringForTitlePattern0: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+            //noinspection ConstantConditions
             assertFalse("result should not contain patterns " + pattern, result.contains(pattern));
 
             Calendar eventTime = DataSubstitutions.getCalendarForEvent(event, data);

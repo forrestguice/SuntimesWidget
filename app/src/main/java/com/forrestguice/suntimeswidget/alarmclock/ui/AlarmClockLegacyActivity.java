@@ -923,9 +923,12 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             task.setTaskListener(onUpdateItem);
 
             if (itemDialog != null) {
-                ContentValues values = itemDialog.getOriginal().asContentValues(true);
-                itemDialog.getOriginal().fromContentValues(AlarmClockLegacyActivity.this, values);
-                task.execute(itemDialog.getItem());
+                AlarmClockItem item0 = itemDialog.getOriginal();
+                ContentValues values = (item0 != null ? item0.asContentValues(true) : null);
+                if (values != null) {
+                    itemDialog.getOriginal().fromContentValues(AlarmClockLegacyActivity.this, values);
+                    task.execute(itemDialog.getItem());
+                }
             }
         }
     };

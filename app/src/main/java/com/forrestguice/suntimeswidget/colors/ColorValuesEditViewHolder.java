@@ -93,7 +93,7 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
                 colorLabel = SuntimesUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
 
             } else if (textColor != null) {
-                colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(colorLabel, labelText, labelText, textColor)
+                colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(null, labelText, labelText, textColor)
                         : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
 
             } else {

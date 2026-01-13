@@ -2431,6 +2431,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     protected void updateLightmapViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
+        //noinspection ConstantConditions
         if (context == null || data == null) {
             return;
         }
@@ -2452,6 +2453,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     protected void updateLightmapKeyViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
+        //noinspection ConstantConditions
         if (context == null || data == null) {
             return;
         }
@@ -2510,6 +2512,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     protected void updateGraphViews(@NonNull SuntimesRiseSetDataset data)
     {
         Context context = getContext();
+        //noinspection ConstantConditions
         if (context == null || data == null) {
             return;
         }
@@ -2552,7 +2555,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         if (color != null) {
             span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
         }
-        return (span != null ? span : elevationString);
+        return span;
     }
 
     private CharSequence styleLengthText(@NonNull Context context, double meters, LengthUnit units)

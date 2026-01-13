@@ -193,7 +193,7 @@ public class BedtimeAlarmHelper
                 public void onLoadFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem bedtimeItem = ((result != null && result.size() > 0) ? result.get(0) : null);
-                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, enabled);
+                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, true);
                 }
             });
         } else {

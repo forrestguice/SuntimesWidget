@@ -219,6 +219,8 @@ public class AlarmDatabaseAdapter
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 
+    public static final String MSG_ILLEGAL_STATE = "database reference is null; was this method called after close() ?";
+
     public AlarmDatabaseAdapter(Context context)
     {
         this.context = context;
@@ -255,6 +257,9 @@ public class AlarmDatabaseAdapter
      */
     public int getAlarmCount()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM " + TABLE_ALARMS, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
@@ -269,6 +274,9 @@ public class AlarmDatabaseAdapter
      */
     public int getAlarmCount(String soundUri)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         int count = 0;
         Cursor cursor = database.query(TABLE_ALARMS, QUERY_ALARMS_MINENTRY, KEY_ALARM_RINGTONE_URI + " = ?", new String[] { soundUri }, null, null, null);
         if (cursor != null) {
@@ -299,6 +307,9 @@ public class AlarmDatabaseAdapter
 
     public Cursor getAllAlarmsByState(int n, int... alarmState)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         StringBuilder selection = new StringBuilder(KEY_STATE + " = ?");
         String[] selectionArgs = new String[alarmState.length];
         selectionArgs[0] = Integer.toString(alarmState[0]);
@@ -317,6 +328,9 @@ public class AlarmDatabaseAdapter
 
     public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC", n+"" )
                                  : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC" );
         if (cursor != null) {
@@ -333,6 +347,9 @@ public class AlarmDatabaseAdapter
      */
     public Cursor getAlarm(long row) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         @SuppressWarnings("UnnecessaryLocalVariable")
         String[] QUERY = QUERY_ALARMS_FULLENTRY;
         Cursor cursor = database.query( true, TABLE_ALARMS, QUERY,
@@ -345,6 +362,9 @@ public class AlarmDatabaseAdapter
     }
     public Cursor getAlarm(long row, @NonNull String[] columns, @Nullable String selection, @Nullable String[] selectionArgs) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String selection0 = KEY_ROWID + "=" + row;
         if (selection != null) {
             selection0 += " AND " + selection;
@@ -362,6 +382,9 @@ public class AlarmDatabaseAdapter
     }
     public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String[] columns = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME_ADJUSTED };
         StringBuilder selection = new StringBuilder(KEY_ALARM_ENABLED + " = ?");
         List<String> selectionArgs = new ArrayList<>(Collections.singletonList("1"));
@@ -426,6 +449,9 @@ public class AlarmDatabaseAdapter
      */
     public Cursor getAlarmState(long row) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         @SuppressWarnings("UnnecessaryLocalVariable")
         String[] QUERY = QUERY_ALARMSTATE_FULLENTRY;
         Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY,
@@ -438,6 +464,9 @@ public class AlarmDatabaseAdapter
     }
     public Cursor getAlarmState(long row, String selection, String[] selectionArgs) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String selection0 = KEY_STATE_ALARMID + "=" + row;
         if (selection != null) {
             selection0 += " AND " + selection;
@@ -456,6 +485,9 @@ public class AlarmDatabaseAdapter
      */
     public long addAlarm( ContentValues values )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         long rowID = database.insert(TABLE_ALARMS, null, values);
         if (rowID != -1)
         {
@@ -469,11 +501,17 @@ public class AlarmDatabaseAdapter
 
     public boolean updateAlarm( long row, ContentValues values )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.update(TABLE_ALARMS, values,KEY_ROWID + "=" + row, null) > 0;
     }
 
     public boolean updateAlarmState( long row, ContentValues values )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.update(TABLE_ALARMSTATE, values, KEY_STATE_ALARMID + "=" + row, null) > 0;
     }
 
@@ -547,6 +585,9 @@ public class AlarmDatabaseAdapter
      */
     public boolean removeAlarm(long row)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         boolean removeAlarm = (database.delete(TABLE_ALARMS, KEY_ROWID + "=" + row, null) > 0);
         boolean removeAlarmState = (database.delete(TABLE_ALARMSTATE, KEY_STATE_ALARMID + "=" + row, null) > 0);
         return removeAlarm && removeAlarmState;
@@ -558,6 +599,9 @@ public class AlarmDatabaseAdapter
      */
     public boolean clearAlarms()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return (database.delete(TABLE_ALARMS, null, null) > 0) &&
                (database.delete(TABLE_ALARMSTATE, null, null) > 0);
     }

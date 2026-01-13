@@ -349,7 +349,7 @@ public class AlarmAddon
                     int i_phrase_quantity = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE_QUANTITY);
                     String noun = (i_phrase >= 0 ? cursor.getString(i_phrase) : item.title);
                     item.phrase = new AlarmEvent.AlarmEventPhrase(
-                            noun != null && !noun.trim().isEmpty() ? noun : item.title,
+                            noun != null && !noun.trim().isEmpty() ? noun : (item.title != null ? item.title : ""),
                             i_phrase_gender >= 0 ? cursor.getString(i_phrase_gender) : null,
                             i_phrase_quantity >= 0 ? cursor.getInt(i_phrase_quantity) : 1);
                 }

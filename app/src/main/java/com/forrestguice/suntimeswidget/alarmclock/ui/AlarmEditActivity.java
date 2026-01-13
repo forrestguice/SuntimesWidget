@@ -1187,7 +1187,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
             if (editor != null && dialog != null)
             {
-                AlarmClockItem item = (editor != null ? editor.getItem() : null);
+                AlarmClockItem item = editor.getItem();
                 if (item != null)
                 {
                     if (dialog.useAppLocation()) {
