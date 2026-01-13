@@ -52,7 +52,9 @@ public class LoadActionDialog extends EditActionDialog
         listHelper.setOnUpdateViews(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateViews(getContext());
+                if (getContext() != null) {
+                    updateViews(getContext());
+                }
             }
         });
         listHelper.onResume();
@@ -63,7 +65,6 @@ public class LoadActionDialog extends EditActionDialog
     public void setData(@Nullable SuntimesData data) {
         this.data = data;
     }
-
 
     private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
@@ -106,7 +107,9 @@ public class LoadActionDialog extends EditActionDialog
     public void setSelected(String actionID) {
         listHelper.setSelected(actionID);
         listHelper.triggerActionMode();
-        updateViews(getActivity());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
 }

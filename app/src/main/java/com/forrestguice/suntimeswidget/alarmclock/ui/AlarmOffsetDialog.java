@@ -133,7 +133,7 @@ public class AlarmOffsetDialog extends DialogBase
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
         }
-        updateViews(getContext());
+        updateViews(myParent);
         return dialog;
     }
 

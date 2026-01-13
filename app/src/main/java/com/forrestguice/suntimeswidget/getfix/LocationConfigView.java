@@ -699,10 +699,13 @@ public class LocationConfigView extends LinearLayout
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                double latitude = dialog.getSelectedLatitude();
-                double longitude = dialog.getSelectedLongitude();
-                text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
-                text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
+                Context context = getContext();
+                if (context != null) {
+                    double latitude = dialog.getSelectedLatitude(context);
+                    double longitude = dialog.getSelectedLongitude(context);
+                    text_locationLat.setText(String.format(Locale.getDefault(), "%.3f", latitude));
+                    text_locationLon.setText(String.format(Locale.getDefault(), "%.3f", longitude));
+                }
             }
         };
     }

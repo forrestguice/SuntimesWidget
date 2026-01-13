@@ -362,11 +362,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     }
     protected void updateViews(@NonNull Context context, SuntimesEquinoxSolsticeData data)
     {
-        if (context != null)
-        {
-            text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
-            text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
-        }
+        text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
+        text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
     }
 
     protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)

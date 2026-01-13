@@ -268,12 +268,12 @@ public class WidgetThemePreview
 
     public void updatePreview_position0(View previewLayout, ContentValues values, int widthDp, int heightDp)
     {
+        Context context = previewLayout.getContext();
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
-        if (view != null)
+        if (view != null && context != null)
         {
-            Context context = view.getContext();
             LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
-            colors.initDefaultDark(previewLayout.getContext());
+            colors.initDefaultDark(context);
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
             colors.values.setColor(LightMapColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
@@ -292,7 +292,7 @@ public class WidgetThemePreview
                 colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
             }
 
-            colors.setOption_drawNow(context != null ? SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())) : SunSymbol.CIRCLE);
+            colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
             colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
@@ -316,11 +316,10 @@ public class WidgetThemePreview
 
     public void updatePreview_position1(View previewLayout, ContentValues values, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
+        Context context = previewLayout.getContext();
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
-        if (view != null)
+        if (view != null && context != null)
         {
-            Context context = previewLayout.getContext();
-
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
