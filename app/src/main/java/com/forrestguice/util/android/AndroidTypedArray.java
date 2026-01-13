@@ -18,33 +18,35 @@
 
 package com.forrestguice.util.android;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.res.TypedArray;
 
 public class AndroidTypedArray implements TypedArray
 {
+    @Nullable
     private android.content.res.TypedArray typedArray;
-    public AndroidTypedArray(android.content.res.TypedArray array) {
+    public AndroidTypedArray(@Nullable android.content.res.TypedArray array) {
         typedArray = array;
     }
 
     @Override
     public boolean getBoolean(int index, boolean defaultValue) {
-        return typedArray.getBoolean(index, defaultValue);
+        return typedArray != null ? typedArray.getBoolean(index, defaultValue) : defaultValue;
     }
 
     @Override
     public int getColor(int index, int defaultValue) {
-        return typedArray.getColor(index, defaultValue);
+        return typedArray != null ? typedArray.getColor(index, defaultValue) : defaultValue;
     }
 
     @Override
     public float getFloat(int index, float defaultValue) {
-        return typedArray.getFloat(index, defaultValue);
+        return typedArray != null ? typedArray.getFloat(index, defaultValue) : defaultValue;
     }
 
     @Override
     public int getInt(int index, int defaultValue) {
-        return typedArray.getInt(index, defaultValue);
+        return typedArray != null ? typedArray.getInt(index, defaultValue) : defaultValue;
     }
 
     @Override
@@ -54,24 +56,27 @@ public class AndroidTypedArray implements TypedArray
         } else return defaultValue;
     }
 
+    @Nullable
     @Override
     public String getString(int index) {
-        return typedArray.getString(index);
+        return typedArray != null ? typedArray.getString(index) : null;
     }
 
     @Override
     public boolean hasValue(int index) {
-        return typedArray.hasValue(index);
+        return typedArray != null ? typedArray.hasValue(index) : false;
     }
 
     @Override
     public int length() {
-        return typedArray.length();
+        return typedArray != null ? typedArray.length() : 0;
     }
 
     @Override
     public void recycle() {
-        typedArray.recycle();
-        typedArray = null;
+        if (typedArray != null) {
+            typedArray.recycle();
+            typedArray = null;
+        }
     }
 }
