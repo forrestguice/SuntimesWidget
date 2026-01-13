@@ -61,6 +61,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -2653,7 +2654,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
+                        ListView v = AlertDialog.getListView(dialog);
+                        int p = (v != null ? v.getCheckedItemPosition() : 0);
                         if ((p >= 0 && p < matchingValues.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (matchingValues.length-1));
                             importSettings(context, matchingValues[p]);
@@ -2675,7 +2677,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
+                        ListView v = AlertDialog.getListView(dialog);
+                        int p = (v != null ? v.getCheckedItemPosition() : 0);
                         if ((p >= 0 && p < values.length)) {
                             //Log.d("ImportSettings", "user selected " + p + " of " + (values.length-1) + " (" + labels[p] + ")");
                             importSettings(context, values[p]);
