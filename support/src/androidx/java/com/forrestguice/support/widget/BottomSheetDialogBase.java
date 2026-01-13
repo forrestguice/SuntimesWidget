@@ -177,7 +177,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        return new BottomSheetDialog(getContext(), getTheme()) {
+        return new BottomSheetDialog(requireContext(), getTheme()) {
             @Override
             public void onBackPressed() {
                 if (!BottomSheetDialogBase.this.onBackPressed()) {

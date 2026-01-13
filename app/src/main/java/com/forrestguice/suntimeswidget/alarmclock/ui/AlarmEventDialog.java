@@ -163,7 +163,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
 
     public void updateAdapter(Context context)
     {
-        adapter = AlarmEvent.createAdapter(context, WidgetSettings.loadLocalizeHemispherePref(context, 0) && moondata != null && moondata.location().getLatitudeAsDouble() < 0);
+        Location location = moondata.location();
+        adapter = AlarmEvent.createAdapter(context, WidgetSettings.loadLocalizeHemispherePref(context, 0) && moondata != null && location != null && location.getLatitudeAsDouble() < 0);
         if (dataset != null)
         {
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);

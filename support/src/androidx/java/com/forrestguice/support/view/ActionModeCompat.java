@@ -98,6 +98,7 @@ public class ActionModeCompat
         }
         @Override
         public void onDestroyActionMode(ActionModeCompat actionMode) {
+            //noinspection ConstantConditions
             mode = null;
         }
     }

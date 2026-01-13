@@ -301,7 +301,15 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             {
                 @Override
                 public int compare(PlaceItem o1, PlaceItem o2) {
-                    return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
+                    if (o1.location == null && o2.location == null) {
+                        return 0;
+                    } else if (o1.location != null && o2.location == null) {
+                        return 1;
+                    } else if (o1.location == null) {
+                        return -1;
+                    } else {
+                        return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
+                    }
                 }
             });
 

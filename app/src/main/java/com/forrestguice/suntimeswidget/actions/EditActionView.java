@@ -49,6 +49,7 @@ import android.widget.ToggleButton;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -655,7 +656,8 @@ public class EditActionView extends LinearLayout
         String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA));
         String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE));
         String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS, defLaunchPrefValue(defaults, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS));
-        Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
+        String color0 = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR);
+        Integer color = (color0 != null ? Integer.parseInt(color0) : Color.WHITE);
         Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
 
         initAdapter(context, text_launchAction, WidgetActions.getSuggestedActions(launchString));    // re-initialize action adapter with additional suggestions

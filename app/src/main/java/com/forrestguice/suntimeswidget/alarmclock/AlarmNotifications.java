@@ -2085,7 +2085,7 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 @Override
                 public boolean passesFilter(AlarmClockItem item) {
-                    int state = item.state.getState();
+                    int state = (item.state != null ? item.state.getState() : AlarmState.STATE_NONE);
                     return (item.getEvent() == null && state != AlarmState.STATE_SOUNDING && state != AlarmState.STATE_SNOOZING);
                 }
             });

@@ -189,7 +189,7 @@ public class AlarmEvent
         {
             if (phrase == null) {
                 phrase = (event != null ? new AlarmEventPhrase(phrase(context, event), phraseGender(context, event), phraseQuantity(context, event))
-                                        : new AlarmEventPhrase(title));          // fallback; queryDisplayStrings is primary way of assigning phrase
+                                        : new AlarmEventPhrase(title != null ? title : ""));          // fallback; queryDisplayStrings is primary way of assigning phrase
             }
             return phrase;
         }

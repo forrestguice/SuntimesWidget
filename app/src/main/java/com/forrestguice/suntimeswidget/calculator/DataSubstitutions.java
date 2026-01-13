@@ -549,16 +549,18 @@ public class DataSubstitutions
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
         String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
 
-        displayString = displayString.replaceAll(PATTERN_loc, location.getLabel());
-        displayString = displayString.replaceAll(PATTERN_lat, location.getLatitude());
-        displayString = displayString.replaceAll(PATTERN_lon, location.getLongitude());
+        displayString = displayString.replaceAll(PATTERN_loc, location != null ? location.getLabel() : "");
+        displayString = displayString.replaceAll(PATTERN_lat, location != null ? location.getLatitude() : "");
+        displayString = displayString.replaceAll(PATTERN_lon, location != null ? location.getLongitude() : "");
 
         if (displayString.contains(PATTERN_lel))
         {
-            String altitudeDisplay = (context.loadLengthUnitsPref(0) == LengthUnit.IMPERIAL)
-                    ? (int) LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
-                    : location.getAltitudeAsInteger() + "";
-            displayString = displayString.replaceAll(PATTERN_lel, altitudeDisplay);
+            if (location != null) {
+                String altitudeDisplay = (context.loadLengthUnitsPref(0) == LengthUnit.IMPERIAL)
+                        ? (int) LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
+                        : location.getAltitudeAsInteger() + "";
+                displayString = displayString.replaceAll(PATTERN_lel, altitudeDisplay);
+            } else displayString = displayString.replaceAll(PATTERN_lel, "");
         }
 
         if (displayString.contains(PATTERN_eot) || displayString.contains(PATTERN_eot_m))

@@ -279,11 +279,15 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_location.setText((item.location != null) ? item.location.getLabel() : "");
 
             boolean useAppLocation = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
-            Drawable locationIcon = ContextCompat.getDrawable(context, (useAppLocation ? res_icHome : res_icPlace)).mutate();
-            locationIcon = new InsetDrawable(locationIcon, iconMargin, iconMargin, iconMargin, iconMargin);
-            locationIcon.setBounds(0, 0, (int)iconSize, (int)iconSize);
-            text_location.setCompoundDrawablePadding(iconMargin);
-            text_location.setCompoundDrawables(locationIcon, null, null, null);
+            Drawable locationIcon0 = ContextCompat.getDrawable(context, (useAppLocation ? res_icHome : res_icPlace));
+            Drawable locationIcon = (locationIcon0 != null ? locationIcon0.mutate() : null);
+            if (locationIcon != null)
+            {
+                locationIcon = new InsetDrawable(locationIcon, iconMargin, iconMargin, iconMargin, iconMargin);
+                locationIcon.setBounds(0, 0, (int) iconSize, (int) iconSize);
+                text_location.setCompoundDrawablePadding(iconMargin);
+                text_location.setCompoundDrawables(locationIcon, null, null, null);
+            }
 
             text_repeat.setText( displayRepeating(context, item, selected));
             text_event.setText(displayEvent(context, item));

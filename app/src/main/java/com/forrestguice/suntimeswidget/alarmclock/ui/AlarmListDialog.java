@@ -459,7 +459,7 @@ public class AlarmListDialog extends DialogBase
                 public void onClick(View v)
                 {
                     Context context = getContext();
-                    if (context != null && deletedItem != null) {
+                    if (context != null) {
                         addAlarm(context, deletedItem);
                     }
                 }
