@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.support.app.AppCompatActivity;
 
 import android.location.Location;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.junit.Rule;
