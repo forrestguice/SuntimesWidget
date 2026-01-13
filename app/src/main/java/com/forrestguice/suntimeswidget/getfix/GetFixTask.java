@@ -35,6 +35,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
 
@@ -163,7 +164,9 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
+    @Nullable
     private Long firstFixTime = null;
+    @Nullable
     private FilteredLocation bestFix;
     private final LocationManager locationManager;
 

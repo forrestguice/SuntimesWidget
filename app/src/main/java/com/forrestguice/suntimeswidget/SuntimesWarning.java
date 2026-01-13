@@ -113,7 +113,9 @@ public class SuntimesWarning
         contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
     }
 
+    @Nullable
     protected CharSequence actionLabel = null;
+    @Nullable
     public CharSequence getActionLabel() {
         return actionLabel;
     }

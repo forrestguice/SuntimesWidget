@@ -24,6 +24,7 @@ import androidx.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -101,6 +102,7 @@ public class DataSubstitutionsTest
         HashMap<SolarEvents, String> patterns_em = DataSubstitutions.getPatternsForEvent(DataSubstitutions.PATTERN_em_at, SolarEvents.values());
         for (SolarEvents event : patterns_em.keySet())
         {
+            @Nullable
             String pattern = patterns_em.get(event);
 
             long bench_start = System.nanoTime();

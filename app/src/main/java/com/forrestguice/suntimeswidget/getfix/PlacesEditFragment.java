@@ -103,6 +103,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     private ImageButton button_map;
 
+    @Nullable
     protected ActionModeCompat actionMode = null;
     protected PlacesEditActionCompat actions = new PlacesEditActionCompat();
 

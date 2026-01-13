@@ -143,11 +143,13 @@ public class TimeZones
             this.calculator = calculator;
         }
 
+        @Nullable
         private SuntimesCalculator calculator = null;
-        public void setCalculator(SuntimesCalculator calculator)
+        public void setCalculator(@Nullable SuntimesCalculator calculator)
         {
             this.calculator = calculator;
         }
+        @Nullable
         public SuntimesCalculator getCalculator() {
             return calculator;
         }

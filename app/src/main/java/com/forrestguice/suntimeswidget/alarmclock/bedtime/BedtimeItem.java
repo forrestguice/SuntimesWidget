@@ -50,6 +50,7 @@ public class BedtimeItem
         return alarmId;
     }
 
+    @Nullable
     protected AlarmClockItem alarmItem = null;
     @Nullable
     public AlarmClockItem getAlarmItem() {

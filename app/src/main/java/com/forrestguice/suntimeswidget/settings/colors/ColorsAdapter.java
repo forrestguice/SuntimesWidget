@@ -82,6 +82,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder>
             notifyItemChanged(oldPosition);
         }
     }
+    @Nullable
     protected Integer selectedColor = null;
 
     @NonNull

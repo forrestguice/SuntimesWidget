@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.notes;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Date;
@@ -32,6 +33,7 @@ public class NoteData
     public int noteIconResource;
     public int noteIconStroke;
     public int textColor, iconColor, iconColor2;
+    @Nullable
     public Date time;
     public boolean tomorrow = false;
     public boolean squareIcon = false;

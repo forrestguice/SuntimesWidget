@@ -24,6 +24,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
 /**
@@ -106,6 +107,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

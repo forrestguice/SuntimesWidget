@@ -273,7 +273,8 @@ public abstract class SuntimesTileBase
     }
 
     private Handler handler;
-    private Runnable updateTask;
+    @Nullable
+    private Runnable updateTask = null;
     protected final Runnable updateTask(final WeakReference<Context> contextRef, final Dialog dialog)
     {
         return new Runnable() {

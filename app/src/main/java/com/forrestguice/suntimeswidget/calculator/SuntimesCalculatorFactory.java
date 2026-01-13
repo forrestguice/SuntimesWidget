@@ -123,8 +123,9 @@ public class SuntimesCalculatorFactory
         public void onCreateFallback(SuntimesCalculatorDescriptor descriptor) {}
     }
 
+    @Nullable
     protected FactoryListener factoryListener = null;
-    public void setFactoryListener( FactoryListener listener )
+    public void setFactoryListener( @Nullable FactoryListener listener )
     {
         factoryListener = listener;
     }

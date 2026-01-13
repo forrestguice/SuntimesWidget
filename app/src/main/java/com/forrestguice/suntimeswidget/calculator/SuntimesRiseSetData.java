@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
@@ -117,6 +118,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: sun angle (overrides time mode)
      */
+    @Nullable
     protected Double angle = null;
     public Double angle() {
         return angle;
@@ -128,6 +130,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: fraction (used with time mode)
      */
+    @Nullable
     protected Double fraction = null;
     public Double fraction() {
         return fraction;
@@ -270,12 +273,14 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: linked data
      */
+    @Nullable
     protected SuntimesRiseSetData linked = null;
+    @Nullable
     public SuntimesRiseSetData getLinked()
     {
         return linked;
     }
-    public void linkData(SuntimesRiseSetData data)
+    public void linkData(@Nullable SuntimesRiseSetData data)
     {
         linked = data;
     }

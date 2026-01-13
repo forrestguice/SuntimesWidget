@@ -99,6 +99,7 @@ public class PlacesListFragment extends DialogBase
     protected RecyclerView listView;
     protected View emptyView;
     protected View progressView;
+    @Nullable
     protected ActionModeCompat actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
 

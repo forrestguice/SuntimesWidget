@@ -28,6 +28,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -328,6 +329,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return b;
     }
 
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

@@ -174,7 +174,8 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
 
     public static final long MAX_WAIT_MS = 1000;
 
-    private ExecutorService executor;
+    @Nullable
+    private ExecutorService executor = null;
     protected ExecutorService initExecutorService()
     {
         if (executor == null || executor.isShutdown()) {

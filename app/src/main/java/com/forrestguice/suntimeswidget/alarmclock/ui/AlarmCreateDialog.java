@@ -591,6 +591,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         public void setLabels(String[] labels) {
             this.labels = new ArrayList<>(Arrays.asList(labels));
         }
+        @Nullable
         protected ArrayList<String> labels = null;
 
         @Override

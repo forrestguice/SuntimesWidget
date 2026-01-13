@@ -604,6 +604,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;
 
         public int highlightPosition = -1;
+        @Nullable
         public String highlightEventID = null;
 
         public void init(Context context)

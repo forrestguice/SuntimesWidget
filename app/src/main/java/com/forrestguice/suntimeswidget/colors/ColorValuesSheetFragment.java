@@ -164,7 +164,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
+    @Nullable
     protected ColorValuesSelectFragment listDialog;
+    @Nullable
     protected ColorValuesEditFragment editDialog;
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {

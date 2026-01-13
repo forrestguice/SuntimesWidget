@@ -121,8 +121,9 @@ public class MoonDialog extends BottomSheetDialogBase
         setArguments(args);
     }
 
+    @Nullable
     private SuntimesMoonData data;
-    public void setData( SuntimesMoonData data )
+    public void setData( @Nullable SuntimesMoonData data )
     {
         Context context = getContext();
         if (context != null && data != null && !data.isCalculated() && data.isImplemented()) {

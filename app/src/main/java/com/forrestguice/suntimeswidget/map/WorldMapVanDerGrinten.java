@@ -25,6 +25,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Path;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
@@ -159,6 +160,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

@@ -76,6 +76,7 @@ public class BedtimeActivity extends AppCompatActivity
     private static final String DIALOGTAG_HELP = "helpDialog";
 
     protected Toolbar menubar;
+    @Nullable
     private BedtimeDialog list;
     private AppSettings.LocaleInfo localeInfo;
     private SuntimesNavigation navigation;

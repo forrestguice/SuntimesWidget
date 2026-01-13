@@ -187,7 +187,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @Deprecated
-    public void setThemeOverride( SuntimesTheme theme ) {
+    public void setThemeOverride( @Nullable SuntimesTheme theme ) {
         options.themeOverride = theme;
     }
 
@@ -197,10 +197,11 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
+    @Nullable
     protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {

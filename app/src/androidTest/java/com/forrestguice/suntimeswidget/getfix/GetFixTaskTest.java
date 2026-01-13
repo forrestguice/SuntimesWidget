@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 
 import android.location.Location;
@@ -94,6 +95,7 @@ public class GetFixTaskTest
     }
 
     private boolean waitForTask = false;
+    @Nullable
     private Location taskResult = null;
     private final GetFixTaskListener taskListener = new GetFixTaskListener()
     {

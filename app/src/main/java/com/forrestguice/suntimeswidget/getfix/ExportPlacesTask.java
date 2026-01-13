@@ -25,6 +25,7 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
@@ -35,6 +36,7 @@ public class ExportPlacesTask extends ExportTask
     public static final String FILEEXT = ".csv";
     public static final String MIMETYPE = "text/csv";
 
+    @Nullable
     private Cursor cursor;
     private GetFixDatabaseAdapter db;
 

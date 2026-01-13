@@ -384,8 +384,9 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     /**
      * Event Listener
      */
+    @Nullable
     private TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
+    public void setTaskListener( @Nullable TaskListener listener )
     {
         taskListener = listener;
     }

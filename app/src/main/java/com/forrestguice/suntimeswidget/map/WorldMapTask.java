@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -180,7 +181,9 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public WorldMapColorValues colors;
         public int foregroundColor = Color.TRANSPARENT;
 
+        @Nullable
         public Drawable map = null;                  // BitmapDrawable
+        @Nullable
         public Drawable map_night = null;            // BitmapDrawable
         public boolean tintForeground = true;
         public boolean hasTransparentBaseMap = true;

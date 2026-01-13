@@ -656,6 +656,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     }
 
+    @Nullable
     private Object pulseAnimationObj, bgAnimationObj;
 
     @Nullable

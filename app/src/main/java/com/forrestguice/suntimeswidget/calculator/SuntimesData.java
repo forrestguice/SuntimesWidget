@@ -76,6 +76,7 @@ public class SuntimesData
     /**
      * Property: todayIs; the date to run the calculation on, if null then "now"
      */
+    @Nullable
     protected Calendar todayIs = null;
     public Calendar todayIs() { return todayIs; }
     public void setTodayIs(Calendar day) { todayIs = day; }
@@ -119,6 +120,7 @@ public class SuntimesData
     /**
      * Property: calculator (cached from calculate, potentially null)
      */
+    @Nullable
     protected SuntimesCalculator calculator = null;
     public SuntimesCalculator calculator()
     {

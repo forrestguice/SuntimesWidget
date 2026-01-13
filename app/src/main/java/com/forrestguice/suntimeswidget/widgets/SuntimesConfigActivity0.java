@@ -249,6 +249,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ActionModeCompat.Callback spinner_timezone_actionMode;
     protected WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
 
+    @Nullable
     protected ActionModeCompat actionMode = null;
 
     public SuntimesConfigActivity0()

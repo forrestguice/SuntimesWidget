@@ -471,7 +471,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
      */
     public static class ColorValuesItem
     {
+        @Nullable
         public String displayString;
+        @Nullable
         public String colorsID;
         public int[] previewColors;
 

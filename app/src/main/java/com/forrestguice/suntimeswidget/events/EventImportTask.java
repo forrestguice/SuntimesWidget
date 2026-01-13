@@ -188,8 +188,9 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
         public void onStarted() {}
         public void onFinished( TaskResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {

@@ -50,6 +50,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.support.widget.PopupMenuCompat;
@@ -94,18 +95,23 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private boolean adapterModified = false;
     private GridView gridView;
 
+    @Nullable
     protected ActionModeCompat actionMode = null;
     private WidgetThemeActionCompat themeActions;
+    @Nullable
     private SuntimesTheme.ThemeDescriptor selected = null;
 
     private ProgressDialog progress;
+    @Nullable
     private static ExportThemesTask exportTask = null;
+    @Nullable
     private static ImportThemesTask importTask = null;
     private static boolean isExporting = false, isImporting = false;
 
     private int previewID = 0;
     private boolean disallowSelect = false;
-    private String preselectedTheme;
+    @Nullable
+    private String preselectedTheme = null;
     private boolean useWallpaper = false;
 
     public WidgetThemeListActivity()

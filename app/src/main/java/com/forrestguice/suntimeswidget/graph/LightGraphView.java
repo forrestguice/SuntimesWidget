@@ -115,7 +115,9 @@ public class LightGraphView extends ImageView
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LightGraphOptions options;
+    @Nullable
     private SuntimesRiseSetDataset data0 = null;
+    @Nullable
     private SuntimesRiseSetDataset[] data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
@@ -463,6 +465,7 @@ public class LightGraphView extends ImageView
     {
         private LightGraphOptions options;
 
+        @Nullable
         protected SuntimesRiseSetDataset[] yearData = null;
         public void setData(SuntimesRiseSetDataset[] data) {
             yearData = data;
@@ -1397,9 +1400,10 @@ public class LightGraphView extends ImageView
             float y = (float) hoursToBitmapCoords(c, hour, options);
             c.drawLine(0, y, c.getWidth(), y, p);
         }
-        
+
+        @Nullable
         private LightGraphTaskListener listener = null;
-        public void setListener( LightGraphTaskListener listener ) {
+        public void setListener( @Nullable LightGraphTaskListener listener ) {
             this.listener = listener;
         }
         public void clearListener() {
@@ -1531,6 +1535,7 @@ public class LightGraphView extends ImageView
         public Lock anim_lock = null;
 
         public TimeZone timezone = null;
+        @Nullable
         public LightGraphColorValues colors;
 
         public EarliestLatestSunriseSunsetData earliestLatestData;

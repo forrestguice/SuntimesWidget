@@ -55,6 +55,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
     public static final String DIALOG_SHEET = "ColorSheet";
+    @Nullable
     protected ColorValuesSheetFragment colorSheet;
 
     public ColorValuesSheetActivity() {

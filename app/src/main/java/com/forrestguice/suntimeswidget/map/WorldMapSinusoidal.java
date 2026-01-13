@@ -23,6 +23,8 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
+
 /**
  * Sinusoidal
  */
@@ -93,6 +95,7 @@ public class WorldMapSinusoidal extends WorldMapVanDerGrinten
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

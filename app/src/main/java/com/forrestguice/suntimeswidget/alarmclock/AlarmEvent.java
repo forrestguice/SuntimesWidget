@@ -128,9 +128,13 @@ public class AlarmEvent
     {
         public static final long MAX_WAIT_MS = 1000;
 
+        @Nullable
         protected SolarEvents event;
+        @Nullable
         protected String title = "", summary = null;
+        @Nullable
         protected AlarmEventPhrase phrase = null;
+        @Nullable
         protected String uri = null;
         protected boolean resolved = false;
 

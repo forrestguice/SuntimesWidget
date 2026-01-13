@@ -67,6 +67,7 @@ public class AlarmEditDialog extends DialogBase
 
     protected View dialogFrame;
     protected TextView text_title;
+    @Nullable
     protected AlarmClockItem item = null, original = null;
     protected AlarmEditViewHolder itemView;
 

@@ -41,6 +41,7 @@ public class LightMapSeekbar extends SeekBar
 {
     public static final String TAG = LightMapSeekbar.class.getSimpleName();
 
+    @Nullable
     protected SuntimesRiseSetDataset data = null;
     protected LightMapView.LightMapColors options;
     protected boolean option_drawBackground = false;

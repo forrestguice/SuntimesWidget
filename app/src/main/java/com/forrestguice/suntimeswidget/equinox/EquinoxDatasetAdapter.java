@@ -127,10 +127,11 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
+    @Nullable
     protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {

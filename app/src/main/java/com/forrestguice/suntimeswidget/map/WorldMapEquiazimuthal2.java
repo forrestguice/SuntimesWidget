@@ -68,6 +68,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     public double[] getMatrix() {
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

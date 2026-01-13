@@ -36,7 +36,8 @@ public abstract class SuntimesTileActivity extends AppCompatActivity
 {
     @Nullable
     protected abstract SuntimesTileBase initTileBase();
-    protected SuntimesTileBase tileBase;
+    @Nullable
+    protected SuntimesTileBase tileBase = null;
 
     public SuntimesTileActivity() {
         super();

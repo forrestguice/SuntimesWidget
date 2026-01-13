@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -44,6 +45,7 @@ public class PlacesActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED = "selectedRowID";
     public static final String EXTRA_LOCATION = "selectedLocation";
 
+    @Nullable
     protected PlacesListFragment list;
 
     @Override

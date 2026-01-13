@@ -46,6 +46,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -399,12 +400,15 @@ public class PlacesPrefsFragment extends PreferenceFragment
         private Activity myParent;
         private ProgressDialog progress;
 
+        @Nullable
         private BuildPlacesTask buildPlacesTask = null;
         private boolean isBuilding = false;
 
+        @Nullable
         private BuildPlacesTask clearPlacesTask = null;
         private boolean isClearing = false;
 
+        @Nullable
         private ExportPlacesTask exportPlacesTask = null;
         private boolean isExporting = false;
 

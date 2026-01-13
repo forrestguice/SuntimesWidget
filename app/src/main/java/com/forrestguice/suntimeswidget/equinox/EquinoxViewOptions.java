@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
@@ -47,10 +49,13 @@ public class EquinoxViewOptions
     public Integer labelColor, textColor;
     public int resID_buttonPressColor;
 
+    @Nullable
     public Float timeSizeSp = null;
+    @Nullable
     public Float titleSizeSp = null;
     public boolean titleBold = false;
 
+    @Nullable
     public SuntimesTheme themeOverride = null;
 
     @SuppressLint("ResourceType")

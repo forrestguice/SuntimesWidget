@@ -200,8 +200,9 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         public void onStarted() {}
         public void onFinished( ImportThemesResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
+    public void setTaskListener( @Nullable TaskListener listener )
     {
         taskListener = listener;
     }

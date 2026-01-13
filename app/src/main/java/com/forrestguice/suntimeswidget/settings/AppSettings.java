@@ -1396,6 +1396,7 @@ public class AppSettings
     {
         public static final String THEME_MONET_SYSTEM = "monet_system";
 
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_MONET_SYSTEM;
@@ -1427,6 +1428,7 @@ public class AppSettings
     {
         public static final String THEME_MONET_DARK = "monet_dark";
 
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_MONET_DARK;
@@ -1458,6 +1460,7 @@ public class AppSettings
     {
         public static final String THEME_MONET_LIGHT = "monet_light";
 
+        @NonNull
         @Override
         public String getThemeName() {
             return THEME_MONET_LIGHT;

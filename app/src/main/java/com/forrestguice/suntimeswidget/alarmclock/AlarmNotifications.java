@@ -1688,6 +1688,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final class ForegroundNotifications
     {
         protected int notificationID = 0;
+        @Nullable
         protected Notification notification = null;
         protected WeakReference<Service> serviceRef;
 

@@ -1115,6 +1115,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        @Nullable
         protected AlarmClockItemImportTask importTask = null;
         private final View.OnClickListener onImportAlarmsClicked = new View.OnClickListener()
         {

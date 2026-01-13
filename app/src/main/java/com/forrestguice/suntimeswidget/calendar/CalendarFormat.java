@@ -52,6 +52,7 @@ public enum CalendarFormat
     ;
 
     protected String displayString, displayString0;
+    @Nullable
     protected String pattern;
 
     private CalendarFormat(@NonNull String displayString, @Nullable String pattern) {

@@ -142,6 +142,7 @@ public class MoonRiseSetView1 extends LinearLayout
         dividers = new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION, card_adapter.getItemsPerDay());
         card_view.addItemDecoration(dividers);
     }
+    @Nullable
     private MoonRiseSetDivider1 dividers = null;
 
     private void init(Context context, AttributeSet attrs)
@@ -650,6 +651,7 @@ public class MoonRiseSetView1 extends LinearLayout
     public static class MoonRiseSetField extends RecyclerView.ViewHolder
     {
         public int position = RecyclerView.NO_POSITION;
+        @Nullable
         public MoonRiseSetEvent eventID = null;
 
         public View layout;
@@ -657,6 +659,7 @@ public class MoonRiseSetView1 extends LinearLayout
         public TextView timeView;
         public TextView positionView;
 
+        @Nullable
         public Drawable icon_rising = null, icon_setting = null, icon_noon = null, icon_midnight = null;
         private final SuntimesUtils utils = new SuntimesUtils();
 

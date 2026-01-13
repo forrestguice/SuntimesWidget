@@ -58,6 +58,7 @@ public class LoadActionDialog extends EditActionDialog
         listHelper.onResume();
     }
 
+    @Nullable
     protected SuntimesData data = null;
     public void setData(@Nullable SuntimesData data) {
         this.data = data;

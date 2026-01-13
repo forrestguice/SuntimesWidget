@@ -1498,6 +1498,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     //////////////////////////////////////////////////////////
 
+    @Nullable
     private PopupWindow seekAltitudePopup = null;
     protected void showSeekAltitudePopup(@NonNull final Context context, @NonNull View v)
     {
@@ -1819,6 +1820,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     });
 
+    @Nullable
     private PopupWindow objHeightPopup = null;
     protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
     {
@@ -2019,6 +2021,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     //////////////////////////////////////////////////////////
 
+    @Nullable
     private PopupWindow seekShadowPopup = null;
     protected void showShadowSeekPopup(@NonNull final Context context, @NonNull View v)
     {

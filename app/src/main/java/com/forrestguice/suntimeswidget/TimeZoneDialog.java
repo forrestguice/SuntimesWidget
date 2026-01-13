@@ -107,6 +107,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     private LinearLayout layout_solartime;
     private TextView label_solartime;
     private Spinner spinner_solartime;
+    @Nullable
     private Object actionMode = null;
 
     private View layout_timezoneExtras;

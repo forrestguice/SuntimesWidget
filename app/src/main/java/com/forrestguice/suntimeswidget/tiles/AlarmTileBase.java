@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -68,23 +70,23 @@ public class AlarmTileBase extends SuntimesTileBase
     }
 
     @Override
-    public Intent getConfigIntent(Context context) {
+    public Intent getConfigIntent(@NonNull Context context) {
         return getConfigIntent(context, appWidgetId(), AlarmTileConfigActivity.class);
     }
 
     @Override
-    public Intent getLaunchIntent(Context context) {
+    public Intent getLaunchIntent(@NonNull Context context) {
         return getLaunchIntent(context, appWidgetId(), initData(context));
     }
 
     @Override
     @Nullable
-    protected Intent getLockScreenIntent(Context context) {
+    protected Intent getLockScreenIntent(@NonNull Context context) {
         return new Intent(context, TileLockScreenActivity.class);
     }
 
     @Override
-    protected void initDefaults(Context context)
+    protected void initDefaults(@NonNull Context context)
     {
         super.initDefaults(context);
         WidgetSettings.saveShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS);
@@ -93,7 +95,7 @@ public class AlarmTileBase extends SuntimesTileBase
     }
 
     @Nullable
-    protected AlarmClockItem initAlarmItem(Context context)
+    protected AlarmClockItem initAlarmItem(@NonNull Context context)
     {
         Long rowID = AlarmSettings.loadUpcomingAlarmId(context);
         if (rowID != null && (alarmItem == null || alarmItem.rowID != rowID)) {
@@ -104,6 +106,7 @@ public class AlarmTileBase extends SuntimesTileBase
     protected void clearAlarmItem() {
         alarmItem = null;
     }
+    @Nullable
     protected AlarmClockItem alarmItem = null;
 
     @Override
@@ -112,7 +115,7 @@ public class AlarmTileBase extends SuntimesTileBase
     }
     public static final int UPDATE_RATE = 12000;     // dialog update rate: 12s
 
-    protected Drawable getDialogIcon(Context context)
+    protected Drawable getDialogIcon(@NonNull Context context)
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
         int[] attrs = { R.attr.text_primaryColor };
@@ -128,7 +131,7 @@ public class AlarmTileBase extends SuntimesTileBase
         return d;
     }
 
-    protected SpannableStringBuilder formatDialogTitle(Context context)
+    protected SpannableStringBuilder formatDialogTitle(@NonNull Context context)
     {
         SpannableStringBuilder title = new SpannableStringBuilder();
         AlarmClockItem item = initAlarmItem(context);
@@ -148,7 +151,7 @@ public class AlarmTileBase extends SuntimesTileBase
         return title;
     }
 
-    protected SpannableStringBuilder formatDialogMessage(Context context)
+    protected SpannableStringBuilder formatDialogMessage(@NonNull Context context)
     {
         SpannableStringBuilder msg = new SpannableStringBuilder();
         AlarmClockItem item = initAlarmItem(context);
@@ -198,7 +201,7 @@ public class AlarmTileBase extends SuntimesTileBase
         return msg;
     }
 
-    public static String formatEventDisplay(Context context, AlarmClockItem item)
+    public static String formatEventDisplay(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         String eventString = item.getEvent();
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());

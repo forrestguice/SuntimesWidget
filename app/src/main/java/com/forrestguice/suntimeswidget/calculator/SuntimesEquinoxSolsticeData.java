@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -139,6 +140,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * result: eventCalendarThisYear
      */
+    @Nullable
     private Calendar eventCalendarThisYear;
     public Calendar eventCalendarThisYear() {
         return eventCalendarThisYear;
@@ -147,6 +149,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * result: eventCalendarLastYear
      */
+    @Nullable
     private Calendar eventCalendarLastYear;
     public Calendar eventCalendarLastYear() {
         return eventCalendarLastYear;
@@ -155,6 +158,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * result: eventCalendarNextYear
      */
+    @Nullable
     private Calendar eventCalendarNextYear;
     public Calendar eventCalendarNextYear() {
         return eventCalendarNextYear;

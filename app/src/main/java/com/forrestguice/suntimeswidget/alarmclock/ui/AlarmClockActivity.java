@@ -146,6 +146,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String DIALOG_HELP = "HelpDialog";
 
+    @Nullable
     private AlarmListDialog list;
 
     private FloatingActionButton addButton;

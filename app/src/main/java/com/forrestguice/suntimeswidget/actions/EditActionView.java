@@ -673,6 +673,7 @@ public class EditActionView extends LinearLayout
         setIntentColor(color);
         lastLoadedID = id;
     }
+    @Nullable
     private String lastLoadedID = null;
 
     public static String defLaunchPrefValue(@NonNull ContentValues values, String key)

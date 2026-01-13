@@ -74,6 +74,7 @@ public class ActionListHelper
     private ActionDisplay selectedItem;
     private ListView list;
     private ActionDisplayAdapter adapter;
+    @Nullable
     protected ActionMode actionMode = null;
     protected ActionDisplayActionMode1 actionModeCallback = new ActionDisplayActionMode1();
 
@@ -111,6 +112,7 @@ public class ActionListHelper
         adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
     }
 
+    @Nullable
     protected SuntimesData data = null;
     public void setData(@Nullable SuntimesData data) {
         this.data = data;

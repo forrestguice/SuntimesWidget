@@ -32,17 +32,19 @@ public class PlaceItem implements Parcelable
     public static final String TAG_DEFAULT = "[default]";
 
     public long rowID = -1;
+    @Nullable
     public Location location = null;
+    @Nullable
     public String comment = null;
 
     public PlaceItem() {}
 
-    public PlaceItem(long rowID, Location location)
+    public PlaceItem(long rowID, @Nullable Location location)
     {
         this.rowID = rowID;
         this.location = location;
     }
-    public PlaceItem(long rowID, Location location, String comment)
+    public PlaceItem(long rowID, @Nullable Location location, @Nullable String comment)
     {
         this.rowID = rowID;
         this.location = location;

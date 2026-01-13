@@ -117,6 +117,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         return null;
     }
 
+    @Nullable
     protected Runnable updateTask = null;
     protected void setUpdateTask(@Nullable Runnable value)
     {

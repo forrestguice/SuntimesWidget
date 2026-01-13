@@ -303,7 +303,7 @@ public class BedtimeDialog extends DialogBase
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         Context context = getContext();
         if (context == null) {

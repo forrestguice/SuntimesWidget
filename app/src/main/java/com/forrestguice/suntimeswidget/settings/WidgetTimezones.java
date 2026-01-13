@@ -705,8 +705,9 @@ public class WidgetTimezones
             }
         }
 
+        @Nullable
         private TimeZonesLoadTaskListener listener = null;
-        public void setListener(TimeZonesLoadTaskListener listener)
+        public void setListener(@Nullable TimeZonesLoadTaskListener listener)
         {
             this.listener = listener;
         }

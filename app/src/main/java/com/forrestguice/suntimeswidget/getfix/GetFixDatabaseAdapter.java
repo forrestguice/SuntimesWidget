@@ -72,6 +72,7 @@ public class GetFixDatabaseAdapter
         return context;
     }
 
+    @Nullable
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 

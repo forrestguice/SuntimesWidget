@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -52,6 +53,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         return polar;
     }
 
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

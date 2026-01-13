@@ -215,6 +215,7 @@ public class AlarmDatabaseAdapter
      *
      */
     private final Context context;
+    @Nullable
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 
@@ -842,9 +843,10 @@ public class AlarmDatabaseAdapter
     public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
     {
         protected AlarmDatabaseAdapter db;
+        @Nullable
         protected Long lastRowId;
 
-        public AlarmDeleteTask(Context context)
+        public AlarmDeleteTask(@NonNull Context context)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }

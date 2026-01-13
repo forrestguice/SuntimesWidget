@@ -84,6 +84,7 @@ public final class EventAlias
         return color;
     }
 
+    @Nullable
     private String summary;
     public String getSummary(final Object context)
     {

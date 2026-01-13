@@ -210,6 +210,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
 
     private TextView titleText;
     private CheckBox check_filter;
+    @Nullable
     private ColorValuesSheetFragment colorSheet;
 
     public void updateFilterVisibility(Context context)

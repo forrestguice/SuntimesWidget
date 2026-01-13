@@ -169,7 +169,9 @@ public class GnssStatusBarView extends GnssStatusView
             } else popup.dismiss();
         }
     }
+    @Nullable
     protected PopupWindow popup = null;
+    @Nullable
     protected GnssStatusItemView popupItem;
 
     /**

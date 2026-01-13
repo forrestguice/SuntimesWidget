@@ -68,6 +68,7 @@ public class LineGraphView extends ImageView
     private final int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
     private LineGraphOptions options;
+    @Nullable
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
@@ -377,6 +378,7 @@ public class LineGraphView extends ImageView
         private final WeakReference<Context> contextRef;
         private LineGraphOptions options;
 
+        @Nullable
         private SuntimesRiseSetDataset t_data = null;
 
         public LineGraphTask(Context context) {
@@ -1276,8 +1278,9 @@ public class LineGraphView extends ImageView
             c.drawCircle(x, y, radius, p);
         }
 
+        @Nullable
         private LineGraphTaskListener listener = null;
-        public void setListener( LineGraphTaskListener listener )
+        public void setListener( @Nullable LineGraphTaskListener listener )
         {
             this.listener = listener;
         }

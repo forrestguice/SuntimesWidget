@@ -614,6 +614,7 @@ public class AlarmListDialog extends DialogBase
         return itemList.toArray(new AlarmClockItem[0]);
     }
 
+    @Nullable
     protected AlarmClockItemExportTask exportTask = null;
     private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
@@ -718,6 +719,7 @@ public class AlarmListDialog extends DialogBase
         }
     }
 
+    @Nullable
     protected AlarmClockItemImportTask importTask = null;
     private final AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
     {

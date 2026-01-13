@@ -30,6 +30,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -392,6 +393,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return masked;
     }
 
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

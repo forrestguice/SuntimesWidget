@@ -23,6 +23,8 @@ import android.graphics.Color;
 import android.util.Log;
 import android.util.Xml;
 
+import com.forrestguice.annotation.Nullable;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -85,9 +87,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     /**
      * Property: progress listener
      */
+    @Nullable
     protected ProgressListener listener = null;
     @Override
-    public void setProgressListener( ProgressListener listener )
+    public void setProgressListener( @Nullable ProgressListener listener )
     {
         this.listener = listener;
     }

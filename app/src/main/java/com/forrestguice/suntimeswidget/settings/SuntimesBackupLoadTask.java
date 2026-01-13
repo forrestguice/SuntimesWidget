@@ -282,8 +282,9 @@ public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupL
         public void onStarted() {}
         public void onFinished( TaskResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {

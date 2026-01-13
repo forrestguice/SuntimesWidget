@@ -51,27 +51,39 @@ public class AlarmClockItem implements Parcelable
     public static final int ICON_NOTIFICATION2 = R.drawable.ic_action_notification2;
 
     public long rowID = -1L;
+    @Nullable
     public AlarmType type = AlarmType.ALARM;
     public boolean enabled = false;
     public boolean repeating = false;
+    @Nullable
     public ArrayList<Integer> repeatingDays = null;
     public long alarmtime = -1L;
     public long timestamp = -1L;
     public int hour = -1, minute = -1;
     public long offset = 0;
+    @Nullable
     public String label = null;
     public String note = null;
     private String event = null;
+    @Nullable
     public String timezone = null;
+    @Nullable
     public Location location = null;
+    @Nullable
     public String ringtoneName = null;
+    @Nullable
     public String ringtoneURI = null;
     public boolean vibrate = false;
+    @Nullable
     public String actionID0 = null;
+    @Nullable
     public String actionID1 = null;
+    @Nullable
     public String actionID2 = null;
+    @Nullable
     public String actionID3 = null;
 
+    @Nullable
     protected HashMap<String, Long> alarmFlags = null;
     public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
     public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
@@ -81,6 +93,7 @@ public class AlarmClockItem implements Parcelable
     public static final String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
 
     public boolean modified = false;
+    @Nullable
     public AlarmState state = null;
 
     public AlarmClockItem() {}
@@ -337,6 +350,7 @@ public class AlarmClockItem implements Parcelable
         eventItem = null;
     }
 
+    @Nullable
     private AlarmEvent.AlarmEventItem eventItem = null;
     public AlarmEvent.AlarmEventItem getEventItem(Context context)
     {

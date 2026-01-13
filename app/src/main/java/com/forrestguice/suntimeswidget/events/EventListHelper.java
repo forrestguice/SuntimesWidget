@@ -98,6 +98,7 @@ public class EventListHelper
     private EventAlias selectedItem;
     private ListView list;
     private EventDisplayAdapterInterface adapter;
+    @Nullable
     protected ActionMode actionMode = null;
     protected EventAliasActionMode1 actionModeCallback = new EventAliasActionMode1();
 
@@ -536,6 +537,7 @@ public class EventListHelper
     /**
      * Export Events
      */
+    @Nullable
     protected EventExportTask exportTask = null;
 
     public boolean exportEvents(FragmentCompat fragment)
@@ -642,6 +644,7 @@ public class EventListHelper
     /**
      * Import Events
      */
+    @Nullable
     protected EventImportTask importTask = null;
 
     public void importEvents(FragmentCompat fragment)

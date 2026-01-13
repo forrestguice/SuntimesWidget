@@ -57,7 +57,9 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     protected WeakReference<Context> contextRef;
 
     protected Uri exportUri = null;
+    @Nullable
     protected String exportTarget;
+    @Nullable
     protected File exportFile;
     protected int numEntries;
     public final String newLine = System.getProperty("line.separator");
@@ -410,8 +412,9 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         public void onStarted() {}
         public void onFinished( ExportResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
+    public void setTaskListener( @Nullable TaskListener listener )
     {
         taskListener = listener;
     }

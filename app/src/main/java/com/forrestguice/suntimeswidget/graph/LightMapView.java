@@ -433,6 +433,7 @@ public class LightMapView extends ImageView
         private final WeakReference<Context> contextRef;
         private LightMapColors colors;
 
+        @Nullable
         private SuntimesRiseSetDataset t_data = null;
 
         public LightMapTask(Context context) {
@@ -897,8 +898,9 @@ public class LightMapView extends ImageView
             }
         }
 
+        @Nullable
         private LightMapTaskListener listener = null;
-        public void setListener( LightMapTaskListener value ) {
+        public void setListener( @Nullable LightMapTaskListener value ) {
             listener = value;
         }
         public void clearListener() {
