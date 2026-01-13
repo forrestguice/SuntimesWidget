@@ -196,7 +196,8 @@ public class SuntimesEquinoxSolsticeDataset
 
     public long tropicalYearLength()
     {
-        double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
+        Location location = dataEquinoxSpring.location;
+        double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
         SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
         return data.tropicalYearLength();
     }

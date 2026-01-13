@@ -98,7 +98,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     }
 
     protected void clearViews() {}
-    protected void updateViews(Context context, BedtimeItem item) {}
+    protected void updateViews(Context context, @Nullable BedtimeItem item) {}
 
     @Nullable
     public View getClickView() {
@@ -634,14 +634,14 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
             if (context != null)
             {
                 updateView_dnd(context);
 
-                AlarmClockItem alarmItem = item.getAlarmItem();
+                AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
                 if (alarmItem != null)
                 {
                     if (text_label != null) {
@@ -714,11 +714,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = item.getAlarmItem();
+            AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
             //if (layout_more != null) {
             //    layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             //}
@@ -781,11 +781,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = item.getAlarmItem();
+            AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
             if (layout_more != null) {
                 layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }

@@ -471,13 +471,15 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                                 {
                                     if (includeKeys.contains(key))
                                     {
-                                        SuntimesBackupRestoreTask.chooseImportMethod(context, key, methodsForKeysThatWantMethods.get(key), new DialogInterface.OnClickListener()
-                                        {
-                                            public void onClick(DialogInterface dialog, int importMethod) {
-                                                methods.put(key, importMethod);
-                                                observer.notify(key);    // trigger observeNext
-                                            }
-                                        });
+                                        int[] m = methodsForKeysThatWantMethods.get(key);
+                                        if (m != null) {
+                                            SuntimesBackupRestoreTask.chooseImportMethod(context, key, m, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int importMethod) {
+                                                    methods.put(key, importMethod);
+                                                    observer.notify(key);    // trigger observeNext
+                                                }
+                                            });
+                                        }
                                     } else observer.notify(key);
                                 }
                                 public void onObservedAll(SuntimesBackupRestoreTask.BackupKeyObserver observer) {

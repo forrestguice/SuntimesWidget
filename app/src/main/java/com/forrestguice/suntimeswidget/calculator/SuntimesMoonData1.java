@@ -65,6 +65,9 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
     public void calculate(Object context)
     {
         super.calculate(context);
+        if (calculator == null) {
+            throw new IllegalStateException("calculator is null after initCalculator() was called!");
+        }
 
         Calendar after = (Calendar)todaysCalendar.clone();
         for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {

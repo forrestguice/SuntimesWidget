@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -249,7 +251,9 @@ public class MoonPhaseView extends LinearLayout
         this.data = data;
         if (data != null && data.isCalculated())
         {
-            northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (data.location().getLatitudeAsDouble() < 0);
+            Location location = data.location();
+            double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
+            northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (latitude < 0);
             themeIcons(context, themeOverride);
             hideIcons();
 

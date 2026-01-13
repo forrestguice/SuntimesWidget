@@ -1225,7 +1225,7 @@ public class PlacesListFragment extends DialogBase
             database.open();
             for (PlaceItem item : items)
             {
-                if (item != null)
+                if (item != null && item.location != null)
                 {
                     if (item.rowID == -1) {
                         item.rowID = database.addPlace(item.location);
@@ -1660,7 +1660,8 @@ public class PlacesListFragment extends DialogBase
 
                 for (PlaceItem item : items0)
                 {
-                    String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
+                    Location location = item.location;
+                    String label = (location != null ? location.getLabel().toLowerCase(Locale.ROOT).trim() : "");
                     String label0 = Normalizer.normalize(label, Normalizer.Form.NFD);    // isolate all accents/glyphs
                     label0 = label0.replaceAll("\\p{M}", "");          // and remove them; e.g. Rīga -> Riga
 

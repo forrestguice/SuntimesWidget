@@ -1536,7 +1536,6 @@ public class LightGraphView extends ImageView
         public Lock anim_lock = null;
 
         public TimeZone timezone = null;
-        @Nullable
         public LightGraphColorValues colors;
 
         public EarliestLatestSunriseSunsetData earliestLatestData;

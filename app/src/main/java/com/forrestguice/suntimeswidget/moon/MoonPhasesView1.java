@@ -27,6 +27,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -397,7 +398,9 @@ public class MoonPhasesView1 extends LinearLayout
             SuntimesMoonData1 moon = initData(context, position);
             Calendar phaseDate = moon.moonPhaseCalendar(holder.phase);
             boolean isAgo = moon.now().after(phaseDate);
-            holder.northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (moon.location().getLatitudeAsDouble() < 0);
+            Location location = moon.location();
+            double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
+            holder.northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (latitude < 0);
             themeViews(context, holder, isAgo);
 
             holder.bindDataToPosition(context, moon, holder.phase, position);

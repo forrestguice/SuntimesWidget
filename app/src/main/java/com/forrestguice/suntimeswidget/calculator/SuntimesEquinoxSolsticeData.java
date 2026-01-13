@@ -179,9 +179,13 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
             double northLatitude = Math.abs(location.getLatitudeAsDouble());                        // by passing a modified location during calculator init
             location = new Location(location.getLabel(), Double.toString(northLatitude), location.getLongitude(), location.getAltitude());
         }
-        initCalculator();
-        location = location0;
 
+        initCalculator();
+        if (calculator == null) {
+            throw new IllegalStateException("calculator is null after initCalculator() was called!");
+        }
+
+        location = location0;
         initTimezone(getDataSettings(context));
 
         Calendar lastYearCalendar = Calendar.getInstance(timezone);

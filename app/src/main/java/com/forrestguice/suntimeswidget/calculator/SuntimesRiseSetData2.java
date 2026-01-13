@@ -195,6 +195,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
 
         initCalculator();
+        if (calculator == null) {
+            throw new IllegalStateException("calculator is null after initCalculator() was called!");
+        }
+
         initTimezone(getDataSettings(context));
 
         for (int i=0; i<calendar.length; i++)

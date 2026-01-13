@@ -213,6 +213,9 @@ public class SuntimesMoonData extends SuntimesMoonData0
     public void calculate(Object context)
     {
         super.calculate(context);
+        if (calculator == null) {
+            throw new IllegalStateException("calculator is null after initCalculator() was called!");
+        }
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
