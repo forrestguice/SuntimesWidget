@@ -240,7 +240,9 @@ public class LightGraphView extends ImageView
                 TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
                 data = LightGraphTask.createYearData(getContext(), data0, timezone);
-                options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(TimeMode.OFFICIAL, data);
+                if (data != null) {
+                    options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(TimeMode.OFFICIAL, data);
+                }
 
                 handler.post(new Runnable() {
                     @Override
@@ -1064,8 +1066,9 @@ public class LightGraphView extends ImageView
 
         protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
         {
+            TimeZone tz = ((yearData != null && yearData[0] != null) ? yearData[0].timezone() : TimeZone.getDefault());
             Calendar calendar0 = Calendar.getInstance(options.timezone);
-            Calendar calendar = Calendar.getInstance(yearData[0].timezone());
+            Calendar calendar = Calendar.getInstance(tz);
             double offsetHours = lmtOffsetHours();
 
             float textSize = textSize(c, options.axisY_labels_textsize_ratio);
@@ -1100,8 +1103,9 @@ public class LightGraphView extends ImageView
             c.drawRect(left, 0, left + (int)(1.5 * textSize), c.getHeight() - top, p);
             //p.setAlpha(255);
 
+            TimeZone tz = (yearData != null && yearData[0] != null ? yearData[0].timezone() : TimeZone.getDefault());
             Calendar calendar0 = Calendar.getInstance(options.timezone);
-            Calendar calendar = Calendar.getInstance(yearData[0].timezone());
+            Calendar calendar = Calendar.getInstance(tz);
             double offsetHours = lmtOffsetHours();
 
             int i = (int) options.axisY_labels_interval;
@@ -1538,6 +1542,7 @@ public class LightGraphView extends ImageView
         public TimeZone timezone = null;
         public LightGraphColorValues colors;
 
+        @Nullable
         public EarliestLatestSunriseSunsetData earliestLatestData;
 
         public LightGraphOptions() {}

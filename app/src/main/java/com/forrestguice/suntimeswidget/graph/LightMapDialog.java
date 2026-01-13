@@ -1652,7 +1652,10 @@ public class LightMapDialog extends BottomSheetDialogBase
     {
         Bundle bundle = new Bundle();
         try {
-            bundle.putDouble(EventListActivity.EXTRA_ADD_ANGLE, (addAngle != null ? Double.parseDouble(addAngle) : null));
+            Double angle = (addAngle != null ? Double.parseDouble(addAngle) : null);
+            if (angle != null) {
+                bundle.putDouble(EventListActivity.EXTRA_ADD_ANGLE, angle);
+            }
         } catch (NumberFormatException e) {
             bundle.remove(EventListActivity.EXTRA_ADD_ANGLE);
         }
@@ -1662,7 +1665,10 @@ public class LightMapDialog extends BottomSheetDialogBase
     {
         Bundle bundle = new Bundle();
         try {
-            bundle.putDouble(EventListActivity.EXTRA_ADD_SHADOWLENGTH, (addShadowMeters != null ? Double.parseDouble(addShadowMeters) : null));
+            Double length = (addShadowMeters != null ? Double.parseDouble(addShadowMeters) : null);
+            if (length != null) {
+                bundle.putDouble(EventListActivity.EXTRA_ADD_SHADOWLENGTH, length);
+            }
         } catch (NumberFormatException e) {
             bundle.remove(EventListActivity.EXTRA_ADD_SHADOWLENGTH);
         }
@@ -1672,7 +1678,10 @@ public class LightMapDialog extends BottomSheetDialogBase
     {
         Bundle bundle = new Bundle();
         try {
-            bundle.putDouble(EventListActivity.EXTRA_ADD_OBJECTHEIGHT, (addObjectHeight != null ? Double.parseDouble(addObjectHeight) : null));
+            Double height = (addObjectHeight != null ? Double.parseDouble(addObjectHeight) : null);
+            if (height != null) {
+                bundle.putDouble(EventListActivity.EXTRA_ADD_OBJECTHEIGHT, height);
+            }
         } catch (NumberFormatException e) {
             bundle.remove(EventListActivity.EXTRA_ADD_OBJECTHEIGHT);
         }

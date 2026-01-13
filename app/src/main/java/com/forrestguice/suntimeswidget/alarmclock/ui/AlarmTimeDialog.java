@@ -148,7 +148,7 @@ public class AlarmTimeDialog extends DialogBase
         return dialogContent;
     }
 
-    protected void initViews( final Context context, View dialogContent )
+    protected void initViews( Context context, View dialogContent )
     {
         SuntimesUtils.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);

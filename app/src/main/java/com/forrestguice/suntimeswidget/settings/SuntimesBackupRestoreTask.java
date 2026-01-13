@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -227,8 +228,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
                     ? methods.get(SuntimesBackupTask.KEY_PLACEITEMS) : IMPORT_PLACES_METHOD_ADDALL;
+            int method = (m != null ? m : IMPORT_PLACES_METHOD_ADDALL);
             c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
@@ -250,8 +252,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
                     ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
+            int method = (m != null ? m : IMPORT_ALARMS_METHOD_ADDALL);
             c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
         }
 
@@ -261,8 +264,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
                     ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
+            int method = (m != null ? m : IMPORT_WIDGETS_METHOD_RESTOREBACKUP);
             c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
         }
 
@@ -664,7 +668,8 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = AlertDialog.getListView(dialog).getCheckedItemPosition();
+                        ListView v = AlertDialog.getListView(dialog);
+                        int p = (v != null ? v.getCheckedItemPosition() : 0);
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })

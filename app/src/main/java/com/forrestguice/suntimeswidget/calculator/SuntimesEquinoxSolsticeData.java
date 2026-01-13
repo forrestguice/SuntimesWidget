@@ -179,6 +179,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
             double northLatitude = Math.abs(location.getLatitudeAsDouble());                        // by passing a modified location during calculator init
             location = new Location(location.getLabel(), Double.toString(northLatitude), location.getLongitude(), location.getAltitude());
         }
+        double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
 
         initCalculator();
         if (calculator == null) {
@@ -209,7 +210,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         switch (timeMode)
         {
             case CROSS_SPRING:
-                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
+                if (localizeHemisphere && latitude < 0)
                 {
                     eventCalendarNextYear = midpoint(calculator.getWinterSolsticeForYear(lastYearCalendar), calculator.getSpringEquinoxForYear(lastYearCalendar));
                     eventCalendarThisYear = midpoint(calculator.getWinterSolsticeForYear(thisYearCalendar), calculator.getSpringEquinoxForYear(thisYearCalendar));
@@ -223,7 +224,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
                 break;
 
             case CROSS_AUTUMN:
-                if (localizeHemisphere && location.getLatitudeAsDouble() < 0)
+                if (localizeHemisphere && latitude < 0)
                 {
                     eventCalendarNextYear = null;
                     eventCalendarThisYear = midpoint(calculator.getSummerSolsticeForYear(lastYearCalendar), calculator.getAutumnalEquinoxForYear(thisYearCalendar));

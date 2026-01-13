@@ -29,6 +29,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -169,7 +170,8 @@ public class SuntimesActionsProvider extends ContentProvider
                     values.put(COLUMN_ACTION_NAME, actionID);
                     break;
                 case COLUMN_ACTION_COLOR:
-                    values.put(column, Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR)));
+                    String v = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR);
+                    values.put(column, (v != null ? Integer.parseInt(v) : Color.WHITE));
                     break;
                 case COLUMN_ACTION_TAGS:
                     Set<String> tags = WidgetActions.loadActionTags(context, 0, actionID);
