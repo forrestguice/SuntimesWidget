@@ -87,7 +87,9 @@ public class AlarmEventProviderTest0
             assertEquals(offset[i], event.getOffset());
             assertEquals(rising[i], event.isRising());
         }
-        assertEquals(-6.0, SunElevationEvent.valueOf("SUN_-6").getAngle());      // no suffix, no offset
+        SunElevationEvent e = SunElevationEvent.valueOf("SUN_-6");
+        assertNotNull(e);
+        assertEquals(-6.0, e.getAngle());      // no suffix, no offset
 
         assertNull( SunElevationEvent.valueOf("") );             // empty
         assertNull( SunElevationEvent.valueOf(null) );           // null
@@ -159,7 +161,9 @@ public class AlarmEventProviderTest0
             assertEquals(offset[i], event.getOffset());
             assertEquals(rising[i], event.isRising());
         }
-        assertEquals(6.0, ShadowLengthEvent.valueOf("SHADOW_6").getLength());      // no suffix, no offset
+        ShadowLengthEvent e = ShadowLengthEvent.valueOf("SHADOW_6");
+        assertNotNull(e);
+        assertEquals(6.0, e.getLength());      // no suffix, no offset
 
         assertNull( SunElevationEvent.valueOf("") );             // empty
         assertNull( SunElevationEvent.valueOf(null) );           // null

@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 
 import static androidx.test.espresso.Espresso.registerIdlingResources;
 import static androidx.test.espresso.Espresso.unregisterIdlingResources;
+import static org.junit.Assert.assertNotNull;
 
 @Category(UnlistedTest.class)
 @LargeTest
@@ -110,6 +111,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         if (config.containsKey(languageTag)) {
             configuration = config.get(languageTag);
         }
+        assertNotNull(configuration);
 
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
@@ -136,6 +138,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         if (config.containsKey(languageTag)) {
             configuration = config.get(languageTag);
         }
+        assertNotNull(configuration);
 
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());

@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -114,6 +115,7 @@ public class AlarmScheduleTest0
 
         while (c < n)
         {
+            assertNotNull(alarm.repeatingDays);
             Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {

@@ -125,7 +125,9 @@ public class AlarmEventProviderTest
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
             String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("false", supportsOffsetDays.get(event.name()));
         }
@@ -133,7 +135,9 @@ public class AlarmEventProviderTest
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
             String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("false", supportsOffsetDays.get(event.name()));
         }
@@ -141,7 +145,9 @@ public class AlarmEventProviderTest
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
             String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("true", supportsOffsetDays.get(event.name()));
         }
@@ -149,7 +155,9 @@ public class AlarmEventProviderTest
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
             String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
             assertEquals("false", requiresLocation.get(event.name()));
             assertEquals("true", supportsOffsetDays.get(event.name()));
         }

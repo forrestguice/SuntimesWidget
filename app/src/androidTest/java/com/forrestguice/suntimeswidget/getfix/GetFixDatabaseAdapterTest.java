@@ -286,7 +286,9 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor0);
             assertTrue("cursor should not be after last", !cursor0.isAfterLast());
             long id = cursor0.getLong(0);
-            verifyPlace(cursor0, false, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor0, false, id, loc);
             cursor0.moveToNext();
         }
         cursor0.close();
@@ -300,7 +302,9 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor1);
             assertTrue("cursor should not be after last", !cursor1.isAfterLast());
             long id = cursor1.getLong(0);
-            verifyPlace(cursor1, true, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor1, true, id, loc);
             cursor1.moveToNext();
         }
         cursor1.close();
@@ -314,7 +318,9 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor2);
             assertTrue("cursor should not be after last", !cursor2.isAfterLast());
             long id = cursor2.getLong(0);
-            verifyPlace(cursor2, false, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor2, false, id, loc);
             cursor2.moveToNext();
         }
         cursor2.close();
