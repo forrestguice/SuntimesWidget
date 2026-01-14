@@ -33,7 +33,7 @@ public enum EventType
     MOON_ELEVATION;
 
     private EventType() {}
-    
+
     private String displayString = name();
     @NonNull
     public String getDisplayString() {
