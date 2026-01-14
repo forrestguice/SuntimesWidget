@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
+@SuppressWarnings({"Convert2Diamond", "deprecation"})
 @Deprecated
 public class EquinoxView extends LinearLayout
 {

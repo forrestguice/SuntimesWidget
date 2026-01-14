@@ -56,6 +56,7 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import java.util.Calendar;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 @Deprecated
 public class EquinoxDialog extends BottomSheetDialogBase
 {

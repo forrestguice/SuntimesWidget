@@ -112,6 +112,7 @@ public class TimeDialog extends TimeDialogBase
         if (Build.VERSION.SDK_INT >= 23) {
             return (timePicker != null ? timePicker.getHour() : getInitialHour());
         } else {
+            //noinspection deprecation
             return (timePicker != null ? timePicker.getCurrentHour() : getInitialHour());
         }
     }
@@ -120,6 +121,7 @@ public class TimeDialog extends TimeDialogBase
         if (Build.VERSION.SDK_INT >= 23) {
             return (timePicker != null ? timePicker.getMinute() : getInitialMinute());
         } else {
+            //noinspection deprecation
             return (timePicker != null ? timePicker.getCurrentMinute() : getInitialMinute());
         }
     }

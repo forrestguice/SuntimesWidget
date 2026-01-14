@@ -276,6 +276,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
                 return StaticLayout.Builder.obtain(text, 0, text.length(), p, (int) getWidth(lines, p))
                         .setLineSpacing(0, 0.90f).build();
             } else {
+                //noinspection deprecation
                 return new StaticLayout(text, p, (int) getWidth(lines, p), Layout.Alignment.ALIGN_NORMAL, 0.90f, 0, false);
             }
         }
