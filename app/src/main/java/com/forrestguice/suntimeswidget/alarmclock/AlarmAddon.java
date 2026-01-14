@@ -33,7 +33,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -40,7 +40,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.support.app.AlertDialog;
 
 import java.io.BufferedInputStream;

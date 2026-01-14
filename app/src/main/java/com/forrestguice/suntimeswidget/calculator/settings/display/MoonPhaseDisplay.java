@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
 
 import java.util.Calendar;

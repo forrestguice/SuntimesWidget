@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
-import com.forrestguice.suntimes.calculator.core.Location;
-
 import org.junit.Test;
 
 import java.io.FileInputStream;

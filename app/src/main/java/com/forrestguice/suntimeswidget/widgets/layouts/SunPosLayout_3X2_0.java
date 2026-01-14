@@ -30,7 +30,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;

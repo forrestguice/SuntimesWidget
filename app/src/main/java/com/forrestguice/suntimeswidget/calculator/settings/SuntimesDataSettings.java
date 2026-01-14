@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.util.ContextInterface;

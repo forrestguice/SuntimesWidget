@@ -23,8 +23,8 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
-import com.forrestguice.suntimes.calculator.core.Location;
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

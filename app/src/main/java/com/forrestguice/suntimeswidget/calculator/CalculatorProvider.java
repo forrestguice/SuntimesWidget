@@ -52,14 +52,14 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.SuntimesApplication;
 
-import com.forrestguice.suntimes.calculator.core.CalculatorProviderContract;
-import com.forrestguice.suntimes.calculator.core.Location;
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import static com.forrestguice.suntimes.calculator.core.CalculatorProviderContract.*;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.*;
 
 /**
  * CalculatorProvider

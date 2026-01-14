@@ -22,7 +22,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.util.Pair;
 
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
 import java.util.HashMap;

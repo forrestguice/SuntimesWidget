@@ -26,7 +26,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;

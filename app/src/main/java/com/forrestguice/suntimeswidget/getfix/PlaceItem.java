@@ -22,7 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;

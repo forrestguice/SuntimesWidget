@@ -20,7 +20,7 @@
 }
 
 # keep SuntimesCalculator noarg constructors
--keepclassmembers class * implements com.forrestguice.suntimes.calculator.core.SuntimesCalculator {
+-keepclassmembers class * implements com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator {
    public <init>();
 }
 

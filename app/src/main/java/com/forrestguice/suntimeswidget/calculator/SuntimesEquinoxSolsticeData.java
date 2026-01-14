@@ -19,8 +19,8 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimes.calculator.core.Location;
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 

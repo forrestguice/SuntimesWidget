@@ -18,8 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
-import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.Calendar;
 import java.util.TimeZone;

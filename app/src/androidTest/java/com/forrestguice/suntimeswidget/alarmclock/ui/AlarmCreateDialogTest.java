@@ -45,7 +45,7 @@ import com.forrestguice.suntimeswidget.TimeDateDialogTest;
 import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.util.text.TimeDisplayText;
