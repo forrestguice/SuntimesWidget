@@ -20,9 +20,9 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.ResID_SolarEvents;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
 
@@ -31,48 +31,47 @@ import java.util.Locale;
 
 public enum SolarEvents
 {
-    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", R.attr.sunriseIconLarge, 0, true), // 0
-    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", R.attr.sunriseIconLarge, 0, true),             // 1
-    MORNING_BLUE8("blue hour", "morning blue hour", R.attr.sunriseIconLarge, 0, true),                                // 2
-    MORNING_CIVIL("civil twilight", "morning civil twilight", R.attr.sunriseIconLarge, 0, true),                      // 3
-    MORNING_BLUE4("blue hour", "morning blue hour", R.attr.sunriseIconLarge, 0, true),                                // 4
-    SUNRISE("sunrise", "sunrise", R.attr.sunriseIconLarge, 0, true),                                                  // 5
-    MORNING_GOLDEN("golden hour", "morning golden hour", R.attr.sunriseIconLarge, 0, true),                           // 6
-    NOON("solar noon", "solar noon", R.attr.sunnoonIcon, 0, false),                                                   // 7
-    EVENING_GOLDEN("golden hour", "evening golden hour", R.attr.sunsetIconLarge, 0, false),                            // 8
-    SUNSET("sunset", "sunset", R.attr.sunsetIconLarge, 0, false),                                                      // 9
-    EVENING_BLUE4("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 10
-    EVENING_CIVIL("civil twilight", "evening civil twilight", R.attr.sunsetIconLarge, 0, false),                       // 11
-    EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 12
-    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
-    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
+    MORNING_ASTRONOMICAL("astronomical twilight", "morning astronomical twilight", 0, 0, true), // 0
+    MORNING_NAUTICAL("nautical twilight", "morning nautical twilight", 0, 0, true),             // 1
+    MORNING_BLUE8("blue hour", "morning blue hour", 0, 0, true),                                // 2
+    MORNING_CIVIL("civil twilight", "morning civil twilight", 0, 0, true),                      // 3
+    MORNING_BLUE4("blue hour", "morning blue hour", 0, 0, true),                                // 4
+    SUNRISE("sunrise", "sunrise", 0, 0, true),                                                  // 5
+    MORNING_GOLDEN("golden hour", "morning golden hour", 0, 0, true),                           // 6
+    NOON("solar noon", "solar noon", 0, 0, false),                                                   // 7
+    EVENING_GOLDEN("golden hour", "evening golden hour", 0, 0, false),                            // 8
+    SUNSET("sunset", "sunset", 0, 0, false),                                                      // 9
+    EVENING_BLUE4("blue hour", "evening blue hour", 0, 0, false),                                 // 10
+    EVENING_CIVIL("civil twilight", "evening civil twilight", 0, 0, false),                       // 11
+    EVENING_BLUE8("blue hour", "evening blue hour", 0, 0, false),                                 // 12
+    EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", 0, 0, false),              // 13
+    EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", 0, 0, false),  // 14
 
-    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
-    MOONSET("moonset", "moonset", R.attr.moonsetIcon, 1, false),                                                   // 16
+    MOONRISE("moonrise", "moonrise", 0, 1, true),                                                 // 15
+    MOONSET("moonset", "moonset", 0, 1, false),                                                   // 16
 
-    NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 2, true),                                             // 17
-    FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 2, true),                              // 18
-    FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 2, false),                                         // 19
-    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 2, false),                             // 20
+    NEWMOON("new moon", "new moon", 0, 2, true),                                             // 17
+    FIRSTQUARTER("first quarter", "first quarter", 0, 2, true),                              // 18
+    FULLMOON("full moon", "full moon", 0, 2, false),                                         // 19
+    THIRDQUARTER("third quarter", "third quarter", 0, 2, false),                             // 20
 
-    EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 3, true),                                         // 21
-    SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 3, false),                                     // 22
-    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
-    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true),                                      // 24
+    EQUINOX_SPRING("equinox", "spring equinox", 0, 3, true),                                         // 21
+    SOLSTICE_SUMMER("solstice", "summer solstice", 0, 3, false),                                     // 22
+    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", 0, 3, false),                                      // 23
+    SOLSTICE_WINTER("solstice", "winter solstice", 0, 3, true),                                      // 24
 
-    MOONNOON("lunar noon", "lunar noon", R.attr.moonnoonIcon, 1, true),                                            // 25
-    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonnightIcon, 1, false),                                  // 26
+    MOONNOON("lunar noon", "lunar noon", 0, 1, true),                                            // 25
+    MOONNIGHT("lunar midnight", "lunar midnight", 0, 1, false),                                  // 26
 
-    CROSS_SPRING("cross-quarter", "spring cross-quarter", R.attr.springColor, 3, false),                          // 27
-    CROSS_SUMMER("cross-quarter", "summer cross-quarter", R.attr.summerColor, 3, false),                         // 28
-    CROSS_AUTUMNAL("cross-quarter", "autumnal cross-quarter", R.attr.fallColor, 3, false),                        // 29
-    CROSS_WINTER("cross-quarter", "winter cross-quarter", R.attr.winterColor, 3, false),                          // 30
+    CROSS_SPRING("cross-quarter", "spring cross-quarter", 0, 3, false),                          // 27
+    CROSS_SUMMER("cross-quarter", "summer cross-quarter", 0, 3, false),                         // 28
+    CROSS_AUTUMNAL("cross-quarter", "autumnal cross-quarter", 0, 3, false),                        // 29
+    CROSS_WINTER("cross-quarter", "winter cross-quarter", 0, 3, false),                          // 30
 
-    MIDNIGHT("solar midnight", "solar midnight", R.attr.sunnightIcon, 0, true),                                        // 31
+    MIDNIGHT("solar midnight", "solar midnight", 0, 0, true),                                        // 31
 
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
-    private final int iconResource;
     private String shortDisplayString, longDisplayString;
     public int type;
     public boolean rising;
@@ -87,16 +86,13 @@ public enum SolarEvents
     }
     public static CharSequence getTypeLabel(Resources context, @Nullable Integer type)
     {
-        if (type == null) {
-            return "";
+        if (displayResID != null) {
+            int resID = displayResID.getResID_string_typeLabel(type);
+            if (resID != 0) {
+                return context.getString(resID);
+            }
         }
-        switch (type) {
-            case TYPE_SUN: return context.getString(R.string.eventType_default_sun);
-            case TYPE_MOON: return context.getString(R.string.eventType_default_moon);
-            case TYPE_MOONPHASE: return context.getString(R.string.eventType_default_moonphases);
-            case TYPE_SEASON: return context.getString(R.string.eventType_default_seasons);
-            default: return type + context.getString(R.string.eventType_default);
-        }
+        return "";
     }
 
     private SolarEvents(@NonNull String shortDisplayString, @NonNull String longDisplayString, int iconResource, int type, boolean rising)
@@ -113,11 +109,13 @@ public enum SolarEvents
         return longDisplayString;
     }
 
-    public int getIcon()
-    {
+    private int iconResource;
+    public void setIconResource(int resID) {
+        this.iconResource = resID;
+    }
+    public int getIcon() {
         return iconResource;
     }
-
     public int getIcon(boolean southernHemisphere)
     {
         if (!southernHemisphere) {
@@ -173,29 +171,45 @@ public enum SolarEvents
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings(Resources context)
+    @Nullable
+    protected static ResID_SolarEvents displayResID = null;
+    public static void setDisplayResID(@Nullable ResID_SolarEvents values)
     {
-        String[] modes_short = context.getStringArray(R.array.solarevents_short);
-        String[] modes_long = context.getStringArray(R.array.solarevents_long);
-        if (modes_long.length != modes_short.length)
-        {
-            Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + Locale.getDefault().toString());
-            return;
+        displayResID = values;
+        if (displayResID != null) {
+            for (SolarEvents event : values()) {
+                event.setIconResource(displayResID.getResID_attr_icon(event));
+            }
         }
+    }
 
-        SolarEvents[] values = values();
-        if (modes_long.length != values.length)
+    public static void initDisplayStrings(Resources context, ResID_SolarEvents resID)
+    {
+        setDisplayResID(resID);
+        int resID_displayShort = (displayResID != null ? displayResID.getResID_array_eventDisplayShort() : 0);
+        int resID_displayLong = (displayResID != null ? displayResID.getResID_array_eventDisplayLong() : 0);
+
+        if (resID_displayLong != 0 && resID_displayShort != 0)
         {
-            Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + Locale.getDefault().toString());
-            return;
-        }
+            String[] modes_short = context.getStringArray(resID_displayShort);
+            String[] modes_long = context.getStringArray(resID_displayLong);
+            if (modes_long.length != modes_short.length) {
+                Log.e("initDisplayStrings", "The size of solarevents_short and solarevents_long DOES NOT MATCH! locale: " + Locale.getDefault().toString());
+                return;
+            }
 
-        for (int i = 0; i < values.length; i++)
-        {
-            values[i].setDisplayString(modes_short[i], modes_long[i]);
-        }
+            SolarEvents[] values = values();
+            if (modes_long.length != values.length) {
+                Log.e("initDisplayStrings", "The size of solarevents_long and SolarEvents DOES NOT MATCH! locale: " + Locale.getDefault().toString());
+                return;
+            }
 
-        MIDNIGHT.setDisplayString(context.getString(R.string.timeMode_midnight_short), context.getString(R.string.timeMode_midnight));
+            for (int i = 0; i < values.length; i++) {
+                values[i].setDisplayString(modes_short[i], modes_long[i]);
+            }
+
+            //MIDNIGHT.setDisplayString(context.getString(R.string.timeMode_midnight_short), context.getString(R.string.timeMode_midnight));   // TODO: string arrays
+        }
     }
 
     public static SolarEvents valueOf(String value, SolarEvents defaultType)

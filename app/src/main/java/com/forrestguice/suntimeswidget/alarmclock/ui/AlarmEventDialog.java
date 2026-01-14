@@ -52,6 +52,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.support.widget.PopupMenuCompat;
@@ -323,7 +324,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         initColors(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
 
         icon_note = (ImageView) dialogContent.findViewById(R.id.appwidget_schedalarm_note_icon);
         icon_note.setVisibility(View.GONE);

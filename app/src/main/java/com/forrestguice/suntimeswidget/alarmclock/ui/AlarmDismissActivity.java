@@ -43,6 +43,7 @@ import android.os.PowerManager;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.FloatingActionButton;
@@ -383,7 +384,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         //int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);

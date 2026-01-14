@@ -55,6 +55,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -186,7 +187,7 @@ public class MoonDialog extends BottomSheetDialogBase
         AndroidResources res = AndroidResources.wrap(context);
         TimeDeltaDisplay.initDisplayStrings(res);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(res);
+        SolarEvents.initDisplayStrings(res, new AndroidResID_SolarEvents());
     }
 
     @Override
