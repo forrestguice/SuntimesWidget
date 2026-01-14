@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -233,7 +234,7 @@ public class MoonPhaseView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
     public void updateViews(Context context, SuntimesMoonData data) {

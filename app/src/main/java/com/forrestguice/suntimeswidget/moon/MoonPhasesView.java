@@ -20,6 +20,8 @@ package com.forrestguice.suntimeswidget.moon;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
@@ -145,7 +147,7 @@ public class MoonPhasesView extends LinearLayout
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
-        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
     private void showEmptyView( boolean show )

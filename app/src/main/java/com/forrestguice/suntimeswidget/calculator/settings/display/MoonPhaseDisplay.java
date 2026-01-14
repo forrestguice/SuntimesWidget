@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
@@ -31,24 +30,34 @@ import java.util.Calendar;
  */
 public enum MoonPhaseDisplay
 {
-    NEW("New", "New Moon", R.drawable.ic_moon_new, R.id.icon_info_moonphase_new),
-    WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent", R.drawable.ic_moon_waxing_crescent, R.id.icon_info_moonphase_waxing_crescent),
-    FIRST_QUARTER("First Quarter", "First Quarter", R.drawable.ic_moon_waxing_quarter, R.id.icon_info_moonphase_waxing_quarter),
-    WAXING_GIBBOUS("Waxing Gibbous", "Waxing Gibbous", R.drawable.ic_moon_waxing_gibbous, R.id.icon_info_moonphase_waxing_gibbous),
-    FULL("Full", "Full Moon", R.drawable.ic_moon_full, R.id.icon_info_moonphase_full),
-    WANING_GIBBOUS("Waning Gibbous", "Waning Gibbous", R.drawable.ic_moon_waning_gibbous, R.id.icon_info_moonphase_waning_gibbous),
-    THIRD_QUARTER("Third Quarter", "Third Quarter", R.drawable.ic_moon_waning_quarter, R.id.icon_info_moonphase_waning_quarter),
-    WANING_CRESCENT("Waning Crescent", "Waning Crescent", R.drawable.ic_moon_waning_crescent, R.id.icon_info_moonphase_waning_crescent);
+    NEW("New", "New Moon"),
+    WAXING_CRESCENT("Waxing Crescent", "Waxing Crescent"),
+    FIRST_QUARTER("First Quarter", "First Quarter"),
+    WAXING_GIBBOUS("Waxing Gibbous", "Waxing Gibbous"),
+    FULL("Full", "Full Moon"),
+    WANING_GIBBOUS("Waning Gibbous", "Waning Gibbous"),
+    THIRD_QUARTER("Third Quarter", "Third Quarter"),
+    WANING_CRESCENT("Waning Crescent", "Waning Crescent");
 
-    private final int iconResource, viewResource;
+    private int iconResource = 0, viewResource = 0;
     private String shortDisplayString, longDisplayString;
 
-    private MoonPhaseDisplay(@NonNull String shortDisplayString, @NonNull String longDisplayString, int iconResource, int viewResource)
+    protected static ResID_MoonPhaseDisplay resIDs = new ResID_MoonPhaseDisplay()
+    {
+        public int resID_string_microFullMoon() { return 0; }
+        public int resID_string_microNewMoon() { return 0; }
+        public int resID_string_superFullMoon() { return 0; }
+        public int resID_string_superNewMoon() { return 0; }
+        public int resID_string_shortDisplay(MoonPhaseDisplay value) { return 0; }
+        public int resID_string_longDisplay(MoonPhaseDisplay value) { return 0; }
+        public int resID_icon(MoonPhaseDisplay value) { return 0; }
+        public int resID_view(MoonPhaseDisplay value) { return 0; }
+    };
+
+    private MoonPhaseDisplay(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;
-        this.iconResource = iconResource;
-        this.viewResource = viewResource;
     }
 
     @NonNull
@@ -95,16 +104,22 @@ public enum MoonPhaseDisplay
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings(Resources context)
+    public static void initDisplayStrings(Resources context, ResID_MoonPhaseDisplay ids)
     {
-         NEW.setDisplayString(context.getString(R.string.timeMode_moon_new_short), context.getString(R.string.timeMode_moon_new));
-         WAXING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waxingcrescent_short), context.getString(R.string.timeMode_moon_waxingcrescent));
-         FIRST_QUARTER.setDisplayString(context.getString(R.string.timeMode_moon_firstquarter_short), context.getString(R.string.timeMode_moon_firstquarter));
-         WAXING_GIBBOUS.setDisplayString(context.getString(R.string.timeMode_moon_waxinggibbous_short), context.getString(R.string.timeMode_moon_waxinggibbous));
-         FULL.setDisplayString(context.getString(R.string.timeMode_moon_full_short), context.getString(R.string.timeMode_moon_full));
-         WANING_GIBBOUS.setDisplayString(context.getString(R.string.timeMode_moon_waninggibbous_short), context.getString(R.string.timeMode_moon_waninggibbous));
-         THIRD_QUARTER.setDisplayString(context.getString(R.string.timeMode_moon_thirdquarter_short), context.getString(R.string.timeMode_moon_thirdquarter));
-         WANING_CRESCENT.setDisplayString(context.getString(R.string.timeMode_moon_waningcrescent_short),context.getString(R.string.timeMode_moon_waningcrescent));
+        resIDs = ids;
+        for (MoonPhaseDisplay value : MoonPhaseDisplay.values())
+        {
+            value.setDisplayString(context.getString(ids.resID_string_shortDisplay(value)), context.getString(ids.resID_string_longDisplay(value)));
+            value.setIconResource(ids.resID_icon(value));
+            value.setViewResource(ids.resID_view(value));
+        }
+    }
+
+    public void setIconResource(int resID) {
+        iconResource = resID;
+    }
+    public void setViewResource(int resID) {
+        viewResource = resID;
     }
 
     public static CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
@@ -114,14 +129,27 @@ public enum MoonPhaseDisplay
             SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
 
             if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
-                        : context.getString(R.string.timeMode_moon_superfull);
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(resIDs.resID_string_superNewMoon())
+                        : context.getString(resIDs.resID_string_superFullMoon());
 
             } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
-                        : context.getString(R.string.timeMode_moon_microfull);
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(resIDs.resID_string_microNewMoon())
+                        : context.getString(resIDs.resID_string_microFullMoon());
 
             } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
         } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
+    }
+
+    public interface ResID_MoonPhaseDisplay
+    {
+        int resID_string_microFullMoon();
+        int resID_string_microNewMoon();
+        int resID_string_superFullMoon();
+        int resID_string_superNewMoon();
+
+        int resID_string_shortDisplay(MoonPhaseDisplay value);
+        int resID_string_longDisplay(MoonPhaseDisplay value);
+        int resID_icon(MoonPhaseDisplay value);
+        int resID_view(MoonPhaseDisplay value);
     }
 }

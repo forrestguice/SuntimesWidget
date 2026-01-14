@@ -28,6 +28,7 @@ import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -194,7 +195,7 @@ public class MoonPhasesView1 extends LinearLayout
         SuntimesUtils.initDisplayStrings(context);
         ViewUtils.initUtils(context);
         WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
-        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
     public int numColumns() {
