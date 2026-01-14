@@ -337,9 +337,9 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         showEmptyView(!isImplemented(card_adapter.initData(context, EquinoxDatasetAdapter.CENTER_POSITION)));
         int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard()) {
-            card_view.setLayoutFrozen(false);
+            card_view.suppressLayout(false);
             card_view.scrollToPosition(position);
-            card_view.setLayoutFrozen(false);
+            card_view.suppressLayout(false);         // TODO: was this a typo? why are calling setLayoutFrozen(false) twice...
         }
         if (text_year_length_label != null && options.columnWidthPx != -1)
         {
@@ -742,7 +742,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         card_view.addItemDecoration(new RecyclerView.MarginDecorator(context, R.dimen.dialog_margin1, 0, R.dimen.dialog_margin1, 0));
 
         card_view.setOnScrollListener(onCardScrollListener);
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
 
         new LinearSnapHelper().attachToRecyclerView(card_view);
 
@@ -812,10 +812,10 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     }
 
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
     }
 
     public int currentCardPosition()

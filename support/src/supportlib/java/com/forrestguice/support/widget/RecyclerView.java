@@ -55,6 +55,13 @@ public class RecyclerView extends android.support.v7.widget.RecyclerView
         };
     }
 
+    public void suppressLayout(boolean value) {
+        setLayoutFrozen(value);
+    }
+    public boolean isLayoutSuppressed() {
+        return isLayoutFrozen();
+    }
+
     public static abstract class OnScrollListenerCompat
     {
         public OnScrollListenerCompat() {}

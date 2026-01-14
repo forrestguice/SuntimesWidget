@@ -252,11 +252,11 @@ public class MoonApsisView extends LinearLayout
     }
 
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
 
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
     }
 
     public void setOnClickListener( OnClickListener listener )

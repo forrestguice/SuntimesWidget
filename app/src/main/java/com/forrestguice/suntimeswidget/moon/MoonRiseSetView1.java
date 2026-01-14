@@ -366,10 +366,10 @@ public class MoonRiseSetView1 extends LinearLayout
         card_layout.scrollToPositionWithOffset(card_adapter.getPositionForDate(getContext(), datetime), 0);
     }
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
     }
 
     private MoonRiseSetViewListener viewListener = null;

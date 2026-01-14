@@ -154,7 +154,7 @@ public class EquinoxView extends LinearLayout
         if (!minimized) {
             card_view.setOnScrollListener(onCardScrollListener);
         }
-        card_view.setLayoutFrozen(minimized);
+        card_view.suppressLayout(minimized);
 
         if (isInEditMode()) {
             updateViews(context);
@@ -246,9 +246,9 @@ public class EquinoxView extends LinearLayout
 
         int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
-            card_view.setLayoutFrozen(false);
+            card_view.suppressLayout(false);
             card_view.scrollToPosition(position);
-            card_view.setLayoutFrozen(isMinimized());
+            card_view.suppressLayout(isMinimized());
         }
     }
 
@@ -397,11 +397,11 @@ public class EquinoxView extends LinearLayout
     };
 
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
 
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(isMinimized());
+        card_view.suppressLayout(isMinimized());
     }
 
     public int currentCardPosition()

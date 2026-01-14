@@ -307,11 +307,11 @@ public class MoonPhasesView1 extends LinearLayout
     }
 
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
 
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
     }
 
     private MoonPhasesViewListener viewListener = null;

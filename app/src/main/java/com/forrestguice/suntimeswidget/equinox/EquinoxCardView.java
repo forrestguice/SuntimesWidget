@@ -141,7 +141,7 @@ public class EquinoxCardView extends LinearLayout
         card_view.addItemDecoration(new RecyclerView.MarginDecorator(0));
 
         card_view.setOnScrollListener(onCardScrollListener);
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
 
         new PagerSnapHelper().attachToRecyclerView(card_view);
 
