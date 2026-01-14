@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
@@ -3033,7 +3034,7 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
-        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context), new AndroidResID_LengthUnitDisplay());
         initDisplayStrings_ActionMode(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);

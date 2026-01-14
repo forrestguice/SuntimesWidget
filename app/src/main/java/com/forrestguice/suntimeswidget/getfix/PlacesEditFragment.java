@@ -34,6 +34,7 @@ import android.os.Bundle;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
@@ -375,7 +376,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     protected void initViews(@NonNull Context context, final View content)
     {
-        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context), new AndroidResID_LengthUnitDisplay());
         WidgetSettings.initDisplayStrings(context);
 
         text_locationName = (EditText) content.findViewById(R.id.appwidget_location_name);

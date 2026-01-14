@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -95,7 +96,7 @@ public class PlacesActivity extends AppCompatActivity
         AndroidResources res = AndroidResources.wrap(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
-        LengthUnitDisplay.initDisplayStrings_LengthUnit(res);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(res, new AndroidResID_LengthUnitDisplay());
         AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
     }
 

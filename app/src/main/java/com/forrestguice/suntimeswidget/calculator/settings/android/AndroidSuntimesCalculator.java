@@ -29,10 +29,12 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.BaseEvent;
@@ -59,10 +61,13 @@ public class AndroidSuntimesCalculator
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
 
         AndroidResources r = AndroidResources.wrap(context);
+        AndroidSuntimesDataSettings dataSettings = AndroidSuntimesDataSettings.wrap(context);
+
         TimeDeltaDisplay.initDisplayStrings(r, new AndroidResID_TimeDeltaDisplay());
         AngleDisplay.initDisplayStrings(r, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         LengthUnitDisplay.initDisplayStrings_LengthUnit(r, new AndroidResID_LengthUnitDisplay());
         MoonPhaseDisplay.initDisplayStrings(r, new AndroidResID_MoonPhaseDisplay());
+        TimeDateDisplay.initDisplayStrings(dataSettings, new AndroidResID_TimeDateDisplay());
 
         Color.init(new AndroidColor());
     }

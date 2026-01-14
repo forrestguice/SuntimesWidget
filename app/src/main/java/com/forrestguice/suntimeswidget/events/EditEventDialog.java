@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
@@ -340,7 +341,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
-        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context), new AndroidResID_LengthUnitDisplay());
         SuntimesUtils.initDisplayStrings(context);
         units = WidgetSettings.loadLengthUnitsPref(context, 0);
 

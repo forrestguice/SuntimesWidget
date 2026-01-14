@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.annotation.NonNull;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
@@ -56,26 +55,26 @@ public class TimeDateDisplay
 
     protected static boolean initialized = false;
 
-    public static void initDisplayStrings(SuntimesDataSettings context)
+    public static void initDisplayStrings(SuntimesDataSettings context, ResID_TimeDateDisplay ids)
     {
         TimeFormatMode mode = context.loadTimeFormatModePref(0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? SystemTimeFormat.is24HourFormat()
                 : (mode == TimeFormatMode.MODE_24HR);
 
-        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
-        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
-        strTimeVeryShortFormat12s = context.getString(R.string.time_format_12hr_veryshort_withseconds);
-        strTimeVeryShortFormat24s = context.getString(R.string.time_format_24hr_veryshort_withseconds);
-        strTimeNone = context.getString(R.string.time_none);
-        strTimeLoading = context.getString(R.string.time_loading);
+        strTimeVeryShortFormat12 = context.getString(ids.resID_strTimeVeryShortFormat12());
+        strTimeVeryShortFormat24 = context.getString(ids.resID_strTimeVeryShortFormat24());
+        strTimeVeryShortFormat12s = context.getString(ids.resID_strTimeVeryShortFormat12s());
+        strTimeVeryShortFormat24s = context.getString(ids.resID_strTimeVeryShortFormat24s());
+        strTimeNone = context.getString(ids.resID_strTimeNone());
+        strTimeLoading = context.getString(ids.resID_strTimeLoading());
 
-        strDateYearFormat = context.getString(R.string.dateyear_format_short);
-        strDateVeryShortFormat = context.getString(R.string.date_format_veryshort);
-        strDateShortFormat = context.getString(R.string.date_format_short);
-        strDateLongFormat = context.getString(R.string.date_format_long);
+        strDateYearFormat = context.getString(ids.resID_strDateYearFormat());
+        strDateVeryShortFormat = context.getString(ids.resID_strDateVeryShortFormat());
+        strDateShortFormat = context.getString(ids.resID_strDateShortFormat());
+        strDateLongFormat = context.getString(ids.resID_strDateLongFormat());
 
-        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strTimeShortFormat12 = context.getString(ids.resID_strTimeShortFormat12(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strTimeShortFormat12s = context.getString(ids.resID_strTimeShortFormat12(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
 
         initialized = true;
     }
@@ -341,6 +340,23 @@ public class TimeDateDisplay
         TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
         return displayText;
+    }
+
+    public interface ResID_TimeDateDisplay
+    {
+        int resID_strTimeVeryShortFormat12();
+        int resID_strTimeVeryShortFormat24();
+        int resID_strTimeVeryShortFormat12s();
+        int resID_strTimeVeryShortFormat24s();
+        int resID_strTimeNone();
+        int resID_strTimeLoading();
+
+        int resID_strDateYearFormat();
+        int resID_strDateVeryShortFormat();
+        int resID_strDateShortFormat();
+        int resID_strDateLongFormat();
+
+        int resID_strTimeShortFormat12();
     }
 
 }
