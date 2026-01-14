@@ -17,8 +17,9 @@
 */
 package com.forrestguice.suntimeswidget.events;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.util.Log;
 
 public class EventUri
 {
@@ -30,8 +31,22 @@ public class EventUri
         return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
     }
 
-    public static String AUTHORITY() {
-        //return AlarmEventContract.AUTHORITY;
-        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".event.provider";
+    public static String AUTHORITY()
+    {
+        if (buildConfig == null) {
+            Log.w("EventUri", "AUTHORITY: BuildConfig is unset! returning default...");
+            return AlarmEventContract.AUTHORITY;
+        } else {
+            return buildConfig.AUTHORITY_ROOT() + ".event.provider";
+        }
+    }
+
+    @Nullable
+    protected static BuildConfigInfo buildConfig = null;
+    public static void setBuildConfigInfo(BuildConfigInfo value) {
+        buildConfig = value;
+    }
+    public interface BuildConfigInfo {
+        String AUTHORITY_ROOT();
     }
 }

@@ -25,10 +25,13 @@ import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.android.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.android.AndroidTimeFormat;
+
+import com.forrestguice.suntimeswidget.BuildConfig;
 
 public class AndroidSuntimesCalculator
 {
@@ -37,7 +40,16 @@ public class AndroidSuntimesCalculator
         SystemTimeFormat.init(new AndroidTimeFormat(context.getApplicationContext()));
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());
+        EventUri.setBuildConfigInfo(new BuildConfigInfo());
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
         Color.init(new AndroidColor());
+    }
+
+    public static class BuildConfigInfo implements EventUri.BuildConfigInfo
+    {
+        @Override
+        public String AUTHORITY_ROOT() {
+            return BuildConfig.SUNTIMES_AUTHORITY_ROOT;
+        }
     }
 }

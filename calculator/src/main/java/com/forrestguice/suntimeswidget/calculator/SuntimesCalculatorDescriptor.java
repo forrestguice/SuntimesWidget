@@ -19,11 +19,12 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculatorInfo;
+import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
         @Override
         public SuntimesCalculatorDescriptor[] values() {
             return new SuntimesCalculatorDescriptor[] {
-                    new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, -1, Time4A4JSuntimesCalculator.FEATURES)
+                    new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF, -1, SunriseSunsetSuntimesCalculator.FEATURES)
             };
         }
     };
