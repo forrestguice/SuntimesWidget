@@ -33,6 +33,7 @@ import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 
 import java.util.ArrayList;
 
@@ -204,6 +205,7 @@ public class TimeOffsetPicker extends LinearLayout
     {
         SuntimesUtils.initDisplayStrings(context);
         SuntimesUtils utils = new SuntimesUtils();
+        //TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
         secondsValues = new int[(param_maxSeconds - param_minSeconds) + 1];
         secondsValues[0] = param_minSeconds;

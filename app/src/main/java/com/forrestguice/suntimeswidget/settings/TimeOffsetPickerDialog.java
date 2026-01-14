@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,8 +31,10 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.util.android.AndroidResources;
 
 @TargetApi(11)
 public class TimeOffsetPickerDialog extends DialogBase
@@ -47,7 +50,8 @@ public class TimeOffsetPickerDialog extends DialogBase
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        SuntimesUtils.initDisplayStrings(getContext());
+        Context context = requireContext();
+        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context));
         AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
         {
@@ -88,8 +92,8 @@ public class TimeOffsetPickerDialog extends DialogBase
             });
         }
 
-        SuntimesUtils.initDisplayStrings(getContext());
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+        SuntimesUtils.initDisplayStrings(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
 
         label = (TextView) dialogView.findViewById(R.id.text_label);
@@ -100,7 +104,7 @@ public class TimeOffsetPickerDialog extends DialogBase
 
         pickMillis = (TimeOffsetPicker) dialogView.findViewById(R.id.pick_offset_millis);
         if (pickMillis != null) {
-            pickMillis.setParams(getContext(), getMin(), getMax(), allowSeconds(), allowMinutes(), allowHours(), allowDays(), allowDirection());
+            pickMillis.setParams(context, getMin(), getMax(), allowSeconds(), allowMinutes(), allowHours(), allowDays(), allowDirection());
             pickMillis.setSelectedValue(getArgs().getInt("value", getMin()));
             pickMillis.addViewListener(onValueChanged);
         }
@@ -208,7 +212,7 @@ public class TimeOffsetPickerDialog extends DialogBase
 
     private String createSummaryString(int value) {
         return (value == 0 && getZeroText() != null) ? getZeroText()
-                : new SuntimesUtils().timeDeltaLongDisplayString(0, value, true).getValue();
+                : new TimeDeltaDisplay().timeDeltaLongDisplayString(0, value, true).getValue();
     }
 
     /**

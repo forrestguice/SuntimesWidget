@@ -1254,6 +1254,7 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
+                        //noinspection deprecation
                         case COLUMN_SEASON_VERNAL:
                         case COLUMN_SEASON_SPRING:
                             event = calculator.getSpringEquinoxForYear(year);

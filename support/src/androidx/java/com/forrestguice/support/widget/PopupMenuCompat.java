@@ -109,7 +109,6 @@ public class PopupMenuCompat
      * from http://stackoverflow.com/questions/18374183/how-to-show-icons-in-overflow-menu-in-actionbar
      * note: when targetting api29+ this method can be replaced with PopupMenu.setForceShowIcon
      */
-    @Deprecated
     public static void forceActionBarIcons(Menu menu)
     {
         if (menu != null)

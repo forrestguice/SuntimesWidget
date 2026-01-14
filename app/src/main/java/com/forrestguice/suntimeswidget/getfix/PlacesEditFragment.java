@@ -34,6 +34,7 @@ import android.os.Bundle;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
@@ -66,6 +67,7 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -210,7 +212,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             {
                 double accuracy = progress[0].getAccuracy();
                 if (accuracy > 0) {
-                    progress_getfix_label.setText(SuntimesUtils.formatAsHeight(context, progress[0].getAccuracy(), lengthUnit, 2, true).toString());
+                    progress_getfix_label.setText(LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), progress[0].getAccuracy(), lengthUnit, 2, true).toString());
                 } else progress_getfix_label.setText("");
 
                 Integer color = getColorForAccuracy(context, accuracy);
@@ -371,8 +373,9 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         return view;
     }
 
-    protected void initViews(Context context, final View content)
+    protected void initViews(@NonNull Context context, final View content)
     {
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
         WidgetSettings.initDisplayStrings(context);
 
         text_locationName = (EditText) content.findViewById(R.id.appwidget_location_name);

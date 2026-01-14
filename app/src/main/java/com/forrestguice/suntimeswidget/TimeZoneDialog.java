@@ -112,7 +112,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
     private View layout_timezoneExtras;
     private TextView label_tzExtras0;
-    private SuntimesUtils utils;
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     private ArrayAdapter<TimezoneMode> spinner_timezoneMode_adapter;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
@@ -293,7 +293,6 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     {
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        utils = new SuntimesUtils();
 
         preview_time = (TextView) dialogContent.findViewById(R.id.text_time);
         preview_time_suffix = (TextView) dialogContent.findViewById(R.id.text_time_suffix);

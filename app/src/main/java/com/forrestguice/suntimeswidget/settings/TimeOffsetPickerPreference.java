@@ -31,6 +31,8 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.util.android.AndroidResources;
 
 /**
  * A version of MillisecondPickerPreference that allows selecting a millisecond value as a
@@ -80,8 +82,9 @@ public class TimeOffsetPickerPreference extends DialogPreference
     @Override
     protected View onCreateDialogView()
     {
-        SuntimesUtils.initDisplayStrings(getContext());
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+        Context context = getContext();
+        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
 
         label = (TextView) dialogView.findViewById(R.id.text_label);
@@ -200,7 +203,7 @@ public class TimeOffsetPickerPreference extends DialogPreference
         if (value == 0 && param_zeroText != null) {
             return param_zeroText;
         } else {
-            return new SuntimesUtils().timeDeltaLongDisplayString(0, value, true).getValue();
+            return new TimeDeltaDisplay().timeDeltaLongDisplayString(0, value, true).getValue();
         }
     }
 

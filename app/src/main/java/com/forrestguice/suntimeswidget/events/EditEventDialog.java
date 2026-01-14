@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -52,6 +53,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 public class EditEventDialog extends EditBottomSheetDialog
 {
@@ -259,7 +261,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         Context context = getContext();
         if (edit_objHeight != null && context != null) {
-            edit_objHeight.setText(SuntimesUtils.formatAsHeight(context, objHeight, units, 2, true).getValue());
+            edit_objHeight.setText(LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), objHeight, units, 2, true).getValue());
         }
     }
     @Nullable
@@ -288,7 +290,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         Context context = getContext();
         if (edit_shadowLength != null && context != null) {
-            edit_shadowLength.setText(SuntimesUtils.formatAsHeight(context, shadowLength, units, 2, true).getValue());
+            edit_shadowLength.setText(LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), shadowLength, units, 2, true).getValue());
         }
     }
     @Nullable
@@ -338,6 +340,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     @Override
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
         SuntimesUtils.initDisplayStrings(context);
         units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
