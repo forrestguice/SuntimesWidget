@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -50,7 +51,8 @@ import java.util.Calendar;
 
 public class MoonRiseSetView extends LinearLayout
 {
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final AngleDisplay angle_utils = new AngleDisplay();
     //private boolean isRtl = false;
     //private boolean centered = false;
     private boolean showPosition = false;
@@ -170,6 +172,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initLocale(Context context)
     {
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
         SuntimesUtils.initDisplayStrings(context);
         //isRtl = AppSettings.isLocaleRtl(context);
     }
@@ -504,14 +507,14 @@ public class MoonRiseSetView extends LinearLayout
                 positionView.setContentDescription("");
 
             } else {
-                TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
-                String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+                TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 1, false);
+                String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
                 SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
                 azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
-                TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
-                positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+                TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 1, true);
+                positionView.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
             }
         }
 

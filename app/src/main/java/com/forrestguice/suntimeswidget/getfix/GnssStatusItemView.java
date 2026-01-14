@@ -29,7 +29,8 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Locale;
 
@@ -52,7 +53,7 @@ public class GnssStatusItemView extends FrameLayout
 
     public void init(Context context)
     {
-        SuntimesUtils.initDisplayStrings(context);
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(ViewHolder.getLayoutResID(), this);
         holder = new ViewHolder(context, this);
@@ -78,7 +79,7 @@ public class GnssStatusItemView extends FrameLayout
             return R.layout.layout_view_gpsstatus_item;
         }
 
-        private static final SuntimesUtils utils = new SuntimesUtils();
+        private static final AngleDisplay utils = new AngleDisplay();
 
         public TextView text_label;
         public TextView text_cnr;

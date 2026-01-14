@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -52,7 +53,8 @@ import java.util.Calendar;
 
 public class MoonPhaseView extends LinearLayout
 {
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final AngleDisplay angle_utils = new AngleDisplay();
     protected boolean isRtl = false;
     protected boolean centered = false;
     protected boolean illumAtNoon = false, illumRange = false;
@@ -406,21 +408,21 @@ public class MoonPhaseView extends LinearLayout
 
         if (azimuthText != null)
         {
-            TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 2, false);
-            String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+            TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 2, false);
+            String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
             SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
             azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
             this.azimuthText.setText(azimuthSpan);
 
-            TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 2, true);
-            this.azimuthText.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+            TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 2, true);
+            this.azimuthText.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
         }
 
         if (elevationText != null)
         {
             //int elevationColor = Color.WHITE;
-            TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 2);
-            String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
+            TimeDisplayText elevationText = angle_utils.formatAsElevation(position.elevation, 2);
+            String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
             SpannableString elevationSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
             //elevationSpan = SuntimesUtils.createColorSpan(elevationSpan, elevationString, elevationString, elevationColor);
             this.elevationText.setText(elevationSpan);

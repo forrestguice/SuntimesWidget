@@ -55,6 +55,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -110,7 +111,8 @@ public class MoonDialog extends BottomSheetDialogBase
 
     public static final String MAPTAG_MOON = "_moon";
 
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public MoonDialog()
     {
@@ -181,8 +183,10 @@ public class MoonDialog extends BottomSheetDialogBase
 
     public void initLocale(Context context)
     {
+        AndroidResources res = AndroidResources.wrap(context);
+        TimeDeltaDisplay.initDisplayStrings(res);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(AndroidResources.wrap(context));
+        SolarEvents.initDisplayStrings(res);
     }
 
     @Override
@@ -487,7 +491,7 @@ public class MoonDialog extends BottomSheetDialogBase
         if (text_dialogTimeOffset != null) {
             if (!suffix.isEmpty())
             {
-                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
+                TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
                 offsetText.setSuffix("");
                 String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
                 text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));

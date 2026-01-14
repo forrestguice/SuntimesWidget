@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.support.content.ContextCompat;
@@ -96,10 +97,12 @@ import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DE
 public class WidgetThemePreview
 {
     public WidgetThemePreview(Context context, int appWidgetId) {
+        initLocale(context);
         initData(context, appWidgetId);
     }
 
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final AngleDisplay angle_utils = new AngleDisplay();
 
     private int appWidgetId = 0;
     public int getAppWidgetId() {
@@ -129,6 +132,10 @@ public class WidgetThemePreview
     private SuntimesCalculator.MoonPosition moonPosition = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
+
+    protected void initLocale(Context context) {
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+    }
 
     protected void initData(Context context, int appWidgetId)
     {
@@ -400,7 +407,7 @@ public class WidgetThemePreview
             if (previewAzimuth != null)
             {
                 previewAzimuth.setTextColor(textColor);
-                previewAzimuth.setText(SunPosLayout.styleAzimuthText(utils.formatAsDirection2(sunPosition.azimuth, PositionLayout.DECIMAL_PLACES, false), highlightColor, suffixColor, boldTime));
+                previewAzimuth.setText(SunPosLayout.styleAzimuthText(angle_utils.formatAsDirection2(sunPosition.azimuth, PositionLayout.DECIMAL_PLACES, false), highlightColor, suffixColor, boldTime));
                 updateSize(previewAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
 
                 TextView previewAzimuthLabel = (TextView) previewLayout.findViewById(R.id.info_sun_azimuth_current_label);
@@ -1022,7 +1029,7 @@ public class WidgetThemePreview
 
             if (previewMoonAzimuth != null)
             {
-                TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+                TimeDisplayText azimuthDisplay = angle_utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
                 previewMoonAzimuth.setTextColor(textColor);
                 previewMoonAzimuth.setText(PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
                 updateSize(previewMoonAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);

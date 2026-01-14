@@ -35,6 +35,10 @@ import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -132,6 +136,8 @@ public class LightMapDialog extends BottomSheetDialogBase
     public static final String ARG_DATETIME = "datetime";
 
     private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final AngleDisplay angle_utils = new AngleDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private TextView dialogTitle;
     private View sunLayout;
@@ -207,14 +213,20 @@ public class LightMapDialog extends BottomSheetDialogBase
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
         initColors(contextWrapper);
 
-        SuntimesUtils.initDisplayStrings(requireActivity());
-        WidgetSettings.initDisplayStrings_SolarTimeMode(requireActivity());
-        initViews(requireContext(), dialogContent);
+        Context context = requireContext();
+        AndroidResources res = AndroidResources.wrap(context);
+        AngleDisplay.initDisplayStrings(res);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(res);
+        TimeDeltaDisplay.initDisplayStrings(res);
+        SuntimesUtils.initDisplayStrings(context);  // TODO: remove
+        WidgetSettings.initDisplayStrings_SolarTimeMode(context);
+
+        initViews(context, dialogContent);
         if (savedState != null) {
             //Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
             loadSettings(savedState);
         }
-        themeViews(requireContext());
+        themeViews(context);
         return dialogContent;
     }
 
@@ -1578,7 +1590,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                         if (seekAltitude(context, input, rising) != null) {
                             dismissSeekAltitudePopup();
                         } else {
-                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, utils.formatAsElevation(input, 0)), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, angle_utils.formatAsElevation(input, 0)), Toast.LENGTH_SHORT).show();
                         }
                     } catch (NumberFormatException e) {
                         Log.w(getClass().getSimpleName(), "onSeekAltitudeClicked: Failed to parse input; " + e);
@@ -2536,8 +2548,8 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
     {
-        TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
-        String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+        TimeDisplayText azimuthText = angle_utils.formatAsDirection2(azimuth, places, false);
+        String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
             //noinspection ConstantConditions
@@ -2547,14 +2559,14 @@ public class LightMapDialog extends BottomSheetDialogBase
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
-        TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
-        view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+        TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(azimuth, places, true);
+        view.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private CharSequence styleElevationText(double elevation, @Nullable Integer color, int places)
     {
-        TimeDisplayText elevationText = utils.formatAsElevation(elevation, places);
-        String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
+        TimeDisplayText elevationText = angle_utils.formatAsElevation(elevation, places);
+        String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
         //noinspection ConstantConditions
         span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
@@ -2710,7 +2722,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         if (offsetTime != null)
         {
             if (isOffset) {
-                TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+                TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
                 offsetText.setSuffix("");
                 String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
                 offsetTime.setText(displayString);

@@ -32,11 +32,14 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.android.AndroidResources;
 
 public class PlacesActivity extends AppCompatActivity
 {
@@ -86,8 +89,11 @@ public class PlacesActivity extends AppCompatActivity
 
     protected void initLocale()
     {
+        AndroidResources res = AndroidResources.wrap(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(res);
+        AngleDisplay.initDisplayStrings(res);
     }
 
     @Override

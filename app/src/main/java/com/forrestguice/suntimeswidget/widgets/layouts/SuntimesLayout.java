@@ -325,6 +325,7 @@ public abstract class SuntimesLayout
             return builder.build();
 
         } else {
+            //noinspection deprecation
             return new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
         }
     }

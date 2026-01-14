@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -53,6 +54,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.LinearSmoothScroller;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -62,8 +64,6 @@ import java.util.TimeZone;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
-
     private final WeakReference<Context> contextRef;
     private final CardAdapterOptions options = new CardAdapterOptions();
 
@@ -72,7 +72,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         contextRef = new WeakReference<>(context);
         initTheme(context);
         SuntimesUtils.initDisplayStrings(context);
-        CardViewHolder.utils = utils;
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
     }
 
     private void initTheme(Context context)

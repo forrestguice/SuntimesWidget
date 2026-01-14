@@ -27,6 +27,8 @@ import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -94,6 +96,7 @@ import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DE
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
     protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static AngleDisplay angle_utils = new AngleDisplay();
 
     public ImageButton btn_flipperNext;
     public ImageButton btn_flipperPrev;
@@ -283,8 +286,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 SpannableString positionSpan = new SpannableString("");
                 SuntimesCalculator.SunPosition positionNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
                 if (positionNoon != null) {
-                    TimeDisplayText elevationText = utils.formatAsElevation(positionNoon.elevation, 1);
-                    String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
+                    TimeDisplayText elevationText = angle_utils.formatAsElevation(positionNoon.elevation, 1);
+                    String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
                     positionSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
                 }
 
@@ -630,8 +633,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public static void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
     {
-        TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
-        String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+        TimeDisplayText azimuthText = angle_utils.formatAsDirection2(azimuth, places, false);
+        String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
         SpannableString azimuthSpan = null;
         if (color != null) {
             //noinspection ConstantConditions
@@ -641,8 +644,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
-        TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
-        view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+        TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(azimuth, places, true);
+        view.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)

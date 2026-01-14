@@ -48,7 +48,8 @@ import java.util.Calendar;
 @Deprecated
 public class MoonPhasesView extends LinearLayout
 {
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+
     private boolean isRtl = false;
     private boolean centered = false;
 
