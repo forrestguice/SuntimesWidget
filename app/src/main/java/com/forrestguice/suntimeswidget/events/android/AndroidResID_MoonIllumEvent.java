@@ -19,17 +19,27 @@
 package com.forrestguice.suntimeswidget.events.android;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.events.BaseEvent;
+import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 
-public class AndroidResID_BaseEvent implements BaseEvent.ResID_BaseEvent
+public class AndroidResID_MoonIllumEvent extends AndroidResID_BaseEvent implements MoonIllumEvent.ResID_MoonIllumEvent
 {
     @Override
-    public int plurals_before() {
-        return R.plurals.offset_before_plural;
+    public int string_title() {
+        return R.string.moonillumevent_title;
     }
 
     @Override
-    public int plurals_after() {
-        return R.plurals.offset_after_plural;
+    public int string_phrase_gender() {
+        return R.string.moonillumevent_phrase_gender;
+    }
+
+    @Override
+    public int string_summary_format() {
+        return R.string.moonillumevent_summary_format;
+    }
+
+    @Override
+    public int string_summary_format1() {
+        return R.string.moonillumevent_summary_format1;
     }
 }

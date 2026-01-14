@@ -19,17 +19,32 @@
 package com.forrestguice.suntimeswidget.events.android;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.events.BaseEvent;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 
-public class AndroidResID_BaseEvent implements BaseEvent.ResID_BaseEvent
+public class AndroidResID_DayPercentEvent extends AndroidResID_BaseEvent implements DayPercentEvent.ResID_DayPercentEvent
 {
     @Override
-    public int plurals_before() {
-        return R.plurals.offset_before_plural;
+    public int string_title_day() {
+        return R.string.daypercentevent_title_day;
     }
 
     @Override
-    public int plurals_after() {
-        return R.plurals.offset_after_plural;
+    public int string_title_night() {
+        return R.string.daypercentevent_title_night;
+    }
+
+    @Override
+    public int string_phrase_gender() {
+        return R.string.daypercentevent_phrase_gender;
+    }
+
+    @Override
+    public int string_summary_format() {
+        return R.string.daypercentevent_summary_format;
+    }
+
+    @Override
+    public int string_summary_format1() {
+        return R.string.daypercentevent_summary_format1;
     }
 }

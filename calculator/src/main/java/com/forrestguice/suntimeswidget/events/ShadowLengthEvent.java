@@ -18,12 +18,12 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -54,17 +54,17 @@ public final class ShadowLengthEvent extends ElevationEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
 
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
 
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(R.string.shadowevent_phrase_gender);
+        return context.getString(r.string_phrase_gender());
     }
 
     @Override
@@ -74,12 +74,12 @@ public final class ShadowLengthEvent extends ElevationEvent
         String height = LengthUnitDisplay.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
 
         TimeDisplayText t = LengthUnitDisplay.formatAsHeight(context.getResources(), getLength(), units, 1, true);
-        String length = context.getString(R.string.units_format_short, t.getValue(), t.getUnits());
+        String length = context.getString(r.string_units_format_short(), t.getValue(), t.getUnits());
 
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(R.string.shadowevent_summary_format, context.getString(R.string.shadowevent_title), height, length);
+            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), context.getString(r.string_title()), height, length);
         } else {
-            return context.getString(R.string.shadowevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.shadowevent_title), height, length);
+            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), context.getString(r.string_title()), height, length);
         }
     }
 
@@ -140,5 +140,19 @@ public final class ShadowLengthEvent extends ElevationEvent
             boolean rising = eventName.endsWith(SUFFIX_RISING);
             return new ShadowLengthEvent(height, length, (offsetMinutes * 60 * 1000), rising);
         } else return null;
+    }
+
+    protected static ResID_ShadowLengthEvent r = null;
+    public static void setResIDs(@NonNull ResID_ShadowLengthEvent values) {
+        r = values;
+    }
+
+    public interface ResID_ShadowLengthEvent extends ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
+        int string_units_format_short();
     }
 }

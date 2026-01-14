@@ -24,10 +24,10 @@ public abstract class BaseEvent
     protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
     public String offsetDisplay(Resources context)
     {
-        if (offset != 0 && resIDs != null)
+        if (offset != 0 && r != null)
         {
             String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
-            return context.getQuantityString((offset < 0 ? resIDs.getResID_plurals_before() : resIDs.getResID_plurals_after()), offset, offsetDisplay);
+            return context.getQuantityString((offset < 0 ? r.plurals_before() : r.plurals_after()), offset, offsetDisplay);
         } else return "";
     }
 
@@ -38,9 +38,9 @@ public abstract class BaseEvent
     public abstract String getEventSummary(SuntimesDataSettings settings);
 
     @Nullable
-    protected static ResID_BaseEvent resIDs = null;
+    protected static ResID_BaseEvent r = null;
     public static void setResIDs(@NonNull ResID_BaseEvent values) {
-        resIDs = values;
+        r = values;
     }
 
     /**
@@ -48,7 +48,7 @@ public abstract class BaseEvent
      */
     public interface ResID_BaseEvent
     {
-        int getResID_plurals_before();    // R.plurals.offset_before_plural
-        int getResID_plurals_after();     // R.plurals.offset_after_plural
+        int plurals_before();    // R.plurals.offset_before_plural
+        int plurals_after();     // R.plurals.offset_after_plural
     }
 }

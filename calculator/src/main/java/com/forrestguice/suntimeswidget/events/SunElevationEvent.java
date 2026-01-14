@@ -18,12 +18,11 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.util.Log;
-
-import com.forrestguice.suntimeswidget.R;
 
 public final class SunElevationEvent extends ElevationEvent
 {
@@ -35,15 +34,15 @@ public final class SunElevationEvent extends ElevationEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getResources().getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.sunevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getResources().getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(R.string.sunevent_phrase_gender);
+        return context.getString(r.string_phrase_gender());
     }
 
     @Override
@@ -52,9 +51,9 @@ public final class SunElevationEvent extends ElevationEvent
         AngleDisplay utils = new AngleDisplay();
         String angle = utils.formatAsElevation(getAngle(), 1).toString();
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(R.string.sunevent_summary_format, context.getString(R.string.sunevent_title), angle);
+            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), context.getString(r.string_title()), angle);
         } else {
-            return context.getString(R.string.sunevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.sunevent_title), angle);
+            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), context.getString(r.string_title()), angle);
         }
     }
 
@@ -104,5 +103,18 @@ public final class SunElevationEvent extends ElevationEvent
             boolean rising = eventName.endsWith(SUFFIX_RISING);
             return new SunElevationEvent(angle, (offsetMinutes * 60 * 1000), rising);
         } else return null;
+    }
+
+    protected static ResID_SunElevationEvent r = null;
+    public static void setResIDs(@NonNull ResID_SunElevationEvent values) {
+        r = values;
+    }
+
+    public interface ResID_SunElevationEvent extends BaseEvent.ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
     }
 }

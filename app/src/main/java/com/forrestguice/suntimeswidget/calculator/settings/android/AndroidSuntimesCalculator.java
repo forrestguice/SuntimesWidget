@@ -38,10 +38,20 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDispl
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.BaseEvent;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
+import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_BaseEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_DayPercentEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_MoonElevationEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_MoonIllumEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_SunElevationEvent;
 import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.android.AndroidTimeFormat;
@@ -59,6 +69,11 @@ public class AndroidSuntimesCalculator
         BaseEvent.setResIDs(new AndroidResID_BaseEvent());
         EventUri.setBuildConfigInfo(new BuildConfigInfo());
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
+        DayPercentEvent.setResIDs(new AndroidResID_DayPercentEvent());
+        ShadowLengthEvent.setResIDs(new AndroidResID_ShadowLengthEvent());
+        MoonIllumEvent.setResIDs(new AndroidResID_MoonIllumEvent());
+        MoonElevationEvent.setResIDs(new AndroidResID_MoonElevationEvent());
+        SunElevationEvent.setResIDs(new AndroidResID_SunElevationEvent());
 
         AndroidResources r = AndroidResources.wrap(context);
         AndroidSuntimesDataSettings dataSettings = AndroidSuntimesDataSettings.wrap(context);

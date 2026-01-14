@@ -19,17 +19,27 @@
 package com.forrestguice.suntimeswidget.events.android;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.events.BaseEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 
-public class AndroidResID_BaseEvent implements BaseEvent.ResID_BaseEvent
+public class AndroidResID_SunElevationEvent extends AndroidResID_BaseEvent implements SunElevationEvent.ResID_SunElevationEvent
 {
     @Override
-    public int plurals_before() {
-        return R.plurals.offset_before_plural;
+    public int string_title() {
+        return R.string.sunevent_title;
     }
 
     @Override
-    public int plurals_after() {
-        return R.plurals.offset_after_plural;
+    public int string_phrase_gender() {
+        return R.string.sunevent_phrase_gender;
+    }
+
+    @Override
+    public int string_summary_format() {
+        return R.string.sunevent_summary_format;
+    }
+
+    @Override
+    public int string_summary_format1() {
+        return R.string.sunevent_summary_format1;
     }
 }

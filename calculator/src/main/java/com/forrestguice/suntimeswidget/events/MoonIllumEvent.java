@@ -18,11 +18,8 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
@@ -64,28 +61,28 @@ public final class MoonIllumEvent extends BaseEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(R.string.moonillumevent_title);
+        String eventTitle = context.getResources().getString(r.string_title());
         return offsetDisplay(context.getResources()) + eventTitle + " " + (waxing ? "waxing" : "waning") + " (" + percent + ")";   // TODO: format
     }
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(R.string.moonillumevent_title);
+        String eventTitle = context.getResources().getString(r.string_title());
         return offsetDisplay(context.getResources()) + eventTitle + " " + (waxing ? "waxing" : "waning") + " at " + percent;   // TODO: format
     }
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(R.string.moonillumevent_phrase_gender);
+        return context.getString(r.string_phrase_gender());
     }
 
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
         String percentDisplay = getPercentValue() + "";
-        String eventTitle = context.getResources().getString(R.string.moonillumevent_title);
+        String eventTitle = context.getResources().getString(r.string_title());
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(R.string.moonillumevent_summary_format, eventTitle, percentDisplay);
+            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay);
         } else {
-            return context.getString(R.string.moonillumevent_summary_format1, offsetDisplay(context.getResources()), eventTitle, percentDisplay);
+            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, percentDisplay);
         }
     }
 
@@ -150,7 +147,7 @@ public final class MoonIllumEvent extends BaseEvent
      * @param now now
      * @return Calendar or null
      */
-    public static Calendar updateAlarmTime(Context context, @NonNull MoonIllumEvent event, SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    public static Calendar updateAlarmTime(Object context, @NonNull MoonIllumEvent event, SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
@@ -174,11 +171,11 @@ public final class MoonIllumEvent extends BaseEvent
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
-                android.util.Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 return null;
             }
 
-            android.util.Log.d("AlarmReceiver", "updateAlarmTime: moonIllumEvent advancing by 1 day..");
+            Log.d("AlarmReceiver", "updateAlarmTime: moonIllumEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
             data.calculate(context);
@@ -249,5 +246,18 @@ public final class MoonIllumEvent extends BaseEvent
 
     private static boolean almostEquals(double a, double b) {
         return Math.abs(a - b) < 0.0025;
+    }
+
+    protected static ResID_MoonIllumEvent r = null;
+    public static void setResIDs(@NonNull ResID_MoonIllumEvent values) {
+        r = values;
+    }
+
+    public interface ResID_MoonIllumEvent extends BaseEvent.ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
     }
 }

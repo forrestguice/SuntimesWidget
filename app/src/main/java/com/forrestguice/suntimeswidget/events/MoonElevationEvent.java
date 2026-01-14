@@ -18,11 +18,8 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
@@ -44,15 +41,15 @@ public final class MoonElevationEvent extends ElevationEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.moonevent_title) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getResources().getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getResources().getString(R.string.moonevent_title) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+        return offsetDisplay(context.getResources()) + context.getResources().getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(R.string.moonevent_phrase_gender);
+        return context.getString(r.string_phrase_gender());
     }
 
     @Override
@@ -61,9 +58,9 @@ public final class MoonElevationEvent extends ElevationEvent
         AngleDisplay utils = new AngleDisplay();
         String angle = utils.formatAsElevation(getAngle(), 1).toString();
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(R.string.moonevent_summary_format, context.getString(R.string.moonevent_title), angle);
+            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), context.getString(r.string_title()), angle);
         } else {
-            return context.getString(R.string.moonevent_summary_format1, offsetDisplay(context.getResources()), context.getString(R.string.moonevent_title), angle);
+            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), context.getString(r.string_title()), angle);
         }
     }
 
@@ -116,7 +113,7 @@ public final class MoonElevationEvent extends ElevationEvent
     }
 
     @Nullable
-    public static Calendar updateAlarmTime(Context context, @NonNull MoonElevationEvent event, @NonNull SuntimesMoonData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    public static Calendar updateAlarmTime(Object context, @NonNull MoonElevationEvent event, @NonNull SuntimesMoonData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -138,11 +135,11 @@ public final class MoonElevationEvent extends ElevationEvent
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
             if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
-                android.util.Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 return null;
             }
 
-            android.util.Log.w("AlarmReceiver", "updateAlarmTime: moonElevationEvent advancing by 1 day..");
+            Log.w("AlarmReceiver", "updateAlarmTime: moonElevationEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
             data.calculate(context);
@@ -215,5 +212,18 @@ public final class MoonElevationEvent extends ElevationEvent
 
     private static boolean almostEquals(double a, double b) {
         return Math.abs(a - b) < 0.01;
+    }
+
+    protected static ResID_MoonElevationEvent r = null;
+    public static void setResIDs(@NonNull ResID_MoonElevationEvent values) {
+        r = values;
+    }
+
+    public interface ResID_MoonElevationEvent extends BaseEvent.ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
     }
 }

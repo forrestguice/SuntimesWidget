@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.events;
 
-import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.util.Resources;
 
 public abstract class ElevationEvent extends BaseEvent
@@ -52,7 +50,7 @@ public abstract class ElevationEvent extends BaseEvent
         if (offset != 0)
         {
             String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
-            return context.getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
+            return context.getQuantityString((offset < 0 ? r.plurals_before() : r.plurals_after()), (int)angle, offsetDisplay);
         } else return "";
     }
 }
