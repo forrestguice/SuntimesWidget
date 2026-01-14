@@ -164,6 +164,7 @@ dependencies
     implementation project(path: ":calculator")
 
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
+    implementation project(path: ":lib-ca-rmen-sunrisesunset")
     implementation project(path: ":lib-luckycatlabs-sunrisesunset")
     implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
 

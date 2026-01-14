@@ -1,3 +1,4 @@
+include ':lib-ca-rmen-sunrisesunset'
 include ':lib-luckycatlabs-sunrisesunset'
 include ':lib-quadflask-colorpicker'
 include ':util', ':support', 'calculator', ':app'
