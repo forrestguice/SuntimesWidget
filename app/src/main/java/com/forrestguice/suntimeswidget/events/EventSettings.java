@@ -112,7 +112,7 @@ public class EventSettings
     }
 
     public static Set<String> loadVisibleEvents(ContextInterface context) {
-        return loadVisibleEvents(context, EventType.visibleTypes());
+        return loadVisibleEvents(context, EventTypeResolver.visibleTypes());
     }
     public static Set<String> loadVisibleEvents(ContextInterface context, EventType... types)
     {

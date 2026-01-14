@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 
@@ -177,17 +178,17 @@ public class AlarmEventProviderTest0
     @Test
     public void test_EventType_isNumeric()
     {
-        assertTrue(EventType.isNumeric(""));    // empty string
-        assertTrue(EventType.isNumeric("0"));
-        assertTrue(EventType.isNumeric("1"));
-        assertTrue(EventType.isNumeric("100"));
-        assertTrue(EventType.isNumeric("1234567890"));
-        assertTrue(EventType.isNumeric("001"));     // leading 0s
+        assertTrue(EventTypeResolver.isNumeric(""));    // empty string
+        assertTrue(EventTypeResolver.isNumeric("0"));
+        assertTrue(EventTypeResolver.isNumeric("1"));
+        assertTrue(EventTypeResolver.isNumeric("100"));
+        assertTrue(EventTypeResolver.isNumeric("1234567890"));
+        assertTrue(EventTypeResolver.isNumeric("001"));     // leading 0s
 
-        assertFalse(EventType.isNumeric("1.1"));    // accepts ints only
-        assertFalse(EventType.isNumeric("x1"));     // contains x
-        assertFalse(EventType.isNumeric("1x"));     // contains x
-        assertFalse(EventType.isNumeric("nan"));    // no numerals
+        assertFalse(EventTypeResolver.isNumeric("1.1"));    // accepts ints only
+        assertFalse(EventTypeResolver.isNumeric("x1"));     // contains x
+        assertFalse(EventTypeResolver.isNumeric("1x"));     // contains x
+        assertFalse(EventTypeResolver.isNumeric("nan"));    // no numerals
     }
 
 }

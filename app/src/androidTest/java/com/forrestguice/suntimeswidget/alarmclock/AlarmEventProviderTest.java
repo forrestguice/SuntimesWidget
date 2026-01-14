@@ -30,6 +30,7 @@ import androidx.test.runner.AndroidJUnit4;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -171,7 +172,7 @@ public class AlarmEventProviderTest
                 EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], EventType.resolveEventType(AndroidEventSettings.wrap(context), events[i]));
+            assertEquals(expected[i], EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), events[i]));
         }
     }
 

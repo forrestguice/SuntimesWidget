@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventS
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
@@ -688,7 +689,7 @@ public class CalculatorProvider extends ContentProvider
             positionSuffix = _POSITION_DEC;
         }
 
-        if (EventType.resolveEventType(AndroidEventSettings.wrap(context), column) == EventType.EVENTALIAS)
+        if (EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), column) == EventType.EVENTALIAS)
         {
             String aliasID = eventID;   // e.g. CUSTOM0
             String aliasSuffix = "";    // e.g. r, s

@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
@@ -291,7 +292,7 @@ public class AlarmEventProvider extends ContentProvider
     private void addRowsToCursor(Context context, MatrixCursor retValue, String eventID, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
-        EventType type = EventType.resolveEventType(AndroidEventSettings.wrap(context), eventID);
+        EventType type = EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), eventID);
         if (type == null) {
             Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID);
             return;
