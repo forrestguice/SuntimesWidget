@@ -427,7 +427,7 @@ public class ColorChooser implements View.OnFocusChangeListener
         colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
         colorDialog.setColorDialogListener(colorDialogListener);
-        if (fragmentManager != null) {
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             colorDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_COLOR + "_" + chooserID);
         } else {
             Log.w("showColorPicker", "fragmentManager is null; showing fallback ...");

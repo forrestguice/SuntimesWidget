@@ -9,11 +9,11 @@ public abstract class FragmentManagerCompat
     public abstract FragmentManager getFragmentManager();
 
     public Fragment findFragmentById(int i) {
-        return getFragmentManager().findFragmentById(i);
+        return (getFragmentManager() != null ? getFragmentManager().findFragmentById(i) : null);
     }
 
     public Fragment findFragmentByTag(String tag) {
-        return getFragmentManager().findFragmentByTag(tag);
+        return (getFragmentManager() != null ? getFragmentManager().findFragmentByTag(tag) : null);
     }
 
     public static FragmentManagerCompat from(final Fragment fragment) {

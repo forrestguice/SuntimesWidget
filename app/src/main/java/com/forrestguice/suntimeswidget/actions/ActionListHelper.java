@@ -315,7 +315,10 @@ public class ActionListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
+
+        if (fragmentManager.getFragmentManager() != null) {
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
+        } else Log.w("ActionListHelper", "fragment manager is null!");
     }
 
     protected void editAction()
@@ -335,7 +338,9 @@ public class ActionListHelper
             });
 
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
+            if (fragmentManager.getFragmentManager() != null) {
+                saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
+            } else Log.w("ActionListHelper", "fragment manager is null!");
         }
     }
 

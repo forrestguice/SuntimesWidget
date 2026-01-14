@@ -429,7 +429,9 @@ public class EditActionView extends LinearLayout
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
                 helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
+                if (fragmentManager.getFragmentManager() != null) {
+                    helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
+                } else Log.w("EditActionView", "onHelpClicked; fragment manager is null!");
             }
         }
     };
@@ -589,7 +591,9 @@ public class EditActionView extends LinearLayout
             }
         });
         saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
-        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_SAVE);
+        if (fragmentManager.getFragmentManager() != null) {
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_SAVE);
+        } else Log.w("EditActionView", "saveIntent: fragment manager is null!");
     }
 
     public void loadIntent()
@@ -598,7 +602,9 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
-        loadDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_LOAD);
+        if (fragmentManager.getFragmentManager() != null) {
+            loadDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_LOAD);
+        } else Log.w("EditActionView", "loadIntent: fragment manager is null!");
     }
 
     private DialogInterface.OnClickListener onSaveDialogAccepted(final Context context, final SaveActionDialog saveDialog)

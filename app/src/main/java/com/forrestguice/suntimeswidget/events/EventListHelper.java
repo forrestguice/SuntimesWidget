@@ -489,7 +489,9 @@ public class EventListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-        saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
+        if (fragmentManager.getFragmentManager() != null) {
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
+        } else Log.w("EventListHelper", "editEvent: fragment manager is null!");
         return saveDialog;
     }
 
@@ -512,7 +514,9 @@ public class EventListHelper
             });
 
             saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
+            if (fragmentManager.getFragmentManager() != null) {
+                saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
+            } else Log.w("EventListHelper", "editEvent: fragment manager is null!");
         }
     }
 
@@ -853,7 +857,9 @@ public class EventListHelper
             helpDialog.setContent(helpSpan);
             helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
-            helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
+            if (fragmentManager.getFragmentManager() != null) {
+                helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
+            } else Log.w("EventListHelper", "showHelp; fragment manager is null!");
         }
     }
 
