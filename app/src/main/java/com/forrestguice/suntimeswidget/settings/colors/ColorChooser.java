@@ -34,8 +34,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.app.FragmentManagerCompat;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
@@ -415,9 +417,13 @@ public class ColorChooser implements View.OnFocusChangeListener
         onColorChanged(getColor());
     }
 
-    private FragmentManagerCompat fragmentManager = null;
+    private WeakReference<FragmentManagerCompat> fragmentManager = null;
     public void setFragmentManager( FragmentManagerCompat manager ) {
-        fragmentManager = manager;
+        fragmentManager = new WeakReference<>(manager);
+    }
+    @Nullable
+    public FragmentManagerCompat getFragmentManager() {
+        return (fragmentManager != null ? fragmentManager.get() : null);
     }
 
     private void showColorPicker(Context context)
@@ -427,6 +433,7 @@ public class ColorChooser implements View.OnFocusChangeListener
         colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
         colorDialog.setColorDialogListener(colorDialogListener);
+        FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             colorDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_COLOR + "_" + chooserID);
         } else {
@@ -460,6 +467,7 @@ public class ColorChooser implements View.OnFocusChangeListener
 
     public void onResume()
     {
+        FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null)
         {
             ColorDialog colorDialog = (ColorDialog) fragmentManager.findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);

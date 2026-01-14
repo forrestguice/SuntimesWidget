@@ -61,6 +61,7 @@ import com.forrestguice.support.app.FragmentManagerCompat;
 
 import com.forrestguice.suntimeswidget.R;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -424,6 +425,7 @@ public class EditActionView extends LinearLayout
         @Override
         public void onClick(View v)
         {
+            FragmentManagerCompat fragmentManager = getFragmentManager();
             if (fragmentManager != null) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
@@ -591,7 +593,8 @@ public class EditActionView extends LinearLayout
             }
         });
         saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
-        if (fragmentManager.getFragmentManager() != null) {
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_SAVE);
         } else Log.w("EditActionView", "saveIntent: fragment manager is null!");
     }
@@ -602,7 +605,8 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
-        if (fragmentManager.getFragmentManager() != null) {
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             loadDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_LOAD);
         } else Log.w("EditActionView", "loadIntent: fragment manager is null!");
     }
@@ -727,9 +731,13 @@ public class EditActionView extends LinearLayout
     /**
      * setFragmentManager
      */
-    protected FragmentManagerCompat fragmentManager = null;
+    protected WeakReference<FragmentManagerCompat> fragmentManager = null;
     public void setFragmentManager( FragmentManagerCompat fragmentManager ) {
-        this.fragmentManager = fragmentManager;
+        this.fragmentManager = new WeakReference<>(fragmentManager);
+    }
+    @Nullable
+    public FragmentManagerCompat getFragmentManager() {
+        return (fragmentManager != null ? fragmentManager.get() : null);
     }
 
     /**
@@ -860,7 +868,7 @@ public class EditActionView extends LinearLayout
      */
     public void initFromOther(EditActionView other )
     {
-        setFragmentManager(other.fragmentManager);
+        setFragmentManager(other.getFragmentManager());
         setIntentTitle(other.getIntentTitle());
         setIntentDesc(other.getIntentDesc());
         setIntentType(other.getIntentType().name());
@@ -882,6 +890,7 @@ public class EditActionView extends LinearLayout
         setFragmentManager(fragments);
         setData(data);
 
+        FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null)
         {
             HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);

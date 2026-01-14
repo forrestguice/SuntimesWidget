@@ -69,7 +69,7 @@ public class ActionListHelper
     public static final String DIALOGTAG_EDIT = "edit";
 
     private final WeakReference<Context> contextRef;
-    private FragmentManagerCompat fragmentManager;
+    private WeakReference<FragmentManagerCompat> fragmentManager;
 
     private ActionDisplay selectedItem;
     private ListView list;
@@ -100,7 +100,11 @@ public class ActionListHelper
     }
 
     public void setFragmentManager(FragmentManagerCompat fragments) {
-        fragmentManager = fragments;
+        fragmentManager = new WeakReference<>(fragments);
+    }
+    @Nullable
+    public FragmentManagerCompat getFragmentManager() {
+        return (fragmentManager != null ? fragmentManager.get() : null);
     }
 
     private boolean disallowSelect = false;
@@ -139,18 +143,20 @@ public class ActionListHelper
 
     public void onResume()
     {
-        SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
-        if (addDialog != null)
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null)
         {
-            addDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), addDialog));
-            addDialog.getEdit().setFragmentManager(fragmentManager);
-        }
+            SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+            if (addDialog != null) {
+                addDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), addDialog));
+                addDialog.getEdit().setFragmentManager(fragmentManager);
+            }
 
-        SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
-        if (editDialog != null)
-        {
-            editDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), editDialog));
-            editDialog.getEdit().setFragmentManager(fragmentManager);
+            SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+            if (editDialog != null) {
+                editDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), editDialog));
+                editDialog.getEdit().setFragmentManager(fragmentManager);
+            }
         }
     }
 
@@ -316,7 +322,8 @@ public class ActionListHelper
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
 
-        if (fragmentManager.getFragmentManager() != null) {
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
         } else Log.w("ActionListHelper", "fragment manager is null!");
     }
@@ -338,7 +345,8 @@ public class ActionListHelper
             });
 
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            if (fragmentManager.getFragmentManager() != null) {
+            FragmentManagerCompat fragmentManager = getFragmentManager();
+            if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
                 saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
             } else Log.w("ActionListHelper", "fragment manager is null!");
         }

@@ -92,7 +92,7 @@ public class EventListHelper
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
     private final WeakReference<Context> contextRef;
-    private FragmentManagerCompat fragmentManager;
+    private WeakReference<FragmentManagerCompat> fragmentManager;
 
     private int selectedChild = -1;
     private EventAlias selectedItem;
@@ -128,7 +128,11 @@ public class EventListHelper
     }
 
     public void setFragmentManager(FragmentManagerCompat fragments) {
-        fragmentManager = fragments;
+        fragmentManager = new WeakReference<>(fragments);
+    }
+    @Nullable
+    public FragmentManagerCompat getFragmentManager() {
+        return (fragmentManager != null ? fragmentManager.get() : null);
     }
 
     private boolean disallowSelect = false;
@@ -199,19 +203,23 @@ public class EventListHelper
 
     public void onResume()
     {
-        EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
-        if (addDialog != null) {
-            addDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), addDialog));
-        }
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null)
+        {
+            EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+            if (addDialog != null) {
+                addDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), addDialog));
+            }
 
-        EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
-        if (editDialog != null) {
-            editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
-        }
+            EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+            if (editDialog != null) {
+                editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
+            }
 
-        HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
-        if (helpDialog != null) {
-            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
+            HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
+            if (helpDialog != null) {
+                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
+            }
         }
     }
 
@@ -489,7 +497,8 @@ public class EventListHelper
             }
         });
         saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-        if (fragmentManager.getFragmentManager() != null) {
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
         } else Log.w("EventListHelper", "editEvent: fragment manager is null!");
         return saveDialog;
@@ -514,7 +523,8 @@ public class EventListHelper
             });
 
             saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
-            if (fragmentManager.getFragmentManager() != null) {
+            FragmentManagerCompat fragmentManager = getFragmentManager();
+            if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
                 saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
             } else Log.w("EventListHelper", "editEvent: fragment manager is null!");
         }
@@ -857,7 +867,8 @@ public class EventListHelper
             helpDialog.setContent(helpSpan);
             helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
-            if (fragmentManager.getFragmentManager() != null) {
+            FragmentManagerCompat fragmentManager = getFragmentManager();
+            if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
                 helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);
             } else Log.w("EventListHelper", "showHelp; fragment manager is null!");
         }
