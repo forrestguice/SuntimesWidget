@@ -22,8 +22,8 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculatorInfo;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculatorInfo;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

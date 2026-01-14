@@ -36,8 +36,8 @@ import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 

@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import org.junit.Before;
 import org.junit.Test;

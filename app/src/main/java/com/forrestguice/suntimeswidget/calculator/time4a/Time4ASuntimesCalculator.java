@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.Location;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;

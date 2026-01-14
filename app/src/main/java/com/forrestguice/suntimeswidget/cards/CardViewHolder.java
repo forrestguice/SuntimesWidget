@@ -28,7 +28,6 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
-import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -69,7 +68,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;

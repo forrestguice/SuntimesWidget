@@ -23,7 +23,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
 
 import java.util.ArrayList;

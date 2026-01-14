@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
-import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.Location;
 
 import java.text.DecimalFormat;
 

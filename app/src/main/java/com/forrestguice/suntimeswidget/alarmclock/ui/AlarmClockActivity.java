@@ -60,7 +60,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -1275,7 +1275,7 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location)
     {
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
@@ -1291,7 +1291,7 @@ public class AlarmClockActivity extends AppCompatActivity
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, String event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, String event, Location location, int hour, int minutes, String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);

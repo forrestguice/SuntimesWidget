@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
 import java.util.Date;

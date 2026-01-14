@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.calculator.core;
+package com.forrestguice.suntimes.calculator.core;
 
 public interface SuntimesCalculatorInfo
 {

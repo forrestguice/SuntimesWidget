@@ -19,7 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.sunrisesunset_java;
 
 import com.forrestguice.util.Log;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
@@ -40,18 +40,18 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
     private SunriseSunsetCalculator calculator = null;
     private TimeZone param_timezone;
-    private com.forrestguice.suntimeswidget.calculator.core.Location param_location;
+    private com.forrestguice.suntimes.calculator.core.Location param_location;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
     @Override
-    public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, String timezone)
+    public void init(com.forrestguice.suntimes.calculator.core.Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
-    public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, TimeZone timezone)
+    public void init(com.forrestguice.suntimes.calculator.core.Location locationSetting, TimeZone timezone)
     {
         this.param_location = locationSetting;
         this.param_timezone = timezone;
@@ -288,7 +288,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public com.forrestguice.suntimeswidget.calculator.core.Location getLocation() {
+    public com.forrestguice.suntimes.calculator.core.Location getLocation() {
         return param_location;
     }
 

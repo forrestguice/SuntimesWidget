@@ -22,8 +22,8 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import java.util.TimeZone;
 

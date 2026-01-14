@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import net.time4j.calendar.astro.StdSolarCalculator;
 

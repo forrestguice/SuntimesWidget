@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.Location;
 
 import org.junit.Test;
 

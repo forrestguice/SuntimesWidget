@@ -57,7 +57,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
@@ -228,7 +228,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         public void updateUI(android.location.Location... locations)
         {
             Context context = getContext();
-            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
+            DecimalFormat formatter = Location.decimalDegreesFormatter();
             if (locations != null && locations[0] != null && context != null)
             {
                 text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
@@ -702,10 +702,10 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
         if (longitude != null && latitude != null)
         {
-            com.forrestguice.suntimeswidget.calculator.core.Location location;
+            Location location;
             if (altitude != null)
-                location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude, altitude);
-            else location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude);
+                location = new Location(label, latitude, longitude, altitude);
+            else location = new Location(label, latitude, longitude);
             updateViews(location);
             updateComment(comment);
         }
@@ -799,7 +799,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
+    private void updateViews(Location location)
     {
         if (text_locationName == null || text_locationLat == null || text_locationLon == null || text_locationAlt == null) {
             return;
@@ -834,7 +834,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     {
         if (context != null && text_locationAlt != null)
         {
-            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
+            DecimalFormat formatter = Location.decimalDegreesFormatter();
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
             switch (units)
             {

@@ -16,7 +16,9 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 
-package com.forrestguice.suntimeswidget.calculator.core;
+package com.forrestguice.suntimes.calculator.core;
+
+import com.forrestguice.suntimes.calculator.core.Location;
 
 import java.util.Calendar;
 import java.util.TimeZone;

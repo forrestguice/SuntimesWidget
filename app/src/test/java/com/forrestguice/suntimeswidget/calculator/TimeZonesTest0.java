@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.test.FlakyTest;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.Location;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import net.time4j.Moment;
 import net.time4j.TemporalType;

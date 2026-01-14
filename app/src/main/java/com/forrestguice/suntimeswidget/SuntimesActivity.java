@@ -92,7 +92,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimes.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -206,7 +206,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private LocationHelper getFixHelper;
 
-    private com.forrestguice.suntimeswidget.calculator.core.Location location;
+    private com.forrestguice.suntimes.calculator.core.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
     protected SuntimesMoonData dataset_moon;
@@ -1123,7 +1123,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (locations[0] != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
+                    com.forrestguice.suntimes.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
                     if (getSupportActionBar() != null) {
                         getSupportActionBar().setSubtitle(location.toString());
                     }
@@ -1135,7 +1135,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (progress[0] != null && progress[0].getResult() != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
+                    com.forrestguice.suntimes.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
                     if (getSupportActionBar() != null) {
                         getSupportActionBar().setSubtitle(location.toString());
                     }
@@ -1176,7 +1176,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimes.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), result);
                         LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getElapsed(), results.getLog());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
@@ -1828,7 +1828,7 @@ public class SuntimesActivity extends AppCompatActivity
             if (dialog != null)
             {
                 AlarmClockItem.AlarmType type = dialog.getAlarmType();
-                com.forrestguice.suntimeswidget.calculator.core.Location location = dialog.getLocation();
+                com.forrestguice.suntimes.calculator.core.Location location = dialog.getLocation();
                 switch (dialog.getMode())
                 {
                     case 1:
