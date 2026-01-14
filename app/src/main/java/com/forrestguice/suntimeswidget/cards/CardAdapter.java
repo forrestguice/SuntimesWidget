@@ -24,6 +24,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
@@ -72,7 +74,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         contextRef = new WeakReference<>(context);
         initTheme(context);
         SuntimesUtils.initDisplayStrings(context);
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
     }
 
     private void initTheme(Context context)

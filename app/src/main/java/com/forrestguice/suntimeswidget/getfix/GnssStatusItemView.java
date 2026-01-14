@@ -29,6 +29,8 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.util.android.AndroidResources;
 
@@ -53,7 +55,7 @@ public class GnssStatusItemView extends FrameLayout
 
     public void init(Context context)
     {
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(ViewHolder.getLayoutResID(), this);
         holder = new ViewHolder(context, this);

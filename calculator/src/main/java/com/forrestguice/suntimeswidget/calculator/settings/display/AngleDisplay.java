@@ -18,8 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
-import com.forrestguice.suntimeswidget.R;
-
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -36,19 +34,19 @@ public class AngleDisplay
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
 
-    public static void initDisplayStrings(Resources res)
+    public static void initDisplayStrings(Resources res, ResID_AngleDisplay resIDs1, ResID_CardinalDirection resIDs2)
     {
-        strAltSymbol = res.getString(R.string.widgetLabel_altitude_symbol);
-        strRaSymbol = res.getString(R.string.widgetLabel_rightAscension_symbol);
-        strDecSymbol = res.getString(R.string.widgetLabel_declination_symbol);
+        strAltSymbol = res.getString(resIDs1.getResID_string_altSymbol());
+        strRaSymbol = res.getString(resIDs1.getResID_string_strRaSymbol());
+        strDecSymbol = res.getString(resIDs1.getResID_string_strDecSymbol());
 
-        strDegreesFormat = res.getString(R.string.degrees_format);
-        strDirectionFormat = res.getString(R.string.direction_format);
-        strElevationFormat = res.getString(R.string.elevation_format);
-        strRaFormat = res.getString(R.string.rightascension_format);
-        strDeclinationFormat = res.getString(R.string.declination_format);
+        strDegreesFormat = res.getString(resIDs1.getResID_string_strDegreesFormat());
+        strDirectionFormat = res.getString(resIDs1.getResID_string_strDirectionFormat());
+        strElevationFormat = res.getString(resIDs1.getResID_string_strElevationFormat());
+        strRaFormat = res.getString(resIDs1.getResID_string_strRaFormat());
+        strDeclinationFormat = res.getString(resIDs1.getResID_string_strDeclinationFormat());
 
-        CardinalDirection.initDisplayStrings(res);
+        CardinalDirection.initDisplayStrings(res, resIDs2);
     }
 
     public String formatAsDegrees(double value) {

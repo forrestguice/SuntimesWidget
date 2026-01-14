@@ -67,6 +67,8 @@ import java.text.DateFormat;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
@@ -203,7 +205,7 @@ public class SuntimesUtils
         strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         //CardinalDirection.initDisplayStrings(context);
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context));
 
         initialized = true;

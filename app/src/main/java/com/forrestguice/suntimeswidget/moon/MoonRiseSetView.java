@@ -38,6 +38,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -172,7 +174,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initLocale(Context context)
     {
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         SuntimesUtils.initDisplayStrings(context);
         //isRtl = AppSettings.isLocaleRtl(context);
     }

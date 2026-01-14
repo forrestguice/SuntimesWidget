@@ -22,8 +22,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
-
 public enum CardinalDirection
 {
     NORTH(1,      "N",   "North"              , 0.0),
@@ -117,10 +115,10 @@ public enum CardinalDirection
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings( Resources res )
+    public static void initDisplayStrings( Resources res, ResID_CardinalDirection resIDs )
     {
-        String[] modes_short = res.getStringArray(R.array.directions_short);
-        String[] modes_long = res.getStringArray(R.array.directions_long);
+        String[] modes_short = res.getStringArray(resIDs.getResID_array_eventDisplayShort());
+        String[] modes_long = res.getStringArray(resIDs.getResID_array_eventDisplayLong());
         if (modes_long.length != modes_short.length)
         {
             Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");

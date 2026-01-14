@@ -30,6 +30,8 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -199,7 +201,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
     public void initLocale(Context context)
     {
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         SuntimesUtils.initDisplayStrings(context);
         isRtl = AppSettings.isLocaleRtl(context);
     }

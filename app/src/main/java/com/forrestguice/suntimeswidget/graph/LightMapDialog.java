@@ -36,6 +36,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.content.ContextCompat;
@@ -214,7 +216,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         Context context = requireContext();
         AndroidResources res = AndroidResources.wrap(context);
-        AngleDisplay.initDisplayStrings(res);
+        AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         LengthUnitDisplay.initDisplayStrings_LengthUnit(res);
         TimeDeltaDisplay.initDisplayStrings(res);
         SuntimesUtils.initDisplayStrings(context);  // TODO: remove
