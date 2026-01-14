@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -360,7 +361,7 @@ public class DataSubstitutions
 
     public static void initDisplayStrings(SuntimesDataSettings context) {
         TimeDateDisplay.initDisplayStrings(context);
-        TimeDeltaDisplay.initDisplayStrings(context.getResources());
+        TimeDeltaDisplay.initDisplayStrings(context.getResources(), new AndroidResID_TimeDeltaDisplay());
         AngleDisplay.initDisplayStrings(context.getResources(), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
     }
 

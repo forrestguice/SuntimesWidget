@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.suntimeswidget.R;
 
-public class AndroidResID_CardinalDirection implements ResID_CardinalDirection
+public class AndroidResID_CardinalDirection implements CardinalDirection.ResID_CardinalDirection
 {
     @Override
     public int getResID_array_eventDisplayShort() {

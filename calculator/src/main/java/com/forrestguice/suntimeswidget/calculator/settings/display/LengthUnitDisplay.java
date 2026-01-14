@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
-import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -27,11 +27,25 @@ import java.text.NumberFormat;
 
 public class LengthUnitDisplay
 {
-    public static void initDisplayStrings_LengthUnit(Resources context)
+    public static void initDisplayStrings_LengthUnit(Resources context, @NonNull ResID_LengthUnitDisplay ids)
     {
-        LengthUnit.METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
-        LengthUnit.IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
+        resIDs = ids;
+        for (LengthUnit unit : LengthUnit.values()) {
+            unit.setDisplayString(context.getString(ids.resID_displayString(unit)));
+        }
     }
+    protected static ResID_LengthUnitDisplay resIDs = new ResID_LengthUnitDisplay()
+    {
+        public int resID_displayString(LengthUnit unit) { return 0; }
+        public int resID_string_feet_short() { return 0; }
+        public int resID_string_meters_short() { return 0; }
+        public int resID_string_miles_short() { return 0; }
+        public int resID_string_kilometers_short() { return 0; }
+        public int resID_string_miles_long() { return 0; }
+        public int resID_string_kilometers_long() { return 0; }
+        public int resID_plurals_feet_long() { return 0; }
+        public int resID_plurals_meters_long() { return 0; }
+    };
 
     /**
      * formatAsHeight
@@ -50,16 +64,16 @@ public class LengthUnitDisplay
             case IMPERIAL:
                 value = LengthUnit.metersToFeet(meters);
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(R.string.units_feet_short)
-                        : context.getQuantityString(R.plurals.units_feet_long, (int)value, formatted));
+                unitsString = (shortForm ? context.getString(resIDs.resID_string_feet_short())
+                        : context.getQuantityString(resIDs.resID_plurals_feet_long(), (int)value, formatted));
                 break;
 
             case METRIC:
             default:
                 value = meters;
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(R.string.units_meters_short)
-                        : context.getQuantityString(R.plurals.units_meters_long, (int)value, formatted));
+                unitsString = (shortForm ? context.getString(resIDs.resID_string_meters_short())
+                        : context.getQuantityString(resIDs.resID_plurals_meters_long(), (int)value, formatted));
                 break;
         }
         return new TimeDisplayText(formatted, unitsString, "");
@@ -76,13 +90,13 @@ public class LengthUnitDisplay
         {
             case IMPERIAL:
                 value = LengthUnit.kilometersToMiles(kilometers);
-                unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
+                unitsString = (shortForm ? context.getString(resIDs.resID_string_miles_short()) : context.getString(resIDs.resID_string_miles_long()));
                 break;
 
             case METRIC:
             default:
                 value = kilometers;
-                unitsString = (shortForm ? context.getString(R.string.units_kilometers_short) : context.getString(R.string.units_kilometers));
+                unitsString = (shortForm ? context.getString(resIDs.resID_string_kilometers_short()) : context.getString(resIDs.resID_string_kilometers_long()));
                 break;
         }
 
@@ -90,5 +104,22 @@ public class LengthUnitDisplay
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(places);
         return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
+    public interface ResID_LengthUnitDisplay
+    {
+        int resID_displayString(LengthUnit unit);
+
+        int resID_string_feet_short();          // R.string.units_feet_short
+        int resID_string_meters_short();        // R.string.units_meters_short
+
+        int resID_string_miles_short();         // R.string.units_miles_short
+        int resID_string_kilometers_short();    // R.string.units_kilometers_short
+
+        int resID_string_miles_long();          // R.string.units_miles
+        int resID_string_kilometers_long();     // R.string.units_kilometers
+
+        int resID_plurals_feet_long();
+        int resID_plurals_meters_long();
     }
 }

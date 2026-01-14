@@ -31,6 +31,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
@@ -51,7 +52,7 @@ public class TimeOffsetPickerDialog extends DialogBase
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
         Context context = requireContext();
-        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context));
+        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_TimeDeltaDisplay());
         AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
         {

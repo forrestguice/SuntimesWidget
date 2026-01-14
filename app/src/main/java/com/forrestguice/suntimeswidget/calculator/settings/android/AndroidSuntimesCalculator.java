@@ -24,11 +24,22 @@ import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
+import com.forrestguice.suntimeswidget.events.BaseEvent;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.android.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_BaseEvent;
 import com.forrestguice.util.SystemTimeFormat;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.android.AndroidTimeFormat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -40,8 +51,16 @@ public class AndroidSuntimesCalculator
         SystemTimeFormat.init(new AndroidTimeFormat(context.getApplicationContext()));
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());
+
+        BaseEvent.setResIDs(new AndroidResID_BaseEvent());
         EventUri.setBuildConfigInfo(new BuildConfigInfo());
         EventAlias.initItemResolver(new AndroidEventAliasResolver());
+
+        AndroidResources r = AndroidResources.wrap(context);
+        TimeDeltaDisplay.initDisplayStrings(r, new AndroidResID_TimeDeltaDisplay());
+        AngleDisplay.initDisplayStrings(r, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(r, new AndroidResID_LengthUnitDisplay());
+
         Color.init(new AndroidColor());
     }
 

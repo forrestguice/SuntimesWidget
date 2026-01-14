@@ -51,7 +51,6 @@ public abstract class ElevationEvent extends BaseEvent
     {
         if (offset != 0)
         {
-            TimeDeltaDisplay.initDisplayStrings(context);
             String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
             return context.getQuantityString((offset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)angle, offsetDisplay);
         } else return "";

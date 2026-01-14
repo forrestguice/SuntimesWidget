@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -40,18 +39,18 @@ public class TimeDeltaDisplay
     public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     public static boolean initialized = false;
 
-    public static void initDisplayStrings(Resources res)
+    public static void initDisplayStrings(Resources res, ResID_TimeDeltaDisplay ids)
     {
-        strTimeShorter = res.getString(R.string.delta_day_shorter);
-        strTimeLonger = res.getString(R.string.delta_day_longer);
-        strTimeSame = res.getString(R.string.delta_day_same);
-        strYears = res.getString(R.string.delta_years);
-        strWeeks = res.getString(R.string.delta_weeks);
-        strDays = res.getString(R.string.delta_days);
-        strHours = res.getString(R.string.delta_hours);
-        strMinutes = res.getString(R.string.delta_minutes);
-        strSeconds = res.getString(R.string.delta_seconds);
-        strTimeDeltaFormat = res.getString(R.string.delta_format);
+        strTimeShorter = res.getString(ids.resID_strTimeShorter());
+        strTimeLonger = res.getString(ids.resID_strTimeLonger());
+        strTimeSame = res.getString(ids.resID_strTimeSame());
+        strYears = res.getString(ids.resID_strYears());
+        strWeeks = res.getString(ids.resID_strWeeks());
+        strDays = res.getString(ids.resID_strDays());
+        strHours = res.getString(ids.resID_strHours());
+        strMinutes = res.getString(ids.resID_strMinutes());
+        strSeconds = res.getString(ids.resID_strSeconds());
+        strTimeDeltaFormat = res.getString(ids.resID_strTimeDeltaFormat());
         initialized = true;
     }
 
@@ -148,5 +147,19 @@ public class TimeDeltaDisplay
         TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
         text.setSuffix("");
         return text;
+    }
+
+    public interface ResID_TimeDeltaDisplay
+    {
+        int resID_strTimeShorter(); // R.string.delta_day_shorter
+        int resID_strTimeLonger();  // R.string.delta_day_longer
+        int resID_strTimeSame();    // R.string.delta_day_same
+        int resID_strYears();       // R.string.delta_years
+        int resID_strWeeks();       // R.string.delta_weeks
+        int resID_strDays();        // R.string.delta_days
+        int resID_strHours();       // R.string.delta_hours
+        int resID_strMinutes();     // R.string.delta_minutes
+        int resID_strSeconds();     // R.string.delta_seconds
+        int resID_strTimeDeltaFormat(); // R.string.delta_format
     }
 }

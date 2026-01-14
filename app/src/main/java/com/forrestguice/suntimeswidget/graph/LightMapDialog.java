@@ -38,6 +38,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.content.ContextCompat;
@@ -218,7 +219,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         AndroidResources res = AndroidResources.wrap(context);
         AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
         LengthUnitDisplay.initDisplayStrings_LengthUnit(res);
-        TimeDeltaDisplay.initDisplayStrings(res);
+        TimeDeltaDisplay.initDisplayStrings(res, new AndroidResID_TimeDeltaDisplay());
         SuntimesUtils.initDisplayStrings(context);  // TODO: remove
         WidgetSettings.initDisplayStrings_SolarTimeMode(context);
 

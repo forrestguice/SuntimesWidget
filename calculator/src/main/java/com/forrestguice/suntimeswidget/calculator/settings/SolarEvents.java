@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.calculator.settings.display.ResID_SolarEvents;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -402,5 +401,13 @@ public enum SolarEvents
             case SOLSTICE_WINTER: return SolarEvents.SOLSTICE_WINTER;
             default: return null;
         }
+    }
+
+    public interface ResID_SolarEvents
+    {
+        int getResID_string_typeLabel(@Nullable Integer type);
+        int getResID_array_eventDisplayShort();
+        int getResID_array_eventDisplayLong();
+        int getResID_attr_icon(SolarEvents event);
     }
 }

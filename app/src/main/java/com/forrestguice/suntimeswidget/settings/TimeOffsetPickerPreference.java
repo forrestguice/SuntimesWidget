@@ -83,7 +83,6 @@ public class TimeOffsetPickerPreference extends DialogPreference
     protected View onCreateDialogView()
     {
         Context context = getContext();
-        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context));
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
 

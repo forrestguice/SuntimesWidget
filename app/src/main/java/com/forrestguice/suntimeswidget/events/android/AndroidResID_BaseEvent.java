@@ -16,16 +16,20 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.calculator.settings.display;
+package com.forrestguice.suntimeswidget.events.android;
 
-public interface ResID_AngleDisplay
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.BaseEvent;
+
+public class AndroidResID_BaseEvent implements BaseEvent.ResID_BaseEvent
 {
-    int getResID_string_altSymbol();
-    int getResID_string_strRaSymbol();
-    int getResID_string_strDecSymbol();
-    int getResID_string_strDegreesFormat();
-    int getResID_string_strDirectionFormat();
-    int getResID_string_strElevationFormat();
-    int getResID_string_strRaFormat();
-    int getResID_string_strDeclinationFormat();
+    @Override
+    public int getResID_plurals_before() {
+        return R.plurals.offset_before_plural;
+    }
+
+    @Override
+    public int getResID_plurals_after() {
+        return R.plurals.offset_after_plural;
+    }
 }

@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import com.forrestguice.suntimeswidget.R;
 
-public class AndroidResID_SolarEvents implements ResID_SolarEvents
+public class AndroidResID_SolarEvents implements SolarEvents.ResID_SolarEvents
 {
     @Override
     public int getResID_string_typeLabel(@Nullable Integer type)

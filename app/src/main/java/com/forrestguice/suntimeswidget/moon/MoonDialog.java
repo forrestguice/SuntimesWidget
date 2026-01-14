@@ -54,6 +54,7 @@ import com.forrestguice.colors.ColorValues;
 
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -185,7 +186,7 @@ public class MoonDialog extends BottomSheetDialogBase
     public void initLocale(Context context)
     {
         AndroidResources res = AndroidResources.wrap(context);
-        TimeDeltaDisplay.initDisplayStrings(res);
+        TimeDeltaDisplay.initDisplayStrings(res, new AndroidResID_TimeDeltaDisplay());
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(res, new AndroidResID_SolarEvents());
     }

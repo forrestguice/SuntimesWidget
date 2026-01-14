@@ -34,7 +34,7 @@ public class AngleDisplay
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
 
-    public static void initDisplayStrings(Resources res, ResID_AngleDisplay resIDs1, ResID_CardinalDirection resIDs2)
+    public static void initDisplayStrings(Resources res, ResID_AngleDisplay resIDs1, CardinalDirection.ResID_CardinalDirection resIDs2)
     {
         strAltSymbol = res.getString(resIDs1.getResID_string_altSymbol());
         strRaSymbol = res.getString(resIDs1.getResID_string_strRaSymbol());
@@ -96,4 +96,15 @@ public class AngleDisplay
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
+    public interface ResID_AngleDisplay
+    {
+        int getResID_string_altSymbol();
+        int getResID_string_strRaSymbol();
+        int getResID_string_strDecSymbol();
+        int getResID_string_strDegreesFormat();
+        int getResID_string_strDirectionFormat();
+        int getResID_string_strElevationFormat();
+        int getResID_string_strRaFormat();
+        int getResID_string_strDeclinationFormat();
+    }
 }

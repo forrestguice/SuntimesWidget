@@ -20,38 +20,35 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.suntimeswidget.R;
 
-public class AndroidResID_AngleDisplay implements AngleDisplay.ResID_AngleDisplay
+public class AndroidResID_TimeDeltaDisplay implements TimeDeltaDisplay.ResID_TimeDeltaDisplay
 {
     @Override
-    public int getResID_string_altSymbol() {
-        return R.string.widgetLabel_altitude_symbol;
-    }
+    public int resID_strTimeShorter() { return R.string.delta_day_shorter; }
+
     @Override
-    public int getResID_string_strRaSymbol() {
-        return R.string.widgetLabel_rightAscension_symbol;
-    }
+    public int resID_strTimeLonger() { return R.string.delta_day_longer; }
+
     @Override
-    public int getResID_string_strDecSymbol() {
-        return R.string.widgetLabel_declination_symbol;
-    }
+    public int resID_strTimeSame() { return R.string.delta_day_same; }
+
     @Override
-    public int getResID_string_strDegreesFormat() {
-        return R.string.degrees_format;
-    }
+    public int resID_strYears() { return R.string.delta_years; }
+
     @Override
-    public int getResID_string_strDirectionFormat() {
-        return R.string.direction_format;
-    }
+    public int resID_strWeeks() { return R.string.delta_weeks; }
+
     @Override
-    public int getResID_string_strElevationFormat() {
-        return R.string.elevation_format;
-    }
+    public int resID_strDays() { return R.string.delta_days; }
+
     @Override
-    public int getResID_string_strRaFormat() {
-        return R.string.rightascension_format;
-    }
+    public int resID_strHours() { return R.string.delta_hours; }
+
     @Override
-    public int getResID_string_strDeclinationFormat() {
-        return R.string.declination_format;
-    }
+    public int resID_strMinutes() { return R.string.delta_minutes; }
+
+    @Override
+    public int resID_strSeconds() { return R.string.delta_seconds; }
+    
+    @Override
+    public int resID_strTimeDeltaFormat() { return R.string.delta_format; }
 }

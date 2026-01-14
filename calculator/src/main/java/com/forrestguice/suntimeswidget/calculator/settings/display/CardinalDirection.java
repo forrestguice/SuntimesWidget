@@ -137,4 +137,10 @@ public enum CardinalDirection
             values[i].setDisplayStrings(modes_short[i], modes_long[i]);
         }
     }
+
+    public interface ResID_CardinalDirection
+    {
+        int getResID_array_eventDisplayShort();
+        int getResID_array_eventDisplayLong();
+    }
 }
