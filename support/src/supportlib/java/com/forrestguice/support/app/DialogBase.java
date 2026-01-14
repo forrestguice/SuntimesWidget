@@ -20,6 +20,7 @@ package com.forrestguice.support.app;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.Window;
 
@@ -54,5 +55,15 @@ public abstract class DialogBase extends DialogFragment
             View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
             decorView.setOnClickListener(null);
         }
+    }
+
+    @NonNull
+    public FragmentManager getParentFragmentManager()
+    {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager == null) {
+            throw new IllegalStateException("fragment manager is null! did you remember to call isAdded first?");
+        }
+        return fragmentManager;
     }
 }

@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -194,4 +195,13 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
         return false;
     }
 
+    @NonNull
+    public FragmentManager getParentFragmentManager()
+    {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager == null) {
+            throw new IllegalStateException("fragment manager is null! did you remember to call isAdded first?");
+        }
+        return fragmentManager;
+    }
 }
