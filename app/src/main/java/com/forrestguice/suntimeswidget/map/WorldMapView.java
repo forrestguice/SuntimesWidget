@@ -32,11 +32,12 @@ import android.os.Build;
 import android.os.Bundle;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;

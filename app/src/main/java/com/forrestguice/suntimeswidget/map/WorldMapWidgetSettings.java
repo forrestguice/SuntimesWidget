@@ -22,11 +22,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
+
+import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;

@@ -28,8 +28,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;

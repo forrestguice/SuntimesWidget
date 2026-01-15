@@ -20,8 +20,8 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>

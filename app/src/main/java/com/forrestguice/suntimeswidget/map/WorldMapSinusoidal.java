@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Path;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
 import com.forrestguice.annotation.Nullable;
 
 /**

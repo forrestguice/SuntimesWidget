@@ -22,8 +22,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
