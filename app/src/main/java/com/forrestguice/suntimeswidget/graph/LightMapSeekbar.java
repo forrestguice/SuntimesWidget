@@ -79,7 +79,7 @@ public class LightMapSeekbar extends SeekBar
 
     public void resetThumb()
     {
-        Calendar calendar = LightMapView.LightMapTask.mapTime(data, options);
+        Calendar calendar = LightMapTask.mapTime(data, options);
         int minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         setProgress(minute);
     }
@@ -106,7 +106,7 @@ public class LightMapSeekbar extends SeekBar
             setBackgroundColor(options.values.getColor(LightMapColorValues.COLOR_NIGHT));
 
         } else if (option_drawBackground) {
-            LightMapView.LightMapTask draw = new LightMapView.LightMapTask(getContext());
+            LightMapTask draw = new LightMapTask(getContext());
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), options);
             if (Build.VERSION.SDK_INT >= 16) {
                 setBackground(new BitmapDrawable(b));

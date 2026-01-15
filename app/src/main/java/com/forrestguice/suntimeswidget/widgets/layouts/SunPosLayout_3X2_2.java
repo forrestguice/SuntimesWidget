@@ -31,8 +31,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
+import com.forrestguice.suntimeswidget.graph.LightGraphTask;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -117,9 +117,9 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? dataset.timezone()
                 : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
 
-        LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
+        LightGraphTask drawTask = new LightGraphTask();
 
-        SuntimesRiseSetDataset[] yearData = LightGraphView.LightGraphTask.createYearData(context, dataset);
+        SuntimesRiseSetDataset[] yearData = LightGraphTask.createYearData(context, dataset);
         drawTask.setData(yearData);
 
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;

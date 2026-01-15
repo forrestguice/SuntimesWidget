@@ -36,6 +36,7 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
+import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.support.app.FragmentManagerCompat;
@@ -857,7 +858,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
+            LightMapTask drawTask = new LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override

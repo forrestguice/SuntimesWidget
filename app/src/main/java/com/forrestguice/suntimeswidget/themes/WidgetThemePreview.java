@@ -32,8 +32,10 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
+import com.forrestguice.suntimeswidget.graph.LightGraphTask;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
+import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
@@ -311,7 +313,7 @@ public class WidgetThemePreview
             colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapOptions.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
             colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapOptions.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
+            LightMapTask drawTask = new LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
@@ -557,7 +559,7 @@ public class WidgetThemePreview
             view.setMinimumWidth(widthPx);
             view.setMinimumHeight(heightPx);
 
-            final LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
+            final LightGraphTask drawTask = new LightGraphTask();
             drawTask.setListener(new LightGraphView.LightGraphTaskListener()
             {
                 @Override
@@ -578,7 +580,7 @@ public class WidgetThemePreview
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
                     //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
                     data.calculateData(context);
-                    drawTask.setData(LightGraphView.LightGraphTask.createYearData(context, data));
+                    drawTask.setData(LightGraphTask.createYearData(context, data));
                     handler.post(new Runnable()
                     {
                         @Override

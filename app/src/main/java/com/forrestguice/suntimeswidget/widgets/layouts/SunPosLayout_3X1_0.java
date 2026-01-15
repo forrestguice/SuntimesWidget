@@ -27,7 +27,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
-import com.forrestguice.suntimeswidget.graph.LightMapView;
+import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -107,7 +107,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_time_lightmap_labels, visibility);
 
-        LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(context);
+        LightMapTask drawTask = new LightMapTask(context);
         Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
         views.setImageViewBitmap(R.id.info_time_lightmap, bitmap);
 
