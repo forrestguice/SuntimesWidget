@@ -517,7 +517,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         if (context != null)
         {
             Location location = WidgetSettings.loadLocationPref(context, 0);
-            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+            WorldMapOptions options = worldmap.getOptions();
             options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
@@ -623,7 +623,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     }
     private long getMapTime(long now)
     {
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        WorldMapOptions options = worldmap.getOptions();
         long offsetMillis = options.offsetMinutes * 60 * 1000;
         return ((options.now == -1) ? now : options.now + offsetMillis);
     }
@@ -933,7 +933,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     private void updateContextMenu(Context context, Menu m)
     {
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        WorldMapOptions options = worldmap.getOptions();
 
         MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
@@ -1243,7 +1243,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 return false;
             }
 
-            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+            WorldMapOptions options = worldmap.getOptions();
 
             boolean toggledValue;
             int itemId = item.getItemId();

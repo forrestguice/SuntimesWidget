@@ -169,7 +169,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options) {
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options) {
         return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
     }
 
@@ -233,7 +233,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!grid_initialized) {
             initGrid(w, h, mid);
@@ -279,7 +279,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!majorline_initialized) {
             initMajorLines(w, h, mid);
@@ -310,7 +310,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!majorline_initialized) {
             initMajorLines(w, h, mid);

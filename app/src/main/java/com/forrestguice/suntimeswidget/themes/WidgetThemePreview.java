@@ -36,6 +36,8 @@ import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.suntimeswidget.map.WorldMapOptions;
+import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 
@@ -334,7 +336,7 @@ public class WidgetThemePreview
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
         if (view != null && context != null)
         {
-            WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
+            WorldMapOptions options = new WorldMapOptions();
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR));
             options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, values.getAsInteger(SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR));
@@ -351,7 +353,7 @@ public class WidgetThemePreview
             options.moonScale = 32;
 
             int[] sizeDp = suggestedPreviewSizeDp(mode);
-            WorldMapTask.WorldMapProjection projection = SunPosLayout_3X2_0.createProjectionForMode(context, mode, options);
+            WorldMapProjection projection = SunPosLayout_3X2_0.createProjectionForMode(context, mode, options);
             WorldMapTask drawTask = new WorldMapTask();
             drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {

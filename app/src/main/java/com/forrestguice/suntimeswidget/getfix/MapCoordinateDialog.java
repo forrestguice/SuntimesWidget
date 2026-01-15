@@ -39,8 +39,9 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.map.WorldMapOptions;
+import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
-import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
@@ -68,8 +69,8 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
     }
 
     protected WorldMapView map;
-    protected WorldMapTask.WorldMapOptions options;
-    protected WorldMapTask.WorldMapProjection projection;
+    protected WorldMapOptions options;
+    protected WorldMapProjection projection;
 
     protected ImageButton marker;
     protected float[] markerCenter = null;

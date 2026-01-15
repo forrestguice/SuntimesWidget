@@ -61,7 +61,7 @@ public class WorldMapView extends ImageView
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
 
     private WorldMapTask drawTask;
-    private WorldMapTask.WorldMapOptions options;
+    private WorldMapOptions options;
     private WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
 
     private SuntimesRiseSetDataset data = null;
@@ -101,7 +101,7 @@ public class WorldMapView extends ImageView
     @SuppressLint("ResourceType")
     private void init(Context context)
     {
-        options = new WorldMapTask.WorldMapOptions(context);
+        options = new WorldMapOptions(context);
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
@@ -226,12 +226,12 @@ public class WorldMapView extends ImageView
         }
     }
 
-    public WorldMapTask.WorldMapOptions getOptions()
+    public WorldMapOptions getOptions()
     {
         return options;
     }
 
-    public void setOptions( WorldMapTask.WorldMapOptions options )
+    public void setOptions( WorldMapOptions options )
     {
         this.options = options;
     }
@@ -361,7 +361,7 @@ public class WorldMapView extends ImageView
 
         int w = getWidth();
         int h = getHeight();
-        WorldMapTask.WorldMapProjection projection;
+        WorldMapProjection projection;
         switch (mode)
         {
             case MERCATOR_SIMPLE:
@@ -432,7 +432,7 @@ public class WorldMapView extends ImageView
         }
     }
 
-    public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    public static WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         switch (mode) {
             case SINUSOIDAL_SIMPLE: return new WorldMapSinusoidal();

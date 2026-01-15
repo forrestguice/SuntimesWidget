@@ -40,7 +40,7 @@ import java.util.Calendar;
 /**
  * WorldMapEquirectangular
  */
-public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
+public class WorldMapEquirectangular extends WorldMapProjection
 {
     @Override
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
@@ -75,7 +75,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     protected Paint paintGrid = null;
 
     @Override
-    public void initPaint(WorldMapTask.WorldMapOptions options)
+    public void initPaint(WorldMapOptions options)
     {
         paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintBackground.setColor(options.colors.getColor(WorldMapColorValues.COLOR_BACKGROUND));
@@ -134,7 +134,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0) {
@@ -403,7 +403,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -435,7 +435,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     private static final double r_polar = (66.560833 / 90d);
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
@@ -468,7 +468,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;

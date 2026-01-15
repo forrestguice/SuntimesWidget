@@ -126,7 +126,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0)
@@ -273,7 +273,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;

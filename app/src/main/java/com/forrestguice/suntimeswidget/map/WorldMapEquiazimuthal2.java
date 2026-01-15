@@ -54,7 +54,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         center[0] = lat;
         center[1] = lon;
     }
-    public boolean setCenterFromOptions(@Nullable WorldMapTask.WorldMapOptions options) {
+    public boolean setCenterFromOptions(@Nullable WorldMapOptions options) {
         if (options != null && options.center != null                                               // if options defines a center
                 && (options.center[0] != center[0] || options.center[1] != center[1]))                  // and that center is not the same
         {
@@ -214,7 +214,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     private final Rect pixelDst = new Rect();
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0) {
@@ -361,7 +361,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -388,7 +388,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -442,7 +442,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     private static double[] grid_mid;
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
             initGrid(mid);

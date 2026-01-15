@@ -36,6 +36,8 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
+import com.forrestguice.suntimeswidget.map.WorldMapOptions;
+import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -874,7 +876,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
         if (view != null)
         {
-            WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
+            WorldMapOptions options = new WorldMapOptions();
             options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, chooseColorMapBackground.getColor());
             options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, chooseColorMapForeground.getColor());
@@ -891,7 +893,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 128;
             int dpHeight = 64;
-            WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
+            WorldMapProjection projection = new WorldMapEquirectangular();
             WorldMapTask drawTask = new WorldMapTask();
             drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {
