@@ -172,21 +172,17 @@ public enum SolarEvents
 
     @Nullable
     protected static ResID_SolarEvents r = null;
-    public static void setDisplayResID(@Nullable ResID_SolarEvents values)
-    {
-        r = values;
-        if (r != null) {
-            for (SolarEvents event : values()) {
-                event.setIconResource(r.attr_icon(event));
-            }
-        }
-    }
 
-    public static void initDisplayStrings(Resources context, ResID_SolarEvents ids)
+    public static void initDisplayStrings(Resources context, ResID_SolarEvents r)
     {
-        setDisplayResID(ids);
-        int resID_displayShort = (r != null ? r.array_eventDisplayShort() : 0);
-        int resID_displayLong = (r != null ? r.array_eventDisplayLong() : 0);
+        SolarEvents.r = r;
+
+        for (SolarEvents event : values()) {
+            event.setIconResource(r.attr_icon(event));
+        }
+
+        int resID_displayShort = r.array_eventDisplayShort();
+        int resID_displayLong = r.array_eventDisplayLong();
 
         if (resID_displayLong != 0 && resID_displayShort != 0)
         {

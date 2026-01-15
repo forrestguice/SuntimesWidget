@@ -160,7 +160,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         {
             if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
                 SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
-                views.setTextViewText(R.id.text_info_moonphase, data.getMoonPhaseLabel(AndroidResources.wrap(context), majorPhase));
+                views.setTextViewText(R.id.text_info_moonphase, data.getMoonPhaseLabel(majorPhase));
             } else views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
 
             views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));

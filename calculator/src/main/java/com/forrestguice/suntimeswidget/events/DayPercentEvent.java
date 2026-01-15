@@ -53,28 +53,30 @@ public final class DayPercentEvent extends ElevationEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night());
+        String eventTitle = (r != null) ? context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night()) : "Percent";
         return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " (" + percent + ")";   // TODO: format
     }
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night());
+        String eventTitle = (r != null) ? context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night()) : "Percent";
         return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " at " + percent;   // TODO: format
     }
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(r.string_phrase_gender());
+        return (r != null ? context.getString(r.string_phrase_gender()) : "other");
     }
 
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
         String percentDisplay = getPercentValue() + "";   // TODO
-        String eventTitle = context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night());
+        String eventTitle = (r != null) ? context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night()) : "Percent";
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay);
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " " + percentDisplay;
         } else {
-            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, percentDisplay);
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, percentDisplay)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " " + percentDisplay;
         }
     }
 
@@ -232,6 +234,7 @@ public final class DayPercentEvent extends ElevationEvent
         return calendar;
     }
 
+    @Nullable
     protected static ResID_DayPercentEvent r = null;
     public static void setResIDs(@NonNull ResID_DayPercentEvent values) {
         r = values;

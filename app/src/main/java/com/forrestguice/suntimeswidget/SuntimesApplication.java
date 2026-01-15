@@ -22,10 +22,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
-import com.forrestguice.colors.Color;
-import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesCalculator;
-import com.forrestguice.colors.ResourceColorValues;
-import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
+import com.forrestguice.suntimeswidget.calculator.AndroidSuntimesCalculator;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.android.AndroidLog;
 

@@ -121,14 +121,14 @@ public enum CardinalDirection
         String[] modes_long = res.getStringArray(r.array_eventDisplayLong());
         if (modes_long.length != modes_short.length)
         {
-            Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
+            Log.e("initDisplayStrings", "The size of directions_short and directions_long DOES NOT MATCH!");
             return;
         }
 
         CardinalDirection[] values = values();
         if (modes_long.length != values.length)
         {
-            Log.e("initDisplayStrings", "The size of directions_long and SolarEvents DOES NOT MATCH!");
+            Log.e("initDisplayStrings", "The size of directions_long and values DOES NOT MATCH!");
             return;
         }
 

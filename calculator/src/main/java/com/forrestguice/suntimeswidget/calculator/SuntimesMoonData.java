@@ -431,8 +431,8 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsNow ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    public CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator.MoonPhase majorPhase) {
-        return MoonPhaseDisplay.getMoonPhaseLabel(context, calculator, majorPhase, moonPhaseCalendar(majorPhase));
+    public CharSequence getMoonPhaseLabel(SuntimesCalculator.MoonPhase majorPhase) {
+        return MoonPhaseDisplay.getMoonPhaseLabel(calculator, majorPhase, moonPhaseCalendar(majorPhase));
     }
 
 }

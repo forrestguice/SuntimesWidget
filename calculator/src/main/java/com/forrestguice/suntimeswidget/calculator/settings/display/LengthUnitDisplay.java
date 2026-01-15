@@ -27,25 +27,28 @@ import java.text.NumberFormat;
 
 public class LengthUnitDisplay
 {
-    public static void initDisplayStrings_LengthUnit(Resources context, @NonNull ResID_LengthUnitDisplay ids)
+    protected static String strFeetShort = "ft", strMetersShort = "m";
+    protected static String strMilesShort = "mi", strMilesLong = "miles", strKilometersShort = "km", strKilometersLong = "kilometers";
+    protected static int rPluralFeet = 0, rPluralMeters = 0;
+
+    public static void initDisplayStrings_LengthUnit(Resources context, @NonNull ResID_LengthUnitDisplay r)
     {
-        r = ids;
+        strFeetShort = context.getString(r.string_feet_short());
+        strMetersShort = context.getString(r.string_meters_short());
+
+        strMilesShort = context.getString(r.string_miles_short());
+        strMilesLong = context.getString(r.string_miles_long());
+
+        strKilometersShort = context.getString(r.string_kilometers_short());
+        strKilometersLong = context.getString(r.string_kilometers_long());
+
+        rPluralFeet = r.plurals_feet_long();
+        rPluralMeters = r.plurals_meters_long();
+
         for (LengthUnit unit : LengthUnit.values()) {
-            unit.setDisplayString(context.getString(ids.string_displayString(unit)));
+            unit.setDisplayString(context.getString(r.string_displayString(unit)));
         }
     }
-    protected static ResID_LengthUnitDisplay r = new ResID_LengthUnitDisplay()
-    {
-        public int string_displayString(LengthUnit unit) { return 0; }
-        public int string_feet_short() { return 0; }
-        public int string_meters_short() { return 0; }
-        public int string_miles_short() { return 0; }
-        public int string_kilometers_short() { return 0; }
-        public int string_miles_long() { return 0; }
-        public int string_kilometers_long() { return 0; }
-        public int plurals_feet_long() { return 0; }
-        public int plurals_meters_long() { return 0; }
-    };
 
     /**
      * formatAsHeight
@@ -64,16 +67,16 @@ public class LengthUnitDisplay
             case IMPERIAL:
                 value = LengthUnit.metersToFeet(meters);
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(r.string_feet_short())
-                        : context.getQuantityString(r.plurals_feet_long(), (int)value, formatted));
+                unitsString = ((shortForm || rPluralFeet == 0) ? strFeetShort
+                        : context.getQuantityString(rPluralFeet, (int)value, formatted));
                 break;
 
             case METRIC:
             default:
                 value = meters;
                 formatted = formatter.format(value);
-                unitsString = (shortForm ? context.getString(r.string_meters_short())
-                        : context.getQuantityString(r.plurals_meters_long(), (int)value, formatted));
+                unitsString = ((shortForm || rPluralMeters == 0) ? strMetersShort
+                        : context.getQuantityString(rPluralMeters, (int)value, formatted));
                 break;
         }
         return new TimeDisplayText(formatted, unitsString, "");
@@ -90,13 +93,13 @@ public class LengthUnitDisplay
         {
             case IMPERIAL:
                 value = LengthUnit.kilometersToMiles(kilometers);
-                unitsString = (shortForm ? context.getString(r.string_miles_short()) : context.getString(r.string_miles_long()));
+                unitsString = (shortForm ? strMilesShort : strMilesLong);
                 break;
 
             case METRIC:
             default:
                 value = kilometers;
-                unitsString = (shortForm ? context.getString(r.string_kilometers_short()) : context.getString(r.string_kilometers_long()));
+                unitsString = (shortForm ? strKilometersShort : strKilometersLong);
                 break;
         }
 

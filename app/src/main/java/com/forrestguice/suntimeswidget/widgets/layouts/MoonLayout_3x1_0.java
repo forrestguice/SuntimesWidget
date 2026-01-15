@@ -142,7 +142,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
 
         TimeDisplayText newMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showTimeDate, showSeconds, abbreviate, timeFormat);
         views.setTextViewText(R.id.moonphase_new_date, newMoonString.getValue());
-        views.setTextViewText(R.id.moonphase_new_label, data.getMoonPhaseLabel(AndroidResources.wrap(context), SuntimesCalculator.MoonPhase.NEW));
+        views.setTextViewText(R.id.moonphase_new_label, data.getMoonPhaseLabel(SuntimesCalculator.MoonPhase.NEW));
         views.setViewVisibility(R.id.moonphase_new_label, (showLabels ? View.VISIBLE : View.GONE));
 
         TimeDisplayText firstQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTimeDate, showSeconds, abbreviate, timeFormat);
@@ -151,7 +151,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
 
         TimeDisplayText fullMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showTimeDate, showSeconds, abbreviate, timeFormat);
         views.setTextViewText(R.id.moonphase_full_date, fullMoonString.getValue());
-        views.setTextViewText(R.id.moonphase_full_label, data.getMoonPhaseLabel(AndroidResources.wrap(context), SuntimesCalculator.MoonPhase.FULL));
+        views.setTextViewText(R.id.moonphase_full_label, data.getMoonPhaseLabel(SuntimesCalculator.MoonPhase.FULL));
         views.setViewVisibility(R.id.moonphase_full_label, (showLabels ? View.VISIBLE : View.GONE));
 
         TimeDisplayText thirdQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showTimeDate, showSeconds, abbreviate, timeFormat);

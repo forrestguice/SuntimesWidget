@@ -61,24 +61,24 @@ public final class MoonIllumEvent extends BaseEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(r.string_title());
+        String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Moon";
         return offsetDisplay(context.getResources()) + eventTitle + " " + (waxing ? "waxing" : "waning") + " (" + percent + ")";   // TODO: format
     }
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        String eventTitle = context.getResources().getString(r.string_title());
+        String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Moon";
         return offsetDisplay(context.getResources()) + eventTitle + " " + (waxing ? "waxing" : "waning") + " at " + percent;   // TODO: format
     }
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(r.string_phrase_gender());
+        return (r != null) ? context.getString(r.string_phrase_gender()) : "other";
     }
 
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
         String percentDisplay = getPercentValue() + "";
-        String eventTitle = context.getResources().getString(r.string_title());
+        String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Moon";
         if (offset == 0) {
             return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay);
         } else {
@@ -248,6 +248,7 @@ public final class MoonIllumEvent extends BaseEvent
         return Math.abs(a - b) < 0.0025;
     }
 
+    @Nullable
     protected static ResID_MoonIllumEvent r = null;
     public static void setResIDs(@NonNull ResID_MoonIllumEvent values) {
         r = values;

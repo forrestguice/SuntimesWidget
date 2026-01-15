@@ -39,10 +39,11 @@ public enum MoonPhaseDisplay
     THIRD_QUARTER("Third Quarter", "Third Quarter"),
     WANING_CRESCENT("Waning Crescent", "Waning Crescent");
 
+    protected static String strSuperFull = "Super Full Moon", strSuperNew = "Super New Moon";
+    protected static String strMicroFull = "Micro Full Moon", strMicroNew = "Micro New Moon";
+
     private int iconResource = 0, viewResource = 0;
     private String shortDisplayString, longDisplayString;
-
-    protected static ResID_MoonPhaseDisplay r = null;
 
     private MoonPhaseDisplay(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
@@ -94,14 +95,18 @@ public enum MoonPhaseDisplay
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings(Resources context, ResID_MoonPhaseDisplay ids)
+    public static void initDisplayStrings(Resources context, ResID_MoonPhaseDisplay r)
     {
-        r = ids;
+        strSuperFull = context.getString(r.string_superFullMoon());
+        strSuperNew = context.getString(r.string_superNewMoon());
+        strMicroFull = context.getString(r.string_microFullMoon());
+        strMicroNew = context.getString(r.string_microNewMoon());
+
         for (MoonPhaseDisplay value : MoonPhaseDisplay.values())
         {
-            value.setDisplayString(context.getString(ids.string_shortDisplay(value)), context.getString(ids.string_longDisplay(value)));
-            value.setIconResource(ids.drawable_icon(value));
-            value.setViewResource(ids.id_view(value));
+            value.setDisplayString(context.getString(r.string_shortDisplay(value)), context.getString(r.string_longDisplay(value)));
+            value.setIconResource(r.drawable_icon(value));
+            value.setViewResource(r.id_view(value));
         }
     }
 
@@ -112,19 +117,16 @@ public enum MoonPhaseDisplay
         viewResource = resID;
     }
 
-    public static CharSequence getMoonPhaseLabel(Resources context, SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
+    public static CharSequence getMoonPhaseLabel(SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
     {
         if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
         {
             SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
-
             if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(r.string_superNewMoon())
-                        : context.getString(r.string_superFullMoon());
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? strSuperNew : strSuperFull;
 
             } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(r.string_microNewMoon())
-                        : context.getString(r.string_microFullMoon());
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? strMicroNew : strMicroFull;
 
             } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
         } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();

@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_AngleDisplay implements AngleDisplay.ResID_AngleDisplay
 {
     @Override
-    public int string_altSymbol() {
+    public int string_strAltSymbol() {
         return R.string.widgetLabel_altitude_symbol;
     }
     @Override

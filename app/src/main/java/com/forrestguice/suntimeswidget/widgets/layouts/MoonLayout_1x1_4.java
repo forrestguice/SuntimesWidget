@@ -82,7 +82,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
 
             TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
-            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(AndroidResources.wrap(context), majorPhase));
+            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));
         }
     }

@@ -16,18 +16,15 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 
-package com.forrestguice.suntimeswidget.calculator.settings.android;
+package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
 import com.forrestguice.colors.Color;
 import com.forrestguice.colors.ResourceColorValues;
-import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettingsFactory;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
@@ -72,8 +69,15 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 
 import net.time4j.android.ApplicationStarter;
 
+/**
+ * Entry point for the Suntimes `calculator` module; call init(Context) before using these classes.
+ */
 public class AndroidSuntimesCalculator
 {
+    /**
+     * Initializes the module and its dependencies.
+     * @param context Context
+     */
     public static void init(Context context)
     {
         Color.init(new AndroidColor());
@@ -89,6 +93,11 @@ public class AndroidSuntimesCalculator
         initResourceIDs(AndroidResources.wrap(context), dataSettings);
     }
 
+    /**
+     * Initializes resources used by display classes.
+     * @param r AndroidResources
+     * @param dataSettings AndroidDataSettings
+     */
     public static void initResourceIDs(AndroidResources r, AndroidSuntimesDataSettings dataSettings)
     {
         AngleDisplay.initDisplayStrings(r, new AndroidResID_AngleDisplay());

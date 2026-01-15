@@ -63,12 +63,13 @@ public class EventSettings
     }
 
     public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType) {
-        int resID = r.string_suggestEventLabel(eventType);
+        int resID = (r != null) ? r.string_suggestEventLabel(eventType) : 0;
         return (resID != 0 ? context.getString(resID) : "");
     }
 
-    public static ResID_EventSettings r;
-    public static void setResIDs(ResID_EventSettings value) {
+    @Nullable
+    public static ResID_EventSettings r = null;
+    public static void setResIDs(@NonNull ResID_EventSettings value) {
         r = value;
     }
 

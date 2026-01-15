@@ -54,17 +54,19 @@ public final class ShadowLengthEvent extends ElevationEvent
 
     @Override
     public String getEventTitle(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
     }
 
     @Override
     public String getEventPhrase(SuntimesDataSettings context) {
-        return offsetDisplay(context.getResources()) + context.getString(r.string_title()) + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
     }
 
     @Override
     public String getEventGender(SuntimesDataSettings context) {
-        return context.getString(r.string_phrase_gender());
+        return (r != null) ? context.getString(r.string_phrase_gender()) : "other";
     }
 
     @Override
@@ -75,11 +77,14 @@ public final class ShadowLengthEvent extends ElevationEvent
 
         TimeDisplayText t = LengthUnitDisplay.formatAsHeight(context.getResources(), getLength(), units, 1, true);
         String length = context.getString(r.string_units_format_short(), t.getValue(), t.getUnits());
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
 
         if (offset == 0) {
-            return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), context.getString(r.string_title()), height, length);
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, height, length)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + height + " : " + length + ")";
         } else {
-            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), context.getString(r.string_title()), height, length);
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, height, length)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + height + " : " + length + ")";
         }
     }
 
@@ -142,6 +147,7 @@ public final class ShadowLengthEvent extends ElevationEvent
         } else return null;
     }
 
+    @Nullable
     protected static ResID_ShadowLengthEvent r = null;
     public static void setResIDs(@NonNull ResID_ShadowLengthEvent values) {
         r = values;

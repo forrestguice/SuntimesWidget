@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
@@ -53,7 +54,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: layoutID
      */
-    protected int layoutID = r.layout_widget_1x1_0_content();
+    protected int layoutID = (r != null ? r.layout_widget_1x1_0_content() : 0);
     public int layoutID()
     {
         return layoutID;
@@ -372,13 +373,13 @@ public class SuntimesRiseSetData extends SuntimesData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = r.string_delta_day_yesterday();
+                dayDeltaPrefix = (r != null ? r.string_delta_day_yesterday() : 0);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = r.string_delta_day_tomorrow();
+                dayDeltaPrefix = (r != null ? r.string_delta_day_tomorrow() : 0);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
@@ -535,8 +536,9 @@ public class SuntimesRiseSetData extends SuntimesData
         }
     }
 
-    protected static ResID_SuntimesRiseSetData r;
-    public static void setResIDs( ResID_SuntimesRiseSetData value ) {
+    @Nullable
+    protected static ResID_SuntimesRiseSetData r = null;
+    public static void setResIDs( @NonNull ResID_SuntimesRiseSetData value ) {
         r = value;
     }
 
@@ -544,7 +546,7 @@ public class SuntimesRiseSetData extends SuntimesData
     {
         int string_delta_day_yesterday();
         int string_delta_day_tomorrow();
-        int layout_widget_1x1_0_content();  // R.layout.layout_widget_1x1_0_content;
+        int layout_widget_1x1_0_content();
     }
 }
 
