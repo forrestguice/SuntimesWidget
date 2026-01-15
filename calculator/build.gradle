@@ -9,6 +9,5 @@ java {
 
 dependencies {
     implementation project(path: ":util")
-    implementation project(path: ":lib-ca-rmen-sunrisesunset")
     implementation project(path: ":lib-luckycatlabs-sunrisesunset")
 }
