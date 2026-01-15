@@ -43,22 +43,22 @@ public class LightMapSeekbar extends SeekBar
 
     @Nullable
     protected SuntimesRiseSetDataset data = null;
-    protected LightMapView.LightMapColors options;
+    protected LightMapOptions options;
     protected boolean option_drawBackground = false;
 
     public LightMapSeekbar(Context context)
     {
         super(context, null, R.style.LightMapSeekBar);
-        init(context, new LightMapView.LightMapColors(context));
+        init(context, new LightMapOptions(context));
     }
 
     public LightMapSeekbar(Context context, AttributeSet attribs)
     {
         super(context, attribs);
-        init(context, new LightMapView.LightMapColors(context));
+        init(context, new LightMapOptions(context));
     }
 
-    protected void init(Context context, LightMapView.LightMapColors options)
+    protected void init(Context context, LightMapOptions options)
     {
         this.options = options;
 
@@ -124,7 +124,7 @@ public class LightMapSeekbar extends SeekBar
 
     public void themeViews( Context context, @NonNull SuntimesTheme theme ) {
         if (options == null) {
-            options = new LightMapView.LightMapColors();
+            options = new LightMapOptions();
         }
         LightMapView.themeViews(context, theme, options);
     }
@@ -134,7 +134,7 @@ public class LightMapSeekbar extends SeekBar
         return true;
     }
 
-    public void setOptions(@NonNull LightMapView.LightMapColors options) {
+    public void setOptions(@NonNull LightMapOptions options) {
         init(getContext(), options);
     }
 

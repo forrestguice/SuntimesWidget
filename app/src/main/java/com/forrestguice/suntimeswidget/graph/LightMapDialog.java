@@ -581,7 +581,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     }
 
-    public static final String MAPTAG_LIGHTMAP = LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+    public static final String MAPTAG_LIGHTMAP = LightMapOptions.MAPTAG_LIGHTMAP;
     public static final String PREF_KEY_LIGHTMAP_SHOWGRAPH = "showgraph";
     public static final boolean DEF_KEY_LIGHTMAP_SHOWGRAPH = false;
     public static final String PREF_KEY_LIGHTMAP_SEEKALTITUDE = "seekaltitude";
@@ -1287,7 +1287,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     {
         if (context != null)
         {
-            LightMapView.LightMapColors options = lightmap.getColors();
+            LightMapOptions options = lightmap.getColors();
 
             if (seekbar != null) {
                 seekbar.setOptions(options);

@@ -95,7 +95,7 @@ import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAP
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWPOINTS;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWSEASONS;
 import static com.forrestguice.suntimeswidget.graph.LightGraphView.PREF_KEY_GRAPH_SHOWTWILIGHT;
-import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.graph.LightMapOptions.MAPTAG_LIGHTMAP;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID;
 
@@ -172,7 +172,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         lightmap = (LightMapView) v.findViewById(R.id.info_time_lightmap);
         if (lightmap != null)
         {
-            LightMapView.LightMapColors options = lightmap.getColors();
+            LightMapOptions options = lightmap.getColors();
             options.option_lmt = true;
             lightmap.setData(data);
         }

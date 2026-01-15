@@ -40,12 +40,10 @@ import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
-import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
-import java.util.concurrent.locks.Lock;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -63,7 +61,7 @@ public class LightMapView extends ImageView
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
 
-    private LightMapColors colors;
+    private LightMapOptions colors;
     @Nullable
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
@@ -93,7 +91,7 @@ public class LightMapView extends ImageView
      */
     private void init(Context context)
     {
-        colors = new LightMapColors(context);
+        colors = new LightMapOptions(context);
         if (isInEditMode())
         {
             setBackgroundColor(colors.values.getColor(LightMapColorValues.COLOR_NIGHT));
@@ -135,7 +133,7 @@ public class LightMapView extends ImageView
         }
     }
 
-    public LightMapColors getColors() {
+    public LightMapOptions getColors() {
         return colors;
     }
 
@@ -146,11 +144,11 @@ public class LightMapView extends ImageView
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (colors == null) {
-            colors = new LightMapColors();
+            colors = new LightMapOptions();
         }
         themeViews(context, theme, colors);
     }
-    public static void themeViews( Context context, @NonNull SuntimesTheme theme, @NonNull LightMapColors colors )
+    public static void themeViews( Context context, @NonNull SuntimesTheme theme, @NonNull LightMapOptions colors )
     {
         colors.values.setColor(LightMapColorValues.COLOR_NIGHT, theme.getNightColor());
         colors.values.setColor(LightMapColorValues.COLOR_DAY, theme.getDayColor());
@@ -433,7 +431,7 @@ public class LightMapView extends ImageView
     public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
         private final WeakReference<Context> contextRef;
-        private LightMapColors colors;
+        private LightMapOptions colors;
 
         @Nullable
         private SuntimesRiseSetDataset t_data = null;
@@ -460,7 +458,7 @@ public class LightMapView extends ImageView
                 data = (SuntimesRiseSetDataset)params[0];
                 w = (Integer)params[1];
                 h = (Integer)params[2];
-                colors = (LightMapColors)params[3];
+                colors = (LightMapOptions)params[3];
 
                 if (params.length > 4) {
                     numFrames = (int)params[4];
@@ -528,7 +526,7 @@ public class LightMapView extends ImageView
             return frame;
         }
 
-        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors)
+        public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapOptions colors)
         {
             if (w <= 0 || h <= 0)
             {
@@ -674,7 +672,7 @@ public class LightMapView extends ImageView
             return retValue;
         }
 
-        protected static Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
+        protected static Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapOptions options)
         {
             Calendar mapTime;
             if (options.now >= 0)
@@ -749,7 +747,7 @@ public class LightMapView extends ImageView
 
         /////////////////////////////////////////////
 
-        protected void drawSunSymbol(int symbol, Calendar calendar, Canvas c, Paint p, LightMapColors options)
+        protected void drawSunSymbol(int symbol, Calendar calendar, Canvas c, Paint p, LightMapOptions options)
         {
             int pointRadius;
             if (colors.option_drawNow_pointSizePx <= 0)
@@ -800,7 +798,7 @@ public class LightMapView extends ImageView
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-        protected boolean drawRect( LightMapColors options, SuntimesRiseSetData data, Canvas c, Paint p )
+        protected boolean drawRect(LightMapOptions options, SuntimesRiseSetData data, Canvas c, Paint p )
         {
             Calendar riseTime = data.sunriseCalendarToday();
             Calendar setTime = data.sunsetCalendarToday();
@@ -931,69 +929,6 @@ public class LightMapView extends ImageView
     private LightMapTaskListener mapListener = null;
     public void setMapTaskListener( LightMapTaskListener listener ) {
         mapListener = listener;
-    }
-
-    /**
-     * LightMapColors
-     */
-    @SuppressWarnings("WeakerAccess")
-    public static class LightMapColors
-    {
-        public static final String MAPTAG_LIGHTMAP = "_lightmap";
-
-        public void setOption_drawNow(SunSymbol symbol) {
-            option_drawNow = SunSymbolBitmap.fromSunSymbol(symbol);
-        }
-
-        public int option_drawNow = SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID;
-        public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
-        public boolean option_lmt = false;
-
-        public boolean option_drawNoon = false;
-
-        public long offsetMinutes = 0;
-        public long now = -1L;
-        public int anim_frameLengthMs = 100;         // frames shown for 200 ms
-        public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
-        public Lock anim_lock = null;
-
-        public LightMapColorValues values;
-
-        public LightMapColors() {
-            values = new LightMapColorValues();
-        }
-
-        @SuppressWarnings("ResourceType")
-        public LightMapColors(Context context) {
-            init(context);
-        }
-
-        public void initDefaultDark(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), true));      // TODO: Resources
-        }
-
-        public void initDefaultLight(Context context) {
-            values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), false));       // TODO: Resources
-        }
-
-        public void init(Context context) {
-            values = new LightMapColorValues(AndroidResources.wrap(context));
-        }
-
-        public void acquireDrawLock()
-        {
-            if (anim_lock != null) {
-                anim_lock.lock();
-                //Log.d("DEBUG", "MapView :: acquire " + anim_lock);
-            }
-        }
-        public void releaseDrawLock()
-        {
-            if (anim_lock != null) {
-                //Log.d("DEBUG", "MapView :: release " + anim_lock);
-                anim_lock.unlock();
-            }
-        }
     }
 
     public static CharSequence getLabel(Context context, SuntimesRiseSetDataset data)

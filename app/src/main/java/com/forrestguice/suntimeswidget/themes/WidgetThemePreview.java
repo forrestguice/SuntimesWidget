@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.support.content.ContextCompat;
@@ -285,7 +286,7 @@ public class WidgetThemePreview
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
         if (view != null && context != null)
         {
-            LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
+            LightMapOptions colors = new LightMapOptions();
             colors.initDefaultDark(context);
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
@@ -305,8 +306,8 @@ public class WidgetThemePreview
                 colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
             }
 
-            colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
-            colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapView.LightMapColors.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
+            colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapOptions.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
+            colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapOptions.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
             drawTask.setListener(new LightMapView.LightMapTaskListener()

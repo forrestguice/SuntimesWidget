@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -41,7 +42,7 @@ import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
-import static com.forrestguice.suntimeswidget.graph.LightMapView.LightMapColors.MAPTAG_LIGHTMAP;
+import static com.forrestguice.suntimeswidget.graph.LightMapOptions.MAPTAG_LIGHTMAP;
 import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DEF_GRAPH_SUNSYMBOL;
 
 /**
@@ -134,7 +135,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public static final int HEIGHT_MEDIUM = 28;
     public static final int HEIGHT_LARGE  = 40;
 
-    protected LightMapView.LightMapColors colors;
+    protected LightMapOptions colors;
     protected int dpWidth = 320, dpHeight = HEIGHT_LARGE;
 
     @Override
@@ -151,7 +152,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
             views.setTextViewTextSize(R.id.info_sun_azimuth_setting, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
 
-        colors = new LightMapView.LightMapColors();
+        colors = new LightMapOptions();
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);

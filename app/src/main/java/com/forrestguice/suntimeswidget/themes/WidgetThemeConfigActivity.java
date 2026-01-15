@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -835,7 +836,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
         if (view != null)
         {
-            LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
+            LightMapOptions colors = new LightMapOptions();
             colors.initDefaultDark(this);
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
