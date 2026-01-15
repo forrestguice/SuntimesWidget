@@ -142,7 +142,7 @@ public class CalendarFormatDialog extends DialogBase
         //Log.d("DEBUG", "updateCustomCalendarFormat");
         CalendarMode mode = getCalendarMode();
         CalendarFormat.CUSTOM.setPattern(pattern);
-        CalendarFormat.CUSTOM.initDisplayString(mode, Calendar.getInstance());
+        CalendarFormat.CUSTOM.initDisplayString(mode, Calendar.getInstance(), AndroidCalendarDisplayFactory.create());
         notifyDataSetChanged_calendarFormatAdapter();
     }
 

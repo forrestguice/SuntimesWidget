@@ -82,13 +82,13 @@ public enum CalendarFormat
         this.displayString = displayString;
     }
 
-    public void initDisplayString(@NonNull CalendarMode mode, @NonNull Calendar now)
+    public void initDisplayString(@NonNull CalendarMode mode, @NonNull Calendar now, CalendarDisplay display)
     {
         if (isValidPattern(pattern)) {
             if (displayString0 == null) {
-                displayString = CalendarDisplay.formatDate(mode, pattern, now);
+                displayString = display.formatDate(mode, pattern, now);
             } else if (displayString0.contains("%s")) {
-                displayString = String.format(displayString0, CalendarDisplay.formatDate(mode, pattern, now));
+                displayString = String.format(displayString0, display.formatDate(mode, pattern, now));
             } else displayString = displayString0;
         } else displayString = displayString0;
     }

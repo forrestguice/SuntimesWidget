@@ -16,9 +16,12 @@
  along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forrestguice.suntimeswidget.calendar;
+package com.forrestguice.suntimeswidget.calculator.time4a;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calendar.CalendarDisplay;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.util.Log;
 
 import net.time4j.Moment;
@@ -44,9 +47,11 @@ import net.time4j.tz.ZonalOffset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CalendarDisplay
+public class Time4JCalendarDisplay implements CalendarDisplay
 {
-    public static String formatDate(CalendarMode calendar, String pattern, Calendar now)
+    @NonNull
+    @Override
+    public String formatDate(CalendarMode calendar, String pattern, Calendar now)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(now.getTime());
         ZonalOffset offset = ZonalOffset.ofTotalSeconds(now.getTimeZone().getOffset(now.getTimeInMillis()) / 1000);

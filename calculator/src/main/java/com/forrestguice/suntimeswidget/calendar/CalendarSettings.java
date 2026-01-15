@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
-import com.forrestguice.util.Resources;
 import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.prefs.SharedPreferences;
@@ -188,12 +187,5 @@ public class CalendarSettings
             deleteCalendarFormatPatternPref(context, appWidgetId, mode.name());
         }
     }
-
-    public static void initDisplayStrings(Resources context )
-    {
-        CalendarModeDisplay.initDisplayStrings(context, new AndroidResID_CalendarModeDisplay());
-        CalendarFormatDisplay.initDisplayStrings(context);
-    }
-
 
 }

@@ -1,6 +1,11 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarFormatDisplay;
+import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarModeDisplay;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
+import com.forrestguice.suntimeswidget.calendar.CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarModeDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.util.Resources;
@@ -69,8 +74,9 @@ public class AndroidCalendarSettings implements CalendarSettingsInterface
     }
 
     @Override
-    public void initDisplayStrings() {
-        CalendarSettings.initDisplayStrings(AndroidResources.wrap(context));
+    public void initDisplayStrings(Resources context) {
+        CalendarModeDisplay.initDisplayStrings(context, new AndroidResID_CalendarModeDisplay());
+        CalendarFormatDisplay.initDisplayStrings(context, new AndroidResID_CalendarFormatDisplay(), AndroidCalendarDisplayFactory.create());
     }
 
     @Override

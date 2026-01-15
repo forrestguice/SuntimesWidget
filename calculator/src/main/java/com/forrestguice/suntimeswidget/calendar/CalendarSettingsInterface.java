@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calendar;
 
 import com.forrestguice.util.ContextInterface;
+import com.forrestguice.util.Resources;
 
 public interface CalendarSettingsInterface extends ContextInterface
 {
@@ -52,5 +53,5 @@ public interface CalendarSettingsInterface extends ContextInterface
     void deleteCalendarPref(int appWidgetId, String key);
     void deletePrefs(int appWidgetId);
 
-    void initDisplayStrings();
+    void initDisplayStrings(Resources context);
 }

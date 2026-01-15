@@ -32,6 +32,8 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
+import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDialog;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
@@ -180,7 +182,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             CalendarFormatDialog calendarFormat = (CalendarFormatDialog) getSupportFragmentManager().findFragmentByTag("CalendarFormatDialog");
             if (calendarFormat != null)
             {
-                CalendarFormatDisplay.initDisplayStrings(AndroidResources.wrap(DateWidget0ConfigActivity.this), mode, Calendar.getInstance());
+                CalendarFormatDisplay.initDisplayStrings(AndroidResources.wrap(DateWidget0ConfigActivity.this), new AndroidResID_CalendarFormatDisplay(), mode, Calendar.getInstance(), AndroidCalendarDisplayFactory.create());
                 calendarFormat.setCalendarMode(mode);
                 calendarFormat.setFormatPattern(pattern);
                 calendarFormat.updateCustomCalendarFormat(pattern);

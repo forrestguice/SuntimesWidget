@@ -34,7 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
-import com.forrestguice.suntimeswidget.calendar.CalendarDisplay;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
@@ -115,7 +115,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
                 Log.w(getClass().getSimpleName(), "updateViews: invalid pattern! " + pattern + ", falling back to default..");
                 pattern = mode.getDefaultPattern();
             }
-            dateString = CalendarDisplay.formatDate(mode, pattern, now);
+            dateString = AndroidCalendarDisplayFactory.create().formatDate(mode, pattern, now);
             views.setTextViewText(R.id.text_date, dateString);
         }
 

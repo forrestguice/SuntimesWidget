@@ -3057,7 +3057,6 @@ public class WidgetSettings
         initDisplayStrings_DateMode(context);
         initDisplayStrings_TimeFormatMode(context);
         initDisplayStrings_RiseSetOrder(context);
-        CalendarSettings.initDisplayStrings(AndroidResources.wrap(context));
         WidgetActions.initDisplayStrings(context);
         AlarmWidgetSettings.initDisplayStrings(context);
     }
