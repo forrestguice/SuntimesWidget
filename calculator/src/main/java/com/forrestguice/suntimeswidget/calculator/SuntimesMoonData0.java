@@ -53,12 +53,24 @@ public class SuntimesMoonData0 extends SuntimesData
         return new SuntimesCalculatorFactory(calculatorMode)
         {
             public SuntimesCalculator fallbackCalculator() {
-                return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
+                return (fallbackInfo != null ? fallbackInfo.fallbackCalculator()
+                        : super.fallbackCalculator());
             }
             public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
-                return DefaultCalculatorDescriptors.Time4A_4J();
+                return (fallbackInfo != null ? fallbackInfo.fallbackCalculatorDescriptor()
+                        : super.fallbackCalculatorDescriptor());
             }
         };
+    }
+
+    protected static FallbackCalculatorInfo fallbackInfo;
+    public static void setFallbackInfo(FallbackCalculatorInfo value) {
+        fallbackInfo = value;
+    }
+    public interface FallbackCalculatorInfo
+    {
+        SuntimesCalculator fallbackCalculator();
+        SuntimesCalculatorDescriptor fallbackCalculatorDescriptor();
     }
 
     /**

@@ -24,7 +24,9 @@ import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
@@ -75,6 +77,20 @@ public class AndroidSuntimesCalculator
         AndroidResources r = AndroidResources.wrap(context);
         AndroidSuntimesDataSettings dataSettings = AndroidSuntimesDataSettings.wrap(context);
 
+        SuntimesMoonData0.setFallbackInfo(new SuntimesMoonData0.FallbackCalculatorInfo()
+        {
+            @Override
+            public SuntimesCalculator fallbackCalculator() {
+                return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
+            }
+
+            @Override
+            public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
+                return DefaultCalculatorDescriptors.Time4A_4J();
+            }
+        });
+        SuntimesRiseSetData.setResIDs(new AndroidResID_SuntimesRiseSetData());
+
         // settings (display)
         TimeDeltaDisplay.initDisplayStrings(r, new AndroidResID_TimeDeltaDisplay());
         AngleDisplay.initDisplayStrings(r, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
@@ -91,7 +107,6 @@ public class AndroidSuntimesCalculator
         MoonIllumEvent.setResIDs(new AndroidResID_MoonIllumEvent());
         MoonElevationEvent.setResIDs(new AndroidResID_MoonElevationEvent());
         SunElevationEvent.setResIDs(new AndroidResID_SunElevationEvent());
-        SuntimesRiseSetData.setResIDs(new AndroidResID_SuntimesRiseSetData());
 
         // calendars
         CalendarModeDisplay.initDisplayStrings(r, new AndroidResID_CalendarModeDisplay());
