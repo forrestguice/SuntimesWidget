@@ -23,7 +23,6 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.UriUtils;
 import com.forrestguice.util.prefs.SharedPreferences;
@@ -63,16 +62,18 @@ public class EventSettings
         return id;
     }
 
-    public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType)
-    {
-        switch (eventType) {
-            case SUN_ELEVATION: return context.getString(R.string.editevent_dialog_label_suggested);
-            case SHADOWLENGTH: return context.getString(R.string.editevent_dialog_label_suggested1);
-            case MOONILLUM: return context.getString(R.string.moonillumevent_label_suggested);
-            case MOON_ELEVATION: return context.getString(R.string.moonevent_label_suggested);
-            case DAYPERCENT:
-            default: return context.getString(R.string.editevent_dialog_label_suggested2);
-        }
+    public static String suggestEventLabel(@NonNull ContextInterface context, EventType eventType) {
+        int resID = r.string_suggestEventLabel(eventType);
+        return (resID != 0 ? context.getString(resID) : "");
+    }
+
+    public static ResID_EventSettings r;
+    public static void setResIDs(ResID_EventSettings value) {
+        r = value;
+    }
+
+    public interface ResID_EventSettings {
+        int string_suggestEventLabel(EventType eventType);
     }
 
     public static EventAlias saveEvent(@NonNull ContextInterface context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
