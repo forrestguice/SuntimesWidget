@@ -29,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -108,7 +109,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         }
     }
 
-    protected LineGraphView.LineGraphOptions options;
+    protected LineGraphOptions options;
     protected int dpWidth = 512, dpHeight = 256;
 
     @Override
@@ -123,7 +124,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LineGraphView.LineGraphOptions(context);
+        options = new LineGraphOptions(context);
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
             options.initDefaultLight(context);
         else options.initDefaultDark(context);

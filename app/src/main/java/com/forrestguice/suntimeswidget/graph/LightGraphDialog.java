@@ -118,7 +118,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
     protected View layout_sunrise_early, layout_sunrise_late;
     protected View layout_sunset_early, layout_sunset_late;
 
-    protected LightGraphView.LightGraphOptions options; // = new LightGraphView.LightGraphOptions();
+    protected LightGraphOptions options; // = new LightGraphView.LightGraphOptions();
 
     public LightGraphDialog() {
         setArguments(new Bundle());

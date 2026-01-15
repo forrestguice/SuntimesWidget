@@ -1311,7 +1311,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
             if (graphView != null && graphView.getVisibility() == View.VISIBLE)
             {
-                LineGraphView.LineGraphOptions options1 = graphView.getOptions();
+                LineGraphOptions options1 = graphView.getOptions();
                 options1.now = options.now;
                 options1.timezone = getSelectedTZ(context, data);
                 options1.is24 = SuntimesUtils.is24();

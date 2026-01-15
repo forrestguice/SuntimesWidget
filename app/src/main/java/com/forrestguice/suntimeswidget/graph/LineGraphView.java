@@ -29,7 +29,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -38,12 +37,10 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
-import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -51,7 +48,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.concurrent.locks.Lock;
 
 /**
  * LineGraphView
@@ -1310,154 +1306,6 @@ public class LineGraphView extends ImageView
     private LineGraphTaskListener graphListener = null;
     public void setMapTaskListener( LineGraphTaskListener listener ) {
         graphListener = listener;
-    }
-
-    /**
-     * LineGraphOptions
-     */
-    @SuppressWarnings("WeakerAccess")
-    public static class LineGraphOptions
-    {
-        public static final int DRAW_NONE = 0;
-        public static final int DRAW_SUN1 = 1;    // solid stroke
-        public static final int DRAW_SUN2 = 2;    // dashed stroke
-
-        public double graph_width = MINUTES_IN_DAY * 0.5d;    // minutes
-        public double graph_x_offset = MINUTES_IN_DAY / 4d;   // minutes
-
-        public double graph_height = 55;                     // degrees
-        public double graph_y_offset = 20;                   // degrees
-
-        // X-Axis
-        public boolean axisX_show = true;
-        public double axisX_width = 5d * MINUTES_IN_DAY_RATIO;   // minutes ratio
-
-        public boolean axisX_labels_show = true;
-        public float axisX_labels_textsize_ratio = 10;
-        public float axisX_labels_interval = 60 * 3;  // minutes
-
-        // Y-Axis
-        public boolean axisY_show = true;
-        public double axisY_width = 7.5d * MINUTES_IN_DAY_RATIO;     // minutes ratio
-        public int axisY_interval = 60 * 12;        // dp
-
-        public boolean axisY_labels_show = true;
-        public float axisY_labels_textsize_ratio = 10;
-        public float axisY_labels_interval = 45;  // degrees
-
-        // Grid-X
-        public boolean gridX_major_show = true;
-        public double gridX_major_width = 4d * MINUTES_IN_DAY_RATIO;        // minutes ratio
-        public float gridX_major_interval = axisY_labels_interval;    // degrees
-
-        public boolean gridX_minor_show = true;
-        public double gridX_minor_width = 2d * MINUTES_IN_DAY_RATIO;        // minutes ratio
-        public float gridX_minor_interval = 5;    // degrees
-
-        // Grid-Y
-        public boolean gridY_major_show = true;
-        public double gridY_major_width = 4d * MINUTES_IN_DAY_RATIO;       // minutes ratio
-        public float gridY_major_interval = axisX_labels_interval;   // minutes
-
-        public boolean gridY_minor_show = true;
-        public double gridY_minor_width = 2d * MINUTES_IN_DAY_RATIO;       // minutes ratio
-        public float gridY_minor_interval = 60;   // minutes
-
-        public boolean sunPath_show_line = true;
-        public boolean sunPath_show_fill = true;
-        public boolean sunPath_show_points = false;
-        //public int sunPath_color_day_closed = Color.YELLOW;
-        public int sunPath_color_day_closed_alpha = 200;
-        //public int sunPath_color_night_closed = Color.BLUE;
-        public int sunPath_color_night_closed_alpha = 200;
-        public double sunPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
-        public int sunPath_interval = 5;   // minutes
-
-        public double[] sunPath_points_elevations = new double[] { 30, -50 };  // TODO
-        //public int sunPath_points_color = Color.MAGENTA;    // TODO
-        public float sunPath_points_width = 150;
-
-        public boolean moonPath_show_line = true;
-        public boolean moonPath_show_fill = true;
-        //public int moonPath_color_day_closed = Color.LTGRAY;
-        public int moonPath_color_day_closed_alpha = 200;
-        //public int moonPath_color_night_closed = Color.CYAN;
-        public int moonPath_color_night_closed_alpha = 200;
-        public double moonPath_width = 140;       // (1440 min/day) / 140 = 10 min wide
-        public int moonPath_interval = 5;   // minutes
-
-        public int option_drawNow = DRAW_SUN1;
-        public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
-
-        public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
-
-        public LineGraphColorValues colors;
-        public int getColor(String key) {
-            return colors.getColor(key);
-        }
-
-        public boolean is24 = false;
-        public void setTimeFormat(Context context, TimeFormatMode timeFormat) {
-            is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
-        }
-
-        public Location location = null;
-        public TimeZone timezone = null;
-
-        public long offsetMinutes = 0;
-        public long now = -1L;
-        public int anim_frameLengthMs = 100;         // frames shown for 200 ms
-        public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
-        public Lock anim_lock = null;
-
-        public LineGraphOptions() {
-            colors = new LineGraphColorValues();
-        }
-
-        @SuppressWarnings("ResourceType")
-        public LineGraphOptions(Context context) {
-            init(context);
-        }
-
-        public void init(Context context)
-        {
-            colors = new LineGraphColorValues(AndroidResources.wrap(context));
-            //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
-            //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
-            //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
-            //axisY_width = SuntimesUtils.dpToPixels(context, axisY_width);
-            //sunPath_width = SuntimesUtils.dpToPixels(context, sunPath_width);
-            //axisX_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisX_labels_textsize, context.getResources().getDisplayMetrics());
-            //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
-        }
-
-        public void initDefaultDark(Context context)
-        {
-            init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), true));  // TODO: Resources
-        }
-
-        public void initDefaultLight(Context context)
-        {
-            init(context);
-            colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), false));  // TODO: Resources
-        }
-
-        public void acquireDrawLock()
-        {
-            if (anim_lock != null) {
-                anim_lock.lock();
-                //Log.d("DEBUG", "GraphView :: acquire " + anim_lock);
-            }
-        }
-        public void releaseDrawLock()
-        {
-            if (anim_lock != null) {
-                //Log.d("DEBUG", "GraphView :: release " + anim_lock);
-                anim_lock.unlock();
-            }
-        }
-
     }
 
 }

@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -130,7 +131,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         }
     }
 
-    protected LightGraphView.LightGraphOptions options;
+    protected LightGraphOptions options;
     protected int dpWidth = 512, dpHeight = 512;
 
     @Override
@@ -146,7 +147,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LightGraphView.LightGraphOptions(context);
+        options = new LightGraphOptions(context);
 
         options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
         options.colors.setColor(COLOR_DAY, theme.getDayColor());

@@ -31,7 +31,9 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
+import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
@@ -472,7 +474,7 @@ public class WidgetThemePreview
         if (view != null)
         {
             Context context = view.getContext();
-            LineGraphView.LineGraphOptions options = new LineGraphView.LineGraphOptions(context);
+            LineGraphOptions options = new LineGraphOptions(context);
             options.initDefaultDark(previewLayout.getContext());
             options.graph_width = LineGraphView.MINUTES_IN_DAY;
             options.graph_height = 180;
@@ -511,7 +513,7 @@ public class WidgetThemePreview
         if (view != null)
         {
             final Context context = view.getContext();
-            final LightGraphView.LightGraphOptions options = new LightGraphView.LightGraphOptions(context);
+            final LightGraphOptions options = new LightGraphOptions(context);
 
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
