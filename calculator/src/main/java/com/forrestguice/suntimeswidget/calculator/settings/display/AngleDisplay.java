@@ -34,19 +34,22 @@ public class AngleDisplay
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
 
-    public static void initDisplayStrings(Resources res, ResID_AngleDisplay resIDs1, CardinalDirection.ResID_CardinalDirection resIDs2)
+    public static void initDisplayStrings(Resources res, ResID_AngleDisplay r1, CardinalDirection.ResID_CardinalDirection r2)
     {
-        strAltSymbol = res.getString(resIDs1.getResID_string_altSymbol());
-        strRaSymbol = res.getString(resIDs1.getResID_string_strRaSymbol());
-        strDecSymbol = res.getString(resIDs1.getResID_string_strDecSymbol());
 
-        strDegreesFormat = res.getString(resIDs1.getResID_string_strDegreesFormat());
-        strDirectionFormat = res.getString(resIDs1.getResID_string_strDirectionFormat());
-        strElevationFormat = res.getString(resIDs1.getResID_string_strElevationFormat());
-        strRaFormat = res.getString(resIDs1.getResID_string_strRaFormat());
-        strDeclinationFormat = res.getString(resIDs1.getResID_string_strDeclinationFormat());
+    }
 
-        CardinalDirection.initDisplayStrings(res, resIDs2);
+    public static void initDisplayStrings(Resources res, ResID_AngleDisplay r1)
+    {
+        strAltSymbol = res.getString(r1.string_altSymbol());
+        strRaSymbol = res.getString(r1.string_strRaSymbol());
+        strDecSymbol = res.getString(r1.string_strDecSymbol());
+
+        strDegreesFormat = res.getString(r1.string_strDegreesFormat());
+        strDirectionFormat = res.getString(r1.string_strDirectionFormat());
+        strElevationFormat = res.getString(r1.string_strElevationFormat());
+        strRaFormat = res.getString(r1.string_strRaFormat());
+        strDeclinationFormat = res.getString(r1.string_strDeclinationFormat());
     }
 
     public String formatAsDegrees(double value) {
@@ -98,13 +101,13 @@ public class AngleDisplay
 
     public interface ResID_AngleDisplay
     {
-        int getResID_string_altSymbol();
-        int getResID_string_strRaSymbol();
-        int getResID_string_strDecSymbol();
-        int getResID_string_strDegreesFormat();
-        int getResID_string_strDirectionFormat();
-        int getResID_string_strElevationFormat();
-        int getResID_string_strRaFormat();
-        int getResID_string_strDeclinationFormat();
+        int string_altSymbol();
+        int string_strRaSymbol();
+        int string_strDecSymbol();
+        int string_strDegreesFormat();
+        int string_strDirectionFormat();
+        int string_strElevationFormat();
+        int string_strRaFormat();
+        int string_strDeclinationFormat();
     }
 }

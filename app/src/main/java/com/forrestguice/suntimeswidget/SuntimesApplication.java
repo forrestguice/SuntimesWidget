@@ -52,9 +52,6 @@ public class SuntimesApplication extends Application
 
         AndroidSuntimesCalculator.init(context);
 
-        Color.init(new AndroidColor());
-        ResourceColorValues.DEBUG = BuildConfig.DEBUG;
-
         if (BuildConfig.DEBUG)
         {
             StrictMode.enableDefaults();

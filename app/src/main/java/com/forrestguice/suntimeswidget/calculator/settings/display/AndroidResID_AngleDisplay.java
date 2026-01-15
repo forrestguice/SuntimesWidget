@@ -23,35 +23,35 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_AngleDisplay implements AngleDisplay.ResID_AngleDisplay
 {
     @Override
-    public int getResID_string_altSymbol() {
+    public int string_altSymbol() {
         return R.string.widgetLabel_altitude_symbol;
     }
     @Override
-    public int getResID_string_strRaSymbol() {
+    public int string_strRaSymbol() {
         return R.string.widgetLabel_rightAscension_symbol;
     }
     @Override
-    public int getResID_string_strDecSymbol() {
+    public int string_strDecSymbol() {
         return R.string.widgetLabel_declination_symbol;
     }
     @Override
-    public int getResID_string_strDegreesFormat() {
+    public int string_strDegreesFormat() {
         return R.string.degrees_format;
     }
     @Override
-    public int getResID_string_strDirectionFormat() {
+    public int string_strDirectionFormat() {
         return R.string.direction_format;
     }
     @Override
-    public int getResID_string_strElevationFormat() {
+    public int string_strElevationFormat() {
         return R.string.elevation_format;
     }
     @Override
-    public int getResID_string_strRaFormat() {
+    public int string_strRaFormat() {
         return R.string.rightascension_format;
     }
     @Override
-    public int getResID_string_strDeclinationFormat() {
+    public int string_strDeclinationFormat() {
         return R.string.declination_format;
     }
 }

@@ -42,17 +42,7 @@ public enum MoonPhaseDisplay
     private int iconResource = 0, viewResource = 0;
     private String shortDisplayString, longDisplayString;
 
-    protected static ResID_MoonPhaseDisplay resIDs = new ResID_MoonPhaseDisplay()
-    {
-        public int resID_string_microFullMoon() { return 0; }
-        public int resID_string_microNewMoon() { return 0; }
-        public int resID_string_superFullMoon() { return 0; }
-        public int resID_string_superNewMoon() { return 0; }
-        public int resID_string_shortDisplay(MoonPhaseDisplay value) { return 0; }
-        public int resID_string_longDisplay(MoonPhaseDisplay value) { return 0; }
-        public int resID_icon(MoonPhaseDisplay value) { return 0; }
-        public int resID_view(MoonPhaseDisplay value) { return 0; }
-    };
+    protected static ResID_MoonPhaseDisplay r = null;
 
     private MoonPhaseDisplay(@NonNull String shortDisplayString, @NonNull String longDisplayString)
     {
@@ -106,12 +96,12 @@ public enum MoonPhaseDisplay
 
     public static void initDisplayStrings(Resources context, ResID_MoonPhaseDisplay ids)
     {
-        resIDs = ids;
+        r = ids;
         for (MoonPhaseDisplay value : MoonPhaseDisplay.values())
         {
-            value.setDisplayString(context.getString(ids.resID_string_shortDisplay(value)), context.getString(ids.resID_string_longDisplay(value)));
-            value.setIconResource(ids.resID_icon(value));
-            value.setViewResource(ids.resID_view(value));
+            value.setDisplayString(context.getString(ids.string_shortDisplay(value)), context.getString(ids.string_longDisplay(value)));
+            value.setIconResource(ids.drawable_icon(value));
+            value.setViewResource(ids.id_view(value));
         }
     }
 
@@ -129,12 +119,12 @@ public enum MoonPhaseDisplay
             SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
 
             if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(resIDs.resID_string_superNewMoon())
-                        : context.getString(resIDs.resID_string_superFullMoon());
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(r.string_superNewMoon())
+                        : context.getString(r.string_superFullMoon());
 
             } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(resIDs.resID_string_microNewMoon())
-                        : context.getString(resIDs.resID_string_microFullMoon());
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(r.string_microNewMoon())
+                        : context.getString(r.string_microFullMoon());
 
             } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
         } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
@@ -142,14 +132,14 @@ public enum MoonPhaseDisplay
 
     public interface ResID_MoonPhaseDisplay
     {
-        int resID_string_microFullMoon();
-        int resID_string_microNewMoon();
-        int resID_string_superFullMoon();
-        int resID_string_superNewMoon();
+        int string_microFullMoon();
+        int string_microNewMoon();
+        int string_superFullMoon();
+        int string_superNewMoon();
 
-        int resID_string_shortDisplay(MoonPhaseDisplay value);
-        int resID_string_longDisplay(MoonPhaseDisplay value);
-        int resID_icon(MoonPhaseDisplay value);
-        int resID_view(MoonPhaseDisplay value);
+        int string_shortDisplay(MoonPhaseDisplay value);
+        int string_longDisplay(MoonPhaseDisplay value);
+        int drawable_icon(MoonPhaseDisplay value);
+        int id_view(MoonPhaseDisplay value);
     }
 }

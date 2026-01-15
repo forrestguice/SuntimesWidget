@@ -26,7 +26,7 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_SolarEvents implements SolarEvents.ResID_SolarEvents
 {
     @Override
-    public int getResID_string_typeLabel(@Nullable Integer type)
+    public int string_typeLabel(@Nullable Integer type)
     {
         if (type == null) {
             return 0;
@@ -41,16 +41,16 @@ public class AndroidResID_SolarEvents implements SolarEvents.ResID_SolarEvents
     }
 
     @Override
-    public int getResID_array_eventDisplayShort() {
+    public int array_eventDisplayShort() {
         return R.array.solarevents_short;
     }
     @Override
-    public int getResID_array_eventDisplayLong() {
+    public int array_eventDisplayLong() {
         return R.array.solarevents_long;
     }
 
     @Override
-    public int getResID_attr_icon(SolarEvents event)
+    public int attr_icon(SolarEvents event)
     {
         switch (event)
         {

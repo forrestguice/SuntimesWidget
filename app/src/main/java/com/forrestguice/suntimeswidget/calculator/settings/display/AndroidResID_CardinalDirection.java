@@ -23,12 +23,12 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_CardinalDirection implements CardinalDirection.ResID_CardinalDirection
 {
     @Override
-    public int getResID_array_eventDisplayShort() {
+    public int array_eventDisplayShort() {
         return R.array.directions_short;
     }
 
     @Override
-    public int getResID_array_eventDisplayLong() {
+    public int array_eventDisplayLong() {
         return R.array.directions_long;
     }
 }

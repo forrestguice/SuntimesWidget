@@ -24,7 +24,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 public class AndroidResID_LengthUnitDisplay implements LengthUnitDisplay.ResID_LengthUnitDisplay
 {
     @Override
-    public int resID_displayString(LengthUnit unit)
+    public int string_displayString(LengthUnit unit)
     {
         if (unit != null) {
             switch (unit) {
@@ -36,22 +36,22 @@ public class AndroidResID_LengthUnitDisplay implements LengthUnitDisplay.ResID_L
     }
 
     @Override
-    public int resID_string_feet_short() { return R.string.units_feet_short; }
+    public int string_feet_short() { return R.string.units_feet_short; }
     @Override
-    public int resID_plurals_feet_long() {  return R.plurals.units_feet_long; }
+    public int plurals_feet_long() {  return R.plurals.units_feet_long; }
 
     @Override
-    public int resID_string_meters_short() { return R.string.units_meters_short; }
+    public int string_meters_short() { return R.string.units_meters_short; }
     @Override
-    public int resID_plurals_meters_long() { return R.plurals.units_meters_long; }
+    public int plurals_meters_long() { return R.plurals.units_meters_long; }
 
     @Override
-    public int resID_string_miles_short() { return R.string.units_miles_short; }
+    public int string_miles_short() { return R.string.units_miles_short; }
     @Override
-    public int resID_string_miles_long() { return R.string.units_miles; }
+    public int string_miles_long() { return R.string.units_miles; }
 
     @Override
-    public int resID_string_kilometers_short() { return R.string.units_kilometers_short; }
+    public int string_kilometers_short() { return R.string.units_kilometers_short; }
     @Override
-    public int resID_string_kilometers_long() { return R.string.units_kilometers; }
+    public int string_kilometers_long() { return R.string.units_kilometers; }
 }

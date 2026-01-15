@@ -23,32 +23,32 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_TimeDeltaDisplay implements TimeDeltaDisplay.ResID_TimeDeltaDisplay
 {
     @Override
-    public int resID_strTimeShorter() { return R.string.delta_day_shorter; }
+    public int string_strTimeShorter() { return R.string.delta_day_shorter; }
 
     @Override
-    public int resID_strTimeLonger() { return R.string.delta_day_longer; }
+    public int string_strTimeLonger() { return R.string.delta_day_longer; }
 
     @Override
-    public int resID_strTimeSame() { return R.string.delta_day_same; }
+    public int string_strTimeSame() { return R.string.delta_day_same; }
 
     @Override
-    public int resID_strYears() { return R.string.delta_years; }
+    public int string_strYears() { return R.string.delta_years; }
 
     @Override
-    public int resID_strWeeks() { return R.string.delta_weeks; }
+    public int string_strWeeks() { return R.string.delta_weeks; }
 
     @Override
-    public int resID_strDays() { return R.string.delta_days; }
+    public int string_strDays() { return R.string.delta_days; }
 
     @Override
-    public int resID_strHours() { return R.string.delta_hours; }
+    public int string_strHours() { return R.string.delta_hours; }
 
     @Override
-    public int resID_strMinutes() { return R.string.delta_minutes; }
+    public int string_strMinutes() { return R.string.delta_minutes; }
 
     @Override
-    public int resID_strSeconds() { return R.string.delta_seconds; }
+    public int string_strSeconds() { return R.string.delta_seconds; }
     
     @Override
-    public int resID_strTimeDeltaFormat() { return R.string.delta_format; }
+    public int string_strTimeDeltaFormat() { return R.string.delta_format; }
 }

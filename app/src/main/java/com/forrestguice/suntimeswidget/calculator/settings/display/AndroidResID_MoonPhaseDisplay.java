@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_MoonPhaseDisplay implements MoonPhaseDisplay.ResID_MoonPhaseDisplay
 {
     @Override
-    public int resID_string_shortDisplay(MoonPhaseDisplay value)
+    public int string_shortDisplay(MoonPhaseDisplay value)
     {
         if (value != null)
         {
@@ -43,7 +43,7 @@ public class AndroidResID_MoonPhaseDisplay implements MoonPhaseDisplay.ResID_Moo
     }
 
     @Override
-    public int resID_string_longDisplay(MoonPhaseDisplay value)
+    public int string_longDisplay(MoonPhaseDisplay value)
     {
         if (value != null)
         {
@@ -63,24 +63,24 @@ public class AndroidResID_MoonPhaseDisplay implements MoonPhaseDisplay.ResID_Moo
     }
 
     @Override
-    public int resID_string_microFullMoon() {
+    public int string_microFullMoon() {
         return R.string.timeMode_moon_microfull;
     }
     @Override
-    public int resID_string_microNewMoon() {
+    public int string_microNewMoon() {
         return R.string.timeMode_moon_micronew;
     }
     @Override
-    public int resID_string_superFullMoon() {
+    public int string_superFullMoon() {
         return R.string.timeMode_moon_superfull;
     }
     @Override
-    public int resID_string_superNewMoon() {
+    public int string_superNewMoon() {
         return R.string.timeMode_moon_supernew;
     }
 
     @Override
-    public int resID_icon(MoonPhaseDisplay value)
+    public int drawable_icon(MoonPhaseDisplay value)
     {
         if (value != null) {
             switch (value)
@@ -99,7 +99,7 @@ public class AndroidResID_MoonPhaseDisplay implements MoonPhaseDisplay.ResID_Moo
     }
 
     @Override
-    public int resID_view(MoonPhaseDisplay value)
+    public int id_view(MoonPhaseDisplay value)
     {
         if (value != null)
         {

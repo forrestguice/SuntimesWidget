@@ -24,11 +24,11 @@ public class CalendarModeDisplay
 {
     public static void initDisplayStrings( Resources context, ResID_CalendarModeDisplay r ) {
         for (CalendarMode value : CalendarMode.values()) {
-            value.setDisplayString(context.getString(r.resID_displayString(value)));
+            value.setDisplayString(context.getString(r.string_displayString(value)));
         }
     }
 
     public interface ResID_CalendarModeDisplay {
-        int resID_displayString(CalendarMode mode);
+        int string_displayString(CalendarMode mode);
     }
 }

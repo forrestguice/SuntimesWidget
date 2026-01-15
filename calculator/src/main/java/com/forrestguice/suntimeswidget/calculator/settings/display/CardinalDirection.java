@@ -115,10 +115,10 @@ public enum CardinalDirection
         this.longDisplayString = longDisplayString;
     }
 
-    public static void initDisplayStrings( Resources res, ResID_CardinalDirection resIDs )
+    public static void initDisplayStrings( Resources res, ResID_CardinalDirection r )
     {
-        String[] modes_short = res.getStringArray(resIDs.getResID_array_eventDisplayShort());
-        String[] modes_long = res.getStringArray(resIDs.getResID_array_eventDisplayLong());
+        String[] modes_short = res.getStringArray(r.array_eventDisplayShort());
+        String[] modes_long = res.getStringArray(r.array_eventDisplayLong());
         if (modes_long.length != modes_short.length)
         {
             Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
@@ -140,7 +140,7 @@ public enum CardinalDirection
 
     public interface ResID_CardinalDirection
     {
-        int getResID_array_eventDisplayShort();
-        int getResID_array_eventDisplayLong();
+        int array_eventDisplayShort();
+        int array_eventDisplayLong();
     }
 }

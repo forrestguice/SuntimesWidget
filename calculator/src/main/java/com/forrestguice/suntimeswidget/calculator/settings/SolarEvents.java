@@ -85,8 +85,8 @@ public enum SolarEvents
     }
     public static CharSequence getTypeLabel(Resources context, @Nullable Integer type)
     {
-        if (displayResID != null) {
-            int resID = displayResID.getResID_string_typeLabel(type);
+        if (r != null) {
+            int resID = r.string_typeLabel(type);
             if (resID != 0) {
                 return context.getString(resID);
             }
@@ -171,22 +171,22 @@ public enum SolarEvents
     }
 
     @Nullable
-    protected static ResID_SolarEvents displayResID = null;
+    protected static ResID_SolarEvents r = null;
     public static void setDisplayResID(@Nullable ResID_SolarEvents values)
     {
-        displayResID = values;
-        if (displayResID != null) {
+        r = values;
+        if (r != null) {
             for (SolarEvents event : values()) {
-                event.setIconResource(displayResID.getResID_attr_icon(event));
+                event.setIconResource(r.attr_icon(event));
             }
         }
     }
 
-    public static void initDisplayStrings(Resources context, ResID_SolarEvents resID)
+    public static void initDisplayStrings(Resources context, ResID_SolarEvents ids)
     {
-        setDisplayResID(resID);
-        int resID_displayShort = (displayResID != null ? displayResID.getResID_array_eventDisplayShort() : 0);
-        int resID_displayLong = (displayResID != null ? displayResID.getResID_array_eventDisplayLong() : 0);
+        setDisplayResID(ids);
+        int resID_displayShort = (r != null ? r.array_eventDisplayShort() : 0);
+        int resID_displayLong = (r != null ? r.array_eventDisplayLong() : 0);
 
         if (resID_displayLong != 0 && resID_displayShort != 0)
         {
@@ -405,9 +405,9 @@ public enum SolarEvents
 
     public interface ResID_SolarEvents
     {
-        int getResID_string_typeLabel(@Nullable Integer type);
-        int getResID_array_eventDisplayShort();
-        int getResID_array_eventDisplayLong();
-        int getResID_attr_icon(SolarEvents event);
+        int string_typeLabel(@Nullable Integer type);
+        int array_eventDisplayShort();
+        int array_eventDisplayLong();
+        int attr_icon(SolarEvents event);
     }
 }

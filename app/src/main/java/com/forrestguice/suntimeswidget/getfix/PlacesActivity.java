@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -97,7 +98,8 @@ public class PlacesActivity extends AppCompatActivity
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
         LengthUnitDisplay.initDisplayStrings_LengthUnit(res, new AndroidResID_LengthUnitDisplay());
-        AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
+        AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(res, new AndroidResID_CardinalDirection());
     }
 
     @Override

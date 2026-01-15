@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_CalendarModeDisplay implements CalendarModeDisplay.ResID_CalendarModeDisplay
 {
     @Override
-    public int resID_displayString(CalendarMode mode)
+    public int string_displayString(CalendarMode mode)
     {
         if (mode != null) {
             switch (mode)

@@ -30,6 +30,7 @@ import android.os.Looper;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.support.content.ContextCompat;
@@ -136,7 +137,8 @@ public class WidgetThemePreview
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
 
     protected void initLocale(Context context) {
-        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay(), new AndroidResID_CardinalDirection());
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_CardinalDirection());
     }
 
     protected void initData(Context context, int appWidgetId)

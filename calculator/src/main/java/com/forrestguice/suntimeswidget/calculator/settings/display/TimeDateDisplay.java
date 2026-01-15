@@ -55,26 +55,26 @@ public class TimeDateDisplay
 
     protected static boolean initialized = false;
 
-    public static void initDisplayStrings(SuntimesDataSettings context, ResID_TimeDateDisplay ids)
+    public static void initDisplayStrings(SuntimesDataSettings context, ResID_TimeDateDisplay r)
     {
         TimeFormatMode mode = context.loadTimeFormatModePref(0);
         is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? SystemTimeFormat.is24HourFormat()
                 : (mode == TimeFormatMode.MODE_24HR);
 
-        strTimeVeryShortFormat12 = context.getString(ids.resID_strTimeVeryShortFormat12());
-        strTimeVeryShortFormat24 = context.getString(ids.resID_strTimeVeryShortFormat24());
-        strTimeVeryShortFormat12s = context.getString(ids.resID_strTimeVeryShortFormat12s());
-        strTimeVeryShortFormat24s = context.getString(ids.resID_strTimeVeryShortFormat24s());
-        strTimeNone = context.getString(ids.resID_strTimeNone());
-        strTimeLoading = context.getString(ids.resID_strTimeLoading());
+        strTimeVeryShortFormat12 = context.getString(r.string_strTimeVeryShortFormat12());
+        strTimeVeryShortFormat24 = context.getString(r.string_strTimeVeryShortFormat24());
+        strTimeVeryShortFormat12s = context.getString(r.string_strTimeVeryShortFormat12s());
+        strTimeVeryShortFormat24s = context.getString(r.string_strTimeVeryShortFormat24s());
+        strTimeNone = context.getString(r.string_strTimeNone());
+        strTimeLoading = context.getString(r.string_strTimeLoading());
 
-        strDateYearFormat = context.getString(ids.resID_strDateYearFormat());
-        strDateVeryShortFormat = context.getString(ids.resID_strDateVeryShortFormat());
-        strDateShortFormat = context.getString(ids.resID_strDateShortFormat());
-        strDateLongFormat = context.getString(ids.resID_strDateLongFormat());
+        strDateYearFormat = context.getString(r.string_strDateYearFormat());
+        strDateVeryShortFormat = context.getString(r.string_strDateVeryShortFormat());
+        strDateShortFormat = context.getString(r.string_strDateShortFormat());
+        strDateLongFormat = context.getString(r.string_strDateLongFormat());
 
-        strTimeShortFormat12 = context.getString(ids.resID_strTimeShortFormat12(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strTimeShortFormat12s = context.getString(ids.resID_strTimeShortFormat12(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strTimeShortFormat12 = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strTimeShortFormat12s = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
 
         initialized = true;
     }
@@ -344,19 +344,19 @@ public class TimeDateDisplay
 
     public interface ResID_TimeDateDisplay
     {
-        int resID_strTimeVeryShortFormat12();
-        int resID_strTimeVeryShortFormat24();
-        int resID_strTimeVeryShortFormat12s();
-        int resID_strTimeVeryShortFormat24s();
-        int resID_strTimeNone();
-        int resID_strTimeLoading();
+        int string_strTimeVeryShortFormat12();
+        int string_strTimeVeryShortFormat24();
+        int string_strTimeVeryShortFormat12s();
+        int string_strTimeVeryShortFormat24s();
+        int string_strTimeNone();
+        int string_strTimeLoading();
 
-        int resID_strDateYearFormat();
-        int resID_strDateVeryShortFormat();
-        int resID_strDateShortFormat();
-        int resID_strDateLongFormat();
+        int string_strDateYearFormat();
+        int string_strDateVeryShortFormat();
+        int string_strDateShortFormat();
+        int string_strDateLongFormat();
 
-        int resID_strTimeShortFormat12();
+        int string_strTimeShortFormat12();
     }
 
 }

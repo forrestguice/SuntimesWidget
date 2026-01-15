@@ -39,18 +39,18 @@ public class TimeDeltaDisplay
     public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     public static boolean initialized = false;
 
-    public static void initDisplayStrings(Resources res, ResID_TimeDeltaDisplay ids)
+    public static void initDisplayStrings(Resources res, ResID_TimeDeltaDisplay r)
     {
-        strTimeShorter = res.getString(ids.resID_strTimeShorter());
-        strTimeLonger = res.getString(ids.resID_strTimeLonger());
-        strTimeSame = res.getString(ids.resID_strTimeSame());
-        strYears = res.getString(ids.resID_strYears());
-        strWeeks = res.getString(ids.resID_strWeeks());
-        strDays = res.getString(ids.resID_strDays());
-        strHours = res.getString(ids.resID_strHours());
-        strMinutes = res.getString(ids.resID_strMinutes());
-        strSeconds = res.getString(ids.resID_strSeconds());
-        strTimeDeltaFormat = res.getString(ids.resID_strTimeDeltaFormat());
+        strTimeShorter = res.getString(r.string_strTimeShorter());
+        strTimeLonger = res.getString(r.string_strTimeLonger());
+        strTimeSame = res.getString(r.string_strTimeSame());
+        strYears = res.getString(r.string_strYears());
+        strWeeks = res.getString(r.string_strWeeks());
+        strDays = res.getString(r.string_strDays());
+        strHours = res.getString(r.string_strHours());
+        strMinutes = res.getString(r.string_strMinutes());
+        strSeconds = res.getString(r.string_strSeconds());
+        strTimeDeltaFormat = res.getString(r.string_strTimeDeltaFormat());
         initialized = true;
     }
 
@@ -151,15 +151,15 @@ public class TimeDeltaDisplay
 
     public interface ResID_TimeDeltaDisplay
     {
-        int resID_strTimeShorter(); // R.string.delta_day_shorter
-        int resID_strTimeLonger();  // R.string.delta_day_longer
-        int resID_strTimeSame();    // R.string.delta_day_same
-        int resID_strYears();       // R.string.delta_years
-        int resID_strWeeks();       // R.string.delta_weeks
-        int resID_strDays();        // R.string.delta_days
-        int resID_strHours();       // R.string.delta_hours
-        int resID_strMinutes();     // R.string.delta_minutes
-        int resID_strSeconds();     // R.string.delta_seconds
-        int resID_strTimeDeltaFormat(); // R.string.delta_format
+        int string_strTimeShorter(); // R.string.delta_day_shorter
+        int string_strTimeLonger();  // R.string.delta_day_longer
+        int string_strTimeSame();    // R.string.delta_day_same
+        int string_strYears();       // R.string.delta_years
+        int string_strWeeks();       // R.string.delta_weeks
+        int string_strDays();        // R.string.delta_days
+        int string_strHours();       // R.string.delta_hours
+        int string_strMinutes();     // R.string.delta_minutes
+        int string_strSeconds();     // R.string.delta_seconds
+        int string_strTimeDeltaFormat(); // R.string.delta_format
     }
 }
