@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 
 import java.util.Arrays;
@@ -222,13 +221,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = R.string.delta_day_yesterday;
+                dayDeltaPrefix = r.string_delta_day_yesterday();
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = R.string.delta_day_tomorrow;
+                dayDeltaPrefix = r.string_delta_day_tomorrow();
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }

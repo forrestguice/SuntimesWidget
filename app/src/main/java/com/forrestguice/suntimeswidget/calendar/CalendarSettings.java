@@ -191,7 +191,7 @@ public class CalendarSettings
 
     public static void initDisplayStrings(Resources context )
     {
-        CalendarModeDisplay.initDisplayStrings(context);
+        CalendarModeDisplay.initDisplayStrings(context, new AndroidResID_CalendarModeDisplay());
         CalendarFormatDisplay.initDisplayStrings(context);
     }
 

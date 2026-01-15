@@ -24,11 +24,13 @@ import com.forrestguice.colors.Color;
 import com.forrestguice.suntimeswidget.calculator.DefaultCalculatorDescriptors;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
@@ -36,6 +38,8 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDis
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarModeDisplay;
+import com.forrestguice.suntimeswidget.calendar.CalendarModeDisplay;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.BaseEvent;
 import com.forrestguice.suntimeswidget.events.DayPercentEvent;
@@ -75,6 +79,8 @@ public class AndroidSuntimesCalculator
         MoonElevationEvent.setResIDs(new AndroidResID_MoonElevationEvent());
         SunElevationEvent.setResIDs(new AndroidResID_SunElevationEvent());
 
+        SuntimesRiseSetData.setResIDs(new AndroidResID_SuntimesRiseSetData());
+
         AndroidResources r = AndroidResources.wrap(context);
         AndroidSuntimesDataSettings dataSettings = AndroidSuntimesDataSettings.wrap(context);
 
@@ -83,6 +89,7 @@ public class AndroidSuntimesCalculator
         LengthUnitDisplay.initDisplayStrings_LengthUnit(r, new AndroidResID_LengthUnitDisplay());
         MoonPhaseDisplay.initDisplayStrings(r, new AndroidResID_MoonPhaseDisplay());
         TimeDateDisplay.initDisplayStrings(dataSettings, new AndroidResID_TimeDateDisplay());
+        CalendarModeDisplay.initDisplayStrings(r, new AndroidResID_CalendarModeDisplay());
 
         Color.init(new AndroidColor());
     }

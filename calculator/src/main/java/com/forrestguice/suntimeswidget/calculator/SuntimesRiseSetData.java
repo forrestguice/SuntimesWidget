@@ -31,8 +31,6 @@ import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.UriUtils;
 
 import java.util.Calendar;
@@ -55,7 +53,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: layoutID
      */
-    protected int layoutID = R.layout.layout_widget_1x1_0_content;
+    protected int layoutID = r.layout_widget_1x1_0_content();
     public int layoutID()
     {
         return layoutID;
@@ -109,7 +107,7 @@ public class SuntimesRiseSetData extends SuntimesData
             this.offset = (event == null ? 0 : event.getOffset());
         }
         TimeMode mode = dataMode.getTimeMode();
-        this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
+        this.timeMode = ((mode != null) ? mode : TimeMode.OFFICIAL);
     }
     public RiseSetDataMode dataMode() {
         return dataMode;
@@ -374,13 +372,13 @@ public class SuntimesRiseSetData extends SuntimesData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = R.string.delta_day_yesterday;
+                dayDeltaPrefix = r.string_delta_day_yesterday();
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = R.string.delta_day_tomorrow;
+                dayDeltaPrefix = r.string_delta_day_tomorrow();
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
@@ -535,6 +533,18 @@ public class SuntimesRiseSetData extends SuntimesData
             Calendar midnight0 = midnight();
             return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
         }
+    }
+
+    protected static ResID_SuntimesRiseSetData r;
+    public static void setResIDs( ResID_SuntimesRiseSetData value ) {
+        r = value;
+    }
+
+    public interface ResID_SuntimesRiseSetData
+    {
+        int string_delta_day_yesterday();
+        int string_delta_day_tomorrow();
+        int layout_widget_1x1_0_content();  // R.layout.layout_widget_1x1_0_content;
     }
 }
 
