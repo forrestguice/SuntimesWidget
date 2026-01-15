@@ -29,8 +29,6 @@ import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.android.AndroidLog;
 
-import net.time4j.android.ApplicationStarter;
-
 public class SuntimesApplication extends Application
 {
     @Override
@@ -52,7 +50,6 @@ public class SuntimesApplication extends Application
         Log.setShowDebug(BuildConfig.DEBUG);
         Log.d("DEBUG", "SuntimesApplication.init:");
 
-        ApplicationStarter.initialize(context, false);
         AndroidSuntimesCalculator.init(context);
 
         Color.init(new AndroidColor());

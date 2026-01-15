@@ -26,4 +26,6 @@ public interface CalendarDisplay
 {
     @NonNull
     String formatDate(CalendarMode calendar, String pattern, Calendar now);
+
+    int hijriLunarDayNumber();
 }

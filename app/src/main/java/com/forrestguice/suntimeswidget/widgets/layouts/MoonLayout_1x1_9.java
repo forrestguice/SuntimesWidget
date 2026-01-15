@@ -28,11 +28,9 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-
-import net.time4j.SystemClock;
-import net.time4j.calendar.HijriCalendar;
 
 import java.util.Calendar;
 
@@ -110,8 +108,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
             }
         }
 
-        HijriCalendar today = SystemClock.inLocalView().today().transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA);
-        int dayNum = today.getDayOfMonth();
+        int dayNum = AndroidCalendarDisplayFactory.create().hijriLunarDayNumber();
         int dayOffset = WidgetSettings.loadDateOffsetPref(context, appWidgetId);
         int moonDay = dayNum + dayOffset;
         String moonDayDisplay = moonDay + "";

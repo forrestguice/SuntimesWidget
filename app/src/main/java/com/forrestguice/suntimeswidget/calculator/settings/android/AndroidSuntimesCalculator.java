@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarModeDisplay
 import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarModeDisplay;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.BaseEvent;
 import com.forrestguice.suntimeswidget.events.DayPercentEvent;
@@ -68,10 +69,14 @@ import com.forrestguice.util.android.AndroidTimeFormat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 
+import net.time4j.android.ApplicationStarter;
+
 public class AndroidSuntimesCalculator
 {
     public static void init(Context context)
     {
+        ApplicationStarter.initialize(context, false);    // time4j
+
         SystemTimeFormat.init(new AndroidTimeFormat(context.getApplicationContext()));
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());

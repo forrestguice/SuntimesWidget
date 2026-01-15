@@ -26,6 +26,7 @@ import com.forrestguice.util.Log;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
+import net.time4j.SystemClock;
 import net.time4j.TemporalType;
 import net.time4j.calendar.ChineseCalendar;
 import net.time4j.calendar.CopticCalendar;
@@ -129,4 +130,13 @@ public class Time4JCalendarDisplay implements CalendarDisplay
             return "";
         }
     }
+
+    @Override
+    public int hijriLunarDayNumber()
+    {
+        HijriCalendar today = SystemClock.inLocalView().today().transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA);
+        int dayNum = today.getDayOfMonth();
+        return dayNum;
+    }
+
 }
