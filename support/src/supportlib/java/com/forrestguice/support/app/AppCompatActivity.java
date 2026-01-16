@@ -28,11 +28,6 @@ public class AppCompatActivity extends android.support.v7.app.AppCompatActivity 
         }
     }
 
-    public interface ActivityResultLauncherCompat {
-        void launch(Intent intent);
-        void launch(Intent intent, ActivityOptionsCompat options);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

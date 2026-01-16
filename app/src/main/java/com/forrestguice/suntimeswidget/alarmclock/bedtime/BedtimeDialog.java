@@ -27,6 +27,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -74,6 +75,12 @@ public class BedtimeDialog extends DialogBase
     public static final int REQUEST_ADD_BEDTIME = 40;
 
     public static final int REQUEST_EDIT_REMINDER = 50;
+
+    protected ActivityResultLauncherCompat startActivityForResult_editWakeUp = registerForActivityResultCompat(REQUEST_EDIT_WAKEUP);
+    protected ActivityResultLauncherCompat startActivityForResult_addWakeUp = registerForActivityResultCompat(REQUEST_ADD_WAKEUP);
+    protected ActivityResultLauncherCompat startActivityForResult_editBedtime = registerForActivityResultCompat(REQUEST_EDIT_BEDTIME);
+    protected ActivityResultLauncherCompat startActivityForResult_addBedtime = registerForActivityResultCompat(REQUEST_ADD_BEDTIME);
+    protected ActivityResultLauncherCompat startActivityForResult_editReminder = registerForActivityResultCompat(REQUEST_EDIT_REMINDER);
 
     protected RecyclerView list;
     protected BedtimeItemAdapter adapter;
@@ -184,9 +191,9 @@ public class BedtimeDialog extends DialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, final Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, final Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         onResume_refreshData = false;
         switch (requestCode)
         {
@@ -899,12 +906,12 @@ public class BedtimeDialog extends DialogBase
             String transitionName = "transition_" + item.rowID;
             ViewCompat.setTransitionName(sharedView, transitionName);
             if (getActivity() != null) {
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName).toBundle();
-                startActivityForResult(intent, requestCode, options);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+                startActivityForResultCompat(intent, requestCode, options);
             }
 
         } else {
-            startActivityForResult(intent, requestCode);
+            startActivityForResultCompat(intent, requestCode);
         }
         return true;
     }

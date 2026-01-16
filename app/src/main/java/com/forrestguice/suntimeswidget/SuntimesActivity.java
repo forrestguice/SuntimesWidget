@@ -42,6 +42,8 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
+
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.Menu;

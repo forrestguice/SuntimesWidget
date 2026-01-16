@@ -19,11 +19,17 @@ package com.forrestguice.support.widget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.ActivityResultLaunchHelper;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.OnActivityResultCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -31,7 +37,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 
-public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
+import androidx.annotation.CallSuper;
+
+public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat
 {
     public static int getBottomSheetResourceID() {
         //return android.support.design.R.id.design_bottom_sheet;    // support libraries
@@ -194,4 +202,30 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment
         return false;
     }
 
+    @CallSuper
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data) {
+        Log.d("DEBUG", "onActivityResultCompat: (bottom sheet) " + requestCode + ", result: " + resultCode);
+    }
+
+    public void startActivityForResultCompat(Intent intent, int requestCode) {
+        startActivityForResultCompat(intent, requestCode, null);
+    }
+    public void startActivityForResultCompat(Intent intent, int requestCode, ActivityOptionsCompat options)
+    {
+        if (!launchers.startActivityForResultCompat(intent, requestCode, options))
+        {
+            Log.e("AppCompatActivity", "startActivityForResultCompat: requestCode " + requestCode + " not found! did you remember to call `registerForActivityResultCompat` first?");
+            //noinspection deprecation
+            startActivityForResult(intent, requestCode, (options != null ? options.toBundle() : null));
+        }
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
+    public ActivityResultLauncherCompat registerForActivityResultCompat(int requestCode) {
+        return registerForActivityResultCompat(requestCode, this);
+    }
+    public ActivityResultLauncherCompat registerForActivityResultCompat(final int requestCode, final OnActivityResultCompat onResult) {
+        return launchers.registerForActivityResultCompat(this, requestCode, onResult);
+    }
+    protected ActivityResultLaunchHelper launchers = new ActivityResultLaunchHelper();
 }

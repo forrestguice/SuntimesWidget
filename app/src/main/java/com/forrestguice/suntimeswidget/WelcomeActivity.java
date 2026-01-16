@@ -50,6 +50,7 @@ import android.widget.ToggleButton;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
@@ -501,6 +502,7 @@ public class WelcomeActivity extends AppCompatActivity
     public static class WelcomeLocationFragment extends WelcomeFragment
     {
         public static final int IMPORT_REQUEST = 1100;
+        protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
 
         private Button button_addPlaces, button_importPlaces, button_lookupLocation;
         private ProgressBar progress_addPlaces;
@@ -588,9 +590,9 @@ public class WelcomeActivity extends AppCompatActivity
         };
 
         @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data)
+        public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
         {
-            super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResultCompat(requestCode, resultCode, data);
             switch (requestCode)
             {
                 case IMPORT_REQUEST:
@@ -610,7 +612,7 @@ public class WelcomeActivity extends AppCompatActivity
         private final View.OnClickListener onImportPlacesClicked = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
+                startActivityForResult_import.launch(BuildPlacesTask.buildPlacesOpenFileIntent());
             }
         };
         protected void importPlaces(Context context, @NonNull Uri uri)
@@ -979,6 +981,7 @@ public class WelcomeActivity extends AppCompatActivity
     public static class WelcomeAlarmsFragment extends WelcomeFragment
     {
         public static final int IMPORT_REQUEST = 1200;
+        protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
 
         public WelcomeAlarmsFragment() {}
 
@@ -1098,9 +1101,9 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data)
+        public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
         {
-            super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResultCompat(requestCode, resultCode, data);
             switch (requestCode)
             {
                 case IMPORT_REQUEST:
@@ -1127,7 +1130,7 @@ public class WelcomeActivity extends AppCompatActivity
                 AlarmListDialog.ImportFragment fragment = new AlarmListDialog.ImportFragment() {
                     @Override
                     public void startActivityForResult(Intent intent, int request) {
-                        WelcomeAlarmsFragment.this.startActivityForResult(intent, request);
+                        WelcomeAlarmsFragment.this.startActivityForResultCompat(intent, request);
                     }
                 };
                 AlarmListDialog.importAlarms(fragment, getContext(), getLayoutInflater(), IMPORT_REQUEST);

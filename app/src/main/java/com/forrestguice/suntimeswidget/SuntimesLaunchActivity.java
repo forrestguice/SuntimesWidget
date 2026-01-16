@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 
 public class SuntimesLaunchActivity extends AppCompatActivity

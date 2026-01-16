@@ -53,6 +53,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.support.widget.PopupMenuCompat;
@@ -87,6 +88,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
 {
     public static final int REQUEST_ADDON_ALARMPICKER = 3000;
     public static final int REQUEST_EVENTALIAS = 4000;
+    protected ActivityResultLauncherCompat startActivityForResult_addon_alarmPicker = registerForActivityResultCompat(REQUEST_ADDON_ALARMPICKER);
+    protected ActivityResultLauncherCompat startActivityForResult_eventAlias = registerForActivityResultCompat(REQUEST_EVENTALIAS);
 
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
@@ -505,14 +508,14 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                 Intent intent = new Intent(context, EventListActivity.class);
                 intent.putExtra(EventListActivity.EXTRA_EXPANDED, true);
                 intent.putExtra(EventListActivity.EXTRA_LOCATION, getLocation());
-                startActivityForResult(intent, REQUEST_EVENTALIAS);
+                startActivityForResult_eventAlias.launch(intent);
                 return true;
 
             } else if (i >= 0 && i < alarmPickers.size()) {
                 AlarmAddon.EventPickerInfo picker = alarmPickers.get(item.getItemId());
                 Intent intent = picker.getIntent(getLocation());
                 intent.putExtra(AlarmEventContract.EXTRA_ALARM_EVENT, getChoice());
-                startActivityForResult(intent, REQUEST_ADDON_ALARMPICKER);
+                startActivityForResult_addon_alarmPicker.launch(intent);
                 return true;
 
             } else {
@@ -523,9 +526,9 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     });
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_EVENTALIAS:
