@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
+import com.forrestguice.suntimeswidget.graph.LineGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LineGraphTask;
 import com.forrestguice.suntimeswidget.graph.LineGraphTaskListener;
@@ -483,7 +484,7 @@ public class WidgetThemePreview
             Context context = view.getContext();
             LineGraphOptions options = new LineGraphOptions(context);
             options.initDefaultDark(previewLayout.getContext());
-            options.graph_width = LineGraphTask.MINUTES_IN_DAY;
+            options.graph_width = LineGraphBitmap.MINUTES_IN_DAY;
             options.graph_height = 180;
             options.graph_x_offset = options.graph_y_offset = 0;
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);

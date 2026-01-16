@@ -29,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.graph.LineGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LineGraphTask;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
@@ -99,10 +100,10 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
-        LineGraphTask drawTask = new LineGraphTask(context);
+        LineGraphBitmap graph = new LineGraphBitmap();
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
+        Bitmap bitmap = graph.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
@@ -145,7 +146,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_STROKE, theme.getMoonsetTextColor());
         options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_FILL, theme.getMoonsetTextColor());
 
-        options.graph_width = LineGraphTask.MINUTES_IN_DAY;
+        options.graph_width = LineGraphBitmap.MINUTES_IN_DAY;
         options.graph_height = 180;
         options.graph_x_offset = options.graph_y_offset = 0;
         options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);

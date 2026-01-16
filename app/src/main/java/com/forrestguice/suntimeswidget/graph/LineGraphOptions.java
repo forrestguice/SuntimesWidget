@@ -39,15 +39,15 @@ public class LineGraphOptions
     public static final int DRAW_SUN1 = 1;    // solid stroke
     public static final int DRAW_SUN2 = 2;    // dashed stroke
 
-    public double graph_width = LineGraphTask.MINUTES_IN_DAY * 0.5d;    // minutes
-    public double graph_x_offset = LineGraphTask.MINUTES_IN_DAY / 4d;   // minutes
+    public double graph_width = LineGraphBitmap.MINUTES_IN_DAY * 0.5d;    // minutes
+    public double graph_x_offset = LineGraphBitmap.MINUTES_IN_DAY / 4d;   // minutes
 
     public double graph_height = 55;                     // degrees
     public double graph_y_offset = 20;                   // degrees
 
     // X-Axis
     public boolean axisX_show = true;
-    public double axisX_width = 5d * LineGraphTask.MINUTES_IN_DAY_RATIO;   // minutes ratio
+    public double axisX_width = 5d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;   // minutes ratio
 
     public boolean axisX_labels_show = true;
     public float axisX_labels_textsize_ratio = 10;
@@ -55,7 +55,7 @@ public class LineGraphOptions
 
     // Y-Axis
     public boolean axisY_show = true;
-    public double axisY_width = 7.5d * LineGraphTask.MINUTES_IN_DAY_RATIO;     // minutes ratio
+    public double axisY_width = 7.5d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;     // minutes ratio
     public int axisY_interval = 60 * 12;        // dp
 
     public boolean axisY_labels_show = true;
@@ -64,20 +64,20 @@ public class LineGraphOptions
 
     // Grid-X
     public boolean gridX_major_show = true;
-    public double gridX_major_width = 4d * LineGraphTask.MINUTES_IN_DAY_RATIO;        // minutes ratio
+    public double gridX_major_width = 4d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;        // minutes ratio
     public float gridX_major_interval = axisY_labels_interval;    // degrees
 
     public boolean gridX_minor_show = true;
-    public double gridX_minor_width = 2d * LineGraphTask.MINUTES_IN_DAY_RATIO;        // minutes ratio
+    public double gridX_minor_width = 2d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;        // minutes ratio
     public float gridX_minor_interval = 5;    // degrees
 
     // Grid-Y
     public boolean gridY_major_show = true;
-    public double gridY_major_width = 4d * LineGraphTask.MINUTES_IN_DAY_RATIO;       // minutes ratio
+    public double gridY_major_width = 4d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;       // minutes ratio
     public float gridY_major_interval = axisX_labels_interval;   // minutes
 
     public boolean gridY_minor_show = true;
-    public double gridY_minor_width = 2d * LineGraphTask.MINUTES_IN_DAY_RATIO;       // minutes ratio
+    public double gridY_minor_width = 2d * LineGraphBitmap.MINUTES_IN_DAY_RATIO;       // minutes ratio
     public float gridY_minor_interval = 60;   // minutes
 
     public boolean sunPath_show_line = true;

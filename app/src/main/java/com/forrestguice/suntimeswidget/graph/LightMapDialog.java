@@ -1317,7 +1317,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                 options1.is24 = SuntimesUtils.is24();
                 options1.offsetMinutes = options.offsetMinutes;
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
-                options1.graph_width = LineGraphTask.MINUTES_IN_DAY;
+                options1.graph_width = LineGraphBitmap.MINUTES_IN_DAY;
                 options1.graph_height = 180;
                 options1.graph_x_offset = options1.graph_y_offset = 0;
                 options1.gridX_minor_show = options1.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
