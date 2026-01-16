@@ -189,7 +189,7 @@ public class LightMapView extends ImageView
         if (useMainThread)
         {
             //Log.d("DEBUG", "updating lightmap on main thread.. " + getWidth() + "x" + getHeight() + " @ " + getNow() + " :: view-" + Integer.toHexString(getColors().hashCode()));
-            LightMapTask draw = new LightMapTask(getContext());
+            LightMapBitmap draw = new LightMapBitmap();
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), colors);
             drawTaskListener.onFinished(b);
 
