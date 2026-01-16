@@ -567,9 +567,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, @NonNull Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -600,7 +599,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }
 
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     protected void configureDismissChallenge(Context context)

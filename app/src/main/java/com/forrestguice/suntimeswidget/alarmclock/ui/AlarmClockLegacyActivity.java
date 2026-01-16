@@ -96,6 +96,7 @@ import java.util.List;
 /**
  * AlarmClockActivity
  */
+@SuppressWarnings("deprecation")
 public class AlarmClockLegacyActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
@@ -1681,12 +1682,11 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, @NonNull Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     private boolean fabMenuExpanded = false;

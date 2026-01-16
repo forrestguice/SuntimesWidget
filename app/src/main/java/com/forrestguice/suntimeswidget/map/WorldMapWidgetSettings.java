@@ -53,6 +53,7 @@ public class WorldMapWidgetSettings
     @Deprecated
     public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";    // deprecated: this flag replaced by enum/string PREF_KEY_WORLDMAP_SPEED
 
+    @SuppressWarnings("deprecation")
     public static final String[][] PREF_DEF_WORLDMAP = new String[][] {
             new String[] {PREF_KEY_WORLDMAP_MAJORLATITUDES, "false"},
             new String[] {PREF_KEY_WORLDMAP_MINORGRID, "false"},
