@@ -38,7 +38,10 @@ import com.forrestguice.suntimeswidget.graph.LightGraphTaskListener;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
+import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
 import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
+import com.forrestguice.suntimeswidget.graph.LineGraphTask;
+import com.forrestguice.suntimeswidget.graph.LineGraphTaskListener;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
@@ -57,7 +60,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
@@ -67,7 +69,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
-import com.forrestguice.suntimeswidget.graph.LineGraphView;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -315,7 +316,7 @@ public class WidgetThemePreview
             colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapOptions.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
             LightMapTask drawTask = new LightMapTask(view.getContext());
-            drawTask.setListener(new LightMapView.LightMapTaskListener()
+            drawTask.setListener(new LightMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
@@ -482,7 +483,7 @@ public class WidgetThemePreview
             Context context = view.getContext();
             LineGraphOptions options = new LineGraphOptions(context);
             options.initDefaultDark(previewLayout.getContext());
-            options.graph_width = LineGraphView.MINUTES_IN_DAY;
+            options.graph_width = LineGraphTask.MINUTES_IN_DAY;
             options.graph_height = 180;
             options.graph_x_offset = options.graph_y_offset = 0;
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);
@@ -495,8 +496,8 @@ public class WidgetThemePreview
             options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
             options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
 
-            LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask(context);
-            drawTask.setListener(new LineGraphView.LineGraphTaskListener() 
+            LineGraphTask drawTask = new LineGraphTask(context);
+            drawTask.setListener(new LineGraphTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result) {

@@ -41,6 +41,10 @@ import java.util.TimeZone;
 
 public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 {
+    protected static final double MINUTES_IN_DAY = 24 * 60;
+    protected static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
+    protected static final double ONE_DIVIDED_MILLIS_IN_DAY = 1d / MILLIS_IN_DAY;
+
     private final WeakReference<Context> contextRef;
     private LightMapOptions colors;
 
@@ -263,10 +267,10 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             Canvas c0 = new Canvas(b0);
 
             long zoneOffsetMs = ((data != null) ? data.timezone().getOffset(now.getTimeInMillis()) : 0);
-            long lonOffsetMs = ((data != null) ? Math.round(data.location().getLongitudeAsDouble() * LightMapView.MILLIS_IN_DAY / 360d) : 0);
+            long lonOffsetMs = ((data != null) ? Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d) : 0);
             long offsetMs = zoneOffsetMs - lonOffsetMs;
 
-            float left = (float)(offsetMs * LightMapView.ONE_DIVIDED_MILLIS_IN_DAY * w);
+            float left = (float)(offsetMs * ONE_DIVIDED_MILLIS_IN_DAY * w);
             if (left > 0) {
                 c0.drawBitmap(b, left - w, 0, p);
             }
@@ -373,7 +377,7 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         }
 
         double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        int x = (int) Math.round((minute / LightMapView.MINUTES_IN_DAY) * c.getWidth());
+        int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
         int y = c.getHeight() / 2;
 
         SunSymbolBitmap.drawSunSymbol(symbol, x, y, pointRadius, c, p, options.values);
@@ -403,7 +407,7 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(location));
             calendar.setTimeInMillis(calendar0.getTimeInMillis());
             double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-            int x = (int) Math.round((minute / LightMapView.MINUTES_IN_DAY) * c.getWidth());
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
             c.drawRect(x - (lineWidth / 2f), 0, x + (lineWidth / 2f), c.getHeight(), p);
         }
     }
@@ -444,7 +448,7 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         {
             int dayDiff = riseTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
             double riseMinute = riseTime.get(Calendar.HOUR_OF_DAY) * 60 + riseTime.get(Calendar.MINUTE);
-            double riseR = ((dayDiff * 60 * 24) + riseMinute) / LightMapView.MINUTES_IN_DAY;
+            double riseR = ((dayDiff * 60 * 24) + riseMinute) / MINUTES_IN_DAY;
             if (riseR > 1) {
                 riseR = 1;
             } else if (riseR < 0) {
@@ -458,7 +462,7 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         {
             int dayDiff = setTime.get(Calendar.DAY_OF_YEAR) - data.calendar().get(Calendar.DAY_OF_YEAR);  // average case: 0; edge cases: -1, 1
             double setMinute = setTime.get(Calendar.HOUR_OF_DAY) * 60 + setTime.get(Calendar.MINUTE);
-            double setR = ((dayDiff * 60 * 24) + setMinute) / LightMapView.MINUTES_IN_DAY;
+            double setR = ((dayDiff * 60 * 24) + setMinute) / MINUTES_IN_DAY;
             if (setR > 1) {
                 setR = 1;
             } else if (setR < 0) {
@@ -482,14 +486,14 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     protected void drawVerticalLine(Calendar calendar, int lineWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
     {
         double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        int x = (int) Math.round((minute / LightMapView.MINUTES_IN_DAY) * c.getWidth());
+        int x = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
         SunSymbolBitmap.drawVerticalLine(x, lineWidth, c, p, color, effect);
     }
 
     protected void drawCross(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int color, @Nullable DashPathEffect effect)
     {
         double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        int cX = (int) Math.round((minute / LightMapView.MINUTES_IN_DAY) * c.getWidth());
+        int cX = (int) Math.round((minute / MINUTES_IN_DAY) * c.getWidth());
         int cY = c.getHeight() / 2;
         SunSymbolBitmap.drawCross(cX, cY, radius, strokeWidth, c, p, color, effect);
     }
@@ -502,7 +506,7 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             int h = c.getHeight();
 
             double minute = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-            int x = (int) Math.round((minute / LightMapView.MINUTES_IN_DAY) * w);
+            int x = (int) Math.round((minute / MINUTES_IN_DAY) * w);
             int y = h / 2;
             SunSymbolBitmap.drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
 
@@ -515,8 +519,8 @@ public class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Nullable
-    private LightMapView.LightMapTaskListener listener = null;
-    public void setListener( @Nullable LightMapView.LightMapTaskListener value ) {
+    private LightMapTaskListener listener = null;
+    public void setListener( @Nullable LightMapTaskListener value ) {
         listener = value;
     }
     public void clearListener() {

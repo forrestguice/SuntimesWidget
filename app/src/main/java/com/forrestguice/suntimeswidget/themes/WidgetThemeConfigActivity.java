@@ -37,6 +37,7 @@ import android.os.Bundle;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
+import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.support.app.FragmentManagerCompat;
@@ -68,7 +69,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
-import com.forrestguice.suntimeswidget.graph.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
@@ -859,7 +859,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             int dpWidth = 256;
             int dpHeight = 64;
             LightMapTask drawTask = new LightMapTask(view.getContext());
-            drawTask.setListener(new LightMapView.LightMapTaskListener()
+            drawTask.setListener(new LightMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)

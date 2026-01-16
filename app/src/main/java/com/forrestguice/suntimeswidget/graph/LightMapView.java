@@ -43,10 +43,6 @@ import java.util.Calendar;
  */
 public class LightMapView extends ImageView
 {
-    protected static final double MINUTES_IN_DAY = 24 * 60;
-    protected static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-    protected static final double ONE_DIVIDED_MILLIS_IN_DAY = 1d / MILLIS_IN_DAY;
-
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
     private LightMapTask drawTask = null;
@@ -415,19 +411,6 @@ public class LightMapView extends ImageView
     }
     public boolean isAnimated() {
         return animated;
-    }
-
-    /**
-     * LightMapTaskListener
-     */
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class LightMapTaskListener
-    {
-        public void onStarted() {}
-        public void onDataModified( SuntimesRiseSetDataset data ) {}
-        public void onFrame(Bitmap frame, long offsetMinutes ) {}
-        public void afterFrame(Bitmap frame, long offsetMinutes ) {}
-        public void onFinished( Bitmap result ) {}
     }
 
     private LightMapTaskListener mapListener = null;
