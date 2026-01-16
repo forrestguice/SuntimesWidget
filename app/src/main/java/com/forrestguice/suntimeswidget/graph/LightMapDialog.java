@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -1660,6 +1661,9 @@ public class LightMapDialog extends BottomSheetDialogBase
     public static final int REQUEST_ADD_SHADOW_EVENT = 300;
     public static final int REQUEST_ADD_ANGLE_EVENT = 400;
     public static final int REQUEST_MANAGE_EVENTS = 500;
+    protected ActivityResultLauncherCompat startActivityForResult_add_shadowEvent = registerForActivityResultCompat(REQUEST_ADD_SHADOW_EVENT);
+    protected ActivityResultLauncherCompat startActivityForResult_add_angleEvent = registerForActivityResultCompat(REQUEST_ADD_ANGLE_EVENT);
+    protected ActivityResultLauncherCompat startActivityForResult_manage_events = registerForActivityResultCompat(REQUEST_MANAGE_EVENTS);
 
     protected void startEventListActivityForResult(@NonNull Context context, @Nullable Bundle extras, int requestCode)
     {
@@ -1667,7 +1671,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         if (extras != null) {
             intent.putExtras(extras);
         }
-        startActivityForResult(intent, requestCode);
+        startActivityForResultCompat(intent, requestCode);
     }
 
     protected Bundle getEventListExtras_addAngle(String addAngle)
@@ -1711,8 +1715,9 @@ public class LightMapDialog extends BottomSheetDialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
+        super.onActivityResultCompat(requestCode, resultCode, data);
         Context context = getContext();
         if (context == null) {
             Log.w("LightMapDialog", "onActivityResult: context is null!");

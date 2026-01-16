@@ -40,6 +40,7 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -112,6 +113,8 @@ public class AlarmListDialog extends DialogBase
 
     public static final int REQUEST_IMPORT_URI = 100;
     public static final int REQUEST_EXPORT_URI = 200;
+    private ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(REQUEST_IMPORT_URI);
+    private ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(REQUEST_EXPORT_URI);
 
     public static final String DIALOG_IMPORT_WARNING = "importwarning";
 
@@ -197,9 +200,9 @@ public class AlarmListDialog extends DialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_EXPORT_URI:
@@ -573,7 +576,7 @@ public class AlarmListDialog extends DialogBase
                     String filename = exportTarget + AlarmClockItemExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, AlarmClockItemExportTask.MIMETYPE);
                     try {
-                        startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        startActivityForResult_export.launch(intent);
                         return true;
 
                     } catch (ActivityNotFoundException e) {
@@ -681,7 +684,7 @@ public class AlarmListDialog extends DialogBase
         ImportFragment fragment = new ImportFragment() {
             @Override
             public void startActivityForResult(Intent intent, int request) {
-                AlarmListDialog.this.startActivityForResult(intent, request);
+                AlarmListDialog.this.startActivityForResultCompat(intent, request);
             }
         };
         importAlarms(fragment, context, getLayoutInflater(), REQUEST_IMPORT_URI);

@@ -36,6 +36,7 @@ import android.widget.ImageButton;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -55,6 +56,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     public static final String KEY_LOCATION_SHOWADDBUTTON = "showaddbutton";
 
     public static final int REQUEST_LOCATION = 30;
+    private ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(REQUEST_LOCATION);
 
     protected ImageButton btn_accept, btn_cancel;
 
@@ -297,7 +299,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
                     Intent intent = new Intent(getContext(), PlacesActivity.class);
                     intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
                     //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
-                    startActivityForResult(intent, REQUEST_LOCATION);
+                    startActivityForResult_location.launch(intent);
                 } else Log.w("LocationConfigDialog", "onListButtonClicked: activity is null!");
             }
         });
@@ -472,9 +474,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_LOCATION:

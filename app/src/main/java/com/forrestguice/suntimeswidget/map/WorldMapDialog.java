@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -100,6 +101,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     public static final String DIALOGTAG_TIME = "worldmap_time";
 
     public static final int REQUEST_BACKGROUND = 400;
+    private ActivityResultLauncherCompat startActivityForResult_background = registerForActivityResultCompat(REQUEST_BACKGROUND);
 
     private View dialogHeader;
     private TextView dialogTitle;
@@ -1213,13 +1215,13 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
         intent.setType("image/*");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_BACKGROUND:
