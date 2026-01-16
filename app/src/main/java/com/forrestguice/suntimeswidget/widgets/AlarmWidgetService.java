@@ -26,7 +26,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -41,9 +40,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -139,7 +140,7 @@ public class AlarmWidgetService extends RemoteViewsService
                         AlarmNotifications.updateAlarmTime(context, item);
                     }
 
-                    if (filterTypes.contains(item.type.name())) {
+                    if (item.type != null && filterTypes.contains(item.type.name())) {
                         items.add(item);
                     }
                     cursor.moveToNext();
@@ -188,14 +189,14 @@ public class AlarmWidgetService extends RemoteViewsService
             //String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilDisplay);
             view.setTextViewText(R.id.text_note, "~ " + timeUntilDisplay);  // TODO: i18n
 
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
             String timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
             view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SuntimesUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
 
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
-            Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
+            Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
             view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));

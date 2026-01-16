@@ -18,20 +18,10 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -42,10 +32,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-
-import java.util.Arrays;
-import java.util.Comparator;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ViewPager;
+import com.forrestguice.support.widget.TabLayout;
+import com.forrestguice.support.widget.Toolbar;
 
 public class AboutActivity extends AppCompatActivity
 {
@@ -79,14 +72,13 @@ public class AboutActivity extends AppCompatActivity
             icon = intent.getIntExtra(EXTRA_ICONID, icon);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(icon);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(icon);
         }
 
-        pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new AboutPagerAdapter(this);
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
@@ -122,44 +114,10 @@ public class AboutActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
-    /**
-     * AboutPagerAdapter
-     */
-    public class AboutPagerAdapter extends FragmentPagerAdapter
-    {
-        public AboutPagerAdapter(FragmentManager fragments)
-        {
-            super(fragments);
-        }
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            switch (position)
-            {
-                case 1:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_CONTRIBUTIONS );
-                case 2:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_PRIVACY );
-                //case 3:
-                //    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_BUSKING );
-                case 0:
-                default:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_APP );
-            }
-        }
-
-        @Override
-        public int getCount()
-        {
-            return 3;
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class AboutAppFragment extends Fragment
+    public static class AboutAppFragment extends DialogBase
     {
         public static final String ARG_LAYOUT_NUMBER = "layoutNumber";
 
@@ -182,10 +140,11 @@ public class AboutActivity extends AppCompatActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view;
-            switch (getArguments().getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP))
+            int layoutID = getArgs().getInt(ARG_LAYOUT_NUMBER, LAYOUT_APP);
+            switch (layoutID)
             {
                 case LAYOUT_PRIVACY:
                     view = inflater.inflate(R.layout.layout_about_privacy, container, false);
@@ -215,8 +174,12 @@ public class AboutActivity extends AppCompatActivity
                 //nameView.setText(getString(param_appName));   // TODO
                 nameView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        AboutDialog.openLink(getActivity(), getString(R.string.help_app_url));
+                    public void onClick(View v)
+                    {
+                        Context context = getActivity();
+                        if (context != null) {
+                            AboutDialog.openLink(context, getString(R.string.help_app_url));
+                        }
                     }
                 });
             }

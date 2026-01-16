@@ -25,16 +25,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -72,7 +74,7 @@ public class NextEventTileBase extends SuntimesTileBase
     }
 
     public static final boolean DEF_LOCATION_FROM_APP = true;
-    public static final WidgetSettings.TimezoneMode DEF_TIMEZONE_MODE = WidgetSettings.TimezoneMode.SOLAR_TIME;
+    public static final TimezoneMode DEF_TIMEZONE_MODE = TimezoneMode.SOLAR_TIME;
     public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
 
     @Override
@@ -138,7 +140,7 @@ public class NextEventTileBase extends SuntimesTileBase
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
         event.setTimeInMillis(nextEvent.getCalendar().getTimeInMillis());
 
-        WidgetSettings.RiseSetDataMode mode = nextEvent.getMode();
+        RiseSetDataMode mode = nextEvent.getMode();
         String modeString = (mode != null ? mode.toString() : "null");
         SpannableString modeDisplay = SuntimesUtils.createBoldSpan(null, modeString, modeString);
         modeDisplay = SuntimesUtils.createRelativeSpan(modeDisplay, modeString, modeString, 1.25f);
@@ -157,8 +159,8 @@ public class NextEventTileBase extends SuntimesTileBase
     protected Drawable getDialogIcon(Context context)
     {
         SuntimesRiseSetDataset.SearchResult nextEvent = findNextEvent(context, false);
-        WidgetSettings.RiseSetDataMode mode = nextEvent.getMode();
-        int icon = (mode != null && mode.getTimeMode() == WidgetSettings.TimeMode.NOON) ? R.drawable.ic_noon_tile
+        RiseSetDataMode mode = nextEvent.getMode();
+        int icon = (mode != null && mode.getTimeMode() == TimeMode.NOON) ? R.drawable.ic_noon_tile
                 : (nextEvent.isRising() ? R.drawable.svg_sunrise : R.drawable.svg_sunset);
         Drawable d = ContextCompat.getDrawable(context, icon);
 
@@ -169,7 +171,7 @@ public class NextEventTileBase extends SuntimesTileBase
             TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
             int colorId = a.getResourceId(nextEvent.isRising() ? 0 : 1, R.color.text_primary);
             a.recycle();
-            DrawableCompat.setTint(d, ContextCompat.getColor(context, colorId));
+            ContextCompat.setTint(d, ContextCompat.getColor(context, colorId));
         }
         return d;
     }

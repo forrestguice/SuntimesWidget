@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
 
 /**
  * A preferences activity for the main app;

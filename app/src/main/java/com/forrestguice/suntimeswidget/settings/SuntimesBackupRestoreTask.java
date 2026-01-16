@@ -26,11 +26,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.ListView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
@@ -38,11 +38,14 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.AlarmColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.events.EventAliasValues;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
@@ -51,6 +54,8 @@ import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -190,8 +195,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         public void onStarted() {}
         public void onFinished( TaskResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {
@@ -222,8 +228,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
                     ? methods.get(SuntimesBackupTask.KEY_PLACEITEMS) : IMPORT_PLACES_METHOD_ADDALL;
+            int method = (m != null ? m : IMPORT_PLACES_METHOD_ADDALL);
             c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
 
@@ -245,8 +252,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
                     ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
+            int method = (m != null ? m : IMPORT_ALARMS_METHOD_ADDALL);
             c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
         }
 
@@ -256,8 +264,9 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
 
         if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
         {
-            int method = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
+            Integer m = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
                     ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
+            int method = (m != null ? m : IMPORT_WIDGETS_METHOD_RESTOREBACKUP);
             c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
         }
 
@@ -301,7 +310,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new AppColorValues(context, true);
+                return new AppColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
@@ -315,7 +324,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new WorldMapColorValues(context, true);
+                return new WorldMapColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
@@ -329,13 +338,23 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         {
             @Override
             public ColorValues createColorValues(Context context) {
-                return new AlarmColorValues(context, true);
+                return new AlarmColorValues(AndroidResources.wrap(context), true);
             }
             @Override
             public ColorValuesCollection<ColorValues> createColorValuesCollection(Context context) {
                 return new BrightAlarmColorValuesCollection<ColorValues>(context);
             }
         }, report, contentValues);
+    }
+
+    protected static HashMap<String, Object> toHashMap(ContentValues values)
+    {
+        HashMap<String, Object> map = new HashMap<>();
+        Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+        for (Map.Entry<String, Object> entry : valueSet) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+        return map;
     }
 
     protected static int importColors(Context context, String key, int method, ColorValuesImporter importer, StringBuilder report, @Nullable ContentValues... contentValues)
@@ -352,7 +371,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                     if (colorsID != null)
                     {
                         ColorValues v = importer.createColorValues(context);
-                        v.loadColorValues(values);
+                        v.loadColorValues(toHashMap(values));
                         collection.setColors(context, colorsID, v);
                         c++;
                     }
@@ -461,10 +480,11 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         int c = 0;
         if (contentValues != null)
         {
+            EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
             for (ContentValues values : contentValues)
             {
                 if (values != null) {
-                    EventSettings.saveEvent(context, new EventSettings.EventAlias(values));
+                    EventSettings.saveEvent(contextInterface, EventAliasValues.createEventAlias(values));
                     c++;
                 }
             }
@@ -566,7 +586,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         }
 
         ArrayList<Integer> widgetIds = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             widgetIds.addAll(SuntimesBackupTask.getAllWidgetIds(context, widgetClass));
         }
         widgetIds.add(0);
@@ -648,7 +668,8 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        ListView v = AlertDialog.getListView(dialog);
+                        int p = (v != null ? v.getCheckedItemPosition() : 0);
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })

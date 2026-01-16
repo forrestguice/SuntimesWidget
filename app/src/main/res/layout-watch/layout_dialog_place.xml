@@ -16,7 +16,7 @@
             android:orientation="horizontal"
             android:layout_gravity="top">
 
-            <ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
                 android:layout_width="wrap_content" android:layout_height="48dp"
                 android:src="?attr/icActionBack"
                 android:contentDescription="@string/dialog_cancel" />
@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:layout_gravity="top">
 
-            <ImageButton android:id="@+id/save_button" style="@style/ActionButton"
+            <com.forrestguice.support.widget.ImageButton android:id="@+id/save_button" style="@style/ActionButton"
                 android:layout_width="wrap_content" android:layout_height="48dp"
                 android:src="?attr/icActionSave"
                 android:contentDescription="@string/configAction_savePlace" />
@@ -74,7 +74,7 @@
                 <FrameLayout android:id="@+id/getFixProgress"
                     android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-                    <ImageButton android:id="@+id/appwidget_location_getfix"
+                    <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_getfix"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:src="?attr/icActionGPS_searching"
                         android:layout_gravity="center"

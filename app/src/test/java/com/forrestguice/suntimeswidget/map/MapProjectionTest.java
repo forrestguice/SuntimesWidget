@@ -112,7 +112,7 @@ public class MapProjectionTest
 
         WorldMapEquiazimuthal2 projection = new WorldMapEquiazimuthal2();
         //projection.center = options.center;
-        projection.center = center;
+        WorldMapEquiazimuthal2.center = center;
         projection.initMatrix();
 
         double[] point, coords;

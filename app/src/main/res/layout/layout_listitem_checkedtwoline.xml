@@ -23,7 +23,7 @@
     android:gravity="center_vertical"
     android:baselineAligned="false">
 
-    <ImageView
+    <com.forrestguice.support.widget.ImageView
         android:id="@android:id/icon" android:background="@drawable/ic_colortab"
         android:layout_width="8dp" android:layout_height="match_parent"
         tools:ignore="ContentDescription"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatCheckedTextView style="?android:attr/dropDownItemStyle"
+        <CheckedTextView style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text1"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"

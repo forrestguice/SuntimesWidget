@@ -22,10 +22,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
@@ -52,7 +53,12 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, cursor) == -1)
         {
             Log.i("LocationListTask", "Place not found, adding it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
-            db.addPlace(selected);
+            boolean isCurrent = selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_found))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_cached))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_set));
+            String comment = (isCurrent ? PlaceTags.TAG_GPS : "");
+
+            db.addPlace(selected, comment);
             closeCursor(cursor);
             cursor = db.getAllPlaces(0, true);
         }
@@ -111,7 +117,7 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
      */
     public abstract static class LocationListTaskListener
     {
-        public abstract void onLoaded( @NonNull Cursor result, int selectedIndex );
+        public abstract void onLoaded(@NonNull Cursor result, int selectedIndex );
     }
 
     public LocationListTaskListener getTaskListener()

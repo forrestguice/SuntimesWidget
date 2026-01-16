@@ -25,10 +25,10 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ExportPlacesTask extends ExportTask
@@ -36,6 +36,7 @@ public class ExportPlacesTask extends ExportTask
     public static final String FILEEXT = ".csv";
     public static final String MIMETYPE = "text/csv";
 
+    @Nullable
     private Cursor cursor;
     private GetFixDatabaseAdapter db;
 
@@ -64,13 +65,16 @@ public class ExportPlacesTask extends ExportTask
     @Override
     public boolean export( Context context, BufferedOutputStream out ) throws IOException
     {
+        boolean result = false;
         cursor = null;
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
         db.open();
         numEntries = db.getPlaceCount();
         cursor = db.getAllPlaces(-1, true);
-        boolean result = exportDatabase(db, cursor, out);
-        cursor.close();
+        if (cursor != null) {
+            result = exportDatabase(db, cursor, out);
+            cursor.close();
+        }
         return result;
     }
 

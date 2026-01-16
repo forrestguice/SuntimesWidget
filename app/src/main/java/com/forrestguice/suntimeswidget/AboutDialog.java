@@ -27,12 +27,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -43,13 +37,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AboutDialog extends BottomSheetDialogFragment
+public class AboutDialog extends BottomSheetDialogBase
 {
     public static final String KEY_ICONID = "paramIconID";
     public static final String KEY_APPNAME = "paramAppName";
@@ -66,15 +63,16 @@ public class AboutDialog extends BottomSheetDialogFragment
         param_appName = resID;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
-                BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
-                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
+            public void onShow(DialogInterface dialog)
+            {
+                FrameLayout layout = getBottomSheetFrameLayout(dialog);
                 if (layout != null)
                 {
                     layout.post(new Runnable() {
@@ -96,7 +94,7 @@ public class AboutDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_about, parent, false);
 
         if (savedState != null)
@@ -104,7 +102,7 @@ public class AboutDialog extends BottomSheetDialogFragment
             param_iconID = savedState.getInt(KEY_ICONID, param_iconID);
             param_appName = savedState.getInt(KEY_APPNAME, param_appName);
         }
-        initViews(getActivity(), dialogContent);
+        initViews(requireContext(), dialogContent);
 
         return dialogContent;
     }
@@ -114,23 +112,6 @@ public class AboutDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
-    }
-
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
     }
 
     public static String anchor(String url) {
@@ -156,8 +137,11 @@ public class AboutDialog extends BottomSheetDialogFragment
         return getString(R.string.app_version, versionString);
     }
 
-    public static void openLink(Context context, String url)
+    public static void openLink(@Nullable Context context, @Nullable String url)
     {
+        if (context == null || url == null) {
+            return;
+        }
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         } catch (ActivityNotFoundException e) {
@@ -174,7 +158,9 @@ public class AboutDialog extends BottomSheetDialogFragment
             @Override
             public void onClick(View v)
             {
-                openLink(getActivity(), getString(R.string.help_app_url));
+                if (getContext() != null) {
+                    openLink(getContext(), getString(R.string.help_app_url));
+                }
             }
         });
 
@@ -195,15 +181,15 @@ public class AboutDialog extends BottomSheetDialogFragment
 
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
         legalView2.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView2.setText(SuntimesUtils.fromHtml(initTranslationCredits(getActivity())));
+        legalView2.setText(SuntimesUtils.fromHtml(initTranslationCredits(context)));
 
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView3.setText(SuntimesUtils.fromHtml(initLibraryCredits(getActivity())));
+        legalView3.setText(SuntimesUtils.fromHtml(initLibraryCredits(context)));
 
         TextView aboutMediaView = (TextView) dialogContent.findViewById(R.id.txt_about_media);
         aboutMediaView.setMovementMethod(LinkMovementMethod.getInstance());
-        aboutMediaView.setText(SuntimesUtils.fromHtml(initMediaCredits(getActivity())));
+        aboutMediaView.setText(SuntimesUtils.fromHtml(initMediaCredits(context)));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
         String permissionsExplained = context.getString(R.string.privacy_permission_location);
@@ -234,33 +220,37 @@ public class AboutDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
     }
 
-    public static String initCredits(Activity activity, int stringResId, int entryArrayResId, int entryFormatResId)
+    public static String initCredits(Context context, int stringResId, int entryArrayResId, int entryFormatResId)
     {
-        final String[] entries = activity.getResources().getStringArray(entryArrayResId);
+        final String[] entries = context.getResources().getStringArray(entryArrayResId);
         StringBuilder credits = new StringBuilder();
         for (int i=0; i<entries.length; i++)
         {
-            credits.append(activity.getString(entryFormatResId, entries[i]));
+            credits.append(context.getString(entryFormatResId, entries[i]));
             if (i != entries.length-1) {
                 credits.append(" <br />");
             }
         }
-        return activity.getString(stringResId, credits.toString());
+        return context.getString(stringResId, credits.toString());
     }
 
-    public static String initLibraryCredits(Activity activity) {
-        return initCredits(activity, R.string.app_legal3, R.array.app_libraries, R.string.libraryCreditsFormat);
+    public static String initLibraryCredits(Context context) {
+        return initCredits(context, R.string.app_legal3, R.array.app_libraries, R.string.libraryCreditsFormat);
     }
 
-    public static String initMediaCredits(Activity activity) {
-        return initCredits(activity, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
+    public static String initMediaCredits(Context context) {
+        return initCredits(context, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
     }
 
-    public static String initTranslationCredits(Activity activity)
+    public static String initTranslationCredits(@Nullable Context context)
     {
-        final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
-        final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
-        final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
+        if (context == null) {
+            return "";
+        }
+
+        final String[] localeValues = context.getResources().getStringArray(R.array.locale_values);
+        final String[] localeCredits = context.getResources().getStringArray(R.array.locale_credits);
+        final String[] localeDisplay = context.getResources().getStringArray(R.array.locale_display);
 
         final String currentLanguage = AppSettings.getLocale().getLanguage();
         Integer[] index = new Integer[localeDisplay.length];    // sort alphabetical (localized)
@@ -293,19 +283,19 @@ public class AboutDialog extends BottomSheetDialogFragment
                     authors = authorList[0];
 
                 } else if (authorList.length == 2) {
-                    authors = activity.getString(R.string.authorListFormat_n, authorList[0], authorList[1]);
+                    authors = context.getString(R.string.authorListFormat_n, authorList[0], authorList[1]);
 
                 } else {
                     for (int k=0; k<authorList.length-1; k++)
                     {
                         if (authors.isEmpty())
                             authors = authorList[k];
-                        else authors = activity.getString(R.string.authorListFormat_i, authors, authorList[k]);
+                        else authors = context.getString(R.string.authorListFormat_i, authors, authorList[k]);
                     }
-                    authors = activity.getString(R.string.authorListFormat_n, authors, authorList[authorList.length-1]);
+                    authors = context.getString(R.string.authorListFormat_n, authors, authorList[authorList.length-1]);
                 }
 
-                String line = activity.getString(R.string.translationCreditsFormat, localeDisplay_j, authors);
+                String line = context.getString(R.string.translationCreditsFormat, localeDisplay_j, authors);
                 if (i != index.length-1) {
                     if (!line.endsWith("<br/>") && !line.endsWith("<br />"))
                         line = line + "<br/>";
@@ -313,7 +303,7 @@ public class AboutDialog extends BottomSheetDialogFragment
                 credits.append(line);
             }
         }
-        return activity.getString(R.string.app_legal2, credits.toString());
+        return context.getString(R.string.app_legal2, credits.toString());
     }
 
 }

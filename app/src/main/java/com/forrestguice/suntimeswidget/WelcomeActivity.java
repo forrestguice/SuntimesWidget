@@ -26,14 +26,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
@@ -52,14 +45,17 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 import com.forrestguice.suntimeswidget.views.Toast;
-import android.widget.ToggleButton;
-
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemImportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
@@ -71,8 +67,10 @@ import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.view.ViewPager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -112,7 +110,7 @@ public class WelcomeActivity extends AppCompatActivity
             intent.removeExtra(EXTRA_PAGE);
         }
 
-        pagerAdapter = new WelcomeFragmentAdapter(this, getSupportFragmentManager());
+        pagerAdapter = new WelcomeFragmentAdapter(this, this);
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
@@ -159,7 +157,7 @@ public class WelcomeActivity extends AppCompatActivity
         onPrevPressed.onClick(prevButton);
     }
 
-    private View.OnClickListener onPrevPressed = new View.OnClickListener() {
+    private final View.OnClickListener onPrevPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -171,7 +169,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
     };
 
-    private View.OnClickListener onNextPressed = new View.OnClickListener()
+    private final View.OnClickListener onNextPressed = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
@@ -183,7 +181,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
     };
 
-    private ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener()
+    private final ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener()
     {
         private int previousPosition = 0;
 
@@ -191,9 +189,9 @@ public class WelcomeActivity extends AppCompatActivity
         public void onPageSelected(int position)
         {
             //Log.d("DEBUG", "onPageSelected: " + position);
-            if (saveSettings(getSupportFragmentManager(), previousPosition))
+            if (saveSettings(WelcomeActivity.this, previousPosition))
             {
-                updateViews(getSupportFragmentManager(), position);
+                updateViews(WelcomeActivity.this, position);
                 setIndicator(position);
                 prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
                 nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
@@ -253,7 +251,7 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void onDone()
     {
-        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
+        saveSettings(this, pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
         setResult(RESULT_OK, getResultData());
         finish();
@@ -261,14 +259,13 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void saveSettings()
     {
-        FragmentManager fragments = getSupportFragmentManager();
         for (int i=0; i<pagerAdapter.getCount(); i++) {
-            saveSettings(fragments, i);
+            saveSettings(this, i);
         }
     }
-    private boolean saveSettings(FragmentManager fragments, int position)
+    private boolean saveSettings(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             if (page.validateInput(WelcomeActivity.this)) {
                 return page.saveSettings(WelcomeActivity.this);
@@ -276,31 +273,25 @@ public class WelcomeActivity extends AppCompatActivity
         }
         return false;
     }
-    private boolean validateInput(FragmentManager fragments, int position)
+    private boolean validateInput(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             return page.validateInput(WelcomeActivity.this);
         }
         return true;
     }
-    private void updateViews(FragmentManager fragments, int position)
+    private void updateViews(AppCompatActivity activity, int position)
     {
-        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        WelcomeFragment page = getPageFragment(activity, pager, position);
         if (page != null) {
             page.updateViews(WelcomeActivity.this);
         }
     }
 
-    public static WelcomeFragment getPageFragment(FragmentManager fragments, ViewPager pager, int position) {
+    public static WelcomeFragment getPageFragment(AppCompatActivity activity, ViewPager pager, int position) {
         // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
-        return (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
-    }
-
-    public void showAbout( View v )
-    {
-        startActivity(new Intent(this, AboutActivity.class));
-        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+        return (WelcomeFragment) activity.getSupportFragmentManager().findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
     }
 
     public void setNeedsRecreateFlag() {
@@ -319,69 +310,6 @@ public class WelcomeActivity extends AppCompatActivity
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * WelcomeFragmentAdapter
-     */
-    private class WelcomeFragmentAdapter extends FragmentPagerAdapter
-    {
-        protected ArrayList<WelcomeFragmentPage> pages = new ArrayList<>();
-
-        public WelcomeFragmentAdapter(Context context, FragmentManager fragments)
-        {
-            super(fragments);
-            pages.add(new WelcomeFragmentPage() {    // 0; first page
-                public WelcomeFragment newInstance() {
-                    return WelcomeFirstPageFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 1; appearance
-                public WelcomeFragment newInstance() {
-                    return WelcomeAppearanceFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 2; ui
-                public WelcomeFragment newInstance() {
-                    return WelcomeUserInterfaceFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 3; location
-                public WelcomeFragment newInstance() {
-                    return WelcomeLocationFragment.newInstance();
-                }
-            });
-            pages.add(new WelcomeFragmentPage() {    // 4; time zone
-                public WelcomeFragment newInstance() {
-                    return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
-                }
-            });
-            if (AlarmSettings.hasAlarmSupport(context)) {    // 5; alarms
-                pages.add(new WelcomeFragmentPage() {
-                    public WelcomeFragment newInstance() {
-                        return WelcomeAlarmsFragment.newInstance();
-                    }
-                });
-            }
-            pages.add(new WelcomeFragmentPage() {
-                public WelcomeFragment newInstance() {    // last page
-                    return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
-                }
-            });
-        }
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            if (position >= 0 && position < getCount()) {
-                return pages.get(position).newInstance();
-            } else return WelcomeFirstPageFragment.newInstance();
-        }
-
-        @Override
-        public int getCount() {
-            return pages.size();
-        }
-    }
-
-    /**
      * WelcomeFragmentPage
      */
     public abstract static class WelcomeFragmentPage {
@@ -391,7 +319,7 @@ public class WelcomeActivity extends AppCompatActivity
     /**
      * WelcomeFragment
      */
-    public static class WelcomeFragment extends Fragment
+    public static class WelcomeFragment extends DialogBase
     {
         public static final String ARG_LAYOUT_RESID = "layoutResID";
 
@@ -487,7 +415,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         public int getLayoutResID() {
-            return getArguments().getInt(ARG_LAYOUT_RESID);
+            return getArgs().getInt(ARG_LAYOUT_RESID);
         }
 
         public int getPreferredIndex() {
@@ -518,6 +446,48 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void initViews(Context context, View view) {
             super.initViews(context, view);
+        }
+    }
+
+    /**
+     * WelcomeLegalFragment
+     */
+    public static class WelcomeLegalFragment extends WelcomeFragment
+    {
+        public WelcomeLegalFragment() {}
+
+        public static WelcomeLegalFragment newInstance()
+        {
+            WelcomeLegalFragment fragment = new WelcomeLegalFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_legal);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+
+            Button aboutButton = (Button) view.findViewById(R.id.button_about);
+            if (aboutButton != null) {
+                aboutButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showAbout(view);
+                    }
+                });
+            }
+        }
+
+        public void showAbout( View view )
+        {
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.startActivity(new Intent(activity, AboutActivity.class));
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            }
         }
     }
 
@@ -684,7 +654,9 @@ public class WelcomeActivity extends AppCompatActivity
         {
             @Override
             public void onClick(View v) {
-                BuildPlacesTask.promptAddWorldPlaces(getActivity(), buildPlacesListener);
+                if (getContext() != null) {
+                    BuildPlacesTask.promptAddWorldPlaces(getContext(), buildPlacesListener);
+                }
             }
         };
         private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
@@ -757,10 +729,7 @@ public class WelcomeActivity extends AppCompatActivity
         private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
-                FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null) {
-                    return (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-                }
+                return (LocationConfigDialog) getChildFragmentManager().findFragmentByTag("LocationConfigDialog");
             }
             return null;
         }
@@ -787,7 +756,7 @@ public class WelcomeActivity extends AppCompatActivity
         {
             LocationConfigDialog locationConfig = getLocationConfigDialog();
             if (locationConfig != null) {
-                return locationConfig.getDialogContent().validateInput();
+                return locationConfig.getDialogContent().validateInput(context);
             }
             return super.validateInput(context);
         }
@@ -824,7 +793,7 @@ public class WelcomeActivity extends AppCompatActivity
         public static WelcomeTimeZoneFragment newInstance(Context context)
         {
             WelcomeTimeZoneFragment fragment = new WelcomeTimeZoneFragment();
-            Bundle args = fragment.getArguments();
+            Bundle args = fragment.getArgs();
             args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_timezone);
             fragment.setArguments(args);
 
@@ -835,17 +804,17 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         public double getLongitude() {
-            return getArguments().getDouble(TimeZoneDialog.KEY_LONGITUDE);
+            return getArgs().getDouble(TimeZoneDialog.KEY_LONGITUDE);
         }
         public void setLongitude(double value) {
-            getArguments().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
+            getArgs().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
         }
 
         public String getLongitudeLabel() {
-            return getArguments().getString(LocationConfigView.KEY_LOCATION_LABEL);
+            return getArgs().getString(LocationConfigView.KEY_LOCATION_LABEL);
         }
         public void setLongitudeLabel( String value ) {
-            getArguments().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
+            getArgs().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
         }
 
         public void toggleWarning(boolean visible)
@@ -862,8 +831,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         protected TimeZoneDialog getTimeZoneDialog() {
-            FragmentManager fragments = getChildFragmentManager();
-            return fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog") : null;
+            return (TimeZoneDialog) getChildFragmentManager().findFragmentByTag("TimeZoneDialog");
         }
 
         @Override
@@ -894,9 +862,9 @@ public class WelcomeActivity extends AppCompatActivity
             timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
             if (timeFormatSpinner != null)
             {
-                final WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-                final ArrayAdapter<WidgetSettings.TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
-                        new WidgetSettings.TimeFormatMode[] {WidgetSettings.TimeFormatMode.MODE_SYSTEM, WidgetSettings.TimeFormatMode.MODE_12HR, WidgetSettings.TimeFormatMode.MODE_24HR});
+                final TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+                final ArrayAdapter<TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
+                        new TimeFormatMode[] {TimeFormatMode.MODE_SYSTEM, TimeFormatMode.MODE_12HR, TimeFormatMode.MODE_24HR});
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 timeFormatSpinner.setAdapter(adapter);
                 timeFormatSpinner.setOnItemSelectedListener(onTimeFormatSelected);
@@ -950,7 +918,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        private TimeZoneDialog.TimeZoneDialogListener timeZoneDialogListener = new TimeZoneDialog.TimeZoneDialogListener()
+        private final TimeZoneDialog.TimeZoneDialogListener timeZoneDialogListener = new TimeZoneDialog.TimeZoneDialogListener()
         {
             @Override
             public void onSelectionChanged( TimeZone tz ) {
@@ -959,7 +927,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         };
 
-        private AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
+        private final AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -967,7 +935,7 @@ public class WelcomeActivity extends AppCompatActivity
                 Activity context = getActivity();
                 TimeZoneDialog tzConfig = getTimeZoneDialog();
                 if (tzConfig != null && context != null) {
-                    tzConfig.setTimeFormatMode((WidgetSettings.TimeFormatMode) parent.getAdapter().getItem(position));
+                    tzConfig.setTimeFormatMode((TimeFormatMode) parent.getAdapter().getItem(position));
                 }
             }
             @Override
@@ -996,7 +964,7 @@ public class WelcomeActivity extends AppCompatActivity
                     tzConfig.saveSettings(context);
                 }
 
-                WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
+                TimeFormatMode timeFormat = (TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
                 //Log.d("DEBUG", "saveSettings: timezone");
                 return true;
@@ -1147,6 +1115,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        @Nullable
         protected AlarmClockItemImportTask importTask = null;
         private final View.OnClickListener onImportAlarmsClicked = new View.OnClickListener()
         {
@@ -1155,7 +1124,13 @@ public class WelcomeActivity extends AppCompatActivity
                 if (importTask != null) {
                     Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
                 }
-                AlarmListDialog.importAlarms(WelcomeAlarmsFragment.this, getContext(), getLayoutInflater(), IMPORT_REQUEST);
+                AlarmListDialog.ImportFragment fragment = new AlarmListDialog.ImportFragment() {
+                    @Override
+                    public void startActivityForResult(Intent intent, int request) {
+                        WelcomeAlarmsFragment.this.startActivityForResult(intent, request);
+                    }
+                };
+                AlarmListDialog.importAlarms(fragment, getContext(), getLayoutInflater(), IMPORT_REQUEST);
             }
         };
 
@@ -1183,9 +1158,9 @@ public class WelcomeActivity extends AppCompatActivity
             @Override
             public void onFinished(AlarmClockItemImportTask.TaskResult result)
             {
-                if (result.getResult())
+                final Context context = getContext();
+                if (result.getResult() && context != null)
                 {
-                    final Context context = getContext();
                     final AlarmClockItem[] items = result.getItems();
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
                     task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -1218,12 +1193,12 @@ public class WelcomeActivity extends AppCompatActivity
                     importTask = null;
                     toggleProgress(false);
                     toggleControlsEnabled(true);
-                    if (isAdded())
+                    if (isAdded() && context != null)
                     {
                         Uri uri = result.getUri();   // import failed
                         String path = ((uri != null) ? uri.toString() : "<path>");
                         String failureMessage = getString(R.string.msg_import_failure, path);
-                        Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -1263,6 +1238,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        @Nullable
         protected String themeID = null, themeID1 = null, darkThemeID = null, lightThemeID = null;
         protected AppSettings.TextSize textSize;
 
@@ -1303,7 +1279,7 @@ public class WelcomeActivity extends AppCompatActivity
             spinner = (Spinner) view.findViewById(R.id.spin_theme);
             if (spinner != null)
             {
-                final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(getActivity(), R.layout.layout_listitem_welcome);
+                final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(context, R.layout.layout_listitem_welcome);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerAdapter);
                 int initialPosition = spinnerAdapter.getPosition(themeID1 != null ? themeInfo1 : themeInfo);

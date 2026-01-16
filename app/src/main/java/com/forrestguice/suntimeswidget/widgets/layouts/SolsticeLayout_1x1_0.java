@@ -28,8 +28,13 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -41,7 +46,7 @@ import java.util.Calendar;
  */
 public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
-    protected WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+    protected SolsticeEquinoxMode timeMode = SolsticeEquinoxMode.EQUINOX_SPRING;
     protected int timeColor = Color.WHITE;
 
     public SolsticeLayout_1x1_0()
@@ -94,10 +99,10 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
-        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
+        boolean showDate = CalendarSettings.loadCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         Calendar event = null;
         if (data != null && data.isCalculated()) {
@@ -178,7 +183,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)
+    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, TrackingMode trackingMode)
     {
         switch (trackingMode) {
             case RECENT: return data.eventCalendarRecent(now);

@@ -25,16 +25,16 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.util.HashMap;
 
-import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES_PROJECTION;
@@ -112,8 +112,12 @@ public class SuntimesThemeProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_THEMES, URIMATCH_THEMES);                 // content://AUTHORITY/themes
-        uriMatcher.addURI(AUTHORITY, QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
+        uriMatcher.addURI(AUTHORITY(), QUERY_THEMES, URIMATCH_THEMES);                 // content://AUTHORITY/themes
+        uriMatcher.addURI(AUTHORITY(), QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
+    }
+
+    private static String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".theme.provider";
     }
 
     @Override

@@ -18,14 +18,13 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.support.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.preference.PreferenceManager;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.app.AppCompatActivity;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import org.junit.Rule;
@@ -68,6 +67,7 @@ public class GetFixTaskTest
         assertTrue(helper.getFix());
         assertTrue("gettingFix should return true", helper.gettingFix());
         assertTrue(waitForTask);
+        //noinspection ConstantConditions,StatementWithEmptyBody,WhileLoopSpinsOnField
         while (waitForTask) {
             /* busy wait for completion */
         }
@@ -95,6 +95,7 @@ public class GetFixTaskTest
     }
 
     private boolean waitForTask = false;
+    @Nullable
     private Location taskResult = null;
     private final GetFixTaskListener taskListener = new GetFixTaskListener()
     {
@@ -145,8 +146,8 @@ public class GetFixTaskTest
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled) {
-            Log.d("TEST", "UI: onResult: " + result + " (was cancelled? " + wasCancelled + ")");
+        public void onResult(LocationResult result) {
+            Log.d("TEST", "UI: onResult: " + result);
         }
     };
 }

@@ -44,15 +44,17 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
+import com.forrestguice.support.app.ActivityCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.app.NotificationManagerHelper;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -79,7 +81,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmPrefsFragment extends PreferenceFragment
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -164,7 +166,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_alarms(final AlarmPrefsFragment fragment)
     {
-        final Context context = fragment.getActivity();
+        Context context = fragment.getActivity();
         if (context == null) {
             return;
         }
@@ -210,7 +212,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
 
@@ -234,7 +236,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         {
             fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
-            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
+            if (NotificationManagerHelper.canUseFullScreenIntent(context))
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
@@ -313,7 +315,10 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue)
                 {
-                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    Context context = preference.getContext();
+                    if (context != null) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    }
                     return true;
                 }
             });
@@ -330,6 +335,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue)
                 {
+                    Context context = preference.getContext();
                     if (context != null)
                     {
                         AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);
@@ -342,7 +348,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
+    private static final ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
     public static class BrightColorsPreviewIntent implements ColorValuesSheetActivity.PreviewColorsIntentBuilder
     {
         public BrightColorsPreviewIntent() {}
@@ -377,53 +383,6 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_BRIGHTMODE_ID, colorsID)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
-        }
-    };
-
-    /**
-     * this method calls areNotificationsPaused (api29+) via reflection
-     */
-    private static boolean areNotificationsPaused(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 29) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
-        } else return false;
-    }
-
-    /**
-     * this method calls canUseFullScreenIntent (api34+) via reflection
-     */
-    private static boolean canUseFullScreenIntent(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 34) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
-        } else return true;
-    }
-
-    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
-    {
-        if (object != null)
-        {
-            try {
-                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
-                try {
-                    boolean result = (boolean) method.invoke(object);
-                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
-                    return result;
-
-                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
-                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                    return defaultValue;
-                }
-            } catch (SecurityException | NoSuchMethodException e) {
-                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                return defaultValue;
-            }
-        } else {
-            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
-            return defaultValue;
         }
     }
 
@@ -545,7 +504,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     /**
      * https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
-     * @param context
+     * @param context Context
      */
     public static void openNotificationSettings(@NonNull Context context)
     {

@@ -23,10 +23,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import org.json.JSONObject;
@@ -42,13 +42,13 @@ import java.util.Map;
 
 /**
  * AsyncTask that reads EventAlias objects from text file (json array).
- * @see EventSettings.EventAlias
+ * @see EventAlias
  */
-public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, EventImportTask.TaskResult>
+public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -86,7 +86,7 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
 
         long startTime = System.currentTimeMillis();
         boolean result = false;
-        ArrayList<EventSettings.EventAlias> items = new ArrayList<>();
+        ArrayList<EventAlias> items = new ArrayList<>();
         Exception error = null;
 
         Context context = contextRef.get();
@@ -121,11 +121,11 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
         }
 
         Log.d(getClass().getSimpleName(), "doInBackground: finishing");
-        return new TaskResult(result, uri, (items != null ? items.toArray(new EventSettings.EventAlias[0]) : null), error);
+        return new TaskResult(result, uri, (items != null ? items.toArray(new EventAlias[0]) : null), error);
     }
 
     @Override
-    protected void onProgressUpdate(EventSettings.EventAlias... progressItems) {
+    protected void onProgressUpdate(EventAlias... progressItems) {
         super.onProgressUpdate(progressItems);
     }
 
@@ -143,7 +143,7 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable EventSettings.EventAlias[] items, Exception e)
+        public TaskResult(boolean result, Uri uri, @Nullable EventAlias[] items, Exception e)
         {
             this.result = result;
             this.items = items;
@@ -151,19 +151,19 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private EventSettings.EventAlias[] items;
-        public EventSettings.EventAlias[] getItems()
+        private final EventAlias[] items;
+        public EventAlias[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -173,7 +173,7 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;
@@ -188,8 +188,9 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
         public void onStarted() {}
         public void onFinished( TaskResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
+    public void setTaskListener( @Nullable TaskListener listener ) {
         taskListener = listener;
     }
     public void clearTaskListener() {
@@ -203,7 +204,7 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
     {
         public static final String TAG = "EventJsonParser";
 
-        public static void readEventAliasItems(Context context, InputStream in, ArrayList<EventSettings.EventAlias> items) throws IOException
+        public static void readEventAliasItems(Context context, InputStream in, ArrayList<EventAlias> items) throws IOException
         {
             if (Build.VERSION.SDK_INT >= 11)
             {
@@ -223,11 +224,11 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
         }
 
         @TargetApi(11)
-        protected static void readEventAliasItems(Context context, JsonReader reader, ArrayList<EventSettings.EventAlias> items) throws IOException
+        protected static void readEventAliasItems(Context context, JsonReader reader, ArrayList<EventAlias> items) throws IOException
         {
             switch (reader.peek()) {
                 case BEGIN_ARRAY: readEventAliasArray(context, reader, items); break;
-                case BEGIN_OBJECT: EventSettings.EventAlias item = readEventAlias(context, reader);
+                case BEGIN_OBJECT: EventAlias item = readEventAlias(context, reader);
                     if (item != null) {
                         items.add(item);
                     }
@@ -237,7 +238,7 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
         }
 
         @TargetApi(11)
-        protected static void readEventAliasArray(Context context, JsonReader reader, ArrayList<EventSettings.EventAlias> items) throws IOException
+        protected static void readEventAliasArray(Context context, JsonReader reader, ArrayList<EventAlias> items) throws IOException
         {
             try {
                 reader.beginArray();
@@ -252,13 +253,13 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
 
         @Nullable
         @TargetApi(11)
-        protected static EventSettings.EventAlias readEventAlias(Context context, JsonReader reader)
+        protected static EventAlias readEventAlias(Context context, JsonReader reader)
         {
             Map<String, Object> map = readJsonObject(reader);
             if (map != null)
             {
                 try {
-                    return new EventSettings.EventAlias(ExportTask.toContentValues(map));
+                    return EventAliasValues.createEventAlias(ExportTask.toContentValues(map));
 
                 } catch (Exception e) {
                     Log.e(TAG, "readEventAlias: skipping item because of " + e);
@@ -321,9 +322,9 @@ public class EventImportTask extends AsyncTask<Uri, EventSettings.EventAlias, Ev
             reader.endArray();
         }
 
-        public static String toJson(EventSettings.EventAlias item)
+        public static String toJson(EventAlias item)
         {
-            HashMap<String,String> map = ExportTask.toMap(item.toContentValues());
+            HashMap<String,String> map = ExportTask.toMap(EventAliasValues.toContentValues(item));
             return new JSONObject(map).toString();
         }
     }

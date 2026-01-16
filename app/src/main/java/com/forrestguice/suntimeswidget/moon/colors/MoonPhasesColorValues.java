@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.moon.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class MoonPhasesColorValues extends ResourceColorValues implements Parcelable
+public class MoonPhasesColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_MOON_NEW = AppColorKeys.COLOR_MOON_NEW;
     public static final String COLOR_MOON_WAXING = AppColorKeys.COLOR_MOON_WAXING;
     public static final String COLOR_MOON_FULL = AppColorKeys.COLOR_MOON_FULL;
@@ -86,26 +86,20 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Parcel
     public MoonPhasesColorValues(ColorValues other) {
         super(other);
     }
-    public MoonPhasesColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private MoonPhasesColorValues(Parcel in) {
+    /*private MoonPhasesColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public MoonPhasesColorValues() {
         super();
     }
-    public MoonPhasesColorValues(Context context) {
+    public MoonPhasesColorValues(Resources context) {
         this(context, true);
     }
-    public MoonPhasesColorValues(Context context, boolean darkTheme) {
+    public MoonPhasesColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public MoonPhasesColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<MoonPhasesColorValues> CREATOR = new Creator<MoonPhasesColorValues>()
+    /*public static final Creator<MoonPhasesColorValues> CREATOR = new Creator<MoonPhasesColorValues>()
     {
         public MoonPhasesColorValues createFromParcel(Parcel in) {
             return new MoonPhasesColorValues(in);
@@ -113,9 +107,14 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Parcel
         public MoonPhasesColorValues[] newArray(int size) {
             return new MoonPhasesColorValues[size];
         }
-    };
+    };*/
 
-    public static MoonPhasesColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+    }
+
+    public static MoonPhasesColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new MoonPhasesColorValues(new MoonPhasesColorValues().getDefaultValues(context, darkTheme));
     }
 }

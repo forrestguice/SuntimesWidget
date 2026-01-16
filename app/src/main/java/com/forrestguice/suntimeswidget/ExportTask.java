@@ -29,10 +29,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.FileProvider;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -47,7 +48,9 @@ import java.util.Map;
 @SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
 {
-    public static final String FILE_PROVIDER_AUTHORITY = "com.forrestguice.suntimeswidget.fileprovider";
+    public static String FILE_PROVIDER_AUTHORITY() {
+        return BuildConfig.APPLICATION_ID + ".fileprovider";
+    }
 
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
@@ -55,7 +58,9 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     protected WeakReference<Context> contextRef;
 
     protected Uri exportUri = null;
+    @Nullable
     protected String exportTarget;
+    @Nullable
     protected File exportFile;
     protected int numEntries;
     public final String newLine = System.getProperty("line.separator");
@@ -74,18 +79,18 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         return isPaused;
     }
 
-    public ExportTask(Context context, String exportTarget)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget)
     {
         this(context, exportTarget, false, false);
     }
-    public ExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
     }
-    public ExportTask(Context context, Uri exportUri)
+    public ExportTask(@NonNull Context context, Uri exportUri)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = null;
@@ -304,7 +309,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         private final File exportFile;
         public File getExportFile() { return exportFile; }
 
-        private String mimeType;
+        private final String mimeType;
         public String getMimeType() {
             return mimeType;
         }
@@ -358,11 +363,15 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (cacheSize > cacheLimit)
         {
             File[] cacheFiles = cacheDir.listFiles();
+            if (cacheFiles == null) {
+                return;
+            }
+
             Arrays.sort(cacheFiles, new Comparator<File>()
             {
                 public int compare(File file1, File file2)
                 {
-                    return Long.valueOf(file1.lastModified()).compareTo(file2.lastModified());
+                    return Long.compare(file1.lastModified(), file2.lastModified());
                 }
             });
 
@@ -385,10 +394,12 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         long result = 0;
         if (dir != null && dir.exists())
         {
-            for (File file : dir.listFiles())
-            {
-                result += (file.isDirectory()) ? cacheSize(file)
-                        : file.length();
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    result += (file.isDirectory()) ? cacheSize(file)
+                            : file.length();
+                }
             }
         }
         return result;
@@ -402,8 +413,9 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         public void onStarted() {}
         public void onFinished( ExportResult result ) {}
     }
+    @Nullable
     protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
+    public void setTaskListener( @Nullable TaskListener listener )
     {
         taskListener = listener;
     }
@@ -436,7 +448,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         try {
-            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, file);
+            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file);
             shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
             context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
 

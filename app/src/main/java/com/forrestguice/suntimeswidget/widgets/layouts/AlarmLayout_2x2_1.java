@@ -20,14 +20,12 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
@@ -90,10 +88,10 @@ public class AlarmLayout_2x2_1 extends AlarmLayout
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
-            {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        //{
+            //if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            //{
                 /*int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
 
@@ -103,8 +101,8 @@ public class AlarmLayout_2x2_1 extends AlarmLayout
                 if (adjustedSizeSp != timeSizeSp) {
                     views.setTextViewTextSize(android.R.id.text2, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp);
                 }*/
-            }
-        }
+            //}
+        //}
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));

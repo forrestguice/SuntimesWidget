@@ -22,16 +22,16 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:clipChildren="false" android:clipToPadding="false">
 
-        <android.support.v7.widget.RecyclerView android:id="@+id/moonphases_card"
+        <com.forrestguice.support.widget.RecyclerView android:id="@+id/moonphases_card"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:layoutManager="@string/layoutManager_LinearLayoutManager"
             tools:itemCount="4" tools:orientation="horizontal"
             tools:listitem="@layout/info_time_moonphase" />
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_gravity="end|bottom"
             android:padding="3dp">
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/info_time_prevbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"
@@ -40,7 +40,7 @@
                 android:padding="4dp"
                 android:contentDescription="@string/today" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/info_time_nextbtn"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end" android:scaleX="0.9" android:scaleY="0.9"

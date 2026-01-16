@@ -24,16 +24,11 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -41,14 +36,18 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.ActionBarDrawerToggle;
+import com.forrestguice.support.view.GravityCompat;
+import com.forrestguice.support.widget.DrawerLayout;
+import com.forrestguice.support.widget.NavigationView;
+import com.forrestguice.support.widget.Toolbar;
 
 import java.lang.ref.WeakReference;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesNavigation
 {
-    private static int anim_in = R.anim.transition_swap_in;
-    private static int anim_out = R.anim.transition_swap_out;
+    private static final int anim_in = R.anim.transition_swap_in;
+    private static final int anim_out = R.anim.transition_swap_out;
 
     private WeakReference<Activity> activityRef;
 
@@ -140,23 +139,17 @@ public class SuntimesNavigation
                             @Override
                             public void run()
                             {
-                                switch (itemID)
-                                {
-                                    case R.id.action_suntimes:
-                                        showSuntimes(activity);
-                                        break;
+                                if (itemID == R.id.action_suntimes) {
+                                    showSuntimes(activity);
 
-                                    case R.id.action_alarms:
-                                        showSuntimesAlarms(activity);
-                                        break;
+                                } else if (itemID == R.id.action_alarms) {
+                                    showSuntimesAlarms(activity);
 
-                                    case R.id.action_settings:
-                                        showSettings(activity);
-                                        break;
+                                } else if (itemID == R.id.action_settings) {
+                                    showSettings(activity);
 
-                                    case R.id.action_about:
-                                        showAbout(activity);
-                                        break;
+                                } else if (itemID == R.id.action_about) {
+                                    showAbout(activity);
                                 }
                             }
                         }, 250);

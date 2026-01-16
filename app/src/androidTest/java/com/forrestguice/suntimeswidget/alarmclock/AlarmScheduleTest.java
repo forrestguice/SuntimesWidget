@@ -21,18 +21,18 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 
 import org.junit.Before;
 
@@ -170,13 +170,13 @@ public class AlarmScheduleTest
 
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.timezone = TimeZones.ApparentSolarTime.TIMEZONEID;
         alarm.hour = hour;
         alarm.minute = minute;
 
         int c = 0, n = 7;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
         Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)
@@ -403,6 +403,7 @@ public class AlarmScheduleTest
         final Handler onStartHandler = new Handler(Looper.getMainLooper());
         onStartHandler.post(runnable);
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + withinMs) && AlarmNotifications.t_updateAlarmTime_runningLoop) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }

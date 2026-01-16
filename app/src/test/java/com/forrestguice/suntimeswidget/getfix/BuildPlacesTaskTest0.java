@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class BuildPlacesTaskTest0
 {

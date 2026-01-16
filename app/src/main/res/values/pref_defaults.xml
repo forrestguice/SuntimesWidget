@@ -42,6 +42,7 @@
     <string name="def_app_ui_emphasizefield" translatable="false">OFFICIAL</string>
     <bool name="def_app_ui_showdatasource" translatable="false">true</bool>
     <bool name="def_app_ui_showmapbutton" translatable="false">true</bool>
+    <bool name="def_app_ui_showcoordinates" translatable="false">true</bool>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>

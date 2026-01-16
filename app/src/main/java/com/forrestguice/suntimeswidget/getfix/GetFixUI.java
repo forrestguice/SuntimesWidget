@@ -44,8 +44,84 @@ public abstract class GetFixUI
     }
 
     public abstract void enableUI(boolean value);
+    @Deprecated
     public abstract void updateUI(Location... locations);
     public abstract void showProgress(boolean showProgress);
     public abstract void onStart();
-    public abstract void onResult(Location result, boolean wasCancelled);
+    public abstract void onResult(LocationResult result);
+
+    public void updateUI(LocationProgress... progress)
+    {
+        Location[] locations = new Location[progress.length];
+        for (int i=0; i<progress.length; i++) {
+            locations[i] = (progress != null ? progress[i].result : null);
+        }
+        //noinspection deprecation
+        updateUI(locations);
+    }
+
+    /**
+     * LocationResult
+     */
+    public static class LocationResult extends LocationProgress
+    {
+        public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
+        {
+            super(result, elapsed, log);
+            this.wasCancelled = wasCancelled;
+        }
+
+        protected boolean wasCancelled;
+        public boolean wasCancelled() {
+            return wasCancelled;
+        }
+    }
+
+    /**
+     * LocationProgress
+     */
+    public static class LocationProgress
+    {
+        public LocationProgress(Location location, long elapsed, String log) {
+            this.result = location;
+            this.elapsed = elapsed;
+            this.accuracy = (location != null ? location.getAccuracy() : -1);
+            this.log = log;
+        }
+        public LocationProgress(Location location, long elapsed, String log, int signal_i, int signal_n) {
+            this(location, elapsed, log);
+            this.signal_i = signal_i;
+            this.signal_n = signal_n;
+        }
+
+        protected Location result;
+        public Location getResult() {
+            return result;
+        }
+
+        protected long elapsed;
+        public long getElapsed() {
+            return elapsed;
+        }
+
+        protected int signal_i = 0;
+        public int getSignalI() {
+            return signal_i;
+        }
+
+        protected int signal_n = 0;
+        public int getSignalN() {
+            return signal_n;
+        }
+
+        protected double accuracy;
+        public double getAccuracy() {
+            return accuracy;
+        }
+
+        protected String log;
+        public String getLog() {
+            return log;
+        }
+    }
 }

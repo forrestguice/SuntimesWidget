@@ -21,11 +21,15 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.content.ContextCompat;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 public class EquinoxViewOptions
 {
@@ -35,7 +39,7 @@ public class EquinoxViewOptions
     public int columnWidthPx = -1;
     public int highlightPosition = -1;
 
-    public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+    public TrackingMode trackingMode = TrackingMode.SOONEST;
     public boolean showSeconds = false;
     public boolean showDate = true;
 
@@ -45,16 +49,19 @@ public class EquinoxViewOptions
     public Integer labelColor, textColor;
     public int resID_buttonPressColor;
 
+    @Nullable
     public Float timeSizeSp = null;
+    @Nullable
     public Float titleSizeSp = null;
     public boolean titleBold = false;
 
+    @Nullable
     public SuntimesTheme themeOverride = null;
 
     @SuppressLint("ResourceType")
     public void init(Context context)
     {
-        colors = new EquinoxColorValues(context, true);
+        colors = new EquinoxColorValues(AndroidResources.wrap(context), true);
 
         int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor,
                              R.attr.table_springColor, R.attr.table_summerColor, R.attr.table_fallColor, R.attr.table_winterColor };
@@ -91,7 +98,7 @@ public class EquinoxViewOptions
         }
     }
 
-    public int getColorForMode(WidgetSettings.SolsticeEquinoxMode mode)
+    public int getColorForMode(SolsticeEquinoxMode mode)
     {
         switch (mode) {
             case CROSS_WINTER: case SOLSTICE_WINTER: return colors.getColor(EquinoxColorValues.COLOR_WINTER_TEXT);

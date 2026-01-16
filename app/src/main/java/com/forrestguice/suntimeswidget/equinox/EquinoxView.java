@@ -24,17 +24,10 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,22 +36,31 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
+@SuppressWarnings({"Convert2Diamond", "deprecation"})
 @Deprecated
 public class EquinoxView extends LinearLayout
 {
@@ -66,7 +68,7 @@ public class EquinoxView extends LinearLayout
     public static final String KEY_UI_CARDPOSITION = "equinoxCardPosition";
     public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
 
     private TextView empty, text_title, text_year_length;
@@ -146,14 +148,13 @@ public class EquinoxView extends LinearLayout
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new PagerSnapHelper().attachToRecyclerView(card_view);
 
         boolean minimized = isMinimized();
         if (!minimized) {
             card_view.setOnScrollListener(onCardScrollListener);
         }
-        card_view.setLayoutFrozen(minimized);
+        card_view.suppressLayout(minimized);
 
         if (isInEditMode()) {
             updateViews(context);
@@ -161,7 +162,7 @@ public class EquinoxView extends LinearLayout
         themeViews(context);
     }
 
-    private EquinoxViewOptions options = new EquinoxViewOptions();
+    private final EquinoxViewOptions options = new EquinoxViewOptions();
 
     @SuppressLint("ResourceType")
     private void themeViews(Context context) {
@@ -208,10 +209,10 @@ public class EquinoxView extends LinearLayout
         options.isRtl = AppSettings.isLocaleRtl(context);
     }
 
-    public void setTrackingMode(WidgetSettings.TrackingMode mode) {
+    public void setTrackingMode(TrackingMode mode) {
         options.trackingMode = mode;
     }
-    public WidgetSettings.TrackingMode getTrackingMode() {
+    public TrackingMode getTrackingMode() {
         return options.trackingMode;
     }
 
@@ -245,9 +246,9 @@ public class EquinoxView extends LinearLayout
 
         int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
-            card_view.setLayoutFrozen(false);
+            card_view.suppressLayout(false);
             card_view.scrollToPosition(position);
-            card_view.setLayoutFrozen(isMinimized());
+            card_view.suppressLayout(isMinimized());
         }
     }
 
@@ -326,10 +327,10 @@ public class EquinoxView extends LinearLayout
         onLongClickListener = listener;
     }
 
-    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             int position = currentCardPosition();
             if (position >= 0) {
@@ -339,7 +340,7 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -348,7 +349,7 @@ public class EquinoxView extends LinearLayout
         }
     };
 
-    private EquinoxViewListener cardListener = new EquinoxViewListener()
+    private final EquinoxViewListener cardListener = new EquinoxViewListener()
     {
         @Override
         public void onClick( int position ) {
@@ -388,7 +389,7 @@ public class EquinoxView extends LinearLayout
             }
         }
         @Override
-        public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+        public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {
             if (viewListener != null) {
                 viewListener.onMenuClick(view, position, mode, datetime);
             }
@@ -396,11 +397,11 @@ public class EquinoxView extends LinearLayout
     };
 
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
 
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(isMinimized());
+        card_view.suppressLayout(isMinimized());
     }
 
     public int currentCardPosition()
@@ -412,7 +413,7 @@ public class EquinoxView extends LinearLayout
         return p;
     }
 
-    private OnClickListener onTitleClicked = new OnClickListener() {
+    private final OnClickListener onTitleClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onTitleClicked(currentCardPosition());
@@ -433,7 +434,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onNextClicked = new OnClickListener() {
+    private final OnClickListener onNextClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onNextClicked(currentCardPosition());
@@ -445,7 +446,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onPrevClicked = new OnClickListener() {
+    private final OnClickListener onPrevClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onPrevClicked(currentCardPosition());
@@ -457,7 +458,7 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private OnClickListener onMenuClicked = new OnClickListener() {
+    private final OnClickListener onMenuClicked = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if (viewListener != null) {
@@ -479,14 +480,14 @@ public class EquinoxView extends LinearLayout
         card_adapter.notifyDataSetChanged();
     }
 
-    public static EquinoxNote findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<EquinoxNote> notes)
+    public static EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxNote> notes)
     {
         if (notes == null || now == null) {
             return null;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -508,14 +509,14 @@ public class EquinoxView extends LinearLayout
         }
         return closest;
     }
-    public static int findClosestPage(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestPage(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -548,7 +549,7 @@ public class EquinoxView extends LinearLayout
         protected Calendar time;
         protected boolean highlighted;
         protected int pageIndex;
-        private EquinoxViewOptions options;
+        private final EquinoxViewOptions options;
         protected View focusView, noteLayout;
 
         public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, ImageButton contextMenu, View focusView, View noteLayout, int pageIndex, EquinoxViewOptions options)
@@ -604,7 +605,7 @@ public class EquinoxView extends LinearLayout
             this.time = time;
             if (timeView != null)
             {
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
+                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
             }
         }
@@ -693,13 +694,13 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();
     }
     public boolean hasSelection() {
         return card_adapter.hasSelection();
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
         card_adapter.setSelection(mode);
     }
 
@@ -715,10 +716,10 @@ public class EquinoxView extends LinearLayout
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
         @SuppressLint("UseSparseArrays")
-        private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
+        private final HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
-        private WeakReference<Context> contextRef;
-        private EquinoxViewOptions options;
+        private final WeakReference<Context> contextRef;
+        private final EquinoxViewOptions options;
 
         public EquinoxViewAdapter(Context context, EquinoxViewOptions options)
         {
@@ -726,6 +727,7 @@ public class EquinoxView extends LinearLayout
             this.options = options;
         }
 
+        @NonNull
         @Override
         public EquinoxViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -735,13 +737,15 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(EquinoxViewHolder holder, int position)
+        public void onBindViewHolder(@NonNull EquinoxViewHolder holder, int position)
         {
+            //noinspection ConstantConditions
             Context context = (contextRef != null ? contextRef.get() : null);
             if (context == null) {
                 Log.w("EquinoxViewAdapter", "onBindViewHolder: null context!");
                 return;
             }
+            //noinspection ConstantConditions
             if (holder == null) {
                 Log.w("EquinoxViewAdapter", "onBindViewHolder: null view holder!");
                 return;
@@ -769,7 +773,7 @@ public class EquinoxView extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(EquinoxViewHolder holder)
+        public void onViewRecycled(@NonNull EquinoxViewHolder holder)
         {
             detachListeners(holder);
 
@@ -789,14 +793,15 @@ public class EquinoxView extends LinearLayout
         public boolean hasSelection() {
             return (selected_mode != null);
         }
-        public WidgetSettings.SolsticeEquinoxMode getSelection() {
+        public SolsticeEquinoxMode getSelection() {
             return this.selected_mode;
         }
-        public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+        public void setSelection(@Nullable SolsticeEquinoxMode mode ) {
             this.selected_mode = mode;
             notifyDataSetChanged();
         }
-        protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+        @Nullable
+        protected SolsticeEquinoxMode selected_mode = null;
 
         /**
          * Clear existing data and initialize the center position.
@@ -813,9 +818,9 @@ public class EquinoxView extends LinearLayout
 
         /**
          * Initialize data at position (returns cached data if it already exists).
-         * @param context
-         * @param position
-         * @return
+         * @param context context
+         * @param position position
+         * @return data
          */
         public SuntimesEquinoxSolsticeDataset initData(Context context, int position)
         {
@@ -876,7 +881,7 @@ public class EquinoxView extends LinearLayout
             for (int i=0; i <holder.notes.size(); i++) {
                 EquinoxNote note = holder.notes.get(i);
                 if (note.contextMenu != null && note.time != null) {
-                    note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
+                    note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
                 }
             }
 
@@ -952,7 +957,7 @@ public class EquinoxView extends LinearLayout
                 }
             };
         }
-        private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+        private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -968,7 +973,7 @@ public class EquinoxView extends LinearLayout
                 @Override
                 public void onClick(View v)
                 {
-                    WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
+                    SolsticeEquinoxMode mode = SolsticeEquinoxMode.values()[i];
                     if (holder.getSelected() == mode) {
                         holder.notes.get(i).contextMenu.performClick();
 
@@ -992,7 +997,7 @@ public class EquinoxView extends LinearLayout
 
         public View clickArea;
         public View[] clickAreas = new View[4];
-        public WidgetSettings.SolsticeEquinoxMode selected = null;
+        public SolsticeEquinoxMode selected = null;
 
         public View container;
         public TextView title;
@@ -1041,11 +1046,11 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        public void setSelected(WidgetSettings.SolsticeEquinoxMode mode) {
+        public void setSelected(SolsticeEquinoxMode mode) {
             this.selected = mode;
             updateItemFocus();
         }
-        public WidgetSettings.SolsticeEquinoxMode getSelected() {
+        public SolsticeEquinoxMode getSelected() {
             return selected;
         }
 
@@ -1135,7 +1140,7 @@ public class EquinoxView extends LinearLayout
 
             if (data.isImplemented() && data.isCalculated())
             {
-                SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
+                TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
                 title.setText(titleText.toString());
 
                 boolean showSeconds = !options.minimized || WidgetSettings.loadShowSecondsPref(context, 0);
@@ -1228,14 +1233,17 @@ public class EquinoxView extends LinearLayout
         public int columnWidthPx = -1;
         public int highlightPosition = -1;
 
-        public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+        public TrackingMode trackingMode = TrackingMode.SOONEST;
 
         public int titleColor, noteColor, disabledColor, pressedColor;
         public Integer[] seasonColors = new Integer[4];
+        @Nullable
         public Integer labelColor, textColor;
         public int resID_buttonPressColor;
 
+        @Nullable
         public Float timeSizeSp = null;
+        @Nullable
         public Float titleSizeSp = null;
         public boolean titleBold = false;
 
@@ -1291,9 +1299,9 @@ public class EquinoxView extends LinearLayout
         public void onTitleClick( int position ) {}
         public void onNextClick( int position ) {}
         public void onPrevClick( int position ) {}
-        public void onSelected( int position, WidgetSettings.SolsticeEquinoxMode mode ) {}
+        public void onSelected( int position, SolsticeEquinoxMode mode ) {}
         public void onMenuClick( View v, int position ) {}
-        public void onMenuClick( View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime ) {}
+        public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime ) {}
     }
 
 }

@@ -19,9 +19,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -32,16 +30,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -51,26 +49,27 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.ImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class WorldMapView extends android.support.v7.widget.AppCompatImageView
+public class WorldMapView extends ImageView
 {
     public static final String LOGTAG = "WorldMap";
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
 
     private WorldMapTask drawTask;
-    private WorldMapTask.WorldMapOptions options;
+    private WorldMapOptions options;
     private WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
 
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
     private int mapW = 0, mapH = 0;
-    private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private final int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
     private boolean animated = false;
 
     public WorldMapView(Context context)
@@ -103,7 +102,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressLint("ResourceType")
     private void init(Context context)
     {
-        options = new WorldMapTask.WorldMapOptions(context);
+        options = new WorldMapOptions(context);
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
@@ -125,6 +124,27 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         this.mode = mode;
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
+            case VANDERGRINTEN_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_van_der_grinten);
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
+            case SINUSOIDAL_SIMPLE:
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_sinusoidal);
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
@@ -207,12 +227,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public WorldMapTask.WorldMapOptions getOptions()
+    public WorldMapOptions getOptions()
     {
         return options;
     }
 
-    public void setOptions( WorldMapTask.WorldMapOptions options )
+    public void setOptions( WorldMapOptions options )
     {
         this.options = options;
     }
@@ -301,7 +321,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
-     * @param context
+     * @param context context
      * @return available screen height int pixels
      */
     private int getScreenHeight(Context context)
@@ -342,9 +362,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
         int w = getWidth();
         int h = getHeight();
-        WorldMapTask.WorldMapProjection projection;
+        WorldMapProjection projection;
         switch (mode)
         {
+            case MERCATOR_SIMPLE:
+            case VANDERGRINTEN_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
             case EQUIAZIMUTHAL_SIMPLE2:
@@ -371,12 +393,20 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
                 break;
 
+            case SINUSOIDAL_SIMPLE:
+                projection = getMapProjection(mode);
+                w = getWidth();
+                h = w / 2;
+                break;
+
             case EQUIRECTANGULAR_BLUEMARBLE:
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 projection = new WorldMapEquirectangular();
                 w = getWidth();
-                h = (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()));
+                h = (options.map != null)
+                        ? (int)(w * ((double)options.map.getIntrinsicHeight() / (double)options.map.getIntrinsicWidth()))
+                        : (int)(w * 0.5);
                 break;
         }
 
@@ -403,9 +433,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    public static WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         switch (mode) {
+            case SINUSOIDAL_SIMPLE: return new WorldMapSinusoidal();
+            case VANDERGRINTEN_SIMPLE: return new WorldMapVanDerGrinten();
+            case MERCATOR_SIMPLE: return new WorldMapMercator();
             case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();
             case EQUIAZIMUTHAL_SIMPLE1: return new WorldMapEquiazimuthal1();
             case EQUIAZIMUTHAL_SIMPLE2: return new WorldMapEquiazimuthal2();
@@ -414,7 +447,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    private WorldMapTask.WorldMapTaskListener drawListener = new WorldMapTask.WorldMapTaskListener()
+    private final WorldMapTask.WorldMapTaskListener drawListener = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
         public void onStarted()
@@ -439,7 +472,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         @Override
         public void afterFrame(Bitmap frame, long offsetMinutes)
         {
-            if (isRecording()) {
+            if (isRecording() && exportTask != null) {
                 exportTask.addBitmap(frame);
             }
         }
@@ -524,6 +557,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     private Bitmap bitmap;
+    @Nullable
     private static WorldMapExportTask exportTask = null;
 
     public boolean isRecording() {
@@ -546,7 +580,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         } else Log.w(LOGTAG, "shareBitmap: null!");
     }
 
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -568,7 +602,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 {
                     String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
                     Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-                    ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile(), result.getMimeType());
+                    ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), result.getExportFile(), result.getMimeType());
                     return;
 
                 } else {
@@ -581,6 +615,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     };
 
+    @Nullable
     private ProgressDialog progressDialog;
     private void showProgress()
     {
@@ -698,6 +733,22 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
     public long getNow() {
         return options.now;
+    }
+
+    public void seekDateTime( Context context, long datetime ) {
+        long offsetMillis = datetime - options.now;
+        options.offsetMinutes = (offsetMillis / 1000 / 60);
+        updateViews(true);
+    }
+
+    /**
+     * @param x image coordinate x
+     * @param y image coordinate y
+     * @return corresponding [longitude, latitude] (or null)
+     */
+    @Nullable
+    public double[] getLatitudeLongitudeAt(float x, float y, double[] mid, int w, int h) {
+        return getMapProjection(mode).fromBitmapCoords((int) x, (int) y, mid, w, h);
     }
 
 }

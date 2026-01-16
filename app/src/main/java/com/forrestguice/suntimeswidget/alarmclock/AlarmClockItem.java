@@ -24,14 +24,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,27 +51,40 @@ public class AlarmClockItem implements Parcelable
     public static final int ICON_NOTIFICATION2 = R.drawable.ic_action_notification2;
 
     public long rowID = -1L;
+    @Nullable
     public AlarmType type = AlarmType.ALARM;
     public boolean enabled = false;
     public boolean repeating = false;
+    @Nullable
     public ArrayList<Integer> repeatingDays = null;
     public long alarmtime = -1L;
     public long timestamp = -1L;
     public int hour = -1, minute = -1;
     public long offset = 0;
+    @Nullable
     public String label = null;
     public String note = null;
+    @Nullable
     private String event = null;
+    @Nullable
     public String timezone = null;
+    @Nullable
     public Location location = null;
+    @Nullable
     public String ringtoneName = null;
+    @Nullable
     public String ringtoneURI = null;
     public boolean vibrate = false;
+    @Nullable
     public String actionID0 = null;
+    @Nullable
     public String actionID1 = null;
+    @Nullable
     public String actionID2 = null;
+    @Nullable
     public String actionID3 = null;
 
+    @Nullable
     protected HashMap<String, Long> alarmFlags = null;
     public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
     public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
@@ -81,6 +94,7 @@ public class AlarmClockItem implements Parcelable
     public static final String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
 
     public boolean modified = false;
+    @Nullable
     public AlarmState state = null;
 
     public AlarmClockItem() {}
@@ -104,6 +118,7 @@ public class AlarmClockItem implements Parcelable
 
         this.location = ((other.location != null) ? new Location(other.location) : null);
         this.event = other.event;
+        this.eventItem = null;
         this.timezone = other.timezone;
 
         this.vibrate = other.vibrate;
@@ -336,6 +351,7 @@ public class AlarmClockItem implements Parcelable
         eventItem = null;
     }
 
+    @Nullable
     private AlarmEvent.AlarmEventItem eventItem = null;
     public AlarmEvent.AlarmEventItem getEventItem(Context context)
     {
@@ -347,6 +363,9 @@ public class AlarmClockItem implements Parcelable
 
     public int getIcon()
     {
+        if (this.type == null) {
+            return ICON_NOTIFICATION;
+        }
         switch (this.type) {
             case ALARM: return ICON_ALARM;
             case NOTIFICATION2: return ICON_NOTIFICATION2;
@@ -357,6 +376,9 @@ public class AlarmClockItem implements Parcelable
 
     public String getLabel(Context context)
     {
+        if (type == null) {
+            return context.getString(R.string.alarmMode_notification);
+        }
         switch(type) {
             case ALARM: return context.getString(R.string.alarmMode_alarm);
             case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
@@ -411,7 +433,7 @@ public class AlarmClockItem implements Parcelable
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
-            case ACTIONID_RESERVED: actionID2 = value; break;
+            case ACTIONID_RESERVED: actionID3 = value; break;
             case ACTIONID_REMINDER: actionID2 = value; break;
             case ACTIONID_DISMISS: actionID1 = value; break;
             case ACTIONID_MAIN: default: actionID0 = value; break;
@@ -679,6 +701,7 @@ public class AlarmClockItem implements Parcelable
             this.displayString = displayString;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
@@ -724,28 +747,30 @@ public class AlarmClockItem implements Parcelable
      */
     public static enum AlarmTimeZone
     {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
+        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, TimeZones.ApparentSolarTime.TIMEZONEID),
+        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, TimeZones.LocalMeanTime.TIMEZONEID),
         SYSTEM_TIME("System Time Zone", null);
 
         private String displayString;
-        private String tzID;
+        private final String tzID;
 
-        private AlarmTimeZone(String displayString, String tzID)
+        private AlarmTimeZone(@NonNull String displayString, @Nullable String tzID)
         {
             this.displayString = displayString;
             this.tzID = tzID;
         }
 
+        @Nullable
         public String timeZoneID() {
             return tzID;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String displayString() {
             return displayString;
         }
@@ -789,10 +814,10 @@ public class AlarmClockItem implements Parcelable
                 return TimeZone.getDefault();
 
             } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
+                return new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
 
             } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
+                return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
 
             } else {
                 return TimeZone.getTimeZone(tzID);

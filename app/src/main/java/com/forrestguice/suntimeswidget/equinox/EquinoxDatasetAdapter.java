@@ -20,20 +20,21 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.Nullable;
-
-import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public static final int MAX_POSITIONS = 200;
     public static final int CENTER_POSITION = 100;
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
+    private final HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
-    private WeakReference<Context> contextRef;
-    private EquinoxViewOptions options;
+    private final WeakReference<Context> contextRef;
+    private final EquinoxViewOptions options;
 
     public EquinoxDatasetAdapter(Context context, EquinoxViewOptions options)
     {
@@ -59,6 +60,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         this.options = options;
     }
 
+    @NonNull
     @Override
     public EquinoxDatasetViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -68,13 +70,15 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     }
 
     @Override
-    public void onBindViewHolder(EquinoxDatasetViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull EquinoxDatasetViewHolder holder, int position)
     {
+        //noinspection ConstantConditions
         Context context = (contextRef != null ? contextRef.get() : null);
         if (context == null) {
             Log.w("EquinoxViewAdapter", "onBindViewHolder: null context!");
             return;
         }
+        //noinspection ConstantConditions
         if (holder == null) {
             Log.w("EquinoxViewAdapter", "onBindViewHolder: null view holder!");
             return;
@@ -102,7 +106,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     }
 
     @Override
-    public void onViewRecycled(EquinoxDatasetViewHolder holder)
+    public void onViewRecycled(@NonNull EquinoxDatasetViewHolder holder)
     {
         detachListeners(holder);
 
@@ -122,14 +126,15 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public boolean hasSelection() {
         return (selected_mode != null);
     }
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
-    protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+    @Nullable
+    protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {
         selected_position = position;
@@ -152,9 +157,9 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
 
     /**
      * Initialize data at position (returns cached data if it already exists).
-     * @param context
-     * @param position
-     * @return
+     * @param context context
+     * @param position position
+     * @return data
      */
     public SuntimesEquinoxSolsticeDataset initData(Context context, int position)
     {
@@ -216,7 +221,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         for (int i=0; i <holder.notes.size(); i++) {
             EquinoxDatasetViewHolder.EquinoxNote note = holder.notes.get(i);
             if (note.contextMenu != null && note.time != null) {
-                note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
+                note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
             }
         }
 
@@ -292,7 +297,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
             }
         };
     }
-    private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+    private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +313,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
             @Override
             public void onClick(View v)
             {
-                WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
+                SolsticeEquinoxMode mode = SolsticeEquinoxMode.values()[i];
                 if (holder.getSelected() == mode) {
                     holder.notes.get(i).contextMenu.performClick();
 
@@ -322,14 +327,14 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         };
     }
 
-    public static EquinoxDatasetViewHolder.EquinoxNote findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<EquinoxDatasetViewHolder.EquinoxNote> notes)
+    public static EquinoxDatasetViewHolder.EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxDatasetViewHolder.EquinoxNote> notes)
     {
         if (notes == null || now == null) {
             return null;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         EquinoxDatasetViewHolder.EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -352,14 +357,14 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         return closest;
     }
 
-    public static int findClosestPage(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestPage(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;

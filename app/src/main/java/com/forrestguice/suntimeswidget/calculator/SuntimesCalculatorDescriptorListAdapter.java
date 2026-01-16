@@ -22,9 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 
@@ -42,14 +41,14 @@ import java.lang.ref.WeakReference;
  */
 public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<SuntimesCalculatorDescriptor>
 {
-    private int layoutID, dropDownLayoutID;
+    private final int layoutID, dropDownLayoutID;
     private String pluginTag = "[plugin]", defaultTag = "[default]";
     private int pluginColor = Color.WHITE, defaultColor = Color.WHITE;
     private String defaultValue = null;
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
 
     @SuppressLint("ResourceType")
-    public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, @LayoutRes int resource, @LayoutRes int dropDownResource, @NonNull SuntimesCalculatorDescriptor[] entries)
+    public SuntimesCalculatorDescriptorListAdapter(@NonNull Context context, int resource, int dropDownResource, @NonNull SuntimesCalculatorDescriptor[] entries)
     {
         super(context, resource, entries);
         this.contextRef = new WeakReference<>(context);
@@ -132,9 +131,12 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
     @SuppressLint("ResourceType")
     public void initDisplayStrings(Context context)
     {
-        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values(context))
+        for (SuntimesCalculatorDescriptor value : SuntimesCalculatorDescriptor.values())
         {
-            value.initDisplayStrings(context);
+            int resID = value.getDisplayStringResID();
+            if (resID != -1 ){
+                value.setDisplayString(context.getString(resID));
+            }
         }
 
         defaultTag = context.getString(R.string.configLabel_tagDefault);

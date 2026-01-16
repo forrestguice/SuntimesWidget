@@ -30,7 +30,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -38,20 +37,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -68,17 +59,21 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
@@ -90,10 +85,16 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemImportTask;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.events.EventIcons;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.widget.SwitchCompat;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -105,7 +106,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmListDialog extends DialogFragment
+public class AlarmListDialog extends DialogBase
 {
     public static final String EXTRA_SELECTED_ROWID = "selectedRowID";
 
@@ -135,8 +136,9 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        AlarmSettings.setDefaultRingtoneUris(getActivity());
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
+        Context context = requireContext();
+        AlarmSettings.setDefaultRingtoneUris(context);
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmlist, parent, false);
 
         progress = (ProgressBar) content.findViewById(R.id.progress);
@@ -147,17 +149,17 @@ public class AlarmListDialog extends DialogFragment
         emptyView.setOnClickListener(onEmptyViewClick);
         emptyView.setVisibility(View.GONE);
 
-        adapter = new AlarmListDialogAdapter(getActivity());
+        adapter = new AlarmListDialogAdapter(context);
         adapter.setAdapterListener(adapterListener);
 
-        AppColorValues colors = AppColorValuesCollection.initSelectedColors(getActivity());
+        AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
         if (colors != null) {
             adapter.getOptions().colors = new AppColorValues(colors);
         }
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.addItemDecoration(itemDecoration);
+        list.setLayoutManager(new LinearLayoutManager(context));
+        list.addItemDecoration(new RecyclerView.LastItemBottomMarginDecorator(contextWrapper, adapter, R.dimen.lastitem_margin));
         list.setAdapter(adapter);
 
         if (savedState != null) {
@@ -204,8 +206,8 @@ public class AlarmListDialog extends DialogFragment
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        exportAlarms(getActivity(), uri);
+                    if (uri != null && getContext() != null) {
+                        exportAlarms(getContext(), uri);
                     }
                 }
                 break;
@@ -214,8 +216,8 @@ public class AlarmListDialog extends DialogFragment
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        importAlarms(getActivity(), uri);
+                    if (uri != null && getContext() != null) {
+                        importAlarms(getContext(), uri);
                     }
                 }
                 break;
@@ -236,15 +238,20 @@ public class AlarmListDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.alarmlist, menu);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu)
+    public void onPrepareOptionsMenu(@NonNull Menu menu)
     {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
         MenuItem selectedItem;
-        switch (AlarmSettings.loadPrefAlarmSort(getActivity())) {
+        switch (AlarmSettings.loadPrefAlarmSort(context)) {
             case AlarmSettings.SORT_BY_ALARMTIME: selectedItem = menu.findItem(R.id.sortByAlarmTime); break;
             case AlarmSettings.SORT_BY_CREATION: default: selectedItem = menu.findItem(R.id.sortByCreation); break;
         }
@@ -254,82 +261,69 @@ public class AlarmListDialog extends DialogFragment
 
         MenuItem enabledFirst = menu.findItem(R.id.sortEnabledFirst);
         if (enabledFirst != null) {
-            enabledFirst.setChecked(AlarmSettings.loadPrefAlarmSortEnabledFirst(getActivity()));
+            enabledFirst.setChecked(AlarmSettings.loadPrefAlarmSortEnabledFirst(context));
         }
 
         MenuItem showOffset = menu.findItem(R.id.showOffset);
         if (showOffset != null) {
-            showOffset.setChecked(AlarmSettings.loadPrefAlarmSortShowOffset(getActivity()));
+            showOffset.setChecked(AlarmSettings.loadPrefAlarmSortShowOffset(context));
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         Activity activity = getActivity();
-        switch (item.getItemId())
-        {
-            case R.id.sortByAlarmTime:
-                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.sortByCreation:
-                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.sortEnabledFirst:
-                AlarmSettings.savePrefAlarmSortEnabledFirst(getActivity(), !item.isChecked());
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.showOffset:
-                AlarmSettings.savePrefAlarmSortShowOffset(getActivity(), !item.isChecked());
-                if (Build.VERSION.SDK_INT >= 11) {
-                    if (activity != null) {
-                        activity.invalidateOptionsMenu();
-                    }
-                }  // else { TODO }
-                adapter.sortItems();
-                return true;
-
-            case R.id.action_clear:
-                if (activity != null) {
-                    confirmClearAlarms(activity);
-                }
-                return true;
-
-            case R.id.action_export:
-                if (activity != null) {
-                    exportAlarms(activity);
-                }
-                return true;
-
-            case R.id.action_import:
-                if (activity != null) {
-                    importAlarms(activity);
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (activity == null) {
+            return false;
         }
+
+        int itemId = item.getItemId();
+        if (itemId == R.id.sortByAlarmTime) {
+            AlarmSettings.savePrefAlarmSort(activity, AlarmSettings.SORT_BY_ALARMTIME);
+            if (Build.VERSION.SDK_INT >= 11) {
+                activity.invalidateOptionsMenu();
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
+
+        } else if (itemId == R.id.sortByCreation) {
+            AlarmSettings.savePrefAlarmSort(activity, AlarmSettings.SORT_BY_CREATION);
+            if (Build.VERSION.SDK_INT >= 11) {
+                activity.invalidateOptionsMenu();
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
+
+        } else if (itemId == R.id.sortEnabledFirst) {
+            AlarmSettings.savePrefAlarmSortEnabledFirst(activity, !item.isChecked());
+            if (Build.VERSION.SDK_INT >= 11) {
+                activity.invalidateOptionsMenu();
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
+
+        } else if (itemId == R.id.showOffset) {
+            AlarmSettings.savePrefAlarmSortShowOffset(activity, !item.isChecked());
+            if (Build.VERSION.SDK_INT >= 11) {
+                activity.invalidateOptionsMenu();
+            }  // else { TODO }
+            adapter.sortItems();
+            return true;
+
+        } else if (itemId == R.id.action_clear) {
+            confirmClearAlarms(activity);
+            return true;
+
+        } else if (itemId == R.id.action_export) {
+            exportAlarms(activity);
+            return true;
+
+        } else if (itemId == R.id.action_import) {
+            importAlarms(activity);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,7 +375,9 @@ public class AlarmListDialog extends DialogFragment
         if (listener != null) {
             listener.onAlarmDeleted(rowID);
         }
-        offerUndoDeleteAlarm(getActivity(), adapter.getItem(rowID));
+        if (getContext() != null) {
+            offerUndoDeleteAlarm(getContext(), adapter.getItem(rowID));
+        }
         adapter.removeItem(rowID);
         updateViews();
     }
@@ -391,7 +387,9 @@ public class AlarmListDialog extends DialogFragment
         if (listener != null) {
             listener.onAlarmsCleared();
         }
-        offerUndoClearAlarms(getActivity(), adapter.getItems());   // pass the (now stale) items to undo
+        if (getContext() != null) {
+            offerUndoClearAlarms(getContext(), adapter.getItems());   // pass the (now stale) items to undo
+        }
         reloadAdapter();                                           // and reload adapter (now cleared)
     }
 
@@ -426,47 +424,46 @@ public class AlarmListDialog extends DialogFragment
         confirm.show();
     }
 
+    @SuppressLint("WrongConstant")
     public void offerUndoClearAlarms(Context context, final List<AlarmClockItem> items)
     {
         View view = getView();
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.make(context, view, context.getString(R.string.clearalarms_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = getActivity();
+                    Context context = getContext();
                     if (context != null) {
                         addAlarm(context, items.toArray(new AlarmClockItem[0]));
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_DELETE_MILLIS).show();
         }
     }
 
+    @SuppressLint("WrongConstant")
     public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
     {
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmClockItem.AlarmType.ALARM.getDisplayString());
+            SnackbarUtils.make(context, view, context.getString(R.string.deletealarm_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = getActivity();
-                    if (context != null && deletedItem != null) {
-                        addAlarm(getActivity(), deletedItem);
+                    Context context = getContext();
+                    if (context != null) {
+                        addAlarm(context, deletedItem);
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_DELETE_MILLIS).show();
         }
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
@@ -495,7 +492,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.minute = minute;
         alarm.timezone = timezone;
         //Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
-        alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
+        alarm.setEvent(date != -1L ? EventUri.getEventInfoUri(EventUri.AUTHORITY(), Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
         alarm.repeatingDays = new ArrayList<>(repetitionDays);
@@ -520,7 +517,6 @@ public class AlarmListDialog extends DialogFragment
     /**
      * Add AlarmClockItem(s) to the alarms database.
      * @param items an array of one or more AlarmClockItem
-     * @return an array of added items (rowID updated)
      */
     public void addAlarm(final Context context, AlarmClockItem... items) {
         addAlarm(context, null, items);
@@ -619,6 +615,7 @@ public class AlarmListDialog extends DialogFragment
         return itemList.toArray(new AlarmClockItem[0]);
     }
 
+    @Nullable
     protected AlarmClockItemExportTask exportTask = null;
     private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
@@ -635,7 +632,7 @@ public class AlarmListDialog extends DialogFragment
             exportTask = null;
             showProgress(false);
 
-            Context context = getActivity();
+            Context context = getContext();
             if (context != null)
             {
                 File file = results.getExportFile();
@@ -645,23 +642,23 @@ public class AlarmListDialog extends DialogFragment
                 {
                     if (isAdded()) {
                         String successMessage = getString(R.string.msg_export_success, path);
-                        Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
                         // TODO: use a snackbar instead; offer 'copy path' action
                     }
 
                     if (Build.VERSION.SDK_INT >= 19) {
                         if (results.getExportUri() == null) {
-                            ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                            ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
                         }
                     } else {
-                        ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                        ExportTask.shareResult(context, results.getExportFile(), results.getMimeType());
                     }
                     return;
                 }
 
                 if (isAdded()) {
                     String failureMessage = getString(R.string.msg_export_failure, path);
-                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -670,16 +667,27 @@ public class AlarmListDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public interface ImportFragment
+    {
+        void startActivityForResult(Intent intent, int request);
+    }
+
     public void importAlarms(final Context context)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             return;
         }
-        importAlarms(AlarmListDialog.this, context, getLayoutInflater(), REQUEST_IMPORT_URI);
+        ImportFragment fragment = new ImportFragment() {
+            @Override
+            public void startActivityForResult(Intent intent, int request) {
+                AlarmListDialog.this.startActivityForResult(intent, request);
+            }
+        };
+        importAlarms(fragment, context, getLayoutInflater(), REQUEST_IMPORT_URI);
     }
 
-    public static void importAlarms(final Fragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
+    public static void importAlarms(final ImportFragment fragment, final Context context, LayoutInflater layoutInflater, final int request)
     {
         DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
         {
@@ -712,6 +720,7 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
+    @Nullable
     protected AlarmClockItemImportTask importTask = null;
     private final AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
     {
@@ -729,61 +738,60 @@ public class AlarmListDialog extends DialogFragment
             importTask = null;
             showProgress(false);
 
-            if (result.getResult())
+            if (result.getResult() && getContext() != null)
             {
                 AlarmClockItem[] items = result.getItems();
-                addAlarm(getActivity(), new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                addAlarm(getContext(), new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
-                        if (isAdded()) {
-                            offerUndoImport(getActivity(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
+                        if (isAdded() && getContext() != null && items != null) {
+                            offerUndoImport(getContext(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
                         }
                     }
                 }, items);
 
                 /*if (isAdded()) {
                     String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
-                    Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), successMessage, Toast.LENGTH_LONG).show();
                 }*/
+                //noinspection UnnecessaryReturnStatement
                 return;    // finished import
 
             } else {
-                if (isAdded())
+                if (isAdded() && getContext() != null)
                 {
                     Uri uri = result.getUri();   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
                     String failureMessage = getString(R.string.msg_import_failure, path);
-                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
         }
     };
 
+    @SuppressLint("WrongConstant")
     public void offerUndoImport(Context context, final List<AlarmClockItem> items)
     {
         View view = getView();
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+            SnackbarUtils.make(context, view, context.getString(R.string.importalarms_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
+                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = getActivity();
-                    if (context != null) {
+                    if (getContext() != null) {
                         for (AlarmClockItem item : items) {
                             if (item != null) {
-                                context.sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+                                context.sendBroadcast(AlarmNotifications.getAlarmIntent(getContext(), AlarmNotifications.ACTION_DELETE, item.getUri()));
                             }
                         }
                     }
                 }
-            });
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_IMPORT_MILLIS);
-            snackbar.show();
+            }).setDuration(UNDO_IMPORT_MILLIS).show();
         }
     }
     public static final int UNDO_IMPORT_MILLIS = 8000;
@@ -799,10 +807,12 @@ public class AlarmListDialog extends DialogFragment
     }
     public void reloadAdapter(Long rowId, AlarmListTask.AlarmListTaskListener taskListener)
     {
-        AlarmListTask listTask = new AlarmListTask(getActivity());
-        listTask.setTaskListener(taskListener);
-        listTask.execute(rowId);
-        //Log.d("DEBUG", "reloadAdapter");
+        if (getContext() != null) {
+            AlarmListTask listTask = new AlarmListTask(getContext());
+            listTask.setTaskListener(taskListener);
+            listTask.execute(rowId);
+            //Log.d("DEBUG", "reloadAdapter");
+        }
     }
 
     protected AlarmListTask.AlarmListTaskListener onListLoaded = new AlarmListTask.AlarmListTaskListener() {
@@ -823,7 +833,7 @@ public class AlarmListDialog extends DialogFragment
             if (data.size() > 0)
             {
                 AlarmClockItem item = data.get(0);
-                if (item != null)
+                if (item != null && getContext() != null)
                 {
                     //Log.d("DEBUG", "onItemChanged: " + item.rowID + ", state: " + item.state.getState());
                     switch(item.getState())
@@ -833,7 +843,7 @@ public class AlarmListDialog extends DialogFragment
                             break;
                         default:
                             //Log.d("DEBUG", "onItemChanged: updating item timestamp");
-                            AlarmNotifications.updateAlarmTime(getActivity(), item);
+                            AlarmNotifications.updateAlarmTime(getContext(), item);
                             break;
                     }
                     adapter.setItem(item);
@@ -855,8 +865,8 @@ public class AlarmListDialog extends DialogFragment
      */
     public static class AlarmListTask extends AsyncTask<Long, AlarmClockItem, List<AlarmClockItem>>
     {
-        private AlarmDatabaseAdapter db;
-        private WeakReference<Context> contextRef;
+        private final AlarmDatabaseAdapter db;
+        private final WeakReference<Context> contextRef;
 
         private boolean option_includeState = true;
         public void setOption_includeState(boolean value) {
@@ -937,7 +947,7 @@ public class AlarmListDialog extends DialogFragment
 
         public static abstract class AlarmListTaskListener
         {
-            public void onLoadFinished(List<AlarmClockItem> result) {};
+            public void onLoadFinished(List<AlarmClockItem> result) {}
         }
     }
 
@@ -1424,64 +1434,51 @@ public class AlarmListDialog extends DialogFragment
 
         protected void showOverflowMenu(final Context context, final long rowId, final View buttonView)
         {
-            PopupMenu menu = new PopupMenu(context, buttonView);
-            MenuInflater inflater = menu.getMenuInflater();
-            inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
-            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext1, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu) {
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
-                    switch (menuItem.getItemId())
-                    {
-                        case R.id.action_delete:
-                            AlarmClockItem item = getItem(rowId);
-                            if (item != null) {
-                                AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
-                            }
-                            return true;
-
-                        default:
-                            return false;
+                    if (menuItem.getItemId() == R.id.action_delete) {
+                        AlarmClockItem item = getItem(rowId);
+                        if (item != null) {
+                            AlarmEditDialog.confirmDeleteAlarm(context, item, onDeleteConfirmed(context, item));
+                        }
+                        return true;
                     }
+                    return false;
                 }
-            }));
-
-            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-            menu.show();
+            })).show();
         }
 
         protected void showAlarmTypeMenu(final Context context, final long rowId, final View buttonView)
         {
-            PopupMenu menu = new PopupMenu(context, buttonView);
-            MenuInflater inflater = menu.getMenuInflater();
-            inflater.inflate(R.menu.alarmtype, menu.getMenu());
-
-            menu.setOnMenuItemClickListener(new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu) {
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
-                    switch (menuItem.getItemId())
-                    {
-                        case R.id.alarmTypeNotification:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
+                    int itemId = menuItem.getItemId();
+                    if (itemId == R.id.alarmTypeNotification) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
 
-                        case R.id.alarmTypeNotification1:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
+                    } else if (itemId == R.id.alarmTypeNotification1) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
 
-                        case R.id.alarmTypeNotification2:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
-
-                        case R.id.alarmTypeAlarm:
-                        default:
-                            return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
+                    } else if (itemId == R.id.alarmTypeNotification2) {
+                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
                     }
+                    return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
                 }
-            }));
-
-            PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-            menu.show();
+            })).show();
         }
 
         protected boolean changeAlarmType(Context context, final long rowId, AlarmClockItem.AlarmType type)
@@ -1573,7 +1570,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         public void init(Context context) {
-            colors = new AppColorValues(context, true);
+            colors = new AppColorValues(AndroidResources.wrap(context), true);
         }
     }
 
@@ -1832,12 +1829,16 @@ public class AlarmListDialog extends DialogFragment
             if (view.typeButton != null)
             {
                 int typeDrawable;
-                switch (item.type) {
-                    case NOTIFICATION: typeDrawable = res_iconNotification; break;
-                    case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
-                    case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
-                    case ALARM: default: typeDrawable = res_iconAlarm; break;
-                }
+                if (item.type != null)
+                {
+                    switch (item.type) {
+                        case NOTIFICATION: typeDrawable = res_iconNotification; break;
+                        case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
+                        case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
+                        case ALARM: default: typeDrawable = res_iconAlarm; break;
+                    }
+                } else typeDrawable = res_iconAlarm;
+
                 view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, typeDrawable));
                 view.typeButton.setContentDescription(item.type.getDisplayString());
 
@@ -2075,7 +2076,7 @@ public class AlarmListDialog extends DialogFragment
 
             // note tray
             if (text_usernote != null) {
-                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(context, item.note, AlarmNotifications.getData(context, item)) : "");
+                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, AlarmNotifications.getData(context, item)) : "");
             }
             if (view.noteTray != null) {
                 view.noteTray.setVisibility(isSelected && item.note != null && !item.note.isEmpty() ? View.VISIBLE : View.GONE);
@@ -2166,9 +2167,9 @@ public class AlarmListDialog extends DialogFragment
                     } else if (background instanceof AnimationDrawable) {
                         //Log.d("DEBUG", "starting background (AnimatedDrawable): " + this);
                         AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background, this.anim_enterFadeDuration, this.anim_exitFadeDuration);
-                    } else {
+                    } //else {
                         //Log.d("DEBUG", "starting background: skipped: " + this);
-                    }
+                    //}
                 }
             }
         }
@@ -2223,20 +2224,6 @@ public class AlarmListDialog extends DialogFragment
             animated.start();
         }
     }
-
-    private final RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
-    {
-        @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state)
-        {
-            int position = parent.getChildAdapterPosition(view);
-            if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
-                outRect.bottom = 400;
-            } else {
-                super.getItemOffsets(outRect, view, parent, state);
-            }
-        }
-    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
