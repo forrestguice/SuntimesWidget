@@ -122,7 +122,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         SuntimesRiseSetDataset[] yearData = LightGraphBitmap.createYearData(context, dataset);
 
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-        options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+        options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
         Bitmap bitmap = graph.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
@@ -146,7 +146,7 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LightGraphOptions(context);
+        options = new LightGraphOptions(AndroidResources.wrap(context));
 
         options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
         options.colors.setColor(COLOR_DAY, theme.getDayColor());

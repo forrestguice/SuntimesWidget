@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -79,7 +80,7 @@ public class LightMapView extends ImageView
      */
     private void init(Context context)
     {
-        colors = new LightMapOptions(context);
+        colors = new LightMapOptions(AndroidResources.wrap(context));
         if (isInEditMode())
         {
             setBackgroundColor(colors.values.getColor(LightMapColorValues.COLOR_NIGHT));

@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -68,7 +69,7 @@ public class LineGraphView extends ImageView
      */
     private void init(Context context)
     {
-        options = new LineGraphOptions(context);
+        options = new LineGraphOptions(AndroidResources.wrap(context));
         if (isInEditMode())
         {
             setBackgroundColor(options.getColor(LineGraphColorValues.COLOR_GRAPH_BG));
@@ -121,7 +122,7 @@ public class LineGraphView extends ImageView
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (options == null) {
-            options = new LineGraphOptions(context);
+            options = new LineGraphOptions(AndroidResources.wrap(context));
         }
         options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());

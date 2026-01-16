@@ -79,6 +79,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.DateFormat;
@@ -426,7 +427,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         if (values != null) {
             lightmap.getColors().values = new LightMapColorValues(values);
         } else if (lightmap.getColors().values == null) {
-            lightmap.getColors().init(context);
+            lightmap.getColors().init(AndroidResources.wrap(context));
         }
     }
 

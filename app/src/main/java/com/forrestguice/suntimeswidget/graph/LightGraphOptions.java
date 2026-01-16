@@ -18,14 +18,12 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.content.Context;
-import android.util.DisplayMetrics;
-
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.SystemTimeFormat;
 
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
@@ -93,11 +91,11 @@ public class LightGraphOptions
 
     public boolean option_drawNow_crosshair = LightGraphView.DEF_KEY_GRAPH_SHOWCROSSHAIR;
 
-    public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
+    public int densityDpi = 160;  // DisplayMetrics.DENSITY_DEFAULT;
 
     public boolean is24 = false;
-    public void setTimeFormat(Context context, TimeFormatMode timeFormat) {
-        is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
+    public void setTimeFormat(TimeFormatMode timeFormat) {
+        is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat()));
     }
 
     public void setLocation(Location value) {
@@ -122,13 +120,13 @@ public class LightGraphOptions
     public LightGraphOptions() {}
 
     @SuppressWarnings("ResourceType")
-    public LightGraphOptions(Context context) {
+    public LightGraphOptions(Resources context) {
         init(context);
     }
 
-    protected void init(Context context)
+    protected void init(Resources context)
     {
-        colors = new LightGraphColorValues(AndroidResources.wrap(context));
+        colors = new LightGraphColorValues(context);
         //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
         //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
         //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -138,11 +136,11 @@ public class LightGraphOptions
         //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
     }
 
-    public void initDefaultDark(Context context) {
+    public void initDefaultDark(Resources context) {
         init(context);
     }
 
-    public void initDefaultLight(Context context) {
+    public void initDefaultLight(Resources context) {
         init(context);
     }
 

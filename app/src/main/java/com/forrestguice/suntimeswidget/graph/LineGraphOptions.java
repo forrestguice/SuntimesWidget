@@ -18,13 +18,11 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.content.Context;
-import android.util.DisplayMetrics;
-
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
-import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.Resources;
+import com.forrestguice.util.SystemTimeFormat;
 
 import java.util.TimeZone;
 import java.util.concurrent.locks.Lock;
@@ -106,7 +104,7 @@ public class LineGraphOptions
     public int option_drawNow = DRAW_SUN1;
     public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
 
-    public int densityDpi = DisplayMetrics.DENSITY_DEFAULT;
+    public int densityDpi = 160;  // DisplayMetrics.DENSITY_DEFAULT;
 
     public LineGraphColorValues colors;
     public int getColor(String key) {
@@ -114,8 +112,8 @@ public class LineGraphOptions
     }
 
     public boolean is24 = false;
-    public void setTimeFormat(Context context, TimeFormatMode timeFormat) {
-        is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && android.text.format.DateFormat.is24HourFormat(context)));
+    public void setTimeFormat(TimeFormatMode timeFormat) {
+        is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat()));
     }
 
     public Location location = null;
@@ -132,13 +130,13 @@ public class LineGraphOptions
     }
 
     @SuppressWarnings("ResourceType")
-    public LineGraphOptions(Context context) {
+    public LineGraphOptions(Resources context) {
         init(context);
     }
 
-    public void init(Context context)
+    public void init(Resources context)
     {
-        colors = new LineGraphColorValues(AndroidResources.wrap(context));
+        colors = new LineGraphColorValues(context);
         //gridX_width = SuntimesUtils.dpToPixels(context, gridX_width);
         //gridY_width = SuntimesUtils.dpToPixels(context, gridY_width);
         //axisX_width = SuntimesUtils.dpToPixels(context, axisX_width);
@@ -148,16 +146,16 @@ public class LineGraphOptions
         //axisY_labels_textsize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, axisY_labels_textsize, context.getResources().getDisplayMetrics());
     }
 
-    public void initDefaultDark(Context context)
+    public void initDefaultDark(Resources context)
     {
         init(context);
-        colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), true));  // TODO: Resources
+        colors = new LineGraphColorValues(colors.getDefaultValues(context, true));
     }
 
-    public void initDefaultLight(Context context)
+    public void initDefaultLight(Resources context)
     {
         init(context);
-        colors = new LineGraphColorValues(colors.getDefaultValues(AndroidResources.wrap(context), false));  // TODO: Resources
+        colors = new LineGraphColorValues(colors.getDefaultValues(context, false));
     }
 
     public void acquireDrawLock()

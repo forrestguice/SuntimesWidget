@@ -294,7 +294,7 @@ public class WidgetThemePreview
         if (view != null && context != null)
         {
             LightMapOptions colors = new LightMapOptions();
-            colors.initDefaultDark(context);
+            colors.initDefaultDark(AndroidResources.wrap(context));
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, values.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR));
             colors.values.setColor(LightMapColorValues.COLOR_CIVIL, values.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR));
@@ -482,8 +482,8 @@ public class WidgetThemePreview
         if (view != null)
         {
             Context context = view.getContext();
-            LineGraphOptions options = new LineGraphOptions(context);
-            options.initDefaultDark(previewLayout.getContext());
+            LineGraphOptions options = new LineGraphOptions(AndroidResources.wrap(context));
+            options.initDefaultDark(AndroidResources.wrap(previewLayout.getContext()));
             options.graph_width = LineGraphBitmap.MINUTES_IN_DAY;
             options.graph_height = 180;
             options.graph_x_offset = options.graph_y_offset = 0;
@@ -495,7 +495,7 @@ public class WidgetThemePreview
             options.moonPath_show_line = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWMOON, MAPTAG_LIGHTMAP, DEF_KEY_GRAPH_SHOWMOON);
             options.moonPath_show_fill = options.sunPath_show_fill;
             options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-            options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+            options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
 
             LineGraphTask drawTask = new LineGraphTask(context);
             drawTask.setListener(new LineGraphTaskListener()
@@ -521,7 +521,7 @@ public class WidgetThemePreview
         if (view != null)
         {
             final Context context = view.getContext();
-            final LightGraphOptions options = new LightGraphOptions(context);
+            final LightGraphOptions options = new LightGraphOptions(AndroidResources.wrap(context));
 
             boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
             options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
@@ -534,7 +534,7 @@ public class WidgetThemePreview
             options.graph_height = 24;    // hours
             options.graph_x_offset = options.graph_y_offset = 0;
             options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-            options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+            options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
 
             options.axisX_show = options.axisY_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_GRAPH_SHOWAXIS, MAPTAG_LIGHTGRAPH, DEF_KEY_GRAPH_SHOWAXIS);
             options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTGRAPH, DEF_KEY_WORLDMAP_MINORGRID);

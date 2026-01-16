@@ -93,6 +93,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.security.InvalidParameterException;
@@ -840,7 +841,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (view != null)
         {
             LightMapOptions colors = new LightMapOptions();
-            colors.initDefaultDark(this);
+            colors.initDefaultDark(AndroidResources.wrap(this));
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_CIVIL, chooseColorCivil.getColor());

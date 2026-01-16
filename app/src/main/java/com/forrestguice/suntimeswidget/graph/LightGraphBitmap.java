@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -76,12 +75,12 @@ public class LightGraphBitmap
     }
 
     @Nullable
-    public static SuntimesRiseSetDataset[] createYearData(Context context, @Nullable SuntimesRiseSetDataset data0) {
+    public static SuntimesRiseSetDataset[] createYearData(Object context, @Nullable SuntimesRiseSetDataset data0) {
         return createYearData(context, data0, null);
     }
 
     @Nullable
-    public static SuntimesRiseSetDataset[] createYearData(Context context, @Nullable SuntimesRiseSetDataset data0, @Nullable TimeZone timezone)
+    public static SuntimesRiseSetDataset[] createYearData(Object context, @Nullable SuntimesRiseSetDataset data0, @Nullable TimeZone timezone)
     {
         if (data0 != null && data0.dataActual != null)
         {

@@ -18,10 +18,8 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.content.Context;
-
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
-import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.Resources;
 
 import java.util.concurrent.locks.Lock;
 
@@ -56,20 +54,20 @@ public class LightMapOptions
     }
 
     @SuppressWarnings("ResourceType")
-    public LightMapOptions(Context context) {
+    public LightMapOptions(Resources context) {
         init(context);
     }
 
-    public void initDefaultDark(Context context) {
-        values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), true));      // TODO: Resources
+    public void initDefaultDark(Resources context) {
+        values = new LightMapColorValues(values.getDefaultValues(context, true));
     }
 
-    public void initDefaultLight(Context context) {
-        values = new LightMapColorValues(values.getDefaultValues(AndroidResources.wrap(context), false));       // TODO: Resources
+    public void initDefaultLight(Resources context) {
+        values = new LightMapColorValues(values.getDefaultValues(context, false));
     }
 
-    public void init(Context context) {
-        values = new LightMapColorValues(AndroidResources.wrap(context));
+    public void init(Resources context) {
+        values = new LightMapColorValues(context);
     }
 
     public void acquireDrawLock()

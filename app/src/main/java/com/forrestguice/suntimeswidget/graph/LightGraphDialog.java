@@ -181,7 +181,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         if (graph != null)
         {
             options = graph.getOptions();
-            options.init(context);
+            options.init(AndroidResources.wrap(context));
 
             graph.setTaskListener(new LightGraphTaskListener()
             {
@@ -471,9 +471,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
             }
 
         } else if (options.colors == null) {
-            options.init(context);
+            options.init(AndroidResources.wrap(context));
             if (lightmap != null) {
-                lightmap.getColors().init(context);
+                lightmap.getColors().init(AndroidResources.wrap(context));
             }
         }
     }

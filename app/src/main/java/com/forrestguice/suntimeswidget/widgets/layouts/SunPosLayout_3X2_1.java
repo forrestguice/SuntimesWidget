@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
@@ -102,7 +103,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
 
         LineGraphBitmap graph = new LineGraphBitmap();
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-        options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
+        options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
         Bitmap bitmap = graph.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
@@ -125,10 +126,11 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LineGraphOptions(context);
+        AndroidResources resources = AndroidResources.wrap(context);
+        options = new LineGraphOptions(resources);
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
-            options.initDefaultLight(context);
-        else options.initDefaultDark(context);
+            options.initDefaultLight(resources);
+        else options.initDefaultDark(resources);
 
         options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());

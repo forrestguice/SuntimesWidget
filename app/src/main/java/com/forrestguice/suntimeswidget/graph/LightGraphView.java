@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -113,7 +114,7 @@ public class LightGraphView extends ImageView
      */
     private void init(Context context)
     {
-        options = new LightGraphOptions(context);
+        options = new LightGraphOptions(AndroidResources.wrap(context));
         if (isInEditMode()) {
             setBackgroundColor(options.colors.getColor(COLOR_DAY));
         }
@@ -170,7 +171,7 @@ public class LightGraphView extends ImageView
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
         if (options == null) {
-            options = new LightGraphOptions(context);
+            options = new LightGraphOptions(AndroidResources.wrap(context));
         }
 
         options.colors.setColor(COLOR_NIGHT, theme.getNightColor());

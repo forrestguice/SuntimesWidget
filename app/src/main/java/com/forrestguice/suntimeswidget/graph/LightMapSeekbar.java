@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.SeekBar;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -49,13 +50,13 @@ public class LightMapSeekbar extends SeekBar
     public LightMapSeekbar(Context context)
     {
         super(context, null, R.style.LightMapSeekBar);
-        init(context, new LightMapOptions(context));
+        init(context, new LightMapOptions(AndroidResources.wrap(context)));
     }
 
     public LightMapSeekbar(Context context, AttributeSet attribs)
     {
         super(context, attribs);
-        init(context, new LightMapOptions(context));
+        init(context, new LightMapOptions(AndroidResources.wrap(context)));
     }
 
     protected void init(Context context, LightMapOptions options)

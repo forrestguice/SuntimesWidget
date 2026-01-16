@@ -2436,7 +2436,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             if (values != null) {
                 lightmap.getColors().values = new LightMapColorValues(values);
             } else if (lightmap.getColors().values == null) {
-                lightmap.getColors().init(context);
+                lightmap.getColors().init(AndroidResources.wrap(context));
             }
         }
 
@@ -2445,7 +2445,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             if (values != null) {
                 graphView.getOptions().colors = new LineGraphColorValues(values);
             } else if (graphView.getOptions().colors == null) {
-                graphView.getOptions().init(context);
+                graphView.getOptions().init(AndroidResources.wrap(context));
             }
             graphView.updateViews(graphView.getVisibility() == View.VISIBLE ? data : null);
         }
@@ -3161,14 +3161,14 @@ public class LightMapDialog extends BottomSheetDialogBase
                 if (values != null) {
                     lightmap.getColors().values = new LightMapColorValues(values);
                 } else {
-                    lightmap.getColors().init(context);
+                    lightmap.getColors().init(AndroidResources.wrap(context));
                 }
             }
             if (graphView != null) {
                 if (values != null) {
                     graphView.getOptions().colors = new LineGraphColorValues(values);
                 } else {
-                    graphView.getOptions().init(context);
+                    graphView.getOptions().init(AndroidResources.wrap(context));
                 }
             }
             themeViews(context);
