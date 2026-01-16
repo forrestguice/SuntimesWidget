@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LightGraphTask;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
@@ -117,14 +118,12 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? dataset.timezone()
                 : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
 
-        LightGraphTask drawTask = new LightGraphTask();
-
-        SuntimesRiseSetDataset[] yearData = LightGraphTask.createYearData(context, dataset);
-        drawTask.setData(yearData);
+        LightGraphBitmap graph = new LightGraphBitmap();
+        SuntimesRiseSetDataset[] yearData = LightGraphBitmap.createYearData(context, dataset);
 
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
         options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
+        Bitmap bitmap = graph.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());

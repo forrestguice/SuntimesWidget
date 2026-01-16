@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LightGraphTask;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
@@ -580,7 +581,7 @@ public class WidgetThemePreview
                     SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(data0);
                     //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
                     data.calculateData(context);
-                    drawTask.setData(LightGraphTask.createYearData(context, data));
+                    drawTask.setData(LightGraphBitmap.createYearData(context, data));
                     handler.post(new Runnable()
                     {
                         @Override

@@ -214,7 +214,7 @@ public class LightGraphView extends ImageView
                 String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
                 TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
-                data = LightGraphTask.createYearData(getContext(), data0, timezone);
+                data = LightGraphBitmap.createYearData(getContext(), data0, timezone);
                 if (data != null) {
                     options.earliestLatestData = EarliestLatestSunriseSunsetData.findEarliestLatest(TimeMode.OFFICIAL, data);
                 }
