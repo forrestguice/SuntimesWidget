@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.util.ContextInterface;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -71,7 +72,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WidgetSettingsTest extends SuntimesActivityTestBase
 {
     @Rule

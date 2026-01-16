@@ -29,6 +29,7 @@ import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -51,7 +52,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class ImportAlarmsTest extends SuntimesActivityTestBase
 {
     private Context mockContext;

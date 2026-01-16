@@ -29,6 +29,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +49,7 @@ import static org.junit.Assert.assertNotNull;
 
 @Category(UnlistedTest.class)
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesScreenshots1 extends SuntimesActivityTestBase
 {
     @Rule

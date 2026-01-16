@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,7 +59,7 @@ import java.util.TimeZone;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class DialogTest extends SuntimesActivityTestBase
 {
     @Rule

@@ -32,6 +32,7 @@ import android.widget.DatePicker;
 
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -57,7 +58,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
  */
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
     @Rule

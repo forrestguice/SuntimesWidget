@@ -30,6 +30,7 @@ import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +47,7 @@ import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_P
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class GetFixDatabaseAdapterTest
 {
     private Context mockContext;

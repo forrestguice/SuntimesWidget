@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.After;
@@ -87,7 +88,7 @@ import static org.hamcrest.Matchers.hasToString;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 {
     @Rule

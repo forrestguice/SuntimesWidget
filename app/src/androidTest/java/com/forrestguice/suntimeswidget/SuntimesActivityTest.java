@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.hamcrest.Matcher;
@@ -93,7 +94,7 @@ import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesActivityTest extends SuntimesActivityTestBase
 {
     @Rule

@@ -23,6 +23,8 @@ import android.content.Intent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -37,7 +39,7 @@ import java.io.IOException;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class LaunchActivityTest extends SuntimesActivityTestBase
 {
     @Rule

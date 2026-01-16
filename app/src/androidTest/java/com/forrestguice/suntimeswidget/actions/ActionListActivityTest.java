@@ -27,6 +27,8 @@ import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import androidx.test.filters.LargeTest;
 
 import org.junit.After;
@@ -54,7 +56,7 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class ActionListActivityTest extends SuntimesActivityTestBase
 {
     @Rule

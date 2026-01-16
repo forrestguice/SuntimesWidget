@@ -20,6 +20,9 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
 import android.os.Parcel;
+
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -28,7 +31,7 @@ import org.junit.runner.RunWith;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmStateTest
 {
     @Test

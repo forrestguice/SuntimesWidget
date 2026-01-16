@@ -34,12 +34,13 @@ import org.junit.runner.RunWith;
 import java.util.Set;
 
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class EventSettingsTest extends SuntimesActivityTestBase
 {
     @Rule

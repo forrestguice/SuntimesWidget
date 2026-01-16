@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment;
 import com.forrestguice.suntimeswidget.support.espresso.DataInteractionHelper;
 import com.forrestguice.suntimeswidget.support.espresso.ViewInteractionHelper;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -81,7 +82,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 {
     @Rule

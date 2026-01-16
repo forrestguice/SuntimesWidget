@@ -29,6 +29,8 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.WidgetConfigActivityTest;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -58,7 +60,7 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class TileActivityTest extends SuntimesActivityTestBase
 {
     @Rule

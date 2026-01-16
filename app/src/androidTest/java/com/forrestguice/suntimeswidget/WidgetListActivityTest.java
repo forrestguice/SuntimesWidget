@@ -27,6 +27,8 @@ import com.forrestguice.suntimeswidget.actions.ActionListActivityTest;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivityTest;
 import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -52,7 +54,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatch
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WidgetListActivityTest extends SuntimesActivityTestBase
 {
     @Rule
