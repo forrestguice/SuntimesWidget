@@ -111,7 +111,7 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
 
             @Override
             public void launch(Intent intent, ActivityOptionsCompat options) {
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResult(intent, requestCode, (options != null ? options.toBundle() : null));
             }
         });
         return launchers.get(requestCode);

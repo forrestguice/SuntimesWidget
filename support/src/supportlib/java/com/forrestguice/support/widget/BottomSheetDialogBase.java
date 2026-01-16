@@ -252,7 +252,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
 
             @Override
             public void launch(Intent intent, ActivityOptionsCompat options) {
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResult(intent, requestCode, (options != null ? options.toBundle() : null));
             }
         });
         return launchers.get(requestCode);
