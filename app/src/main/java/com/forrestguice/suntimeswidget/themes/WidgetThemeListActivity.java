@@ -74,9 +74,6 @@ import com.forrestguice.support.widget.Toolbar;
 
 import java.io.File;
 
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
-
 public class WidgetThemeListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
@@ -84,9 +81,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     public static final int WALLPAPER_DELAY = 1000;
 
+    public static final int ADD_THEME_REQUEST = WidgetThemeConfigActivity.ADD_THEME_REQUEST;
+    public static final int EDIT_THEME_REQUEST = WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
     public static final int PICK_THEME_REQUEST = 1;
     public static final int IMPORT_REQUEST = 100;
     public static final int EXPORT_REQUEST = 200;
+
+    private final ActivityResultLauncherCompat startActivityForResult_addTheme = registerForActivityResultCompat(ADD_THEME_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_editTheme = registerForActivityResultCompat(EDIT_THEME_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EXPORT_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
 
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
@@ -284,7 +288,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
-        startActivityForResult(intent, ADD_THEME_REQUEST);
+        startActivityForResult_addTheme.launch(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -302,7 +306,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (previewID >= 0) {
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
             }
-            startActivityForResult(intent, EDIT_THEME_REQUEST);
+            startActivityForResult_editTheme.launch(intent);
             overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
         }
     }
@@ -316,7 +320,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (previewID >= 0) {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
-        startActivityForResult(intent, ADD_THEME_REQUEST);
+        startActivityForResult_addTheme.launch(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -394,7 +398,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 String filename = exportTarget + ExportThemesTask.FILEEXT;
                 Intent intent = ExportTask.getCreateFileIntent(filename, ExportThemesTask.MIMETYPE);
                 try {
-                    startActivityForResult(intent, EXPORT_REQUEST);
+                    startActivityForResult_export.launch(intent);
                     return true;
 
                 } catch (ActivityNotFoundException e) {
@@ -434,7 +438,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             } else {
                 Intent intent = ExportTask.getOpenFileIntent(ExportThemesTask.MIMETYPE);
-                startActivityForResult(intent, IMPORT_REQUEST);
+                startActivityForResult_import.launch(intent);
                 return true;
             }
         }
@@ -729,9 +733,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
      * @param data result data (containing: SuntimesTheme.THEME_NAME)
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case ADD_THEME_REQUEST:

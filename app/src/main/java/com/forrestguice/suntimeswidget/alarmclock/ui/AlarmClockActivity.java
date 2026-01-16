@@ -136,7 +136,10 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final int REQUEST_EDITALARM = 1;
     public static final int REQUEST_ADDALARM = 10;
-    public static final int REQUEST_SETTINGS = 20;
+    public static final int REQUEST_SETTINGS = SuntimesNavigation.REQUEST_SETTINGS;
+    private final ActivityResultLauncherCompat startActivityForResult_editAlarm = registerForActivityResultCompat(REQUEST_EDITALARM);
+    private final ActivityResultLauncherCompat startActivityForResult_addAlarm = registerForActivityResultCompat(REQUEST_ADDALARM);
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(REQUEST_SETTINGS);
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
     public static final String WARNINGID_NOTIFICATIONS_CHANNEL = "NotificationsChannelWarning";
@@ -223,9 +226,9 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_ADDALARM:
@@ -881,14 +884,14 @@ public class AlarmClockActivity extends AppCompatActivity
             String transitionName = ViewCompat.getTransitionName(sharedView);
             if (transitionName != null)
             {
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName).toBundle();
-                startActivityForResult(intent, requestCode, options);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName);
+                startActivityForResultCompat(intent, requestCode, options);
 
             } else {
-                startActivityForResult(intent, requestCode);
+                startActivityForResultCompat(intent, requestCode);
             }
         } else {
-            startActivityForResult(intent, requestCode);
+            startActivityForResultCompat(intent, requestCode);
         }
         return true;
     }
@@ -1190,7 +1193,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        startActivityForResultCompat(settingsIntent, REQUEST_SETTINGS);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 

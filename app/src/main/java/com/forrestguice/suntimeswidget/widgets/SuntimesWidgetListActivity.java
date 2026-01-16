@@ -76,6 +76,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     public static final int IMPORT_REQUEST = 100;
     public static final int EXPORT_REQUEST = 200;
+    private final ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EXPORT_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
 
     private ListView widgetList;
     private WidgetListAdapter widgetListAdapter;
@@ -122,9 +124,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case EXPORT_REQUEST:
@@ -359,7 +361,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             String filename = SuntimesBackupTask.DEF_EXPORT_TARGET + WidgetSettingsExportTask.FILEEXT;
             Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
             try {
-                startActivityForResult(intent, EXPORT_REQUEST);
+                startActivityForResult_export.launch(intent);
                 return;
 
             } catch (ActivityNotFoundException e) {
@@ -424,7 +426,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void importSettings(Context context)
     {
         if (context != null) {
-            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            startActivityForResult_import.launch(ExportTask.getOpenFileIntent("text/*"));
         }
     }
 

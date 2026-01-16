@@ -173,7 +173,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
-    public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_NOTEINDEX = "noteIndex";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard_main";
@@ -197,6 +196,8 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_MOON = "moon";
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
+
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(SuntimesNavigation.REQUEST_SETTINGS);
 
     private Menu actionBarMenu;
     private String appTheme;
@@ -293,7 +294,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (AppSettings.isFirstLaunch(this))
         {
-            startActivityForResult(new Intent(this, WelcomeActivity.class), SUNTIMES_SETTINGS_REQUEST);
+            startActivityForResult_settings.launch(new Intent(this, WelcomeActivity.class));
             overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
         }
     }
@@ -884,10 +885,10 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
+        super.onActivityResultCompat(requestCode, resultCode, data);
+        if (requestCode == SuntimesNavigation.REQUEST_SETTINGS && resultCode == RESULT_OK)
         {
             boolean recreateFlag = (data != null && data.getBooleanExtra(SettingsActivityInterface.RECREATE_ACTIVITY, false));
             Log.d("DEBUG", "onActivityResult: " + requestCode + ":" + resultCode + " recreate? " + recreateFlag + ", hasData? " + (data != null));
@@ -1759,7 +1760,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivityForResult(settingsIntent, SUNTIMES_SETTINGS_REQUEST);
+        startActivityForResult_settings.launch(settingsIntent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
     protected void showGeneralSettings()

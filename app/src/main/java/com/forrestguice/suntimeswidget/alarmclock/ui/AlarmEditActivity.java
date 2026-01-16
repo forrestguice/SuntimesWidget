@@ -96,6 +96,15 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final int REQUEST_ACTION3 = 70;
     public static final int REQUEST_DISMISS_CHALLENGE_CONFIG = 80;
 
+    private final ActivityResultLauncherCompat startActivityForResult_ringtone = registerForActivityResultCompat(REQUEST_RINGTONE);
+    private final ActivityResultLauncherCompat startActivityForResult_ringtone1 = registerForActivityResultCompat(REQUEST_RINGTONE1);
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(REQUEST_SETTINGS);
+    private final ActivityResultLauncherCompat startActivityForResult_action0 = registerForActivityResultCompat(REQUEST_ACTION0);
+    private final ActivityResultLauncherCompat startActivityForResult_action1 = registerForActivityResultCompat(REQUEST_ACTION1);
+    private final ActivityResultLauncherCompat startActivityForResult_action2 = registerForActivityResultCompat(REQUEST_ACTION2);
+    private final ActivityResultLauncherCompat startActivityForResult_action3 = registerForActivityResultCompat(REQUEST_ACTION3);
+    private final ActivityResultLauncherCompat startActivityForResult_dismissChallengeConfig = registerForActivityResultCompat(REQUEST_DISMISS_CHALLENGE_CONFIG);
+
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
     private static final String DIALOGTAG_LABEL = "alarmlabel";
@@ -173,9 +182,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_RINGTONE:
@@ -606,7 +615,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             {
                 Log.i(TAG, "configureDismissChallenge: " + info.get(0).getIntent());
                 AlarmAddon.DismissChallengeInfo configInfo = info.get(0);
-                startActivityForResult(configInfo.getIntent()
+                startActivityForResultCompat(configInfo.getIntent()
                                 .putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, alarm.rowID)
                                 .putExtra(AlarmNotifications.EXTRA_NOTIFICATION_ID, alarm.rowID)
                         , REQUEST_DISMISS_CHALLENGE_CONFIG);
@@ -923,7 +932,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
     }
 
     protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
@@ -1045,7 +1054,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         intent.setType("audio/*");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE1);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE1);
     }
 
     protected void onRingtoneResult1(int resultCode, Intent data)
@@ -1347,7 +1356,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         Intent intent = new Intent(AlarmEditActivity.this, ActionListActivity.class);
         intent.putExtra(ActionListActivity.PARAM_NOSELECT, false);
         intent.putExtra(ActionListActivity.PARAM_SELECTED, item.getActionID(actionNum));
-        startActivityForResult(intent, getActionRequestCode(actionNum));
+        startActivityForResultCompat(intent, getActionRequestCode(actionNum));
     }
     protected void onActionResult(int resultCode, Intent data, int actionNum)
     {

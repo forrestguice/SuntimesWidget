@@ -72,7 +72,8 @@ public class BedtimeActivity extends AppCompatActivity
 
     private static final String EXTRA_SHOWBACK = AlarmClockActivity.EXTRA_SHOWBACK;
 
-    private static final int REQUEST_SETTINGS = 20;
+    private static final int REQUEST_SETTINGS = SuntimesNavigation.REQUEST_SETTINGS;
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(REQUEST_SETTINGS);
 
     private static final String DIALOGTAG_HELP = "helpDialog";
 
@@ -143,9 +144,9 @@ public class BedtimeActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_SETTINGS:
@@ -498,7 +499,7 @@ public class BedtimeActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        startActivityForResult_settings.launch(settingsIntent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 

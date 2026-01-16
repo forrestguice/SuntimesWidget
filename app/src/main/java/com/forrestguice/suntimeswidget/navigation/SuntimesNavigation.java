@@ -37,6 +37,8 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.ActionBarDrawerToggle;
+import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.GravityCompat;
 import com.forrestguice.support.widget.DrawerLayout;
 import com.forrestguice.support.widget.NavigationView;
@@ -49,21 +51,21 @@ public class SuntimesNavigation
     private static final int anim_in = R.anim.transition_swap_in;
     private static final int anim_out = R.anim.transition_swap_out;
 
-    private WeakReference<Activity> activityRef;
+    private WeakReference<AppCompatActivity> activityRef;
 
-    public SuntimesNavigation(Activity activity)
+    public SuntimesNavigation(AppCompatActivity activity)
     {
         Toolbar menuBar = (Toolbar) activity.findViewById(R.id.app_menubar);
         init(activity, menuBar);
     }
 
-    public SuntimesNavigation(Activity activity, Toolbar menuBar, int menuItemID)
+    public SuntimesNavigation(AppCompatActivity activity, Toolbar menuBar, int menuItemID)
     {
         this.menuItemID = menuItemID;
         init(activity, menuBar);
     }
 
-    protected void init(Activity activity, @Nullable Toolbar menuBar)
+    protected void init(AppCompatActivity activity, @Nullable Toolbar menuBar)
     {
         activityRef = new WeakReference<>(activity);
 
@@ -127,7 +129,7 @@ public class SuntimesNavigation
                 }
             }
 
-            final Activity activity = activityRef.get();
+            final AppCompatActivity activity = activityRef.get();
             if (activity != null)
             {
                 closeNavigationDrawer();
@@ -198,26 +200,15 @@ public class SuntimesNavigation
         }
     }
 
-    @TargetApi(16)
-    public ActivityOptions getActivityOptions(@NonNull Activity activity) {
-        return ActivityOptions.makeCustomAnimation(activity, anim_in, anim_out);
+    public ActivityOptionsCompat getActivityOptions(@NonNull Activity activity) {
+        return ActivityOptionsCompat.makeCustomAnimation(activity, anim_in, anim_out);
     }
 
-    private void startActivity(@NonNull Activity activity, @NonNull Intent intent)
-    {
-        if (Build.VERSION.SDK_INT >= 16) {
-            activity.startActivity(intent, getActivityOptions(activity).toBundle());
-        } else {
-            activity.startActivity(intent);
-        }
+    private void startActivity(@NonNull Activity activity, @NonNull Intent intent) {
+        activity.startActivity(intent, getActivityOptions(activity).toBundle());
     }
-    private void startActivityForResult(@NonNull Activity activity, @NonNull Intent intent, int requestCode)
-    {
-        if (Build.VERSION.SDK_INT >= 16) {
-            activity.startActivityForResult(intent, requestCode, getActivityOptions(activity).toBundle());
-        } else {
-            activity.startActivityForResult(intent, requestCode);
-        }
+    private void startActivityForResult(@NonNull AppCompatActivity activity, @NonNull Intent intent, int requestCode) {
+        activity.startActivityForResultCompat(intent, requestCode, getActivityOptions(activity));
     }
 
     public void showSuntimes(@NonNull final Activity activity)
@@ -244,7 +235,7 @@ public class SuntimesNavigation
     }
 
     public static final int REQUEST_SETTINGS = 2200;
-    public void showSettings(@NonNull Activity activity)
+    public void showSettings(@NonNull AppCompatActivity activity)
     {
         Intent intent = new Intent(activity, SuntimesSettingsActivity.class);
         startActivityForResult(activity, intent, REQUEST_SETTINGS);
