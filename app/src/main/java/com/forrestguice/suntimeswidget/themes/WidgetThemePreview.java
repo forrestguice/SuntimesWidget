@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirec
 import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.LightGraphTask;
+import com.forrestguice.suntimeswidget.graph.LightGraphTaskListener;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
@@ -64,7 +65,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.graph.LineGraphView;
@@ -561,7 +561,7 @@ public class WidgetThemePreview
             view.setMinimumHeight(heightPx);
 
             final LightGraphTask drawTask = new LightGraphTask();
-            drawTask.setListener(new LightGraphView.LightGraphTaskListener()
+            drawTask.setListener(new LightGraphTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)

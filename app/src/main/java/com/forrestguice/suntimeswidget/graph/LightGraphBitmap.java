@@ -61,6 +61,9 @@ import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues
 
 public class LightGraphBitmap
 {
+    public static final int MINUTES_IN_DAY = 24 * 60;
+    public static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
+
     protected LightGraphOptions options = new LightGraphOptions();   // set in `makeBitmap`
     public LightGraphOptions getOptions() {
         return options;
@@ -373,7 +376,7 @@ public class LightGraphBitmap
                 double offset = lmtOffsetHours(calendar.getTimeInMillis()) - lmtOffsetHours();  // offset lmt_hour to lmt_hour + dst
 
                 float x = (float) daysToBitmapCoords(c, point[0], options);
-                float y = (float) hoursToBitmapCoords(c, LightGraphView.wrapHour(point[1] + offset), options);
+                float y = (float) hoursToBitmapCoords(c, wrapHour(point[1] + offset), options);
                 p.add(new float[] {x, y});
             }
         }
@@ -405,7 +408,7 @@ public class LightGraphBitmap
             event = (rising ? d.sunriseCalendarToday() : d.sunsetCalendarToday());
             dayLength = d.dayLengthToday();
             nullHour = (dayLength == SuntimesRiseSetDataset.NONE_NIGHT) ? nullHour1 : nullHour0;
-            hour = (event != null) ? LightGraphView.wrapHour(LightGraphView.tzHour(event) - lmtOffsetHours) : nullHour;    // lmt_hour + dst
+            hour = (event != null) ? wrapHour(tzHour(event) - lmtOffsetHours) : nullHour;    // lmt_hour + dst
 
             if (Math.abs(hour - hour_prev) > 12) {   // ignore sudden shifts (polar regions near graph edge)
                 hour = hour_prev;
@@ -533,7 +536,7 @@ public class LightGraphBitmap
      */
     protected double lmtOffsetHours()
     {
-        long lonOffsetMs = Math.round(options.longitude * LightGraphView.MILLIS_IN_DAY / 360d);
+        long lonOffsetMs = Math.round(options.longitude * MILLIS_IN_DAY / 360d);
         long rawOffsetMs = options.timezone.getRawOffset();
         return (rawOffsetMs - lonOffsetMs) / (1000d * 60d * 60d);
     }
@@ -543,7 +546,7 @@ public class LightGraphBitmap
      * @return offset in hours between time zone and local mean time (with dst)
      */
     protected double lmtOffsetHours(long date) {
-        return LightGraphView.lmtOffsetHours(date, options.timezone, options.longitude);
+        return lmtOffsetHours(date, options.timezone, options.longitude);
     }
 
     protected void drawAxisX(Canvas c, Paint p, LightGraphOptions options)
@@ -568,7 +571,7 @@ public class LightGraphBitmap
 
             calendar.setTimeInMillis(calendar0.getTimeInMillis());
             double h = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d);
-            float y = (float) hoursToBitmapCoords(c, LightGraphView.wrapHour(h - offsetHours), options);
+            float y = (float) hoursToBitmapCoords(c, wrapHour(h - offsetHours), options);
             c.drawLine(x, y, w, y, p);
         }
     }
@@ -788,7 +791,7 @@ public class LightGraphBitmap
         Path path = new Path();
         for (int day=0; day<365; day++)
         {
-            lmtHour = LightGraphView.wrapHour(LightGraphView.tzHour(calendar0) - lmtOffsetHours);
+            lmtHour = wrapHour(tzHour(calendar0) - lmtOffsetHours);
             x = (float) daysToBitmapCoords(c, day, options);
             y = (float) hoursToBitmapCoords(c, lmtHour, options);
 
@@ -807,7 +810,7 @@ public class LightGraphBitmap
         if (calendar != null)
         {
             int day = calendar.get(Calendar.DAY_OF_YEAR);
-            double hour = LightGraphView.wrapHour(LightGraphView.tzHour(calendar) - lmtOffsetHours());
+            double hour = wrapHour(tzHour(calendar) - lmtOffsetHours());
             drawPoint(day, hour, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
         }
     }
@@ -870,7 +873,7 @@ public class LightGraphBitmap
         if (calendar != null)
         {
             double tzHour = calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60d) + (calendar.get(Calendar.SECOND) / (60d * 60d));
-            double hour = LightGraphView.wrapHour(tzHour - lmtOffsetHours());
+            double hour = wrapHour(tzHour - lmtOffsetHours());
             drawHorizontalLine(hour, c, p, lineWidth, lineColor, lineEffect);
         }
     }
@@ -888,12 +891,47 @@ public class LightGraphBitmap
         c.drawLine(0, y, c.getWidth(), y, p);
     }
 
-    @Nullable
-    private LightGraphView.LightGraphTaskListener listener = null;
-    public void setListener( @Nullable LightGraphView.LightGraphTaskListener listener ) {
-        this.listener = listener;
+    /**
+     * @param hour raw hour value
+     * @return hour value within range [0, 24]
+     */
+    protected static double wrapHour(double hour)
+    {
+        double v = hour;
+        while (v < 0) {
+            v += 24;
+        }
+        while (v > 24) {
+            v -= 24;
+        }
+        return v;
     }
-    public void clearListener() {
-        this.listener = null;
+    protected static double clampHour(double hour)
+    {
+        if (hour < 0) {
+            hour = 0;
+        }
+        if (hour > 24) {
+            hour = 24;
+        }
+        return hour;
+    }
+
+    public static double lmtHour(@NonNull Calendar event, double longitude) {
+        return wrapHour(tzHour(event) - lmtOffsetHours(event.getTimeInMillis(), event.getTimeZone(), longitude));
+    }
+
+    public static double tzHour(@NonNull Calendar event)
+    {
+        return event.get(Calendar.HOUR_OF_DAY)
+                + (event.get(Calendar.MINUTE) / 60d)
+                + (event.get(Calendar.SECOND) / (60d * 60d))
+                + (event.get(Calendar.MILLISECOND) / (60d * 60d * 1000d));
+    }
+
+    public static double lmtOffsetHours(long date, TimeZone tz, double longitude)
+    {
+        long lonOffsetMs = Math.round(longitude * MILLIS_IN_DAY / 360d);
+        return (tz.getOffset(date) - lonOffsetMs) / (1000d * 60d * 60d);
     }
 }

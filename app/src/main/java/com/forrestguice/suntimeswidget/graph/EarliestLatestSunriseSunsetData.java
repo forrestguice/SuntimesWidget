@@ -62,7 +62,7 @@ public class EarliestLatestSunriseSunsetData
             Calendar risingEvent = ((d != null) ? d.sunriseCalendarToday() : null);
             if (risingEvent != null)
             {
-                double lmtRisingHour = LightGraphView.lmtHour(risingEvent, result.longitude);
+                double lmtRisingHour = LightGraphBitmap.lmtHour(risingEvent, result.longitude);
                 if (result.early_sunrise_hour == -1 || lmtRisingHour < result.early_sunrise_hour) {
                     result.early_sunrise_hour = lmtRisingHour;
                     result.early_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
@@ -76,7 +76,7 @@ public class EarliestLatestSunriseSunsetData
             Calendar settingEvent = ((d != null) ? d.sunsetCalendarToday() : null);
             if (settingEvent != null)
             {
-                double lmtSettingHour = LightGraphView.lmtHour(settingEvent, result.longitude);
+                double lmtSettingHour = LightGraphBitmap.lmtHour(settingEvent, result.longitude);
                 if (result.early_sunset_hour == -1 || lmtSettingHour < result.early_sunset_hour) {
                     result.early_sunset_hour = lmtSettingHour;
                     result.early_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);

@@ -80,9 +80,6 @@ public class LightGraphView extends ImageView
     public static final String PREF_KEY_GRAPH_SHOWCROSSHAIR = "showCrosshair";
     public static final boolean DEF_KEY_GRAPH_SHOWCROSSHAIR = true;
 
-    public static final int MINUTES_IN_DAY = 24 * 60;
-    public static final double MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
     private LightGraphTask drawTask = null;
@@ -455,69 +452,9 @@ public class LightGraphView extends ImageView
         } else Log.w(LightGraphView.class.getSimpleName(), "shareBitmap: null!");
     }
 
-    /**
-     * LightGraphTaskListener
-     */
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class LightGraphTaskListener
-    {
-        public void onStarted() {}
-        public void onFrame(Bitmap frame, long offsetDays) {}
-        public void afterFrame(Bitmap frame, long offsetDays) {}
-        public void onFinished(Bitmap result) {}
-        public void onProgress(boolean value) {}
-    }
-
     private LightGraphTaskListener graphListener = null;
     public void setTaskListener( LightGraphTaskListener listener ) {
         graphListener = listener;
     }
 
-    /**
-     * @param hour raw hour value
-     * @return hour value within range [0, 24]
-     */
-    protected static double wrapHour(double hour)
-    {
-        double v = hour;
-        while (v < 0) {
-            v += 24;
-        }
-        while (v > 24) {
-            v -= 24;
-        }
-        return v;
-    }
-    protected static double clampHour(double hour)
-    {
-        if (hour < 0) {
-            hour = 0;
-        }
-        if (hour > 24) {
-            hour = 24;
-        }
-        return hour;
-    }
-
-    public static double lmtHour(@NonNull Calendar event, double longitude) {
-        return wrapHour(tzHour(event) - lmtOffsetHours(event.getTimeInMillis(), event.getTimeZone(), longitude));
-    }
-
-    public static double tzHour(@NonNull Calendar event)
-    {
-        return event.get(Calendar.HOUR_OF_DAY)
-                + (event.get(Calendar.MINUTE) / 60d)
-                + (event.get(Calendar.SECOND) / (60d * 60d))
-                + (event.get(Calendar.MILLISECOND) / (60d * 60d * 1000d));
-    }
-
-    public static double lmtOffsetHours(long date, TimeZone tz, double longitude)
-    {
-        long lonOffsetMs = Math.round(longitude * MILLIS_IN_DAY / 360d);
-        return (tz.getOffset(date) - lonOffsetMs) / (1000d * 60d * 60d);
-    }
-
-
 }
-
-

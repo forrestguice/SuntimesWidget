@@ -157,8 +157,8 @@ public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Nullable
-    private LightGraphView.LightGraphTaskListener listener = null;
-    public void setListener( @Nullable LightGraphView.LightGraphTaskListener listener ) {
+    private LightGraphTaskListener listener = null;
+    public void setListener( @Nullable LightGraphTaskListener listener ) {
         this.listener = listener;
     }
     public void clearListener() {

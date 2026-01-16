@@ -183,7 +183,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             options = graph.getOptions();
             options.init(context);
 
-            graph.setTaskListener(new LightGraphView.LightGraphTaskListener()
+            graph.setTaskListener(new LightGraphTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result) {
