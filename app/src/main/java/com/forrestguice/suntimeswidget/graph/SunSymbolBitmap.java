@@ -18,14 +18,11 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
@@ -164,12 +161,12 @@ public class SunSymbolBitmap
         c.drawLine(cX, cY, cX, cY - radius, p);
     }
 
-    public static Drawable makeSunSymbolDrawable(Context context, int symbol, int w, int h, ColorValues colors)
+    public static Bitmap makeSunSymbolBitmap(int symbol, int w, int h, ColorValues colors)
     {
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         drawSunSymbol(symbol, w/2, h/2, (w/2) - (w/6), c, makeSunSymbolDrawable_p, colors);
-        return new BitmapDrawable(context.getResources(), b);
+        return b;
     }
     private static final Paint makeSunSymbolDrawable_p = new Paint(Paint.ANTI_ALIAS_FLAG);
 }

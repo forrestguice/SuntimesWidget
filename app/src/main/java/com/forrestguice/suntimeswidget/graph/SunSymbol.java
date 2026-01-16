@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
-import android.util.Log;
+import com.forrestguice.util.Log;
 
 public enum SunSymbol
 {

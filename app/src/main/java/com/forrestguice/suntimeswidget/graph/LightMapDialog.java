@@ -26,9 +26,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -873,6 +875,12 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     });
 
+    protected static Drawable makeSunSymbolDrawable(Context context, int symbol, int w, int h, ColorValues colors)
+    {
+        Bitmap b = SunSymbolBitmap.makeSunSymbolBitmap(symbol, w, h, colors);
+        return new BitmapDrawable(context.getResources(), b);
+    }
+
     private void updateContextMenu(Context context, Menu menu)
     {
         MenuItem showGraphItem = menu.findItem(R.id.action_showgraph);
@@ -909,23 +917,23 @@ public class LightMapDialog extends BottomSheetDialogBase
         MenuItem graphOption_sunSymbol = menu.findItem(R.id.graphOption_sunSymbol);
         if (graphOption_sunSymbol != null) {
             int symbol = SunSymbolBitmap.fromSunSymbol(sunSymbol);
-            graphOption_sunSymbol.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors().values));
+            graphOption_sunSymbol.setIcon(makeSunSymbolDrawable(context, symbol, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_circle = menu.findItem(R.id.graphOption_sunSymbol_circle);
         if (graphOption_sunSymbol_circle != null) {
-            graphOption_sunSymbol_circle.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN1, iconSize, iconSize, lightmap.getColors().values));
+            graphOption_sunSymbol_circle.setIcon(makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN1, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_circledot = menu.findItem(R.id.graphOption_sunSymbol_circledot);
         if (graphOption_sunSymbol_circledot != null) {
-            graphOption_sunSymbol_circledot.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors().values));
+            graphOption_sunSymbol_circledot.setIcon(makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CIRCLEDOT_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_cross = menu.findItem(R.id.graphOption_sunSymbol_cross);
         if (graphOption_sunSymbol_cross != null) {
-            graphOption_sunSymbol_cross.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors().values));
+            graphOption_sunSymbol_cross.setIcon(makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_CROSS_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
         MenuItem graphOption_sunSymbol_line = menu.findItem(R.id.graphOption_sunSymbol_line);
         if (graphOption_sunSymbol_line != null) {
-            graphOption_sunSymbol_line.setIcon(SunSymbolBitmap.makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors().values));
+            graphOption_sunSymbol_line.setIcon(makeSunSymbolDrawable(context, SunSymbolBitmap.DRAW_SUN_LINE_SOLID, iconSize, iconSize, lightmap.getColors().values));
         }
 
         if (sunSymbol != null) {
