@@ -20,16 +20,17 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.content.Intent;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
@@ -71,13 +72,13 @@ public class DialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test
@@ -199,7 +200,7 @@ public class DialogTest extends SuntimesActivityTestBase
         }
 
         public HelpDialogRobot showDialog(Activity context) {
-            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             sleep(500);
             onView(withText(R.string.configAction_help)).perform(click());
             return this;
@@ -245,7 +246,7 @@ public class DialogTest extends SuntimesActivityTestBase
                 onView(withText(R.string.configAction_aboutWidget)).perform(click());
 
             } else {
-                openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+                openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
                 onView(withText(R.string.configAction_aboutWidget)).perform(click());
             }
             return this;

@@ -21,11 +21,9 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.app.Activity;
 import android.content.Context;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import android.content.Intent;
 import android.util.Log;
@@ -48,6 +46,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -100,13 +99,13 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test
@@ -282,7 +281,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 
         public AlarmDialogRobot showDialog(Activity context)
         {
-            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             onView(ViewMatchers.withText(R.string.configAction_setAlarm)).perform(click());
             return this;
         }

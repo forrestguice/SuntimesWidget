@@ -21,9 +21,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.test.InstrumentationRegistry;
 
-import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -33,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
@@ -60,7 +59,7 @@ public class AlarmScheduleTest
 
     @Before
     public void init() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationUtils.getContext();
     }
 
     @Test

@@ -22,13 +22,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import androidx.test.InstrumentationRegistry;
+
 import androidx.test.filters.LargeTest;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.json.JSONObject;
@@ -59,7 +60,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
 
     @Before
     public void setup() {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test

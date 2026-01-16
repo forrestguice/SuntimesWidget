@@ -26,10 +26,9 @@ import android.media.RingtoneManager;
 import android.media.VolumeShaper;
 import android.net.Uri;
 import android.os.Build;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Assert;
@@ -44,7 +43,7 @@ public class AlarmSoundFadeTest
 
     @Before
     public void init() {
-        mockContext = InstrumentationRegistry.getTargetContext();
+        mockContext = InstrumentationUtils.getContext();
     }
 
     @Test

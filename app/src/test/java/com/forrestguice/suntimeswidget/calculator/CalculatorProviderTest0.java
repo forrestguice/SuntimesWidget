@@ -185,6 +185,7 @@ public class CalculatorProviderTest0
     public void test_query_seasons_projection()
     {
         List<String> projection = Arrays.asList(QUERY_SEASONS_PROJECTION);
+        //noinspection deprecation
         assertTrue("default projection contains COLUMN_SEASON_VERNAL", projection.contains(COLUMN_SEASON_VERNAL));
         assertTrue("default projection contains COLUMN_SEASON_SUMMER", projection.contains(COLUMN_SEASON_SUMMER));
         assertTrue("default projection contains COLUMN_SEASON_AUTUMN", projection.contains(COLUMN_SEASON_AUTUMN));

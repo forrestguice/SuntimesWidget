@@ -38,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * non-instrumented tests moved from androidTest/SuntimesUtilsTest
  */
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "deprecation"})
 public class SuntimesUtilsTest0
 {
     private SuntimesUtils utils;

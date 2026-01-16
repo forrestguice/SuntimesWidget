@@ -35,15 +35,16 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import androidx.test.InstrumentationRegistry;
+
 import androidx.test.rule.ServiceTestRule;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Assert;
@@ -76,7 +77,7 @@ public class AlarmNotificationsTest
 
     @Before
     public void init() {
-        mockContext = InstrumentationRegistry.getTargetContext();
+        mockContext = InstrumentationUtils.getContext();
     }
 
     private final ServiceConnection testConnection = new ServiceConnection()

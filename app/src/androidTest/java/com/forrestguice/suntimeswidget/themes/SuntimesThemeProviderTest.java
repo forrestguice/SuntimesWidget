@@ -24,12 +24,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
@@ -119,7 +119,7 @@ public class SuntimesThemeProviderTest
 
     @Before
     public void setup() {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
         WidgetThemes.initThemes(mockContext);
     }
 

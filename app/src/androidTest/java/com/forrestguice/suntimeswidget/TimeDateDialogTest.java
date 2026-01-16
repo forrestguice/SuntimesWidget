@@ -20,10 +20,11 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
+
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.content.Intent;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
@@ -32,6 +33,7 @@ import android.widget.DatePicker;
 
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
@@ -70,13 +72,13 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test @QuickTest
@@ -121,7 +123,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
         public TimeDateDialogRobot showDialog(Activity context)
         {
             String actionDateText = context.getString(R.string.configAction_viewDate);
-            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             onView(withText(actionDateText)).perform(click());
             return this;
         }

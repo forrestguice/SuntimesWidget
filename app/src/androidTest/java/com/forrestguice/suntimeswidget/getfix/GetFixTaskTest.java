@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.getfix;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import android.location.Location;
 import androidx.test.rule.ActivityTestRule;
@@ -35,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class GetFixTaskTest
 {
     @Rule

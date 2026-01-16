@@ -21,13 +21,14 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import androidx.test.InstrumentationRegistry;
+
 import androidx.test.filters.FlakyTest;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
@@ -69,13 +70,13 @@ public class AboutActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -152,7 +153,7 @@ public class AboutActivityTest extends SuntimesActivityTestBase
                 onView(withText(R.string.configAction_aboutWidget)).perform(click());
 
             } else {
-                openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+                openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
                 sleep(500);
                 onView(withText(R.string.configAction_aboutWidget)).perform(click());
             }

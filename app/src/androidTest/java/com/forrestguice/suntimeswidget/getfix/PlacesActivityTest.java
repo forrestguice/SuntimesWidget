@@ -30,11 +30,11 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -85,13 +85,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -132,9 +132,9 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -230,8 +230,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_build()
     {
-        clearPlaces(getContext());
-        assertEquals(0, numPlaces(getContext()));
+        clearPlaces(InstrumentationUtils.getContext());
+        assertEquals(0, numPlaces(InstrumentationUtils.getContext()));
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -261,10 +261,10 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
-        int n = numPlaces(getContext());
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
+        int n = numPlaces(InstrumentationUtils.getContext());
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -295,7 +295,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add()
     {
-        clearPlaces(getContext());
+        clearPlaces(InstrumentationUtils.getContext());
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
 

@@ -28,10 +28,10 @@ import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.FailureHandler;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -51,6 +51,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.jraska.falcon.Falcon;
 
 import org.hamcrest.Description;
@@ -89,7 +90,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public abstract class SuntimesActivityTestBase
 {
     public static final String TESTLOC_0_LABEL = "Test Location 0";
@@ -395,15 +396,11 @@ public abstract class SuntimesActivityTestBase
     {
         if (Build.VERSION.SDK_INT >= 21)
         {
-            UiAutomation automation = androidx.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
+            UiAutomation automation = InstrumentationRegistry.getInstrumentation().getUiAutomation();
             automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
         } // else // TODO
-    }
-
-    public static Context getContext() {
-        return androidx.test.InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
     ///////////////////////////////////////////////////////////////

@@ -24,13 +24,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.EventTypeResolver;
+import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
@@ -61,7 +60,7 @@ public class AlarmEventProviderTest
 
     @Before
     public void init() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationUtils.getContext();
     }
 
     @Test
