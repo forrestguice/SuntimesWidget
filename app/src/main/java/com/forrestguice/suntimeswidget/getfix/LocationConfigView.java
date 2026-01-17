@@ -661,13 +661,14 @@ public class LocationConfigView extends LinearLayout
         TooltipCompat.setTooltipText(button_auto, button_auto.getContentDescription());
         button_auto.setOnClickListener(onAutoButtonClicked);
 
-        GetFixHelper helper = new GetFixHelper(parent, getFixUI_editMode);    // 0; getFixUI_editMode
-        helper.setGetFixHelperListener(new GetFixHelper.GetFixHelperListener() {
+        // 0; getFixUI_editMode
+        GetFixHelper helper = new GetFixHelper(parent, getFixUI_editMode, new GetFixHelper.GetFixHelperListener()
+        {
             @Override
             public void onRequestPermissions(String[] permissions, int requestID) {
-                if (getFragment() != null) {
-                    getFragment().getFragment().requestPermissions(permissions, requestID);  // TODO
-                } else Log.w("LocationConfigView", "getFragment() is null!");
+                if (viewListener != null) {
+                    viewListener.onRequestPermissions(permissions, requestID);
+                } else Log.e("LocationConfigView", "onRequestPermissions: required listener is null!");
             }
         });
         getFixHelper = helper;
@@ -1338,6 +1339,7 @@ public class LocationConfigView extends LinearLayout
     public static class LocationConfigViewListener
     {
         public void onModeChanged(LocationViewMode mode) {}
+        public void onRequestPermissions(@NonNull String[] permissions, int requestID) {}
     }
 
     public void setViewListener(LocationConfigViewListener l) {

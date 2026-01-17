@@ -61,6 +61,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
@@ -615,15 +616,18 @@ public class PlacesListFragment extends DialogBase
 
     public static class PlacesEditFragment0 extends PlacesEditFragment
     {
+        protected PermissionResultLauncherCompat requestPermissions = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
+
         @Nullable
-        protected LocationHelper createLocationHelper() {
-            GetFixHelper helper = (getActivity() != null ? new GetFixHelper((AppCompatActivity) getActivity(), getFixUI()) : null);
-            helper.setGetFixHelperListener(new GetFixHelper.GetFixHelperListener() {
+        protected LocationHelper createLocationHelper()
+        {
+            GetFixHelper.GetFixHelperListener helperListener = new GetFixHelper.GetFixHelperListener() {
                 @Override
-                public void onRequestPermissions(String[] permissions, int requestID) {
-                    requestPermissions(permissions, requestID);
+                public void onRequestPermissions(String[] permissions, int requestID) {    // requestID is always GetFixHelper.REQUEST_GETFIX_LOCATION
+                    requestPermissionsCompat(permissions, requestID);
                 }
-            });
+            };
+            GetFixHelper helper = (getActivity() != null ? new GetFixHelper((AppCompatActivity) getActivity(), getFixUI(), helperListener) : null);
             return helper;
         }
     }

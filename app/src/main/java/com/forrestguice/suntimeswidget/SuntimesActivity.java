@@ -44,6 +44,7 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -208,6 +209,7 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesNavigation navigation;
 
     private LocationHelper getFixHelper;
+    protected PermissionResultLauncherCompat requestPermissions_location = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
 
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
@@ -869,14 +871,14 @@ public class SuntimesActivity extends AppCompatActivity
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null)
         {
-            locationDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            locationDialog.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
         }
 
         LocationMode locationMode = WidgetSettings.loadLocationModePref(this, 0);
@@ -1197,13 +1199,21 @@ public class SuntimesActivity extends AppCompatActivity
             }
         };
 
-        getFixHelper = new GetFixHelper(this, getFixUI)
+        GetFixHelper.GetFixHelperListener getFixHelperListener = new GetFixHelper.GetFixHelperListener()
+        {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {
+                requestPermissionsCompat(permissions, requestID);
+            }
+        };
+        GetFixHelper helper = new GetFixHelper(this, getFixUI, getFixHelperListener)
         {
             @Override
             public int getMinElapsedTime(@NonNull Context context) {
                 return 1000;
             }
         };
+        getFixHelper = helper;
     }
 
     /**

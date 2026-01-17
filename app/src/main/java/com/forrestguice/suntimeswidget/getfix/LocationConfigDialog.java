@@ -41,6 +41,7 @@ import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
@@ -57,6 +58,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
     public static final int REQUEST_LOCATION = 30;
     private final ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(REQUEST_LOCATION);
+    private final PermissionResultLauncherCompat requestPermissions_location = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
 
     protected ImageButton btn_accept, btn_cancel;
 
@@ -245,9 +247,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
         if (dialogContent != null) {
             dialogContent.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -303,12 +305,20 @@ public class LocationConfigDialog extends BottomSheetDialogBase
                 } else Log.w("LocationConfigDialog", "onListButtonClicked: activity is null!");
             }
         });
-        dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener() {
+        dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener()
+        {
+            @Override
             public void onModeChanged(LocationConfigView.LocationViewMode mode) {
                 if (dialogListener != null) {
                     dialogListener.onEditModeChanged(mode);
                 }
             }
+
+            @Override
+            public void onRequestPermissions(@NonNull String[] permissions, int requestCode) {
+                requestPermissionsCompat(permissions, requestCode);
+            }
+
         });
 
         View header = view.findViewById(R.id.dialog_header);

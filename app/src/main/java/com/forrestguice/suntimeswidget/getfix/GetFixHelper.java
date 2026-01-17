@@ -79,9 +79,10 @@ public class GetFixHelper implements LocationHelper
     private final ArrayList<GetFixUI> uiObj = new ArrayList<GetFixUI>();
     private int uiIndex = 0;
 
-    public GetFixHelper(AppCompatActivity parent, GetFixUI ui)
+    public GetFixHelper(AppCompatActivity parent, GetFixUI ui, GetFixHelperListener listener)
     {
         myParent = new WeakReference<>(parent);
+        setGetFixHelperListener(listener);
         addUI(ui);
     }
 
@@ -319,23 +320,22 @@ public class GetFixHelper implements LocationHelper
                 builder.show();
 
             } else {
-                ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
+                requestPermissions(requestID);
             }
         }
         return hasPermission;
     }
 
-    protected void requestPermissions(final int requestID) {
+    protected void requestPermissions(final int requestID)
+    {
         if (listener != null) {
             listener.onRequestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
-        } else if (getActivity() != null) {
-            requestPermissions(getActivity(), requestID);
-        } else Log.w("GetFixHelper", "requestPermissions: both fragment and activity are null!");
+        } else Log.e("GetFixHelper", "requestPermissions: required listener is null!");
     }
-    protected void requestPermissions(Activity activity, final int requestID) {
+    /*protected void requestPermissions(Activity activity, final int requestID) {
         ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
     }
-    /*protected void requestPermissions(FragmentCompat fragment, final int requestID) {
+    protected void requestPermissions(FragmentCompat fragment, final int requestID) {
         fragment.getFragment().requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
     }*/
 

@@ -69,9 +69,11 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -231,6 +233,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showLabels;
 
     protected LocationConfigView locationConfig;
+    protected PermissionResultLauncherCompat requestPermissions_location = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
 
     protected TextView label_timezoneMode;
     protected Spinner spinner_timezoneMode;
@@ -875,6 +878,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             locationConfig.setAutoAllowed(true);
             locationConfig.setHideMode(false);
             locationConfig.init(this, false, this.appWidgetId);
+            locationConfig.setViewListener(new LocationConfigView.LocationConfigViewListener() {
+                @Override
+                public void onRequestPermissions(@NonNull String[] permissions, int requestCode) {
+                    requestPermissionsCompat(permissions, requestCode);
+                }
+            });
             locationConfig.setOnListButtonClicked(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -2853,10 +2862,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         locationConfig.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
     }
 
     /**

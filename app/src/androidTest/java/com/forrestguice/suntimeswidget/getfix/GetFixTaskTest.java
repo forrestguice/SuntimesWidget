@@ -46,7 +46,11 @@ public class GetFixTaskTest
     public void test_getFix()
     {
         AppCompatActivity activity = (AppCompatActivity) activityRule.getActivity();
-        LocationHelper helper = new GetFixHelper(activity, uiObj) {
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activity, uiObj, listener) {
             public int getMinElapsedTime() {
                 return 0;
             }
@@ -85,7 +89,11 @@ public class GetFixTaskTest
     @Test
     public void test_getLastKnownLocation()
     {
-        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj);
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj, listener);
 
         long bench_start = System.nanoTime();
         Location location = helper.getLastKnownLocation(activityRule.getActivity());

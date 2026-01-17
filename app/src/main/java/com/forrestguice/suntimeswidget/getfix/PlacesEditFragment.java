@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDis
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.NestedScrollView;
@@ -105,6 +106,8 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     private GnssStatusView gpsStatusView;
 
     private ImageButton button_map;
+
+    protected PermissionResultLauncherCompat requestPermissions = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
 
     @Nullable
     protected ActionModeCompat actionMode = null;
@@ -302,10 +305,11 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         updateComment(item.comment);
     }
 
+    @Deprecated
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
         if (getFixHelper != null) {
             getFixHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
