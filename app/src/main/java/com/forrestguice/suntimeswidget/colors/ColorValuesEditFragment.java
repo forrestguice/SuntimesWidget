@@ -38,10 +38,12 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.EventListHelper;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.lifecycle.ViewModelProviders;
 import com.forrestguice.support.widget.GridLayoutManager;
@@ -264,9 +266,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
 
         if (requestCode >= 0 && requestCode < REQUEST_IMPORT_THEME) {
             onPickColorResult(requestCode, resultCode, data);
@@ -350,6 +352,17 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         updateViews();
     }
 
+    protected ActivityResultLauncherCompat[] startActivityForResult_pickColor = registerForActivityResult_pickColor();
+    protected ActivityResultLauncherCompat[] registerForActivityResult_pickColor()
+    {
+        String[] keys = colorValues.getColorKeys();
+        ActivityResultLauncherCompat[] result = new ActivityResultLauncherCompat[keys.length];
+        for (int i=0; i<keys.length; i++) {
+            result[i] = registerForActivityResultCompat(i);
+        }
+        return result;
+    }
+
     public void pickColor(String key)
     {
         int requestCode = colorValues.colorKeyIndex(key);
@@ -357,7 +370,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         {
             Intent intent = pickColorIntent(key, requestCode);
             if (intent != null) {
-                startActivityForResult(pickColorIntent(key, requestCode), requestCode);
+                startActivityForResultCompat(pickColorIntent(key, requestCode), requestCode);
             }
         }
     }
@@ -475,8 +488,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     public static final int REQUEST_IMPORT_THEME = 1000;
+    protected ActivityResultLauncherCompat startActivityForResult_importTheme = registerForActivityResultCompat(REQUEST_IMPORT_THEME);
     protected void importFromTheme(Context context) {
-        startActivityForResult(pickThemeIntent(), REQUEST_IMPORT_THEME);
+        startActivityForResult_importTheme.launch(pickThemeIntent());
     }
     protected Intent pickThemeIntent() {
         return null;
