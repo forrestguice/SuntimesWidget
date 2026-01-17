@@ -56,7 +56,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     public static final String KEY_LOCATION_SHOWADDBUTTON = "showaddbutton";
 
     public static final int REQUEST_LOCATION = 30;
-    private ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(REQUEST_LOCATION);
+    private final ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(REQUEST_LOCATION);
 
     protected ImageButton btn_accept, btn_cancel;
 
@@ -248,8 +248,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (dialogContent != null)
-        {
+        if (dialogContent != null) {
             dialogContent.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

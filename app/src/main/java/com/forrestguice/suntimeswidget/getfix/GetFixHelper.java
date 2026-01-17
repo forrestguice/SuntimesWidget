@@ -111,14 +111,6 @@ public class GetFixHelper implements LocationHelper
         return activity;
     }
 
-    public void setFragment(FragmentCompat f) {
-        fragmentRef = new WeakReference<>(f);
-    }
-    public FragmentCompat getFragment() {
-        return fragmentRef != null ? fragmentRef.get() : null;
-    }
-    private WeakReference<FragmentCompat> fragmentRef = null;
-
     public int getMinElapsedTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return LocationHelperSettings.loadPrefGpsMinElapsed(prefs, GetFixTask.MIN_ELAPSED);
@@ -334,8 +326,8 @@ public class GetFixHelper implements LocationHelper
     }
 
     protected void requestPermissions(final int requestID) {
-        if (getFragment() != null) {
-            requestPermissions(getFragment(), requestID);
+        if (listener != null) {
+            listener.onRequestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
         } else if (getActivity() != null) {
             requestPermissions(getActivity(), requestID);
         } else Log.w("GetFixHelper", "requestPermissions: both fragment and activity are null!");
@@ -343,9 +335,9 @@ public class GetFixHelper implements LocationHelper
     protected void requestPermissions(Activity activity, final int requestID) {
         ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
     }
-    protected void requestPermissions(FragmentCompat fragment, final int requestID) {
+    /*protected void requestPermissions(FragmentCompat fragment, final int requestID) {
         fragment.getFragment().requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, requestID);
-    }
+    }*/
 
     public boolean isGettingFix()
     {
@@ -682,4 +674,15 @@ public class GetFixHelper implements LocationHelper
         }
     }
 
+    @Nullable
+    protected GetFixHelperListener listener = null;
+    public void setGetFixHelperListener( @Nullable GetFixHelperListener value ) {
+        listener = value;
+    }
+    
+    public interface GetFixHelperListener
+    {
+        void onRequestPermissions(String[] permissions, int requestID);
+    }
+    
 }

@@ -50,6 +50,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
@@ -63,6 +64,7 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentCompat;
 
+import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -113,13 +115,16 @@ public class LocationConfigView extends LinearLayout
 
     public boolean isInitialized() { return isInitialized; }
 
+    protected WeakReference<FragmentCompat> fragmentRef = null;
     public void setFragment(FragmentCompat f) {
-        if (getFixHelper != null) {
-            getFixHelper.setFragment(f);
-        } else Log.w("LocationConfigView", "setFragment: getFixHelper is null!");
+        fragmentRef = new WeakReference<>(f);
+        //if (getFixHelper != null) {
+        //    getFixHelper.setFragment(f);
+        //} else Log.w("LocationConfigView", "setFragment: getFixHelper is null!");
     }
+    @Nullable
     public FragmentCompat getFragment() {
-        return getFixHelper != null ? getFixHelper.getFragment() : null;
+        return fragmentRef != null ? fragmentRef.get() : null;
     }
 
     public com.forrestguice.suntimeswidget.calculator.core.Location getLocation(@NonNull Context context)
@@ -656,7 +661,16 @@ public class LocationConfigView extends LinearLayout
         TooltipCompat.setTooltipText(button_auto, button_auto.getContentDescription());
         button_auto.setOnClickListener(onAutoButtonClicked);
 
-        getFixHelper = new GetFixHelper(parent, getFixUI_editMode);    // 0; getFixUI_editMode
+        GetFixHelper helper = new GetFixHelper(parent, getFixUI_editMode);    // 0; getFixUI_editMode
+        helper.setGetFixHelperListener(new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {
+                if (getFragment() != null) {
+                    getFragment().getFragment().requestPermissions(permissions, requestID);  // TODO
+                } else Log.w("LocationConfigView", "getFragment() is null!");
+            }
+        });
+        getFixHelper = helper;
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
 

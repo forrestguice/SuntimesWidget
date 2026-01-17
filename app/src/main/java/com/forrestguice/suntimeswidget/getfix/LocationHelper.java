@@ -30,8 +30,6 @@ public interface LocationHelper
     void saveSettings( Bundle bundle );
     void loadSettings( Bundle bundle );
 
-    void setFragment(FragmentCompat f);
-    FragmentCompat getFragment();
     void onResume();
 
     GetFixUI getUI();

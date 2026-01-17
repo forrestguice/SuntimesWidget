@@ -473,9 +473,6 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         });
 
         getFixHelper = createLocationHelper();
-        if (getFixHelper != null) {
-            getFixHelper.setFragment(FragmentCompat.from(this));
-        }
         updateGPSButtonIcons(context);
     }
 

@@ -617,7 +617,14 @@ public class PlacesListFragment extends DialogBase
     {
         @Nullable
         protected LocationHelper createLocationHelper() {
-            return (getActivity() != null ? new GetFixHelper((AppCompatActivity) getActivity(), getFixUI()) : null);
+            GetFixHelper helper = (getActivity() != null ? new GetFixHelper((AppCompatActivity) getActivity(), getFixUI()) : null);
+            helper.setGetFixHelperListener(new GetFixHelper.GetFixHelperListener() {
+                @Override
+                public void onRequestPermissions(String[] permissions, int requestID) {
+                    requestPermissions(permissions, requestID);
+                }
+            });
+            return helper;
         }
     }
 
