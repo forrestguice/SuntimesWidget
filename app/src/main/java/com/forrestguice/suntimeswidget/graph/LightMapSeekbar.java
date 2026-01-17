@@ -110,7 +110,7 @@ public class LightMapSeekbar extends SeekBar
             LightMapBitmap draw = new LightMapBitmap();
             Bitmap b = draw.makeBitmap(data, getWidth(), getHeight(), options);
             if (Build.VERSION.SDK_INT >= 16) {
-                setBackground(new BitmapDrawable(b));
+                setBackground(new BitmapDrawable(getResources(), b));
             } // else // TODO
         }
     }
