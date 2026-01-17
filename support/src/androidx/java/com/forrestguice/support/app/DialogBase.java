@@ -30,7 +30,9 @@ import android.view.Window;
 
 import com.forrestguice.annotation.NonNull;
 
-public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat
+import java.util.Map;
+
+public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
 {
     public DialogBase() {
         setArguments(new Bundle());
@@ -61,6 +63,10 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         }
     }
 
+    //
+    // OnActivityResult
+    //
+
     @CallSuper
     public void onActivityResultCompat(int requestCode, int resultCode, Intent data) {
         Log.d("DEBUG", "onActivityResultCompat: (fragment) " + requestCode + ", result: " + resultCode);
@@ -87,5 +93,38 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         return launchers.registerForActivityResultCompat(this, requestCode, onResult);
     }
     protected ActivityResultLaunchHelper launchers = new ActivityResultLaunchHelper();
+
+    //
+    // OnPermissionResult
+    //
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull Map<String, Boolean> results) {
+        Log.d("DEBUG", "onRequestPermissionsResultCompat: (dialog fragment) " + requestCode);
+    }
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d("DEBUG", "onRequestPermissionsResultCompat: (dialog fragment) " + requestCode);
+    }
+
+    public void requestPermissionsCompat(String[] permissions, int requestCode)
+    {
+        if (!launchers.requestPermissions(permissions, requestCode))
+        {
+            Log.e("DialogBase", "requestPermissionCompat: requestCode " + requestCode + " not found! did you remember to call `requestPermissionsCompat` first?");
+            //noinspection deprecation
+            requestPermissions(permissions, requestCode);    // fallback
+        }
+    }
+
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode) {
+        return registerForPermissionResult(requestCode, this);
+    }
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode, OnPermissionResultCompat onResult) {
+        return launchers.registerForPermissionResult(this, requestCode, onResult);
+    }
 
 }
