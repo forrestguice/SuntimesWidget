@@ -22,6 +22,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
@@ -35,12 +37,16 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.OnActivityResultCompat;
+import com.forrestguice.support.app.OnPermissionResultCompat;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat
+public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
 {
     public static int getBottomSheetResourceID() {
         return android.support.design.R.id.design_bottom_sheet;    // support libraries
@@ -213,6 +219,11 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return fragmentManager;
     }
 
+
+    //
+    // Activity Request
+    //
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -259,4 +270,51 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
     }
     protected Map<Integer, ActivityResultLauncherCompat> launchers = new HashMap<>();
     protected Map<Integer, OnActivityResultCompat> results = new HashMap<>();
+
+    //
+    // PermissionRequest
+    //
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+        onRequestPermissionsResult(requestCode, DialogBase.permissionResultsToMap(permissions, grantResults));
+    }
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull Map<String, Boolean> results) {}
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+
+    public void requestPermissionsCompat(String[] permissions, int requestCode)
+    {
+        PermissionResultLauncherCompat launcher = permissionRequests.get(requestCode);
+        if (launcher == null) {
+            Log.e("BottomSheetDialog", "requestPermissionsCompat: requestCode " + requestCode + " not found!");
+            BottomSheetDialogBase.this.requestPermissions(permissions, requestCode);
+        } else launcher.requestPermissions(permissions);
+    }
+
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode) {
+        return registerForPermissionResult(requestCode, this);
+    }
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode, OnPermissionResultCompat onResult)
+    {
+        permissionResults.put(requestCode, onResult);
+        permissionRequests.put(requestCode, new PermissionResultLauncherCompat() {
+            @Override
+            public void requestPermissions(String[] permissions) {
+                BottomSheetDialogBase.this.requestPermissions(permissions, requestCode);
+            }
+        });
+        return permissionRequests.get(requestCode);
+    }
+    protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
+    protected Map<Integer, OnPermissionResultCompat> permissionResults = new HashMap<>();
+
 }

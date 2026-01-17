@@ -19,7 +19,9 @@ package com.forrestguice.support.app;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -31,7 +33,7 @@ import com.forrestguice.annotation.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat
+public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
 {
     public DialogBase() {
         setArguments(new Bundle());
@@ -71,6 +73,10 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         }
         return fragmentManager;
     }
+
+    //
+    // ActivityResult
+    //
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -118,4 +124,59 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
     }
     protected Map<Integer, ActivityResultLauncherCompat> launchers = new HashMap<>();
     protected Map<Integer, OnActivityResultCompat> results = new HashMap<>();
+
+    //
+    // PermissionRequest
+    //
+
+    public static Map<String, Boolean> permissionResultsToMap(@NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        Map<String, Boolean> result = new HashMap<>();
+        for (int i =0; i<permissions.length; i++) {
+            result.put(permissions[i], grantResults[i] == PackageManager.PERMISSION_GRANTED);
+        }
+        return result;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+        onRequestPermissionsResult(requestCode, DialogBase.permissionResultsToMap(permissions, grantResults));
+    }
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull Map<String, Boolean> results) {}
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
+
+    public void requestPermissionsCompat(String[] permissions, int requestCode)
+    {
+        PermissionResultLauncherCompat launcher = permissionRequests.get(requestCode);
+        if (launcher == null) {
+            Log.e("DialogBase", "requestPermissionsCompat: requestCode " + requestCode + " not found!");
+            DialogBase.this.requestPermissions(permissions, requestCode);
+        } else launcher.requestPermissions(permissions);
+    }
+
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode) {
+        return registerForPermissionResult(requestCode, this);
+    }
+    public PermissionResultLauncherCompat registerForPermissionResult(int requestCode, OnPermissionResultCompat onResult)
+    {
+        permissionResults.put(requestCode, onResult);
+        permissionRequests.put(requestCode, new PermissionResultLauncherCompat() {
+            @Override
+            public void requestPermissions(String[] permissions) {
+                DialogBase.this.requestPermissions(permissions, requestCode);
+            }
+        });
+        return permissionRequests.get(requestCode);
+    }
+    protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
+    protected Map<Integer, OnPermissionResultCompat> permissionResults = new HashMap<>();
 }
