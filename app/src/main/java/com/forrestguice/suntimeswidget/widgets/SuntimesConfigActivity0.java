@@ -71,6 +71,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
@@ -234,6 +235,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected LocationConfigView locationConfig;
     protected PermissionResultLauncherCompat requestPermissions_location = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
+    protected ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(LocationConfigDialog.REQUEST_LOCATION);
+    protected ActivityResultLauncherCompat startActivityForResult_pickEvent = registerForActivityResultCompat(PICK_EVENT_REQUEST);
+    protected ActivityResultLauncherCompat startActivityForResult_pickTheme = registerForActivityResultCompat(PICK_THEME_REQUEST);
+    protected ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EXPORT_REQUEST);
+    protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
+
 
     protected TextView label_timezoneMode;
     protected Spinner spinner_timezoneMode;
@@ -889,7 +896,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onClick(View v) {
                     Intent intent = new Intent(SuntimesConfigActivity0.this, PlacesActivity.class);
                     intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
-                    startActivityForResult(intent, LocationConfigDialog.REQUEST_LOCATION);
+                    startActivityForResultCompat(intent, LocationConfigDialog.REQUEST_LOCATION);
                 }
             });
         }
@@ -1820,7 +1827,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void launchEventEditor(Context context)
     {
         Intent configEventsIntent = eventEditorIntent(context);
-        startActivityForResult(configEventsIntent, PICK_EVENT_REQUEST);
+        startActivityForResultCompat(configEventsIntent, PICK_EVENT_REQUEST);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -2508,7 +2515,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             String filename = exportTarget + WidgetSettingsExportTask.FILEEXT;
             Intent intent = ExportTask.getCreateFileIntent(filename, WidgetSettingsExportTask.MIMETYPE);
             try {
-                startActivityForResult(intent, EXPORT_REQUEST);
+                startActivityForResultCompat(intent, EXPORT_REQUEST);
                 return;
 
             } catch (ActivityNotFoundException e) {
@@ -2588,7 +2595,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected boolean importSettings(Context context)
     {
         if (context != null) {
-            startActivityForResult(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
+            startActivityForResultCompat(ExportTask.getOpenFileIntent("text/*"), IMPORT_REQUEST);
             return true;
         }
         return false;
@@ -3343,9 +3350,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      * @param data an Intent with extra string data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case EXPORT_REQUEST:
@@ -3575,7 +3582,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void launchThemeEditor(Context context)
     {
         Intent configThemesIntent = themeEditorIntent(context);
-        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        startActivityForResultCompat(configThemesIntent, PICK_THEME_REQUEST);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 

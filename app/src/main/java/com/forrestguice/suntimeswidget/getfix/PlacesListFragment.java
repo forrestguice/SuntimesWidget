@@ -58,6 +58,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
@@ -181,9 +182,9 @@ public class PlacesListFragment extends DialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         Context context = getContext();
         switch (requestCode)
         {
@@ -967,10 +968,12 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
+
     public boolean importPlaces(Context context)
     {
         if (context != null) {
-            startActivityForResult(BuildPlacesTask.buildPlacesOpenFileIntent(), IMPORT_REQUEST);
+            startActivityForResult_import.launch(BuildPlacesTask.buildPlacesOpenFileIntent());
             return true;
         }
         return false;
@@ -988,6 +991,8 @@ public class PlacesListFragment extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EXPORT_REQUEST);
+
     public void exportPlaces(Context context)
     {
         String exportTarget = "SuntimesPlaces";
@@ -996,7 +1001,7 @@ public class PlacesListFragment extends DialogBase
             String filename = exportTarget + ExportPlacesTask.FILEEXT;
             Intent intent = ExportTask.getCreateFileIntent(filename, ExportPlacesTask.MIMETYPE);
             try {
-                startActivityForResult(intent, EXPORT_REQUEST);
+                startActivityForResult_export.launch(intent);
                 return;
 
             } catch (ActivityNotFoundException e) {

@@ -67,7 +67,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
@@ -556,7 +556,7 @@ public class EventListHelper
     @Nullable
     protected EventExportTask exportTask = null;
 
-    public boolean exportEvents(FragmentCompat fragment)
+    public boolean exportEvents(DialogBase fragment)
     {
         if (exportTask != null && importTask != null) {
             Log.e("ExportEvents", "Already busy importing/exporting! ignoring request");
@@ -575,8 +575,8 @@ public class EventListHelper
                     String filename = exportTarget + EventExportTask.FILEEXT;
                     Intent intent = ExportTask.getCreateFileIntent(filename, EventExportTask.MIMETYPE);
                     try {
-                        if (fragment.getFragment() != null) {
-                            fragment.getFragment().startActivityForResult(intent, REQUEST_EXPORT_URI);
+                        if (fragment != null) {
+                            fragment.startActivityForResultCompat(intent, REQUEST_EXPORT_URI);
                         }
                         return true;
 
@@ -663,15 +663,15 @@ public class EventListHelper
     @Nullable
     protected EventImportTask importTask = null;
 
-    public void importEvents(FragmentCompat fragment)
+    public void importEvents(DialogBase fragment)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportEvents", "Already busy importing/exporting! ignoring request");
             return;
         }
         Intent intent = ExportTask.getOpenFileIntent(EventExportTask.MIMETYPE);
-        if (fragment.getFragment() != null) {
-            fragment.getFragment().startActivityForResult(intent, REQUEST_IMPORT_URI);
+        if (fragment != null) {
+            fragment.startActivityForResultCompat(intent, REQUEST_IMPORT_URI);
         }
     }
 

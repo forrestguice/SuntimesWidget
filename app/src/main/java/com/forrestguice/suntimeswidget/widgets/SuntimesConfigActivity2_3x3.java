@@ -80,7 +80,7 @@ public class SuntimesConfigActivity2_3x3 extends SuntimesConfigActivity2
     {
         Intent configThemesIntent = themeEditorIntent(context);
         configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);  // TODO: preview
-        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        startActivityForResultCompat(configThemesIntent, PICK_THEME_REQUEST);
     }
 
     @Override

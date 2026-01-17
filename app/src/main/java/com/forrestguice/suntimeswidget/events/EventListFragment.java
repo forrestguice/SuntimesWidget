@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.FragmentManagerCompat;
@@ -54,6 +55,8 @@ public class EventListFragment extends DialogBase
     public static final String EXTRA_SELECTFILTER = "selectfilter";   // allow "select and return" for given types
 
     private EventListHelper helper;
+    protected ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EventListHelper.REQUEST_EXPORT_URI);
+    protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(EventListHelper.REQUEST_IMPORT_URI);
 
     public EventListFragment()
     {
@@ -130,9 +133,9 @@ public class EventListFragment extends DialogBase
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case EventListHelper.REQUEST_EXPORT_URI:
@@ -198,11 +201,11 @@ public class EventListFragment extends DialogBase
             return true;
 
         } else if (itemId == R.id.exportEvents) {
-            helper.exportEvents(FragmentCompat.from(EventListFragment.this));
+            helper.exportEvents(this);
             return true;
 
         } else if (itemId == R.id.importEvents) {
-            helper.importEvents(FragmentCompat.from(EventListFragment.this));
+            helper.importEvents(this);
             return true;
 
         } else if (itemId == R.id.helpEvents) {
