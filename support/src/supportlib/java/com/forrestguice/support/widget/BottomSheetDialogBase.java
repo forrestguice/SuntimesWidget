@@ -219,6 +219,17 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return fragmentManager;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedState) {
+        super.onViewCreated(view, savedState);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedState) {
+        super.onActivityCreated(savedState);
+        onActivityCreatedCompat(savedState);
+    }
+    @CallSuper
+    public void onActivityCreatedCompat(Bundle savedInstanceState) {}
 
     //
     // Activity Request

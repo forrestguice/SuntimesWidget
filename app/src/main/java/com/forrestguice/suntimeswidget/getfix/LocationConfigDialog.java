@@ -477,9 +477,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     });
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    public void onActivityCreatedCompat(Bundle savedInstanceState)
     {
-        super.onViewCreated(view, savedInstanceState);
+        super.onActivityCreatedCompat(savedInstanceState);
         DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 

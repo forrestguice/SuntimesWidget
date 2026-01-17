@@ -206,6 +206,15 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return false;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedState)
+    {
+        super.onViewCreated(view, savedState);
+        onActivityCreatedCompat(savedState);
+    }
+    @CallSuper
+    public void onActivityCreatedCompat(Bundle savedInstanceState) {}
+
     //
     // OnActivityResult
     //
