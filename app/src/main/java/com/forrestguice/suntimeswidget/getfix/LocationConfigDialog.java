@@ -60,11 +60,12 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
     protected ImageButton btn_accept, btn_cancel;
 
-    public void onInflate(@NonNull Activity activity, @NonNull AttributeSet attrs, Bundle savedInstanceState)
+    @Override
+    public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs, Bundle savedInstanceState)
     {
-        super.onInflate(activity, attrs, savedInstanceState);
+        super.onInflate(context, attrs, savedInstanceState);
 
-        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.LocationConfigDialog);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LocationConfigDialog);
         setHideDialogHeader(a.getBoolean(R.styleable.LocationConfigDialog_hideHeader, hideHeader));
         setHideDialogFooter(a.getBoolean(R.styleable.LocationConfigDialog_hideFooter, hideFooter));
         setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
