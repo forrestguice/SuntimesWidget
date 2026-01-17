@@ -24,6 +24,7 @@ import com.forrestguice.annotation.Nullable;
 
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Before;
@@ -87,7 +88,6 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_WINTER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
@@ -186,7 +186,7 @@ public class CalculatorProviderTest0
     {
         List<String> projection = Arrays.asList(QUERY_SEASONS_PROJECTION);
         //noinspection deprecation
-        assertTrue("default projection contains COLUMN_SEASON_VERNAL", projection.contains(COLUMN_SEASON_VERNAL));
+        assertTrue("default projection contains COLUMN_SEASON_VERNAL", projection.contains(CalculatorProviderContract.COLUMN_SEASON_VERNAL));
         assertTrue("default projection contains COLUMN_SEASON_SUMMER", projection.contains(COLUMN_SEASON_SUMMER));
         assertTrue("default projection contains COLUMN_SEASON_AUTUMN", projection.contains(COLUMN_SEASON_AUTUMN));
         assertTrue("default projection contains COLUMN_SEASON_WINTER", projection.contains(COLUMN_SEASON_WINTER));

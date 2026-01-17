@@ -92,7 +92,6 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SPRING;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_TROPICAL_YEAR_LENGTH;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_WINTER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
@@ -252,7 +251,7 @@ public class CalculatorProviderTest
         //noinspection deprecation
         test_allColumnsLong("QUERY_SEASONS", cursor0,
                 new String[] { COLUMN_SEASON_CROSS_SPRING, COLUMN_SEASON_CROSS_SUMMER, COLUMN_SEASON_CROSS_AUTUMN, COLUMN_SEASON_CROSS_WINTER, COLUMN_SEASON_TROPICAL_YEAR_LENGTH,
-                COLUMN_SEASON_SPRING, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
+                COLUMN_SEASON_SPRING, CalculatorProviderContract.COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 1: year
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR));
@@ -263,7 +262,7 @@ public class CalculatorProviderTest
         //noinspection deprecation
         test_allColumnsLong("QUERY_SEASONS", cursor1,
                 new String[] { COLUMN_SEASON_CROSS_SPRING, COLUMN_SEASON_CROSS_SUMMER, COLUMN_SEASON_CROSS_AUTUMN, COLUMN_SEASON_CROSS_WINTER, COLUMN_SEASON_TROPICAL_YEAR_LENGTH,
-                COLUMN_SEASON_SPRING, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
+                COLUMN_SEASON_SPRING, CalculatorProviderContract.COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR) + "-" + TEST_DATE1.get(Calendar.YEAR));
