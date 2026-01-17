@@ -193,7 +193,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
             } else {                 // save to: external download dir
                 Log.d("ExportTask", "saving to external download dir");
-                File exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File exportPath = FileProvider.getExternalStorageDownloadDirectory(context);
                 exportFile = new File(exportPath, exportTarget);
 
                 boolean targetExists = exportFile.exists();
