@@ -68,7 +68,7 @@ public class AppSettingsTest0
         test_prefTypeInfo("WorldMapWidgetSettings", WorldMapWidgetSettings.getPrefTypeInfo(), WorldMapWidgetSettings. getPrefTypes());
     }
 
-    public void test_prefTypeInfo(String tag, PrefTypeInfo info, Map<String,Class> keys)
+    public void test_prefTypeInfo(String tag, PrefTypeInfo info, Map<String,Class<?>> keys)
     {
         ArrayList<String> allKeys1 = new ArrayList<>();    // "all keys" should contain every subset
         allKeys1.addAll(Arrays.asList(info.intKeys()));

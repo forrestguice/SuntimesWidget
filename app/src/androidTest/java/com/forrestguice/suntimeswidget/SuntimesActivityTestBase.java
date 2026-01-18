@@ -124,7 +124,7 @@ public abstract class SuntimesActivityTestBase
     /**
      * Rotate the device to landscape and back.
      */
-    public void rotateDevice(ActivityTestRule activityRule)
+    public void rotateDevice(ActivityTestRule<?> activityRule)
     {
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -134,7 +134,7 @@ public abstract class SuntimesActivityTestBase
      * Rotate to given orientation.
      * @param orientation ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE | ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      */
-    public void rotateDevice(ActivityTestRule activityRule, int orientation )
+    public void rotateDevice(ActivityTestRule<?> activityRule, int orientation )
     {
         activityRule.getActivity().setRequestedOrientation(orientation);
     }
