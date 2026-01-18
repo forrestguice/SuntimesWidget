@@ -293,12 +293,13 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     });
 
-    @SuppressWarnings("deprecation")
     private void themeViews(Context context)
     {
         if (themeOverride != null)
         {
+            //noinspection deprecation
             options.init(themeOverride);
+            //noinspection deprecation
             card_adapter.setThemeOverride(themeOverride);
 
             text_title.setTextColor(options.titleColor);

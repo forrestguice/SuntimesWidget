@@ -92,6 +92,7 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.TimeZone;
 
+@SuppressWarnings("deprecation")
 public class SuntimesUtils
 {
     public static final String SPANTAG_DST = "[d]";

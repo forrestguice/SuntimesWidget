@@ -362,9 +362,13 @@ public class MoonDialog extends BottomSheetDialogBase
             text_dialogTimeOffset.setTextColor(textColor);
             text_dialogTimeOffset.setTextSize(textSizeSp);
 
+            //noinspection deprecation
             moonriseset.themeViews(context, themeOverride);
+            //noinspection deprecation
             currentphase.themeViews(context, themeOverride);
+            //noinspection deprecation
             moonphases.themeViews(context, themeOverride);
+            //noinspection deprecation
             moonapsis.themeViews(context, themeOverride);
 
             moondistance_label.setTextColor(titleColor);
@@ -393,6 +397,7 @@ public class MoonDialog extends BottomSheetDialogBase
     }
 
     private SuntimesTheme themeOverride = null;
+    @SuppressWarnings("deprecation")
     @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
