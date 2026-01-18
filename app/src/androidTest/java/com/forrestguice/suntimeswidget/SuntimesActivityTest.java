@@ -28,6 +28,7 @@ import androidx.test.filters.LargeTest;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
@@ -190,7 +191,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         onView(withId(R.id.text_time)).check(assertShown);
         onView(withId(R.id.text_time)).check(matches(withText(timeText.getValue())));
 
-        if (!SuntimesUtils.is24()) {
+        if (!TimeDateDisplay.is24()) {
             onView(withId(R.id.text_time_suffix)).check(assertShown);
             onView(withId(R.id.text_time_suffix)).check(matches(withText(timeText.getSuffix())));
         }

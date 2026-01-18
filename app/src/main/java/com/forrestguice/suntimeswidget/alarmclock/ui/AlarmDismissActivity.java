@@ -44,6 +44,7 @@ import android.os.PowerManager;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -1021,7 +1022,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
     {
         TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
-        if (SuntimesUtils.is24()) {
+        if (TimeDateDisplay.is24()) {
             return timeText.getValue();
         } else {
             String timeString = timeText.getValue() + " " + timeText.getSuffix();
@@ -1036,7 +1037,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         {
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(alarm.timestamp);
-            int alarmHour = alarmTime.get( SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
+            int alarmHour = alarmTime.get( TimeDateDisplay.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
             boolean isBefore = (alarm.offset <= 0);
             String offsetText = delta_utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
             String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);

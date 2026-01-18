@@ -41,6 +41,7 @@ import android.provider.AlarmClock;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -1094,7 +1095,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             AlarmTimeDialog timeDialog = new AlarmTimeDialog();
             timeDialog.setTime(hour, minute);
-            timeDialog.set24Hour(SuntimesUtils.is24());
+            timeDialog.set24Hour(TimeDateDisplay.is24());
             timeDialog.setTimeZone(item.timezone);
             timeDialog.setLocation(item.location);
             timeDialog.setDialogListener(onTimeChanged);

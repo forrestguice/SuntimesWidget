@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -1638,7 +1639,7 @@ public class AlarmNotifications extends BroadcastReceiver
         String offsetText = delta_utils.timeDeltaLongDisplayString(0, offset).getValue();
 
         if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
-            int plural = SuntimesUtils.is24() ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
+            int plural = TimeDateDisplay.is24() ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
             String gender = context.getString(R.string.time_gender);
             return formatOffsetMessage(context, offset, offsetText, eventText, plural, gender);
         } else return formatOffsetMessage(context, offset, offsetText, eventText);

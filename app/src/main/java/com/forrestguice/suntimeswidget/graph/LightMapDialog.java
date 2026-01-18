@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.Editable;
@@ -1323,7 +1324,7 @@ public class LightMapDialog extends BottomSheetDialogBase
                 LineGraphOptions options1 = graphView.getOptions();
                 options1.now = options.now;
                 options1.timezone = getSelectedTZ(context, data);
-                options1.is24 = SuntimesUtils.is24();
+                options1.is24 = TimeDateDisplay.is24();
                 options1.offsetMinutes = options.offsetMinutes;
                 options1.anim_frameOffsetMinutes = options.anim_frameOffsetMinutes;
                 options1.graph_width = LineGraphBitmap.MINUTES_IN_DAY;

@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -434,7 +435,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         CharSequence alarmDesc;
         SuntimesUtils utils = new SuntimesUtils();
         TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
-        if (SuntimesUtils.is24()) {
+        if (TimeDateDisplay.is24()) {
             alarmDesc = timeText.getValue();
 
         } else {
@@ -477,7 +478,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         CharSequence alarmDesc;
         TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
-        if (SuntimesUtils.is24()) {
+        if (TimeDateDisplay.is24()) {
             alarmDesc = timeText.getValue();
 
         } else {
@@ -499,7 +500,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     {
         Calendar alarmTime = Calendar.getInstance();
         alarmTime.setTimeInMillis(item.timestamp);
-        int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
+        int alarmHour = TimeDateDisplay.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
 
         if (item.offset == 0) {
             return context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);

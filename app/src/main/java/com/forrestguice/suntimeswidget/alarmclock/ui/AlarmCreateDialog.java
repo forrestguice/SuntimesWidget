@@ -46,6 +46,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
@@ -369,7 +370,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         fragment.setTime(getHour(), getMinute());
         fragment.setTimeZone(getTimeZone());
         fragment.setLocation(getLocation());
-        fragment.set24Hour(SuntimesUtils.is24());
+        fragment.set24Hour(TimeDateDisplay.is24());
         fragment.setDialogListener(new AlarmTimeDialog.DialogListener()
         {
             @Override

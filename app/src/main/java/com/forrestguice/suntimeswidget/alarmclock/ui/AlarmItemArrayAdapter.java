@@ -32,6 +32,7 @@ import android.os.Vibrator;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -740,7 +741,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         {
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.timestamp);
-            int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
+            int alarmHour = TimeDateDisplay.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
 
             if (item.offset == 0)
             {

@@ -157,7 +157,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         switch (timeFormat)
         {
-            case MODE_SUNTIMES: return SuntimesUtils.is24();
+            case MODE_SUNTIMES: return TimeDateDisplay.is24();
             case MODE_SYSTEM: return android.text.format.DateFormat.is24HourFormat(context);
             case MODE_12HR: return false;
             case MODE_24HR: default: return true;
