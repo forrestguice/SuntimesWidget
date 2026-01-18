@@ -32,6 +32,7 @@ import android.os.Vibrator;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -79,7 +80,7 @@ import java.util.Calendar;
  */
 public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     private Context context;
     private long selectedItem;

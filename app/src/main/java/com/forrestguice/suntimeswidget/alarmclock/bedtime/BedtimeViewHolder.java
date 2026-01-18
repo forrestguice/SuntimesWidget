@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.ImageViewCompat;
@@ -61,7 +62,8 @@ import java.util.TimeZone;
 
 public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 {
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public BedtimeViewHolder(View view)
     {
@@ -1025,7 +1027,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             {
                 Calendar now = Calendar.getInstance();
                 AlarmNotifications.updateAlarmTime(context, bedtime, now, true);
-                String deltaString = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
+                String deltaString = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
                 String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
                 CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, deltaString);
                 note.setText(noteDisplay);

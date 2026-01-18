@@ -44,6 +44,7 @@ import android.os.PowerManager;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.FloatingActionButton;
@@ -137,7 +138,8 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private View background;
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private int pulseSoundingDuration = 4000;
     private int pulseSnoozingDuration = 6000;
@@ -1036,7 +1038,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             alarmTime.setTimeInMillis(alarm.timestamp);
             int alarmHour = alarmTime.get( SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
             boolean isBefore = (alarm.offset <= 0);
-            String offsetText = utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
+            String offsetText = delta_utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
             String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
             offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }
@@ -1049,7 +1051,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         long snoozeMillis = (alarm != null)
                 ? alarm.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(this))    // NPE this line after rotation
                 : AlarmSettings.PREF_DEF_ALARM_SNOOZE;
-        TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeMillis);
+        TimeDisplayText snoozeText = delta_utils.timeDeltaLongDisplayString(0, snoozeMillis);
         String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
         return SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
     }

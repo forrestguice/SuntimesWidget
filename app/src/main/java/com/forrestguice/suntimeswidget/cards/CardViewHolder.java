@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.support.content.ContextCompat;
@@ -96,8 +97,9 @@ import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DE
 
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
-    protected static AngleDisplay angle_utils = new AngleDisplay();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final AngleDisplay angle_utils = new AngleDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public ImageButton btn_flipperNext;
     public ImageButton btn_flipperPrev;
@@ -433,7 +435,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected CharSequence comparisonDisplayString(Context context, SuntimesRiseSetData data, CardAdapter.CardAdapterOptions options)
     {
-        TimeDisplayText deltaText = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
+        TimeDisplayText deltaText = delta_utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String deltaString = deltaText.getValue() + " " + deltaText.getUnits();
         String compareString = (data.dayLengthToday() == data.dayLengthOther())
                 ? context.getString(data.dayDeltaPrefix()) + " " + deltaText.getSuffix()
@@ -656,7 +658,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             dayLengthDisplay = new TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 0, (showSeconds ? SuntimesUtils.strSeconds : SuntimesUtils.strMinutes)), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
         else if (dayLength >= SuntimesData.DAY_MILLIS)
             dayLengthDisplay = new TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 24, SuntimesUtils.strHours), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
-        else dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
+        else dayLengthDisplay = delta_utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
 
         dayLengthDisplay.setSuffix("");
         String dayLengthStr = dayLengthDisplay.getValue();

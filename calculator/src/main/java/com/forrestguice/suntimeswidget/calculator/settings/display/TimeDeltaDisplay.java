@@ -55,27 +55,41 @@ public class TimeDeltaDisplay
     }
 
     /**
-     * @param timeSpan1 first event
-     * @param timeSpan2 second event
-     * @return a display string that describes difference between the two spans
+     * @param t duration
+     * @return a display string that describes the duration
      */
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2) {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, false);
+    public TimeDisplayText timeDeltaLongDisplayString(long t) {
+        return timeDeltaLongDisplayString(t, true);
     }
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showSeconds) {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, false, true, showSeconds);
+    public TimeDisplayText timeDeltaLongDisplayString(long t, boolean showSeconds)
+    {
+        TimeDisplayText text = timeDeltaLongDisplayString(0, t, showSeconds);
+        text.setSuffix("");
+        return text;
     }
 
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
-        return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
+    /**
+     * @param t1 first event
+     * @param t2 second event
+     * @return a display string that describes the time span between the events
+     */
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2) {
+        return timeDeltaLongDisplayString(t1, t2, false, true, false);
     }
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showSeconds) {
+        return timeDeltaLongDisplayString(t1, t2, false, true, showSeconds);
+    }
+
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showWeeks, boolean showHours, boolean showSeconds) {
+        return timeDeltaLongDisplayString(t1, t2, showWeeks, showHours, true, showSeconds);
+    }
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
     {
         String value = strEmpty;
         String units = strEmpty;
         String suffix = strEmpty;
 
-        long timeSpan = timeSpan2 - timeSpan1;
+        long timeSpan = t2 - t1;
         GregorianCalendar d = new GregorianCalendar();
         d.setTimeInMillis(timeSpan);
         long timeInMillis = d.getTimeInMillis();
@@ -139,13 +153,6 @@ public class TimeDeltaDisplay
 
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
-        return text;
-    }
-
-    public TimeDisplayText timeDeltaLongDisplayString(long timeSpan, boolean showSeconds)
-    {
-        TimeDisplayText text = timeDeltaLongDisplayString(0, timeSpan, showSeconds);
-        text.setSuffix("");
         return text;
     }
 

@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.R;
@@ -168,6 +169,7 @@ public class AlarmNotifications extends BroadcastReceiver
     };
 
     private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
     private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
     /**
@@ -260,7 +262,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 default:
-                    TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
+                    TimeDisplayText alarmText = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
                     String typeDisplay = (item.type != null ? item.type.getDisplayString() : "Alarm");
                     alarmString = context.getString(messageResID, typeDisplay, alarmText.getValue());
                     alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
@@ -1347,7 +1349,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
                     SuntimesUtils.initDisplayStrings(context);
-                    TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
+                    TimeDisplayText snoozeText = delta_utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setColor(ContextCompat.getColor(context, R.color.alarm_notification_snoozing));
@@ -1599,7 +1601,7 @@ public class AlarmNotifications extends BroadcastReceiver
             } else {
                 AlarmEvent.AlarmEventPhrase phrase = event.getPhrase(context);
                 String eventText = (phrase != null ? phrase.getNoun() : event.getTitle());
-                String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+                String offsetText = delta_utils.timeDeltaLongDisplayString(0, offset).getValue();
 
                 if (Build.VERSION.SDK_INT >= 24)
                 {
@@ -1618,7 +1620,7 @@ public class AlarmNotifications extends BroadcastReceiver
         int i = event.ordinal();
         String[] eventStrings = context.getResources().getStringArray(R.array.solarevents_long1);
         String eventText = (i >= 0 && i <eventStrings.length) ? eventStrings[i] : event.name();
-        String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+        String offsetText = delta_utils.timeDeltaLongDisplayString(0, offset).getValue();
 
         if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
             int[] eventPlurals = context.getResources().getIntArray(R.array.solarevents_quantity);
@@ -1633,7 +1635,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
         String eventText = utils.calendarTimeShortDisplayString(context, calendar).toString();
-        String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+        String offsetText = delta_utils.timeDeltaLongDisplayString(0, offset).getValue();
 
         if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
             int plural = SuntimesUtils.is24() ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);

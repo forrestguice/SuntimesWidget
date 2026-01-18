@@ -30,6 +30,7 @@ import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -47,6 +48,7 @@ import java.util.TimeZone;
 public class NextEventTileBase extends SuntimesTileBase
 {
     protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public NextEventTileBase(@Nullable Activity activity) {
         super(activity);
@@ -145,7 +147,7 @@ public class NextEventTileBase extends SuntimesTileBase
         SpannableString modeDisplay = SuntimesUtils.createBoldSpan(null, modeString, modeString);
         modeDisplay = SuntimesUtils.createRelativeSpan(modeDisplay, modeString, modeString, 1.25f);
 
-        String noteValue = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), event.getTimeInMillis()).getValue();
+        String noteValue = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), event.getTimeInMillis()).getValue();
         String noteString = context.getString(event.after(now) ? R.string.hence : R.string.ago, noteValue);
         CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, noteValue);
 

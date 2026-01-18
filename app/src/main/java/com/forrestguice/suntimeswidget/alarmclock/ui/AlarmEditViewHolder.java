@@ -22,6 +22,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.View;
@@ -54,6 +56,7 @@ import java.util.TimeZone;
 public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 {
     public static SuntimesUtils utils = new SuntimesUtils();
+    protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public int position = RecyclerView.NO_POSITION;
     public boolean selected = true;
@@ -450,7 +453,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             int noteColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
             a.recycle();
 
-            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
+            String timeString = " " + delta_utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
             String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
             return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
@@ -503,7 +506,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         } else {
             boolean isBefore = (item.offset <= 0);
-            String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
+            String offsetText = delta_utils.timeDeltaLongDisplayString(0, item.offset).getValue();
             String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
             return SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }

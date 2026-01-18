@@ -45,6 +45,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.NotificationManagerCompat;
@@ -82,6 +83,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
 public class AlarmPrefsFragment extends PreferenceFragment
 {
     private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -422,7 +424,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             AlarmSettings.BootCompletedInfo bootCompletedInfo = AlarmSettings.loadPrefLastBootCompleted(context);
             long lastRunMillis = bootCompletedInfo.getTimeMillis();
             String lastBootCompleted = utils.calendarDateTimeDisplayString(context, lastRunMillis).toString();
-            String afterDelay = (lastRunMillis >= 0 ? utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
+            String afterDelay = (lastRunMillis >= 0 ? delta_utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
             String took = (lastRunMillis >= 0 ? bootCompletedInfo.getDurationMillis() + "ms": "");
             CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)
                     : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
