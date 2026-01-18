@@ -278,7 +278,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
      */
     protected static boolean importAppSettings(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
     {
-        Map<String,Class> prefTypes = AppSettings.getPrefTypes();
+        Map<String,Class<?>> prefTypes = AppSettings.getPrefTypes();
         prefTypes.putAll(AlarmSettings.getPrefTypes());
         prefTypes.putAll(BedtimeSettings.getPrefTypes());
         prefTypes.putAll(AppColorValuesCollection.getPrefTypes());

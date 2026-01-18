@@ -112,8 +112,8 @@ public class AppColorValuesCollection<T> extends ColorValuesCollection<ColorValu
             PREFS_PREFIX + "1" + "_" + KEY_SELECTED + "_" + AppColorValues.TAG_APPCOLORS,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {

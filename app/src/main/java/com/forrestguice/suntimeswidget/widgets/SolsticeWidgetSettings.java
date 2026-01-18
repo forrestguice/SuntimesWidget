@@ -46,8 +46,8 @@ public class SolsticeWidgetSettings
             PREF_PREFIX_KEY_SOLSTICEWIDGET + PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {

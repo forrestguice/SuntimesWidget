@@ -100,8 +100,8 @@ public class WorldMapColorValuesCollection<T> extends ColorValuesCollection<Colo
             PREFS_PREFIX + "1" + "_" + KEY_SELECTED + "_" + WorldMapColorValues.TAG_WORLDMAP,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {

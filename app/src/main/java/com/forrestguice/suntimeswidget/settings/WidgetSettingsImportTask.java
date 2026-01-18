@@ -549,7 +549,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     }
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
     {
-        Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
+        Map<String,Class<?>> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
         prefTypes.putAll(ClockWidgetSettings.getPrefTypes());
         prefTypes.putAll(CalendarSettings.getPrefTypes());
@@ -561,7 +561,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         importValues(prefs, prefTypes, values, true, toPrefix, appWidgetId, "WidgetSettings");
     }
 
-    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
+    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class<?>> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
     {
         Set<Map.Entry<String, Object>> entries = values.valueSet();
         for (Map.Entry<String, Object> entry : entries)

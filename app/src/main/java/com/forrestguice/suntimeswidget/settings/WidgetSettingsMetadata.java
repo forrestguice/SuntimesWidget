@@ -97,8 +97,8 @@ public class WidgetSettingsMetadata
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -116,7 +116,7 @@ public class WidgetSettingsMetadata
         }
         return types;
     }
-    private static void putType(Map<String,Class> map, Class<?> type, String... keys) {
+    private static void putType(Map<String,Class<?>> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }

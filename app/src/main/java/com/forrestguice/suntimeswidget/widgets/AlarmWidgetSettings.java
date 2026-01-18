@@ -84,8 +84,8 @@ public class AlarmWidgetSettings
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {

@@ -67,8 +67,8 @@ public class ClockWidgetSettings
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_COLOR,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {

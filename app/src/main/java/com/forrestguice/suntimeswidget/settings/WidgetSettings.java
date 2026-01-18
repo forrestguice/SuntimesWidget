@@ -409,8 +409,8 @@ public class WidgetSettings
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -432,7 +432,7 @@ public class WidgetSettings
         }
         return types;
     }
-    public static void putType(Map<String,Class> map, Class<?> type, String... keys) {
+    public static void putType(Map<String,Class<?>> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
