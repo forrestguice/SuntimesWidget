@@ -31,12 +31,38 @@ import java.util.concurrent.TimeoutException;
 
 public class ExecutorUtils
 {
-    public static boolean runTask(String tag, @NonNull final Callable<Boolean> r, long timeoutAfter)
+    /**
+     * runTask (async)
+     * @param tag tag
+     * @param r Runnable
+     */
+    public static void runTask(String tag, @NonNull final Runnable r)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(r);
+    }
+
+    /**
+     * waitForTask; synchronous
+     * @param tag tag
+     * @param r Callable<Boolean>
+     * @param timeoutAfter will block for timeoutAfter millis
+     * @return result
+     */
+    public static boolean waitForTask(String tag, @NonNull final Callable<Boolean> r, long timeoutAfter)
     {
         Boolean result = getResult(tag, r, timeoutAfter);
         return (result != null && result);
     }
 
+    /**
+     * getResult; synchronous
+     * @param tag tag
+     * @param callable Callable
+     * @param timeoutAfter will block for timeoutAfter millis
+     * @param <T> result type
+     * @return result
+     */
     @Nullable
     public static <T> T getResult(String tag, @NonNull final Callable<T> callable, long timeoutAfter)
     {

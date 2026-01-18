@@ -151,7 +151,7 @@ public class AlarmEvent
         {
             event = null;
             uri = EventUri.getEventInfoUri(authority, name);
-            resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
+            resolved = ExecutorUtils.waitForTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
         }
 
         public AlarmEventItem( @Nullable String eventUri, @Nullable final ContentResolver resolver)
@@ -160,7 +160,7 @@ public class AlarmEvent
             if (event == null) {
                 uri = eventUri;
                 title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
-                resolved = ExecutorUtils.runTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
+                resolved = ExecutorUtils.waitForTask("AlarmEventItem", resolveItemTask(resolver), MAX_WAIT_MS);
             }
         }
 
