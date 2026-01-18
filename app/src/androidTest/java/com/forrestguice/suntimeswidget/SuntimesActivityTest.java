@@ -66,8 +66,6 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.registerIdlingResources;
-import static androidx.test.espresso.Espresso.unregisterIdlingResources;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.pressBack;

@@ -28,7 +28,11 @@ import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -616,6 +620,15 @@ public abstract class SuntimesActivityTestBase
         public static TimeZone timeZone_Suntimes(Context context) {
             return appTimeZone(context);
         }
+    }
+
+    public static boolean registerIdlingResources(IdlingResource... resources) {
+        //return Espresso.registerIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().register(resources);
+    }
+    public static boolean unregisterIdlingResources(IdlingResource... resources) {
+        //return Espresso.unregisterIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().unregister(resources);
     }
 
 }

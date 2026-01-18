@@ -45,8 +45,6 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static androidx.test.espresso.Espresso.registerIdlingResources;
-import static androidx.test.espresso.Espresso.unregisterIdlingResources;
 import static org.junit.Assert.assertNotNull;
 
 @Category(UnlistedTest.class)
