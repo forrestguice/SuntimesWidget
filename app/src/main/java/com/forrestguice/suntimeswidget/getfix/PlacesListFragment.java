@@ -68,7 +68,9 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.SearchView;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.File;
@@ -806,13 +808,13 @@ public class PlacesListFragment extends DialogBase
 
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                     .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), onConfirmDeletePlace(context, rowIDs))
+                    .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), onConfirmDeletePlace(rowIDs))
                     .setNegativeButton(context.getString(R.string.locationdelete_dialog_cancel), null);
             confirm.show();
         }
     }
 
-    private DialogInterface.OnClickListener onConfirmDeletePlace(@NonNull Context context, final Long[] rowIDs)
+    private DialogInterface.OnClickListener onConfirmDeletePlace(Long[] rowIDs)
     {
         return new DialogInterface.OnClickListener()
         {
@@ -823,14 +825,17 @@ public class PlacesListFragment extends DialogBase
                     return;
                 }
 
-                DeletePlaceTask task = new DeletePlaceTask(context);
-                task.setTaskListener(new DeletePlaceTask.TaskListener()
+                DeletePlaceTask task = new DeletePlaceTask(context, rowIDs);
+                ExecutorUtils.TaskListener<DeletePlaceTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<DeletePlaceTask.TaskResult>()
                 {
                     @Override
-                    public void onFinished(boolean result, Long... rowIDs)
+                    public void onStarted() {}
+
+                    @Override
+                    public void onFinished(DeletePlaceTask.TaskResult result)
                     {
                         List<PlaceItem> deletedItems = new ArrayList<>();
-                        for (long rowID : rowIDs)
+                        for (long rowID : result.getRowIDs())
                         {
                             PlaceItem item = adapter.getItem(rowID);
                             if (item != null) {
@@ -841,10 +846,10 @@ public class PlacesListFragment extends DialogBase
                         setModified(true);
                         offerUndoDeletePlace(context, deletedItems.toArray(new PlaceItem[0]));
                     }
-                });
+                };
 
                 finishActionMode();
-                task.execute(rowIDs);
+                ExecutorUtils.runTask("DeletePlace", AndroidTaskHandler.get(), task, taskListener);
             }
         };
     }
