@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
@@ -68,6 +69,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatDelegateHelper;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -580,7 +582,9 @@ public class UIPrefsFragment extends PreferenceFragment
                     if (doubleValue > 0)
                     {
                         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
+
+                        String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), doubleValue, units, 2, false).toString();
+                        preference.setSummary(context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay));
                         return true;
 
                     } else return false;
@@ -595,12 +599,9 @@ public class UIPrefsFragment extends PreferenceFragment
         final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
         pref.setText((pref.isMetric() ? observerHeight : LengthUnit.metersToFeet(observerHeight)) + "");
-        pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
-    }
-    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, LengthUnit units, boolean convert)
-    {
-        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
-        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+
+        String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), observerHeight, units, 2, false).toString();
+        pref.setSummary(context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay));
     }
 
 }

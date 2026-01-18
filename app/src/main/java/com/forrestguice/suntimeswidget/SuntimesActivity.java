@@ -43,6 +43,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.util.Pair;
@@ -121,6 +122,7 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.PagerSnapHelper;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.lang.reflect.Method;
@@ -1941,7 +1943,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (supportsAltitude && enabledAltitude && location.getAltitudeAsInteger() != 0)
         {
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            TimeDisplayText altitudeText = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), location.getAltitudeAsDouble(), units, 0, true);
             altitudeString = getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = getString(R.string.location_format_alttag, altitudeString);
 

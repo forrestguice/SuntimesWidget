@@ -1894,7 +1894,7 @@ public class PlacesListFragment extends DialogBase
         if (showAltitude)
         {
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            TimeDisplayText altitudeText = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), location.getAltitudeAsDouble(), units, 0, true);
             String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);
             String displayString = context.getString(R.string.location_format_latlonalt, locationString, altitudeTag);

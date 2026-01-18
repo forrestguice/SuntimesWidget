@@ -2151,7 +2151,8 @@ public class LightMapDialog extends BottomSheetDialogBase
                             WorldMapWidgetSettings.saveWorldMapString(context, 0, PREF_KEY_LIGHTMAP_SEEKSHADOW, MAPTAG_LIGHTMAP, edit.getText().toString());
                             dismissShadowSeekPopup();
                         } else {
-                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, SuntimesUtils.formatAsHeight(context, input, units, false, 2)), Toast.LENGTH_SHORT).show();
+                            // SuntimesUtils.formatAsHeight(context, input, units, false, 2)
+                            Toast.makeText(context, context.getString(R.string.schedalarm_dialog_note2, LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, false)), Toast.LENGTH_SHORT).show();
                         }
                     } catch (NumberFormatException e) {
                         Log.w(getClass().getSimpleName(), "onSeekShadowClicked: Failed to parse input; " + e);
@@ -2600,7 +2601,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
         if (meters < Double.POSITIVE_INFINITY)
-            return SuntimesUtils.formatAsDistance(context, SuntimesUtils.formatAsHeight(context, meters, units, 2, true));
+            return SuntimesUtils.formatAsDistance(context, LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, true));
         else return formatter.format(meters);
     }
 
@@ -2898,8 +2899,8 @@ public class LightMapDialog extends BottomSheetDialogBase
         };
 
         final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, true, 2);
+        double meters = WidgetSettings.loadObserverHeightPref(context, 0);
+        String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, false).toString();
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
         String shadowHelp = getString(R.string.help_shadowlength, shadowSummary);
         SpannableStringBuilder shadowHelpSpan = SuntimesUtils.createSpan(context, shadowHelp, helpTags);

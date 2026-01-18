@@ -53,7 +53,11 @@ public class LengthUnitDisplay
     /**
      * formatAsHeight
      */
-    public static TimeDisplayText formatAsHeight(Resources context, double meters, LengthUnit units, int places, boolean shortForm)
+
+    public static TimeDisplayText formatAsHeight(Resources context, double meters, LengthUnit units, int places, boolean shortForm) {
+        return formatAsHeight(context, meters, LengthUnit.METRIC, units, places, shortForm);
+    }
+    public static TimeDisplayText formatAsHeight(Resources context, double value0, LengthUnit inUnits, LengthUnit toUnits, int places, boolean shortForm)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
@@ -62,21 +66,21 @@ public class LengthUnitDisplay
 
         double value;
         String unitsString;
-        switch (units)
+        switch (toUnits)
         {
             case IMPERIAL:
-                value = LengthUnit.metersToFeet(meters);
+                value = (inUnits == LengthUnit.IMPERIAL ? value0 : LengthUnit.metersToFeet(value0));
                 formatted = formatter.format(value);
                 unitsString = ((shortForm || rPluralFeet == 0) ? strFeetShort
-                        : context.getQuantityString(rPluralFeet, (int)value, formatted));
+                        : context.getQuantityString(rPluralFeet, (int) Math.ceil(value), formatted)).replace(formatted + " ", "");
                 break;
 
             case METRIC:
             default:
-                value = meters;
+                value = (inUnits == LengthUnit.METRIC ? value0 : LengthUnit.feetToMeters(value0));
                 formatted = formatter.format(value);
                 unitsString = ((shortForm || rPluralMeters == 0) ? strMetersShort
-                        : context.getQuantityString(rPluralMeters, (int)value, formatted));
+                        : context.getQuantityString(rPluralMeters, (int) Math.ceil(value), formatted)).replace(formatted + " ", "");
                 break;
         }
         return new TimeDisplayText(formatted, unitsString, "");
