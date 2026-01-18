@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class WidgetTimezones
@@ -676,7 +677,7 @@ public class WidgetTimezones
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
                 double rawOffsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
                 double offsetHr = timezone.getOffset(today.getTime()) / (double)(1000 * 60 * 60);
-                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, SuntimesUtils.getLocale());
+                String displayName = timezone.getDisplayName(timezone.inDaylightTime(today), TimeZone.LONG, Locale.getDefault());
                 timezones.add(new TimeZoneItem(timezone.getID(), displayName, offsetHr, rawOffsetHr));
             }
 

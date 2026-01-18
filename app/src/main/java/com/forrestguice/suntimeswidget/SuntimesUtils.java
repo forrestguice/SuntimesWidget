@@ -238,12 +238,13 @@ public class SuntimesUtils
         return initialized;
     }
 
+    @Deprecated
     public static boolean is24()
     {
         return is24;
     }
 
-    public static Locale getLocale()
+    private static Locale getLocale()
     {
         return Locale.getDefault();
     }
@@ -649,6 +650,7 @@ public class SuntimesUtils
      * @param cal a Calendar representing some year
      * @return a time display string
      */
+    @Deprecated
     public TimeDisplayText calendarDateYearDisplayString(Context context, Calendar cal)
     {
         if (cal == null)
@@ -666,10 +668,12 @@ public class SuntimesUtils
      * @param c2 another Calendar representing another point in time
      * @return a display string that describes the span between the two calendars
      */
+    @Deprecated
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
     {
         return timeDeltaDisplayString(c1, c2, false, true);
     }
+    @Deprecated
     public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2, boolean showWeeks, boolean showHours)
     {
         if (c1 != null && c2 != null)
@@ -713,6 +717,7 @@ public class SuntimesUtils
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showSeconds) {
         return timeDeltaLongDisplayString(timeSpan1, timeSpan2, showWeeks, showHours, true, showSeconds);
     }
+    @Deprecated
     public TimeDisplayText timeDeltaLongDisplayString(long timeSpan1, long timeSpan2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
     {
         String value = strEmpty;
@@ -786,6 +791,7 @@ public class SuntimesUtils
         return text;
     }
 
+    @Deprecated
     public String timeDeltaLongDisplayString(long timeInMillis)
     {
         long numberOfSeconds = timeInMillis / 1000;
@@ -827,6 +833,7 @@ public class SuntimesUtils
         return value.trim();
     }
 
+    @Deprecated
     public String formatDoubleValue(double value, int places)
     {
         NumberFormat formatter = NumberFormat.getInstance();
@@ -994,6 +1001,7 @@ public class SuntimesUtils
         return new TimeDisplayText(formatter.format(value), unitsString, "");
     }
 
+    @Deprecated
     public static String formatAsDistance(Context context, TimeDisplayText text) {
         return String.format(strDistanceFormat, text.getValue(), text.getUnits());
     }

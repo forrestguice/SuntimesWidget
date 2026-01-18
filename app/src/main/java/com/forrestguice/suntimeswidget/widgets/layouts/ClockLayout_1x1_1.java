@@ -47,6 +47,7 @@ import com.forrestguice.util.text.TimeDisplayText;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
@@ -163,9 +164,9 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         }
     }
 
-    protected static SimpleDateFormat hourFormat12 = new SimpleDateFormat("h", SuntimesUtils.getLocale());
-    protected static SimpleDateFormat hourFormat24 = new SimpleDateFormat("HH", SuntimesUtils.getLocale());
-    protected static SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", SuntimesUtils.getLocale());
+    protected static SimpleDateFormat hourFormat12 = new SimpleDateFormat("h", Locale.getDefault());
+    protected static SimpleDateFormat hourFormat24 = new SimpleDateFormat("HH", Locale.getDefault());
+    protected static SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
 
     /**
      * ClockFaceBitmap
