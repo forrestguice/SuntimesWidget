@@ -477,6 +477,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             utcTime.setTextSize(themeOverride.getTimeSizeSp());
             utcTime.setTypeface(utcTime.getTypeface(), (themeOverride.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
+            //noinspection deprecation
             worldmap.themeViews(context, themeOverride);
         } else {
             worldmap.themeViews(context);

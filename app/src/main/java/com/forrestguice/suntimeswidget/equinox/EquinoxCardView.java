@@ -197,6 +197,7 @@ public class EquinoxCardView extends LinearLayout
         ImageViewCompat.setImageTintList(resetBackButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
     }
 
+    @SuppressWarnings("deprecation")
     @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {

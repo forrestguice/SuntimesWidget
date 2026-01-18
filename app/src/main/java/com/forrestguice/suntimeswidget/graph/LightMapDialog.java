@@ -2318,10 +2318,12 @@ public class LightMapDialog extends BottomSheetDialogBase
             sunAzimuthLabel.setTextColor(titleColor);
             sunAzimuthLabel.setTextSize(suffixSizeSp);
 
+            //noinspection deprecation
             lightmap.themeViews(context, themeOverride);
             seekbar.themeViews(context, themeOverride);
             seekbar1.themeViews(context, themeOverride);
             if (graphView != null) {
+                //noinspection deprecation
                 graphView.themeViews(context, themeOverride);
             }
 

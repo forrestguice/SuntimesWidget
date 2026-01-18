@@ -188,6 +188,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         }
 
         if (options.themeOverride != null) {
+            //noinspection deprecation
             applyTheme(options.themeOverride, options);
         }
         themeViews(options, position);

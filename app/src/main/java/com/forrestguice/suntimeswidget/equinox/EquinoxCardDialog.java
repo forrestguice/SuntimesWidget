@@ -293,6 +293,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     });
 
+    @SuppressWarnings("deprecation")
     private void themeViews(Context context)
     {
         if (themeOverride != null)

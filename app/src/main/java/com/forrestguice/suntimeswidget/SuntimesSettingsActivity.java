@@ -175,7 +175,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 setResult(RESULT_OK, data);
                 break;
 
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_DARK:
+                //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT:
                 onPickTheme(requestCode, resultCode, data);
                 break;
@@ -203,7 +205,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         switch(requestCode)
         {
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_DARK: return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
             case SettingsActivityInterface.REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
