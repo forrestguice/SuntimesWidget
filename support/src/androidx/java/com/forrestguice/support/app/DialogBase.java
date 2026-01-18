@@ -63,6 +63,30 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        setUserVisibleHintCompat(true);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setUserVisibleHintCompat(false);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Deprecated    // override `setUserVisibleHintCompat` instead
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @CallSuper
+    public void setUserVisibleHintCompat(boolean isVisibleToUser) {}
+
+
     //
     // OnActivityResult
     //

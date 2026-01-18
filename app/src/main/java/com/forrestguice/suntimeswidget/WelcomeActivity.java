@@ -352,9 +352,9 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         @Override
-        public void setUserVisibleHint(boolean value)
+        public void setUserVisibleHintCompat(boolean value)
         {
-            super.setUserVisibleHint(value);
+            super.setUserVisibleHintCompat(value);
             if (isResumed()) {
                 updateViews(getActivity());
             }

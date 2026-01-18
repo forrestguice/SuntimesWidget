@@ -74,6 +74,15 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         return fragmentManager;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+	setUserVisibleHintCompat(isVisibleTouser);
+    }
+
+    @CallSuper
+    public void setUserVisibleHintCompat(boolean isVisibleToUser) {}
+
     //
     // ActivityResult
     //
