@@ -36,6 +36,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * AlarmDatabaseAdapter
@@ -884,23 +886,25 @@ public class AlarmDatabaseAdapter
     /**
      * AlarmDeleteTask
      */
-    public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
+    public static class AlarmDeleteTask implements Callable<AlarmDeleteTask.TaskResult>
     {
         protected AlarmDatabaseAdapter db;
         @Nullable
-        protected Long lastRowId;
+        protected final Long[] rowIDs;
 
-        public AlarmDeleteTask(@NonNull Context context)
+        public AlarmDeleteTask(@NonNull Context context, @Nullable Long[] rowIDs)
         {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
+            this.rowIDs = rowIDs;
         }
 
         @Override
-        protected Boolean doInBackground(Long... rowIDs)
+        public TaskResult call() throws Exception
         {
+            Long lastRowId = null;
             db.open();
             boolean removed = true;
-            if (rowIDs.length > 0)
+            if (rowIDs != null && rowIDs.length > 0)
             {
                 for (long rowID : rowIDs) {
                     removed = removed && db.removeAlarm(rowID);
@@ -911,25 +915,28 @@ public class AlarmDatabaseAdapter
                 lastRowId = null;
             }
             db.close();
-            return removed;
+            return new TaskResult(removed, lastRowId);
         }
 
-        @Override
-        protected void onPostExecute(Boolean result)
+        public static class TaskResult
         {
-            if (listener != null)
-                listener.onFinished(result, lastRowId);
-        }
+            public TaskResult(@NonNull Boolean result, @NonNull Long lastRowID)
+            {
+                this.result = result;
+                this.lastRowID = lastRowID;
+            }
 
-        protected AlarmClockDeleteTaskListener listener = null;
-        public void setTaskListener( AlarmClockDeleteTaskListener l )
-        {
-            listener = l;
-        }
+            private final Boolean result;
+            @NonNull
+            public Boolean getResult() {
+                return result;
+            }
 
-        public static abstract class AlarmClockDeleteTaskListener
-        {
-            public void onFinished(Boolean result, Long rowID) {}
+            private final Long lastRowID;
+            @NonNull
+            public Long getLastRowID() {
+                return lastRowID;
+            }
         }
     }
 

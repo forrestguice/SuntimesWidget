@@ -91,6 +91,7 @@ import com.forrestguice.support.app.NotificationCompat;
 import com.forrestguice.support.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.IOException;
@@ -2158,9 +2159,8 @@ public class AlarmNotifications extends BroadcastReceiver
             public void onItemsLoaded(Long[] ids)
             {
                 cancelAlarmTimeouts(getApplicationContext(), ids);
-                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
-                clearTask.setTaskListener(onClearedState(getApplicationContext()));
-                clearTask.execute();
+                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext(), null);
+                ExecutorUtils.runTask("ClearAlarms", AndroidTaskHandler.get(), clearTask, onClearedState(getApplicationContext()));
             }
         };
 
@@ -2294,9 +2294,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 Log.i(TAG, "Delete: " + item.rowID);
                                 cancelAlarmTimeouts(context, item);
 
-                                AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
-                                deleteTask.setTaskListener(onDeletedState(context, startId));
-                                deleteTask.execute(item.rowID);
+                                AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context, new Long[] { item.rowID });
+                                ExecutorUtils.runTask("DeleteAlarm", AndroidTaskHandler.get(), deleteTask, onDeletedState(context, startId));
                             } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SCHEDULE) || (action.startsWith(ACTION_RESCHEDULE))) {
@@ -2592,20 +2591,23 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onDeletedState(final Context context, final int startId)
+        private ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onDeletedState(final Context context, final int startId)
         {
-            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            return new ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
             {
                 @Override
-                public void onFinished(Boolean result, final Long itemID)
+                public void onStarted() {}
+
+                @Override
+                public void onFinished(AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult result)
                 {
                     Log.d(TAG, "Alarm Deleted (onDeleted)");
-                    BedtimeSettings.clearAlarmID(getApplicationContext(), itemID);
+                    BedtimeSettings.clearAlarmID(getApplicationContext(), result.getLastRowID());
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            Intent updateIntent = getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, itemID));
+                            Intent updateIntent = getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, result.getLastRowID()));
                             updateIntent.putExtra(ACTION_DELETE, true);    // signal item was deleted
                             context.sendBroadcast(updateIntent);     // dismiss fullscreen activity, update list UIs
 
@@ -2613,7 +2615,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             //alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             //context.startActivity(alarmListIntent);                                                                             // open the alarm list
 
-                            notifications.dismissNotification(context, itemID.intValue());
+                            notifications.dismissNotification(context, result.getLastRowID().intValue());
                             notifications.stopSelf(startId);
                         }
                     });
@@ -2621,12 +2623,15 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onClearedState(final Context context)
+        private ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onClearedState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            return new ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
             {
                 @Override
-                public void onFinished(Boolean result, final Long itemID)
+                public void onStarted() {}
+
+                @Override
+                public void onFinished(AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult result)
                 {
                     Log.d(TAG, "Alarms Cleared (on Cleared)");
                     BedtimeSettings.clearAlarmIDs(getApplicationContext());
