@@ -37,7 +37,6 @@ import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -621,32 +620,30 @@ public class AlarmSettings
 
     public static void setDefaultRingtoneUris(Context context)
     {
-        CacheDefaultRingtoneTask task = new CacheDefaultRingtoneTask(context);
-        task.execute(AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION);
+        ExecutorUtils.runTask("setDefaultRingtone",
+                CacheDefaultRingtoneRunnable(context, new AlarmClockItem.AlarmType[] { AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION }));
     }
 
     /**
      * CacheDefaultRingtoneTask
      */
-    public static class CacheDefaultRingtoneTask extends AsyncTask<AlarmClockItem.AlarmType, Void, Boolean>
+    public static Runnable CacheDefaultRingtoneRunnable(Context context, final AlarmClockItem.AlarmType[] types)
     {
-        WeakReference<Context> contextRef;
-        public CacheDefaultRingtoneTask(Context context) {
-            contextRef = new WeakReference<>(context);
-        }
-
-        @Override
-        protected Boolean doInBackground(AlarmClockItem.AlarmType... types)
+        final WeakReference<Context> contextRef = new WeakReference<>(context);
+        return new Runnable()
         {
-            Context context = contextRef.get();
-            AlarmSettings settings = new AlarmSettings();
-            if (context != null) {
-                for (AlarmClockItem.AlarmType type : types) {
-                    settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+            @Override
+            public void run()
+            {
+                Context context = contextRef.get();
+                AlarmSettings settings = new AlarmSettings();
+                if (context != null) {
+                    for (AlarmClockItem.AlarmType type : types) {
+                        settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                    }
                 }
-                return true;
-            } else return false;
-        }
+            }
+        };
     }
 
     @TargetApi(26)
