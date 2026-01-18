@@ -113,8 +113,8 @@ public class AlarmListDialog extends DialogBase
 
     public static final int REQUEST_IMPORT_URI = 100;
     public static final int REQUEST_EXPORT_URI = 200;
-    private ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(REQUEST_IMPORT_URI);
-    private ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(REQUEST_EXPORT_URI);
+    private final ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(REQUEST_IMPORT_URI);
+    private final ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(REQUEST_EXPORT_URI);
 
     public static final String DIALOG_IMPORT_WARNING = "importwarning";
 

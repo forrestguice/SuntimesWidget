@@ -102,7 +102,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     public static final String DIALOGTAG_TIME = "worldmap_time";
 
     public static final int REQUEST_BACKGROUND = 400;
-    private ActivityResultLauncherCompat startActivityForResult_background = registerForActivityResultCompat(REQUEST_BACKGROUND);
+    private final ActivityResultLauncherCompat startActivityForResult_background = registerForActivityResultCompat(REQUEST_BACKGROUND);
 
     private View dialogHeader;
     private TextView dialogTitle;
