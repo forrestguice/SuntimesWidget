@@ -58,6 +58,8 @@ import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
 
 import java.io.File;
 import java.util.HashMap;
@@ -434,8 +436,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context);
-        task.setTaskListener(new SuntimesBackupLoadTask.TaskListener()
+        ExecutorUtils.TaskListener<SuntimesBackupLoadTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<SuntimesBackupLoadTask.TaskResult>()
         {
             @Override
             public void onStarted() {
@@ -511,8 +512,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, 0, null);
                 }
             }
-        });
-        task.execute(uri);
+        };
+
+        //SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context);
+        //task.setTaskListener(taskListener);
+        //task.execute(uri);
+
+        SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context, uri);
+        ExecutorUtils.runTask(SuntimesBackupLoadTask.TAG, AndroidTaskHandler.get(), task, taskListener);
     }
 
     protected void importSettings(final Context context, final Set<String> keys, final Map<String,Integer> methods, final Map<String, ContentValues[]> allValues)
