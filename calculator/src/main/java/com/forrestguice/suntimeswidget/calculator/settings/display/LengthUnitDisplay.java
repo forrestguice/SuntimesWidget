@@ -30,6 +30,7 @@ public class LengthUnitDisplay
     protected static String strFeetShort = "ft", strMetersShort = "m";
     protected static String strMilesShort = "mi", strMilesLong = "miles", strKilometersShort = "km", strKilometersLong = "kilometers";
     protected static int rPluralFeet = 0, rPluralMeters = 0;
+    protected static String strDistanceFormat = "%1$s %2$s";
 
     public static void initDisplayStrings_LengthUnit(Resources context, @NonNull ResID_LengthUnitDisplay r)
     {
@@ -44,6 +45,8 @@ public class LengthUnitDisplay
 
         rPluralFeet = r.plurals_feet_long();
         rPluralMeters = r.plurals_meters_long();
+
+        strDistanceFormat = context.getString(r.string_distance_format());
 
         for (LengthUnit unit : LengthUnit.values()) {
             unit.setDisplayString(context.getString(r.string_displayString(unit)));
@@ -113,6 +116,10 @@ public class LengthUnitDisplay
         return new TimeDisplayText(formatter.format(value), unitsString, "");
     }
 
+    public static String formatAsDistance(Resources context, TimeDisplayText text) {
+        return String.format(strDistanceFormat, text.getValue(), text.getUnits());
+    }
+
     public interface ResID_LengthUnitDisplay
     {
         int string_displayString(LengthUnit unit);
@@ -128,5 +135,7 @@ public class LengthUnitDisplay
 
         int plurals_feet_long();
         int plurals_meters_long();
+
+        int string_distance_format();
     }
 }

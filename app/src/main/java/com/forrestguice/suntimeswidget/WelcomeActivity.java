@@ -50,6 +50,7 @@ import android.widget.ToggleButton;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.getfix.LocationConfigDialog;
@@ -85,7 +86,7 @@ public class WelcomeActivity extends AppCompatActivity
     private LinearLayout indicatorLayout;
     private AppSettings.LocaleInfo localeInfo;
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     @Override
     protected void attachBaseContext(Context newBase)

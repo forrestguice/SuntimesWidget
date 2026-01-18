@@ -548,7 +548,7 @@ public class MoonDialog extends BottomSheetDialogBase
                 int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
                 int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
                 TimeDisplayText distance = LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
+                moondistance.setText(SuntimesUtils.createColorSpan(null, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));

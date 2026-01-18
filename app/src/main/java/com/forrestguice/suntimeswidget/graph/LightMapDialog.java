@@ -54,6 +54,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -2603,9 +2604,10 @@ public class LightMapDialog extends BottomSheetDialogBase
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
-        if (meters < Double.POSITIVE_INFINITY)
-            return SuntimesUtils.formatAsDistance(context, LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, true));
-        else return formatter.format(meters);
+        if (meters < Double.POSITIVE_INFINITY) {
+            AndroidResources r = AndroidResources.wrap(context);
+            return LengthUnitDisplay.formatAsDistance(r, LengthUnitDisplay.formatAsHeight(r, meters, units, 2, true));
+        } else return formatter.format(meters);
     }
 
     private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)

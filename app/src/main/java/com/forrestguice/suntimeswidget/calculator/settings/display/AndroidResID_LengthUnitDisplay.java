@@ -54,4 +54,7 @@ public class AndroidResID_LengthUnitDisplay implements LengthUnitDisplay.ResID_L
     public int string_kilometers_short() { return R.string.units_kilometers_short; }
     @Override
     public int string_kilometers_long() { return R.string.units_kilometers; }
+
+    @Override
+    public int string_distance_format() { return R.string.distance_format; }
 }

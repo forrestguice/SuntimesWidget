@@ -197,9 +197,10 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
     public static SpannableString distanceSpan(Context context, double distance, LengthUnit units, int color, int suffixColor, boolean boldTime)
     {
-        TimeDisplayText distanceDisplay = LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), distance, units, PositionLayout.DECIMAL_PLACES, true);
+        AndroidResources r = AndroidResources.wrap(context);
+        TimeDisplayText distanceDisplay = LengthUnitDisplay.formatAsDistance(r, distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();
-        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
+        String distanceString = LengthUnitDisplay.formatAsDistance(r, distanceDisplay);
         SpannableString distanceSpan = SuntimesUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);
         distanceSpan = SuntimesUtils.createBoldColorSpan(distanceSpan, distanceString, unitsSymbol, suffixColor);
         distanceSpan = SuntimesUtils.createRelativeSpan(distanceSpan, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
