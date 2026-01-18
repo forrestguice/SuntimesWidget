@@ -33,11 +33,13 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_W
  */
 public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public int position = RecyclerView.NO_POSITION;
@@ -208,7 +210,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 
         if (data.isImplemented() && data.isCalculated())
         {
-            TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
+            TimeDisplayText titleText = utils.calendarDateYearDisplayString(AndroidResources.wrap(context), data.dataEquinoxSpring.eventCalendarThisYear());
             title.setText(titleText.toString());
 
             boolean showSeconds = !options.minimized || WidgetSettings.loadShowSecondsPref(context, 0);
@@ -359,7 +361,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             this.time = time;
             if (timeView != null)
             {
-                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, time, showTime, showSeconds);
+                TimeDisplayText timeText = new SuntimesUtils().calendarDateTimeDisplayString(context, time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
             }
         }

@@ -48,6 +48,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -85,7 +86,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     public static final String DIALOGTAG_HELP = "equinox_help";
     public static final int HELP_PATH_ID = R.string.help_solstice_path;
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     protected TextView empty, text_title;
@@ -366,7 +367,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     }
     protected void updateViews(@NonNull Context context, SuntimesEquinoxSolsticeData data)
     {
-        text_title.setText(utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear()).toString());
+        text_title.setText(utils.calendarDateYearDisplayString(AndroidResources.wrap(context), data.eventCalendarThisYear()).toString());
         text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
     }
 
