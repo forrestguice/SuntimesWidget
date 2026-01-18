@@ -50,6 +50,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -113,6 +114,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     private View layout_timezoneExtras;
     private TextView label_tzExtras0;
     private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private ArrayAdapter<TimezoneMode> spinner_timezoneMode_adapter;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
@@ -467,7 +469,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
         int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
-        TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+        TimeDisplayText dstSavings = delta_utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
         ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, iconSize, iconSize);
         String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
         String extrasString = getString(stringResID, dstString);

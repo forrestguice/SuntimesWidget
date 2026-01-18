@@ -34,6 +34,7 @@ import android.widget.NumberPicker;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
 
@@ -159,24 +160,24 @@ public class AlarmOffsetDialog extends DialogBase
     protected void initLocale(Context context)
     {
         SuntimesUtils.initDisplayStrings(context);
-        SuntimesUtils utils = new SuntimesUtils();
+        TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
         minuteStrings = new String[minuteValues.length];
         minuteStrings[0] = " ";
         for (int i=1; i<minuteValues.length; i++) {
-            minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60);
+            minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60).toString();
         }
 
         hourStrings = new String[hourValues.length];
         hourStrings[0] = " ";
         for (int i=1; i<hourValues.length; i++) {
-            hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60);
+            hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60).toString();
         }
 
         dayStrings = new String[dayValues.length];
         dayStrings[0] = " ";
         for (int i=1; i<dayValues.length; i++) {
-            dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24);
+            dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24).toString();
         }
     }
 

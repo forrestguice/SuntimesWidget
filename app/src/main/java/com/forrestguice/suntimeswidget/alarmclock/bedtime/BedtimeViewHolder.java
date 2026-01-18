@@ -752,7 +752,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         }
                     }
 
-                    String offsetString = utils.timeDeltaLongDisplayString(offset);
+                    String offsetString = delta_utils.timeDeltaLongDisplayString(offset).toString();
                     String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
                     CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
                     text_label.setText(labelDisplay);
@@ -871,7 +871,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (text_totalsleep != null)
                 {
                     long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-                    String sleepTotalString = utils.timeDeltaLongDisplayString(sleepTotalMs);
+                    String sleepTotalString = delta_utils.timeDeltaLongDisplayString(sleepTotalMs).toString();
                     String displayString = context.getString(R.string.msg_bedtime_sleep_length, sleepTotalString);
                     SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTotalString);
                     text_totalsleep.setText(sleepTimeDisplay);
@@ -880,7 +880,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (text_sleepcycle != null)
                 {
                     long sleepOffsetMs = BedtimeSettings.loadPrefSleepOffsetMs(context);
-                    String offsetString = utils.timeDeltaLongDisplayString(sleepOffsetMs);
+                    String offsetString = delta_utils.timeDeltaLongDisplayString(sleepOffsetMs).toString();
 
                     boolean useSleepCycle = BedtimeSettings.loadPrefUseSleepCycle(context);
                     if (useSleepCycle)
@@ -889,8 +889,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         int sleepCycleCount = (int) BedtimeSettings.loadPrefSleepCycleCount(context);
 
                         String sleepCycleCountString = context.getResources().getQuantityString(R.plurals.cyclePlural, sleepCycleCount, sleepCycleCount);  //String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
-                        String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
-                        String sleepCycleHoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
+                        String sleepCycleString = delta_utils.timeDeltaLongDisplayString(sleepCycleMs).toString();
+                        String sleepCycleHoursString = delta_utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount)).toString();
 
                         String displayString = (sleepOffsetMs > 0)
                                 ? context.getString(R.string.msg_bedtime_sleep_length_cycles_plus, sleepCycleCountString, sleepCycleString, offsetString)
@@ -904,7 +904,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
                     } else {
                         long sleepMs = BedtimeSettings.loadPrefSleepMs(context);
-                        String sleepTimeString = utils.timeDeltaLongDisplayString(sleepMs);
+                        String sleepTimeString = delta_utils.timeDeltaLongDisplayString(sleepMs).toString();
                         String displayString = (sleepOffsetMs > 0)
                                 ? context.getString(R.string.msg_bedtime_sleep_length_other_plus, sleepTimeString, offsetString)
                                 : "";

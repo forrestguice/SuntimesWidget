@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.cards.CardColorValues;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
@@ -57,7 +58,7 @@ import java.util.Date;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesNotes
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     private ArrayList<NoteData> notesList;
 

@@ -88,7 +88,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     protected void updateTimeUntilView(Context context, RemoteViews views, AlarmClockItem item)
     {
         long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
-        String timeUntilDisplay = time_utils1.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
+        String timeUntilDisplay = delta_utils.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
         //String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilDisplay);
         views.setTextViewText(R.id.text_note, "~ " + timeUntilDisplay);  // TODO: i18n
     }

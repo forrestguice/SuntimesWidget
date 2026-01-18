@@ -168,7 +168,7 @@ public class SunLayout_2x1_0 extends SunLayout
 
         // update day delta
         boolean isSame = (data.dayLengthToday() == data.dayLengthOther());
-        TimeDisplayText dayDeltaDisplay = time_utils1.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
+        TimeDisplayText dayDeltaDisplay = delta_utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();

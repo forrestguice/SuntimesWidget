@@ -26,6 +26,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -67,6 +68,7 @@ import java.util.HashMap;
 public class MoonApsisView extends LinearLayout
 {
     private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private LinearLayout content;
     private RecyclerView card_view;
@@ -642,7 +644,7 @@ public class MoonApsisView extends LinearLayout
         private CharSequence createApsisNote(Context context, Calendar dateTime, boolean showWeeks, boolean showHours, int noteColor)
         {
             Calendar now = Calendar.getInstance();
-            String noteText = (dateTime == null ? "" : utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
+            String noteText = (dateTime == null ? "" : delta_utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
             String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
             return SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor);
         }

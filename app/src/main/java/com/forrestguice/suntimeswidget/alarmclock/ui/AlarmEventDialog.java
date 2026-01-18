@@ -53,6 +53,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
@@ -101,7 +102,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice1";
     public static final String PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE.name();
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     /**
      * The appWidgetID used when saving/loading choice to prefs (main app uses 0).

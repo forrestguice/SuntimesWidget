@@ -32,6 +32,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -45,7 +46,8 @@ import java.util.Calendar;
  */
 public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public View clickArea;
     public View focusView;
@@ -122,7 +124,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         Calendar calendar = data.eventCalendarThisYear();
         if (now != null && calendar != null)
         {
-            String noteText = utils.timeDeltaDisplayString(now.getTime(), calendar.getTime(), showWeeks, showHours).toString();
+            String noteText = delta_utils.timeDeltaDisplayString(now.getTime(), calendar.getTime(), showWeeks, showHours).toString();
 
             if (calendar.before(Calendar.getInstance()))
             {

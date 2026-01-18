@@ -208,7 +208,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
     public static SpannableString noteSpan(Context context, @NonNull Calendar now, @NonNull Calendar event, boolean showWeeks, boolean showHours, int timeColor, boolean boldTime)
     {
-        String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
+        String noteTime = delta_utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
         String noteString = context.getString((event.before(now) ? R.string.ago : R.string.hence), noteTime);
         return (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
     }

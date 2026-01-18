@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.text.TimeDisplayText;
 
+import java.text.NumberFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class TimeDeltaDisplay
@@ -154,6 +156,37 @@ public class TimeDeltaDisplay
         TimeDisplayText text = new TimeDisplayText(value.trim(), units, suffix);
         text.setRawValue(timeSpan);
         return text;
+    }
+
+    /**
+     * @param d1 a Date representing some point in time
+     * @param d2 another Date representing another point in time
+     * @return a display string that describes the span between the two calendars
+     */
+    public TimeDisplayText timeDeltaDisplayString(Date d1, Date d2) {
+        return timeDeltaDisplayString(d1, d2, false, true);
+    }
+    public TimeDisplayText timeDeltaDisplayString(Date d1, Date d2, boolean showWeeks, boolean showHours)
+    {
+        if (d1 != null && d2 != null)
+        {
+            TimeDisplayText displayText = timeDeltaLongDisplayString(d1.getTime(), d2.getTime(), showWeeks, showHours,false);
+            displayText.setSuffix("");
+            return displayText;
+
+        } else {
+            TimeDisplayText displayText = new TimeDisplayText();
+            displayText.setSuffix("");
+            return displayText;
+        }
+    }
+
+    public static String formatDoubleValue(double value, int places)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(places);
+        formatter.setMaximumFractionDigits(places);
+        return formatter.format(value);
     }
 
     public interface ResID_TimeDeltaDisplay

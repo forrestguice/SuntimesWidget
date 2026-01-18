@@ -55,7 +55,7 @@ import java.util.TimeZone;
 
 public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 {
-    public static SuntimesUtils utils = new SuntimesUtils();
+    public static final SuntimesUtils utils = new SuntimesUtils();
     protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public int position = RecyclerView.NO_POSITION;
@@ -343,7 +343,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
             //Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
-            check_reminder.setText(context.getString(R.string.reminder_label, utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
+            check_reminder.setText(context.getString(R.string.reminder_label, delta_utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
             check_reminder.setChecked(reminderWithin > 0);
 
             text_action2.setText(displayAction(context, item, 2));

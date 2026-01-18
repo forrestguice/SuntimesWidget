@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageViewCompat;
@@ -52,7 +53,8 @@ import static com.forrestguice.suntimeswidget.equinox.EquinoxColorValues.COLOR_W
  */
 public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public int position = RecyclerView.NO_POSITION;
 
@@ -368,7 +370,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             {
                 if (now != null && time != null)
                 {
-                    String noteText = utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks, showHours).toString();
+                    String noteText = delta_utils.timeDeltaDisplayString(now.getTime(), time.getTime(), showWeeks, showHours).toString();
 
                     if (time.before(Calendar.getInstance()))
                     {

@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
@@ -84,7 +85,8 @@ public class AlarmWidgetService extends RemoteViewsService
         protected int appWidgetID = 0;
         protected String layoutMode = AlarmWidgetSettings.MODE_2x2;
         protected List<AlarmClockItem> alarmList = new ArrayList<>();
-        protected SuntimesUtils utils = new SuntimesUtils();
+        protected static final SuntimesUtils utils = new SuntimesUtils();
+        protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
         public AlarmWidgetItemViewFactory(Context context, Intent intent)
         {
@@ -185,7 +187,7 @@ public class AlarmWidgetService extends RemoteViewsService
             view.setViewVisibility(R.id.text_event, (eventDisplay != null && !eventDisplay.isEmpty() ? View.VISIBLE : View.GONE));
 
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
-            String timeUntilDisplay = utils.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
+            String timeUntilDisplay = delta_utils.timeDeltaLongDisplayString(timeUntilMs, 0, false, true, false,false).getValue();
             //String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilDisplay);
             view.setTextViewText(R.id.text_note, "~ " + timeUntilDisplay);  // TODO: i18n
 

@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
@@ -85,7 +86,7 @@ public class BedtimeDialog extends DialogBase
     protected RecyclerView list;
     protected BedtimeItemAdapter adapter;
     protected LinearLayoutManager layout;
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     @Override
     public void onCreate(Bundle savedState)
@@ -1014,7 +1015,7 @@ public class BedtimeDialog extends DialogBase
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
 
-        String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context));
+        String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context)).toString();
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
@@ -1035,7 +1036,7 @@ public class BedtimeDialog extends DialogBase
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
 
-        String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context));
+        String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context)).toString();
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
         CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 

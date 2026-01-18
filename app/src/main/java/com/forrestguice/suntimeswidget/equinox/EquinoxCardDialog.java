@@ -48,6 +48,7 @@ import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
@@ -84,7 +85,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     public static final String DIALOGTAG_HELP = "equinox_help";
     public static final int HELP_PATH_ID = R.string.help_solstice_path;
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     protected TextView empty, text_title;
     protected TextView text_year_length, text_year_length_label;
@@ -371,8 +373,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)
     {
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
-        String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
-        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, utils.formatDoubleValue(yearLengthDays, 6));
+        String timeString = delta_utils.timeDeltaLongDisplayString(yearLengthMillis).toString();
+        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
         return SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
     }

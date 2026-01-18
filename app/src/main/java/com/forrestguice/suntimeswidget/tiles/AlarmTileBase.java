@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -58,7 +59,8 @@ public class AlarmTileBase extends SuntimesTileBase
     public static final ContentValues DEF_ACTION_VALUES =  WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
     public static final boolean DEF_SHOW_LABELS = true;    // show alarm label and note as part of dialog
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public AlarmTileBase(@Nullable Activity activity) {
         super(activity);
@@ -165,7 +167,7 @@ public class AlarmTileBase extends SuntimesTileBase
 
             // formatted "time until"
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
-            String timeUntilString = utils.timeDeltaLongDisplayString(timeUntilMs);
+            String timeUntilString = delta_utils.timeDeltaLongDisplayString(timeUntilMs).toString();
             String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilString);
 
             String eventDisplay = formatEventDisplay(context, item);    // formatted event label

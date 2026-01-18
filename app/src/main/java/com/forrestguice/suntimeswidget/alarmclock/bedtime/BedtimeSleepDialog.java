@@ -38,6 +38,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
 
@@ -48,7 +49,7 @@ public class BedtimeSleepDialog extends DialogBase
     protected NumberPicker sleepCyclePicker;
     protected TextView sleepCycleLabel;
 
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     public BedtimeSleepDialog() {
         setArguments(new Bundle());
@@ -225,8 +226,8 @@ public class BedtimeSleepDialog extends DialogBase
             long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
             long totalSleepMs = (long) (sleepCycleMs * numCycles);
 
-            String sleepCycleMsText = utils.timeDeltaLongDisplayString(sleepCycleMs);
-            String totalSleepMsText = utils.timeDeltaLongDisplayString(totalSleepMs);
+            String sleepCycleMsText = utils.timeDeltaLongDisplayString(sleepCycleMs).toString();
+            String totalSleepMsText = utils.timeDeltaLongDisplayString(totalSleepMs).toString();
             String numCyclesText = getResources().getQuantityString(R.plurals.cyclePlural, (int)numCycles, (int)numCycles);
 
             String sleepCycleText = getString(R.string.configLabel_numSleepCycles, numCyclesText, sleepCycleMsText, totalSleepMsText);

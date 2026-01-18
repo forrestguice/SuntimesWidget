@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -259,7 +261,7 @@ public class EquinoxView extends LinearLayout
         long yearLengthMillis = data.tropicalYearLength();
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
-        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, utils.formatDoubleValue(yearLengthDays, 6));
+        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
         CharSequence yearDisplay = SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
 

@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -139,14 +140,14 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
                                 utils.calendarDateTimeDisplayString(context, time).getValue(),
-                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
                                 provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
-                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                                (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
                                 utils.calendarDateTimeDisplayString(context, time).getValue(),
-                                utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                                (elapsed > 0 ? utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                                delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     }
                     lastRequestPref.setSummary(lastRequestDisplay);
 
@@ -155,7 +156,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     long timeAgo0 = System.currentTimeMillis() - time0;
                     CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
                             utils.calendarDateTimeDisplayString(context, time0).getValue(),
-                            utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
+                            delta_utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
                     lastRequestPref.setSummary(lastRequestDisplay);
                 }
             } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
@@ -297,7 +298,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 {
                     SuntimesUtils.initDisplayStrings(getActivity());
                     long locationAge = GetFixTask.calculateLocationAge(location);
-                    summary += "~" + context.getString(R.string.ago, utils.timeDeltaLongDisplayString(0, locationAge).getValue());
+                    summary += "~" + context.getString(R.string.ago, delta_utils.timeDeltaLongDisplayString(0, locationAge).getValue());
                     summary += " (±" + String.format(Locale.getDefault(), "%.2f", location.getAccuracy()) + "m)";
                 }
             } catch (SecurityException | IllegalArgumentException e) {
@@ -324,7 +325,8 @@ public class PlacesPrefsFragment extends PreferenceFragment
         };
         return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
     }
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;
     protected void requestLocationPermissions()

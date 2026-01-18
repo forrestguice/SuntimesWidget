@@ -180,7 +180,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             if (offset != null)
             {
-                TimeDisplayText offsetText = time_utils1.timeDeltaLongDisplayString(0L, offset, false, false, true);
+                TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
                 String offsetString = (offsetText.getRawValue() < 0 ? "-" : "+") + offsetText.getValue();
                 String extrasString = context.getString(stringResID, offsetString);
                 SpannableString boldedExtrasSpan = SuntimesUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);

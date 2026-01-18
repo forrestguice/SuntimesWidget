@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
@@ -242,7 +243,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ViewFlipper preview;
 
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public WidgetThemeConfigActivity()
     {
@@ -1013,7 +1015,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         if (previewTimeDelta != null)
         {
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data1.dayLengthToday(), data1.dayLengthOther()).getValue());
+            previewTimeDelta.setText(delta_utils.timeDeltaLongDisplayString(data1.dayLengthToday(), data1.dayLengthOther()).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
             updateSizeFromChooser(previewTimeDelta, chooseTextSize);
         }
