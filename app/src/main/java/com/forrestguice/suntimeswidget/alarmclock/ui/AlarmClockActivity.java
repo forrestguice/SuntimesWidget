@@ -79,7 +79,9 @@ import com.forrestguice.support.widget.BottomSheetBehaviorCompat;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidTaskHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -499,8 +501,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAllAlarms()
     {
-        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-            public void onItemsLoaded(Long[] ids) {
+        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+        {
+            @Override
+            public void onStarted() {}
+
+            @Override
+            public void onFinished(Long[] ids) {
                 for (long id : ids) {
                     sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                 }
@@ -530,14 +537,19 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             AlarmDatabaseAdapter.AlarmListTask findTask = createFindAlarmsByLabelTask(this, search);
             findTask.setParam_enabledOnly(true);
-            findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                public void onItemsLoaded(Long[] ids) {
+            ExecutorUtils.TaskListener<Long[]> taskListener = new ExecutorUtils.TaskListener<Long[]>()
+            {
+                @Override
+                public void onStarted() {}
+
+                @Override
+                public void onFinished(Long[] ids) {
                     for (long id : ids) {
                         sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                     }
                 }
-            });
-            findTask.execute();
+            };
+            ExecutorUtils.runTask(TAG, AndroidTaskHandler.get(), findTask, taskListener);
 
         } else {
             Log.w(TAG, "dismissAlarmByLabel: missing search term.. falling back to dismissNextAlarm.");
@@ -561,17 +573,26 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(this);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING, AlarmState.STATE_SNOOZING);
-        findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        ExecutorUtils.TaskListener<Long[]> taskListener = new ExecutorUtils.TaskListener<Long[]>()
         {
             @Override
-            public void onItemsLoaded(Long[] ids) {
+            public void onStarted() {}
+
+            @Override
+            public void onFinished(Long[] ids)
+            {
                 if (ids.length > 0) {
                     for (long id : ids) {    // dismiss all sounding or snoozing alarms
                         sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                     }
                 } else {
-                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                        public void onItemsLoaded(Long[] ids) {
+                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+                    {
+                        @Override
+                        public void onStarted() {}
+
+                        @Override
+                        public void onFinished(Long[] ids) {
                             if (ids.length > 0 && ids[0] != null) {    // dismiss next upcoming alarm
                                 sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, ids[0])));
                             }
@@ -579,8 +600,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     });
                 }
             }
-        });
-        findTask.execute();
+        };
+        ExecutorUtils.runTask(TAG, AndroidTaskHandler.get(), findTask, taskListener);
     }
 
     protected void handleIntent_snoozeAlarm(final Intent intent)
@@ -588,9 +609,13 @@ public class AlarmClockActivity extends AppCompatActivity
         final int minutes = intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1);
         Log.i(TAG, "ACTION_SNOOZE_ALARM: " + minutes + " minutes");
 
-        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+        {
             @Override
-            public void onItemsLoaded(Long[] ids)
+            public void onStarted() {}
+
+            @Override
+            public void onFinished(Long[] ids)
             {
                 for (long id : ids) {
                     Uri uri = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id);

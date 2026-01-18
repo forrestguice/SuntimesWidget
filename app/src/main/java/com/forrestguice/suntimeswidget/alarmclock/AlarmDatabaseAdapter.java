@@ -1046,7 +1046,7 @@ public class AlarmDatabaseAdapter
     /**
      * AlarmListTask
      */
-    public static class AlarmListTask extends AsyncTask<Void, Void, Long[]>
+    public static class AlarmListTask implements Callable<Long[]> // extends AsyncTask<Void, Void, Long[]>
     {
         protected AlarmDatabaseAdapter db;
 
@@ -1075,7 +1075,7 @@ public class AlarmDatabaseAdapter
         }
 
         @Override
-        protected Long[] doInBackground(Void... voids)
+        public Long[] call() throws Exception
         {
             ArrayList<Long> alarmIds = new ArrayList<>();
             db.open();
@@ -1104,24 +1104,6 @@ public class AlarmDatabaseAdapter
 
             db.close();
             return alarmIds.toArray(new Long[0]);
-        }
-
-        protected void onPostExecute( Long[] items )
-        {
-            if (taskListener != null) {
-                taskListener.onItemsLoaded(items);
-            }
-        }
-
-        private AlarmListTaskListener taskListener = null;
-        public void setAlarmItemTaskListener( AlarmListTaskListener listener )
-        {
-            this.taskListener = listener;
-        }
-
-        public static abstract class AlarmListTaskListener
-        {
-            public void onItemsLoaded(Long[] ids ) {}
         }
     }
 
