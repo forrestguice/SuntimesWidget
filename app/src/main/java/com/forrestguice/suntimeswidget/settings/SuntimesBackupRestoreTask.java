@@ -63,8 +63,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 
-public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBackupRestoreTask.TaskResult>
+public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestoreTask.TaskResult>
 {
     public static final String TAG = "RestoreBackup";
 
@@ -92,16 +93,7 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        //Log.d(TAG, "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Void... params)
+    public TaskResult call() throws Exception
     {
         Log.d(TAG, "doInBackground: starting");
         long startTime = System.currentTimeMillis();
@@ -139,20 +131,6 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         return new TaskResult(result, report.toString(), c, error);
     }
 
-    @Override
-    protected void onProgressUpdate(Void... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        //Log.d(TAG, "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * TaskResult
      */
@@ -185,23 +163,6 @@ public class SuntimesBackupRestoreTask extends AsyncTask<Void, Void, SuntimesBac
         public Exception getException() {
             return e;
         }
-    }
-
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

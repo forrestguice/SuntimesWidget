@@ -528,7 +528,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         task.setData(allValues);
         task.setKeys(keys);
         task.setMethods(methods);
-        task.setTaskListener(new SuntimesBackupRestoreTask.TaskListener()
+        ExecutorUtils.TaskListener<SuntimesBackupRestoreTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<SuntimesBackupRestoreTask.TaskResult>()
         {
             @Override
             public void onStarted() {
@@ -548,8 +548,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, result.getNumResults(), result.getReport());
                 }
             }
-        });
-        task.execute();
+        };
+        ExecutorUtils.runTask(SuntimesBackupRestoreTask.TAG, AndroidTaskHandler.get(), task, taskListener);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
