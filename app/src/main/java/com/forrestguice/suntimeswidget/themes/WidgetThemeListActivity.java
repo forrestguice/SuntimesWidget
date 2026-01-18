@@ -914,6 +914,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @TargetApi(18)
     @SuppressLint("MissingPermission")
     @Deprecated

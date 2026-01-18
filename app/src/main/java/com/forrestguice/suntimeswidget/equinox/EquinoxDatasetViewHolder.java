@@ -260,6 +260,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     public void applyTheme(SuntimesTheme theme, EquinoxViewOptions options)
     {

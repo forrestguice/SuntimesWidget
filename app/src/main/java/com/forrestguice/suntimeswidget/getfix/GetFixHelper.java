@@ -227,6 +227,7 @@ public class GetFixHelper implements LocationHelper
 
             fix = location;
             gotFix = (fix != null);
+            //noinspection deprecation
             uiObj.updateUI(location);
             uiObj.onResult(new GetFixUI.LocationResult(location, 0, false, logItem));
 

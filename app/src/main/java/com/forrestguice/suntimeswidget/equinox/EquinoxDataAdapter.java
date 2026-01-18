@@ -187,6 +187,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         holder.button_menu.setOnClickListener(null);
     }
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     public void setThemeOverride( @Nullable SuntimesTheme theme ) {
         options.themeOverride = theme;
