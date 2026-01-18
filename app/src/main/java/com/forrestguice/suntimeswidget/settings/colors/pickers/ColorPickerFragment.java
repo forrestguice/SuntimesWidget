@@ -165,9 +165,9 @@ public class ColorPickerFragment extends DialogBase
     protected void clearListeners() {}
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
+    public void setUserVisibleHintCompat(boolean isVisibleToUser)
     {
-        super.setUserVisibleHint(isVisibleToUser);
+        super.setUserVisibleHintCompat(isVisibleToUser);
         if (isVisibleToUser && getView() != null) {
             getView().post(new Runnable() {
                 @Override
