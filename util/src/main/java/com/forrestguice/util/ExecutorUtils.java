@@ -31,6 +31,66 @@ import java.util.concurrent.TimeoutException;
 
 public class ExecutorUtils
 {
+    public interface TaskListener<T> {
+        void onStarted();
+        void onFinished(T result);
+    }
+
+    public interface TaskHandler {
+        void post(Runnable r);
+    }
+
+    /**
+     * runTask (async)
+     * @param tag tag
+     * @param handler TaskHandler
+     * @param callable Callable
+     * @param listener TaskListener
+     * @param <T> result type
+     */
+    public static <T> void runTask(String tag, @Nullable TaskHandler handler, Callable<T> callable, TaskListener<T> listener)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                final T result;
+                try {
+                    postStarted(handler, listener);
+                    result = callable.call();
+                    postFinished(handler, result, listener);
+
+                } catch (Exception e) {
+                    Log.e(tag, "runTask: failed! " + e);
+                }
+            }
+        });
+    }
+    private static <T> void postStarted(@NonNull TaskHandler handler, TaskListener<T> listener)
+    {
+        if (handler != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onStarted();
+                }
+            });
+        }
+    }
+    private static <T> void postFinished(@NonNull TaskHandler handler, T result, TaskListener<T> listener)
+    {
+        if (handler != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onFinished(result);
+                }
+            });
+        }
+    }
+
     /**
      * runTask (async)
      * @param tag tag
