@@ -394,7 +394,7 @@ public class SuntimesUtils
      * An opportunity to directly modify the Date before its formatted/displayed; apply special
      * timezone rules here.
      */
-    public static void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
+    private static void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
     {
         String tzID = timezone.getID();
         if (tzID.equals(TimeZones.SiderealTime.TZID_GMST) || tzID.equals(TimeZones.SiderealTime.TZID_LMST)) {

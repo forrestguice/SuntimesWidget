@@ -37,6 +37,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
@@ -91,7 +92,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
     {
         Date time = now.getTime();
         TimeZone tz = now.getTimeZone();
-        SuntimesUtils.applyTimeZone(time, tz);
+        TimeDateDisplay.applySpecialTimeZone(time, tz);
         Log.d("DEBUG", "getNowString: tz: " + tz);
 
         switch (options.style)

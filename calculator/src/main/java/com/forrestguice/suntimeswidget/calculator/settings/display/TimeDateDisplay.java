@@ -155,7 +155,7 @@ public class TimeDateDisplay
     public String calendarTime24HrString(Resources context, @NonNull Calendar cal, boolean showSeconds)
     {
         Date time = cal.getTime();
-        applyTimeZone(time, cal.getTimeZone());
+        applySpecialTimeZone(time, cal.getTimeZone());
         SimpleDateFormat timeFormat = initTimeFormat_24(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(time);
@@ -177,11 +177,10 @@ public class TimeDateDisplay
     private SimpleDateFormat timeFormat_24, timeFormat_24s;
 
     /**
-     * applyTimeZone
-     * An opportunity to directly modify the Date before its formatted/displayed; apply special
-     * timezone rules here.
+     * applySpecialTimeZone
+     * An opportunity to directly modify the Date before its formatted/displayed; special timezone rules applied here.
      */
-    protected void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
+    public static void applySpecialTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
     {
         String tzID = timezone.getID();
         if (tzID.equals(TimeZones.SiderealTime.TZID_GMST) || tzID.equals(TimeZones.SiderealTime.TZID_LMST)) {
@@ -234,7 +233,7 @@ public class TimeDateDisplay
         timeFormat_12_suffix.setTimeZone(cal.getTimeZone());
 
         Date time = cal.getTime();
-        applyTimeZone(time, cal.getTimeZone());
+        applySpecialTimeZone(time, cal.getTimeZone());
         TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", timeFormat_12_suffix.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
@@ -265,7 +264,7 @@ public class TimeDateDisplay
         SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeShortFormat12, locale); // h:mm a
 
         Date time = cal.getTime();
-        applyTimeZone(time, cal.getTimeZone());
+        applySpecialTimeZone(time, cal.getTimeZone());
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(time);
     }
@@ -286,7 +285,7 @@ public class TimeDateDisplay
         SimpleDateFormat dayFormat = new SimpleDateFormat((abbreviate ? "E" : "EEEE"), locale);
 
         Date time = calendar.getTime();
-        applyTimeZone(time, calendar.getTimeZone());
+        applySpecialTimeZone(time, calendar.getTimeZone());
         dayFormat.setTimeZone(calendar.getTimeZone());
         TimeDisplayText displayText = new TimeDisplayText(dayFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
@@ -335,7 +334,7 @@ public class TimeDateDisplay
         else dateFormat = new SimpleDateFormat((abbreviate ? strDateVeryShortFormat : strDateShortFormat), locale);
 
         Date time = calendar.getTime();
-        applyTimeZone(time, calendar.getTimeZone());
+        applySpecialTimeZone(time, calendar.getTimeZone());
         dateFormat.setTimeZone(calendar.getTimeZone());
         TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
