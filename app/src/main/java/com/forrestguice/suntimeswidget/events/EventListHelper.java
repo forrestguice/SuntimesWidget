@@ -72,6 +72,10 @@ import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ContextInterface;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -681,18 +685,17 @@ public class EventListHelper
             Log.e("ImportEvents", "Already busy importing/exporting! ignoring request");
 
         } else if (context != null) {
-            importTask = new EventImportTask(context);
-            importTask.setTaskListener(importListener);
-            importTask.execute(uri);
+            importTask = new EventImportTask(context, uri);
+            ExecutorUtils.runTask("ImportEventsTask", AndroidTaskHandler.get(), importTask, importListener);
         }
     }
 
-    private EventImportTask.TaskListener importListener0 = null;
-    public void setImportTaskListener(EventImportTask.TaskListener listener) {
+    private ProgressListener<EventImportTask.TaskResult, EventAlias> importListener0 = null;
+    public void setImportTaskListener( ProgressListener<EventImportTask.TaskResult, EventAlias> listener ) {
         importListener0 = listener;
     }
 
-    private final EventImportTask.TaskListener importListener =  new EventImportTask.TaskListener()
+    private final ProgressListener<EventImportTask.TaskResult, EventAlias> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
     {
         @Override
         public void onStarted()

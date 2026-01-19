@@ -21,13 +21,13 @@ package com.forrestguice.suntimeswidget.events;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.JsonReader;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import org.json.JSONObject;
 
@@ -44,11 +44,12 @@ import java.util.Map;
  * AsyncTask that reads EventAlias objects from text file (json array).
  * @see EventAlias
  */
-public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.TaskResult>
+public class EventImportTask extends ProgressCallable<EventImportTask.TaskResult, EventAlias>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
     private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -61,28 +62,16 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
         return isPaused;
     }
 
-    public EventImportTask(Context context)
+    public EventImportTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
+    public TaskResult call() throws Exception
     {
         Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
 
         long startTime = System.currentTimeMillis();
         boolean result = false;
@@ -122,20 +111,6 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
 
         Log.d(getClass().getSimpleName(), "doInBackground: finishing");
         return new TaskResult(result, uri, (items != null ? items.toArray(new EventAlias[0]) : null), error);
-    }
-
-    @Override
-    protected void onProgressUpdate(EventAlias... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
     }
 
     /**
@@ -178,23 +153,6 @@ public class EventImportTask extends AsyncTask<Uri, EventAlias, EventImportTask.
         {
             return e;
         }
-    }
-
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
     }
 
     /**

@@ -41,6 +41,8 @@ import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.File;
 
@@ -271,7 +273,8 @@ public class EventListFragment extends DialogBase
     /**
      * ImportListener
      */
-    private final EventImportTask.TaskListener importListener = new EventImportTask.TaskListener() {
+    private final ProgressListener<EventImportTask.TaskResult, EventAlias> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
+    {
         @Override
         public void onStarted() {
             setRetainInstance(true);
