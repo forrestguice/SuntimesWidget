@@ -72,6 +72,10 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.File;
 
@@ -453,14 +457,13 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         } else {
             Log.i("importThemes", "Starting import task from uri: " + uri);
-            importTask = new ImportThemesTask(context);
-            importTask.setTaskListener(importThemesListener);
-            importTask.execute(uri);
+            importTask = new ImportThemesTask(context, uri);
+            ExecutorUtils.runTask("ImportThemesTask", AndroidTaskHandler.get(), importTask, importThemesListener);
             return true;
         }
     }
 
-    private final ImportThemesTask.TaskListener importThemesListener = new ImportThemesTask.TaskListener()
+    private final ProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme> importThemesListener = new SimpleProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme>()
     {
         public void onStarted()
         {
@@ -830,7 +833,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (isImporting && importTask != null)
         {
             importTask.pauseTask();
-            importTask.clearTaskListener();
+            //importTask.clearTaskListener();
         }
         dismissProgress();
     }
@@ -883,7 +886,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
         if (isImporting && importTask != null)
         {
-            importTask.setTaskListener(importThemesListener);
+            //importTask.setTaskListener(importThemesListener);
             showImportProgress();
             importTask.resumeTask();
         }

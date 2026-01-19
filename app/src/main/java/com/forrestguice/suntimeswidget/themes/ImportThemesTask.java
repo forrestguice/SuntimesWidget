@@ -20,10 +20,10 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -31,12 +31,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
-public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemesTask.ImportThemesResult>
+public class ImportThemesTask extends ProgressCallable<ImportThemesTask.ImportThemesResult, SuntimesTheme>
 {
     public static final String TAG = "importThemesTask";
     public static final long MIN_WAIT_TIME = 2000;
 
     private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask()
@@ -52,29 +53,15 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         return isPaused;
     }
 
-    public ImportThemesTask(Context context)
+    public ImportThemesTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
+    public ImportThemesResult call() throws Exception
     {
-        Log.d(TAG, "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected ImportThemesResult doInBackground(Uri... params)
-    {
-        Log.d(TAG, "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         SuntimesTheme[] themes = null;
@@ -88,7 +75,7 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             {
                 @Override
                 public void onImported( SuntimesTheme theme, int i, int n ) {
-                    onProgressUpdate(theme);
+                    onProgressUpdate(new SuntimesTheme[] { theme });
                 }
             });
 
@@ -134,22 +121,6 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         return new ImportThemesResult(result, uri, themes, error);
     }
 
-    @Override
-    protected void onProgressUpdate(SuntimesTheme... values)
-    {
-        super.onProgressUpdate(values);
-        // TODO
-    }
-
-    @Override
-    protected void onPostExecute( ImportThemesResult result )
-    {
-        Log.d(TAG, "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * ImportThemesResult
      */
@@ -190,25 +161,6 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         {
             return e;
         }
-    }
-
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( ImportThemesResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
     }
 
 }
