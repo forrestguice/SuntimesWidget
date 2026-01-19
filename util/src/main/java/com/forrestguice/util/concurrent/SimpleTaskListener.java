@@ -18,6 +18,9 @@
 
 package com.forrestguice.util.concurrent;
 
+/**
+ * @see TaskListener
+ */
 public class SimpleTaskListener<T> implements TaskListener<T>
 {
     @Override

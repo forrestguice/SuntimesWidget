@@ -19,9 +19,11 @@
 package com.forrestguice.util.concurrent;
 
 /**
+ * A `TaskListener` with an `onProgress(...)` method.
  * @param <T> task return type
+ * @param <P> task progress type
+ * @see ProgressCallable
  */
-public interface TaskListener<T> {
-    void onStarted();
-    void onFinished(T result);
+public interface ProgressListener<T,P> extends TaskListener<T> {
+    void onProgressUpdate(P[] values);
 }

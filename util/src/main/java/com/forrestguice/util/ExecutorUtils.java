@@ -20,6 +20,8 @@ package com.forrestguice.util;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.TaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
 
@@ -61,9 +63,47 @@ public class ExecutorUtils
             }
         });
     }
-    private static <T> void postStarted(@NonNull TaskHandler handler, TaskListener<T> listener)
+
+    /**
+     * runTask (async)
+     * @param tag tag
+     * @param handler TaskHandler
+     * @param callable ProgressCallable
+     * @param listener ProgressListener
+     * @param <T> result type
+     * @param <P> progress type
+     */
+    public static <T,P> void runTask(String tag, @Nullable TaskHandler handler, ProgressCallable<T,P> callable, ProgressListener<T,P> listener)
     {
-        if (handler != null) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                final T result;
+                try {
+                    callable.setProgressInterface(new ProgressCallable.ProgressInterface<P>()
+                    {
+                        @Override
+                        public void signalProgress(P[] progress) {
+                            postProgress(handler, listener, progress);
+                        }
+                    });
+                    postStarted(handler, listener);
+                    result = callable.call();
+                    postFinished(handler, result, listener);
+
+                } catch (Exception e) {
+                    Log.e(tag, "runTask: failed! " + e);
+                }
+            }
+        });
+    }
+
+    private static <T> void postStarted(@NonNull TaskHandler handler, @Nullable TaskListener<T> listener)
+    {
+        if (handler != null && listener != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -72,13 +112,24 @@ public class ExecutorUtils
             });
         }
     }
-    private static <T> void postFinished(@NonNull TaskHandler handler, T result, TaskListener<T> listener)
+    private static <T> void postFinished(@NonNull TaskHandler handler, T result, @Nullable TaskListener<T> listener)
     {
-        if (handler != null) {
+        if (handler != null && listener != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     listener.onFinished(result);
+                }
+            });
+        }
+    }
+    private static <T,P> void postProgress(@NonNull TaskHandler handler, @Nullable ProgressListener<T,P> listener, P[] progress)
+    {
+        if (handler != null && listener != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onProgressUpdate(progress);
                 }
             });
         }
