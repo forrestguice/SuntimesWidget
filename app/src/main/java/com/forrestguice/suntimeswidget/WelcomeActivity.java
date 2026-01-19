@@ -72,6 +72,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.view.ViewPager;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -618,11 +621,10 @@ public class WelcomeActivity extends AppCompatActivity
         };
         protected void importPlaces(Context context, @NonNull Uri uri)
         {
-            BuildPlacesTask task = new BuildPlacesTask(context);
-            task.setTaskListener(importPlacesListener);
-            task.execute(false, uri);
+            BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, uri });
+            ExecutorUtils.runTask("ImportPlacesTask", AndroidTaskHandler.get(), task, importPlacesListener);
         }
-        private final BuildPlacesTask.TaskListener importPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> importPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted() {
@@ -662,7 +664,7 @@ public class WelcomeActivity extends AppCompatActivity
                 }
             }
         };
-        private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> buildPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted()

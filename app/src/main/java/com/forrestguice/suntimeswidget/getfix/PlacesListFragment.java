@@ -892,9 +892,8 @@ public class PlacesListFragment extends DialogBase
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
                         if (getContext() != null) {
-                            BuildPlacesTask task = new BuildPlacesTask(getContext());
-                            task.setTaskListener(clearPlacesListener);
-                            task.execute(true);   // clearFlag set to true
+                            BuildPlacesTask task = new BuildPlacesTask(getContext(), new Object[] { true });    // clearFlag set to true
+                            ExecutorUtils.runTask("ClearPlacesTask", AndroidTaskHandler.get(), task, clearPlacesListener);
                         }
                     }
                 })
@@ -902,7 +901,7 @@ public class PlacesListFragment extends DialogBase
 
         confirm.show();
     }
-    private final BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
+    private final TaskListener<Integer> clearPlacesListener = new TaskListener<Integer>()
     {
         @Override
         public void onStarted()
@@ -986,9 +985,8 @@ public class PlacesListFragment extends DialogBase
     public boolean importPlaces(Context context, @NonNull Uri uri)
     {
         Log.i("importPlaces", "Starting import task: " + uri);
-        BuildPlacesTask task = new BuildPlacesTask(context);
-        task.setTaskListener(buildPlacesListener);
-        task.execute(false, uri);
+        BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, uri });
+        ExecutorUtils.runTask("ImportPlacesTask", AndroidTaskHandler.get(), task, buildPlacesListener);
         return true;
     }
 
@@ -1081,7 +1079,7 @@ public class PlacesListFragment extends DialogBase
     public void addWorldPlaces(@NonNull Context context) {
         BuildPlacesTask.promptAddWorldPlaces(context, buildPlacesListener);
     }
-    private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+    private final TaskListener<Integer> buildPlacesListener = new TaskListener<Integer>()
     {
         @Override
         public void onStarted()

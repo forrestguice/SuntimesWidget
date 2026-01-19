@@ -28,9 +28,10 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,8 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -55,13 +58,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
-public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
+public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Object, Void, Integer>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
     private final GetFixDatabaseAdapter db;
     private final WeakReference<Context> contextRef;
+    private final Object[] params;
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -79,10 +84,11 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return isPaused;
     }
 
-    public BuildPlacesTask(Context context)
+    public BuildPlacesTask(Context context, Object[] params)
     {
         this.contextRef = new WeakReference<Context>(context);
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
+        this.params = params;
     }
 
     private int clearPlaces()
@@ -346,7 +352,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Override
-    protected Integer doInBackground(Object... params)
+    public Integer call() throws Exception
     {
         long startTime = System.currentTimeMillis();
 
@@ -376,49 +382,6 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return result;
     }
 
-    @Override
-    protected void onPreExecute()
-    {
-        signalStarted();
-    }
-
-    @Override
-    protected void onPostExecute(Integer result)
-    {
-        signalFinished(result);
-    }
-
-
-    /**
-     * Event Listener
-     */
-    @Nullable
-    private TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
-    }
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( Integer result ) {}
-    }
-
-    private void signalStarted()
-    {
-        if (taskListener != null)
-            taskListener.onStarted();
-    }
-    private void signalFinished( Integer result )
-    {
-        if (taskListener != null)
-            taskListener.onFinished(result);
-    }
-
     /**
      * OpenFileIntent
      */
@@ -429,7 +392,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     /**
      * promptAddWorldPlaces
      */
-    public static void promptAddWorldPlaces(@NonNull final Context context, final BuildPlacesTask.TaskListener l)
+    public static void promptAddWorldPlaces(@NonNull final Context context, final TaskListener<Integer> taskListener)
     {
         BuildPlacesTask.chooseGroups(context, new BuildPlacesTask.ChooseGroupsDialogListener()
         {
@@ -444,9 +407,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                             items.add(groups[i]);
                         }
                     }
-                    BuildPlacesTask task = new BuildPlacesTask(context);
-                    task.setTaskListener(l);
-                    task.execute(false, null, items.toArray(new String[0]));
+                    BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, null, items.toArray(new String[0]) });
+                    ExecutorUtils.runTask("BuildPlacesTask", AndroidTaskHandler.get(), task, taskListener);
                 }
             }
         });

@@ -62,6 +62,9 @@ import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
 import java.util.List;
@@ -496,7 +499,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         /**
          * Build Places (task handler)
          */
-        private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> buildPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted()
@@ -601,9 +604,8 @@ public class PlacesPrefsFragment extends PreferenceFragment
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    clearPlacesTask = new BuildPlacesTask(myParent);
-                                    clearPlacesTask.setTaskListener(clearPlacesListener);
-                                    clearPlacesTask.execute(true);   // clearFlag set to true
+                                    clearPlacesTask = new BuildPlacesTask(myParent, new Object[] { true });    // clearFlag set to true
+                                    ExecutorUtils.runTask("ClearPlacesTask", AndroidTaskHandler.get(), clearPlacesTask, clearPlacesListener);
                                 }
                             })
                             .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
@@ -618,7 +620,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         /**
          * Clear Places (task handler)
          */
-        private final BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> clearPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted()
@@ -642,7 +644,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             if (isClearing && clearPlacesTask != null)
             {
                 clearPlacesTask.pauseTask();
-                clearPlacesTask.clearTaskListener();
+                //clearPlacesTask.clearTaskListener();
             }
 
             if (isExporting && exportPlacesTask != null)
@@ -654,7 +656,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             if (isBuilding && buildPlacesTask != null)
             {
                 buildPlacesTask.pauseTask();
-                buildPlacesTask.clearTaskListener();
+                //buildPlacesTask.clearTaskListener();
             }
 
             dismissProgress();
@@ -665,7 +667,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
             if (isClearing && clearPlacesTask != null && clearPlacesTask.isPaused())
             {
-                clearPlacesTask.setTaskListener(clearPlacesListener);
+                //clearPlacesTask.setTaskListener(clearPlacesListener);
                 showProgressClearing();
                 clearPlacesTask.resumeTask();
             }
@@ -679,7 +681,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
             if (isBuilding && buildPlacesTask != null)
             {
-                buildPlacesTask.setTaskListener(buildPlacesListener);
+                //buildPlacesTask.setTaskListener(buildPlacesListener);
                 showProgressBuilding();
                 buildPlacesTask.resumeTask();
             }
