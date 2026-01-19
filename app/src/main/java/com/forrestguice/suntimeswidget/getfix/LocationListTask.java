@@ -21,15 +21,15 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
-public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
+import java.util.concurrent.Callable;
+
+public class LocationListTask implements Callable<LocationListTask.LocationListTaskResult>
 {
     private final GetFixDatabaseAdapter db;
     private final Location selected;
@@ -41,7 +41,7 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
     }
 
     @Override
-    protected LocationListTaskResult doInBackground(Object... params)
+    public LocationListTaskResult call() throws Exception
     {
         String selectedPlaceName = selected.getLabel();
         String selectedPlaceLat = selected.getLatitude();
@@ -103,44 +103,6 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         }
     }
 
-    @Override
-    protected void onPostExecute(LocationListTaskResult result)
-    {
-        if (result != null)
-        {
-            signalOnLoaded(result);
-        }
-    }
-
-    /**
-     *
-     */
-    public abstract static class LocationListTaskListener
-    {
-        public abstract void onLoaded(@NonNull Cursor result, int selectedIndex );
-    }
-
-    public LocationListTaskListener getTaskListener()
-    {
-        return taskListener;
-    }
-    public void setTaskListener( LocationListTaskListener listener )
-    {
-        taskListener = listener;
-    }
-
-    private LocationListTaskListener taskListener;
-    private void signalOnLoaded( LocationListTaskResult result )
-    {
-        if (taskListener != null)
-        {
-            taskListener.onLoaded(result.getCursor(), result.getIndex());
-        }
-    }
-
-    /**
-     *
-     */
     public static class LocationListTaskResult
     {
         private final Cursor cursor;

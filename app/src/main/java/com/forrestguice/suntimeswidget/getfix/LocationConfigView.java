@@ -63,6 +63,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
@@ -1032,16 +1036,18 @@ public class LocationConfigView extends LinearLayout
         }
 
         LocationListTask task = new LocationListTask(context, getLocation(context));
-        task.setTaskListener( new LocationListTask.LocationListTaskListener()
+        TaskListener<LocationListTask.LocationListTaskResult> taskListener = new SimpleTaskListener<LocationListTask.LocationListTaskResult>()
         {
             @Override
-            public void onLoaded(@NonNull Cursor result, int selectedIndex)
+            public void onFinished(LocationListTask.LocationListTaskResult r)
             {
-                 getFixAdapter.changeCursor(result);
-                 spin_locationName.setSelection(selectedIndex);
+                Cursor result = r.getCursor();
+                int selectedIndex = r.getIndex();
+                getFixAdapter.changeCursor(result);
+                spin_locationName.setSelection(selectedIndex);
             }
-        });
-        task.execute((Object[]) null);
+        };
+        ExecutorUtils.runTask("LocationListTask", AndroidTaskHandler.get(), task, taskListener);
     }
 
     public void clickLocationSpinner() {
