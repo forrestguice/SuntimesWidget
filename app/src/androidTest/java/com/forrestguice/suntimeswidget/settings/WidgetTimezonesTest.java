@@ -24,7 +24,11 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -51,8 +55,8 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
     @Test
     public void test_timeZonesLoadTask()
     {
-        WidgetTimezones.TimeZonesLoadTask task = new WidgetTimezones.TimeZonesLoadTask(context);
-        task.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
+        WidgetTimezones.TimeZonesLoadTask task = new WidgetTimezones.TimeZonesLoadTask(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        TaskListener<WidgetTimezones.TimeZoneItemAdapter> taskListener = new SimpleTaskListener<WidgetTimezones.TimeZoneItemAdapter>()
         {
             @Override
             public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
@@ -68,8 +72,8 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
                 assertTrue(result.getItem(i_npt).getRawOffsetHr() == 5.75);
                 assertTrue(i_npt > i_ist);
             }
-        });
-        task.execute(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        };
+        ExecutorUtils.runTask("TimeZoneLoadTest", AndroidTaskHandler.get(), task, taskListener);
     }
 
 }

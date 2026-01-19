@@ -45,6 +45,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.view.ActionModeCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import android.graphics.drawable.GradientDrawable;
 
@@ -57,6 +61,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 
 public class WidgetTimezones
 {
@@ -518,8 +523,8 @@ public class WidgetTimezones
         protected void sortTimeZones( final WidgetTimezones.TimeZoneSort sortMode )
         {
             onSaveSortMode(sortMode);
-            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
-            loadTask.setListener(new TimeZonesLoadTaskListener()
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context, sortMode);
+            TaskListener<TimeZoneItemAdapter> taskListener = new SimpleTaskListener<TimeZoneItemAdapter>()
             {
                 @Override
                 public void onFinished(TimeZoneItemAdapter result)
@@ -528,8 +533,8 @@ public class WidgetTimezones
                     spinner.setAdapter(result);
                     onSortTimeZones(result, sortMode);
                 }
-            });
-            loadTask.execute(sortMode);
+            };
+            ExecutorUtils.runTask("SortTimeZonesTask", AndroidTaskHandler.get(), loadTask, taskListener);
         }
 
         public boolean onActionItemClicked(int action)
@@ -641,33 +646,21 @@ public class WidgetTimezones
     ///////////////////////////////////////
 
     @SuppressWarnings("Convert2Diamond")
-    public static class TimeZonesLoadTask extends AsyncTask<TimeZoneSort, Object, TimeZoneItemAdapter>
+    public static class TimeZonesLoadTask implements Callable<TimeZoneItemAdapter>
     {
         private final WeakReference<Context> contextRef;
+        @Nullable
+        private final TimeZoneSort sortBy;
 
-        public TimeZonesLoadTask(Context context)
+        public TimeZonesLoadTask(Context context, @Nullable TimeZoneSort sort)
         {
             this.contextRef = new WeakReference<Context>(context);
+            this.sortBy = sort;
         }
 
         @Override
-        protected void onPreExecute()
+        public TimeZoneItemAdapter call() throws Exception
         {
-            if (listener != null)
-            {
-                listener.onStart();
-            }
-        }
-
-        @Override
-        protected TimeZoneItemAdapter doInBackground(TimeZoneSort... sorts)
-        {
-            TimeZoneSort sortBy = null;
-            if (sorts != null && sorts.length > 0)
-            {
-                sortBy = sorts[0];
-            }
-
             Date today = new Date();
             ArrayList<TimeZoneItem> timezones = new ArrayList<TimeZoneItem>();
             String[] allTimezoneValues = TimeZone.getAvailableIDs();
@@ -681,8 +674,7 @@ public class WidgetTimezones
                 timezones.add(new TimeZoneItem(timezone.getID(), displayName, offsetHr, rawOffsetHr));
             }
 
-            if (sortBy != null)
-            {
+            if (sortBy != null) {
                 Collections.sort(timezones, sortBy.getComparator());
             }
 
@@ -691,38 +683,6 @@ public class WidgetTimezones
                 return new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_timezone, timezones, sortBy);
             else return null;
         }
-
-        @Override
-        protected void onProgressUpdate(Object... progress)
-        {
-        }
-
-        @Override
-        protected void onPostExecute(TimeZoneItemAdapter result)
-        {
-            if (result != null && listener != null)
-            {
-                listener.onFinished(result);
-            }
-        }
-
-        @Nullable
-        private TimeZonesLoadTaskListener listener = null;
-        public void setListener(@Nullable TimeZonesLoadTaskListener listener)
-        {
-            this.listener = listener;
-        }
-        public void clearListener()
-        {
-            this.listener = null;
-        }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class TimeZonesLoadTaskListener
-    {
-        public void onStart() {}
-        public void onFinished( WidgetTimezones.TimeZoneItemAdapter result ) {}
     }
 
 }

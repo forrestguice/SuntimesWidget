@@ -51,6 +51,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.getfix.DeletePlaceTask;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -66,6 +67,9 @@ import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.Normalizer;
@@ -248,9 +252,8 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         }
 
         WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
-        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
-        loadTask.setListener(onTimeZonesLoaded);
-        loadTask.execute(sortZonesBy);
+        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context, sortZonesBy);
+        ExecutorUtils.runTask("TimeZoneLoadTask", AndroidTaskHandler.get(), loadTask, onTimeZonesLoaded);
 
         return dialogContent;
     }
@@ -944,12 +947,11 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         }
     }
 
-    private final WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    private final TaskListener<WidgetTimezones.TimeZoneItemAdapter> onTimeZonesLoaded = new TaskListener<WidgetTimezones.TimeZoneItemAdapter>()
     {
         @Override
-        public void onStart()
+        public void onStarted()
         {
-            super.onStart();
             btn_accept.setEnabled(false);
             progress_timezone.setVisibility(View.VISIBLE);
             if (getContext() != null) {
@@ -960,7 +962,6 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         @Override
         public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
         {
-            super.onFinished(result);
             spinner_timezone_adapter = result;
             spinner_timezone.setAdapter(spinner_timezone_adapter);
             String tzID = (getTimeZoneMode() == TimezoneMode.CURRENT_TIMEZONE ? TimeZone.getDefault().getID() : customTimezoneID);

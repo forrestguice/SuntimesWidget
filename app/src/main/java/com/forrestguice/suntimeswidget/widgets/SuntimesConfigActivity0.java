@@ -140,6 +140,9 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -803,13 +806,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timezone.setEmptyView(spinner_timezone_empty);
 
             WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
-            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context);
-            loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
+            WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context, sortZonesBy);
+            TaskListener<WidgetTimezones.TimeZoneItemAdapter> taskListener = new TaskListener<WidgetTimezones.TimeZoneItemAdapter>()
             {
                 @Override
-                public void onStart()
+                public void onStarted()
                 {
-                    super.onStart();
                     progress_timezone.setVisibility(View.VISIBLE);
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
                     addOnItemSelectedListener(spinner_timezone, null);
@@ -819,7 +821,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 @Override
                 public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
                 {
-                    super.onFinished(result);
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
                     addOnItemSelectedListener(spinner_timezone, null);
@@ -827,8 +828,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     button_addWidget.setEnabled(true);
                     progress_timezone.setVisibility(View.GONE);
                 }
-            });
-            loadTask.execute(sortZonesBy);
+            };
+            ExecutorUtils.runTask("TimeZoneLoadTask", AndroidTaskHandler.get(), loadTask, taskListener);
         }
 
         layout_solartime = (LinearLayout) findViewById(R.id.appwidget_solartime_layout);
