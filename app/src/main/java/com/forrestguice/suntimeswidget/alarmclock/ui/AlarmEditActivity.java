@@ -72,13 +72,18 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
@@ -958,8 +963,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         AlarmClockItem item = (editor != null ? editor.getItem() : null);
         if (item != null)
         {
-            OnRingtoneResultTask task = new OnRingtoneResultTask(this, uri, isAudioFile);
-            task.setTaskListener(new OnRingtoneResultTask.TaskListener() {
+            OnRingtoneResultTask task = new OnRingtoneResultTask(this, uri, isAudioFile, item);
+            ExecutorUtils.runTask("RingtoneTask", AndroidTaskHandler.get(), task, new SimpleTaskListener<Boolean>()
+            {
                 @Override
                 public void onFinished(Boolean result) {
                     if (editor != null) {
@@ -967,30 +973,30 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                     }
                 }
             });
-            task.execute(item);
         }
     }
 
     /**
      * OnRingtoneResultTask
      */
-    public static class OnRingtoneResultTask extends AsyncTask<AlarmClockItem, Void, Boolean>
+    public static class OnRingtoneResultTask implements Callable<Boolean>
     {
         private final WeakReference<Context> contextRef;
         private final boolean isAudioFile;
         private final Uri uri;
+        private final AlarmClockItem item;
 
-        public OnRingtoneResultTask(Context context, Uri uri, boolean isAudioFile)
+        public OnRingtoneResultTask(Context context, Uri uri, boolean isAudioFile, AlarmClockItem item)
         {
             contextRef = new WeakReference<>(context);
             this.uri = uri;
             this.isAudioFile = isAudioFile;
+            this.item = item;
         }
 
         @Override
-        protected Boolean doInBackground(AlarmClockItem... items)
+        public Boolean call() throws Exception
         {
-            AlarmClockItem item = items[0];
             Context context = contextRef.get();
             if (context != null && uri != null)
             {
@@ -1015,22 +1021,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 //Log.d(TAG, "OnRingtoneResult: null uri");
             }
             return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (listener != null) {
-                listener.onFinished(result);
-            }
-        }
-
-        protected TaskListener listener = null;
-        public void setTaskListener( TaskListener l )
-        {
-            listener = l;
-        }
-        public static abstract class TaskListener {
-            public void onFinished(Boolean result) {}
         }
     }
 
