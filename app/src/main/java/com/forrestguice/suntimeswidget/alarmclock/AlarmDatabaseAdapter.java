@@ -726,6 +726,33 @@ public class AlarmDatabaseAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * AlarmItemTaskResult
+     */
+    public static class AlarmItemTaskResult
+    {
+        public AlarmItemTaskResult(@NonNull Boolean result, AlarmClockItem item, AlarmClockItem[] items) {
+            this.result = result;
+            this.item = item;
+            this.items = items;
+        }
+
+        private final Boolean result;
+        Boolean getResult() {
+            return result;
+        }
+
+        private final AlarmClockItem item;
+        AlarmClockItem getItem() {
+            return item;
+        }
+
+        private final AlarmClockItem[] items;
+        AlarmClockItem[] getItems() {
+            return items;
+        }
+    }
+
+    /**
      * AlarmItemTask
      */
     public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
