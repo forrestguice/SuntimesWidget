@@ -69,6 +69,9 @@ import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.SearchView;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidResources;
@@ -485,20 +488,19 @@ public class PlacesListFragment extends DialogBase
         reloadAdapter(listTaskListener(-1));
     }
 
-    public void reloadAdapter( PlacesListTask.TaskListener taskListener )
+    public void reloadAdapter( PlacesListTask.PlacesListTaskListener taskListener )
     {
         Context context = getContext();
         if (context != null)
         {
             PlacesListTask listTask = new PlacesListTask(context);
-            listTask.setTaskListener(taskListener);
-            listTask.execute();
+            ExecutorUtils.runTask("ReloadPlaceAdapter", AndroidTaskHandler.get(), listTask, taskListener);
         }
     }
 
-    protected PlacesListTask.TaskListener listTaskListener(final long... selectedRowID)
+    protected PlacesListTask.PlacesListTaskListener listTaskListener(final long... selectedRowID)
     {
-        return new PlacesListTask.TaskListener() {
+        return new PlacesListTask.PlacesListTaskListener() {
             @Override
             public void onStarted() {
                 emptyView.setVisibility(View.GONE);
@@ -683,7 +685,7 @@ public class PlacesListFragment extends DialogBase
 
     protected void addOrUpdatePlace(@NonNull Context context, PlaceItem... item)
     {
-        addOrUpdatePlace(context, new PlacesListTask.TaskListener()
+        addOrUpdatePlace(context, new PlacesListTask.PlacesListTaskListener()
         {
             @Override
             public void onStarted() {}
@@ -710,12 +712,11 @@ public class PlacesListFragment extends DialogBase
         }, item);
     }
 
-    protected void addOrUpdatePlace(@NonNull Context context, PlacesListTask.TaskListener listener, PlaceItem... item)
+    protected void addOrUpdatePlace(@NonNull Context context, PlacesListTask.PlacesListTaskListener listener, PlaceItem... items)
     {
         setModified(true);
-        PlacesEditTask task = new PlacesEditTask(context);
-        task.setTaskListener(listener);
-        task.execute(item);
+        PlacesEditTask task = new PlacesEditTask(context, items);
+        ExecutorUtils.runTask("AddOrUpdatePlace", AndroidTaskHandler.get(), task, listener);
     }
 
     protected void scrollToSelection()
@@ -946,11 +947,8 @@ public class PlacesListFragment extends DialogBase
                         for (PlaceItem item : deletedItems) {
                             item.rowID = -1;    // re-add item
                         }
-                        addOrUpdatePlace(context, new PlacesListTask.TaskListener()
+                        addOrUpdatePlace(context, new PlacesListTask.PlacesListTaskListener()
                         {
-                            @Override
-                            public void onStarted() {}
-
                             @Override
                             public void onFinished(List<PlaceItem> results)
                             {
@@ -1152,7 +1150,7 @@ public class PlacesListFragment extends DialogBase
     /**
      * PlacesListTask
      */
-    public static class PlacesListTask extends AsyncTask<PlaceItem, Location, List<PlaceItem>>
+    public static class PlacesListTask extends ProgressCallable<List<PlaceItem>, PlaceItem>
     {
         protected GetFixDatabaseAdapter database;
 
@@ -1161,7 +1159,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         @Override
-        protected List<PlaceItem> doInBackground(PlaceItem... items)
+        public List<PlaceItem> call() throws Exception
         {
             ArrayList<PlaceItem> result = new ArrayList<>();
 
@@ -1199,32 +1197,7 @@ public class PlacesListFragment extends DialogBase
             return result;
         }
 
-        @Override
-        protected void onPostExecute(List<PlaceItem> result)
-        {
-            if (listener != null) {
-                listener.onFinished(result);
-            }
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            if (listener != null) {
-                listener.onStarted();
-            }
-        }
-
-        protected TaskListener listener = null;
-        public void setTaskListener(TaskListener listener) {
-            this.listener = listener;
-        }
-
-        public interface TaskListener
-        {
-            void onStarted();
-            void onFinished(List<PlaceItem> results);
-        }
+        public static class PlacesListTaskListener extends SimpleProgressListener<List<PlaceItem>, PlaceItem> {}
     }
 
     /**
@@ -1232,12 +1205,15 @@ public class PlacesListFragment extends DialogBase
      */
     public static class PlacesEditTask extends PlacesListTask
     {
-        public PlacesEditTask(@NonNull Context context) {
+        private final PlaceItem[] items;
+
+        public PlacesEditTask(@NonNull Context context, PlaceItem[] items) {
             super(context);
+            this.items = items;
         }
 
         @Override
-        protected List<PlaceItem> doInBackground(PlaceItem... items)
+        public List<PlaceItem> call() throws Exception
         {
             ArrayList<PlaceItem> result = new ArrayList<>();
             database.open();
@@ -1259,7 +1235,6 @@ public class PlacesListFragment extends DialogBase
             database.close();
             return result;
         }
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
