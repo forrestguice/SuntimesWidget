@@ -80,6 +80,8 @@ import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.android.AndroidTaskHandler;
 
@@ -501,11 +503,8 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAllAlarms()
     {
-        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new SimpleTaskListener<Long[]>()
         {
-            @Override
-            public void onStarted() {}
-
             @Override
             public void onFinished(Long[] ids) {
                 for (long id : ids) {
@@ -537,11 +536,8 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             AlarmDatabaseAdapter.AlarmListTask findTask = createFindAlarmsByLabelTask(this, search);
             findTask.setParam_enabledOnly(true);
-            ExecutorUtils.TaskListener<Long[]> taskListener = new ExecutorUtils.TaskListener<Long[]>()
+            TaskListener<Long[]> taskListener = new SimpleTaskListener<Long[]>()
             {
-                @Override
-                public void onStarted() {}
-
                 @Override
                 public void onFinished(Long[] ids) {
                     for (long id : ids) {
@@ -573,11 +569,8 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(this);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING, AlarmState.STATE_SNOOZING);
-        ExecutorUtils.TaskListener<Long[]> taskListener = new ExecutorUtils.TaskListener<Long[]>()
+        TaskListener<Long[]> taskListener = new SimpleTaskListener<Long[]>()
         {
-            @Override
-            public void onStarted() {}
-
             @Override
             public void onFinished(Long[] ids)
             {
@@ -586,11 +579,8 @@ public class AlarmClockActivity extends AppCompatActivity
                         sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                     }
                 } else {
-                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new SimpleTaskListener<Long[]>()
                     {
-                        @Override
-                        public void onStarted() {}
-
                         @Override
                         public void onFinished(Long[] ids) {
                             if (ids.length > 0 && ids[0] != null) {    // dismiss next upcoming alarm
@@ -609,11 +599,8 @@ public class AlarmClockActivity extends AppCompatActivity
         final int minutes = intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1);
         Log.i(TAG, "ACTION_SNOOZE_ALARM: " + minutes + " minutes");
 
-        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new ExecutorUtils.TaskListener<Long[]>()
+        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new SimpleTaskListener<Long[]>()
         {
-            @Override
-            public void onStarted() {}
-
             @Override
             public void onFinished(Long[] ids)
             {

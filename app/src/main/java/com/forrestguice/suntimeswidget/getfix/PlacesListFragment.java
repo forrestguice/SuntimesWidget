@@ -69,6 +69,8 @@ import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.SearchView;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -826,11 +828,8 @@ public class PlacesListFragment extends DialogBase
                 }
 
                 DeletePlaceTask task = new DeletePlaceTask(context, rowIDs);
-                ExecutorUtils.TaskListener<DeletePlaceTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<DeletePlaceTask.TaskResult>()
+                TaskListener<DeletePlaceTask.TaskResult> taskListener = new SimpleTaskListener<DeletePlaceTask.TaskResult>()
                 {
-                    @Override
-                    public void onStarted() {}
-
                     @Override
                     public void onFinished(DeletePlaceTask.TaskResult result)
                     {

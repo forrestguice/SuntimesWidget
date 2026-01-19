@@ -91,6 +91,8 @@ import com.forrestguice.support.app.NotificationCompat;
 import com.forrestguice.support.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -468,21 +470,21 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void findEnabledAlarms(final Context context, @Nullable final ExecutorUtils.TaskListener<Long[]> onFinished)
+    public static void findEnabledAlarms(final Context context, @Nullable final TaskListener<Long[]> onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_enabledOnly(true);
         ExecutorUtils.runTask("findEnabledAlarms", AndroidTaskHandler.get(), findTask, onFinished);
     }
 
-    public static void findSoundingAlarms(final Context context, @Nullable final ExecutorUtils.TaskListener<Long[]> onFinished)
+    public static void findSoundingAlarms(final Context context, @Nullable final TaskListener<Long[]> onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING);
         ExecutorUtils.runTask("findSoundingAlarms", AndroidTaskHandler.get(), findTask, onFinished);
     }
 
-    public static void findAppLocationAlarms(final Context context, @Nullable final ExecutorUtils.TaskListener<Long[]> onFinished)
+    public static void findAppLocationAlarms(final Context context, @Nullable final TaskListener<Long[]> onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context)
         {
@@ -508,16 +510,13 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param saveResult true save to prefs (and set power off alarm); false no action is performed (the result is available in onFinished)
      * @param onFinished task AlarmListTaskListener
      */
-    public static void findUpcomingAlarm(final Context context, final boolean saveResult, @Nullable final ExecutorUtils.TaskListener<Long[]> onFinished)
+    public static void findUpcomingAlarm(final Context context, final boolean saveResult, @Nullable final TaskListener<Long[]> onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_enabledOnly(true);
         findTask.setParam_nowMillis(System.currentTimeMillis());
-        ExecutorUtils.TaskListener<Long[]> onFinished1 = new ExecutorUtils.TaskListener<Long[]>()
+        TaskListener<Long[]> onFinished1 = new SimpleTaskListener<Long[]>()
         {
-            @Override
-            public void onStarted() {}
-
             @Override
             public void onFinished(Long[] ids)
             {
@@ -536,7 +535,7 @@ public class AlarmNotifications extends BroadcastReceiver
         };
         ExecutorUtils.runTask("findUpcomingAlarm", AndroidTaskHandler.get(), findTask, onFinished1);
     }
-    public static void findUpcomingAlarm(final Context context, @Nullable final ExecutorUtils.TaskListener<Long[]> onFinished) {
+    public static void findUpcomingAlarm(final Context context, @Nullable final TaskListener<Long[]> onFinished) {
         findUpcomingAlarm(context, true, onFinished);
     }
 
@@ -1913,11 +1912,8 @@ public class AlarmNotifications extends BroadcastReceiver
                         AlarmNotifications.stopAlert();
                         if (AlarmSettings.loadPrefPowerOffAlarms(getApplicationContext()))
                         {
-                            findUpcomingAlarm(getApplicationContext(), false, new ExecutorUtils.TaskListener<Long[]>()
+                            findUpcomingAlarm(getApplicationContext(), false, new SimpleTaskListener<Long[]>()
                             {
-                                @Override
-                                public void onStarted() {}
-
                                 @Override
                                 public void onFinished(Long[] ids)
                                 {
@@ -1983,11 +1979,8 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
             alarmListTask.setParam_enabledOnly(true);
 
-            ExecutorUtils.TaskListener<Long[]> taskListener = new ExecutorUtils.TaskListener<Long[]>()
+            TaskListener<Long[]> taskListener = new SimpleTaskListener<Long[]>()
             {
-                @Override
-                public void onStarted() {}
-
                 @Override
                 public void onFinished(Long[] ids)
                 {
@@ -2095,7 +2088,7 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        private ExecutorUtils.TaskListener<Long[]> rescheduleTaskListener_clocktime(final int startId)
+        private TaskListener<Long[]> rescheduleTaskListener_clocktime(final int startId)
         {
             return rescheduleTaskListener(startId, new AlarmClockItemFilter()
             {
@@ -2110,13 +2103,10 @@ public class AlarmNotifications extends BroadcastReceiver
             boolean passesFilter(AlarmClockItem item);
         }
 
-        private ExecutorUtils.TaskListener<Long[]> rescheduleTaskListener(final int startId, @Nullable final AlarmClockItemFilter filter)
+        private TaskListener<Long[]> rescheduleTaskListener(final int startId, @Nullable final AlarmClockItemFilter filter)
         {
-            return new ExecutorUtils.TaskListener<Long[]>()
+            return new SimpleTaskListener<Long[]>()
             {
-                @Override
-                public void onStarted() {}
-
                 @Override
                 public void onFinished(Long[] ids)
                 {
@@ -2164,11 +2154,8 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private final ExecutorUtils.TaskListener<Long[]> clearTaskListener = new ExecutorUtils.TaskListener<Long[]>()
+        private final TaskListener<Long[]> clearTaskListener = new SimpleTaskListener<Long[]>()
         {
-            @Override
-            public void onStarted() {}
-
             @Override
             public void onFinished(Long[] ids)
             {
@@ -2501,10 +2488,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     if (nextAction == null)
                     {
-                        findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>() {    // find upcoming alarm (then finish)
-                            @Override
-                            public void onStarted() {}
-
+                        findUpcomingAlarm(context, new SimpleTaskListener<Long[]>() {    // find upcoming alarm (then finish)
                             @Override
                             public void onFinished(Long[] ids) {
                                 notifications.dismissNotification(context, (int)item.rowID);
@@ -2595,10 +2579,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
-                    findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>() {    // find upcoming alarm (then finish)
-                        @Override
-                        public void onStarted() {}
-
+                    findUpcomingAlarm(context, new SimpleTaskListener<Long[]>() {    // find upcoming alarm (then finish)
                         @Override
                         public void onFinished(Long[] ids)
                         {
@@ -2612,22 +2593,16 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onDeletedState(final Context context, final int startId)
+        private TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onDeletedState(final Context context, final int startId)
         {
-            return new ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
+            return new SimpleTaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
             {
-                @Override
-                public void onStarted() {}
-
                 @Override
                 public void onFinished(AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult result)
                 {
                     Log.d(TAG, "Alarm Deleted (onDeleted)");
                     BedtimeSettings.clearAlarmID(getApplicationContext(), result.getLastRowID());
-                    findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>() {     // find upcoming alarm (then finish)
-                        @Override
-                        public void onStarted() {}
-
+                    findUpcomingAlarm(context, new SimpleTaskListener<Long[]>() {     // find upcoming alarm (then finish)
                         @Override
                         public void onFinished(Long[] ids)
                         {
@@ -2647,22 +2622,16 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onClearedState(final Context context)
+        private TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult> onClearedState(final Context context)
         {
-            return new ExecutorUtils.TaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
+            return new SimpleTaskListener<AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult>()
             {
-                @Override
-                public void onStarted() {}
-
                 @Override
                 public void onFinished(AlarmDatabaseAdapter.AlarmDeleteTask.TaskResult result)
                 {
                     Log.d(TAG, "Alarms Cleared (on Cleared)");
                     BedtimeSettings.clearAlarmIDs(getApplicationContext());
-                    findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>() {    // clear upcoming alarm (then finish)
-                        @Override
-                        public void onStarted() {}
-
+                    findUpcomingAlarm(context, new SimpleTaskListener<Long[]>() {    // clear upcoming alarm (then finish)
                         @Override
                         public void onFinished(Long[] ids)
                         {
@@ -2722,10 +2691,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
-                        findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>() {
-                            @Override
-                            public void onStarted() {}
-
+                        findUpcomingAlarm(context, new SimpleTaskListener<Long[]>() {
                             @Override
                             public void onFinished(Long[] ids)
                             {
@@ -2759,7 +2725,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
 
-                        findUpcomingAlarm(context, new ExecutorUtils.TaskListener<Long[]>()
+                        findUpcomingAlarm(context, new TaskListener<Long[]>()
                         {
                             @Override
                             public void onStarted() {}

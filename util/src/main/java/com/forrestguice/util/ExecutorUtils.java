@@ -20,6 +20,8 @@ package com.forrestguice.util;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.concurrent.TaskHandler;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -31,15 +33,6 @@ import java.util.concurrent.TimeoutException;
 
 public class ExecutorUtils
 {
-    public interface TaskListener<T> {
-        void onStarted();
-        void onFinished(T result);
-    }
-
-    public interface TaskHandler {
-        void post(Runnable r);
-    }
-
     /**
      * runTask (async)
      * @param tag tag

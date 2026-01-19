@@ -59,6 +59,7 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidTaskHandler;
 
 import java.io.File;
@@ -436,7 +437,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        ExecutorUtils.TaskListener<SuntimesBackupLoadTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<SuntimesBackupLoadTask.TaskResult>()
+        TaskListener<SuntimesBackupLoadTask.TaskResult> taskListener = new TaskListener<SuntimesBackupLoadTask.TaskResult>()
         {
             @Override
             public void onStarted() {
@@ -528,7 +529,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         task.setData(allValues);
         task.setKeys(keys);
         task.setMethods(methods);
-        ExecutorUtils.TaskListener<SuntimesBackupRestoreTask.TaskResult> taskListener = new ExecutorUtils.TaskListener<SuntimesBackupRestoreTask.TaskResult>()
+        TaskListener<SuntimesBackupRestoreTask.TaskResult> taskListener = new TaskListener<SuntimesBackupRestoreTask.TaskResult>()
         {
             @Override
             public void onStarted() {
