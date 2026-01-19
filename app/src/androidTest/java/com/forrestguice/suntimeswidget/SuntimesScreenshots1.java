@@ -42,8 +42,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.registerIdlingResources;
-import static androidx.test.espresso.Espresso.unregisterIdlingResources;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertNotNull;
 

@@ -6,6 +6,6 @@
     <string name="layoutBehavior_BottomSheetBehavior">android.support.design.widget.BottomSheetBehavior</string>
 
     <string name="actionViewClass_SearchView">com.forrestguice.support.widget.SearchView</string>
-    <string name="supportClass_UiAutomator">android.support.test.uiautomator.v18</string>
+    <string name="supportClass_UiAutomator">android_libs.ub_uiautomator</string>
 
 </resources>

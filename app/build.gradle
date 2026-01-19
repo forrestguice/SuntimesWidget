@@ -104,9 +104,9 @@ android
             applicationIdSuffix ".legacy"
             versionNameSuffix "-legacy"
             resValue "string", "packageName", "com.forrestguice.suntimeswidget.legacy"   // TODO: cleaner way to set this resValue without duplication
-            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.legacy", suntimesPermissionRoot:"suntimes"]
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.legacy", suntimesPermissionRoot:"suntimes.legacy"]
             buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget.legacy\""
-            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
+            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.legacy\""
         }
         nightly {
             dimension "version"

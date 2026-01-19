@@ -22,14 +22,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.FlakyTest;
 import androidx.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.Before;
@@ -42,6 +48,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("ALL")
@@ -310,6 +317,31 @@ public class SuntimesUtilsTest
         bench_millis /= ((double)n);
         Log.d("SuntimesUtilsTest", "avg SuntimesUtils.calendarDateTimeDisplay in " + bench_millis + ", [" + bench_fast + " .. " + bench_slow + "]");
         assertTrue("calendarDateTimeDisplay takes less than " + threshold_millis + " ms .. took " + bench_millis, bench_millis < threshold_millis);
+    }
+
+    @FlakyTest
+    @Test
+    public void test_formatAsHeight_deprecation()
+    {
+        Context context = InstrumentationUtils.getContext();
+        final LengthUnit units = LengthUnit.IMPERIAL;
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        String oldWay = SuntimesUtils.formatAsHeight(context, observerHeight, units, true, 2);
+        TimeDisplayText newWay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), observerHeight, units, 2, false);
+        assertEquals(oldWay, newWay.toString());
+    }
+
+    @Test
+    public void test_timeDeltaLongDisplayString_deprecation()
+    {
+        Context context = InstrumentationUtils.getContext();
+        SuntimesUtils utils0 = new SuntimesUtils();
+        TimeDeltaDisplay utils1 = new TimeDeltaDisplay();
+
+        long t = 300000;
+        String oldWay = utils.timeDeltaLongDisplayString(t);
+        TimeDisplayText newWay = utils1.timeDeltaLongDisplayString(t);
+        assertEquals(oldWay, newWay.toString());
     }
 
 }
