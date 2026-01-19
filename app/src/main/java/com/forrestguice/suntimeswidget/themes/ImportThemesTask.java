@@ -75,7 +75,7 @@ public class ImportThemesTask extends ProgressCallable<ImportThemesTask.ImportTh
             {
                 @Override
                 public void onImported( SuntimesTheme theme, int i, int n ) {
-                    onProgressUpdate(new SuntimesTheme[] { theme });
+                    publishProgress(new SuntimesTheme[] { theme });
                 }
             });
 

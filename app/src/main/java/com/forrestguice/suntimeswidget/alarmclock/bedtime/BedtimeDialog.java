@@ -63,6 +63,7 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.Calendar;
 import java.util.List;
@@ -727,10 +728,10 @@ public class BedtimeDialog extends DialogBase
         if (wakeupId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -759,10 +760,10 @@ public class BedtimeDialog extends DialogBase
         if (rowId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -805,10 +806,10 @@ public class BedtimeDialog extends DialogBase
             scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
 
         } else {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem alarmItem = ((result != null && result.size() > 0 && result.get(0) != null) ? result.get(0) : null);
                     boolean addAlarm = (alarmItem == null);
@@ -882,12 +883,12 @@ public class BedtimeDialog extends DialogBase
         if (rowID == BedtimeSettings.ID_NONE) {
             return false;
         }
-        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
         {
             @Override
-            public void onLoadFinished(List<AlarmClockItem> result)
+            public void onFinished(List<AlarmClockItem> result)
             {
-                super.onLoadFinished(result);
+                super.onFinished(result);
                 if (result != null && result.size() > 0) {
                     showAlarmEditActivity(context, result.get(0), sharedView, requestCode, isNewAlarm);
                 }

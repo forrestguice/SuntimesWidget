@@ -36,6 +36,10 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,10 +58,10 @@ public class BedtimeAlarmHelper
         final long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -136,13 +140,12 @@ public class BedtimeAlarmHelper
         return alarmItem;
     }
 
-    public static void loadAlarmItem(Context context, @Nullable Long rowId, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
+    public static void loadAlarmItem(Context context, @Nullable Long rowId, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
     {
         if (rowId != null)
         {
-            AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context);
-            listTask.setTaskListener(taskListener);
-            listTask.execute(rowId);
+            AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowId });
+            ExecutorUtils.runTask("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
         }
     }
     public static void saveAlarmItem(Context context, @Nullable AlarmClockItem item, boolean addAlarm, @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener taskListener)
@@ -188,9 +191,10 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE && enabled)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
-                public void onLoadFinished(List<AlarmClockItem> result)
+                @Override
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem bedtimeItem = ((result != null && result.size() > 0) ? result.get(0) : null);
                     BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, true);
@@ -224,9 +228,10 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
-                public void onLoadFinished(List<AlarmClockItem> result)
+                @Override
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem reminderItem = ((result != null && result.size() > 0) ? result.get(0) : null);
                     BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, eventItem, enabled);

@@ -61,6 +61,7 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.List;
 
@@ -239,11 +240,10 @@ public class BedtimeActivity extends AppCompatActivity
                             list.notifyItemChanged(position);
                             continue;
                         }
-                        item.loadAlarmItem(this, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+                        item.loadAlarmItem(this, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
                         {
                             @Override
-                            public void onLoadFinished(List<AlarmClockItem> result) {
-                                super.onLoadFinished(result);
+                            public void onFinished(List<AlarmClockItem> result) {
                                 list.notifyItemChanged(position);
                             }
                         });

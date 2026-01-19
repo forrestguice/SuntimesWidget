@@ -95,7 +95,12 @@ import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -105,6 +110,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmListDialog extends DialogBase
@@ -803,19 +809,19 @@ public class AlarmListDialog extends DialogBase
     public void reloadAdapter(Long rowId) {
         reloadAdapter(rowId, onItemChanged);
     }
-    public void reloadAdapter(Long rowId, AlarmListTask.AlarmListTaskListener taskListener)
+    public void reloadAdapter(Long rowId, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
     {
         if (getContext() != null) {
-            AlarmListTask listTask = new AlarmListTask(getContext());
-            listTask.setTaskListener(taskListener);
-            listTask.execute(rowId);
+            AlarmListTask listTask = new AlarmListTask(getContext(), new Long[] { rowId });
+            ExecutorUtils.runTask("AlarmListTask", AndroidTaskHandler.get(), listTask, taskListener);
             //Log.d("DEBUG", "reloadAdapter");
         }
     }
 
-    protected AlarmListTask.AlarmListTaskListener onListLoaded = new AlarmListTask.AlarmListTaskListener() {
+    protected ProgressListener<List<AlarmClockItem>, AlarmClockItem> onListLoaded = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    {
         @Override
-        public void onLoadFinished(List<AlarmClockItem> data)
+        public void onFinished(List<AlarmClockItem> data)
         {
             //Log.d("DEBUG", "onListLoaded: " + data.size());
             adapter.setItems(data);
@@ -824,9 +830,13 @@ public class AlarmListDialog extends DialogBase
         }
     };
 
-    protected AlarmListTask.AlarmListTaskListener onItemChanged = new AlarmListTask.AlarmListTaskListener() {
+    protected ProgressListener<List<AlarmClockItem>, AlarmClockItem> onItemChanged = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    {
         @Override
-        public void onLoadFinished(List<AlarmClockItem> data)
+        public void onProgressUpdate(AlarmClockItem[] values) {}
+
+        @Override
+        public void onFinished(List<AlarmClockItem> data)
         {
             if (data.size() > 0)
             {
@@ -861,27 +871,26 @@ public class AlarmListDialog extends DialogBase
     /**
      * AlarmClockListTask
      */
-    public static class AlarmListTask extends AsyncTask<Long, AlarmClockItem, List<AlarmClockItem>>
+    public static class AlarmListTask extends ProgressCallable<List<AlarmClockItem>, AlarmClockItem>
     {
         private final AlarmDatabaseAdapter db;
         private final WeakReference<Context> contextRef;
+        private final Long[] rowIds;
 
         private boolean option_includeState = true;
         public void setOption_includeState(boolean value) {
             option_includeState = value;
         }
 
-        public AlarmListTask(Context context)
+        public AlarmListTask(Context context, Long[] rowIds)
         {
             contextRef = new WeakReference<>(context);
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
+            this.rowIds = rowIds;
         }
 
         @Override
-        protected void onPreExecute() {}
-
-        @Override
-        protected List<AlarmClockItem> doInBackground(Long... rowIds)
+        public List<AlarmClockItem> call() throws Exception
         {
             ArrayList<AlarmClockItem> items = new ArrayList<>();
             db.open();
@@ -913,7 +922,7 @@ public class AlarmListDialog extends DialogBase
                 }
 
                 items.add(item);
-                publishProgress(item);
+                publishProgress(new AlarmClockItem[] { item });
 
                 cursor.moveToNext();
             }
@@ -922,33 +931,7 @@ public class AlarmListDialog extends DialogBase
             db.close();
             return items;
         }
-
-        @Override
-        protected void onProgressUpdate(AlarmClockItem... item) {}
-
-        @Override
-        protected void onPostExecute(List<AlarmClockItem> result)
-        {
-            if (result != null)
-            {
-                if (taskListener != null) {
-                    taskListener.onLoadFinished(result);
-                }
-            }
-        }
-
-        protected AlarmListTaskListener taskListener;
-        public void setTaskListener( AlarmListTaskListener l )
-        {
-            taskListener = l;
-        }
-
-        public static abstract class AlarmListTaskListener
-        {
-            public void onLoadFinished(List<AlarmClockItem> result) {}
-        }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

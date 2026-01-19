@@ -28,6 +28,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -215,10 +216,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         final BedtimeItem item = getItem(position);
         if (item != null && item.getAlarmItem() == null)
         {
-            item.loadAlarmItem(context, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            item.loadAlarmItem(context, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result) {
+                public void onFinished(List<AlarmClockItem> result) {
                     if (result != null && result.size() > 0) {
                         notifyItemChanged(holder.getAdapterPosition());
                     }
@@ -249,8 +250,10 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         {
             final long id = i;
             BedtimeItem item = items.get(i);
-            item.loadAlarmItem(context, new AlarmListDialog.AlarmListTask.AlarmListTaskListener() {
-                public void onLoadFinished(List<AlarmClockItem> result)
+            item.loadAlarmItem(context, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            {
+                @Override
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     //observer.notify(id);
                     notifyItemChanged((int)id);

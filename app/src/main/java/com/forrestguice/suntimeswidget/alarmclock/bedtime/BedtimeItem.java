@@ -23,6 +23,8 @@ import android.content.Context;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.List;
 
@@ -59,22 +61,22 @@ public class BedtimeItem
     public void setAlarmItem(@Nullable AlarmClockItem item) {
         alarmItem = item;
     }
-    protected boolean loadAlarmItem(Context context, final AlarmListDialog.AlarmListTask.AlarmListTaskListener onItemLoaded)
+    protected boolean loadAlarmItem(Context context, final ProgressListener<List<AlarmClockItem>, AlarmClockItem> onItemLoaded)
     {
         setAlarmItem(null);
         final Long alarmId = getAlarmID(context);
         if (alarmId != null && alarmId != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0) {
                         setAlarmItem(result.get(0));
                     }
                     if (onItemLoaded != null) {
-                        onItemLoaded.onLoadFinished(result);
+                        onItemLoaded.onFinished(result);
                     }
                 }
             });
@@ -82,7 +84,7 @@ public class BedtimeItem
 
         } else {
             if (onItemLoaded != null) {
-                onItemLoaded.onLoadFinished(null);
+                onItemLoaded.onFinished(null);
             }
             return false;
         }

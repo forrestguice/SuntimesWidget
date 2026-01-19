@@ -55,9 +55,14 @@ import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.SwitchCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
@@ -250,13 +255,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             //setAlarmItem(null);
         }
 
-        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
+        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
         {
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {
-                AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context);
-                listTask.setTaskListener(taskListener);
-                listTask.execute(rowID);
+                AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowID });
+                ExecutorUtils.runTask("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
 
             } else {
                 updateViews(context, item);

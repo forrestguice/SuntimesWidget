@@ -30,7 +30,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class ProgressCallable<T,P> implements Callable<T>
 {
-    protected void onProgressUpdate(P[] progress) {
+    protected void publishProgress(P[] progress) {
         if (progressInterface != null) {
             progressInterface.signalProgress(progress);
         }
