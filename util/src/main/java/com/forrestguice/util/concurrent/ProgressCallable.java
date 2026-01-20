@@ -22,6 +22,7 @@ import com.forrestguice.util.Log;
 
 import java.util.Collection;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * ProgressCallable
@@ -36,14 +37,25 @@ public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInt
     public void publishProgress(P progress) {
         if (progressInterface != null) {
             progressInterface.publishProgress(progress);
-        } else Log.e("ProgressCallable", "progressInterface is unset!");
+        } else Log.e("ProgressCallable", "publish: progressInterface is unset!");
     }
 
     @Override
     public void publishProgress(Collection<P> progress) {
         if (progressInterface != null) {
             progressInterface.publishProgress(progress);
-        } else Log.e("ProgressCallable", "progressInterface is unset!");
+        } else Log.e("ProgressCallable", "publish: progressInterface is unset!");
+    }
+
+    protected AtomicBoolean isCancelled = new AtomicBoolean();
+    public void cancel(boolean mayInterruptIfRunning) {
+        isCancelled.set(true);
+        if (mayInterruptIfRunning) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    public boolean isCancelled() {
+        return isCancelled.get();   //return Thread.currentThread().isInterrupted();
     }
 
     @Nullable
