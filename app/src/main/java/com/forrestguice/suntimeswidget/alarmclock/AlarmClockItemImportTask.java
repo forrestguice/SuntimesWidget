@@ -21,13 +21,14 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.JsonReader;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
 
@@ -44,11 +45,12 @@ import java.util.Map;
  * AsyncTask that reads AlarmClockItem objects from text file (json array).
  * @see AlarmClockItem
  */
-public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, AlarmClockItemImportTask.TaskResult>
+public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItemImportTask.TaskResult, AlarmClockItem>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
     private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -61,29 +63,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return isPaused;
     }
 
-    public AlarmClockItemImportTask(Context context)
+    public AlarmClockItemImportTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
+    public TaskResult call() throws Exception
     {
         Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         ArrayList<AlarmClockItem> items = new ArrayList<>();
@@ -135,20 +124,6 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return new TaskResult(result, uri, (items != null ? items.toArray(new AlarmClockItem[0]) : null), error);
     }
 
-    @Override
-    protected void onProgressUpdate(AlarmClockItem... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * TaskResult
      */
@@ -194,19 +169,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
     /**
      * TaskListener
      */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<TaskResult, AlarmClockItem> {}
 
     /**
      * AlarmClockItemJson

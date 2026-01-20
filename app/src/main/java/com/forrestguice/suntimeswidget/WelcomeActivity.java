@@ -1145,12 +1145,11 @@ public class WelcomeActivity extends AppCompatActivity
             if (importTask != null) {
                 Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             }
-            importTask = new AlarmClockItemImportTask(context);
-            importTask.setTaskListener(importAlarmsListener);
-            importTask.execute(uri);
+            importTask = new AlarmClockItemImportTask(context, uri);
+            ExecutorUtils.runTask("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importAlarmsListener);
         }
 
-        private final AlarmClockItemImportTask.TaskListener importAlarmsListener =  new AlarmClockItemImportTask.TaskListener()
+        private final AlarmClockItemImportTask.TaskListener importAlarmsListener = new AlarmClockItemImportTask.TaskListener()
         {
             @Override
             public void onStarted()

@@ -718,9 +718,8 @@ public class AlarmListDialog extends DialogBase
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else if (context != null) {
-            importTask = new AlarmClockItemImportTask(context);
-            importTask.setTaskListener(importListener);
-            importTask.execute(uri);
+            importTask = new AlarmClockItemImportTask(context, uri);
+            ExecutorUtils.runTask("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importListener);
         }
     }
 
