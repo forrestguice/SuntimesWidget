@@ -44,7 +44,7 @@ import java.util.Map;
  * AsyncTask that reads EventAlias objects from text file (json array).
  * @see EventAlias
  */
-public class EventImportTask extends ProgressCallable<EventImportTask.TaskResult, EventAlias>
+public class EventImportTask extends ProgressCallable<EventAlias, EventImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 

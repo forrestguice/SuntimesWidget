@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
  * @param <P> progress type
  * @see ProgressListener
  */
-public abstract class ProgressCallable<T,P> implements Callable<T>
+public abstract class ProgressCallable<P, T> implements Callable<T>
 {
     protected void publishProgress(P[] progress) {
         if (progressInterface != null) {

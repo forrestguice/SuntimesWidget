@@ -1148,7 +1148,7 @@ public class PlacesListFragment extends DialogBase
     /**
      * PlacesListTask
      */
-    public static class PlacesListTask extends ProgressCallable<List<PlaceItem>, PlaceItem>
+    public static class PlacesListTask extends ProgressCallable<PlaceItem, List<PlaceItem>>
     {
         protected GetFixDatabaseAdapter database;
 

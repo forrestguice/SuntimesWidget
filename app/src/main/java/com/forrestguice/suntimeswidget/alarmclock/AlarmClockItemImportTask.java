@@ -45,7 +45,7 @@ import java.util.Map;
  * AsyncTask that reads AlarmClockItem objects from text file (json array).
  * @see AlarmClockItem
  */
-public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItemImportTask.TaskResult, AlarmClockItem>
+public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, AlarmClockItemImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 

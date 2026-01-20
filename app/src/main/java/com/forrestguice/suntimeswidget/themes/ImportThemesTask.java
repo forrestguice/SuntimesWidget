@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
-public class ImportThemesTask extends ProgressCallable<ImportThemesTask.ImportThemesResult, SuntimesTheme>
+public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThemesTask.ImportThemesResult>
 {
     public static final String TAG = "importThemesTask";
     public static final long MIN_WAIT_TIME = 2000;

@@ -87,12 +87,12 @@ public class ExecutorUtils
      * @param <L> ProgressListener<T,P>>
      */
     public static <T, P,
-            C extends ProgressCallable<T,P>,
+            C extends ProgressCallable<P, T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, L listener) {
         runProgress(tag, handler, callable, Collections.singletonList(listener));
     }
     public static <T, P,
-            C extends ProgressCallable<T,P>,
+            C extends ProgressCallable<P, T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         callable.setProgressInterface(new ProgressCallable.ProgressInterface<P>()

@@ -42,7 +42,6 @@ import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.concurrent.ProgressCallable;
-import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
@@ -60,7 +59,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-public class WidgetSettingsImportTask extends ProgressCallable<WidgetSettingsImportTask.TaskResult, ContentValues>
+public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, WidgetSettingsImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 

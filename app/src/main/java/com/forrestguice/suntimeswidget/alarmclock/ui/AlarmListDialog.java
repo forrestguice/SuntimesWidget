@@ -868,7 +868,7 @@ public class AlarmListDialog extends DialogBase
     /**
      * AlarmClockListTask
      */
-    public static class AlarmListTask extends ProgressCallable<List<AlarmClockItem>, AlarmClockItem>
+    public static class AlarmListTask extends ProgressCallable<AlarmClockItem, List<AlarmClockItem>>
     {
         private final AlarmDatabaseAdapter db;
         private final WeakReference<Context> contextRef;
