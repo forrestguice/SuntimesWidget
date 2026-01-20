@@ -717,7 +717,7 @@ public class AlarmListDialog extends DialogBase
 
         } else if (context != null) {
             importTask = new AlarmClockItemImportTask(context, uri);
-            ExecutorUtils.runProgress("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importListener);
+            ExecutorUtils.runProgress("ImportAlarmsTask", importTask, importListener);
         }
     }
 
@@ -810,7 +810,7 @@ public class AlarmListDialog extends DialogBase
     {
         if (getContext() != null) {
             AlarmListTask listTask = new AlarmListTask(getContext(), new Long[] { rowId });
-            ExecutorUtils.runProgress("AlarmListTask", AndroidTaskHandler.get(), listTask, taskListener);
+            ExecutorUtils.runProgress("AlarmListTask", listTask, taskListener);
             //Log.d("DEBUG", "reloadAdapter");
         }
     }

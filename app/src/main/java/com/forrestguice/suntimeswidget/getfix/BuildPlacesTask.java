@@ -408,7 +408,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
                         }
                     }
                     BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, null, items.toArray(new String[0]) });
-                    ExecutorUtils.runTask("BuildPlacesTask", AndroidTaskHandler.get(), task, taskListener);
+                    ExecutorUtils.runTask("BuildPlacesTask", task, taskListener);
                 }
             }
         });

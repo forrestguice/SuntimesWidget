@@ -24,6 +24,7 @@ import com.forrestguice.util.concurrent.ProgressCallable;
 import com.forrestguice.util.concurrent.ProgressInterface;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.TaskHandler;
+import com.forrestguice.util.concurrent.TaskHandlerFactory;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.util.Collection;
@@ -38,19 +39,35 @@ import java.util.concurrent.TimeoutException;
 
 public class ExecutorUtils
 {
+    protected static TaskHandlerFactory handler = null;
+    public static void initHandler(TaskHandlerFactory value) {
+        handler = value;
+    }
+    public static TaskHandler getHandler()
+    {
+        if (handler != null) {
+            return handler.getHandler();
+        } else {
+            Log.e("ExecutorUtils", "TaskHandlerFactory is unset!");
+            return null;
+        }
+    }
+
     /**
      * runTask (async)
-     * @param tag tag
-     * @param handler TaskHandler
-     * @param callable Callable
-     * @param listener TaskListener
      * @param <T> result type
      * @param <C> Callable<T>
      * @param <L> TaskListener<T>
+     * @param callable Callable
+     * @param listener TaskListener
      */
     public static <T, C extends Callable<T>,
-            L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, L listener) {
-        runTask(tag, handler, callable, Collections.singletonList(listener));
+            L extends TaskListener<T>> void runTask(C callable, L listener) {
+        runTask("Task", getHandler(), callable, Collections.singletonList(listener));
+    }
+    public static <T, C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, C callable, L listener) {
+        runTask(tag, getHandler(), callable, Collections.singletonList(listener));
     }
     public static <T, C extends Callable<T>,
             L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
@@ -76,18 +93,20 @@ public class ExecutorUtils
 
     /**
      * runTask (async)
-     * @param tag tag
-     * @param handler TaskHandler
-     * @param callable ProgressCallable
-     * @param listener ProgressListener
      * @param <T> result type
      * @param <P> progress type
      * @param <C> ProgressCallable<T,P>
      * @param <L> ProgressListener<T,P>>
+     * @param callable ProgressCallable
+     * @param listener ProgressListener
      */
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, L listener) {
-        runProgress(tag, handler, callable, Collections.singletonList(listener));
+            L extends ProgressListener<T,P>> void runProgress(C callable, L listener) {
+        runProgress("ProgressTask", getHandler(), callable, Collections.singletonList(listener));
+    }
+    public static <T, P, C extends ProgressCallable<P,T>,
+            L extends ProgressListener<T,P>> void runProgress(String tag, C callable, L listener) {
+        runProgress(tag, getHandler(), callable, Collections.singletonList(listener));
     }
     public static <T, P, C extends ProgressCallable<P,T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)

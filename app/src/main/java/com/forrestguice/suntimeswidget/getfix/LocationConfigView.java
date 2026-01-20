@@ -1047,7 +1047,7 @@ public class LocationConfigView extends LinearLayout
                 spin_locationName.setSelection(selectedIndex);
             }
         };
-        ExecutorUtils.runTask("LocationListTask", AndroidTaskHandler.get(), task, taskListener);
+        ExecutorUtils.runTask("LocationListTask", task, taskListener);
     }
 
     public void clickLocationSpinner() {

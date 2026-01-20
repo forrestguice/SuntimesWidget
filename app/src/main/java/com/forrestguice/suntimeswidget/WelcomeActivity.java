@@ -622,7 +622,7 @@ public class WelcomeActivity extends AppCompatActivity
         protected void importPlaces(Context context, @NonNull Uri uri)
         {
             BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, uri });
-            ExecutorUtils.runTask("ImportPlacesTask", AndroidTaskHandler.get(), task, importPlacesListener);
+            ExecutorUtils.runTask("ImportPlacesTask", task, importPlacesListener);
         }
         private final TaskListener<Integer> importPlacesListener = new TaskListener<Integer>()
         {
@@ -1146,7 +1146,7 @@ public class WelcomeActivity extends AppCompatActivity
                 Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             }
             importTask = new AlarmClockItemImportTask(context, uri);
-            ExecutorUtils.runProgress("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importAlarmsListener);
+            ExecutorUtils.runProgress("ImportAlarmsTask", importTask, importAlarmsListener);
         }
 
         private final AlarmClockItemImportTask.TaskListener importAlarmsListener = new AlarmClockItemImportTask.TaskListener()

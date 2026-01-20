@@ -259,7 +259,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {
                 AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowID });
-                ExecutorUtils.runProgress("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
+                ExecutorUtils.runProgress("LoadAlarmTask", listTask, taskListener);
 
             } else {
                 updateViews(context, item);

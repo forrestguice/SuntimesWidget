@@ -520,7 +520,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         //task.execute(uri);
 
         SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context, uri);
-        ExecutorUtils.runTask(SuntimesBackupLoadTask.TAG, AndroidTaskHandler.get(), task, taskListener);
+        ExecutorUtils.runTask(SuntimesBackupLoadTask.TAG, task, taskListener);
     }
 
     protected void importSettings(final Context context, final Set<String> keys, final Map<String,Integer> methods, final Map<String, ContentValues[]> allValues)
@@ -550,7 +550,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 }
             }
         };
-        ExecutorUtils.runTask(SuntimesBackupRestoreTask.TAG, AndroidTaskHandler.get(), task, taskListener);
+        ExecutorUtils.runTask(SuntimesBackupRestoreTask.TAG, task, taskListener);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

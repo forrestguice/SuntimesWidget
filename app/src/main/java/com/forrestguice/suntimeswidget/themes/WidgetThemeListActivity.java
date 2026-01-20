@@ -458,7 +458,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         } else {
             Log.i("importThemes", "Starting import task from uri: " + uri);
             importTask = new ImportThemesTask(context, uri);
-            ExecutorUtils.runProgress("ImportThemesTask", AndroidTaskHandler.get(), importTask, importThemesListener);
+            ExecutorUtils.runProgress("ImportThemesTask", importTask, importThemesListener);
             return true;
         }
     }

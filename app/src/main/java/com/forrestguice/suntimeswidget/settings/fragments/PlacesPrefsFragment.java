@@ -605,7 +605,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
                                     clearPlacesTask = new BuildPlacesTask(myParent, new Object[] { true });    // clearFlag set to true
-                                    ExecutorUtils.runTask("ClearPlacesTask", AndroidTaskHandler.get(), clearPlacesTask, clearPlacesListener);
+                                    ExecutorUtils.runTask("ClearPlacesTask", clearPlacesTask, clearPlacesListener);
                                 }
                             })
                             .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);

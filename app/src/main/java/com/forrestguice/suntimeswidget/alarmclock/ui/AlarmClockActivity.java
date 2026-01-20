@@ -545,7 +545,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 }
             };
-            ExecutorUtils.runTask(TAG, AndroidTaskHandler.get(), findTask, taskListener);
+            ExecutorUtils.runTask(TAG, findTask, taskListener);
 
         } else {
             Log.w(TAG, "dismissAlarmByLabel: missing search term.. falling back to dismissNextAlarm.");
@@ -591,7 +591,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
         };
-        ExecutorUtils.runTask(TAG, AndroidTaskHandler.get(), findTask, taskListener);
+        ExecutorUtils.runTask(TAG, findTask, taskListener);
     }
 
     protected void handleIntent_snoozeAlarm(final Intent intent)

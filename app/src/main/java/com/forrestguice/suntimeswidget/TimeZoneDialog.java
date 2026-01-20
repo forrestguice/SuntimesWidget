@@ -253,7 +253,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
         WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
         WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(context, sortZonesBy);
-        ExecutorUtils.runTask("TimeZoneLoadTask", AndroidTaskHandler.get(), loadTask, onTimeZonesLoaded);
+        ExecutorUtils.runTask("TimeZoneLoadTask", loadTask, onTimeZonesLoaded);
 
         return dialogContent;
     }

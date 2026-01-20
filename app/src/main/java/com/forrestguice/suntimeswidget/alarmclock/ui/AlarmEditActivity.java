@@ -964,7 +964,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (item != null)
         {
             OnRingtoneResultTask task = new OnRingtoneResultTask(this, uri, isAudioFile, item);
-            ExecutorUtils.runTask("RingtoneTask", AndroidTaskHandler.get(), task, new SimpleTaskListener<Boolean>()
+            ExecutorUtils.runTask("RingtoneTask", task, new SimpleTaskListener<Boolean>()
             {
                 @Override
                 public void onFinished(Boolean result) {

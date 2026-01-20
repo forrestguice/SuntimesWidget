@@ -474,14 +474,14 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_enabledOnly(true);
-        ExecutorUtils.runTask("findEnabledAlarms", AndroidTaskHandler.get(), findTask, onFinished);
+        ExecutorUtils.runTask("findEnabledAlarms", findTask, onFinished);
     }
 
     public static void findSoundingAlarms(final Context context, @Nullable final TaskListener<Long[]> onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING);
-        ExecutorUtils.runTask("findSoundingAlarms", AndroidTaskHandler.get(), findTask, onFinished);
+        ExecutorUtils.runTask("findSoundingAlarms", findTask, onFinished);
     }
 
     public static void findAppLocationAlarms(final Context context, @Nullable final TaskListener<Long[]> onFinished)
@@ -500,7 +500,7 @@ public class AlarmNotifications extends BroadcastReceiver
             private final HashMap<String,Long> flags = new HashMap<>();
         };
         findTask.setParam_enabledOnly(true);
-        ExecutorUtils.runTask("findAppLocationAlarms", AndroidTaskHandler.get(), findTask, onFinished);
+        ExecutorUtils.runTask("findAppLocationAlarms", findTask, onFinished);
     }
 
     /**
@@ -533,7 +533,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
             }
         };
-        ExecutorUtils.runTask("findUpcomingAlarm", AndroidTaskHandler.get(), findTask, onFinished1);
+        ExecutorUtils.runTask("findUpcomingAlarm", findTask, onFinished1);
     }
     public static void findUpcomingAlarm(final Context context, @Nullable final TaskListener<Long[]> onFinished) {
         findUpcomingAlarm(context, true, onFinished);
@@ -1921,14 +1921,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                         @Override
                                         public void onFinished(Boolean result, AlarmClockItem item) {
                                             AlarmDatabaseAdapter.AlarmListTask clearTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
-                                            ExecutorUtils.runTask("ClearAlarmTask", AndroidTaskHandler.get(), clearTask, clearTaskListener);
+                                            ExecutorUtils.runTask("ClearAlarmTask", clearTask, clearTaskListener);
                                         }
                                     });
                                 }
                             });
                         } else {
                             AlarmDatabaseAdapter.AlarmListTask clearTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
-                            ExecutorUtils.runTask("ClearAlarmTask", AndroidTaskHandler.get(), clearTask, clearTaskListener);
+                            ExecutorUtils.runTask("ClearAlarmTask", clearTask, clearTaskListener);
                         }
 
                     } else {
@@ -2036,7 +2036,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
             };
             //notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
-            ExecutorUtils.runTask("OnAfterBootCompletedTask", AndroidTaskHandler.get(), alarmListTask, taskListener);
+            ExecutorUtils.runTask("OnAfterBootCompletedTask", alarmListTask, taskListener);
         }
 
         public static void triggerBedtimeMode(Context context, boolean value)
@@ -2161,7 +2161,7 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 cancelAlarmTimeouts(getApplicationContext(), ids);
                 AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext(), null);
-                ExecutorUtils.runTask("ClearAlarms", AndroidTaskHandler.get(), clearTask, onClearedState(getApplicationContext()));
+                ExecutorUtils.runTask("ClearAlarms", clearTask, onClearedState(getApplicationContext()));
             }
         };
 
@@ -2296,7 +2296,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item);
 
                                 AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context, new Long[] { item.rowID });
-                                ExecutorUtils.runTask("DeleteAlarm", AndroidTaskHandler.get(), deleteTask, onDeletedState(context, startId));
+                                ExecutorUtils.runTask("DeleteAlarm", deleteTask, onDeletedState(context, startId));
                             } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SCHEDULE) || (action.startsWith(ACTION_RESCHEDULE))) {

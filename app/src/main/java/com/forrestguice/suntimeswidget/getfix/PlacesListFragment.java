@@ -492,7 +492,7 @@ public class PlacesListFragment extends DialogBase
         if (context != null)
         {
             PlacesListTask listTask = new PlacesListTask(context);
-            ExecutorUtils.runProgress("ReloadPlaceAdapter", AndroidTaskHandler.get(), listTask, taskListener);
+            ExecutorUtils.runProgress("ReloadPlaceAdapter", listTask, taskListener);
         }
     }
 
@@ -714,7 +714,7 @@ public class PlacesListFragment extends DialogBase
     {
         setModified(true);
         PlacesEditTask task = new PlacesEditTask(context, items);
-        ExecutorUtils.runProgress("AddOrUpdatePlace", AndroidTaskHandler.get(), task, listener);
+        ExecutorUtils.runProgress("AddOrUpdatePlace", task, listener);
     }
 
     protected void scrollToSelection()
@@ -847,7 +847,7 @@ public class PlacesListFragment extends DialogBase
                 };
 
                 finishActionMode();
-                ExecutorUtils.runTask("DeletePlace", AndroidTaskHandler.get(), task, taskListener);
+                ExecutorUtils.runTask("DeletePlace", task, taskListener);
             }
         };
     }
@@ -892,7 +892,7 @@ public class PlacesListFragment extends DialogBase
                     {
                         if (getContext() != null) {
                             BuildPlacesTask task = new BuildPlacesTask(getContext(), new Object[] { true });    // clearFlag set to true
-                            ExecutorUtils.runTask("ClearPlacesTask", AndroidTaskHandler.get(), task, clearPlacesListener);
+                            ExecutorUtils.runTask("ClearPlacesTask", task, clearPlacesListener);
                         }
                     }
                 })
@@ -982,7 +982,7 @@ public class PlacesListFragment extends DialogBase
     {
         Log.i("importPlaces", "Starting import task: " + uri);
         BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, uri });
-        ExecutorUtils.runTask("ImportPlacesTask", AndroidTaskHandler.get(), task, buildPlacesListener);
+        ExecutorUtils.runTask("ImportPlacesTask", task, buildPlacesListener);
         return true;
     }
 

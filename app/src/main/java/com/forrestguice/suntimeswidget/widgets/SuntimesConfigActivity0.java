@@ -829,7 +829,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     progress_timezone.setVisibility(View.GONE);
                 }
             };
-            ExecutorUtils.runTask("TimeZoneLoadTask", AndroidTaskHandler.get(), loadTask, taskListener);
+            ExecutorUtils.runTask("TimeZoneLoadTask", loadTask, taskListener);
         }
 
         layout_solartime = (LinearLayout) findViewById(R.id.appwidget_solartime_layout);
@@ -2605,7 +2605,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
         WidgetSettingsImportTask task = new WidgetSettingsImportTask(context, uri);
-        ExecutorUtils.runProgress("ImportWidgetSettings", AndroidTaskHandler.get(), task, new WidgetSettingsImportTask.TaskListener()
+        ExecutorUtils.runProgress("ImportWidgetSettings", task, new WidgetSettingsImportTask.TaskListener()
         {
             @Override
             public void onStarted() {

@@ -534,7 +534,7 @@ public class WidgetTimezones
                     onSortTimeZones(result, sortMode);
                 }
             };
-            ExecutorUtils.runTask("SortTimeZonesTask", AndroidTaskHandler.get(), loadTask, taskListener);
+            ExecutorUtils.runTask("SortTimeZonesTask", loadTask, taskListener);
         }
 
         public boolean onActionItemClicked(int action)
