@@ -21,6 +21,7 @@ package com.forrestguice.util;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressInterface;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.TaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
@@ -47,13 +48,11 @@ public class ExecutorUtils
      * @param <C> Callable<T>
      * @param <L> TaskListener<T>
      */
-    public static <T,
-            C extends Callable<T>,
+    public static <T, C extends Callable<T>,
             L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, L listener) {
         runTask(tag, handler, callable, Collections.singletonList(listener));
     }
-    public static <T,
-            C extends Callable<T>,
+    public static <T, C extends Callable<T>,
             L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -86,19 +85,17 @@ public class ExecutorUtils
      * @param <C> ProgressCallable<T,P>
      * @param <L> ProgressListener<T,P>>
      */
-    public static <T, P,
-            C extends ProgressCallable<P, T>,
+    public static <T, P, C extends ProgressCallable<P,T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, L listener) {
         runProgress(tag, handler, callable, Collections.singletonList(listener));
     }
-    public static <T, P,
-            C extends ProgressCallable<P, T>,
+    public static <T, P, C extends ProgressCallable<P,T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
-        callable.setProgressInterface(new ProgressCallable.ProgressInterface<P>()
+        callable.setProgressInterface(new ProgressInterface<P>()
         {
             @Override
-            public void signalProgress(P[] progress) {
+            public void publishProgress(P[] progress) {
                 postProgress(handler, listeners, progress);
             }
         });

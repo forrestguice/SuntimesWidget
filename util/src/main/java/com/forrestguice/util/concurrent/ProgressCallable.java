@@ -25,21 +25,19 @@ import java.util.concurrent.Callable;
 /**
  * ProgressCallable
  * A Callable that may `signalProgress` during execution; use with `ExecutorUtils.runTask` and ProgressListener.
- * @param <T> return type
  * @param <P> progress type
+ * @param <T> return type
  * @see ProgressListener
  */
-public abstract class ProgressCallable<P, T> implements Callable<T>
+public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInterface<P>
 {
-    protected void publishProgress(P[] progress) {
+    @Override
+    public void publishProgress(P[] progress) {
         if (progressInterface != null) {
-            progressInterface.signalProgress(progress);
+            progressInterface.publishProgress(progress);
         } else Log.e("ProgressCallable", "progressInterface is unset!");
     }
 
-    public interface ProgressInterface<P> {
-        void signalProgress(P[] progress);
-    }
     @Nullable
     protected ProgressInterface<P> progressInterface = null;
     public void setProgressInterface(@Nullable ProgressInterface<P> value) {
