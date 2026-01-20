@@ -18,6 +18,8 @@
 
 package com.forrestguice.util.concurrent;
 
+import java.util.Collection;
+
 /**
  * A `TaskListener` with an `onProgress(...)` method.
  * @param <T> task return type
@@ -25,5 +27,5 @@ package com.forrestguice.util.concurrent;
  * @see ProgressCallable
  */
 public interface ProgressListener<T,P> extends TaskListener<T> {
-    void onProgressUpdate(P[] values);
+    void onProgressUpdate(Collection<P> values);
 }

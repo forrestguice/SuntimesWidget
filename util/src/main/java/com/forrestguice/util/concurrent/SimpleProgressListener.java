@@ -18,6 +18,8 @@
 
 package com.forrestguice.util.concurrent;
 
+import java.util.Collection;
+
 /**
  * @see ProgressListener
  */
@@ -30,5 +32,5 @@ public class SimpleProgressListener<T,P> implements ProgressListener<T,P>
     public void onFinished(T result) {}
 
     @Override
-    public void onProgressUpdate(P[] values) {}
+    public void onProgressUpdate(Collection<P> values) {}
 }

@@ -114,7 +114,11 @@ public class ExecutorUtils
         callable.setProgressInterface(new ProgressInterface<P>()
         {
             @Override
-            public void publishProgress(P[] progress) {
+            public void publishProgress(P progress) {
+                postProgress(handler, listeners, Collections.singletonList(progress));
+            }
+            @Override
+            public void publishProgress(Collection<P> progress) {
                 postProgress(handler, listeners, progress);
             }
         });
@@ -147,7 +151,7 @@ public class ExecutorUtils
             });
         }
     }
-    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, @Nullable Collection<C> listeners, P[] progress)
+    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, @Nullable Collection<C> listeners, Collection<P> progress)
     {
         if (handler != null && listeners != null) {
             handler.post(new Runnable() {

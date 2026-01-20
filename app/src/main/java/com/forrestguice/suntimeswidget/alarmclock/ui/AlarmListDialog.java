@@ -96,7 +96,6 @@ import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressCallable;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
@@ -830,9 +829,6 @@ public class AlarmListDialog extends DialogBase
     protected ProgressListener<List<AlarmClockItem>, AlarmClockItem> onItemChanged = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
     {
         @Override
-        public void onProgressUpdate(AlarmClockItem[] values) {}
-
-        @Override
         public void onFinished(List<AlarmClockItem> data)
         {
             if (data.size() > 0)
@@ -919,7 +915,7 @@ public class AlarmListDialog extends DialogBase
                 }
 
                 items.add(item);
-                publishProgress(new AlarmClockItem[] { item });
+                publishProgress(item);
 
                 cursor.moveToNext();
             }

@@ -18,6 +18,9 @@
 
 package com.forrestguice.util.concurrent;
 
+import java.util.Collection;
+
 public interface ProgressInterface<P> {
-    void publishProgress(P[] progress);
+    void publishProgress(P progress);
+    void publishProgress(Collection<P> progress);
 }

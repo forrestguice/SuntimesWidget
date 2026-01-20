@@ -20,6 +20,7 @@ package com.forrestguice.util.concurrent;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 
 /**
@@ -32,7 +33,14 @@ import java.util.concurrent.Callable;
 public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInterface<P>
 {
     @Override
-    public void publishProgress(P[] progress) {
+    public void publishProgress(P progress) {
+        if (progressInterface != null) {
+            progressInterface.publishProgress(progress);
+        } else Log.e("ProgressCallable", "progressInterface is unset!");
+    }
+
+    @Override
+    public void publishProgress(Collection<P> progress) {
         if (progressInterface != null) {
             progressInterface.publishProgress(progress);
         } else Log.e("ProgressCallable", "progressInterface is unset!");
