@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.JsonReader;
@@ -42,6 +41,9 @@ import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
 import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
 
@@ -58,11 +60,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, WidgetSettingsImportTask.TaskResult>
+public class WidgetSettingsImportTask extends ProgressCallable<WidgetSettingsImportTask.TaskResult, ContentValues>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
     protected final WeakReference<Context> contextRef;
+    protected final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -75,28 +78,14 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return isPaused;
     }
 
-    public WidgetSettingsImportTask(Context context) {
+    public WidgetSettingsImportTask(Context context, Uri uri) {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
+    public TaskResult call() throws Exception
     {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
-    {
-        Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         ArrayList<ContentValues> items = new ArrayList<>();
@@ -174,20 +163,6 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         }
     }
 
-    @Override
-    protected void onProgressUpdate(ContentValues... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * TaskResult
      */
@@ -230,22 +205,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         }
     }
 
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<TaskResult, ContentValues> {}
 
     /**
      * ContentValuesJson
