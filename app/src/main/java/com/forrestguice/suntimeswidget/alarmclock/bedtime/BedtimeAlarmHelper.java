@@ -145,7 +145,7 @@ public class BedtimeAlarmHelper
         if (rowId != null)
         {
             AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowId });
-            ExecutorUtils.runTask("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
+            ExecutorUtils.runProgress("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
         }
     }
     public static void saveAlarmItem(Context context, @Nullable AlarmClockItem item, boolean addAlarm, @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener taskListener)

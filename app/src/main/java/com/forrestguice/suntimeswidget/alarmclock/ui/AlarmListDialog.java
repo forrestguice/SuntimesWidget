@@ -34,7 +34,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -110,7 +109,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmListDialog extends DialogBase
@@ -719,7 +717,7 @@ public class AlarmListDialog extends DialogBase
 
         } else if (context != null) {
             importTask = new AlarmClockItemImportTask(context, uri);
-            ExecutorUtils.runTask("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importListener);
+            ExecutorUtils.runProgress("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importListener);
         }
     }
 
@@ -812,7 +810,7 @@ public class AlarmListDialog extends DialogBase
     {
         if (getContext() != null) {
             AlarmListTask listTask = new AlarmListTask(getContext(), new Long[] { rowId });
-            ExecutorUtils.runTask("AlarmListTask", AndroidTaskHandler.get(), listTask, taskListener);
+            ExecutorUtils.runProgress("AlarmListTask", AndroidTaskHandler.get(), listTask, taskListener);
             //Log.d("DEBUG", "reloadAdapter");
         }
     }

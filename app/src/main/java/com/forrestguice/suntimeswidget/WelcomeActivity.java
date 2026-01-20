@@ -1146,7 +1146,7 @@ public class WelcomeActivity extends AppCompatActivity
                 Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
             }
             importTask = new AlarmClockItemImportTask(context, uri);
-            ExecutorUtils.runTask("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importAlarmsListener);
+            ExecutorUtils.runProgress("ImportAlarmsTask", AndroidTaskHandler.get(), importTask, importAlarmsListener);
         }
 
         private final AlarmClockItemImportTask.TaskListener importAlarmsListener = new AlarmClockItemImportTask.TaskListener()

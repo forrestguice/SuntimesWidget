@@ -686,7 +686,7 @@ public class EventListHelper
 
         } else if (context != null) {
             importTask = new EventImportTask(context, uri);
-            ExecutorUtils.runTask("ImportEventsTask", AndroidTaskHandler.get(), importTask, importListener);
+            ExecutorUtils.runProgress("ImportEventsTask", AndroidTaskHandler.get(), importTask, importListener);
         }
     }
 

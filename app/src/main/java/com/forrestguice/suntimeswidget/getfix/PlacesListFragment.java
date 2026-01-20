@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -70,7 +69,6 @@ import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.SearchView;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.ProgressCallable;
-import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
@@ -494,7 +492,7 @@ public class PlacesListFragment extends DialogBase
         if (context != null)
         {
             PlacesListTask listTask = new PlacesListTask(context);
-            ExecutorUtils.runTask("ReloadPlaceAdapter", AndroidTaskHandler.get(), listTask, taskListener);
+            ExecutorUtils.runProgress("ReloadPlaceAdapter", AndroidTaskHandler.get(), listTask, taskListener);
         }
     }
 
@@ -716,7 +714,7 @@ public class PlacesListFragment extends DialogBase
     {
         setModified(true);
         PlacesEditTask task = new PlacesEditTask(context, items);
-        ExecutorUtils.runTask("AddOrUpdatePlace", AndroidTaskHandler.get(), task, listener);
+        ExecutorUtils.runProgress("AddOrUpdatePlace", AndroidTaskHandler.get(), task, listener);
     }
 
     protected void scrollToSelection()

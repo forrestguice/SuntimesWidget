@@ -25,6 +25,8 @@ import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.TaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -42,8 +44,17 @@ public class ExecutorUtils
      * @param callable Callable
      * @param listener TaskListener
      * @param <T> result type
+     * @param <C> Callable<T>
+     * @param <L> TaskListener<T>
      */
-    public static <T> void runTask(String tag, @Nullable TaskHandler handler, Callable<T> callable, TaskListener<T> listener)
+    public static <T,
+            C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, L listener) {
+        runTask(tag, handler, callable, Collections.singletonList(listener));
+    }
+    public static <T,
+            C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable()
@@ -53,9 +64,9 @@ public class ExecutorUtils
             {
                 final T result;
                 try {
-                    postStarted(handler, listener);
+                    postStarted(handler, listeners);
                     result = callable.call();
-                    postFinished(handler, result, listener);
+                    postFinished(handler, result, listeners);
 
                 } catch (Exception e) {
                     Log.e(tag, "runTask: failed! " + e);
@@ -72,64 +83,63 @@ public class ExecutorUtils
      * @param listener ProgressListener
      * @param <T> result type
      * @param <P> progress type
+     * @param <C> ProgressCallable<T,P>
+     * @param <L> ProgressListener<T,P>>
      */
-    public static <T,P> void runTask(String tag, @Nullable TaskHandler handler, ProgressCallable<T,P> callable, ProgressListener<T,P> listener)
+    public static <T, P,
+            C extends ProgressCallable<T,P>,
+            L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, L listener) {
+        runProgress(tag, handler, callable, Collections.singletonList(listener));
+    }
+    public static <T, P,
+            C extends ProgressCallable<T,P>,
+            L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable()
+        callable.setProgressInterface(new ProgressCallable.ProgressInterface<P>()
         {
             @Override
-            public void run()
-            {
-                final T result;
-                try {
-                    callable.setProgressInterface(new ProgressCallable.ProgressInterface<P>()
-                    {
-                        @Override
-                        public void signalProgress(P[] progress) {
-                            postProgress(handler, listener, progress);
-                        }
-                    });
-                    postStarted(handler, listener);
-                    result = callable.call();
-                    postFinished(handler, result, listener);
-
-                } catch (Exception e) {
-                    Log.e(tag, "runTask: failed! " + e);
-                }
+            public void signalProgress(P[] progress) {
+                postProgress(handler, listeners, progress);
             }
         });
+        runTask(tag, handler, callable, listeners);
     }
 
-    private static <T> void postStarted(@NonNull TaskHandler handler, @Nullable TaskListener<T> listener)
+    private static <T,C extends TaskListener<T>> void postStarted(@NonNull TaskHandler handler, @Nullable Collection<C> listeners)
     {
-        if (handler != null && listener != null) {
+        if (handler != null && listeners != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onStarted();
+                    for (TaskListener<T> listener : listeners) {
+                        listener.onStarted();
+                    }
                 }
             });
         }
     }
-    private static <T> void postFinished(@NonNull TaskHandler handler, T result, @Nullable TaskListener<T> listener)
+    private static <T,C extends TaskListener<T>> void postFinished(@NonNull TaskHandler handler, T result, @Nullable Collection<C> listeners)
     {
-        if (handler != null && listener != null) {
+        if (handler != null && listeners != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onFinished(result);
+                    for (TaskListener<T> listener : listeners) {
+                        listener.onFinished(result);
+                    }
                 }
             });
         }
     }
-    private static <T,P> void postProgress(@NonNull TaskHandler handler, @Nullable ProgressListener<T,P> listener, P[] progress)
+    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, @Nullable Collection<C> listeners, P[] progress)
     {
-        if (handler != null && listener != null) {
+        if (handler != null && listeners != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onProgressUpdate(progress);
+                    for (ProgressListener<T,P> listener : listeners) {
+                        listener.onProgressUpdate(progress);
+                    }
                 }
             });
         }
@@ -153,7 +163,7 @@ public class ExecutorUtils
      * @param timeoutAfter will block for timeoutAfter millis
      * @return result
      */
-    public static boolean waitForTask(String tag, @NonNull final Callable<Boolean> r, long timeoutAfter)
+    public static <R extends Callable<Boolean>> boolean waitForTask(String tag, @NonNull final R r, long timeoutAfter)
     {
         Boolean result = getResult(tag, r, timeoutAfter);
         return (result != null && result);
@@ -168,7 +178,7 @@ public class ExecutorUtils
      * @return result
      */
     @Nullable
-    public static <T> T getResult(String tag, @NonNull final Callable<T> callable, long timeoutAfter)
+    public static <T,C extends Callable<T>> T getResult(String tag, @NonNull final C callable, long timeoutAfter)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         final Future<T> task = executor.submit(callable);

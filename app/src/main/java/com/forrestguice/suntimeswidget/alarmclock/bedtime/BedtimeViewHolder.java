@@ -58,7 +58,6 @@ import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressListener;
-import com.forrestguice.util.concurrent.SimpleProgressListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -260,7 +259,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {
                 AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowID });
-                ExecutorUtils.runTask("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
+                ExecutorUtils.runProgress("LoadAlarmTask", AndroidTaskHandler.get(), listTask, taskListener);
 
             } else {
                 updateViews(context, item);

@@ -2605,7 +2605,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
         WidgetSettingsImportTask task = new WidgetSettingsImportTask(context, uri);
-        ExecutorUtils.runTask("ImportWidgetSettings", AndroidTaskHandler.get(), task, new WidgetSettingsImportTask.TaskListener()
+        ExecutorUtils.runProgress("ImportWidgetSettings", AndroidTaskHandler.get(), task, new WidgetSettingsImportTask.TaskListener()
         {
             @Override
             public void onStarted() {
