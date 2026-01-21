@@ -107,33 +107,33 @@ public class ExecutorUtils
      * @param listener ProgressListener
      */
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(C callable, L listener)
+            L extends ProgressListener<P, T>> void runProgress(C callable, L listener)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         runProgress("ProgressTask", executor, getHandler(), callable, Collections.singletonList(listener));
         executor.shutdown();
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, C callable, L listener)
+            L extends ProgressListener<P, T>> void runProgress(String tag, C callable, L listener)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         runProgress(tag, executor, getHandler(), callable, Collections.singletonList(listener));
         executor.shutdown();
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(@NonNull Executor executor, C callable, L listener) {
+            L extends ProgressListener<P, T>> void runProgress(@NonNull Executor executor, C callable, L listener) {
         runProgress("ProgressTask", executor, getHandler(), callable, Collections.singletonList(listener));
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, C callable, L listener) {
+            L extends ProgressListener<P, T>> void runProgress(String tag, @NonNull Executor executor, C callable, L listener) {
         runProgress(tag, executor, getHandler(), callable, Collections.singletonList(listener));
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, L listener) {
+            L extends ProgressListener<P, T>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, L listener) {
         runProgress(tag, executor, handler, callable, Collections.singletonList(listener));
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
+            L extends ProgressListener<P, T>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         callable.setProgressInterface(new ProgressInterface<P>()
         {
@@ -230,13 +230,13 @@ public class ExecutorUtils
             }
         });
     }
-    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, ProgressCallable<P,T> callable, @Nullable Collection<C> listeners, Collection<P> progress)
+    private static <T,P,C extends ProgressListener<P, T>> void postProgress(@NonNull TaskHandler handler, ProgressCallable<P,T> callable, @Nullable Collection<C> listeners, Collection<P> progress)
     {
         postCallback(handler, new HandlerCallback() {
             @Override
             public void post() {
                 callable.onProgressUpdate(progress);
-                for (ProgressListener<T,P> listener : listeners) {
+                for (ProgressListener<P, T> listener : listeners) {
                     listener.onProgressUpdate(progress);
                 }
             }

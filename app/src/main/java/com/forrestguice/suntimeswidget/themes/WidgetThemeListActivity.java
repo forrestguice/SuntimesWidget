@@ -73,7 +73,6 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -463,7 +462,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    private final ProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme> importThemesListener = new SimpleProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme>()
+    private final ProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult> importThemesListener = new SimpleProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme>()
     {
         public void onStarted()
         {

@@ -73,7 +73,6 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -690,12 +689,12 @@ public class EventListHelper
         }
     }
 
-    private ProgressListener<EventImportTask.TaskResult, EventAlias> importListener0 = null;
-    public void setImportTaskListener( ProgressListener<EventImportTask.TaskResult, EventAlias> listener ) {
+    private ProgressListener<EventAlias, EventImportTask.TaskResult> importListener0 = null;
+    public void setImportTaskListener( ProgressListener<EventAlias, EventImportTask.TaskResult> listener ) {
         importListener0 = listener;
     }
 
-    private final ProgressListener<EventImportTask.TaskResult, EventAlias> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
+    private final ProgressListener<EventAlias, EventImportTask.TaskResult> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
     {
         @Override
         public void onStarted()

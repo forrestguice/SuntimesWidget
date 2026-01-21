@@ -805,7 +805,7 @@ public class AlarmListDialog extends DialogBase
     public void reloadAdapter(Long rowId) {
         reloadAdapter(rowId, onItemChanged);
     }
-    public void reloadAdapter(Long rowId, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
+    public void reloadAdapter(Long rowId, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
     {
         if (getContext() != null) {
             AlarmListTask listTask = new AlarmListTask(getContext(), new Long[] { rowId });
@@ -814,7 +814,7 @@ public class AlarmListDialog extends DialogBase
         }
     }
 
-    protected ProgressListener<List<AlarmClockItem>, AlarmClockItem> onListLoaded = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onListLoaded = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
     {
         @Override
         public void onFinished(List<AlarmClockItem> data)
@@ -826,7 +826,7 @@ public class AlarmListDialog extends DialogBase
         }
     };
 
-    protected ProgressListener<List<AlarmClockItem>, AlarmClockItem> onItemChanged = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemChanged = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
     {
         @Override
         public void onFinished(List<AlarmClockItem> data)

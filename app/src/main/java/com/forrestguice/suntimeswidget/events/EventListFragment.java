@@ -39,7 +39,6 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.DialogBase;
-import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
@@ -273,7 +272,7 @@ public class EventListFragment extends DialogBase
     /**
      * ImportListener
      */
-    private final ProgressListener<EventImportTask.TaskResult, EventAlias> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
+    private final ProgressListener<EventAlias, EventImportTask.TaskResult> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
     {
         @Override
         public void onStarted() {

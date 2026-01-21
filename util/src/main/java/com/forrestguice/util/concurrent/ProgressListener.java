@@ -26,6 +26,6 @@ import java.util.Collection;
  * @param <P> task progress type
  * @see ProgressCallable
  */
-public interface ProgressListener<T,P> extends TaskListener<T> {
+public interface ProgressListener<P, T> extends TaskListener<T> {
     void onProgressUpdate(Collection<P> values);
 }

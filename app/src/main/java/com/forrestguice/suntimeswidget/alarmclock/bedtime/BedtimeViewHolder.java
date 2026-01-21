@@ -56,7 +56,6 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -254,7 +253,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             //setAlarmItem(null);
         }
 
-        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
+        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
         {
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {

@@ -22,7 +22,6 @@ import android.content.Context;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -61,7 +60,7 @@ public class BedtimeItem
     public void setAlarmItem(@Nullable AlarmClockItem item) {
         alarmItem = item;
     }
-    protected boolean loadAlarmItem(Context context, final ProgressListener<List<AlarmClockItem>, AlarmClockItem> onItemLoaded)
+    protected boolean loadAlarmItem(Context context, final ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemLoaded)
     {
         setAlarmItem(null);
         final Long alarmId = getAlarmID(context);

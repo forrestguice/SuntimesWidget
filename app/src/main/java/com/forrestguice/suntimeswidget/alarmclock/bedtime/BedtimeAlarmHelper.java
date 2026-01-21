@@ -37,7 +37,6 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -140,7 +139,7 @@ public class BedtimeAlarmHelper
         return alarmItem;
     }
 
-    public static void loadAlarmItem(Context context, @Nullable Long rowId, ProgressListener<List<AlarmClockItem>, AlarmClockItem> taskListener)
+    public static void loadAlarmItem(Context context, @Nullable Long rowId, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
     {
         if (rowId != null)
         {
