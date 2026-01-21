@@ -31,6 +31,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.View;
 
@@ -458,10 +460,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 WidgetSettingsExportTask.addWidgetMetadata(context);
                 SuntimesBackupTask task = (uri != null ? new SuntimesBackupTask(context, uri)
                         : new SuntimesBackupTask(context, SuntimesBackupTask.DEF_EXPORT_TARGET, true, true));  // export to external cache;
-                task.setTaskListener(exportListener);
                 task.includeInBackup(keys, checked);
                 task.setAppWidgetIds(getAllWidgetIds(context));
-                task.execute();
+                ExecutorUtils.runProgress("ExportSettingsTask", task, exportListener);
             }
         });
     }

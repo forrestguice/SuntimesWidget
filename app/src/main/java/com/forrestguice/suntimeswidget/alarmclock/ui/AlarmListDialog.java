@@ -96,6 +96,7 @@ import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressCallable;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
@@ -108,6 +109,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmListDialog extends DialogBase
@@ -583,8 +585,7 @@ public class AlarmListDialog extends DialogBase
                 }
                 exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
                 exportTask.setItems(items);
-                exportTask.setTaskListener(exportListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportAlarmsTask", exportTask, exportListener);
                 return true;
             } else return false;
         }
@@ -602,8 +603,7 @@ public class AlarmListDialog extends DialogBase
             {
                 exportTask = new AlarmClockItemExportTask(context, uri);    // export directly to uri
                 exportTask.setItems(items);
-                exportTask.setTaskListener(exportListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportAlarmsTask", exportTask, exportListener);
             }
         }
     }
@@ -620,6 +620,7 @@ public class AlarmListDialog extends DialogBase
     protected AlarmClockItemExportTask exportTask = null;
     private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
+        @Override
         public void onStarted()
         {
             setRetainInstance(true);
@@ -627,7 +628,7 @@ public class AlarmListDialog extends DialogBase
         }
 
         @Override
-        public void onFinished(AlarmClockItemExportTask.ExportResult results)
+        public void onFinished(ExportTask.ExportResult results)
         {
             setRetainInstance(false);
             exportTask = null;

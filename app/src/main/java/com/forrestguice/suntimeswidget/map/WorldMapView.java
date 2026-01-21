@@ -98,7 +98,7 @@ public class WorldMapView extends ImageView
         @Override
         public Executor getExecutor() {
             if (executor0 == null) {
-                executor0 = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+                executor0 = new ThreadPoolExecutor(0, 5, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
             }
             return executor0;
         }
@@ -589,7 +589,7 @@ public class WorldMapView extends ImageView
     private static WorldMapExportTask exportTask = null;
 
     public boolean isRecording() {
-        return (exportTask != null && !exportTask.isCancelled() && exportTask.getStatus() != AsyncTask.Status.FINISHED);
+        return (exportTask != null && !exportTask.isCancelled() && exportTask.getStatus() != ExportTask.Status.FINISHED);
     }
 
     public void shareBitmap()
@@ -597,13 +597,10 @@ public class WorldMapView extends ImageView
         if (bitmap != null)
         {
             exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
-            exportTask.setTaskListener(exportListener);
             exportTask.setBitmaps(new Bitmap[] { bitmap });
             exportTask.setWaitForFrames(animated);
             exportTask.setZippedOutput(animated);
-            if (Build.VERSION.SDK_INT >= 11) {
-                exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);   // executes in parallel to draw task
-            } else exportTask.execute();
+            ExecutorUtils.runProgress("ExportTask", getExecutor(), exportTask, exportListener);
 
         } else Log.w(LOGTAG, "shareBitmap: null!");
     }
@@ -672,7 +669,7 @@ public class WorldMapView extends ImageView
         super.onAttachedToWindow();
 
         if (exportTask != null && exportTask.isPaused()) {
-            exportTask.setTaskListener(exportListener);
+            //exportTask.setTaskListener(exportListener);
             exportTask.resumeTask();
             stopAnimation();
         }

@@ -73,7 +73,6 @@ import com.forrestguice.util.concurrent.SimpleProgressListener;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidResources;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.File;
@@ -1007,16 +1006,14 @@ public class PlacesListFragment extends DialogBase
             }
         }
         ExportPlacesTask task = new ExportPlacesTask(context, exportTarget, true, true);  // export to external cache
-        task.setTaskListener(exportPlacesListener);
-        task.execute();
+        ExecutorUtils.runProgress("ExportPlacesTask", task, exportPlacesListener);
     }
 
     public void exportPlaces(Context context, @NonNull Uri uri)
     {
         Log.i("exportPlaces", "Starting export task: " + uri);
         ExportPlacesTask task = new ExportPlacesTask(context, uri);
-        task.setTaskListener(exportPlacesListener);
-        task.execute();
+        ExecutorUtils.runProgress("ExportPlacesTask", task, exportPlacesListener);
     }
 
     private final ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()

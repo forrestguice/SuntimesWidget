@@ -530,8 +530,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 if (myParent != null)
                 {
                     exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true, true);  // export to external cache
-                    exportPlacesTask.setTaskListener(exportPlacesListener);
-                    exportPlacesTask.execute();
+                    ExecutorUtils.runProgress("ExportPlacesTask", exportPlacesTask, exportPlacesListener);
                     return true;
                 }
                 return false;
@@ -650,7 +649,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             if (isExporting && exportPlacesTask != null)
             {
                 exportPlacesTask.pauseTask();
-                exportPlacesTask.clearTaskListener();
+                //exportPlacesTask.clearTaskListener();
             }
 
             if (isBuilding && buildPlacesTask != null)
@@ -674,7 +673,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
             if (isExporting && exportPlacesTask != null)
             {
-                exportPlacesTask.setTaskListener(exportPlacesListener);
+                //exportPlacesTask.setTaskListener(exportPlacesListener);
                 showProgressExporting();
                 exportPlacesTask.resumeTask();
             }

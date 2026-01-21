@@ -446,13 +446,10 @@ public class LightGraphView extends ImageView
         if (bitmap != null)
         {
             LightGraphExportTask exportTask = new LightGraphExportTask(getContext(), "SuntimesLightGraph", true, true);
-            exportTask.setTaskListener(listener);
             exportTask.setBitmaps(new Bitmap[] { bitmap });
             exportTask.setWaitForFrames(animated);
             exportTask.setZippedOutput(animated);
-            if (Build.VERSION.SDK_INT >= 11) {
-                exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);   // executes in parallel to draw task
-            } else exportTask.execute();
+            ExecutorUtils.runProgress("ShareBitmapTask", getExecutor(), exportTask, listener);
 
         } else Log.w(LightGraphView.class.getSimpleName(), "shareBitmap: null!");
     }

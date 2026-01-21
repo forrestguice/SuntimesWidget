@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
@@ -34,6 +33,8 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -46,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("Convert2Diamond")
-public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
+public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgress, ExportTask.ExportResult>
 {
     public static String FILE_PROVIDER_AUTHORITY() {
         return BuildConfig.APPLICATION_ID + ".fileprovider";
@@ -150,17 +151,17 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
      * Runs before task begins.
      */
     @Override
-    protected void onPreExecute()
+    public void onPreExecute()
     {
+        super.onPreExecute();
         numEntries = 0;
-        signalStarted();
     }
 
     /**
      * doInBackground
      */
     @Override
-    protected ExportResult doInBackground(Object... params)
+    public ExportResult call() throws Exception
     {
         final Context context = contextRef.get();
         if (context == null)
@@ -276,16 +277,6 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     protected abstract boolean export(Context context, BufferedOutputStream out) throws IOException;
 
     protected void cleanup(Context context) {}
-
-    /**
-     * Runs after the task completes.
-     * @param results an ExportResult object wrapping the result
-     */
-    @Override
-    protected void onPostExecute(ExportResult results)
-    {
-        signalFinished(results);
-    }
 
     /**
      * Export Result
@@ -408,35 +399,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     /**
      * Task Listener
      */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( ExportResult result ) {}
-    }
-    @Nullable
-    protected TaskListener taskListener = null;
-    public void setTaskListener( @Nullable TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
-    }
-    private void signalStarted()
-    {
-        if (taskListener != null)
-        {
-            taskListener.onStarted();
-        }
-    }
-    private void signalFinished( ExportResult result )
-    {
-        if (taskListener != null)
-        {
-            taskListener.onFinished(result);
-        }
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<ExportProgress, ExportResult> {}
 
     /**
      */

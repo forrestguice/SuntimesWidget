@@ -1306,7 +1306,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (t_widgetPreview != null)
         {
             BitmapExportTask exportTask = new BitmapExportTask(context, "widget-preview", true, true);
-            exportTask.setTaskListener(new ExportTask.TaskListener()
+            ExportTask.TaskListener taskListener = new ExportTask.TaskListener()
             {
                 public void onStarted() {
                     showProgress(context, "", "");
@@ -1326,14 +1326,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                         Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
                     }
                 }
-            });
+            };
 
             Bitmap bitmap = Bitmap.createBitmap(t_widgetPreview.getWidth(), t_widgetPreview.getHeight(), Bitmap.Config.ARGB_8888);
             t_widgetPreview.draw(new Canvas(bitmap));
             exportTask.setBitmaps(new Bitmap[] { bitmap });
-            if (Build.VERSION.SDK_INT >= 11) {
-                exportTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else exportTask.execute();
+            ExecutorUtils.runProgress("SharePreviewTask", getExecutor().getExecutor(), exportTask, taskListener);
         }
     }
 
@@ -2530,18 +2528,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, exportTarget, true, true);  // export to external cache
-        task.setTaskListener(exportSettingsListener);
         task.setAppWidgetId(appWidgetId);
-        task.execute();
+        ExecutorUtils.runProgress("ExportSettingsTask", getExecutor().getExecutor(), task, exportSettingsListener);
     }
     public void exportSettings(Context context, @NonNull Uri uri)
     {
         Log.i("ExportSettings", "Starting export task: " + uri);
         saveSettings(context);
         WidgetSettingsExportTask task = new WidgetSettingsExportTask(context, uri);
-        task.setTaskListener(exportSettingsListener);
         task.setAppWidgetId(appWidgetId);
-        task.execute();
+        ExecutorUtils.runProgress("ExportSettingsTask", getExecutor().getExecutor(), task, exportSettingsListener);
     }
 
     private final WidgetSettingsExportTask.TaskListener exportSettingsListener = new WidgetSettingsExportTask.TaskListener()

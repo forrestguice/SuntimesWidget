@@ -380,8 +380,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             } else {
                 exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
                 exportTask.setDescriptors(themes);
-                exportTask.setTaskListener(exportThemesListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
                 return true;
             }
         }
@@ -411,8 +410,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             }
             exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
             exportTask.setDescriptors(WidgetThemes.values());
-            exportTask.setTaskListener(exportThemesListener);
-            exportTask.execute();
+            ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
             return true;
         } else return false;
     }
@@ -426,8 +424,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         Log.i("exportThemes", "Starting export with uri: " + uri);
         exportTask = new ExportThemesTask(context, uri);
         exportTask.setDescriptors(WidgetThemes.values());
-        exportTask.setTaskListener(exportThemesListener);
-        exportTask.execute();
+        ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
     }
 
     /**
@@ -826,7 +823,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (isExporting && exportTask != null)
         {
             exportTask.pauseTask();
-            exportTask.clearTaskListener();
+            //exportTask.clearTaskListener();
         }
 
         if (isImporting && importTask != null)
@@ -879,7 +876,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (isExporting && exportTask != null)
         {
             exportTask.setDescriptors(WidgetThemes.values());
-            exportTask.setTaskListener(exportThemesListener);
+            //exportTask.setTaskListener(exportThemesListener);
             showExportProgress();
             exportTask.resumeTask();
         }

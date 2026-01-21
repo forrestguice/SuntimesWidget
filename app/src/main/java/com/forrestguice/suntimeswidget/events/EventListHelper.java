@@ -589,8 +589,7 @@ public class EventListHelper
                 }
                 exportTask = new EventExportTask(context, exportTarget, true, true);    // export to external cache
                 exportTask.setItems(items);
-                exportTask.setTaskListener(exportListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportEventsTask", exportTask, exportListener);
                 return true;
             } else return false;
         }
@@ -608,8 +607,7 @@ public class EventListHelper
             {
                 exportTask = new EventExportTask(context, uri);    // export directly to uri
                 exportTask.setItems(items);
-                exportTask.setTaskListener(exportListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportEventTask", exportTask, exportListener);
             }
         }
     }
