@@ -26,13 +26,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * ProgressCallable
- * A Callable that may `signalProgress` during execution; use with `ExecutorUtils.runTask` and ProgressListener.
+ * A Callable that may `publishProgress` during execution; use with `ExecutorUtils.runTask` and ProgressListener.
  * @param <P> progress type
  * @param <T> return type
  * @see ProgressListener
  */
 public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInterface<P>
 {
+    public void onPreExecute() {}
+    public void onPostExecute(T result) {}
+    public void onProgressUpdate(Collection<P> progress) {}
+
     @Override
     public void publishProgress(P progress) {
         if (progressInterface != null) {
@@ -48,11 +52,8 @@ public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInt
     }
 
     protected AtomicBoolean isCancelled = new AtomicBoolean();
-    public void cancel(boolean mayInterruptIfRunning) {
+    public void cancel() {
         isCancelled.set(true);
-        if (mayInterruptIfRunning) {
-            Thread.currentThread().interrupt();
-        }
     }
     public boolean isCancelled() {
         return isCancelled.get();   //return Thread.currentThread().isInterrupted();
@@ -63,4 +64,13 @@ public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInt
     public void setProgressInterface(@Nullable ProgressInterface<P> value) {
         progressInterface = value;
     }
+
+    public static enum Status { PENDING, RUNNING, FINISHED }
+    synchronized public Status getStatus() {
+        return status;
+    }
+    synchronized public void setStatus(Status value) {
+        status = value;
+    }
+    protected Status status = Status.FINISHED;
 }

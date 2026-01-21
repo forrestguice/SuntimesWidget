@@ -115,54 +115,109 @@ public class ExecutorUtils
         {
             @Override
             public void publishProgress(P progress) {
-                postProgress(handler, listeners, Collections.singletonList(progress));
+                postProgress(handler, callable, listeners, Collections.singletonList(progress));
             }
             @Override
             public void publishProgress(Collection<P> progress) {
-                postProgress(handler, listeners, progress);
+                postProgress(handler, callable, listeners, progress);
             }
         });
-        runTask(tag, handler, callable, listeners);
+
+        callable.setStatus(ProgressCallable.Status.PENDING);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                final T result;
+                try {
+                    //Log.d("DEBUG", "runProgress: RUNNING " + callable.toString());
+                    callable.setStatus(ProgressCallable.Status.RUNNING);
+                    if (!callable.isCancelled())
+                    {
+                        postCallback(handler, new HandlerCallback() {
+                            @Override
+                            public void post() {
+                                callable.onPreExecute();
+                                for (TaskListener<T> listener : listeners) {
+                                    listener.onStarted();
+                                }
+                            }
+                        });
+                    }
+                    result = (callable.isCancelled() ? null : callable.call());
+                    if (!callable.isCancelled())
+                    {
+                        postCallback(handler, new HandlerCallback()
+                        {
+                            @Override
+                            public void post()
+                            {
+                                callable.onPostExecute(result);
+                                for (TaskListener<T> listener : listeners) {
+                                    listener.onFinished(result);
+                                }
+                            }
+                        });
+                    }
+                    callable.setStatus(ProgressCallable.Status.FINISHED);
+                    //Log.d("DEBUG", "runProgress: FINISHED " + callable.toString());
+
+                } catch (Exception e) {
+                    Log.e(tag, "runTask: failed! " + e);
+                }
+            }
+        });
     }
 
-    private static <T,C extends TaskListener<T>> void postStarted(@NonNull TaskHandler handler, @Nullable Collection<C> listeners)
+    private interface HandlerCallback {
+        void post();
+    }
+    private static <T,A> void postCallback(@NonNull TaskHandler handler, @Nullable HandlerCallback callback)
     {
-        if (handler != null && listeners != null) {
+        if (handler != null && callback != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    for (TaskListener<T> listener : listeners) {
-                        listener.onStarted();
-                    }
+                    callback.post();
                 }
             });
         }
+    }
+    private static <T,C extends TaskListener<T>> void postStarted(@NonNull TaskHandler handler, @Nullable Collection<C> listeners)
+    {
+        postCallback(handler, new HandlerCallback() {
+            @Override
+            public void post() {
+                for (TaskListener<T> listener : listeners) {
+                    listener.onStarted();
+                }
+            }
+        });
     }
     private static <T,C extends TaskListener<T>> void postFinished(@NonNull TaskHandler handler, T result, @Nullable Collection<C> listeners)
     {
-        if (handler != null && listeners != null) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    for (TaskListener<T> listener : listeners) {
-                        listener.onFinished(result);
-                    }
+        postCallback(handler, new HandlerCallback() {
+            @Override
+            public void post() {
+                for (TaskListener<T> listener : listeners) {
+                    listener.onFinished(result);
                 }
-            });
-        }
+            }
+        });
     }
-    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, @Nullable Collection<C> listeners, Collection<P> progress)
+    private static <T,P,C extends ProgressListener<T,P>> void postProgress(@NonNull TaskHandler handler, ProgressCallable<P,T> callable, @Nullable Collection<C> listeners, Collection<P> progress)
     {
-        if (handler != null && listeners != null) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    for (ProgressListener<T,P> listener : listeners) {
-                        listener.onProgressUpdate(progress);
-                    }
+        postCallback(handler, new HandlerCallback() {
+            @Override
+            public void post() {
+                callable.onProgressUpdate(progress);
+                for (ProgressListener<T,P> listener : listeners) {
+                    listener.onProgressUpdate(progress);
                 }
-            });
-        }
+            }
+        });
     }
 
     /**
