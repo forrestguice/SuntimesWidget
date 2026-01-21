@@ -36,9 +36,11 @@ import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.ExecutorProvider;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -76,14 +78,21 @@ public class LightMapView extends ImageView
         init(context);
     }
 
-    private ExecutorService executor;
-    protected ExecutorService getExecutor() {
-        if (executor == null) {
-            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    private ExecutorProvider executor = new ExecutorProvider()
+    {
+        private Executor executor0;
+        @Override
+        public Executor getExecutor() {
+            if (executor0 == null) {
+                executor0 = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+            }
+            return executor0;
         }
-        return executor;
+    };
+    protected Executor getExecutor() {
+        return executor.getExecutor();
     }
-    public void setExecutor(@NonNull ExecutorService value) {
+    public void setExecutor(@NonNull ExecutorProvider value) {
         executor = value;
     }
 

@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -54,7 +53,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
-import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -118,6 +116,7 @@ import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.ExecutorProvider;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
@@ -126,6 +125,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -182,6 +183,21 @@ public class LightMapDialog extends BottomSheetDialogBase
         Bundle args = new Bundle();
         args.putLong(ARG_DATETIME, -1);
         setArguments(args);
+    }
+
+    private final ExecutorProvider executor = new ExecutorProvider()
+    {
+        private Executor executor0;
+        @Override
+        public Executor getExecutor() {
+            if (executor0 == null) {
+                executor0 = Executors.newCachedThreadPool();
+            }
+            return executor0;
+        }
+    };
+    protected Executor getExecutor() {
+        return executor.getExecutor();
     }
 
     public void showPositionAt(@Nullable Long datetime)
@@ -477,6 +493,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         if (graphView != null)
         {
+            graphView.setExecutor(executor);
             boolean showGraph = WorldMapWidgetSettings.loadWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, DEF_KEY_LIGHTMAP_SHOWGRAPH);
             resizeLightMapView(context, showGraph);
             graphView.setVisibility(showGraph ? View.VISIBLE : View.GONE);
@@ -490,6 +507,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         if (lightmap != null)
         {
+            lightmap.setExecutor(executor);
             lightmap.setMapTaskListener(new LightMapTaskListener()
             {
                 @Override
