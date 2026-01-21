@@ -142,6 +142,7 @@ import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.ExecutorProvider;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
@@ -151,6 +152,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -470,7 +472,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
-        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -479,7 +480,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun2x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
-        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -488,7 +488,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun3x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun3x1.values());
-        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -3669,12 +3668,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Nullable
-    private ExecutorService executor = null;
-    @NonNull
-    protected ExecutorService getExecutor() {
-        if (executor == null) {
-            executor = new ThreadPoolExecutor(0, 9, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    private static final ExecutorProvider executor = new ExecutorProvider()
+    {
+        private ExecutorService executor0 = null;
+        @Override
+        public Executor getExecutor() {
+            if (executor0 == null || executor0.isShutdown()) {
+                executor0 = Executors.newCachedThreadPool();
+            }
+            return executor0;
         }
+    };
+    @NonNull
+    public static ExecutorProvider getExecutor() {
         return executor;
     }
 
@@ -3715,18 +3721,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         protected void initPreview(Context context) {
-            preview = new WidgetThemePreview(context, appWidgetId_preview());
-            preview.setExecutor(getExecutor());
+            preview = new WidgetThemePreview(context, getExecutor(), appWidgetId_preview());
             preview.setShowTitle(false);
         }
-
-        public void setExecutor(ExecutorService value) {
-            executor = value;
-        }
-        protected ExecutorService getExecutor() {
-            return executor;
-        }
-        private ExecutorService executor = null;
 
         public void updateAdapter(Context context)
         {

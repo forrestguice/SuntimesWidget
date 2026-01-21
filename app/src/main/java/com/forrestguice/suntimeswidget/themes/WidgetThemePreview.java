@@ -90,6 +90,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.ExecutorProvider;
 import com.forrestguice.util.concurrent.TaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -118,7 +119,8 @@ import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DE
 
 public class WidgetThemePreview
 {
-    public WidgetThemePreview(Context context, int appWidgetId) {
+    public WidgetThemePreview(@NonNull Context context, @NonNull ExecutorProvider executor, int appWidgetId) {
+        this.executor = executor;
         initLocale(context);
         initData(context, appWidgetId);
     }
@@ -156,17 +158,11 @@ public class WidgetThemePreview
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
 
-    @Nullable
-    private ExecutorService executor;
-    public void setExecutor(@Nullable ExecutorService value) {
-        executor = value;
-    }
     @NonNull
-    protected ExecutorService getExecutor() {
-        if (executor == null) {
-            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-        }
-        return executor;
+    private final ExecutorProvider executor;
+    @NonNull
+    protected Executor getExecutor() {
+        return executor.getExecutor();
     }
 
     protected void initLocale(Context context) {
@@ -620,7 +616,6 @@ public class WidgetThemePreview
                         @Override
                         public void run() {
                             ExecutorUtils.runProgress("WidgetThemePreview1", getExecutor(), handler, drawTask, drawTaskListener);
-                            executor.shutdown();
                         }
                     });
                 }

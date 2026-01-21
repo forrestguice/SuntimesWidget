@@ -105,6 +105,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -253,7 +254,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     @NonNull
     protected ExecutorService getExecutor() {
         if (executor == null) {
-            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+            executor = Executors.newCachedThreadPool();
         }
         return executor;
     }
