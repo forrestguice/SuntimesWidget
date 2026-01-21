@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
@@ -98,6 +99,9 @@ import java.util.Collections;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
@@ -151,6 +155,19 @@ public class WidgetThemePreview
     private SuntimesCalculator.MoonPosition moonPosition = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
+
+    @Nullable
+    private ExecutorService executor;
+    public void setExecutor(@Nullable ExecutorService value) {
+        executor = value;
+    }
+    @NonNull
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(0, 3, 30L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        }
+        return executor;
+    }
 
     protected void initLocale(Context context) {
         AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay());
@@ -507,21 +524,22 @@ public class WidgetThemePreview
             options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
             options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
 
-            LineGraphTask drawTask = new LineGraphTask(context);
-            drawTask.setListener(new LineGraphTaskListener()
+            int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
+            int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+
+            LineGraphTask drawTask = new LineGraphTask(context, new Object[] { data0, widthPx, heightPx, options });
+            LineGraphTaskListener taskListener = new LineGraphTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result) {
                     super.onFinished(result);
                     view.setImageBitmap(result);
                 }
-            });
-
-            int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
-            int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
-            view.setMinimumWidth(widthPx);
-            view.setMinimumHeight(heightPx);
-            drawTask.execute(data0, widthPx, heightPx, options);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemePreview3", getExecutor(), drawTask, taskListener);
         }
     }
 

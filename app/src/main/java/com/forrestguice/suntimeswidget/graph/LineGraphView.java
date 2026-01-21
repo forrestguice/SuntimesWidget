@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -35,6 +36,10 @@ import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class LineGraphView extends ImageView
 {
@@ -62,6 +67,17 @@ public class LineGraphView extends ImageView
     {
         super(context, attribs);
         init(context);
+    }
+
+    private ExecutorService executor;
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(0, 3, 15L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        }
+        return executor;
+    }
+    public void setExecutor(@NonNull ExecutorService value) {
+        executor = value;
     }
 
     /**
@@ -155,10 +171,10 @@ public class LineGraphView extends ImageView
     {
         setData(data);
 
-        if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (drawTask != null && drawTask.getStatus() == LineGraphTask.Status.RUNNING)
         {
             Log.w(LineGraphView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(LineGraphView.this.hashCode())  +  ") .. restarting task.");
-            drawTask.cancel(true);
+            drawTask.cancel();
         } // else Log.d(LineGraphView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
@@ -166,14 +182,9 @@ public class LineGraphView extends ImageView
             return;
         }
 
-        drawTask = new LineGraphTask(getContext());
+        drawTask = new LineGraphTask(getContext(), new Object[] { data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes } );
         drawTask.setListener(drawTaskListener);
-
-        if (Build.VERSION.SDK_INT >= 11) {
-            drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
-        } else {
-            drawTask.execute(data, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetMinutes);
-        }
+        ExecutorUtils.runProgress("LineGraphTask", getExecutor(), drawTask, drawTaskListener);
     }
 
     private final LineGraphTaskListener drawTaskListener = new LineGraphTaskListener() {
@@ -258,7 +269,7 @@ public class LineGraphView extends ImageView
         //Log.d(LineGraphView.class.getSimpleName(), "stopAnimation");
         animated = false;
         if (drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -302,7 +313,7 @@ public class LineGraphView extends ImageView
         super.onDetachedFromWindow();
         if (drawTask != null) {
             //Log.d(LineGraphView.class.getSimpleName(), "onDetachedFromWindow: cancel task " + Integer.toHexString(LineGraphView.this.hashCode()));
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -312,7 +323,7 @@ public class LineGraphView extends ImageView
         super.onVisibilityChanged(view, visibility);
         //Log.d("DEBUG", "onVisibilityChanged: " + visibility);
         if (visibility != View.VISIBLE && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -322,7 +333,7 @@ public class LineGraphView extends ImageView
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 

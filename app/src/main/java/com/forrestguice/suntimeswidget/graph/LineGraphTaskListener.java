@@ -21,13 +21,20 @@ package com.forrestguice.suntimeswidget.graph;
 import android.graphics.Bitmap;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.util.concurrent.ProgressListener;
+
+import java.util.Collection;
 
 @SuppressWarnings("EmptyMethod")
-public abstract class LineGraphTaskListener
+public abstract class LineGraphTaskListener implements ProgressListener<Bitmap, Bitmap>
 {
+    @Override
     public void onStarted() {}
     public void onDataModified(SuntimesRiseSetDataset data) {}
     public void onFrame(Bitmap frame, long offsetMinutes) {}
     public void afterFrame(Bitmap frame, long offsetMinutes) {}
+    @Override
     public void onFinished(Bitmap result) {}
+    @Override
+    public void onProgressUpdate(Collection<Bitmap> values) {}
 }

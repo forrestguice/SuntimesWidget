@@ -25,30 +25,41 @@ import android.os.AsyncTask;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.util.Log;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.Collection;
 
-public class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
+public class LineGraphTask extends ProgressCallable<Bitmap, Bitmap>
 {
     private final WeakReference<Context> contextRef;
     protected final LineGraphBitmap graph = new LineGraphBitmap();
 
     @Nullable
     private SuntimesRiseSetDataset t_data = null;
-
-    public LineGraphTask(Context context) {
-        contextRef = new WeakReference<>(context);
-    }
+    private final Object[] params;
 
     /**
      * @param params 0: SuntimesRiseSetDataset,
      *               1: Integer (width),
      *               2: Integer (height)
+     *               3: LineGraphOptions
+     *               4: numFrames (optional: 1)
+     *               5; initialOffset (millis) (optional: 0)
+     */
+    public LineGraphTask(Context context, Object[] params)
+    {
+        contextRef = new WeakReference<>(context);
+        this.params = params;
+    }
+
+    /**
      * @return a bitmap, or null params are invalid
      */
+
     @Override
-    protected Bitmap doInBackground(Object... params)
+    public Bitmap call() throws Exception
     {
         int w, h;
         int numFrames = 1;
@@ -127,16 +138,9 @@ public class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Override
-    protected void onPreExecute()
+    public void onProgressUpdate( Collection<Bitmap> frames0 )
     {
-        if (listener != null) {
-            listener.onStarted();
-        }
-    }
-
-    @Override
-    protected void onProgressUpdate( Bitmap... frames )
-    {
+        super.onProgressUpdate(frames0);
         if (listener != null)
         {
             if (t_data != null) {
@@ -145,6 +149,7 @@ public class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
             LineGraphOptions options = graph.getOptions();
             if (options != null) {
+                Bitmap[] frames = frames0.toArray(new Bitmap[0]);
                 for (int i = 0; i < frames.length; i++) {
                     listener.onFrame(frames[i], options.offsetMinutes);
                 }
@@ -153,8 +158,9 @@ public class LineGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Override
-    protected void onPostExecute( Bitmap lastFrame )
+    public void onPostExecute( Bitmap lastFrame )
     {
+        super.onPostExecute(lastFrame);
         if (isCancelled()) {
             lastFrame = null;
         }
