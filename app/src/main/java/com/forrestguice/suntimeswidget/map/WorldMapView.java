@@ -56,11 +56,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class WorldMapView extends ImageView
 {
     public static final String LOGTAG = "WorldMap";
     public static final int DEFAULT_MAX_UPDATE_RATE = 1000;  // ms value; once a second
+
+    private final ExecutorService executor = new ThreadPoolExecutor(0, 3, 15L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 
     private WorldMapTask drawTask;
     private WorldMapOptions options;
@@ -429,7 +435,7 @@ public class WorldMapView extends ImageView
             drawTask.setListener(drawListener);
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
-            ExecutorUtils.runProgress("WorldMapView", drawTask, drawListener);
+            ExecutorUtils.runProgress("WorldMapView", executor, drawTask, drawListener);
             //drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
 
             options.modified = false;

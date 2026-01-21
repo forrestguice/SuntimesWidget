@@ -47,6 +47,9 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.suntimeswidget.graph.LightGraphDialog.MAPTAG_LIGHTGRAPH;
 import static com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues.COLOR_SUN_FILL;
@@ -84,6 +87,7 @@ public class LightGraphView extends ImageView
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
+    private final ExecutorService executor = new ThreadPoolExecutor(0, 3, 15L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
     private LightGraphTask drawTask = null;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
@@ -273,13 +277,7 @@ public class LightGraphView extends ImageView
         drawTask = new LightGraphTask(new Object[] { data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays } );
         drawTask.setData(data);
         drawTask.setListener(drawTaskListener);
-
-        ExecutorUtils.runProgress("LightGraphTask", drawTask, drawTaskListener);
-        //if (Build.VERSION.SDK_INT >= 11) {
-        //    drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
-        //} else {
-        //    drawTask.execute(data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
-        //}
+        ExecutorUtils.runProgress("LightGraphTask", executor, drawTask, drawTaskListener);
     }
 
     private final LightGraphTaskListener drawTaskListener = new LightGraphTaskListener() {
