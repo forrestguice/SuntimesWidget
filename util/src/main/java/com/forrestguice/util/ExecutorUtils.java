@@ -121,6 +121,14 @@ public class ExecutorUtils
         executor.shutdown();
     }
     public static <T, P, C extends ProgressCallable<P,T>,
+            L extends ProgressListener<T,P>> void runProgress(@NonNull Executor executor, C callable, L listener) {
+        runProgress("ProgressTask", executor, getHandler(), callable, Collections.singletonList(listener));
+    }
+    public static <T, P, C extends ProgressCallable<P,T>,
+            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, C callable, L listener) {
+        runProgress(tag, executor, getHandler(), callable, Collections.singletonList(listener));
+    }
+    public static <T, P, C extends ProgressCallable<P,T>,
             L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, L listener) {
         runProgress(tag, executor, handler, callable, Collections.singletonList(listener));
     }
