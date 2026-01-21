@@ -45,6 +45,7 @@ import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
@@ -87,7 +88,10 @@ public class LightGraphView extends ImageView
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
 
-    private final ExecutorService executor = new ThreadPoolExecutor(0, 3, 15L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    private final ExecutorService executor = new ThreadPoolExecutor(0, 5, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    protected Executor getExecutor() {
+        return executor;
+    }
     private LightGraphTask drawTask = null;
 
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
@@ -277,7 +281,7 @@ public class LightGraphView extends ImageView
         drawTask = new LightGraphTask(new Object[] { data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays } );
         drawTask.setData(data);
         drawTask.setListener(drawTaskListener);
-        ExecutorUtils.runProgress("LightGraphTask", executor, drawTask, drawTaskListener);
+        ExecutorUtils.runProgress("LightGraphTask", getExecutor(), drawTask, drawTaskListener);
     }
 
     private final LightGraphTaskListener drawTaskListener = new LightGraphTaskListener() {
