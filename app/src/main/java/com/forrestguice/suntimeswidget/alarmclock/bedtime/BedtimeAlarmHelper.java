@@ -57,7 +57,7 @@ public class BedtimeAlarmHelper
         final long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)
@@ -190,7 +190,7 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE && enabled)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)
@@ -227,7 +227,7 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)

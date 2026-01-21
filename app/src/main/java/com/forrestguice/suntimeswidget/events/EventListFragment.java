@@ -272,7 +272,7 @@ public class EventListFragment extends DialogBase
     /**
      * ImportListener
      */
-    private final ProgressListener<EventAlias, EventImportTask.TaskResult> importListener = new SimpleProgressListener<EventImportTask.TaskResult, EventAlias>()
+    private final ProgressListener<EventAlias, EventImportTask.TaskResult> importListener = new SimpleProgressListener<EventAlias, EventImportTask.TaskResult>()
     {
         @Override
         public void onStarted() {

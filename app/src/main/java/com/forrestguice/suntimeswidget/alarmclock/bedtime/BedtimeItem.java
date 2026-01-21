@@ -66,7 +66,7 @@ public class BedtimeItem
         final Long alarmId = getAlarmID(context);
         if (alarmId != null && alarmId != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)

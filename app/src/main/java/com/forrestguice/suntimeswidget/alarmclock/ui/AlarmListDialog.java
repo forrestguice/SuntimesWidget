@@ -814,7 +814,7 @@ public class AlarmListDialog extends DialogBase
         }
     }
 
-    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onListLoaded = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onListLoaded = new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
     {
         @Override
         public void onFinished(List<AlarmClockItem> data)
@@ -826,7 +826,7 @@ public class AlarmListDialog extends DialogBase
         }
     };
 
-    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemChanged = new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+    protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemChanged = new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
     {
         @Override
         public void onFinished(List<AlarmClockItem> data)

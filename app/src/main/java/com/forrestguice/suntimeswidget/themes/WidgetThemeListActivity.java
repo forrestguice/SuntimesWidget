@@ -462,7 +462,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    private final ProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult> importThemesListener = new SimpleProgressListener<ImportThemesTask.ImportThemesResult, SuntimesTheme>()
+    private final ProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult> importThemesListener = new SimpleProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult>()
     {
         public void onStarted()
         {

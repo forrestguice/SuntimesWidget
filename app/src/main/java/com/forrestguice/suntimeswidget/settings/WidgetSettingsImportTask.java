@@ -204,7 +204,7 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
         }
     }
 
-    public static abstract class TaskListener extends SimpleProgressListener<TaskResult, ContentValues> {}
+    public static abstract class TaskListener extends SimpleProgressListener<ContentValues, TaskResult> {}
 
     /**
      * ContentValuesJson

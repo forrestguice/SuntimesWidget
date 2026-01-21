@@ -1195,7 +1195,7 @@ public class PlacesListFragment extends DialogBase
             return result;
         }
 
-        public static class PlacesListTaskListener extends SimpleProgressListener<List<PlaceItem>, PlaceItem> {}
+        public static class PlacesListTaskListener extends SimpleProgressListener<PlaceItem, List<PlaceItem>> {}
     }
 
     /**

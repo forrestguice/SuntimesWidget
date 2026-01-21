@@ -25,7 +25,6 @@ import android.service.quicksettings.Tile;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeAlarmHelper;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
@@ -88,7 +87,7 @@ public class BedtimeTileService extends SuntimesTileService
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)

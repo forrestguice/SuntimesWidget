@@ -169,7 +169,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
     /**
      * TaskListener
      */
-    public static abstract class TaskListener extends SimpleProgressListener<TaskResult, AlarmClockItem> {}
+    public static abstract class TaskListener extends SimpleProgressListener<AlarmClockItem, TaskResult> {}
 
     /**
      * AlarmClockItemJson

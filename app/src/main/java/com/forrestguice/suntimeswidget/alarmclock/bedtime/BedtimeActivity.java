@@ -48,7 +48,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -240,7 +239,7 @@ public class BedtimeActivity extends AppCompatActivity
                             list.notifyItemChanged(position);
                             continue;
                         }
-                        item.loadAlarmItem(this, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+                        item.loadAlarmItem(this, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
                         {
                             @Override
                             public void onFinished(List<AlarmClockItem> result) {

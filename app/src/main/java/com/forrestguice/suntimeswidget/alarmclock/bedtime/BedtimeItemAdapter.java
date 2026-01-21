@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -216,7 +215,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         final BedtimeItem item = getItem(position);
         if (item != null && item.getAlarmItem() == null)
         {
-            item.loadAlarmItem(context, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            item.loadAlarmItem(context, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result) {
@@ -250,7 +249,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         {
             final long id = i;
             BedtimeItem item = items.get(i);
-            item.loadAlarmItem(context, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            item.loadAlarmItem(context, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)

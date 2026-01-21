@@ -23,7 +23,7 @@ import java.util.Collection;
 /**
  * @see ProgressListener
  */
-public class SimpleProgressListener<T,P> implements ProgressListener<P, T>
+public class SimpleProgressListener<P, T> implements ProgressListener<P, T>
 {
     @Override
     public void onStarted() {}

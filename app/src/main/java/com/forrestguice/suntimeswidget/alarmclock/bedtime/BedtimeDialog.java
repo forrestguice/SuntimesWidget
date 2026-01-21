@@ -52,7 +52,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
@@ -728,7 +727,7 @@ public class BedtimeDialog extends DialogBase
         if (wakeupId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)
@@ -760,7 +759,7 @@ public class BedtimeDialog extends DialogBase
         if (rowId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)
@@ -806,7 +805,7 @@ public class BedtimeDialog extends DialogBase
             scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
 
         } else {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
                 public void onFinished(List<AlarmClockItem> result)
@@ -883,7 +882,7 @@ public class BedtimeDialog extends DialogBase
         if (rowID == BedtimeSettings.ID_NONE) {
             return false;
         }
-        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<List<AlarmClockItem>, AlarmClockItem>()
+        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
         {
             @Override
             public void onFinished(List<AlarmClockItem> result)
