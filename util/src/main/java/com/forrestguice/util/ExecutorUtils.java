@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -62,17 +63,22 @@ public class ExecutorUtils
      * @param listener TaskListener
      */
     public static <T, C extends Callable<T>,
-            L extends TaskListener<T>> void runTask(C callable, L listener) {
-        runTask("Task", getHandler(), callable, Collections.singletonList(listener));
-    }
-    public static <T, C extends Callable<T>,
-            L extends TaskListener<T>> void runTask(String tag, C callable, L listener) {
-        runTask(tag, getHandler(), callable, Collections.singletonList(listener));
-    }
-    public static <T, C extends Callable<T>,
-            L extends TaskListener<T>> void runTask(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
+            L extends TaskListener<T>> void runTask(C callable, L listener)
     {
         ExecutorService executor = Executors.newSingleThreadExecutor();
+        runTask("Task", executor, getHandler(), callable, Collections.singletonList(listener));
+        executor.shutdown();
+    }
+    public static <T, C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, C callable, L listener)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runTask(tag, executor, getHandler(), callable, Collections.singletonList(listener));
+        executor.shutdown();
+    }
+    public static <T, C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
+    {
         executor.execute(new Runnable()
         {
             @Override
@@ -101,15 +107,25 @@ public class ExecutorUtils
      * @param listener ProgressListener
      */
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(C callable, L listener) {
-        runProgress("ProgressTask", getHandler(), callable, Collections.singletonList(listener));
+            L extends ProgressListener<T,P>> void runProgress(C callable, L listener)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runProgress("ProgressTask", executor, getHandler(), callable, Collections.singletonList(listener));
+        executor.shutdown();
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, C callable, L listener) {
-        runProgress(tag, getHandler(), callable, Collections.singletonList(listener));
+            L extends ProgressListener<T,P>> void runProgress(String tag, C callable, L listener)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runProgress(tag, executor, getHandler(), callable, Collections.singletonList(listener));
+        executor.shutdown();
     }
     public static <T, P, C extends ProgressCallable<P,T>,
-            L extends ProgressListener<T,P>> void runProgress(String tag, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
+            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, L listener) {
+        runProgress(tag, executor, handler, callable, Collections.singletonList(listener));
+    }
+    public static <T, P, C extends ProgressCallable<P,T>,
+            L extends ProgressListener<T,P>> void runProgress(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         callable.setProgressInterface(new ProgressInterface<P>()
         {
@@ -124,7 +140,6 @@ public class ExecutorUtils
         });
 
         callable.setStatus(ProgressCallable.Status.PENDING);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable()
         {
             @Override
@@ -165,7 +180,7 @@ public class ExecutorUtils
                     //Log.d("DEBUG", "runProgress: FINISHED " + callable.toString());
 
                 } catch (Exception e) {
-                    Log.e(tag, "runTask: failed! " + e);
+                    Log.e(tag, "runProgress: failed! " + e);
                 }
             }
         });
@@ -225,10 +240,18 @@ public class ExecutorUtils
      * @param tag tag
      * @param r Runnable
      */
-    public static void runTask(String tag, @NonNull final Runnable r)
-    {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+    public static void runTask(String tag, @NonNull Executor executor, @NonNull final Runnable r) {
         executor.execute(r);
+    }
+    public static void runTask(String tag, @NonNull final Runnable r) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runTask(tag, executor, r);
+        executor.shutdown();
+    }
+    public static void runTask(@NonNull final Runnable r) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runTask("Runnable", executor, r);
+        executor.shutdown();
     }
 
     /**
