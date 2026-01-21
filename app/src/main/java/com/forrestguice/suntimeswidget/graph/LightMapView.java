@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 
 import android.view.View;
 
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -37,6 +38,11 @@ import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -68,6 +74,17 @@ public class LightMapView extends ImageView
     {
         super(context, attribs);
         init(context);
+    }
+
+    private ExecutorService executor;
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        }
+        return executor;
+    }
+    public void setExecutor(@NonNull ExecutorService value) {
+        executor = value;
     }
 
     public void setUseMainThread(boolean value) {
@@ -175,11 +192,11 @@ public class LightMapView extends ImageView
         setData(data);
         //Log.d("DEBUG", "updateViews: " + data.dataActual.sunsetCalendarToday().get(Calendar.DAY_OF_YEAR));
 
-        if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (drawTask != null && drawTask.getStatus() == LightMapTask.Status.RUNNING)
         {
             //Log.d("DEBUG", "updateViews: canceling existing task..");
             //Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(getColors().hashCode())  +  ") .. restarting task.");
-            drawTask.cancel(true);
+            drawTask.cancel();
         } //else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         if (getWidth() == 0 || getHeight() == 0) {
@@ -195,9 +212,9 @@ public class LightMapView extends ImageView
             drawTaskListener.onFinished(b);
 
         } else {
-            drawTask = new LightMapTask(getContext());
+            drawTask = new LightMapTask(getContext(), new Object[] { data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes });
             drawTask.setListener(drawTaskListener);
-            drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
+            ExecutorUtils.runProgress("LightMapTask", getExecutor(), drawTask, drawTaskListener);
         }
     }
 
@@ -283,7 +300,7 @@ public class LightMapView extends ImageView
         //Log.d(LightMapView.class.getSimpleName(), "stopAnimation");
         animated = false;
         if (drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -328,7 +345,7 @@ public class LightMapView extends ImageView
         super.onDetachedFromWindow();
         if (drawTask != null) {
             //Log.d("DEBUG", "onDetachedFromWindow: cancel task :: view-" + Integer.toHexString(getColors().hashCode()));
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -338,7 +355,7 @@ public class LightMapView extends ImageView
         super.onVisibilityChanged(view, visibility);
         //Log.d("DEBUG", "onVisibilityChanged: " + visibility);
         if (visibility != View.VISIBLE && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -348,7 +365,7 @@ public class LightMapView extends ImageView
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 

@@ -164,7 +164,7 @@ public class WidgetThemePreview
     @NonNull
     protected ExecutorService getExecutor() {
         if (executor == null) {
-            executor = new ThreadPoolExecutor(0, 3, 30L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
         }
         return executor;
     }
@@ -339,8 +339,8 @@ public class WidgetThemePreview
             colors.setOption_drawNow(SunSymbol.valueOfOrNull(WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_GRAPH_SUNSYMBOL, LightMapOptions.MAPTAG_LIGHTMAP, PREF_DEF_GRAPH_SUNSYMBOL.name())));
             colors.option_drawNoon = WorldMapWidgetSettings.loadWorldMapPref(context, 0, LightMapDialog.PREF_KEY_GRAPH_SHOWNOON, LightMapOptions.MAPTAG_LIGHTMAP, LightMapDialog.DEF_KEY_GRAPH_SHOWNOON);
 
-            LightMapTask drawTask = new LightMapTask(view.getContext());
-            drawTask.setListener(new LightMapTaskListener()
+
+            LightMapTaskListener taskListener = new LightMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
@@ -348,13 +348,16 @@ public class WidgetThemePreview
                     super.onFinished(result);
                     view.setImageBitmap(result);
                 }
-            });
+            };
 
             int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
             int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
             view.setMinimumWidth(widthPx);
             view.setMinimumHeight(heightPx);
-            drawTask.execute(data0, widthPx, heightPx, colors);
+
+            LightMapTask drawTask = new LightMapTask(view.getContext(), new Object[] { data0, widthPx, heightPx, colors });
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemePreview", getExecutor(), drawTask, taskListener);
         }
     }
 

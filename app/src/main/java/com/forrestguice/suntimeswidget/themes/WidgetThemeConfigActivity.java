@@ -104,6 +104,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
@@ -243,6 +247,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorBackground;
 
     private ViewFlipper preview;
+
+    @Nullable
+    private ExecutorService executor = null;
+    @NonNull
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(0, 3, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        }
+        return executor;
+    }
 
     private static final SuntimesUtils utils = new SuntimesUtils();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
@@ -862,8 +876,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapTask drawTask = new LightMapTask(view.getContext());
-            drawTask.setListener(new LightMapTaskListener()
+            LightMapTask drawTask = new LightMapTask(view.getContext(), new Object[] { data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), colors });
+            LightMapTaskListener taskListener = new LightMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
@@ -871,8 +885,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     super.onFinished(result);
                     view.setImageBitmap(result);
                 }
-            });
-            drawTask.execute(data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), colors);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemeConfig", getExecutor(), drawTask, taskListener);
         }
     }
 
