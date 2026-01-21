@@ -108,6 +108,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetModeMoon1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon1x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -138,6 +139,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetModeMoon2x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon2x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -154,6 +156,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetModeMoon3x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon3x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts1);
         adapter.setThemeValues(themeValues);
         return adapter;

@@ -154,6 +154,9 @@ import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.forrestguice.suntimeswidget.events.EventListActivity.PICK_EVENT_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
@@ -467,6 +470,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -475,6 +479,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun2x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -483,6 +488,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected WidgetModeAdapter createAdapter_widgetModeSun3x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun3x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -3662,6 +3668,18 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Nullable
+    private ExecutorService executor = null;
+    @NonNull
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(0, 9, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        }
+        return executor;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * WidgetLayoutAdapter
      */
@@ -3698,8 +3716,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         protected void initPreview(Context context) {
             preview = new WidgetThemePreview(context, appWidgetId_preview());
+            preview.setExecutor(getExecutor());
             preview.setShowTitle(false);
         }
+
+        public void setExecutor(ExecutorService value) {
+            executor = value;
+        }
+        protected ExecutorService getExecutor() {
+            return executor;
+        }
+        private ExecutorService executor = null;
 
         public void updateAdapter(Context context)
         {

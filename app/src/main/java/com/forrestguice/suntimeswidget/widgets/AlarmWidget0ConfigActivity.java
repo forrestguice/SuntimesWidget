@@ -208,6 +208,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, AlarmWidgetSettings.WidgetModeAlarm1x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -250,6 +251,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode2x2()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, AlarmWidgetSettings.WidgetModeAlarm2x2.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;
@@ -270,6 +272,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, AlarmWidgetSettings.WidgetModeAlarm3x2.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;

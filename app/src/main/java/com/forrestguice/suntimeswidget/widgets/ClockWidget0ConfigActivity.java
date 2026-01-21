@@ -198,6 +198,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, ClockWidgetSettings.WidgetModeClock1x1.values());
+        adapter.setExecutor(getExecutor());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;

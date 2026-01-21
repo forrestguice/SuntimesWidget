@@ -400,7 +400,7 @@ public class WidgetThemePreview
                 }
             };
             drawTask.setListener(taskListener);
-            ExecutorUtils.runProgress("WidgetThemePreview", drawTask, taskListener);
+            ExecutorUtils.runProgress("WidgetThemePreview2", getExecutor(), drawTask, taskListener);
             //drawTask.execute(data0,  widthPx, heightPx, options, projection);
         }
     }
@@ -603,8 +603,7 @@ public class WidgetThemePreview
             drawTask.setListener(drawTaskListener);
 
             final TaskHandler handler = ExecutorUtils.getHandler();
-            final ExecutorService executor = Executors.newSingleThreadExecutor();
-            ExecutorUtils.runTask("WidgetThemePreview0", executor, new Runnable()
+            ExecutorUtils.runTask("WidgetThemePreview0", getExecutor(), new Runnable()
             {
                 @Override
                 public void run()
@@ -617,7 +616,7 @@ public class WidgetThemePreview
                     {
                         @Override
                         public void run() {
-                            ExecutorUtils.runProgress("WidgetThemePreview1", executor, handler, drawTask, drawTaskListener);
+                            ExecutorUtils.runProgress("WidgetThemePreview1", getExecutor(), handler, drawTask, drawTaskListener);
                             executor.shutdown();
                         }
                     });
