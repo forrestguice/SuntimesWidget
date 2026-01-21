@@ -28,6 +28,7 @@ import android.util.AttributeSet;
 
 import android.view.View;
 
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -254,10 +255,10 @@ public class LightGraphView extends ImageView
 
     public void updateViews()
     {
-        if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (drawTask != null && drawTask.getStatus() == LightGraphTask.Status.RUNNING)
         {
             Log.w(LightGraphView.class.getSimpleName(), "updateViews: task already running: " + data0 + " (" + Integer.toHexString(LightGraphView.this.hashCode())  +  ") .. restarting task.");
-            drawTask.cancel(true);
+            drawTask.cancel();
         } // else Log.d(LightGraphView.class.getSimpleName(), "updateViews: starting task " + data0);
 
         if (getWidth() == 0 || getHeight() == 0) {
@@ -269,15 +270,16 @@ public class LightGraphView extends ImageView
             return;
         }
 
-        drawTask = new LightGraphTask();
+        drawTask = new LightGraphTask(new Object[] { data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays } );
         drawTask.setData(data);
         drawTask.setListener(drawTaskListener);
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
-        } else {
-            drawTask.execute(data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
-        }
+        ExecutorUtils.runProgress("LightGraphTask", drawTask, drawTaskListener);
+        //if (Build.VERSION.SDK_INT >= 11) {
+        //    drawTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
+        //} else {
+        //    drawTask.execute(data0, getWidth(), getHeight(), options, (animated ? 0 : 1), options.offsetDays);
+        //}
     }
 
     private final LightGraphTaskListener drawTaskListener = new LightGraphTaskListener() {
@@ -353,7 +355,7 @@ public class LightGraphView extends ImageView
         //Log.d(LightGraphView.class.getSimpleName(), "stopAnimation");
         animated = false;
         if (drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -389,7 +391,7 @@ public class LightGraphView extends ImageView
         super.onDetachedFromWindow();
         if (drawTask != null) {
             //Log.d(LightGraphView.class.getSimpleName(), "onDetachedFromWindow: cancel task " + Integer.toHexString(LightGraphView.this.hashCode()));
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -399,7 +401,7 @@ public class LightGraphView extends ImageView
         super.onVisibilityChanged(view, visibility);
         //Log.d("DEBUG", "onVisibilityChanged: " + visibility);
         if (visibility != View.VISIBLE && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 
@@ -409,7 +411,7 @@ public class LightGraphView extends ImageView
         super.onVisibilityAggregated(isVisible);
         //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
         if (!isVisible && drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
     }
 

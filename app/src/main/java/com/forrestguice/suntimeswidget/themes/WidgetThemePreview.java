@@ -89,10 +89,13 @@ import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.TaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -569,8 +572,8 @@ public class WidgetThemePreview
             view.setMinimumWidth(widthPx);
             view.setMinimumHeight(heightPx);
 
-            final LightGraphTask drawTask = new LightGraphTask();
-            drawTask.setListener(new LightGraphTaskListener()
+            final LightGraphTask drawTask = new LightGraphTask(new Object[] { data0, widthPx, heightPx, options } );
+            LightGraphTaskListener drawTaskListener = new LightGraphTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
@@ -578,11 +581,12 @@ public class WidgetThemePreview
                     super.onFinished(result);
                     view.setImageBitmap(result);
                 }
-            });
+            };
+            drawTask.setListener(drawTaskListener);
 
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            final Handler handler = new Handler(Looper.getMainLooper());
-            executor.execute(new Runnable()
+            final TaskHandler handler = ExecutorUtils.getHandler();
+            final ExecutorService executor = Executors.newSingleThreadExecutor();
+            ExecutorUtils.runTask("WidgetThemePreview0", executor, new Runnable()
             {
                 @Override
                 public void run()
@@ -595,7 +599,8 @@ public class WidgetThemePreview
                     {
                         @Override
                         public void run() {
-                            drawTask.execute(data0, widthPx, heightPx, options);
+                            ExecutorUtils.runProgress("WidgetThemePreview1", executor, handler, drawTask, drawTaskListener);
+                            executor.shutdown();
                         }
                     });
                 }

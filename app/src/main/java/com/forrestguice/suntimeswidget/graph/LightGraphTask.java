@@ -19,24 +19,18 @@
 package com.forrestguice.suntimeswidget.graph;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.util.Log;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
-public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
+import java.util.Collection;
+
+public class LightGraphTask extends ProgressCallable<Bitmap, Bitmap>
 {
     private final LightGraphBitmap lightgraph = new LightGraphBitmap();
-
-    @Nullable
-    protected SuntimesRiseSetDataset[] yearData = null;
-    public void setData(SuntimesRiseSetDataset[] data) {
-        yearData = data;
-    }
-    public void invalidData() {
-        yearData = null;
-    }
+    private final Object[] params;
 
     /**
      * @param params 0: SuntimesRiseSetDataset,
@@ -45,10 +39,25 @@ public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
      *               3: options (optional),
      *               4: num frames (optional),
      *               5: initial offset (optional)
+     */
+    public LightGraphTask(Object[] params) {
+        this.params = params;
+    }
+    
+    @Nullable
+    protected SuntimesRiseSetDataset[] yearData = null;
+    public void setData(SuntimesRiseSetDataset[] data) {
+        yearData = data;
+    }
+    public void invalidateData() {
+        yearData = null;
+    }
+
+    /**
      * @return a bitmap, or null params are invalid
      */
     @Override
-    protected Bitmap doInBackground(Object... params)
+    public Bitmap call() throws Exception
     {
         LightGraphOptions options;
         int w, h;
@@ -114,19 +123,11 @@ public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        if (listener != null) {
-            listener.onStarted();
-        }
-    }
-
-    @Override
-    protected void onProgressUpdate( Bitmap... frames )
+    public void onProgressUpdate( Collection<Bitmap> frames0 )
     {
         if (listener != null)
         {
-            notifyIfDataModified();
+            Bitmap[] frames = frames0.toArray(new Bitmap[0]);
             LightGraphOptions options = lightgraph.getOptions();
             if (options != null) {
                 for (int i = 0; i < frames.length; i++) {
@@ -134,26 +135,6 @@ public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
                 }
             }
         }
-    }
-
-    @Override
-    protected void onPostExecute( Bitmap lastFrame )
-    {
-        if (isCancelled()) {
-            lastFrame = null;
-        }
-        if (listener != null) {
-            notifyIfDataModified();
-            listener.onFinished(lastFrame);
-        }
-    }
-
-    protected void notifyIfDataModified()
-    {
-        /*if (t_data != null) {
-            listener.onDataModified(t_data);
-            t_data = null;
-        }*/
     }
 
     @Nullable
@@ -164,4 +145,5 @@ public class LightGraphTask extends AsyncTask<Object, Bitmap, Bitmap>
     public void clearListener() {
         this.listener = null;
     }
+
 }

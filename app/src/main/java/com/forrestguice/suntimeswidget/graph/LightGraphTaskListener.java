@@ -20,12 +20,20 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.graphics.Bitmap;
 
+import com.forrestguice.util.concurrent.ProgressListener;
+
+import java.util.Collection;
+
 @SuppressWarnings("EmptyMethod")
-public abstract class LightGraphTaskListener
+public abstract class LightGraphTaskListener implements ProgressListener<Bitmap, Bitmap>
 {
+    @Override
     public void onStarted() {}
     public void onFrame(Bitmap frame, long offsetDays) {}
     public void afterFrame(Bitmap frame, long offsetDays) {}
+    @Override
     public void onFinished(Bitmap result) {}
     public void onProgress(boolean value) {}
+    @Override
+    public void onProgressUpdate(Collection<Bitmap> values) {}
 }
