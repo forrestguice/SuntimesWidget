@@ -55,6 +55,7 @@ import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -361,8 +362,15 @@ public class WidgetThemePreview
 
             int[] sizeDp = suggestedPreviewSizeDp(mode);
             WorldMapProjection projection = SunPosLayout_3X2_0.createProjectionForMode(context, mode, options);
-            WorldMapTask drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
+
+            int widthPx = SuntimesUtils.dpToPixels(context, sizeDp[0]);
+            int heightPx = SuntimesUtils.dpToPixels(context, sizeDp[1]);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+
+            Object[] args = new Object[] { data0, widthPx, heightPx, options, projection };
+            WorldMapTask drawTask = new WorldMapTask(args);
+            WorldMapTask.WorldMapTaskListener taskListener = new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap lastFrame)
@@ -370,13 +378,10 @@ public class WidgetThemePreview
                     super.onFinished(lastFrame);
                     view.setImageBitmap(lastFrame);
                 }
-            });
-
-            int widthPx = SuntimesUtils.dpToPixels(context, sizeDp[0]);
-            int heightPx = SuntimesUtils.dpToPixels(context, sizeDp[1]);
-            view.setMinimumWidth(widthPx);
-            view.setMinimumHeight(heightPx);
-            drawTask.execute(data0,  widthPx, heightPx, options, projection);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemePreview", drawTask, taskListener);
+            //drawTask.execute(data0,  widthPx, heightPx, options, projection);
         }
     }
 

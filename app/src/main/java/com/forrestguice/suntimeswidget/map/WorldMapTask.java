@@ -19,29 +19,38 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 
 import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.ProgressListener;
 
-public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
+import java.util.Collection;
+
+public class WorldMapTask extends ProgressCallable<Bitmap, Bitmap>
 {
     private WorldMapProjection projection = new WorldMapEquirectangular();
     private WorldMapOptions options = new WorldMapOptions();
-
-    public WorldMapTask()
-    {
-    }
+    private final Object[] params;
 
     /**
      * @param params 0: SuntimesRiseSetDataset,
      *               1: Integer (width),
      *               2: Integer (height),
-     *               3: Drawable (map)
+     *               3: WorldMapOptions
+     *               4: WorldMapProjection
+     *               5: numFrames
+     *               6: initialOffset (millis)
+     */
+    public WorldMapTask(Object[] params) {
+        this.params = params;
+    }
+
+    /**
      * @return a bitmap, or null params are invalid
      */
     @Override
-    protected Bitmap doInBackground(Object... params)
+    public Bitmap call() throws Exception
     {
         int w, h;
         int numFrames = 1;
@@ -106,32 +115,14 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        if (listener != null) {
-            listener.onStarted();
-        }
-    }
-
-    @Override
-    protected void onProgressUpdate( Bitmap... frames )
+    public void onProgressUpdate( Collection<Bitmap> frames0 )
     {
         if (listener != null)
         {
+            Bitmap[] frames = frames0.toArray(new Bitmap[0]);
             for (int i=0; i<frames.length; i++) {
                 listener.onFrame(frames[i], options.offsetMinutes);
             }
-        }
-    }
-
-    @Override
-    protected void onPostExecute( Bitmap lastFrame )
-    {
-        if (isCancelled()) {
-            lastFrame = null;
-        }
-        if (listener != null) {
-            listener.onFinished(lastFrame);
         }
     }
 
@@ -146,12 +137,16 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
      * WorldMapTaskListener
      */
     @SuppressWarnings("EmptyMethod")
-    public static abstract class WorldMapTaskListener
+    public static abstract class WorldMapTaskListener implements ProgressListener<Bitmap, Bitmap>
     {
+        @Override
         public void onStarted() {}
-        public void onFrame(Bitmap frame, long offsetMinutes ) {}
-        public void afterFrame(Bitmap frame, long offsetMinutes ) {}
+        public void onFrame( Bitmap frame, long offsetMinutes ) {}
+        public void afterFrame( Bitmap frame, long offsetMinutes ) {}
+        @Override
         public void onFinished( Bitmap result ) {}
+        @Override
+        public void onProgressUpdate( Collection<Bitmap> values ) {}
     }
 
 }

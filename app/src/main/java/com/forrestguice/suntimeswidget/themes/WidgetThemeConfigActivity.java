@@ -94,6 +94,7 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -898,8 +899,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             int dpWidth = 128;
             int dpHeight = 64;
             WorldMapProjection projection = new WorldMapEquirectangular();
-            WorldMapTask drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
+            Object[] args = new Object[] { data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection };
+            WorldMapTask drawTask = new WorldMapTask(args);
+            WorldMapTask.WorldMapTaskListener taskListener = new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap lastFrame)
@@ -907,8 +909,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     super.onFinished(lastFrame);
                     view.setImageBitmap(lastFrame);
                 }
-            });
-            drawTask.execute(data0,  SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemeConfig", drawTask, taskListener);
+            //drawTask.execute(data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
         }
     }
 

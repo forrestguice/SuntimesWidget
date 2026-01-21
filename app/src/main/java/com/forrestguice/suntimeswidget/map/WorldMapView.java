@@ -37,6 +37,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -353,10 +354,10 @@ public class WorldMapView extends ImageView
         this.data = data;
 
         boolean wasCancelled = false;
-        if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (drawTask != null && drawTask.getStatus() == WorldMapTask.Status.RUNNING)
         {
             Log.w(LOGTAG, "updateViews: task already running");
-            drawTask.cancel(true);
+            drawTask.cancel();
             wasCancelled = true;
         }
 
@@ -423,11 +424,14 @@ public class WorldMapView extends ImageView
                 return;
             }
 
-            drawTask = new WorldMapTask();
+            Object[] args = new Object[] { data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes };
+            drawTask = new WorldMapTask(args);
             drawTask.setListener(drawListener);
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
-            drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
+            ExecutorUtils.runProgress("WorldMapView", drawTask, drawListener);
+            //drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
+
             options.modified = false;
             lastUpdate = System.currentTimeMillis();
         }
@@ -679,7 +683,7 @@ public class WorldMapView extends ImageView
     {
         dismissProgress();
         if (drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
         if (exportTask != null) {
             exportTask.pauseTask();
@@ -696,7 +700,7 @@ public class WorldMapView extends ImageView
     {
         animated = false;
         if (drawTask != null) {
-            drawTask.cancel(true);
+            drawTask.cancel();
         }
         if (exportTask != null)
         {
