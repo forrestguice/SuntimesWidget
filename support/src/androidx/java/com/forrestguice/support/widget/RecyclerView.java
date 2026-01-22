@@ -34,7 +34,7 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         addOnScrollListener(from(listener));
     }
     public void setOnScrollListener(@Nullable final OnScrollListenerCompat listener) {
-        setOnScrollListener(from(listener));
+        addOnScrollListener(from(listener));    // setOnScrollListener(from(listener)) is deprecated
     }
 
     public OnScrollListener from(@Nullable final OnScrollListenerCompat listener)
