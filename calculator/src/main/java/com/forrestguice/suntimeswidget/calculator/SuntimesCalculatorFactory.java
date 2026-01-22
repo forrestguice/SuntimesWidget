@@ -91,7 +91,7 @@ public class SuntimesCalculatorFactory
             //Log.d("createCalculator", "trying .oO( " + current.getReference() + " )");
             Class<?> calculatorClass = Class.forName(current.getReference());  // may fail if using proguard without exempting key classes
             //Log.d("createCalculator", "found class " + calculatorClass.getName());
-            calculator = (SuntimesCalculator)calculatorClass.newInstance();
+            calculator = (SuntimesCalculator)calculatorClass.newInstance();    // TODO: newInstance deprecated api34+
             //Log.d("createCalculator", "using .oO( " + calculator.name() + " ): " + timezone);
 
         } catch (Exception e1) {

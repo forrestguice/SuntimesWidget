@@ -441,6 +441,7 @@ public interface CalculatorProviderContract
     String COLUMN_SEASON_CROSS_WINTER = "season_cross_winter";           // long (timestamp)
 
     String QUERY_SEASONS = "seasons";
+    @SuppressWarnings("deprecation")
     String[] QUERY_SEASONS_PROJECTION = new String[] {
             COLUMN_SEASON_CROSS_SPRING, COLUMN_SEASON_CROSS_SUMMER, COLUMN_SEASON_CROSS_AUTUMN, COLUMN_SEASON_CROSS_WINTER,
             COLUMN_SEASON_SPRING, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER,
