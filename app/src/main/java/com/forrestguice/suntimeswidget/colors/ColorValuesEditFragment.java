@@ -355,9 +355,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     protected ActivityResultLauncherCompat[] startActivityForResult_pickColor = registerForActivityResult_pickColor();
     protected ActivityResultLauncherCompat[] registerForActivityResult_pickColor()
     {
-        String[] keys = colorValues.getColorKeys();
-        ActivityResultLauncherCompat[] result = new ActivityResultLauncherCompat[keys.length];
-        for (int i=0; i<keys.length; i++) {
+        //String[] keys = new String[100];     // = colorValues.getColorKeys();
+        int n = 100;  // colorValues is unset when we need to registerForActivityResult (before onCreate) so register 100 slots instead
+        ActivityResultLauncherCompat[] result = new ActivityResultLauncherCompat[n];
+        for (int i=0; i<n; i++) {
             result[i] = registerForActivityResultCompat(i);
         }
         return result;
