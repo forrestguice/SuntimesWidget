@@ -151,11 +151,11 @@ public class BedtimeAlarmHelper
     {
         if (item != null)
         {
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, addAlarm, false);
+            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, addAlarm, false);
             if (taskListener != null) {
                 task.setTaskListener(taskListener);
             }
-            task.execute(item);
+            ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
         }
     }
 
@@ -176,9 +176,9 @@ public class BedtimeAlarmHelper
             BedtimeAlarmHelper.saveAlarmItem(context, item, false, new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item) {
-                    if (result) {
-                        BedtimeAlarmHelper.scheduleAlarmItem(context, item, enabled);
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
+                    if (result.getResult()) {
+                        BedtimeAlarmHelper.scheduleAlarmItem(context, result.getItem(), enabled);
                     }
                 }
             });
@@ -278,10 +278,11 @@ public class BedtimeAlarmHelper
             BedtimeAlarmHelper.saveAlarmItem(context, reminderItem, addReminder, new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item)
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
-                    Log.d("DEBUG", "saved reminder item " + item.rowID + ": " + result);
-                    if (result) {
+                    AlarmClockItem item = result.getItem();
+                    Log.d("DEBUG", "saved reminder item " + item.rowID + ": " + result.getResult());
+                    if (result.getResult()) {
                         BedtimeSettings.saveAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER, item.rowID);
                         BedtimeAlarmHelper.scheduleAlarmItem(context, item, enabled);
                     }

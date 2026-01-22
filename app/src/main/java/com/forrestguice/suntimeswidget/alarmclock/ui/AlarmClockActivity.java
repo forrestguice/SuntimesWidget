@@ -913,9 +913,10 @@ public class AlarmClockActivity extends AppCompatActivity
     private final AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
-        public void onFinished(Boolean result, AlarmClockItem item)
+        public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
         {
-            if (result)
+            AlarmClockItem item = result.getItem();
+            if (result.getResult())
             {
                 if (item.enabled) {
                     sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_RESCHEDULE, item.getUri()) );
@@ -1252,9 +1253,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
                 if (item != null && !data.hasExtra(AlarmNotifications.ACTION_DELETE))
                 {
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, isNewAlarm, false);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, item, isNewAlarm, false);
                     task.setTaskListener(onUpdateItem);
-                    task.execute(item);
+                    ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
                 }
             }
         }

@@ -31,12 +31,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -737,37 +736,53 @@ public class AlarmDatabaseAdapter
         }
 
         private final Boolean result;
-        Boolean getResult() {
+        public Boolean getResult() {
             return result;
         }
 
         private final AlarmClockItem item;
-        AlarmClockItem getItem() {
+        public AlarmClockItem getItem() {
             return item;
         }
 
         private final AlarmClockItem[] items;
-        AlarmClockItem[] getItems() {
+        public AlarmClockItem[] getItems() {
             return items;
         }
     }
 
     /**
+     * AlarmItemTaskListener
+     */
+    public static abstract class AlarmItemTaskListener implements TaskListener<AlarmItemTaskResult>
+    {
+        @Override
+        public void onStarted() {}
+        @Override
+        public void onFinished(AlarmItemTaskResult result) {}
+    }
+
+    /**
      * AlarmItemTask
      */
-    public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
+    public static class AlarmItemTask implements Callable<AlarmItemTaskResult>
     {
         private final WeakReference<Context> contextRef;
         protected AlarmDatabaseAdapter db;
+        protected final Long[] rowIDs;
 
-        public AlarmItemTask(Context context)
+        public AlarmItemTask(Context context, Long rowId) {
+            this(context, new Long[] { rowId });
+        }
+        public AlarmItemTask(Context context, Long[] rowIds)
         {
             contextRef = new WeakReference<>(context);
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
+            this.rowIDs = rowIds;
         }
 
         @Override
-        protected AlarmClockItem doInBackground(Long... rowIDs)
+        public AlarmItemTaskResult call() throws Exception
         {
             AlarmClockItem item = null;
             if (rowIDs.length > 0)
@@ -776,7 +791,7 @@ public class AlarmDatabaseAdapter
                 item = loadAlarmClockItem(contextRef.get(), db, rowIDs[0]);
                 db.close();
             }
-            return item;
+            return new AlarmItemTaskResult(true, item, new AlarmClockItem[] { item } );
         }
 
         public static AlarmClockItem loadAlarmClockItem(Context context, AlarmDatabaseAdapter db, long rowId)
@@ -810,32 +825,22 @@ public class AlarmDatabaseAdapter
             return item;
         }
 
-        protected void onPostExecute( AlarmClockItem item )
-        {
-            for (int i=0; i<taskListeners.size(); i++)
-            {
-                AlarmItemTaskListener taskListener = taskListeners.get(i);
-                if (taskListener != null) {
-                    taskListener.onFinished(true, item);
-                }
-            }
-        }
-
         private final List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
-        public void addAlarmItemTaskListener(AlarmItemTaskListener listener )
-        {
+        public void addAlarmItemTaskListener(AlarmItemTaskListener listener ) {
             this.taskListeners.add(listener);
         }
-        public void clearAlarmItemTaskListeners()
-        {
+        public void clearAlarmItemTaskListeners() {
             taskListeners.clear();
+        }
+        public List<AlarmItemTaskListener> getTaskListeners() {
+            return taskListeners;
         }
     }
 
     /**
      * AlarmUpdateTask
      */
-    public static class AlarmUpdateTask extends AsyncTask<AlarmClockItem, Void, Boolean>
+    public static class AlarmUpdateTask implements Callable<AlarmItemTaskResult>
     {
         public static final String TAG = "AlarmReceiverItemTask";
 
@@ -843,22 +848,29 @@ public class AlarmDatabaseAdapter
         private boolean flag_add = false;
         private boolean flag_withState = true;
         private AlarmClockItem lastItem;
-        private AlarmClockItem[] items = null;
+        private final AlarmClockItem[] items;
 
-        public AlarmUpdateTask(@NonNull Context context)
-        {
+        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem item) {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
+            this.items = new AlarmClockItem[] { item } ;
         }
-
-        public AlarmUpdateTask(@NonNull Context context, boolean flag_add, boolean flag_withState)
-        {
+        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem[] items) {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
+            this.items = items;
+        }
+        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem item, boolean flag_add, boolean flag_withState) {
+            this(context, item);
+            this.flag_add = flag_add;
+            this.flag_withState = flag_withState;
+        }
+        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem[] items, boolean flag_add, boolean flag_withState) {
+            this(context, items);
             this.flag_add = flag_add;
             this.flag_withState = flag_withState;
         }
 
         @Override
-        protected Boolean doInBackground(AlarmClockItem... items)
+        public AlarmItemTaskResult call() throws Exception
         {
             db.open();
             boolean updated = true;
@@ -883,31 +895,17 @@ public class AlarmDatabaseAdapter
                 updated = updated && itemUpdated;
             }
             db.close();
-            this.items = Arrays.copyOf(items, items.length);
-            return updated;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            Log.d(TAG, "Item Saved: " + (lastItem != null ? lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null) : "null"));
-            if (listener != null) {
-                listener.onFinished(result, lastItem);
-                listener.onFinished(result, items);
-            }
+            //this.items = Arrays.copyOf(items, items.length);
+            return new AlarmItemTaskResult(updated, lastItem, items);
         }
 
         protected AlarmItemTaskListener listener = null;
-        public void setTaskListener( AlarmItemTaskListener l )
-        {
+        public void setTaskListener( AlarmItemTaskListener l ) {
             listener = l;
         }
-    }
-
-    public static abstract class AlarmItemTaskListener
-    {
-        public void onFinished(Boolean result, AlarmClockItem item) {}
-        public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {}
+        public AlarmItemTaskListener getTaskListener() {
+            return listener;
+        }
     }
 
     /**

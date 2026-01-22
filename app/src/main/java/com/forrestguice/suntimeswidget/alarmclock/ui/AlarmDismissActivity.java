@@ -53,6 +53,8 @@ import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
@@ -271,7 +273,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                     intent.setAction(null);
                     onLoaded = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                         @Override
-                        public void onFinished(Boolean result, AlarmClockItem item) {
+                        public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
                             dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
                         }
                     };
@@ -322,7 +324,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             intent.setAction(null);
             onLoaded = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item) {
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
                     dismissAlarmAfterChallenge(AlarmDismissActivity.this, dismissButton);
                 }
             };
@@ -754,26 +756,28 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             return;
         }
 
-        AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
+        AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context, alarmID);
         task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
-            public void onFinished(Boolean result, AlarmClockItem item)
+            public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
             {
+                AlarmClockItem item = result.getItem();
+                Boolean r = result.getResult();
                 if (item != null) {
                     if (item.type == AlarmClockItem.AlarmType.ALARM) {
                         setAlarmItem(context, item);
 
                     } else {
                         Log.w(TAG, "setAlarmID: " + item.getUri() + " not of type alarm; ignoring.");
-                        result = false;
+                        r = false;
                     }
                 }
                 if (listener != null) {
-                    listener.onFinished(result, item);
+                    listener.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(r, item, result.getItems()));
                 }
             }
         });
-        task.execute(alarmID);
+        ExecutorUtils.runTask("AlarmItemTask", task, task.getTaskListeners());
     }
 
     public void setAlarmID(final Context context, Uri uri) {

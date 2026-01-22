@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.SwitchCompat;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -420,8 +421,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                 {
                     item.vibrate = isChecked;
                     item.modified = true;
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                    task.execute(item);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, false);
+                    ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
 
                     if (isChecked) {
                         Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -950,8 +951,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                 item.type = type;
                 item.setState(AlarmState.STATE_NONE);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
-                task.execute(item);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, true);
+                ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
                 notifyDataSetChanged();
                 return true;
             }
@@ -971,13 +972,14 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         item.enabled = enabled;
         item.modified = true;
 
-        AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+        AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, false);
         enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
         {
             @Override
-            public void onFinished(Boolean result, AlarmClockItem item)
+            public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
             {
-                if (result) {
+                AlarmClockItem item = result.getItem();
+                if (result.getResult()) {
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                     if (!enabled) {
@@ -988,7 +990,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                 } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
             }
         });
-        enableTask.execute(item);
+        ExecutorUtils.runTask("AlarmUpdateTask", enableTask, enableTask.getTaskListener());
     }
 
     private CompoundButton.OnCheckedChangeListener onAlarmEnabledChanged(final AlarmClockItemView view, final AlarmClockItem item, final boolean isSelected)

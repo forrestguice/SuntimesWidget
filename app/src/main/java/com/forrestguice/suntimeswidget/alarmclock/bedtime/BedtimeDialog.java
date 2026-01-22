@@ -854,8 +854,9 @@ public class BedtimeDialog extends DialogBase
                 BedtimeAlarmHelper.saveAlarmItem(context, alarmItem, addAlarm, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
-                    public void onFinished(Boolean result, AlarmClockItem alarmItem)
+                    public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                     {
+                        AlarmClockItem alarmItem = result.getItem();
                         BedtimeSettings.saveAlarmID(context, slot, alarmItem.rowID);
                         //if (!alarmItem.enabled) {
                         context.sendBroadcast(AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()));
@@ -968,10 +969,10 @@ public class BedtimeDialog extends DialogBase
                 BedtimeAlarmHelper.saveAlarmItem(context, item, isNewAlarm, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
-                    public void onFinished(Boolean result, @Nullable final AlarmClockItem[] items)
+                    public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                     {
                         Context context = getContext();
-                        if (result && context != null)
+                        if (result.getResult() && context != null)
                         {
                             Integer[] positions = adapter.findItemPositions(context, item.rowID);
                             for (int position : positions)
@@ -992,18 +993,18 @@ public class BedtimeDialog extends DialogBase
                         }
 
                         if (onSaved != null) {
-                            onSaved.onFinished(result, items);
+                            onSaved.onFinished(result);
                         }
                     }
                 });
             } else {
                 if (onSaved != null) {    // data may contain null item if EditActivity deleted its entry
-                    onSaved.onFinished(true, new AlarmClockItem[] { null });
+                    onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(true, null, new AlarmClockItem[] { null }));
                 }
             }
         } else {
             if (onSaved != null) {
-                onSaved.onFinished(false, (AlarmClockItem[])null);
+                onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(false, null, (AlarmClockItem[])null));
             }
         }
     }

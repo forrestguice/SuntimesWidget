@@ -738,15 +738,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             item.enabled = false;
             item.modified = true;
 
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
+            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, item, false, false);
             task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item) {
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
+                    AlarmClockItem item = result.getItem();
                     sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DISABLE, item.getUri()));
                     invalidateOptionsMenu();
                 }
             });
-            task.execute(item);
+            ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
             returnItem(item);
         }
     }

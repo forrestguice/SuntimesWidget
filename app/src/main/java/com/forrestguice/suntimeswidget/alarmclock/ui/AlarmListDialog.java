@@ -526,13 +526,14 @@ public class AlarmListDialog extends DialogBase
     }
     public void addAlarm(final Context context, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener l, AlarmClockItem... items)
     {
-        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, items, true, true);
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
         {
             @Override
-            public void onFinished(Boolean result, AlarmClockItem[] items)
+            public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
             {
-                if (result)
+                AlarmClockItem[] items = result.getItems();
+                if (result.getResult())
                 {
                     for (AlarmClockItem item : items)
                     {
@@ -547,11 +548,11 @@ public class AlarmListDialog extends DialogBase
                     reloadAdapter();
                 }
                 if (l != null) {
-                    l.onFinished(result, items);
+                    l.onFinished(result);
                 }
             }
         });
-        task.execute(items);
+        ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -745,7 +746,8 @@ public class AlarmListDialog extends DialogBase
                 addAlarm(getContext(), new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
-                    public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
+                    public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
+                        AlarmClockItem[] items = result.getItems();
                         if (isAdded() && getContext() != null && items != null) {
                             offerUndoImport(getContext(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
                         }
@@ -1473,9 +1475,9 @@ public class AlarmListDialog extends DialogBase
                     item.type = type;
                     item.setState(AlarmState.STATE_NONE);
 
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, true);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, true);
                     task.setTaskListener(changeAlarmTypeTaskListener(rowId));
-                    task.execute(item);
+                    ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
                     return true;
                 }
             }
@@ -1486,7 +1488,7 @@ public class AlarmListDialog extends DialogBase
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item) {
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
                     notifyItemChanged(getIndex(rowId));
                 }
             };
@@ -1504,13 +1506,14 @@ public class AlarmListDialog extends DialogBase
             item.enabled = enabled;
             item.modified = true;
 
-            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, false);
             enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item)
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
-                    if (result && item != null) {
+                    AlarmClockItem item = result.getItem();
+                    if (result.getResult() && item != null) {
                         context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                        : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                         if (!enabled) {
@@ -1525,7 +1528,7 @@ public class AlarmListDialog extends DialogBase
                     } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
                 }
             });
-            enableTask.execute(item);
+            ExecutorUtils.runTask("AlarmUpdateTask", enableTask, enableTask.getTaskListener());
         }
 
     }

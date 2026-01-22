@@ -1167,18 +1167,19 @@ public class WelcomeActivity extends AppCompatActivity
                 if (result.getResult() && context != null)
                 {
                     final AlarmClockItem[] items = result.getItems();
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, items, true, true);
                     task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
                     {
                         @Override
-                        public void onFinished(Boolean result, AlarmClockItem[] items)
+                        public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                         {
+                            AlarmClockItem[] items = result.getItems();
                             setRetainInstance(false);
                             importTask = null;
                             toggleProgress(false);
                             toggleControlsVisible(true);
 
-                            if (result)
+                            if (result.getResult())
                             {
                                 String plural = getResources().getQuantityString(R.plurals.alarmPlural, items.length, items.length);
                                 importAlarmsButton.setText(getString(R.string.importalarms_toast_success, plural));
@@ -1191,7 +1192,7 @@ public class WelcomeActivity extends AppCompatActivity
                             }
                         }
                     });
-                    task.execute(items);
+                    ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
 
                 } else {
                     setRetainInstance(false);
