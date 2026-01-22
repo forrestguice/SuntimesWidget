@@ -77,6 +77,12 @@ public class ExecutorUtils
         executor.shutdown();
     }
     public static <T, C extends Callable<T>,
+            L extends TaskListener<T>> void runTask(String tag, C callable, Collection<L> listeners)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        runTask(tag, executor, getHandler(), callable, listeners);
+    }
+    public static <T, C extends Callable<T>,
             L extends TaskListener<T>> void runTask(String tag, @NonNull Executor executor, @Nullable TaskHandler handler, C callable, Collection<L> listeners)
     {
         executor.execute(new Runnable()
