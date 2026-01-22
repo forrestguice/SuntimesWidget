@@ -39,6 +39,7 @@ public class PopupMenuCompat
 {
     @Deprecated
     public static PopupMenu createMenu(Context context, View view, int menuResID, @Nullable PopupMenu.OnMenuItemClickListener onClickListener, @Nullable PopupMenu.OnDismissListener onDismissListener) {
+        //noinspection deprecation
         return createMenu(context, view, menuResID, Gravity.NO_GRAVITY, onClickListener, onDismissListener);
     }
 
