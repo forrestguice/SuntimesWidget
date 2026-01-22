@@ -23,7 +23,7 @@ public class SnackbarCompat
 
     public void addCallback(final Callback listener)
     {
-        this.snackbar.setCallback(new Snackbar.Callback()
+        Snackbar.Callback callback = new Snackbar.Callback()
         {
             @Override
             public void onShown(Snackbar sb) {
@@ -34,7 +34,8 @@ public class SnackbarCompat
                 listener.onDismissed(SnackbarCompat.this, event);
                 super.onDismissed(sb, event);
             }
-        });
+        };
+        this.snackbar.addCallback(callback);
     }
 
     public void setAction(String text, View.OnClickListener listener) {
