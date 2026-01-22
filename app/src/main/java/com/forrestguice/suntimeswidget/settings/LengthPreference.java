@@ -22,7 +22,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class LengthPreference extends android.preference.EditTextPreference
+import com.forrestguice.support.preference.EditTextPreference;
+
+public class LengthPreference extends EditTextPreference
 {
     public LengthPreference(Context context)
     {
