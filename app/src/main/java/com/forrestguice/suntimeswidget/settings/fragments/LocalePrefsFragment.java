@@ -25,8 +25,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+
+import com.forrestguice.support.preference.PreferenceFragment;
 import com.forrestguice.util.Pair;
 import android.util.Log;
 

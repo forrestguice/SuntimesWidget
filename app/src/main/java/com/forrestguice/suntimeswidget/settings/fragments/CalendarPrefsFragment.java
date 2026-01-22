@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
@@ -33,6 +32,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 /**
  * Calendar Prefs

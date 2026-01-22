@@ -31,7 +31,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -69,6 +68,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatDelegateHelper;
+import com.forrestguice.support.preference.PreferenceFragment;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;

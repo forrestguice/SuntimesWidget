@@ -41,7 +41,6 @@ import android.os.Parcelable;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
@@ -73,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
