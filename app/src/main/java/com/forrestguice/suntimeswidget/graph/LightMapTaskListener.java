@@ -36,5 +36,7 @@ public abstract class LightMapTaskListener implements ProgressListener<Bitmap, B
     @Override
     public void onFinished( Bitmap result ) {}
     @Override
+    public void onCancelled(Bitmap result) {}
+    @Override
     public void onProgressUpdate(Collection<Bitmap> values) {}
 }

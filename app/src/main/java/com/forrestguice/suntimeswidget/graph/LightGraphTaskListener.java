@@ -33,6 +33,8 @@ public abstract class LightGraphTaskListener implements ProgressListener<Bitmap,
     public void afterFrame(Bitmap frame, long offsetDays) {}
     @Override
     public void onFinished(Bitmap result) {}
+    @Override
+    public void onCancelled(Bitmap result) {}
     public void onProgress(boolean value) {}
     @Override
     public void onProgressUpdate(Collection<Bitmap> values) {}

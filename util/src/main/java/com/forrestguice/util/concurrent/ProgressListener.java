@@ -28,4 +28,5 @@ import java.util.Collection;
  */
 public interface ProgressListener<P, T> extends TaskListener<T> {
     void onProgressUpdate(Collection<P> values);
+    void onCancelled(T result);
 }

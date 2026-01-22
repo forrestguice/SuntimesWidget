@@ -170,13 +170,23 @@ public class ExecutorUtils
                         });
                     }
                     result = (callable.isCancelled() ? null : callable.call());
-                    if (!callable.isCancelled())
+                    if (callable.isCancelled())
                     {
                         postCallback(handler, new HandlerCallback()
                         {
                             @Override
-                            public void post()
-                            {
+                            public void post() {
+                                callable.onCancelled(result);
+                                for (ProgressListener<P, T> listener : listeners) {
+                                    listener.onCancelled(result);
+                                }
+                            }
+                        });
+                    } else {
+                        postCallback(handler, new HandlerCallback()
+                        {
+                            @Override
+                            public void post() {
                                 callable.onPostExecute(result);
                                 for (TaskListener<T> listener : listeners) {
                                     listener.onFinished(result);
@@ -184,6 +194,7 @@ public class ExecutorUtils
                             }
                         });
                     }
+
                     callable.setStatus(ProgressCallable.Status.FINISHED);
                     //Log.d("DEBUG", "runProgress: FINISHED " + callable.toString());
 

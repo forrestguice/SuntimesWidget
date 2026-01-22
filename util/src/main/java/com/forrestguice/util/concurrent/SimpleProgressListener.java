@@ -32,5 +32,9 @@ public class SimpleProgressListener<P, T> implements ProgressListener<P, T>
     public void onFinished(T result) {}
 
     @Override
+    public void onCancelled(T result) {}
+
+    @Override
     public void onProgressUpdate(Collection<P> values) {}
+
 }

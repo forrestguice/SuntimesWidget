@@ -146,6 +146,8 @@ public class WorldMapTask extends ProgressCallable<Bitmap, Bitmap>
         @Override
         public void onFinished( Bitmap result ) {}
         @Override
+        public void onCancelled(Bitmap result) {}
+        @Override
         public void onProgressUpdate( Collection<Bitmap> values ) {}
     }
 
