@@ -374,7 +374,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)
     {
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
-        String timeString = delta_utils.timeDeltaLongDisplayString(yearLengthMillis).toString();
+        String timeString = delta_utils.timeDeltaLongDisplayString(0, yearLengthMillis, false,false, true, true, false, false).setSuffix("").toString();
         String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
         return SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);

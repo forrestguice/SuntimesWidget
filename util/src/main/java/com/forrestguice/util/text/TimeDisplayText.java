@@ -46,9 +46,10 @@ public class TimeDisplayText
         this.suffix = suffix;
     }
 
-    public void setRawValue(long value)
+    public TimeDisplayText setRawValue(long value)
     {
         rawValue = value;
+        return this;
     }
 
     public long getRawValue()
@@ -71,9 +72,10 @@ public class TimeDisplayText
         return suffix;
     }
 
-    public void setSuffix(String suffix)
+    public TimeDisplayText setSuffix(String suffix)
     {
         this.suffix = suffix;
+        return this;
     }
 
     public String toString()

@@ -63,11 +63,8 @@ public class TimeDeltaDisplay
     public TimeDisplayText timeDeltaLongDisplayString(long t) {
         return timeDeltaLongDisplayString(t, true);
     }
-    public TimeDisplayText timeDeltaLongDisplayString(long t, boolean showSeconds)
-    {
-        TimeDisplayText text = timeDeltaLongDisplayString(0, t, showSeconds);
-        text.setSuffix("");
-        return text;
+    public TimeDisplayText timeDeltaLongDisplayString(long t, boolean showSeconds) {
+        return timeDeltaLongDisplayString(0, t, showSeconds).setSuffix("");
     }
 
     /**
@@ -85,7 +82,10 @@ public class TimeDeltaDisplay
     public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showWeeks, boolean showHours, boolean showSeconds) {
         return timeDeltaLongDisplayString(t1, t2, showWeeks, showHours, true, showSeconds);
     }
-    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds)
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds) {
+        return timeDeltaLongDisplayString(t1, t2, true, showWeeks, showHours, showMinutes, showSeconds, true);
+    }
+    public TimeDisplayText timeDeltaLongDisplayString(long t1, long t2, boolean showYears, boolean showWeeks, boolean showHours, boolean showMinutes, boolean showSeconds, boolean fuzzy)
     {
         String value = strEmpty;
         String units = strEmpty;
@@ -113,7 +113,7 @@ public class TimeDeltaDisplay
         long remainingMinutes = numberOfMinutes % 60;
         long remainingSeconds = numberOfSeconds % 60;
 
-        boolean showingYears = (numberOfYears > 0);
+        boolean showingYears = (numberOfYears > 0) && showYears;
         if (showingYears)
             value += String.format(strTimeDeltaFormat, numberOfYears, strYears);
 
@@ -122,14 +122,14 @@ public class TimeDeltaDisplay
             value += (showingYears ? strSpace : strEmpty) +
                     String.format(strTimeDeltaFormat, remainingWeeks, strWeeks);
 
-        boolean showingDays = (remainingDays > 0);
+        boolean showingDays = (remainingDays > 0) || (!showYears && !showWeeks);
         if (showingDays)
             value += (showingYears || showingWeeks ? strSpace : strEmpty) +
-                    String.format(strTimeDeltaFormat, remainingDays, strDays);
+                    String.format(strTimeDeltaFormat, ((!showingYears && !showingWeeks) ? numberOfDays : remainingDays), strDays);
 
         boolean showingHours = (!showingYears && !showingWeeks && remainingHours > 0);
-        boolean showingMinutes = (showMinutes && !showingDays && !showingWeeks && !showingYears && remainingMinutes > 0);
-        boolean showingSeconds = (showSeconds && !showingDays && !showingWeeks && !showingYears && (remainingSeconds > 0));
+        boolean showingMinutes = (showMinutes && (remainingMinutes > 0) && (!fuzzy || (!showingDays && !showingWeeks && !showingYears)));
+        boolean showingSeconds = (showSeconds && (remainingSeconds > 0) && (!fuzzy || (!showingDays && !showingWeeks && !showingYears)));
 
         if (showHours || !showingYears && !showingWeeks && remainingDays < 2)
         {
