@@ -38,10 +38,12 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +53,7 @@ import java.util.concurrent.TimeUnit;
  * good location fix to be acquired; updates progress.
  */
 @SuppressWarnings("Convert2Diamond")
-public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
+public class GetFixTask extends ProgressCallable<LocationProgress, Location> // AsyncTask<Object, LocationProgress, Location>
 {
     public static final String TAG = "LocationTask";
 
@@ -65,6 +67,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     public static final String FUSED_PROVIDER = "fused";    // LocationManager.FUSED_PROVIDER (api31+)
     public static final String[] LOCATION_PROVIDERS = new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, FUSED_PROVIDER };
 
+    private final boolean passiveMode;
     private final String[] locationProviders;
     protected String[] initLocationProviders(@NonNull Context context)
     {
@@ -85,21 +88,13 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     }
 
     private final WeakReference<LocationHelper> helperRef;
-    public GetFixTask(Context parent, LocationHelper helper)
+    public GetFixTask(Context parent, LocationHelper helper, boolean passiveMode)
     {
         this.log_flag = LocationHelperSettings.keepLastLocationLog(parent);
         this.locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<LocationHelper>(helper);
         this.locationProviders = initLocationProviders(parent);
-    }
-
-    public AsyncTask<Object, LocationProgress, Location> executeTask(Object... params)
-    {
-        if (Build.VERSION.SDK_INT >= 11) {
-            return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-        } else {
-            return execute(params);
-        }
+        this.passiveMode = passiveMode;
     }
 
     /**
@@ -171,6 +166,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     private final LocationManager locationManager;
 
     private final GetFixTaskLocationListener locationListener = new GetFixTaskLocationListener();
+
     private class GetFixTaskLocationListener implements LocationListener
     {
         @Override
@@ -277,7 +273,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
      * Prepares UI objects, signals onStarted listeners, and (re)sets flags in preparation for getting a location.
      */
     @Override
-    protected void onPreExecute()
+    public void onPreExecute()
     {
         clearLog();
         final LocationHelper helper = helperRef.get();
@@ -289,7 +285,6 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
             uiObj.enableUI(false);
         }
 
-        signalStarted();
         if (helper != null)
         {
             helper.setGettingFix(true);
@@ -307,11 +302,9 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
      * @return the "best fix" we were able to obtain (potentially null)
      */
     @Override
-    protected Location doInBackground(Object... params)
-    {
-        final boolean passiveMode = (params.length > 0) ? (Boolean)params[0]
-                                                        : false;
 
+    public Location call() throws Exception
+    {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable()
         {
@@ -395,13 +388,13 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
      * @param locations a list of android.location.Location to be displayed during progress update
      */
     @Override
-    protected void onProgressUpdate(LocationProgress... locations)
+    public void onProgressUpdate(Collection<LocationProgress> locations)
     {
         final LocationHelper helper = helperRef.get();
         if (helper != null)
         {
             GetFixUI uiObj = helper.getUI();
-            uiObj.updateUI(locations);
+            uiObj.updateUI(locations.toArray(new LocationProgress[0]));
         }
     }
 
@@ -410,7 +403,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
      * @param result the "best fix" that could be obtained (potentially null)
      */
     @Override
-    protected void onPostExecute(Location result)
+    public void onPostExecute(Location result)
     {
         try {
             removeGpsStatusListener(locationManager);
@@ -432,7 +425,6 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
             uiObj.enableUI(true);
             uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, false, getLog()));
         }
-        signalFinished(result);
     }
 
     /**
@@ -440,7 +432,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
      * @param result the "best fix" that could be obtained (potentially null)
      */
     @Override
-    protected void onCancelled(Location result)
+    public void onCancelled(Location result)
     {
         try {
             removeGpsStatusListener(locationManager);
@@ -462,7 +454,6 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
             uiObj.enableUI(true);
             uiObj.onResult(new GetFixUI.LocationResult(result, elapsedTime, true, getLog()));
         }
-        signalCancelled(result);
     }
 
     private final ArrayList<GetFixTaskListener> listeners = new ArrayList<GetFixTaskListener>();
@@ -485,22 +476,6 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
         }
     }
 
-    protected void signalStarted()
-    {
-        for (GetFixTaskListener listener : listeners)
-        {
-            if (listener != null)
-                listener.onStarted();
-        }
-    }
-    protected void signalFinished(Location result)
-    {
-        for (GetFixTaskListener listener : listeners)
-        {
-            if (listener != null)
-                listener.onFinished(result);
-        }
-    }
     protected void signalCancelled(Location result)
     {
         for (GetFixTaskListener listener : listeners)
@@ -512,7 +487,7 @@ public class GetFixTask extends AsyncTask<Object, LocationProgress, Location>
     }
 
     protected void signalProgress() {
-        onProgressUpdate(new LocationProgress((bestFix != null ? bestFix.getLocation() : null), System.currentTimeMillis() - startTime, getLog()));
+        publishProgress(new LocationProgress((bestFix != null ? bestFix.getLocation() : null), System.currentTimeMillis() - startTime, getLog()));
     }
 
     //////////////////////////////////////////////////

@@ -46,9 +46,11 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 
 /**
  * A helper class that helps to manage a GetFixTask; has methods for starting/stopping the task;
@@ -147,7 +149,7 @@ public class GetFixHelper implements LocationHelper
                 if (isLocationEnabled(activity))
                 {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-                    getFixTask = new GetFixTask(activity, this);
+                    getFixTask = new GetFixTask(activity, this, LocationHelperSettings.loadPrefGpsPassiveMode(activity));
                     getFixTask.setMinElapsed(getMinElapsedTime(activity));
                     getFixTask.setMinElapsedSinceFirstFix(getMinElapsedTimeSinceFirstFix(activity));
                     getFixTask.setAutoStop(autoStop);
@@ -177,7 +179,7 @@ public class GetFixHelper implements LocationHelper
                             }
                         }
                     });
-                    getFixTask.executeTask(LocationHelperSettings.loadPrefGpsPassiveMode(activity));
+                    ExecutorUtils.runProgress("GetFixTask", Executors.newSingleThreadExecutor(), ExecutorUtils.getHandler(), getFixTask, listeners);
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while location disabled; showing a prompt");
@@ -278,7 +280,7 @@ public class GetFixHelper implements LocationHelper
         if (gettingFix && getFixTask != null)
         {
             //Log.d("GetFixHelper", "Canceling getFix");
-            getFixTask.cancel(true);
+            getFixTask.cancel();
         }
     }
 

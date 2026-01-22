@@ -20,11 +20,20 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.location.Location;
 
+import com.forrestguice.util.concurrent.ProgressListener;
+
+import java.util.Collection;
+
 @SuppressWarnings("EmptyMethod")
-public abstract class GetFixTaskListener
+public abstract class GetFixTaskListener implements ProgressListener<GetFixUI.LocationProgress, Location>
 {
+    @Override
     public void onStarted() {}
+    @Override
     public void onFinished(Location result) {}
+    @Override
+    public void onProgressUpdate(Collection<GetFixUI.LocationProgress> values) {}
+
     public void onCancelled() {}
     public void onCancelled(Location result) {
         onCancelled();
