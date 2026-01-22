@@ -168,10 +168,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
     private final Preference.OnPreferenceClickListener onLastRequestPrefClicked = new Preference.OnPreferenceClickListener() {
         @Override
-        public boolean onPreferenceClick(Preference preference) {
+        public boolean onPreferenceClick(Preference preference)
+        {
             Context context = preference.getContext();
             if (context != null && !LocationHelperSettings.lastLocationLog(context).isEmpty()) {
                 showLocationLastRequestReport(context, LocationHelperSettings.lastLocationLog(context));
+            } else if (context != null) {
+                Toast.makeText(context, context.getString(R.string.configLabel_getFix_lastRequest_noreport), Toast.LENGTH_SHORT).show();
             }
             return false;
         }
