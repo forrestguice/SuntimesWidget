@@ -38,6 +38,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.lang.ref.WeakReference;
@@ -270,6 +271,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
     }
 
     /**
+     * runs on UI thread
      * Prepares UI objects, signals onStarted listeners, and (re)sets flags in preparation for getting a location.
      */
     @Override
@@ -285,10 +287,16 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
             uiObj.enableUI(false);
         }
 
-        if (helper != null)
-        {
+        if (helper != null) {
             helper.setGettingFix(true);
         }
+        onPreExecute0();
+    }
+
+    /**
+     * runs on task thread
+     */
+    protected void onPreExecute0() {
         bestFix = null;
         firstFixTime = null;
         elapsedTime = 0;
@@ -305,8 +313,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
 
     public Location call() throws Exception
     {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable()
+        ExecutorUtils.getHandler().post(new Runnable()
         {
             public void run()
             {
