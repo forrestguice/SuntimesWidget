@@ -29,6 +29,7 @@ import android.widget.ListAdapter;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.preference.ListPreference;
 
 public class TextSizePreference extends ListPreference
 {
