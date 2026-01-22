@@ -77,7 +77,7 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-	setUserVisibleHintCompat(isVisibleTouser);
+        setUserVisibleHintCompat(isVisibleToUser);
     }
 
     @CallSuper
