@@ -34,10 +34,10 @@ import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
+
+import com.forrestguice.support.preference.Preference;
 import android.preference.PreferenceManager;
+
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.widget.HorizontalScrollView;
@@ -62,8 +62,9 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.content.FileProvider;
 import com.forrestguice.support.preference.PreferenceFragment;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
@@ -89,10 +90,10 @@ public class PlacesPrefsFragment extends PreferenceFragment
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
         addPreferencesFromResource(R.xml.preference_places);
 
-        Preference managePlacesPref = findPreference("places_manage");
-        Preference clearPlacesPref = findPreference("places_clear");
-        Preference exportPlacesPref = findPreference("places_export");
-        Preference buildPlacesPref = findPreference("places_build");
+        Preference managePlacesPref = (Preference) findPreference("places_manage");
+        Preference clearPlacesPref = (Preference) findPreference("places_clear");
+        Preference exportPlacesPref = (Preference) findPreference("places_export");
+        Preference buildPlacesPref =  (Preference) findPreference("places_build");
         base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
         updateLocationProviderPrefs();
         updateLocationLastRequestInfo(getActivity());
@@ -103,16 +104,16 @@ public class PlacesPrefsFragment extends PreferenceFragment
         CheckBoxPreference debugPref = (CheckBoxPreference) findPreference("getFix_last_log_enabled");
         if (debugPref != null)
         {
-            debugPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            debugPref.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
                     if (!(Boolean) newValue) {
                         LocationHelperSettings.clearLastLocationLog(preference.getContext());
                     }
 
-                    Preference lastRequestPref = findPreference("places_location_last_info");
+                    Preference lastRequestPref = (Preference) findPreference("places_location_last_info");
                     if (lastRequestPref != null) {
                         lastRequestPref.setEnabled((Boolean) newValue);
                     }
@@ -121,7 +122,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             });
         }
 
-        Preference lastRequestPref = findPreference("places_location_last_info");
+        Preference lastRequestPref = (Preference) findPreference("places_location_last_info");
         if (lastRequestPref != null)
         {
             lastRequestPref.setEnabled(LocationHelperSettings.keepLastLocationLog(context));
@@ -248,10 +249,10 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     preference.setEnabled(isEnabled);
                     preference.setChecked(LocationHelperSettings.isProviderRequested(getActivity(), provider));
 
-                    preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+                    preference.setOnPreferenceClickListener(new CheckBoxPreference.OnPreferenceClickListener()
                     {
                         @Override
-                        public boolean onPreferenceClick(Preference preference)
+                        public boolean onPreferenceClick(CheckBoxPreference preference)
                         {
                             if (!hasLocationPermission(getActivity())) {
                                 requestLocationPermissions();

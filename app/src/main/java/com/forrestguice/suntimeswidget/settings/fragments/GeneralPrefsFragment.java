@@ -26,11 +26,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
+
 import android.preference.PreferenceManager;
-import com.forrestguice.support.content.ContextCompat;
+
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -47,6 +45,11 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.PreferenceFragment;
 
 /**
@@ -164,7 +167,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
 
-        Preference introScreenPref = fragment.findPreference("appwidget_0_intro_screen");
+        Preference introScreenPref = (Preference) fragment.findPreference("appwidget_0_intro_screen");
         if (introScreenPref != null)
         {
             introScreenPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
@@ -252,12 +255,12 @@ public class GeneralPrefsFragment extends PreferenceFragment
         }
     }
 
-    public static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
+    public static void initPref_timeFormat(final Activity context, final ListPreference timeformatPref)
     {
-        timeformatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        timeformatPref.setOnPreferenceChangeListener(new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object o)
+            public boolean onPreferenceChange(ListPreference preference, Object o)
             {
                 timeformatPref.setSummary(timeFormatPrefSummary(TimeFormatMode.valueOf((String)o), context));
                 return true;

@@ -2,12 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
+    <com.forrestguice.support.preference.Preference
         android:key="appwidget_0_intro_screen" android:persistent="false"
         android:title="@string/welcome_pref_title"
         android:summary="@string/welcome_pref_summary" />
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_general">
 
         <com.forrestguice.support.preference.ListPreference
@@ -26,26 +26,26 @@
             android:entries="@array/lengthUnits_display" android:entryValues="@array/lengthUnits_values"
             android:defaultValue="@string/default_units_length" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_localize_hemisphere"
             android:title="@string/configLabel_general_localize_hemisphere"
             android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@bool/def_appwidget_0_general_localize_hemisphere" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
             android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@bool/def_appwidget_0_general_showseconds" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
             android:title="@string/configLabel_general_altitude_enabled"
             android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@bool/def_appwidget_0_general_altitude_enabled" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory android:layout="@layout/divider_pref" />
+    <com.forrestguice.support.preference.PreferenceCategory android:layout="@layout/divider_pref" />
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_advanced">
 
         <com.forrestguice.suntimeswidget.settings.SummaryListPreference
@@ -73,7 +73,7 @@
             app:moreHelpButtonText="@string/configAction_onlineHelp"
             />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
     <!--<PreferenceCategory
         android:title="@string/configLabel_experimental">

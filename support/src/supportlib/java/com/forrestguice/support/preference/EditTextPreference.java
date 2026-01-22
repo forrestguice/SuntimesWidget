@@ -71,4 +71,18 @@ public class EditTextPreference extends android.preference.EditTextPreference
             return summary;
         }
     }
+
+    public interface OnPreferenceChangeListener {
+        boolean onPreferenceChange(EditTextPreference preference, Object value);
+    }
+    public void setOnPreferenceChangeListener( EditTextPreference.OnPreferenceChangeListener listener )
+    {
+        setOnPreferenceChangeListener(new android.preference.Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(android.preference.Preference preference, Object o) {
+                return listener.onPreferenceChange(EditTextPreference.this, o);
+            }
+        });
+    }
 }

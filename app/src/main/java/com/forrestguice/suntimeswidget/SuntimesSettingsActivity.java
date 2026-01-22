@@ -26,12 +26,14 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceCategory;
+
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -588,7 +590,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_locale()
     {
-        Preference localeModePref = findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
+        ListPreference localeModePref = (ListPreference) findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
         ListPreference localePref = (ListPreference) findPreference(AppSettings.PREF_KEY_LOCALE);
         LocalePrefsFragment.initPref_locale(this, localeModePref, localePref);
     }
@@ -598,10 +600,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_places()
     {
-        Preference managePlacesPref = findPreference("places_manage");
-        Preference buildPlacesPref = findPreference("places_build");
-        Preference clearPlacesPref = findPreference("places_clear");
-        Preference exportPlacesPref = findPreference("places_export");
+        Preference managePlacesPref = (Preference) findPreference("places_manage");
+        Preference buildPlacesPref = (Preference) findPreference("places_build");
+        Preference clearPlacesPref = (Preference) findPreference("places_clear");
+        Preference exportPlacesPref = (Preference) findPreference("places_export");
         placesPrefBase = new PlacesPrefsFragment.PlacesPrefsBase(this, managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
 
@@ -639,7 +641,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             UIPrefsFragment.loadPref_observerHeight(this, observerHeightPref);
         }
 
-        Preference manage_events = findPreference("manage_events");
+        Preference manage_events = (Preference) findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(UIPrefsFragment.getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
         }
@@ -653,14 +655,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_alarms()
     {
-        Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        Preference batteryOptimization = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
         PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
         AlarmPrefsFragment.removePrefFromCategory(batteryOptimization, alarmsCategory);
 
-        Preference autostart = findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        Preference autostart = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
         AlarmPrefsFragment.removePrefFromCategory(autostart, alarmsCategory);
 
-        Preference dndPermission = findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        Preference dndPermission = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
         PreferenceCategory bedtimeCategory = (PreferenceCategory)findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
         AlarmPrefsFragment.removePrefFromCategory(dndPermission, bedtimeCategory);
     }

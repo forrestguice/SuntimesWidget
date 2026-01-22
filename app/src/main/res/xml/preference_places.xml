@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
+    <com.forrestguice.support.preference.Preference
         android:key="places_manage"
         android:persistent="false"
         android:title="@string/configLabel_places_manage"
         android:icon="?attr/icActionPlace" />
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_location">
 
         <com.forrestguice.support.preference.ListPreference
@@ -26,32 +26,32 @@
             android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
             android:defaultValue="@string/def_getFix_maxAge" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="getFix_passiveMode"
             android:title="@string/configLabel_getFix_passiveMode"
             android:summary="@string/configLabel_getFix_passiveMode_summary"
             android:defaultValue="@bool/def_getFix_passiveMode" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:key="getFix_providers"
         android:title="@string/configLabel_locationproviders" />   <!-- populated at runtime -->
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:key="getFix_debug"
         android:title="@string/configLabel_getFix_lastRequest">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="getFix_last_log_enabled"
             android:title="@string/configLabel_getFix_lastRequest_flag"
             android:defaultValue="false" />
 
-        <Preference
+        <com.forrestguice.support.preference.Preference
             android:key="places_location_last_info"
             android:persistent="false"
             android:title="@string/configLabel_getFix_lastRequest" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
 </PreferenceScreen>

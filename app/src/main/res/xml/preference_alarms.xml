@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category">
 
@@ -54,12 +54,12 @@
             android:entryValues="@array/alarm_hardwarebutton_actions_values"
             android:entries="@array/alarm_hardwarebutton_actions_display" />-->
 
-        <Preference
+        <com.forrestguice.support.preference.Preference
             android:key="app_alarms_batterytopt" android:persistent="false"
             android:title="@string/configLabel_alarms_optWhiteList"
             android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
     <!--<PreferenceCategory
         android:title="@string/configLabel_bedtime"
@@ -75,22 +75,22 @@
 
     </PreferenceCategory>-->
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_bedtime"
         android:key="app_bedtime_category">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_alarms_dnd_permission" android:persistent="false"
             android:title="@string/configLabel_dnd"
             android:summary="@string/configLabel_permissionGranted" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_alarmFullscreen"
         android:key="app_alarms_category3">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_alarms_bright"
             android:title="@string/configLabel_alarms_brightMode"
             android:summary="@string/configLabel_alarms_brightMode_summary"
@@ -124,9 +124,9 @@
             android:widgetLayout="@layout/layout_pref_color"
             android:defaultValue="@color/def_app_alarms_bright_color_end" />-->
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_alarmQuick_notification"
         android:key="app_alarms_category2">
 
@@ -140,9 +140,9 @@
             app:minValue="@integer/minAlarmAutoDismissMillis"
             app:maxValue="@integer/maxAlarmAutoDismissMillis" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_alarmSounds" >
 
         <com.forrestguice.support.preference.EditTextPreference
@@ -157,24 +157,24 @@
             android:summary="@string/configLabel_alarms_allRingtones_summary"
             android:defaultValue="@bool/def_app_alarms_allringtones" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/configLabel_alarmMisc">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="dialog_importwarning_donotshowagain"
             android:title="@string/importalarms_title_warning"
             android:summary="@string/dialog_msg_donotshowagain"
             android:defaultValue="false" />
 
-        <Preference
+        <com.forrestguice.support.preference.Preference
             android:key="app_alarms_bootcompleted"
             android:title="@string/configLabel_alarms_bootcompleted"
             android:summary="@string/configLabel_alarms_bootcompleted_summary"
             android:defaultValue="false" />
 
-        <Preference
+        <com.forrestguice.support.preference.Preference
             android:key="app_alarms_clearall"
             android:title="@string/configLabel_alarms_clearall"
             android:summary="@string/configLabel_alarms_clearall_summary"

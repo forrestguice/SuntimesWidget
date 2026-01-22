@@ -189,4 +189,18 @@ public class ListPreference extends android.preference.ListPreference
             return summary;
         }
     }
+
+    public interface OnPreferenceChangeListener {
+        boolean onPreferenceChange(ListPreference preference, Object value);
+    }
+    public void setOnPreferenceChangeListener( OnPreferenceChangeListener listener )
+    {
+        setOnPreferenceChangeListener(new android.preference.Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(android.preference.Preference preference, Object o) {
+                return listener.onPreferenceChange(ListPreference.this, o);
+            }
+        });
+    }
 }

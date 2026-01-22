@@ -38,24 +38,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
+
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
-import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
-import com.forrestguice.support.app.ActivityCompat;
-import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.app.NotificationManagerCompat;
-import com.forrestguice.support.app.NotificationManagerHelper;
-import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -72,6 +65,15 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.support.app.ActivityCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.app.NotificationManagerHelper;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
 import com.forrestguice.support.preference.PreferenceFragment;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
@@ -158,7 +160,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     protected void setBootCompletedPrefEnabled(boolean value)
     {
-        final Preference pref = findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+        final Preference pref = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
         if (pref != null) {
             pref.setEnabled(value);
         }
@@ -179,7 +181,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(1,  R.color.text_accent_dark));
         typedArray.recycle();
 
-        Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        Preference batteryOptimization = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
         if (batteryOptimization != null)
         {
             if (Build.VERSION.SDK_INT >= 23)
@@ -193,7 +195,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference autostartPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        Preference autostartPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
         if (autostartPref != null)
         {
             if (AlarmSettings.hasAutostartSettings(context))
@@ -207,7 +209,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
+        Preference notificationPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
@@ -233,7 +235,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
+        Preference fullscreenNotificationPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
         if (fullscreenNotificationPrefs != null)
         {
             fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
@@ -248,7 +250,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
+        Preference volumesPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
         }
@@ -261,13 +263,13 @@ public class AlarmPrefsFragment extends PreferenceFragment
             brightColorsPref.setPreviewIntentBuilder(brightColorPreviewIntent);
         }
 
-        Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
+        CheckBoxPreference powerOffAlarmsPref = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
         if (powerOffAlarmsPref != null)
         {
-            powerOffAlarmsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            powerOffAlarmsPref.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
                     Activity activity = fragment.getActivity();
                     boolean enabled = (Boolean)newValue;
@@ -312,10 +314,10 @@ public class AlarmPrefsFragment extends PreferenceFragment
         if (dndRuleBased != null)
         {
             dndRuleBased.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context));
-            dndRuleBased.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            dndRuleBased.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
                     Context context = preference.getContext();
                     if (context != null) {
@@ -329,13 +331,13 @@ public class AlarmPrefsFragment extends PreferenceFragment
         initPref_alarms_bootCompleted(fragment);
         initPref_alarms_clearAll(fragment);
 
-        Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
+        CheckBoxPreference showLauncher = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
         {
-            showLauncher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            showLauncher.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
                     Context context = preference.getContext();
                     if (context != null)
@@ -396,7 +398,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             return;
         }
 
-        final Preference bootCompletedPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+        final Preference bootCompletedPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
         if (bootCompletedPref != null)
         {
             bootCompletedPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
@@ -439,7 +441,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             return;
         }
 
-        final Preference clearAllPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
+        final Preference clearAllPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
         if (clearAllPref != null) {
             clearAllPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
@@ -566,11 +568,11 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static Preference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
+    private static CheckBoxPreference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
     {
-        return new Preference.OnPreferenceClickListener() {
+        return new CheckBoxPreference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference)
+            public boolean onPreferenceClick(CheckBoxPreference preference)
             {
                 BedtimeSettings.startDoNotDisturbAccessActivity(context);
                 return false;
@@ -677,8 +679,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
         } else return false;
     }
 
-    public static void removePrefFromCategory(Preference pref, PreferenceCategory category)
-    {
+    public static void removePrefFromCategory(Preference pref, PreferenceCategory category) {
+        if (pref != null && category != null) {
+            category.removePreference(pref);
+        }
+    }
+    public static void removePrefFromCategory(CheckBoxPreference pref, PreferenceCategory category) {
         if (pref != null && category != null) {
             category.removePreference(pref);
         }

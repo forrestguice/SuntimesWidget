@@ -23,11 +23,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+
 import android.preference.PreferenceManager;
 
-import com.forrestguice.support.preference.PreferenceFragment;
 import com.forrestguice.util.Pair;
 import android.util.Log;
 
@@ -36,6 +34,10 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -62,7 +64,7 @@ public class LocalePrefsFragment extends PreferenceFragment
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_locale(PreferenceFragment fragment)
     {
-        Preference localeModePref = fragment.findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
+        ListPreference localeModePref = (ListPreference) fragment.findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
         ListPreference localePref = (ListPreference) fragment.findPreference(AppSettings.PREF_KEY_LOCALE);
         initPref_locale(fragment.getActivity(), localeModePref, localePref);
     }
@@ -98,7 +100,7 @@ public class LocalePrefsFragment extends PreferenceFragment
         return new Pair<>(entries, values);
     }
 
-    public static void initPref_locale(final Activity activity, Preference localeModePref, ListPreference localePref)
+    public static void initPref_locale(final Activity activity, ListPreference localeModePref, ListPreference localePref)
     {
         Pair<CharSequence[], CharSequence[]> a = getEntries(activity);
         localePref.setEntries(a.first);
@@ -108,10 +110,10 @@ public class LocalePrefsFragment extends PreferenceFragment
         localePref.setEnabled(localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE);
 
         if (localePref != null) {
-            localePref.setOnPreferenceChangeListener(onLocaleChanged(activity, localePref));
+            localePref.setOnPreferenceChangeListener(onLocaleChanged1(activity));
         }
         if (localeModePref != null) {
-            localeModePref.setOnPreferenceChangeListener(onLocaleChanged(activity, localeModePref));
+            localeModePref.setOnPreferenceChangeListener(onLocaleChanged(activity));
         }
     }
 
@@ -136,11 +138,21 @@ public class LocalePrefsFragment extends PreferenceFragment
         return index;
     }
 
-    protected static Preference.OnPreferenceChangeListener onLocaleChanged(final Context context, final Preference pref)
+    protected static ListPreference.OnPreferenceChangeListener onLocaleChanged(final Context context)
     {
-        return new Preference.OnPreferenceChangeListener() {
+        return new ListPreference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        };
+    }
+    protected static ListPreference.OnPreferenceChangeListener onLocaleChanged1(final Context context)
+    {
+        return new ListPreference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }

@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_appearance">
 
         <com.forrestguice.support.preference.ListPreference
@@ -36,9 +36,9 @@
             android:entries="@array/textSize_display" android:entryValues="@array/textSize_values"
             android:defaultValue="@string/def_app_appearance_textsize" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_navigation">
 
         <com.forrestguice.support.preference.ListPreference
@@ -57,71 +57,71 @@
             android:entries="@array/launcherMode_display" android:entryValues="@array/launcherMode_values"
             android:defaultValue="@string/def_app_launcher_mode" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:key="custom_events"
         android:title="@string/configLabel_ui_fields1">
 
-        <Preference
+        <com.forrestguice.support.preference.Preference
             android:key="manage_events"
             android:title="@string/configLabel_manageEvents"
             android:icon="?attr/icActionEvents"
             android:summary="@string/configLabel_manageEvents_summary"
             android:persistent="false" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_ui_fields">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_3"
             android:title="@string/timeMode_astronomical"
             android:defaultValue="true" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_2"
             android:title="@string/timeMode_nautical"
             android:defaultValue="true" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_6"
             android:title="@string/configLabel_ui_showbluehour"
             android:defaultValue="@bool/def_app_ui_showbluehour" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_1"
             android:title="@string/timeMode_civil"
             android:defaultValue="true" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_0"
             android:title="@string/timeMode_official"
             android:defaultValue="true" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_4"
             android:title="@string/timeMode_noon"
             android:defaultValue="true" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_5"
             android:title="@string/configLabel_ui_showgoldhour"
             android:defaultValue="@bool/def_app_ui_showgoldhour" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showfields_7"
             android:title="@string/timeMode_midnight"
             android:defaultValue="@bool/def_app_ui_showmidnight" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
     <!--<PreferenceCategory
         android:title="@string/configLabel_ui_showheaders">
     </PreferenceCategory>-->
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_ui">
 
         <com.forrestguice.support.preference.ListPreference
@@ -131,7 +131,7 @@
             android:entries="@array/emphasizefield_display" android:entryValues="@array/emphasizefield_values"
             android:defaultValue="@string/def_app_ui_emphasizefield" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showheader_icon"
             android:title="@string/configLabel_ui_showheader_icon"
             android:defaultValue="@bool/def_app_ui_showheader_icon" />
@@ -143,13 +143,13 @@
             android:entries="@array/headerText_display" android:entryValues="@array/headerText_values"
             android:defaultValue="@string/def_app_ui_showheader_text" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showcoordinates"
             android:title="@string/configLabel_ui_showcoordinates"
             android:summary="@string/configLabel_ui_showcoordinates_summary"
             android:defaultValue="@bool/def_app_ui_showcoordinates" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showmapbutton"
             android:title="@string/configLabel_ui_showmapbutton"
             android:summary="@string/configLabel_ui_showmapbutton_summary"
@@ -161,7 +161,7 @@
             android:summary="@string/configLabel_ui_showdatasource_summary"
             android:defaultValue="@bool/def_app_ui_showdatasource" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showcompare"
             android:title="@string/configLabel_general_showComparison"
             android:summary="@string/configLabel_general_showComparison_summary"
@@ -174,36 +174,36 @@
             android:entries="@array/compareMode_display" android:entryValues="@array/compareMode_values"
             android:defaultValue="@string/def_appwidget_0_general_comparemode" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showlightmap"
             android:title="@string/configLabel_ui_showLightmap"
             android:summary="@string/configLabel_ui_showLightmap_summary"
             android:defaultValue="@bool/def_app_ui_showlightmap" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showmoon"
             android:title="@string/configLabel_ui_showmoon"
             android:summary="@string/configLabel_ui_showmoon_summary"
             android:defaultValue="@bool/def_app_ui_showmoon" />
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showmoon_noon"
             android:title="@string/configLabel_ui_showmoon_noon"
             android:summary="@string/configLabel_ui_showmoon_noon_summary"
             android:defaultValue="@bool/def_app_ui_showmoon_noon" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showequinox"
             android:title="@string/configLabel_ui_showEquinox"
             android:summary="@string/configLabel_ui_showEquinox_summary"
             android:defaultValue="@bool/def_app_ui_showequinox" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showequinox_date"
             android:title="@string/configLabel_ui_showEquinoxDate"
             android:summary="@string/configLabel_ui_showEquinoxDate_summary"
             android:defaultValue="@bool/def_app_ui_showequinox_date" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showcrossquarter"
             android:title="@string/configLabel_ui_showCrossQuarter"
             android:summary="@string/configLabel_ui_showCrossQuarter_summary"
@@ -222,41 +222,41 @@
             android:summary="@string/configLabel_general_observerheight_summary"
             android:defaultValue="@string/def_appwidget_0_general_observerheight" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_ui_showwarnings"
             android:title="@string/configLabel_ui_showWarnings"
             android:summary="@string/configLabel_ui_showWarnings_summary"
             android:defaultValue="@bool/def_app_ui_showwarnings" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_accessibility_verbose"
             android:title="@string/configLabel_accessibility_verbose"
             android:summary="@string/configLabel_accessibility_verbose_summary"
             android:defaultValue="@bool/def_app_accessibility_verbose" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_ui_misc">
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showweeks"
             android:title="@string/configLabel_general_showWeeks"
             android:summary="@string/configLabel_general_showWeeks_summary" android:defaultValue="@bool/def_appwidget_0_general_showweeks" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showhours"
             android:title="@string/configLabel_general_showHours"
             android:summary="@string/configLabel_general_showHours_summary" android:defaultValue="@bool/def_appwidget_0_general_showhours" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showtimedate"
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@bool/def_appwidget_0_general_showtimedate" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_action">
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
@@ -295,6 +295,6 @@
             android:defaultValue="@string/def_app_ui_notetapaction"
             app:actionButtonContentDescription="@string/configActionDesc_actionList" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
 </PreferenceScreen>

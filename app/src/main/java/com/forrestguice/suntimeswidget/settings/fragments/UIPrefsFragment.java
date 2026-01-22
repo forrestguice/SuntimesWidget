@@ -27,10 +27,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
+
 import android.preference.PreferenceManager;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -66,9 +63,17 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 import com.forrestguice.suntimeswidget.views.Toast;
+
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatDelegateHelper;
+
+import com.forrestguice.support.preference.EditTextPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
 import com.forrestguice.support.preference.PreferenceFragment;
+
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
@@ -155,13 +160,13 @@ public class UIPrefsFragment extends PreferenceFragment
             loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
         }
 
-        Preference manage_events = fragment.findPreference("manage_events");
+        Preference manage_events = (Preference) fragment.findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
             manage_events.setOrder(-91);
         }
 
-        Preference navigation = fragment.findPreference("app_navigation_mode");
+        ListPreference navigation = (ListPreference) fragment.findPreference("app_navigation_mode");
         if (navigation != null) {
             navigation.setOnPreferenceChangeListener(onNavigationChanged(fragment.getActivity(), navigation));
         }
@@ -174,7 +179,7 @@ public class UIPrefsFragment extends PreferenceFragment
 
     public static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
     {
-        ArrayList<Preference> eventPrefs = new ArrayList<>();
+        ArrayList<CheckBoxPreference> eventPrefs = new ArrayList<>();
 
         Set<String> eventIDs = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
         for (final String eventID : eventIDs)
@@ -221,14 +226,14 @@ public class UIPrefsFragment extends PreferenceFragment
         }
 
         boolean sortByName = false;    // TODO: optional
-        Collections.sort(eventPrefs, new Comparator<Preference>() {
+        Collections.sort(eventPrefs, new Comparator<CheckBoxPreference>() {
             @Override
-            public int compare(Preference o1, Preference o2) {
+            public int compare(CheckBoxPreference o1, CheckBoxPreference o2) {
                 return o1.getTitle().toString().compareTo(o2.getTitle().toString());
             }
         });
         for (int i=0; i<eventPrefs.size(); i++) {
-            Preference p = eventPrefs.get(i);
+            CheckBoxPreference p = eventPrefs.get(i);
             if (sortByName) {
                 p.setOrder(i+1);
             }
@@ -236,12 +241,12 @@ public class UIPrefsFragment extends PreferenceFragment
         }
     }
 
-    protected static Preference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
+    protected static CheckBoxPreference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new CheckBoxPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue) {
                 Boolean checked = (Boolean) newValue;
                 if (!checked)
                 {
@@ -271,11 +276,11 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    protected static Preference.OnPreferenceChangeListener onNavigationChanged(final Context context, final Preference pref)
+    protected static ListPreference.OnPreferenceChangeListener onNavigationChanged(final Context context, final ListPreference pref)
     {
-        return new Preference.OnPreferenceChangeListener() {
+        return new ListPreference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -285,10 +290,10 @@ public class UIPrefsFragment extends PreferenceFragment
     public static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
     {
         field.setChecked(value);
-        field.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        field.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object o)
+            public boolean onPreferenceChange(CheckBoxPreference preference, Object o)
             {
                 if (context != null) {
                     AppSettings.saveShowFieldsPref(context, k, (Boolean) o);
@@ -315,12 +320,12 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
+    private static ListPreference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 //overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
                 Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
@@ -546,12 +551,12 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    private static Preference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
+    private static ListPreference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 pref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, (String)newValue, requestCode));
                 return true;
             }
@@ -572,10 +577,10 @@ public class UIPrefsFragment extends PreferenceFragment
 
         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         pref.setMetric(units == LengthUnit.METRIC);
-        pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        pref.setOnPreferenceChangeListener(new EditTextPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            public boolean onPreferenceChange(EditTextPreference preference, Object newValue)
             {
                 try {
                     double doubleValue = Double.parseDouble((String)newValue);

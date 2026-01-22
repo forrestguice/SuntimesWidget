@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
+    <com.forrestguice.support.preference.PreferenceCategory
         android:title="@string/configLabel_locale">
 
         <com.forrestguice.support.preference.ListPreference
@@ -20,6 +20,6 @@
             android:entries="@array/locale_display" android:entryValues="@array/locale_values"
             android:defaultValue="@string/def_app_locale" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
 </PreferenceScreen>
