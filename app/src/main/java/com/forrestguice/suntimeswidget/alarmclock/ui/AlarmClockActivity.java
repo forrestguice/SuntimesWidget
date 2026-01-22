@@ -737,7 +737,7 @@ public class AlarmClockActivity extends AppCompatActivity
         View bottomSheet = findViewById(R.id.app_bottomsheet);
         sheetBehavior = BottomSheetBehaviorCompat.from(bottomSheet);
         sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehaviorCompat.BottomSheetCallback()
+        sheetBehavior.addBottomSheetCallback(new BottomSheetBehaviorCompat.BottomSheetCallback()
         {
             @Override
             public void onStateChanged(@NonNull View view, int newState)

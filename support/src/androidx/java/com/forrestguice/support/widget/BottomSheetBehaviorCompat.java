@@ -34,9 +34,9 @@ public class BottomSheetBehaviorCompat
         return behavior;
     }
 
-    public void setBottomSheetCallback(final BottomSheetCallback callback)
+    public void addBottomSheetCallback(final BottomSheetCallback callback)
     {
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
+        behavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()    // setBottomSheetCallback is deprecated
         {
             @Override
             public void onStateChanged(@androidx.annotation.NonNull View view, int i) {
