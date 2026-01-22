@@ -37,6 +37,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ExecutorUtils
 {
@@ -159,23 +160,42 @@ public class ExecutorUtils
             @Override
             public void run()
             {
+                AtomicBoolean waitForPreExecute = new AtomicBoolean(false);
                 final T result;
                 try {
                     //Log.d("DEBUG", "runProgress: RUNNING " + callable.toString());
                     callable.setStatus(ProgressCallable.Status.RUNNING);
+
+                    // pre-execute
                     if (!callable.isCancelled())
                     {
-                        postCallback(handler, new HandlerCallback() {
+                        waitForPreExecute.set(true);
+                        postCallback(handler, new HandlerCallback()
+                        {
                             @Override
-                            public void post() {
+                            public void post()
+                            {
                                 callable.onPreExecute();
                                 for (TaskListener<T> listener : listeners) {
                                     listener.onStarted();
                                 }
+                                synchronized (waitForPreExecute) {
+                                    waitForPreExecute.set(false);
+                                    waitForPreExecute.notifyAll();
+                                }
                             }
                         });
                     }
+                    synchronized (waitForPreExecute) {
+                        while (waitForPreExecute.get()) {
+                            waitForPreExecute.wait();
+                        }
+                    }
+
+                    // execute
                     result = (callable.isCancelled() ? null : callable.call());
+
+                    // post execute
                     if (callable.isCancelled())
                     {
                         postCallback(handler, new HandlerCallback()
