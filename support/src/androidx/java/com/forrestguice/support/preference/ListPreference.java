@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.support.preference;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -33,7 +33,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimes.support.R;
 
 /**
  * A custom ListPreference to work around some bugs pre api 19.

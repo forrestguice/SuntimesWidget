@@ -5,7 +5,7 @@
     <PreferenceCategory
         android:title="@string/configLabel_appearance">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_appearance_theme"
             android:title="@string/configLabel_appearance_mode"
             android:dialogTitle="@string/configLabel_appearance_mode"
@@ -41,7 +41,7 @@
     <PreferenceCategory
         android:title="@string/configLabel_navigation">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_navigation_mode"
             android:title="@string/configLabel_navigation_mode"
             android:dialogTitle="@string/configLabel_navigation_mode"
@@ -49,7 +49,7 @@
             android:entries="@array/navMode_display" android:entryValues="@array/navMode_values"
             android:defaultValue="@string/def_app_navigation_mode"/>
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_launcher_mode"
             android:title="@string/configLabel_launcherMode"
             android:dialogTitle="@string/configLabel_launcherMode"
@@ -124,7 +124,7 @@
     <PreferenceCategory
         android:title="@string/configLabel_ui">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_ui_emphasizefield"
             android:title="@string/configLabel_ui_emphasizefield_text"
             android:summary="@string/configLabel_ui_emphasizefield_summary"
@@ -136,7 +136,7 @@
             android:title="@string/configLabel_ui_showheader_icon"
             android:defaultValue="@bool/def_app_ui_showheader_icon" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_ui_showheader_text1"
             android:title="@string/configLabel_ui_showheader_text"
             android:summary="@string/configLabel_ui_showheader_text_summary"
@@ -167,7 +167,7 @@
             android:summary="@string/configLabel_general_showComparison_summary"
             android:defaultValue="@bool/def_appwidget_0_general_showcompare" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="appwidget_0_general_comparemode"
             android:title="@string/configLabel_general_compareMode"
             android:summary="%s"
@@ -209,7 +209,7 @@
             android:summary="@string/configLabel_ui_showCrossQuarter_summary"
             android:defaultValue="@bool/def_app_ui_showcrossquarter" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="appwidget_0_general_trackingmode"
             android:title="@string/configLabel_ui_solsticeTrackingMode"
             android:summary="@string/configLabel_ui_solsticeTrackingMode_summary"

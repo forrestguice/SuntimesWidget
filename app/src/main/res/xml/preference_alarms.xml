@@ -6,7 +6,7 @@
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_alarms_dismiss_challenge"
             android:title="@string/configLabel_alarms_dismissChallenge"
             android:dialogTitle="@string/configLabel_alarms_dismissChallenge"

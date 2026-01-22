@@ -4,7 +4,7 @@
     <PreferenceCategory
         android:title="@string/configLabel_locale">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_locale_mode"
             android:title="@string/configLabel_localeMode"
             android:dialogTitle="@string/configLabel_localeMode"
@@ -12,7 +12,7 @@
             android:entries="@array/localeMode_display" android:entryValues="@array/localeMode_values"
             android:defaultValue="@string/def_app_locale_mode" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="app_locale"
             android:title="@string/configLabel_localeSelect"
             android:dialogTitle="@string/configLabel_localeSelect"
