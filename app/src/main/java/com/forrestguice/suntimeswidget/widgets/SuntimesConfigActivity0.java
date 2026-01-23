@@ -76,7 +76,7 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.about.AboutDialog;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
