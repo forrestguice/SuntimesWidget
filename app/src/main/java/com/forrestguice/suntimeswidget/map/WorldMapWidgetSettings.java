@@ -50,6 +50,7 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_SUNSHADOW = "sunshadow";
     public static final String PREF_KEY_WORLDMAP_MOONLIGHT = "moonlight";
     public static final String PREF_KEY_WORLDMAP_LOCATION = "showlocation";
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";    // deprecated: this flag replaced by enum/string PREF_KEY_WORLDMAP_SPEED
 

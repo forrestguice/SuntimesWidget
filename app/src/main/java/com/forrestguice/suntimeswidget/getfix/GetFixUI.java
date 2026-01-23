@@ -44,6 +44,7 @@ public abstract class GetFixUI
     }
 
     public abstract void enableUI(boolean value);
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     public abstract void updateUI(Location... locations);
     public abstract void showProgress(boolean showProgress);
