@@ -27,13 +27,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.NotificationManagerHelper;
 
+/**
+ * This ConditionProviderService is enabled by @bool/supports_condition_service; true for [api24 - api28].
+ * It is not supported for earlier versions, and deprecated in later versions. The static methods
+ * in this class are used to manage the state of the Bedtime AutomaticZenRule.
+ */
+@SuppressWarnings("deprecation")
 @TargetApi(24)
 public class BedtimeConditionService extends ConditionProviderService
 {
@@ -45,14 +53,18 @@ public class BedtimeConditionService extends ConditionProviderService
 
     @Override
     public void onConnected() {
-        Log.d("DEBUG", "BedtimeConditionService :: onConnected");
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: onConnected");
+        }
         registerReceiver(receiver, getReceiverIntentFilter(), REQUIRED_PERMISSION(), null);
     }
 
     @Override
     public void onDestroy()
     {
-        Log.d("DEBUG", "BedtimeConditionService :: onDestroy");
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: onDestroy");
+        }
         super.onDestroy();
         unregisterReceiver(receiver);
     }
@@ -62,7 +74,9 @@ public class BedtimeConditionService extends ConditionProviderService
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            Log.d("DEBUG", "BedtimeConditionService :: onReceive: " + intent.getAction());
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "BedtimeConditionService :: onReceive: " + intent.getAction());
+            }
             String action = intent.getAction();
             if (ACTION_BEDTIME_UPDATE.equals(action)) {
                 notifyCondition();
@@ -84,7 +98,9 @@ public class BedtimeConditionService extends ConditionProviderService
     @Override
     public void onSubscribe(Uri conditionId)
     {
-        Log.d("DEBUG", "BedtimeConditionService :: onSubscribe: " + conditionId);
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: onSubscribe: " + conditionId);
+        }
         notifyCondition();
     }
 
@@ -93,28 +109,34 @@ public class BedtimeConditionService extends ConditionProviderService
     }
     protected void notifyCondition(boolean value)
     {
-        Log.d("DEBUG", "BedtimeConditionService :: notifyCondition: " + value);
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: notifyCondition: " + value);
+        }
         String conditionSummary = value ? getString(R.string.msg_bedtime_active) : "";
-        notifyCondition( BedtimeConditionService.createAutomaticZenRuleCondition(conditionSummary, value) );
+        notifyCondition( createAutomaticZenRuleCondition(conditionSummary, value) );
     }
 
     @Override
     public void onUnsubscribe(Uri conditionId) {
-        Log.d("DEBUG", "BedtimeConditionService :: onUnsubscribe: " + conditionId);
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: onUnsubscribe: " + conditionId);
+        }
     }
 
     @Override
     public void onRequestConditions(int relevance)
     {
         super.onRequestConditions(relevance);
-        Log.d("DEBUG", "BedtimeConditionService :: onRequestConditions: " + relevance);
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "BedtimeConditionService :: onRequestConditions: " + relevance);
+        }
     }
 
     public static String getAutomaticZenRuleName(Context context) {
         return context.getString(R.string.configLabel_bedtime_zenrule_name);
     }
     public static Uri getAutomaticZenRuleConditionId() {
-        return Uri.parse("condition://bedtime");
+        return Uri.parse("condition://bedtime");   // note: this is not the same as the AutomaticZenRule id, which is a random id issued when calling `addAutomaticZenRule`
     }
 
     @TargetApi(24)
@@ -124,7 +146,11 @@ public class BedtimeConditionService extends ConditionProviderService
         String ruleName = getAutomaticZenRuleName(context);
         Uri conditionId = getAutomaticZenRuleConditionId();
         ComponentName componentName = new ComponentName(context, BedtimeConditionService.class);
-        return new AutomaticZenRule(ruleName, componentName, conditionId, filter, enabled);
+        ComponentName configComponent = new ComponentName(context, BedtimeActivity.class);
+
+        AutomaticZenRule rule = new AutomaticZenRule(ruleName, componentName, conditionId, filter, enabled);
+        rule = NotificationManagerHelper.setAutomaticZenRuleConfigurationActivity(rule, configComponent);
+        return rule;
     }
 
     @TargetApi(23)
@@ -147,11 +173,27 @@ public class BedtimeConditionService extends ConditionProviderService
     @TargetApi(24)
     public static void triggerBedtimeAutomaticZenRule(final Context context, boolean value)
     {
-        Log.d("DEBUG", "BedtimeConditionService :: triggerAutomaticZenRule: " + value);
-        Intent intent = new Intent();
-        intent.setAction(ACTION_BEDTIME_UPDATE);
-        intent.setPackage(BuildConfig.APPLICATION_ID);
-        context.sendBroadcast(intent);
+        if (context.getResources().getBoolean(R.bool.supports_condition_service))
+        {
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "BedtimeConditionService :: triggerAutomaticZenRule: " + value);
+            }
+            Intent intent = new Intent();
+            intent.setAction(ACTION_BEDTIME_UPDATE);
+            intent.setPackage(BuildConfig.APPLICATION_ID);
+            context.sendBroadcast(intent);
+
+        } else {
+            if (Build.VERSION.SDK_INT >= 29)
+            {
+                if (BuildConfig.DEBUG) {
+                    Log.d("DEBUG", "NotificationManager :: setAutomaticZenRuleState: " + value + ", " + BedtimeSettings.getRecentAutomaticZenRuleID(context));
+                }
+                String conditionSummary = (value ? context.getString(R.string.msg_bedtime_active) : "");
+                Condition condition = createAutomaticZenRuleCondition(conditionSummary, value);
+                NotificationManagerHelper.setAutomaticZenRuleState(context, BedtimeSettings.getRecentAutomaticZenRuleID(context), condition);
+            }
+        }
     }
 
 }

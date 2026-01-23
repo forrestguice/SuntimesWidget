@@ -402,7 +402,7 @@
         <service
             android:name=".alarmclock.bedtime.BedtimeConditionService"
             android:exported="true"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/supports_condition_service"
             android:directBootAware="true"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
@@ -416,7 +416,7 @@
         </service>
 
         <service android:name=".alarmclock.AlarmJobService"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name=".alarmclock.AlarmNotifications$NotificationService"
@@ -459,14 +459,14 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
         <activity android:name=".tiles.TileLockScreenActivity" android:theme="@style/LockScreenActivityStyle"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.BedtimeTileService"
             android:exported="true"
             android:label="@string/configLabel_bedtime"
             android:icon="@drawable/ic_action_bedtime"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
@@ -478,42 +478,42 @@
             android:exported="true"
             android:label="@string/app_name_alarmtile"
             android:icon="@drawable/ic_action_alarms"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.AlarmTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.ClockTileService"
             android:exported="true"
             android:label="@string/app_name_clocktile"
             android:icon="@drawable/ic_action_time"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.ClockTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.NextEventTileService"
             android:exported="true"
             android:label="@string/app_name_eventtile"
             android:icon="@drawable/ic_action_timereset"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.NextEventTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
@@ -605,7 +605,7 @@
         <receiver
             android:name=".widgets.SuntimesWidget1"
             android:exported="true"
-            android:enabled="@bool/api_post_14"
+            android:enabled="@bool/api_14_plus"
             android:label="@string/app_name_widget1"
             android:icon="@mipmap/ic_launcher">   <!-- TODO: icon -->
 
@@ -625,7 +625,7 @@
         <service
             android:name=".widgets.SuntimesWidget1Service"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:enabled="@bool/api_post_14" />
+            android:enabled="@bool/api_14_plus" />
 
         <!-- Widget 1 Configuration Activity -->
         <activity
@@ -963,7 +963,7 @@
         <service
             android:name=".widgets.AlarmWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:enabled="@bool/api_post_14" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
+            android:enabled="@bool/api_14_plus" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Alarms (3x2)                                                        -->

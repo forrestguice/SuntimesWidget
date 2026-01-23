@@ -1,5 +1,8 @@
 package com.forrestguice.support.app;
 
+import android.app.AutomaticZenRule;
+import android.content.ComponentName;
+import android.service.notification.Condition;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -46,5 +49,13 @@ public class NotificationManagerHelper
             Log.e("NotificationManager", methodName + ": false; object is null!");
             return defaultValue;
         }
+    }
+
+    public static AutomaticZenRule setAutomaticZenRuleConfigurationActivity(AutomaticZenRule rule, ComponentName component) {
+        return rule;
+    }
+
+    public static void setAutomaticZenRuleState(Context context, String id, Condition condition) {
+        // EMPTY; older versions make changes to AutomaticZenRuleState using a ConditionProviderService
     }
 }

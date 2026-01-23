@@ -397,11 +397,25 @@ public class BedtimeSettings
                     ruleId = notifications.addAutomaticZenRule(BedtimeConditionService.createAutomaticZenRule(context, enabled));
                     Log.d("BedtimeSettings", "Added AutomaticZenRule " + ruleId + " (" + enabled + ")");
                 }
-                return ruleId;
+                return saveRecentAutomaticZenRuleID(context, ruleId);
             }
-            return null;
+            return saveRecentAutomaticZenRuleID(context, null);
         }
-        return null;
+        return saveRecentAutomaticZenRuleID(context, null);
+    }
+
+    public static final String PREF_KEY_ZENRULE_ID = "zenruleid";
+    public static String saveRecentAutomaticZenRuleID(Context context, String id)
+    {
+        Log.d("DEBUG", "saveRecentAutomaticZenRuleID: " + id);
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(PREF_KEY_ZENRULE_ID, id);
+        prefs.apply();
+        return id;
+    }
+    public static String getRecentAutomaticZenRuleID(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREF_KEY_ZENRULE_ID, null);
     }
 
     public static void clearAutomaticZenRules(Context context)
@@ -416,6 +430,7 @@ public class BedtimeSettings
                     notifications.removeAutomaticZenRule(id);
                 }
             }
+            saveRecentAutomaticZenRuleID(context, null);
         }
     }
 

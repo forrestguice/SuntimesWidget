@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="api_pre_14">true</bool>
-    <bool name="api_post_14">false</bool>
-    <bool name="api_post_24">false</bool>
+    <bool name="api_14_plus">false</bool>
+    <bool name="api_24_plus">false</bool>
     <bool name="is_watch">false</bool>
+    <bool name="supports_condition_service">false</bool>
 
     <attr name="dialogFrame" format="reference" />
     <attr name="dialogBackground" format="reference" />
