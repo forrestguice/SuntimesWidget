@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.about;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;

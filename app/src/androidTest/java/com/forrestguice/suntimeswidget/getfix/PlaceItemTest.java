@@ -1,7 +1,6 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.os.Parcel;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.core.Location;

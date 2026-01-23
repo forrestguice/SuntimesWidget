@@ -25,7 +25,6 @@ import android.content.Intent;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
 import com.forrestguice.util.SuntimesJUnitTestRunner;

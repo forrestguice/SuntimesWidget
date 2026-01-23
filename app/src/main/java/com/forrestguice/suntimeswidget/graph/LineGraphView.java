@@ -19,8 +19,6 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -38,7 +36,6 @@ import com.forrestguice.util.concurrent.ExecutorProvider;
 
 import java.util.Calendar;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;

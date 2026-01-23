@@ -17,7 +17,6 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -51,7 +50,6 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
-import com.forrestguice.suntimeswidget.getfix.DeletePlaceTask;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -68,7 +66,6 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.text.TimeDisplayText;
 

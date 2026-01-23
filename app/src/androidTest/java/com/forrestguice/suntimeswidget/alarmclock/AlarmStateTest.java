@@ -23,8 +23,6 @@ import android.os.Parcel;
 
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
-import androidx.test.runner.AndroidJUnit4;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

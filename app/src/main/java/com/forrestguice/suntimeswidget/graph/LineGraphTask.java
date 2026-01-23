@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;

@@ -36,7 +36,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.support.preference.ListPreference;
-import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.PreferenceFragment;
 
 import java.util.Arrays;

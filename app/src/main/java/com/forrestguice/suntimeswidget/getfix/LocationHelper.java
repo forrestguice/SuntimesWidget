@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.forrestguice.support.app.FragmentCompat;
-
 public interface LocationHelper
 {
     void saveSettings( Bundle bundle );

@@ -73,7 +73,6 @@ import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.view.ViewPager;
 import com.forrestguice.util.ExecutorUtils;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.util.Calendar;

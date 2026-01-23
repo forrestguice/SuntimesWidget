@@ -25,7 +25,7 @@ import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import android.location.Location;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+
 import android.util.Log;
 
 import org.junit.Rule;

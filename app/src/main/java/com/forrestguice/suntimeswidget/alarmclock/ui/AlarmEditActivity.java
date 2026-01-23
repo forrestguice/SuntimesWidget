@@ -29,7 +29,6 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -74,9 +73,7 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
-import com.forrestguice.util.concurrent.TaskListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

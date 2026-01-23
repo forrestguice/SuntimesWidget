@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget.timepicker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 

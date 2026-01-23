@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;

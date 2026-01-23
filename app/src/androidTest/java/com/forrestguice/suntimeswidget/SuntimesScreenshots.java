@@ -24,7 +24,6 @@ import androidx.test.espresso.IdlingPolicies;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;

@@ -26,9 +26,7 @@ import com.forrestguice.suntimeswidget.calculator.AndroidSuntimesCalculator;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.android.AndroidLog;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.android.AndroidTaskHandlerFactory;
-import com.forrestguice.util.concurrent.TaskHandler;
 
 public class SuntimesApplication extends Application
 {

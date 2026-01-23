@@ -38,7 +38,6 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
-import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.view.ActionModeCompat;

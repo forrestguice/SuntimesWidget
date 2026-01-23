@@ -37,7 +37,6 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.content.ContextCompat;
-import com.forrestguice.util.android.AndroidResources;
 
 import java.text.NumberFormat;
 

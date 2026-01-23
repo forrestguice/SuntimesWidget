@@ -96,7 +96,6 @@ import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.ProgressCallable;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
@@ -109,7 +108,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmListDialog extends DialogBase

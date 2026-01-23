@@ -29,10 +29,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.preference.DialogPreference;
-import com.forrestguice.util.android.AndroidResources;
 
 /**
  * A version of MillisecondPickerPreference that allows selecting a millisecond value as a

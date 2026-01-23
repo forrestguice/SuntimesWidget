@@ -93,7 +93,6 @@ import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.io.IOException;

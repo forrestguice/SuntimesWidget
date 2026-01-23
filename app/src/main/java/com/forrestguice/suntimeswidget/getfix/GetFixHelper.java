@@ -44,7 +44,6 @@ import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
-import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
 

@@ -83,7 +83,6 @@ import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.android.AndroidResources;
-import com.forrestguice.util.android.AndroidTaskHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
