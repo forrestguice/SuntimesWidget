@@ -1137,11 +1137,18 @@ public class AppSettings
 
     public static AppThemeInfo[] appThemeInfo()
     {
-        return new AppThemeInfo[] {
-                info_systemTheme, info_darkTheme, info_lightTheme,
-                info_system1Theme, info_dark1Theme, info_light1Theme,
-                info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme
-        };
+        if (Build.VERSION.SDK_INT >= 31) {
+            return new AppThemeInfo[] {
+                    info_systemTheme, info_darkTheme, info_lightTheme,
+                    info_system1Theme, info_dark1Theme, info_light1Theme,
+                    info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme
+            };
+        } else {
+            return new AppThemeInfo[] {
+                    info_systemTheme, info_darkTheme, info_lightTheme,
+                    info_system1Theme, info_dark1Theme, info_light1Theme,
+            };
+        }
     }
 
     /**
