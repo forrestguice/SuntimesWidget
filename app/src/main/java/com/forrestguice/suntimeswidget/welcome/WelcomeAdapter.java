@@ -20,14 +20,18 @@ package com.forrestguice.suntimeswidget.welcome;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ViewPager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -83,6 +87,16 @@ public class WelcomeAdapter extends PagerAdapter
         });
     }
 
+    protected WeakReference<ViewPager> pagerRef;
+    public void attachToPager(@NonNull ViewPager pager) {
+        pagerRef = new WeakReference<>(pager);
+        pager.setAdapter(this);
+    }
+    @Nullable
+    protected ViewPager getViewPager() {
+        return pagerRef.get();
+    }
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup viewGroup, int position)
@@ -91,12 +105,15 @@ public class WelcomeAdapter extends PagerAdapter
                 ? pages.get(position).newInstance(activityRef.get())
                 : WelcomeFirstPageView.newInstance(activityRef.get());
 
-        if (Build.VERSION.SDK_INT >= 17) {
-            view.setId(View.generateViewId());
+        int viewID = (position >= 0 && position < getCount())
+                ? pages.get(position).getViewID() : 0;
+        if (viewID != 0) {
+            view.setId(viewID);
         }
 
         view.setTag(getTag(position));
         viewGroup.addView(view, position);
+        Log.d("DEBUG", "WelcomeAdapter.onInstantiateItem: " + viewID);
         return view;
     }
 
@@ -143,10 +160,49 @@ public class WelcomeAdapter extends PagerAdapter
         }
     }
 
+    protected int[] getViewIDs()
+    {
+        int[] retValue = new int[pages.size()];
+        for (int i=0; i<retValue.length; i++) {
+            retValue[i] = pages.get(i).getViewID();
+        }
+        return retValue;
+    }
+
+    public static final String KEY_VIEWIDS = "adapterViewIDs";
+
+    public void onSaveInstanceState(Bundle bundle) {
+        Log.d("DEBUG", "WelcomeAdapter.onSaveInstanceState");
+        bundle.putIntArray(KEY_VIEWIDS, getViewIDs());
+    }
+    public void onRestoreInstanceState(Bundle bundle)
+    {
+        Log.d("DEBUG", "WelcomeAdapter.onRestoreInstanceState");
+        int[] viewIDs = bundle.getIntArray(KEY_VIEWIDS);
+        for (int i=0; i<pages.size(); i++) {
+            pages.get(i).setViewID(viewIDs[i]);
+        }
+    }
+
     /**
      * WelcomeFragmentPage
      */
-    public abstract static class WelcomeFragmentPage {
+    public abstract static class WelcomeFragmentPage
+    {
         public abstract WelcomeView newInstance(AppCompatActivity activity);
+
+        private int viewID = 0;
+        protected void setViewID(int id) {
+            viewID = id;
+        }
+        public int getViewID()
+        {
+            if (Build.VERSION.SDK_INT >= 17) {
+                if (viewID == 0) {
+                    viewID = View.generateViewId();
+                }
+            }
+            return viewID;
+        }
     }
 }

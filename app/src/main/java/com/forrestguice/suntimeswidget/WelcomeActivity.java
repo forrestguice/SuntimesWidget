@@ -79,10 +79,17 @@ public class WelcomeActivity extends AppCompatActivity
             page = intent.getIntExtra(EXTRA_PAGE, 0);
             intent.removeExtra(EXTRA_PAGE);
         }
+        if (savedInstanceState != null) {
+            page = savedInstanceState.getInt(KEY_CURRENT_PAGE, page);
+        }
 
         pagerAdapter = new WelcomeAdapter(this);
+        if (savedInstanceState != null) {
+            pagerAdapter.onRestoreInstanceState(savedInstanceState);
+        }
+
         pager = (ViewPager) findViewById(R.id.container);
-        pager.setAdapter(pagerAdapter);
+        pagerAdapter.attachToPager(pager);
         pager.addOnPageChangeListener(pagerChangeListener);
         pager.setOffscreenPageLimit(pagerAdapter.getCount()-1);
 
@@ -117,6 +124,30 @@ public class WelcomeActivity extends AppCompatActivity
         super.onResume();
         if (pagerAdapter != null) {
             pagerAdapter.onResume(pager);
+        }
+    }
+
+    public static final String KEY_CURRENT_PAGE = "currentPage";
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle bundle)
+    {
+        if (pagerAdapter != null) {
+            pagerAdapter.onSaveInstanceState(bundle);
+        }
+        bundle.putInt(KEY_CURRENT_PAGE, pager.getCurrentItem());
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle bundle)
+    {
+        super.onRestoreInstanceState(bundle);
+        if (pagerAdapter != null) {
+            pagerAdapter.onRestoreInstanceState(bundle);
+        }
+        if (pager != null) {
+            pager.setCurrentItem(bundle.getInt(KEY_CURRENT_PAGE, 0));
         }
     }
 
