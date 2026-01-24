@@ -410,7 +410,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
-    protected void updatePreview(@Nullable Context context)
+    public void updatePreview(@Nullable Context context)
     {
         if (context != null && isAdded())
         {
@@ -853,7 +853,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
      * Save the dialog state to preferences to be used by the app (occurs on dialog accept).
      * @param context a context used to access shared prefs
      */
-    protected void saveSettings(Context context)
+    public void saveSettings(Context context)
     {
         final TimezoneMode[] timezoneModes = TimezoneMode.values();
         TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
