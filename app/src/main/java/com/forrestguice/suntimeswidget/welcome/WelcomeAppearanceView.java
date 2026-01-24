@@ -75,9 +75,18 @@ public class WelcomeAppearanceView extends WelcomeView
         }
     }
 
-    @Nullable
-    private String themeID = null, themeID1 = null, darkThemeID = null, lightThemeID = null;
-    private AppSettings.TextSize textSize;
+    private static final String KEY_THEMEID = "themeID";
+    private static final String KEY_THEMEID1 = "themeID1";
+    private static final String KEY_DARKTHEMEID = "darkThemeID";
+    private static final String KEY_LIGHTTHEMEID = "lightThemeID";
+    private static final String KEY_TEXTSIZE = "textSize";
+
+    protected AppSettings.TextSize getTextSize() {
+        return AppSettings.TextSize.valueOf(getArgs().getString(KEY_TEXTSIZE, AppSettings.TextSize.NORMAL.name()));
+    }
+    protected void setTextSize(AppSettings.TextSize textSize) {
+        getArgs().putString(KEY_TEXTSIZE, textSize.name());
+    }
 
     @Override
     public void initViews(Context context, View view)
@@ -89,7 +98,8 @@ public class WelcomeAppearanceView extends WelcomeView
         RadioButton largeText = (RadioButton) view.findViewById(R.id.radio_text_large);
         RadioButton xlargeText = (RadioButton) view.findViewById(R.id.radio_text_xlarge);
 
-        textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
+        AppSettings.TextSize textSize = AppSettings.TextSize.valueOf(AppSettings.loadTextSizePref(context));
+        setTextSize(textSize);
         switch (textSize)
         {
             case SMALL: setChecked(smallText, true); break;
@@ -103,12 +113,17 @@ public class WelcomeAppearanceView extends WelcomeView
         setCheckedChangeListener(xlargeText, onTextSizeChecked(context, AppSettings.TextSize.XLARGE));
 
         final AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
-        themeID = themeInfo.getThemeName();
-        themeID1 = AppSettings.getThemeOverride(context, themeInfo);
+        String themeID = themeInfo.getThemeName();
+        String themeID1 = AppSettings.getThemeOverride(context, themeInfo);
         final AppSettings.AppThemeInfo themeInfo1 = AppSettings.loadThemeInfo(themeID1);
-        darkThemeID = AppSettings.loadThemeDarkPref(context);
-        lightThemeID = AppSettings.loadThemeLightPref(context);
+        String darkThemeID = AppSettings.loadThemeDarkPref(context);
+        String lightThemeID = AppSettings.loadThemeLightPref(context);
         AppSettings.AppThemeInfo darkThemeInfo = AppSettings.loadThemeInfo(darkThemeID);
+
+        setArg(KEY_THEMEID, themeID);
+        setArg(KEY_THEMEID1, themeID1);
+        setArg(KEY_DARKTHEMEID, darkThemeID);
+        setArg(KEY_LIGHTTHEMEID, lightThemeID);
 
         previewDate = (TextView) view.findViewById(R.id.text_date);
         updatePreview(context, themeInfo.getDisplayString(context));
@@ -162,6 +177,8 @@ public class WelcomeAppearanceView extends WelcomeView
             }
             lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT, null, null));
         }
+
+        Log.d("DEBUG", "Appearance: initViews: " + lightThemeID + ", " + darkThemeID + ", " + textSize + ", " + themeID + " .. " + toString());
     }
 
     public static class AppThemeInfoAdapter extends ArrayAdapter<AppSettings.AppThemeInfo>
@@ -288,7 +305,7 @@ public class WelcomeAppearanceView extends WelcomeView
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
                 {
-                    WelcomeAppearanceView.this.textSize = textSize;
+                    setTextSize(textSize);
                     AppSettings.saveTextSizePref(context, textSize);
                     recreate(getActivity());
                 }
@@ -304,9 +321,9 @@ public class WelcomeAppearanceView extends WelcomeView
                 Activity activity = getActivity();
                 if (activity != null)
                 {
-                    themeID = themeID0;
-                    lightThemeID = lightID0;
-                    darkThemeID = darkID0;
+                    setArg(KEY_THEMEID, themeID0);
+                    setArg(KEY_LIGHTTHEMEID, lightID0);
+                    setArg(KEY_DARKTHEMEID, darkID0);
                     AppSettings.saveThemeLightPref(activity, lightID0);
                     AppSettings.saveThemeDarkPref(activity, darkID0);
                     AppSettings.setThemePref(activity, themeID0);
@@ -340,7 +357,12 @@ public class WelcomeAppearanceView extends WelcomeView
     @Override
     public boolean saveSettings(Context context)
     {
-        //Log.d("DEBUG", "Appearance: saveSettings: " + lightThemeID + ", " + darkThemeID + ", " + textSize + ", " + themeID + " .. " + toString());
+        Bundle args = getArgs();
+        String themeID = args.getString(KEY_THEMEID, null);
+        String lightThemeID = args.getString(KEY_LIGHTTHEMEID, null);
+        String darkThemeID = args.getString(KEY_DARKTHEMEID, null);
+        AppSettings.TextSize textSize = getTextSize();
+        Log.d("DEBUG", "Appearance: saveSettings: " + lightThemeID + ", " + darkThemeID + ", " + textSize + ", " + themeID + " .. " + toString());
         // the following are set when changed (on automatic transition)
         //AppSettings.saveThemeLightPref(context, lightThemeID);
         //AppSettings.saveThemeDarkPref(context, darkThemeID);

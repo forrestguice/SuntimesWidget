@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.TimeZoneDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -76,22 +77,17 @@ public class WelcomeTimeZoneView extends WelcomeView
     }
 
     public double getLongitude() {
-        //return getArgs().getDouble(TimeZoneDialog.KEY_LONGITUDE);
-        return longitude;
+        return getArgs().getDouble(TimeZoneDialog.KEY_LONGITUDE);
     }
     public void setLongitude(double value) {
-        //getArgs().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
-        longitude = value;
+        getArgs().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
     }
-    protected double longitude;
 
     public String getLongitudeLabel() {
-        //return getArgs().getString(LocationConfigView.KEY_LOCATION_LABEL);
-        return label_longitude;
+        return getArgs().getString(LocationConfigView.KEY_LOCATION_LABEL);
     }
     public void setLongitudeLabel( String value ) {
-        label_longitude = value;
-        //getArgs().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
+        getArgs().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
     }
     protected String label_longitude;
 
