@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -148,15 +150,6 @@ public class WelcomeView extends FrameLayout
         return true;
     }
 
-    @Override
-    public Parcelable onSaveInstanceState() {
-        return super.onSaveInstanceState();
-    }
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(state);
-    }
-
     public void onActivityResultCompat(int requestCode, int resultCode, Intent data) {
         /* EMPTY */
     }
@@ -182,5 +175,75 @@ public class WelcomeView extends FrameLayout
 
     public int getPreferredIndex() {
         return 0;
+    }
+
+    /**
+     * Args
+     */
+    protected Bundle args = new Bundle();
+    @NonNull
+    public Bundle getArgs() {
+        return args;
+    }
+    public void setArgs( @NonNull Bundle values ) {
+        args = values;
+    }
+    public void setArg(String key, String value) {
+        getArgs().putString(key, value);
+    }
+    public void setArg(String key, boolean value) {
+        getArgs().putBoolean(key, value);
+    }
+    public void setArg(String key, double value) {
+        getArgs().putDouble(key, value);
+    }
+
+    /**
+     * ViewState
+     */
+    protected static class ViewState extends BaseSavedState
+    {
+        protected static final String STATE = "WelcomeView.STATE";
+
+        public ViewState(Parcelable superState, Bundle bundle)
+        {
+            super(superState);
+            this.bundle = bundle;
+        }
+
+        private final Bundle bundle;
+        public Bundle getBundle() {
+            return bundle;
+        }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState()
+    {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "onSaveInstanceState: " + getId());
+        }
+        Bundle bundle = new Bundle();
+        ViewState state = new ViewState(super.onSaveInstanceState(), getArgs());
+        bundle.putParcelable(ViewState.STATE, state);
+        return bundle;
+    }
+    @Override
+    protected void onRestoreInstanceState(Parcelable state)
+    {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "onRestoreInstanceState0: " + getId());
+        }
+        if (state instanceof Bundle)
+        {
+            Bundle bundle = (Bundle) state;
+            ViewState viewState = bundle.getParcelable(ViewState.STATE);
+            if (viewState != null) {
+                setArgs(viewState.getBundle());
+                Log.d("DEBUG", "onRestoreInstanceState1: " + getId());
+                super.onRestoreInstanceState(viewState.getSuperState());
+            }
+        }
+        super.onRestoreInstanceState(BaseSavedState.EMPTY_STATE);
     }
 }
