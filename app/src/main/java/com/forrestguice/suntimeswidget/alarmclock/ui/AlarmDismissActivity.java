@@ -141,7 +141,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private View background;
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private int pulseSoundingDuration = 4000;
@@ -887,7 +887,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location));
                 eventTime.set(Calendar.HOUR_OF_DAY, alarm.hour);
                 eventTime.set(Calendar.MINUTE, alarm.minute);
-                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(alarm.timezone));
+                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(alarm.timezone));
                 alarmSubtitle.setVisibility(View.VISIBLE);
 
             } else {
@@ -1025,7 +1025,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
 
     protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
     {
-        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, calendar, false);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), calendar, false);
         if (TimeDateDisplay.is24()) {
             return timeText.getValue();
         } else {

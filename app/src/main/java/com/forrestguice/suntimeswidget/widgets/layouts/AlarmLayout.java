@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -111,8 +112,8 @@ public abstract class AlarmLayout extends SuntimesLayout
 
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         String displayString = (millisUntilAlarm > 1000 * 60 * 60 * 24)
-                ? utils.calendarDateTimeDisplayString(context, alarmTime, true, false, timeFormat).toString()
-                : utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
+                ? time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), alarmTime, true, false, timeFormat).toString()
+                : time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false, timeFormat).toString();
 
         return displayString;
     }

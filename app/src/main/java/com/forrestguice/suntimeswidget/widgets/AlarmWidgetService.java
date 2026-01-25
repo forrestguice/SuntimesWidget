@@ -41,11 +41,13 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,7 +87,7 @@ public class AlarmWidgetService extends RemoteViewsService
         protected int appWidgetID = 0;
         protected String layoutMode = AlarmWidgetSettings.MODE_2x2;
         protected List<AlarmClockItem> alarmList = new ArrayList<>();
-        protected static final SuntimesUtils utils = new SuntimesUtils();
+        protected static final TimeDateDisplay utils = new TimeDateDisplay();
         protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
         public AlarmWidgetItemViewFactory(Context context, Intent intent)
@@ -194,7 +196,7 @@ public class AlarmWidgetService extends RemoteViewsService
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetID);
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
-            String timeDisplay = utils.calendarTimeShortDisplayString(context, alarmTime, false, timeFormat).toString();
+            String timeDisplay = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false, timeFormat).toString();
             view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SuntimesUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
 
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);

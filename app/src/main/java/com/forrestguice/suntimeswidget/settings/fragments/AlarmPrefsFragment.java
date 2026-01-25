@@ -48,6 +48,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -75,6 +76,7 @@ import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.CheckBoxPreference;
 import com.forrestguice.support.preference.PreferenceCategory;
 import com.forrestguice.support.preference.PreferenceFragment;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
@@ -84,7 +86,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmPrefsFragment extends PreferenceFragment
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     @Override
@@ -425,7 +427,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             AlarmSettings.BootCompletedInfo bootCompletedInfo = AlarmSettings.loadPrefLastBootCompleted(context);
             long lastRunMillis = bootCompletedInfo.getTimeMillis();
-            String lastBootCompleted = utils.calendarDateTimeDisplayString(context, lastRunMillis).toString();
+            String lastBootCompleted = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), lastRunMillis).toString();
             String afterDelay = (lastRunMillis >= 0 ? delta_utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
             String took = (lastRunMillis >= 0 ? bootCompletedInfo.getDurationMillis() + "ms": "");
             CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)

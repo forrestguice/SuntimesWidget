@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.preference.Preference;
 import android.preference.PreferenceManager;
 
@@ -65,6 +66,7 @@ import com.forrestguice.support.preference.PreferenceFragment;
 import com.forrestguice.support.preference.CheckBoxPreference;
 import com.forrestguice.support.preference.PreferenceCategory;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
@@ -143,13 +145,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     if (LocationHelperSettings.lastLocationResult(context))
                     {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
-                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
                                 delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
                                 provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
                                 (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
                         lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
-                                utils.calendarDateTimeDisplayString(context, time).getValue(),
+                                utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
                                 delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
                                 (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     }
@@ -159,7 +161,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     long time0 = LocationHelperSettings.lastAutoLocationRequest(context);
                     long timeAgo0 = System.currentTimeMillis() - time0;
                     CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
-                            utils.calendarDateTimeDisplayString(context, time0).getValue(),
+                            utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time0).getValue(),
                             delta_utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
                     lastRequestPref.setSummary(lastRequestDisplay);
                 }
@@ -332,7 +334,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         };
         return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
     }
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public static final int LOCATION_PERMISSION_REQUEST = 100;

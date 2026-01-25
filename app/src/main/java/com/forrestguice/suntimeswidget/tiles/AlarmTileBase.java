@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
@@ -48,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -59,7 +61,7 @@ public class AlarmTileBase extends SuntimesTileBase
     public static final ContentValues DEF_ACTION_VALUES =  WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
     public static final boolean DEF_SHOW_LABELS = true;    // show alarm label and note as part of dialog
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public AlarmTileBase(@Nullable Activity activity) {
@@ -142,7 +144,7 @@ public class AlarmTileBase extends SuntimesTileBase
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
             SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
             timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
             title.append(timeDisplay);
@@ -163,7 +165,7 @@ public class AlarmTileBase extends SuntimesTileBase
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
 
             // formatted "time until"
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();

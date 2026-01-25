@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.ContextCompat;
 
 import android.text.SpannableString;
@@ -74,7 +75,7 @@ import java.util.HashMap;
 
 public class MoonRiseSetView1 extends LinearLayout
 {
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private boolean isRtl = false;
     private boolean centered = false;
 
@@ -669,7 +670,6 @@ public class MoonRiseSetView1 extends LinearLayout
 
         @Nullable
         public Drawable icon_rising = null, icon_setting = null, icon_noon = null, icon_midnight = null;
-        private static final SuntimesUtils utils = new SuntimesUtils();
         private static final AngleDisplay angle_utils = new AngleDisplay();
 
         public static int getLayoutID() {
@@ -784,7 +784,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
-            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds);
             timeView.setText(text.toString());
         }
 
@@ -927,7 +927,7 @@ public class MoonRiseSetView1 extends LinearLayout
             if (d != null)
             {
                 Calendar date = d.calendar();
-                String dateText = utils.calendarDateDisplayString(getContext(), date).toString();
+                String dateText = utils.calendarDateDisplayString(AndroidResources.wrap(getContext()), date).toString();
 
                 int textColor = colorDisabled;
                 Calendar now = d.now();

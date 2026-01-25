@@ -280,6 +280,7 @@ public class SuntimesUtils
                     : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
     }
+    @Deprecated
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds, TimeFormatMode format)
     {
         if (!initialized) {

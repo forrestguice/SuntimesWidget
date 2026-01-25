@@ -152,7 +152,7 @@ public class MoonLayout_1x1_7 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 

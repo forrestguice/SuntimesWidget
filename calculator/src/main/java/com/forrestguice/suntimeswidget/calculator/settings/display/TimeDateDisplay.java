@@ -74,6 +74,7 @@ public class TimeDateDisplay
     protected static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
     protected static boolean initialized = false;
+    protected static ResID_TimeDateDisplay resIDs;
 
     public static void initDisplayStrings(SuntimesDataSettings context, ResID_TimeDateDisplay r)
     {
@@ -108,6 +109,7 @@ public class TimeDateDisplay
         strDateTimeLongFormatSec = dateTimeFormatLong(res, r, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         initialized = true;
+        resIDs = r;
     }
 
     private static String dateTimeFormatVeryShort(Resources res, ResID_TimeDateDisplay r, boolean is24, boolean showSeconds) {
@@ -466,6 +468,47 @@ public class TimeDateDisplay
         // doesn't use app's 12hr/24hr setting
         /** DateFormat timeFormat = android.text.format.DateFormat.getLongDateFormat(context);
          String value = timeFormat.format(cal.getTime());*/
+    }
+
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, false, format);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format) {
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, abbreviate, format);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format)
+    {
+        if (cal == null || context == null) {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        boolean formatIs24;
+        switch (format) {
+            case MODE_SUNTIMES: formatIs24 = is24; break;
+            case MODE_SYSTEM: formatIs24 = SystemTimeFormat.is24HourFormat(); break;
+            case MODE_12HR: formatIs24 = false; break;
+            case MODE_24HR: default: formatIs24 = true; break;
+        }
+
+        Locale locale = getLocale();
+        SimpleDateFormat dateTimeFormat;
+        if (showTime) {
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context, resIDs, formatIs24, showSeconds)
+                    : (abbreviate ? dateTimeFormatVeryShort(context, resIDs, formatIs24, showSeconds)
+                    : dateTimeFormatShort(context, resIDs, formatIs24, showSeconds))
+            ), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat
+                : (abbreviate ? strDateVeryShortFormat
+                : strDateShortFormat)
+        ), locale);
+        //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
+
+        Date time = cal.getTime();
+        applySpecialTimeZone(time, cal.getTimeZone());
+        dateTimeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(time), "", "");
+        displayText.setRawValue(cal.getTimeInMillis());
+        return displayText;
     }
 
     public interface ResID_TimeDateDisplay

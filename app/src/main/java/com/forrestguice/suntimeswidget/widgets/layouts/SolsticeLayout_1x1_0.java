@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -140,7 +141,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
             views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
             views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds, abbreviate, timeFormat);
+            TimeDisplayText eventString = time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, showTimeDate, showSeconds, abbreviate, timeFormat);
             views.setTextViewText(R.id.text_time_event, eventString.getValue());
             views.setViewVisibility(R.id.text_time_event, showDate ? View.VISIBLE : View.GONE);
 

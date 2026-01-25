@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -180,7 +181,7 @@ public class MoonLayout_1x1_5 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 

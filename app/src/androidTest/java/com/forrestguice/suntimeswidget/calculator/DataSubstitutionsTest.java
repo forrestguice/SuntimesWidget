@@ -28,8 +28,10 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -152,9 +154,9 @@ public class DataSubstitutionsTest
         assertFalse("result should not contain patterns", result1.contains("%eT@sn"));
         assertFalse("result should not be empty", result1.isEmpty());
 
-        SuntimesUtils utils = new SuntimesUtils();
+        TimeDateDisplay utils = new TimeDateDisplay();
         Calendar eventTime = data.calculator().getSolarNoonCalendarForDate(calendar);
-        String displayString = utils.calendarTimeShortDisplayString(context, eventTime, true).toString();
+        String displayString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime, true).toString();
         assertEquals("result should be formatted time of solar noon", displayString, result1);
     }
 
@@ -174,9 +176,9 @@ public class DataSubstitutionsTest
         assertFalse("result should not contain patterns", result.contains("%eT@sn"));
         assertFalse("result should not be empty", result.isEmpty());
 
-        SuntimesUtils utils = new SuntimesUtils();
+        TimeDateDisplay utils = new TimeDateDisplay();
         Calendar eventTime = data.calculator().getSolarNoonCalendarForDate(calendar);
-        String displayString = utils.calendarTimeShortDisplayString(context, eventTime, true).toString();
+        String displayString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime, true).toString();
         assertEquals("result should be formatted time of solar noon", displayString, result);
     }
 

@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.view.ViewCompat;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -56,7 +57,7 @@ import java.util.TimeZone;
 
 public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 {
-    public static final SuntimesUtils utils = new SuntimesUtils();
+    public static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public int position = RecyclerView.NO_POSITION;
@@ -433,8 +434,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         alarmTime.setTimeInMillis(item.timestamp + (withOffset ? item.offset : 0));
 
         CharSequence alarmDesc;
-        SuntimesUtils utils = new SuntimesUtils();
-        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+        TimeDateDisplay utils = new TimeDateDisplay();
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false);
         if (TimeDateDisplay.is24()) {
             alarmDesc = timeText.getValue();
 
@@ -477,7 +478,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         alarmTime.setTimeInMillis(item.timestamp + (withOffset ? item.offset : 0));
 
         CharSequence alarmDesc;
-        TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
+        TimeDisplayText timeText = utils.calendarDateDisplayString(AndroidResources.wrap(context), alarmTime, true);
         if (TimeDateDisplay.is24()) {
             alarmDesc = timeText.getValue();
 
@@ -592,13 +593,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
             adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
             adjustedTime.set(Calendar.MINUTE, item.minute);
-            return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
+            return utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
 
         } else {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(null, item.location));
             adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
             adjustedTime.set(Calendar.MINUTE, item.minute);
-            return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + context.getString(R.string.alarmOption_solarevent_none);
+            return utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), adjustedTime) + "\n" + context.getString(R.string.alarmOption_solarevent_none);
         }
     }
 

@@ -30,6 +30,7 @@ import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
@@ -40,6 +41,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -47,7 +49,7 @@ import java.util.TimeZone;
 @TargetApi(24)
 public class NextEventTileBase extends SuntimesTileBase
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static TimeDateDisplay utils = new TimeDateDisplay();
     protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public NextEventTileBase(@Nullable Activity activity) {
@@ -126,7 +128,7 @@ public class NextEventTileBase extends SuntimesTileBase
         SuntimesRiseSetDataset.SearchResult nextEvent = findNextEvent(context, false);
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
         event.setTimeInMillis(nextEvent.getCalendar().getTimeInMillis());
-        String timeString = utils.calendarTimeShortDisplayString(context, event, false).toString();
+        String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false).toString();
         SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
         timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
 

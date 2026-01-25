@@ -33,6 +33,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventType;
@@ -59,6 +60,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.*;
 
@@ -719,7 +721,7 @@ public class CalculatorProvider extends ContentProvider
                     if (positionSuffix == null)
                     {
                         if (BuildConfig.DEBUG) {
-                            Log.d("DEBUG", eventID + " is a " + aliasType + " that occurs at " + eventTime + " (" + new SuntimesUtils().calendarDateTimeDisplayString(context, eventTime) + ")");
+                            Log.d("DEBUG", eventID + " is a " + aliasType + " that occurs at " + eventTime + " (" + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), eventTime) + ")");
                         }
                         return eventTime;
                     }

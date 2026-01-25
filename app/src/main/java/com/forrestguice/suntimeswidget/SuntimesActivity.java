@@ -44,6 +44,7 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.util.Pair;
@@ -200,7 +201,7 @@ public class SuntimesActivity extends AppCompatActivity
     private static final String DIALOGTAG_EQUINOX = "equinox";
     private static final String DIALOGTAG_MOON = "moon";
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
 
     private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(SuntimesNavigation.REQUEST_SETTINGS);
 
@@ -2116,7 +2117,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void updateTimeViews(Context context)
     {
         Calendar now = dataset.now();
-        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(this, now);
+        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), now);
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);

@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.graph.LightMapTask;
@@ -256,7 +257,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return executor;
     }
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public WidgetThemeConfigActivity()
@@ -945,7 +946,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             Calendar now = Calendar.getInstance();
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
-            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), now, false, timeFormat);
             String nowString = nowText.getValue();
             CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
@@ -968,7 +969,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         SuntimesRiseSetData noonData = data1.getLinked();
         TimeDisplayText noonText = ((noonData != null)
-                ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
+                ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), noonData.sunriseCalendarToday())
                 : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
@@ -989,7 +990,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -1009,7 +1010,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -1113,7 +1114,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
@@ -1133,7 +1134,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();

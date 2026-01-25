@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
@@ -97,7 +98,7 @@ import static com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.PREF_DE
 
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final AngleDisplay angle_utils = new AngleDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
@@ -256,34 +257,35 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         String notCalculated = context.getString(R.string.time_loading);
         if (sun != null && sun.isCalculated())
         {
+            AndroidResources res = AndroidResources.wrap(context);
             if (options.showActual) {
-                TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunriseCalendarToday(), options.showSeconds);
-                TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(res, sun.dataActual.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(res, sun.dataActual.sunsetCalendarToday(), options.showSeconds);
                 row_actual.updateFields(sunriseString_actualTime.toString(), sunsetString_actualTime.toString());
             }
 
             if (options.showCivil) {
-                TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunriseCalendarToday(), options.showSeconds);
-                TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(res, sun.dataCivil.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(res, sun.dataCivil.sunsetCalendarToday(), options.showSeconds);
                 row_civil.updateFields(sunriseString_civilTime.toString(), sunsetString_civilTime.toString());
             }
 
             if (options.showNautical) {
-                TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunriseCalendarToday(), options.showSeconds);
-                TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(res, sun.dataNautical.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(res, sun.dataNautical.sunsetCalendarToday(), options.showSeconds);
                 row_nautical.updateFields(sunriseString_nauticalTime.toString(), sunsetString_nauticalTime.toString());
             }
 
             if (options.showAstro) {
-                TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunriseCalendarToday(), options.showSeconds);
-                TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunsetCalendarToday(), options.showSeconds);
+                TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(res, sun.dataAstro.sunriseCalendarToday(), options.showSeconds);
+                TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(res, sun.dataAstro.sunsetCalendarToday(), options.showSeconds);
                 row_astro.updateFields(sunriseString_astroTime.toString(), sunsetString_astroTime.toString());
             }
 
             if (options.showNoon)
             {
                 Calendar noonTime = sun.dataNoon.sunriseCalendarToday();
-                String noonString = utils.calendarTimeShortDisplayString(context, noonTime, options.showSeconds).toString();
+                String noonString = utils.calendarTimeShortDisplayString(res, noonTime, options.showSeconds).toString();
 
                 SuntimesCalculator calculator = sun.calculator();
                 SpannableString positionSpan = new SpannableString("");
@@ -299,24 +301,24 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             if (options.showMidnight)
             {
                 Calendar midnightTime = sun.dataMidnight.sunriseCalendarToday();
-                String midnightString = utils.calendarTimeShortDisplayString(context, midnightTime, options.showSeconds).toString();
+                String midnightString = utils.calendarTimeShortDisplayString(res, midnightTime, options.showSeconds).toString();
                 row_midnight.updateFields(midnightString);
             }
             noonClickArea.setVisibility((options.showNoon || options.showMidnight) ? View.VISIBLE : View.GONE);
 
             if (options.showBlue) {
-                String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();
-                String sunsetString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunsetCalendarToday(), options.showSeconds).toString();
+                String sunriseString_blue8 = utils.calendarTimeShortDisplayString(res, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_blue8 = utils.calendarTimeShortDisplayString(res, sun.dataBlue8.sunsetCalendarToday(), options.showSeconds).toString();
                 row_blue8.updateFields(sunriseString_blue8, sunsetString_blue8);
 
-                String sunriseString_blue4 = utils.calendarTimeShortDisplayString(context, sun.dataBlue4.sunriseCalendarToday(), options.showSeconds).toString();
-                String sunsetString_blue4 = utils.calendarTimeShortDisplayString(context, sun.dataBlue4.sunsetCalendarToday(), options.showSeconds).toString();
+                String sunriseString_blue4 = utils.calendarTimeShortDisplayString(res, sun.dataBlue4.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_blue4 = utils.calendarTimeShortDisplayString(res, sun.dataBlue4.sunsetCalendarToday(), options.showSeconds).toString();
                 row_blue4.updateFields(sunriseString_blue4, sunsetString_blue4);
             }
 
             if (options.showGold) {
-                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, sun.dataGold.sunriseCalendarToday(), options.showSeconds).toString();
-                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, sun.dataGold.sunsetCalendarToday(), options.showSeconds).toString();
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(res, sun.dataGold.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(res, sun.dataGold.sunsetCalendarToday(), options.showSeconds).toString();
                 row_gold.updateFields(sunriseString_gold, sunsetString_gold);
             }
 
@@ -329,8 +331,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     SuntimesRiseSetData rowData = sun.getData(eventID);
                     if (rowData != null)
                     {
-                        String sunriseString = utils.calendarTimeShortDisplayString(context, rowData.sunriseCalendarToday(), options.showSeconds).toString();
-                        String sunsetString = utils.calendarTimeShortDisplayString(context, rowData.sunsetCalendarToday(), options.showSeconds).toString();
+                        String sunriseString = utils.calendarTimeShortDisplayString(res, rowData.sunriseCalendarToday(), options.showSeconds).toString();
+                        String sunsetString = utils.calendarTimeShortDisplayString(res, rowData.sunsetCalendarToday(), options.showSeconds).toString();
                         row.updateFields(sunriseString, sunsetString);
                     } else {
                         row.updateFields(notCalculated, notCalculated);

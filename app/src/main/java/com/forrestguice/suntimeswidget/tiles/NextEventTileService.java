@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -63,7 +64,7 @@ public class NextEventTileService extends ClockTileService
         int icon = (mode != null && mode.getTimeMode() == TimeMode.NOON) ? R.drawable.ic_noon_tile
                 : (result.isRising() ? R.drawable.svg_sunrise : R.drawable.svg_sunset);
 
-        String timeDisplay = utils.calendarTimeShortDisplayString(context, event, false).toString() + " " + (mode != null ? mode.toString() : "null"); // context.getString(result.isRising() ? R.string.sunrise : R.string.sunset);
+        String timeDisplay = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false).toString() + " " + (mode != null ? mode.toString() : "null"); // context.getString(result.isRising() ? R.string.sunrise : R.string.sunset);
         tile.setLabel(timeDisplay);
         tile.setIcon(Icon.createWithResource(this, icon));
 

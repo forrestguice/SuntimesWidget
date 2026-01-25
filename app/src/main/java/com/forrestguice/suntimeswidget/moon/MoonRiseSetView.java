@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -54,7 +55,7 @@ import java.util.Calendar;
 
 public class MoonRiseSetView extends LinearLayout
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final AngleDisplay angle_utils = new AngleDisplay();
     //private boolean isRtl = false;
     //private boolean centered = false;
@@ -494,7 +495,7 @@ public class MoonRiseSetView extends LinearLayout
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
-            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds);
             timeView.setText(text.toString());
         }
 

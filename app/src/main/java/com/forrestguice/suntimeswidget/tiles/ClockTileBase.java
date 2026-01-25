@@ -28,6 +28,7 @@ import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -37,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -47,7 +49,7 @@ public class ClockTileBase extends SuntimesTileBase
     public static final TimezoneMode DEF_TIMEZONE_MODE = TimezoneMode.SOLAR_TIME;
     public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
 
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
 
     public ClockTileBase(@Nullable Activity activity) {
         super(activity);
@@ -88,7 +90,7 @@ public class ClockTileBase extends SuntimesTileBase
     {
         Calendar now = now(context);
         TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
-        String timeString = utils.calendarTimeShortDisplayString(context, now, false, formatMode).toString();
+        String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false, formatMode).toString();
         SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
         timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
 
@@ -105,7 +107,7 @@ public class ClockTileBase extends SuntimesTileBase
         String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, timezone);
         boolean isLocalTime = SuntimesTileBase.isLocalTime(timezone.getID());
 
-        String dateString = utils.calendarDateDisplayString(context, now(context), true).toString();
+        String dateString = utils.calendarDateDisplayString(AndroidResources.wrap(context), now(context), true).toString();
         SpannableString dateDisplay = SuntimesUtils.createBoldSpan(null, dateString, dateString);
         dateDisplay = SuntimesUtils.createRelativeSpan(dateDisplay, dateString, dateString, 1.25f);
 

@@ -102,7 +102,7 @@ public class MoonWidget0 extends SuntimesWidget0
                     soonest += 5000;   // +5s
                 }
                 WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, soonest);
-                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), soonest).toString());
             }
         }
     }

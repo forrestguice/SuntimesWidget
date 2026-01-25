@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 
@@ -49,6 +50,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -465,7 +467,7 @@ public class CalculatorProviderTest
         return eventID;
     }
 
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private final TimeDateDisplay utils = new TimeDateDisplay();
     public void verify_sunEvent(String eventID, Cursor cursor, Calendar eventTime0, SuntimesCalculator.SunPosition position0)
     {
         long eventTime = cursor.getLong(cursor.getColumnIndex(eventID));
@@ -474,8 +476,8 @@ public class CalculatorProviderTest
         double eventPosition_ra = cursor.getDouble(cursor.getColumnIndex(eventID + _POSITION_RA));
         double eventPosition_dec = cursor.getDouble(cursor.getColumnIndex(eventID + _POSITION_DEC));
 
-        assertEquals("expected " + utils.calendarDateTimeDisplayString(mockContext, eventTime0.getTimeInMillis())
-                + ", but got " + utils.calendarDateTimeDisplayString(mockContext, eventTime) + " :: a difference of " + ((eventTime0.getTimeInMillis() - eventTime) / 1000) + " seconds; ",
+        assertEquals("expected " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(mockContext), eventTime0.getTimeInMillis())
+                + ", but got " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(mockContext), eventTime) + " :: a difference of " + ((eventTime0.getTimeInMillis() - eventTime) / 1000) + " seconds; ",
                 eventTime0.getTimeInMillis(), eventTime);
 
         assertEquals(position0.azimuth, eventPosition_az, 0);

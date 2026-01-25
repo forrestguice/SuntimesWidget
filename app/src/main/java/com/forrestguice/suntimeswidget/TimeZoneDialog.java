@@ -49,6 +49,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
@@ -66,6 +67,7 @@ import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.ActionModeCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -114,7 +116,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
     private View layout_timezoneExtras;
     private TextView label_tzExtras0;
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private ArrayAdapter<TimezoneMode> spinner_timezoneMode_adapter;
@@ -415,7 +417,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         if (context != null && isAdded())
         {
             TimeZone tz = getTimeZone();
-            TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
+            TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), Calendar.getInstance(tz), false, getTimeFormatMode());
             if (preview_time != null) {
                 preview_time.setText(timeDisplay.getValue());
             }

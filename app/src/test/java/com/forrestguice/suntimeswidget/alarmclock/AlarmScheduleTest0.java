@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -38,7 +39,7 @@ import static junit.framework.Assert.assertTrue;
 
 public class AlarmScheduleTest0
 {
-    public SuntimesUtils utils = new SuntimesUtils();
+    public static final TimeDateDisplay utils = new TimeDateDisplay();
 
     @Test
     @Category(UnlistedTest.class)

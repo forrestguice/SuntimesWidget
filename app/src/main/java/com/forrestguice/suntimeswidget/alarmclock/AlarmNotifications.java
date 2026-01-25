@@ -91,6 +91,7 @@ import com.forrestguice.support.app.NotificationCompat;
 import com.forrestguice.support.app.NotificationManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -171,7 +172,7 @@ public class AlarmNotifications extends BroadcastReceiver
             Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED
     };
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
     private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
@@ -1634,7 +1635,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
-        String eventText = utils.calendarTimeShortDisplayString(context, calendar).toString();
+        String eventText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), calendar).toString();
         String offsetText = delta_utils.timeDeltaLongDisplayString(0, offset).getValue();
 
         if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender

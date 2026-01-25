@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.widget.FloatingActionButton;
 import com.forrestguice.support.content.ContextCompat;
@@ -56,6 +57,7 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.support.widget.SwitchCompat;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -65,7 +67,7 @@ import java.util.TimeZone;
 
 public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public BedtimeViewHolder(View view)
@@ -360,7 +362,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     AlarmNotifications.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
-                    TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+                    TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false);
 
                     if (text_label != null)
                     {

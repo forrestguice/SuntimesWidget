@@ -33,6 +33,7 @@ import android.widget.TimePicker;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
@@ -48,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.After;
@@ -268,7 +270,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             setRobot(this);
         }
 
-        protected static SuntimesUtils utils = new SuntimesUtils();
+        protected static TimeDateDisplay utils = new TimeDateDisplay();
 
         protected AlarmDialogRobotConfig expected;
         public void initRobotConfig() {
@@ -389,7 +391,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             calendar.set(Calendar.SECOND, 0);
 
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
-            TimeDisplayText text = utils.calendarTimeShortDisplayString(context, calendar, false, timeFormat);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), calendar, false, timeFormat);
             onView( allOf(withParent(withId(R.id.text_datetime)), isAssignableFrom(TextView.class), isDisplayed()) )
                     .check(assertContainsText(text.toString()));
             return this;

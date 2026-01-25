@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -161,13 +162,14 @@ public abstract class MoonLayout extends SuntimesLayout
             }
         }
 
-        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds, timeFormat);
+        AndroidResources res = AndroidResources.wrap(context);
+        TimeDisplayText riseText = time_utils.calendarTimeShortDisplayString(res, moonrise, showSeconds, timeFormat);
         String riseString = riseText.getValue();
         CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
-        TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds, timeFormat);
+        TimeDisplayText setText = time_utils.calendarTimeShortDisplayString(res, moonset, showSeconds, timeFormat);
         String setString = setText.getValue();
         CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);

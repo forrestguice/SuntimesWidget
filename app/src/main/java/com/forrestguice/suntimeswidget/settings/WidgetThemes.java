@@ -48,6 +48,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -58,6 +59,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.json.JSONArray;
@@ -373,11 +375,11 @@ public class WidgetThemes
             noonTime = noon;
 
             SuntimesUtils.initDisplayStrings(context);
-            SuntimesUtils utils = new SuntimesUtils();
+            TimeDateDisplay utils = new TimeDateDisplay();
 
-            riseText = utils.calendarTimeShortDisplayString(context, riseTime);
-            setText = utils.calendarTimeShortDisplayString(context, setTime);
-            noonText = utils.calendarTimeShortDisplayString(context, noonTime);
+            riseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), riseTime);
+            setText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), setTime);
+            noonText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonTime);
         }
 
         public int ordinal( String themeName )

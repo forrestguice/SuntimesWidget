@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidLocation;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask;
@@ -58,6 +59,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,8 +80,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     public static final String TAG = "WidgetUpdate";
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
-    protected static TimeDeltaDisplay time_utils1 = new TimeDeltaDisplay();
+    protected static TimeDateDisplay utils = new TimeDateDisplay();
+    protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     protected int[] minSize = { 0, 0 };
     protected int[] getMinSize(Context context)
@@ -709,7 +711,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
                     soonest += 5000;   // +5s
                 }
                 WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId,  soonest);
-                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
+                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), soonest).toString());
             }
         }
     }
@@ -784,7 +786,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 } else {
                     alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
                 }
-                Log.d(TAG, "SuntimesWidget.setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + time_utils1.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+                Log.d(TAG, "SuntimesWidget.setUpdateAlarm: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + delta_utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
             } else Log.w(TAG, "SuntimesWidget.setUpdateAlarm: skipping " + alarmID);
         }
     }

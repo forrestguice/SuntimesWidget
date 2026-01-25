@@ -40,9 +40,11 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -77,7 +79,7 @@ public class AlarmTimeDialog extends DialogBase
     private TextView datePicker;
 
     private AlarmTimeModeAdapter modeAdapter;
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
 
     public AlarmTimeDialog()
     {
@@ -300,7 +302,7 @@ public class AlarmTimeDialog extends DialogBase
         {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(datetime);
-            return utils.calendarDateDisplayString(context, calendar, true).toString();
+            return utils.calendarDateDisplayString(AndroidResources.wrap(context), calendar, true).toString();
         } else {
             return "";    //return context.getString(R.string.date_any);
         }
