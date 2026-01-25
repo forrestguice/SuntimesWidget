@@ -29,7 +29,7 @@
         style="@style/WidgetTimeTextView2" android:layout_marginTop="0dp"
         android:text="@string/timeMode_moon_thirdquarter" />
 
-    <com.forrestguice.support.widget.ImageView
+    <ImageView
         android:id="@+id/moonphase_thirdquarter_icon"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:src="@drawable/ic_moon_waning_quarter" android:contentDescription="@string/timeMode_moon_thirdquarter" />

@@ -35,7 +35,7 @@
             android:textColor="@color/sunIcon_color_setting_dark"
             tools:text="4:20" />
 
-        <com.forrestguice.support.widget.ImageView
+        <ImageView
             style="@style/SunsetTimeImageView"
             android:id="@+id/icon_time_sunset"
             android:scaleType="fitCenter" android:layout_width="wrap_content" android:layout_height="wrap_content"
