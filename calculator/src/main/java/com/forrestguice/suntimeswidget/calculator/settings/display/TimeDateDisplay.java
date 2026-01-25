@@ -29,6 +29,7 @@ import com.forrestguice.util.Resources;
 import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.text.TimeDisplayText;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -339,6 +340,32 @@ public class TimeDateDisplay
         TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
         return displayText;
+    }
+
+    /**
+     * getDayString
+     * @param day of week (0: sunday)
+     * @return display string (e.g. Sunday)
+     */
+    public static String getDayString(int day) {
+        String[] weekDays = getDayStrings();
+        return (day >= 0 && day < weekDays.length ? weekDays[day] : "");
+    }
+    public static String[] getDayStrings() {
+        return DateFormatSymbols.getInstance(getLocale()).getWeekdays();
+    }
+
+    /**
+     * getShortDayString
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sun"
+     */
+    public static String getShortDayString(int day) {
+        String[] shortWeekDays = getShortDayStrings();
+        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
+    }
+    public static String[] getShortDayStrings() {
+        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
     }
 
     public interface ResID_TimeDateDisplay

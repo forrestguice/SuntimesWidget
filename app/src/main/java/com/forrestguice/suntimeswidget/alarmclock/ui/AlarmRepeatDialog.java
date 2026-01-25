@@ -40,6 +40,7 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.view.ViewCompat;
@@ -202,7 +203,7 @@ public class AlarmRepeatDialog extends DialogBase
             if (button != null)
             {
                 button.setOnCheckedChangeListener(onRepeatDayChanged);
-                String dayName = utils.getShortDayString(context, day);
+                String dayName = TimeDateDisplay.getShortDayString(day);
                 button.setTextOn(dayName);
                 button.setTextOff(dayName);
             }
@@ -216,10 +217,10 @@ public class AlarmRepeatDialog extends DialogBase
         {
             if (days.size() == 1)
             {
-                retString.append(utils.getDayString(context, days.get(0)));
+                retString.append(TimeDateDisplay.getDayString(days.get(0)));
 
             } else {
-                String[] dayStrings = utils.getShortDayStrings(context);
+                String[] dayStrings = TimeDateDisplay.getShortDayStrings();
                 Collections.sort(days);
                 int n = days.size();
                 for (int i=0; i<n; i++)
