@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.annotation.NonNull;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
@@ -36,6 +37,17 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * calendarTimeShort
+ * calendarTime24
+ * calendarTime12
+ * calendarDay
+ * calendarShortDay
+ * calendarDateYear
+ * calendarDate
+ *
+ * calendarDateTime
+ */
 public class TimeDateDisplay
 {
     protected static String strTimeShortFormat12 = "h:mm\u00A0a";
@@ -53,6 +65,13 @@ public class TimeDateDisplay
     protected static String strDateVeryShortFormat = "MMM d";
     protected static String strDateShortFormat = "MMMM d";
     protected static String strDateLongFormat = "MMMM d, yyyy";
+
+    protected static String strDateTimeVeryShortFormat = "MMM d, h:mm\u00A0a";
+    protected static String strDateTimeShortFormat = "MMMM d, h:mm\u00A0a";
+    protected static String strDateTimeLongFormat = "MMMM d, yyyy, h:mm\u00A0a";
+    protected static String strDateTimeVeryShortFormatSec = "MMM d, h:mm:ss\u00A0a";
+    protected static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
+    protected static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
     protected static boolean initialized = false;
 
@@ -77,7 +96,31 @@ public class TimeDateDisplay
         strTimeShortFormat12 = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strTimeShortFormat12s = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
 
+        Resources res = context.getResources();
+        strTimeShortFormat12 = context.getString(r.string_time_format_12hr_short(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeVeryShortFormat = dateTimeFormatVeryShort(res, r, is24, false);  //  context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
+        strDateTimeShortFormat = dateTimeFormatShort(res, r, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = dateTimeFormatLong(res, r, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+
+        strTimeShortFormat12s = context.getString(r.string_time_format_12hr_short(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeVeryShortFormatSec = dateTimeFormatVeryShort(res, r, is24, true);  // context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormatSec);
+        strDateTimeShortFormatSec = dateTimeFormatShort(res, r, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = dateTimeFormatLong(res, r, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+
         initialized = true;
+    }
+
+    private static String dateTimeFormatVeryShort(Resources res, ResID_TimeDateDisplay r, boolean is24, boolean showSeconds) {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return res.getString(r.string_datetime_format_short(), strDateVeryShortFormat, timeFormat);
+    }
+    private static String dateTimeFormatShort(Resources res, ResID_TimeDateDisplay r, boolean is24, boolean showSeconds) {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return res.getString(r.string_datetime_format_short(), strDateShortFormat, timeFormat);
+    }
+    private static String dateTimeFormatLong(Resources res,  ResID_TimeDateDisplay r, boolean is24, boolean showSeconds) {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return res.getString(r.string_datetime_format_long(), strDateLongFormat, timeFormat);
     }
 
     public static boolean is24() {
@@ -292,6 +335,31 @@ public class TimeDateDisplay
         displayText.setRawValue(calendar.getTimeInMillis());
         return displayText;
     }
+    /**
+     * getDayString
+     * @param day of week (0: sunday)
+     * @return display string (e.g. Sunday)
+     */
+    public static String getDayString(int day) {
+        String[] weekDays = getDayStrings();
+        return (day >= 0 && day < weekDays.length ? weekDays[day] : "");
+    }
+    public static String[] getDayStrings() {
+        return DateFormatSymbols.getInstance(getLocale()).getWeekdays();
+    }
+
+    /**
+     * getShortDayString
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sun"
+     */
+    public static String getShortDayString(int day) {
+        String[] shortWeekDays = getShortDayStrings();
+        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
+    }
+    public static String[] getShortDayStrings() {
+        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
+    }
 
     /**
      * @param context a context
@@ -343,29 +411,61 @@ public class TimeDateDisplay
     }
 
     /**
-     * getDayString
-     * @param day of week (0: sunday)
-     * @return display string (e.g. Sunday)
+     * calendarDateTime
      */
-    public static String getDayString(int day) {
-        String[] weekDays = getDayStrings();
-        return (day >= 0 && day < weekDays.length ? weekDays[day] : "");
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal) {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false, false);
     }
-    public static String[] getDayStrings() {
-        return DateFormatSymbols.getInstance(getLocale()).getWeekdays();
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        return calendarDateTimeDisplayString(context, cal, true, true);
     }
+    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds) {
+        return calendarDateTimeDisplayString(context, cal, showTime, showSeconds, false);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate) {
+        Calendar now = Calendar.getInstance();
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds, abbreviate);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
+    {
+        if (cal == null) {
+            return new TimeDisplayText(strTimeNone);
+        }
 
-    /**
-     * getShortDayString
-     * @param day e.g. Calendar.SUNDAY
-     * @return "Sun"
-     */
-    public static String getShortDayString(int day) {
-        String[] shortWeekDays = getShortDayStrings();
-        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
-    }
-    public static String[] getShortDayStrings() {
-        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
+        Locale locale = getLocale();
+        SimpleDateFormat dateTimeFormat;
+        if (showTime) {
+            if (showSeconds)
+                dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormatSec : (abbreviate ? strDateTimeVeryShortFormatSec : strDateTimeShortFormatSec)), locale);
+            else dateTimeFormat = new SimpleDateFormat((showYear ? strDateTimeLongFormat : (abbreviate ? strDateTimeVeryShortFormat : strDateTimeShortFormat)), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : (abbreviate ? strDateVeryShortFormat : strDateShortFormat)), locale);
+        //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
+
+        Date time = cal.getTime();
+        applySpecialTimeZone(time, cal.getTimeZone());
+        dateTimeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(time), "", "");
+        displayText.setRawValue(cal.getTimeInMillis());
+        return displayText;
+
+        // doesn't use the appropriate timezone (always formats to system)
+        /**int formatFlags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME;
+         formatFlags = (showYear ? (formatFlags | DateUtils.FORMAT_SHOW_YEAR) : (formatFlags | DateUtils.FORMAT_NO_YEAR));
+         return new TimeDisplayText(DateUtils.formatDateRange(context, cal.getTimeInMillis(), cal.getTimeInMillis(), formatFlags), "", "");*/
+
+        // doesn't use app's 12hr/24hr setting, doesn't work w/ custom TimeZone objs
+        /**Long time = cal.getTimeInMillis();
+         String tzID = cal.getTimeZone().getID();
+         Formatter formatter = new Formatter(new StringBuilder(50), Locale.getDefault());
+         formatter = DateUtils.formatDateRange(context, formatter, time, time, formatFlags, tzID);
+         return new TimeDisplayText(formatter.toString(), "", "");*/
+
+        // doesn't use app's 12hr/24hr setting
+        /** DateFormat timeFormat = android.text.format.DateFormat.getLongDateFormat(context);
+         String value = timeFormat.format(cal.getTime());*/
     }
 
     public interface ResID_TimeDateDisplay
@@ -383,6 +483,10 @@ public class TimeDateDisplay
         int string_strDateLongFormat();
 
         int string_strTimeShortFormat12();
+
+        int string_time_format_12hr_short();
+        int string_datetime_format_short();
+        int string_datetime_format_long();
     }
 
 }

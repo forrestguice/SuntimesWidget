@@ -32,11 +32,13 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -46,7 +48,7 @@ import java.util.Calendar;
  */
 public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public View clickArea;
@@ -81,7 +83,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 Calendar now = Calendar.getInstance();
-                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
+                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
                 text_datetime.setVisibility(options.showDate ? View.VISIBLE : View.GONE);
                 text_label.setText(data.timeMode().getLongDisplayString());

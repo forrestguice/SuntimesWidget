@@ -22,6 +22,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
@@ -51,7 +52,7 @@ import java.util.Calendar;
 @Deprecated
 public class MoonPhasesView extends LinearLayout
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private boolean isRtl = false;
@@ -313,7 +314,7 @@ public class MoonPhasesView extends LinearLayout
         {
             if (field != null)
             {
-                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showTime, showSeconds).getValue());
+                field.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dateTime, showTime, showSeconds).getValue());
             }
 
             if (note != null)

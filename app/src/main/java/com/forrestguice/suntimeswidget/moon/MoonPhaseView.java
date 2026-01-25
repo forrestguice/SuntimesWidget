@@ -25,6 +25,7 @@ import android.graphics.Typeface;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -54,7 +55,7 @@ import java.util.Calendar;
 
 public class MoonPhaseView extends LinearLayout
 {
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final AngleDisplay angle_utils = new AngleDisplay();
     protected boolean isRtl = false;
     protected boolean centered = false;
@@ -328,13 +329,13 @@ public class MoonPhaseView extends LinearLayout
                 if (tomorrowMode)
                 {
                     illum = formatter.format(data.getMoonIlluminationTomorrow());
-                    illumTime = utils.calendarTimeShortDisplayString(context, noonTomorrow).toString();
+                    illumTime = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonTomorrow).toString();
 
                 } else {
                     illum = formatter.format(data.getMoonIlluminationToday());
                     illumTime = (sharedNoon)
-                            ? utils.calendarDateTimeDisplayString(context, noonToday).toString()
-                            : utils.calendarTimeShortDisplayString(context, noonToday).toString();
+                            ? utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), noonToday).toString()
+                            : utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonToday).toString();
                 }
                 String illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
                 illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));

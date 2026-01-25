@@ -165,9 +165,11 @@ public class MoonLayout_1x1_8 extends MoonLayout
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
 
+        AndroidResources res = AndroidResources.wrap(context);
+
         if (apogee != null)
         {
-            TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText apogeeString = time_utils.calendarDateTimeDisplayString(res, apogee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
             views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours, timeColor, boldTime));
             if (apogee.second != null) {
@@ -179,7 +181,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         if (perigee != null)
         {
-            TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText perigeeString = time_utils.calendarDateTimeDisplayString(res, perigee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());
             views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours, timeColor, boldTime));
             if (perigee.second != null) {

@@ -26,6 +26,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
@@ -67,7 +68,7 @@ import java.util.HashMap;
 
 public class MoonApsisView extends LinearLayout
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     private LinearLayout content;
@@ -618,7 +619,7 @@ public class MoonApsisView extends LinearLayout
             if (apsis != null)
             {
                 labelView.setText(context.getString(isRising ? R.string.label_apogee : R.string.label_perigee));
-                timeView.setText(utils.calendarDateTimeDisplayString(context, apsis.first, showTime, showSeconds).getValue());
+                timeView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), apsis.first, showTime, showSeconds).getValue());
                 noteView.setText(createApsisNote(context, apsis.first, showWeeks, showHours, timeColor));
                 AndroidResources r = AndroidResources.wrap(context);
                 positionView.setText(LengthUnitDisplay.formatAsDistance(r, LengthUnitDisplay.formatAsDistance(r, apsis.second.distance, units, 2, true)));

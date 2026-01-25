@@ -106,7 +106,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
 
     public static final String DIALOGTAG_COLORS = "lightgraph_colors";
     public static final String DIALOGTAG_HELP = "lightgraph_help";
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static TimeDateDisplay utils = new TimeDateDisplay();
 
     protected TextView text_title, text_time;
     protected LightGraphView graph;
@@ -404,7 +404,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), mapTime);
         if (text_time != null)
         {
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
@@ -541,7 +541,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
     {
         Calendar calendar = getCalendar(context, day, hour);
         if (calendar != null) {
-            textView.setText(utils.calendarDateTimeDisplayString(context, calendar).toString());
+            textView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), calendar).toString());
         } else textView.setText("");
         if (calendar != null && context != null) {
             layout.setOnClickListener(onMoreInfoClicked(context.getString(labelResID), calendar.getTimeInMillis()));
@@ -953,9 +953,8 @@ public class LightGraphDialog extends BottomSheetDialogBase
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
                 boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-                SuntimesUtils utils = new SuntimesUtils();
-                SuntimesUtils.initDisplayStrings(context);
-                String itemDisplay = context.getString(R.string.share_format, label, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+                TimeDateDisplay utils = new TimeDateDisplay();
+                String itemDisplay = context.getString(R.string.share_format, label, utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 {

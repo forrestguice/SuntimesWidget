@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -98,7 +99,7 @@ public class AlarmEventProvider extends ContentProvider
     private static final int URIMATCH_EVENT_CALC = 20;
     private static final int URIMATCH_EVENT_TYPES = 30;
 
-    private SuntimesUtils utils = null;
+    private TimeDateDisplay utils = null;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -143,7 +144,7 @@ public class AlarmEventProvider extends ContentProvider
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         if (utils == null) {
-            utils = new SuntimesUtils();
+            utils = new TimeDateDisplay();
             SuntimesUtils.initDisplayStrings(getContext());
         }
         initDisplayStrings_EventType(getContext());
@@ -745,7 +746,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_TITLE:
                 case COLUMN_EVENT_PHRASE:
-                    row[i] = utils.calendarDateTimeDisplayString(getContext(), eventCalendar, true, false);
+                    row[i] = utils.calendarDateTimeDisplayString(AndroidResources.wrap(getContext()), eventCalendar, true, false);
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
                     row[i] = context.getString(R.string.date_gender);

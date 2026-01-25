@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
@@ -117,7 +118,7 @@ public class WidgetThemePreview
         initData(context, appWidgetId);
     }
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
     private static final AngleDisplay angle_utils = new AngleDisplay();
 
@@ -640,7 +641,7 @@ public class WidgetThemePreview
             SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
             data.calculate(context);
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, data.now(), false, timeFormat);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data.now(), false, timeFormat);
             String nowString = nowText.getValue();
 
             CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
@@ -709,7 +710,7 @@ public class WidgetThemePreview
 
         SuntimesRiseSetData noonData = data1.getLinked();
         TimeDisplayText noonText = ((noonData != null)
-                ? utils.calendarTimeShortDisplayString(previewLayout.getContext(), noonData.sunriseCalendarToday())
+                ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(previewLayout.getContext()), noonData.sunriseCalendarToday())
                 : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
@@ -730,7 +731,7 @@ public class WidgetThemePreview
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
@@ -750,7 +751,7 @@ public class WidgetThemePreview
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
@@ -855,7 +856,7 @@ public class WidgetThemePreview
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(context, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
@@ -875,7 +876,7 @@ public class WidgetThemePreview
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(context, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
@@ -1153,7 +1154,7 @@ public class WidgetThemePreview
             }
             if (apogee != null)
             {
-                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), apogee.first, showTimeDate, showSeconds);
                 previewMoonApogeeDate.setText(perigeeString.getValue());
                 previewMoonApogeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), apogee.first, showWeeks, showHours, timeColor, boldTime));
 
@@ -1186,7 +1187,7 @@ public class WidgetThemePreview
             }
             if (perigee != null)
             {
-                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
+                TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), perigee.first, showTimeDate, showSeconds);
                 previewMoonPerigeeDate.setText(perigeeString.getValue());
                 previewMoonPerigeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), perigee.first, showWeeks, showHours, timeColor, boldTime));
 

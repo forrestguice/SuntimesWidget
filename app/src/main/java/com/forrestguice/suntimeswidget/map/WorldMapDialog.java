@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
@@ -126,8 +127,8 @@ public class WorldMapDialog extends BottomSheetDialogBase
     private int color_warning = Color.RED;
     private int color_sun = Color.RED;
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
-    private static final TimeDeltaDisplay utils1 = new TimeDeltaDisplay();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public WorldMapDialog()
     {
@@ -660,7 +661,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             }
         }
 
-        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), mapTime);
         if (utcTime != null)
         {
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
@@ -669,7 +670,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
-        TimeDisplayText offsetText = utils1.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+        TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
         String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);

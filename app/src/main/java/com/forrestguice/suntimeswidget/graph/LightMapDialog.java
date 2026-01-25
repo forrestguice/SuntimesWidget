@@ -145,7 +145,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     public static final String ARG_DATETIME = "datetime";
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final AngleDisplay angle_utils = new AngleDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
@@ -2737,7 +2737,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), mapTime);
         if (sunTime != null)
         {
             TimeZone timezone = mapTime.getTimeZone();

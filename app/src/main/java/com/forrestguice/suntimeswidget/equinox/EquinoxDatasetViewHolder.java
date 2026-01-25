@@ -362,7 +362,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             this.time = time;
             if (timeView != null)
             {
-                TimeDisplayText timeText = new SuntimesUtils().calendarDateTimeDisplayString(context, time, showTime, showSeconds);
+                TimeDisplayText timeText = new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), time, showTime, showSeconds);
                 timeView.setText(timeText.toString());
             }
         }

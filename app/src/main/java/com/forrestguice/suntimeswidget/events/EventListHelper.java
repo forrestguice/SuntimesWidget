@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -73,6 +74,7 @@ import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.concurrent.ProgressListener;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -897,7 +899,8 @@ public class EventListHelper
         private final List<EventAlias> objects;
         private EventAlias selectedItem;
         private int selectedChild = -1;
-        private final SuntimesUtils utils = new SuntimesUtils();
+        private final SuntimesUtils utilss = new SuntimesUtils();
+        private static final TimeDateDisplay utils = new TimeDateDisplay();
 
         public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventAlias> objects)
         {
@@ -1036,8 +1039,8 @@ public class EventListHelper
                 Log.d("DEBUG", "getChildView: isRising? " + rising + ": " + eventTime);
                 boolean isSoon = (eventTime != null && (Math.abs(now.getTimeInMillis() - eventTime.getTimeInMillis()) < 1000 * 60 * 260 * 48));
                 timeText.setText(eventTime != null
-                        ? ( isSoon ? utils.calendarTimeShortDisplayString(context, eventTime).toString()
-                                   : utils.calendarDateTimeDisplayString(context, eventTime, false, true, false, true).getValue())
+                        ? ( isSoon ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime).toString()
+                                   : utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), eventTime, false, true, false, true).getValue())
                         : "");
                 timeText.setVisibility(eventTime != null ? View.VISIBLE : View.GONE);
             }

@@ -55,5 +55,13 @@ public class AndroidResID_TimeDateDisplay implements TimeDateDisplay.ResID_TimeD
     @Override
     public int string_strTimeShortFormat12() { return R.string.time_format_12hr_short; }
 
+    @Override
+    public int string_time_format_12hr_short() { return R.string.time_format_12hr_short; }
+
+    @Override
+    public int string_datetime_format_short() { return R.string.datetime_format_short; }
+
+    @Override
+    public int string_datetime_format_long() { return R.string.datetime_format_long; }
 
 }

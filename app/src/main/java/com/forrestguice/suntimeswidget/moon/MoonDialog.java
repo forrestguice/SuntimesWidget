@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -113,7 +114,7 @@ public class MoonDialog extends BottomSheetDialogBase
 
     public static final String MAPTAG_MOON = "_moon";
 
-    private static final SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public MoonDialog()
@@ -479,7 +480,7 @@ public class MoonDialog extends BottomSheetDialogBase
             suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
 
-        String timeText = utils.calendarDateTimeDisplayString(context, dialogTime).toString();
+        String timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dialogTime).toString();
         if (text_dialogTime != null)
         {
             CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);

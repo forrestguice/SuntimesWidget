@@ -29,7 +29,9 @@ import android.util.Log;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;
 import java.util.Calendar;
@@ -46,9 +48,8 @@ public class ShareUtils
             Calendar itemTime = Calendar.getInstance();
             itemTime.setTimeInMillis(itemMillis);
 
-            SuntimesUtils utils = new SuntimesUtils();
-            SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+            TimeDateDisplay utils = new TimeDateDisplay();
+            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {

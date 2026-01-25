@@ -711,9 +711,9 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-            SuntimesUtils utils = new SuntimesUtils();
+            TimeDateDisplay utils = new TimeDateDisplay();
             SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
