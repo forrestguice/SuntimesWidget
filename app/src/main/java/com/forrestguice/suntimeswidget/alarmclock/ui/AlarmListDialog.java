@@ -1555,8 +1555,6 @@ public class AlarmListDialog extends DialogBase
      */
     public static class AlarmListDialogItem extends RecyclerView.ViewHolder
     {
-        public static SuntimesUtils utils = new SuntimesUtils();
-
         public boolean isSelected = false;
         public boolean preview_offset = true;
         public boolean preview_offset_transition = false;

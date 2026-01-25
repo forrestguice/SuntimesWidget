@@ -85,7 +85,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     private ListView widgetList;
     private WidgetListAdapter widgetListAdapter;
     protected View progressView;
-    private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
     {

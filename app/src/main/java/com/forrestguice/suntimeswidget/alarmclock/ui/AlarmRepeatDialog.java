@@ -60,8 +60,6 @@ public class AlarmRepeatDialog extends DialogBase
 
     public static final String KEY_COLORS = "alarmrepeat_colors";
 
-    protected static final SuntimesUtils utils = new SuntimesUtils();
-
     private SwitchCompat switchRepeat;
     private CheckBox checkRepeat;
 

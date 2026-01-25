@@ -149,6 +149,7 @@ public class SuntimesUtils
     protected static String strDateTimeShortFormatSec = "MMMM d, h:mm:ss\u00A0a";
     protected static String strDateTimeLongFormatSec = "MMMM d, yyyy, h:mm:ss\u00A0a";
 
+    @Deprecated
     public SuntimesUtils()
     {
     }

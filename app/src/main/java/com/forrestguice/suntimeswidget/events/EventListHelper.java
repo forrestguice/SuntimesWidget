@@ -899,7 +899,6 @@ public class EventListHelper
         private final List<EventAlias> objects;
         private EventAlias selectedItem;
         private int selectedChild = -1;
-        private final SuntimesUtils utilss = new SuntimesUtils();
         private static final TimeDateDisplay utils = new TimeDateDisplay();
 
         public ExpandableEventDisplayAdapter(Context context, int groupResourceID, int childResourceID, @NonNull List<EventAlias> objects)

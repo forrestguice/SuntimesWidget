@@ -117,7 +117,6 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
     protected Spinner spin_type;
     protected ImageButton btn_alarms;
     protected ImageButton btn_accept;
-    protected SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmCreateDialog() {
         super();

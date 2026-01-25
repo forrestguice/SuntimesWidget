@@ -43,7 +43,6 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 public abstract class SuntimesLayout
 {
     public static final int MAX_SP = 72;
-    protected static final SuntimesUtils utils = new SuntimesUtils();
     protected static final TimeDateDisplay time_utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
     protected static final AngleDisplay angle_utils = new AngleDisplay();

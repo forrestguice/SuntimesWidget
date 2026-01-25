@@ -75,8 +75,6 @@ import java.util.concurrent.Executors;
 @SuppressWarnings("Convert2Diamond")
 public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetListItem>
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
-
     @SuppressWarnings("rawtypes")
     public static Class[] ALL_WIDGETS = new Class[] {
             SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
