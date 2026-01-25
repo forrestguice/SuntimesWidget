@@ -218,20 +218,17 @@ public class SuntimesUtils
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
-    @Deprecated
-    public static String dateTimeFormatVeryShort(Resources res, boolean is24, boolean showSeconds)
+    private static String dateTimeFormatVeryShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
     }
-    @Deprecated
-    public static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
+    private static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
     }
-    @Deprecated
-    public static String dateTimeFormatLong(Resources res, boolean is24, boolean showSeconds)
+    private static String dateTimeFormatLong(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);

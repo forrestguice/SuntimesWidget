@@ -3658,7 +3658,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @Nullable
     private static final ExecutorProvider executor = new ExecutorProvider()
     {
         private ExecutorService executor0 = null;
