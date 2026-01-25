@@ -746,7 +746,12 @@ public class LightMapDialog extends BottomSheetDialogBase
                 WorldMapWidgetSettings.saveWorldMapPref(context, 0, PREF_KEY_LIGHTMAP_SHOWGRAPH, MAPTAG_LIGHTMAP, toggledValue);
                 item.setChecked(toggledValue);
                 resizeLightMapView(context, toggledValue);
+
                 graphView.setVisibility(toggledValue ? View.VISIBLE : View.GONE);
+                if (toggledValue && lightmap.isAnimated()) {
+                    graphView.startAnimation();
+                } else graphView.stopAnimation();
+
                 graphView.post(new Runnable() {
                     @Override
                     public void run() {
