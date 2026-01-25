@@ -217,22 +217,26 @@ public class SuntimesUtils
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
+    @Deprecated
     public static String dateTimeFormatVeryShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
     }
+    @Deprecated
     public static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
     }
+    @Deprecated
     public static String dateTimeFormatLong(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
         return res.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
     }
 
+    @Deprecated
     public static boolean isInitialized()
     {
         return initialized;
@@ -254,10 +258,12 @@ public class SuntimesUtils
      * @param cal     a Calendar representing some point in time
      * @return a display string that describes the time (short format)
      */
+    @Deprecated
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal)
     {
         return calendarTimeShortDisplayString(context, cal, false);
     }
+    @Deprecated
     public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds)
     {
         if (!initialized)
@@ -313,6 +319,7 @@ public class SuntimesUtils
      * @param day e.g. Calendar.SUNDAY
      * @return "Sunday"
      */
+    @Deprecated
     public String getDayString(Context context, int day)
     {
         return DateUtils.getDayOfWeekString(day, DateUtils.LENGTH_LONG);
@@ -324,13 +331,14 @@ public class SuntimesUtils
      * @param day e.g. Calendar.SUNDAY
      * @return "Sun"
      */
+    @Deprecated
     public String getShortDayString(Context context, int day)
     {
         String[] shortWeekDays = getShortDayStrings(context);
         return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
     }
-    public String[] getShortDayStrings(Context context)
-    {
+    @Deprecated
+    public String[] getShortDayStrings(Context context) {
         return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
     }
 
@@ -341,6 +349,7 @@ public class SuntimesUtils
      * @param cal     a Calendar representing some point in time
      * @return a time display string (short format)
      */
+    @Deprecated
     public TimeDisplayText calendarTimeSysDisplayString(Context context, @NonNull Calendar cal)
     {
         DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
@@ -359,6 +368,7 @@ public class SuntimesUtils
      * @param cal     a Calendar representing some point in time
      * @return a time display string (12 hr) (short format)
      */
+    @Deprecated
     public TimeDisplayText calendarTime24HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         TimeDisplayText retValue = new TimeDisplayText(calendarTime24HrString(context, cal, showSeconds), "", "");
@@ -366,6 +376,7 @@ public class SuntimesUtils
         return retValue;
     }
 
+    @Deprecated
     public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         Date time = cal.getTime();
@@ -409,6 +420,7 @@ public class SuntimesUtils
      * @param cal a Calendar representing some point in time
      * @return a time display string (24 hr) (short format)
      */
+    @Deprecated
     public TimeDisplayText calendarTime12HrDisplayString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
         // some locales use (or optionally allow) 12 hr time;
@@ -473,6 +485,7 @@ public class SuntimesUtils
     }
     private SimpleDateFormat timeFormat_12, timeFormat_12s, timeFormat_12_suffix;
 
+    @Deprecated
     public String calendarTime12HrString(Context context, @NonNull Calendar cal)
     {
         Locale locale = getLocale();
@@ -514,12 +527,15 @@ public class SuntimesUtils
      * @param calendar  a Calendar representing some date
      * @return a time display string
      */
+    @Deprecated
     public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar) {
         return calendarDateDisplayString(context, calendar, false);
     }
+    @Deprecated
     public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear) {
         return calendarDateDisplayString(context, calendar, showYear, false);
     }
+    @Deprecated
     public TimeDisplayText calendarDateDisplayString(Context context, Calendar calendar, boolean showYear, boolean abbreviate)
     {
         if (calendar == null || context == null)
@@ -547,24 +563,29 @@ public class SuntimesUtils
      * @param cal a Calendar representing some date + time
      * @return a time display string
      */
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal)
     {
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false, false);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, long timestamp)
     {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
         return calendarDateTimeDisplayString(context, cal, true, true);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds) {
         return calendarDateTimeDisplayString(context, cal, showTime, showSeconds, false);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate) {
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds, abbreviate);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(@Nullable Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
     {
         if (cal == null) {
@@ -604,12 +625,15 @@ public class SuntimesUtils
         String value = timeFormat.format(cal.getTime());*/
     }
 
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, false, format);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format) {
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, abbreviate, format);
     }
+    @Deprecated
     public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format)
     {
         if (cal == null || context == null) {
