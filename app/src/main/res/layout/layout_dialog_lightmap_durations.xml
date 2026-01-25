@@ -184,7 +184,7 @@
         app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_day_label"
 
         style="@style/SunsetTimeTextView"
-        android:layout_gravity="center"
+        android:layout_gravity="center" android:lines="2"
         android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
         tools:text="10h 45m 20s [+1m\n 50s]"/>
 
